@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   it(`should have as title 'ita-challenges-frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ita-challenges-frontend');
+    expect(app.title).toEqual('ita-challenges');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ita-challenges-frontend app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('ita-challenges app is running!');
   });
 });
