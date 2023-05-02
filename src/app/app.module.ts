@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {StarterModule} from "./modules/starter/starter.module";
+//import {CustomDateAdapter} from "./helpers/CustomDateAdapter";
 
 @NgModule({
   declarations: [
@@ -10,9 +14,14 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    StarterModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    /* { provide: DateAdapter, useClass: CustomDateAdapter}*/ //Adapter de dia de semana para Angular Material
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
