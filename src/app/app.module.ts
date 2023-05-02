@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {StarterModule} from "./modules/starter/starter.module";
+import {CoreModule} from "./core/core.module";
 //import {CustomDateAdapter} from "./helpers/CustomDateAdapter";
 
 @NgModule({
@@ -16,7 +16,7 @@ import {StarterModule} from "./modules/starter/starter.module";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StarterModule
+    CoreModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },

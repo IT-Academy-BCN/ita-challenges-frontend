@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MainComponent} from "../../core/layout/main/main.component";
+import {StarterComponent} from "./starter/starter.component";
+import {ChallengeComponent} from "../challenge/challenge/challenge.component";
 
-const routes: Routes = [
-    { path: 'ita-challenge', component: MainComponent }
-];
+const routes: Routes = [];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
