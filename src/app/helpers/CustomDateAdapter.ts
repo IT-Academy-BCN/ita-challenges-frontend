@@ -14,6 +14,5 @@ export class CustomDateAdapter extends NativeDateAdapter {
   getFirstDayOfWeek(): number {
     return 1;
   }
-  //TODO - bug en config
 
 }
