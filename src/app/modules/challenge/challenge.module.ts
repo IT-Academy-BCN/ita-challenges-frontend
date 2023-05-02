@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChallengeComponent } from './challenge/challenge.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ChallengeComponent
+  ],
   imports: [
     CommonModule
   ]
