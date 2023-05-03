@@ -13,8 +13,7 @@ import {RouterModule} from "@angular/router";
     StarterComponent
   ],
   imports: [
-    //CommonModule,
-    BrowserModule,
+    CommonModule,
     StarterRoutingModule,
     CoreModule,
     FormsModule,

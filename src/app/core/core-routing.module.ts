@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {MainComponent} from "./layout/main/main.component";
 import {StarterComponent} from "../modules/starter/starter/starter.component";
 import {StarterRoutingModule} from "../modules/starter/starter-routing.module";
-import {ChallengeComponent} from "../modules/challenge/challenge/challenge.component";
+import {ChallengeComponent} from "../shared/components/challenge/challenge.component";
 
 const routes: Routes = [
     {
