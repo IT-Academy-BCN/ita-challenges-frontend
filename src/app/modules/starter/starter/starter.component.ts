@@ -39,6 +39,9 @@ export class StarterComponent {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
+
+      //TODO: remove this
+      console.log(this.challenges);
     });
 
   }
