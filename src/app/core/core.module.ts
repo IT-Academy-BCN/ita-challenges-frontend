@@ -4,6 +4,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
+import { MainMenuComponent } from './layout/main-menu/main-menu.component';
 
 
 
@@ -11,7 +12,8 @@ import {CoreRoutingModule} from "./core-routing.module";
     declarations: [
         HeaderComponent,
         FooterComponent,
-        MainComponent
+        MainComponent,
+        MainMenuComponent
     ],
     exports: [
         HeaderComponent,
