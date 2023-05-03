@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {StarterService} from "../../../services/starter.service";
+import {DataChallenge} from "../../../models/data-challenge.model";
+import {Challenge} from "../../../models/challenge.model";
 
 @Component({
   selector: 'app-starter',
@@ -10,8 +12,10 @@ import {StarterService} from "../../../services/starter.service";
 })
 export class StarterComponent {
 
+  dataChallenge!: DataChallenge;
+  challenges: Challenge[] = [];
   params$!: Subscription;
-  challenges$!: Subscription;
+  challengesSubs$!: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -32,9 +36,9 @@ export class StarterComponent {
   }
 
   loadMasterData() {
-    this.challenges$ = this.starterService.getAllChallenges().subscribe(resp => {
-      console.log(resp);
-
+    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
+      this.dataChallenge = new DataChallenge(resp);
+      this.challenges = this.dataChallenge.challenges;
     });
 
   }

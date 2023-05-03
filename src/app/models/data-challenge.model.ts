@@ -10,7 +10,7 @@ export class DataChallenge {
         this.count = element.count;
         this.offset = element.offset;
         this.limit = element.limit;
-        element.challenges.forEach( (challenge: any) => {
+        element.results.forEach( (challenge: any) => {
             this.challenges.push(challenge);
         });
     }

@@ -9,14 +9,15 @@ import {CoreModule} from "./core/core.module";
 import {CustomDateAdapter} from "./helpers/CustomDateAdapter";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-//import {CustomDateAdapter} from "./helpers/CustomDateAdapter";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    //BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
