@@ -5,7 +5,8 @@
     "outDir": "./out-tsc/spec",
     "module": "commonjs",
     "types": [
-      "jest"
+      "jest",
+      "@angular/localize"
     ]
   },
   "include": [
