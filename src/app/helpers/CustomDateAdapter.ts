@@ -11,7 +11,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
   3- ...
    */
 
-  getFirstDayOfWeek(): number {
+  override getFirstDayOfWeek(): number {
     return 1;
   }
 
