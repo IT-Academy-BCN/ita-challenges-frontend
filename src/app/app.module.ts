@@ -7,6 +7,7 @@ import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/materi
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StarterModule } from './modules/starter/starter.module';
 //import {CustomDateAdapter} from "./helpers/CustomDateAdapter";
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    NgbModule
+    NgbModule,
+    StarterModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
