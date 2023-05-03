@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChallengeComponent } from './challenge/challenge.component';
+import { ChallengeComponent } from '../../shared/components/challenge/challenge.component';
 
 
 
