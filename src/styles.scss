@@ -1,9 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'styles/colors';
+@import "styles/colors";
 
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
 
 /* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+
+/* Import font */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap");
