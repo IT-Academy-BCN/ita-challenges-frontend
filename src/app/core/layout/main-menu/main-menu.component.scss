@@ -1,8 +1,10 @@
+@import '../../../../styles.scss';
+
 .main-menu{
     height: 100%;
     a{
         width: max-content;
-        color: #000;
+        color: $gray-3;
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -20,14 +22,14 @@
                 display: block;
                 width: 9px;
                 height: 9px;
-                background: #BA007C;
+                background: $primary;
                 margin-right: 6px;
                 margin-left: 9px;
                 border-radius: 9px;
             }
         }
         &:hover{
-            color:#BA007C;
+            color: $primary;
         }
         &::before{
             -moz-transition: all .15s ease-out;
@@ -39,7 +41,7 @@
             display: block;
             width: 0;
             height: 0;
-            background: #BA007C;
+            background: $primary;
             margin-right: 9px;
             border-radius: 0;
         }
