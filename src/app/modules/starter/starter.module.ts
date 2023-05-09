@@ -7,10 +7,12 @@ import { StarterComponent } from './starter/starter.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
+import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
 
 @NgModule({
   declarations: [
-    StarterComponent
+    StarterComponent,
+      ChallengeComponent
   ],
   imports: [
     CommonModule,

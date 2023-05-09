@@ -11,6 +11,8 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {StarterModule} from "./modules/starter/starter.module";
+import {ChallengeModule} from "./modules/challenge/challenge.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     CoreModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    StarterModule,
+    ChallengeModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },

@@ -6,7 +6,6 @@ import { ChallengeComponent } from '../../shared/components/challenge/challenge.
 
 @NgModule({
   declarations: [
-    ChallengeComponent
   ],
   imports: [
     CommonModule
