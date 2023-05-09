@@ -1,0 +1,52 @@
+@import '../../../../styles.scss';
+
+.challenge-list-element{
+    border: 1px solid $gray-3;
+    border-radius: 20px;
+    padding: 16px  35px;
+    min-height: 110px;
+    cursor: pointer;
+    background-color: $white;
+
+    -moz-transition: all .15s ease-out;
+    -webkit-transition: all .15s ease-out;
+    -ms-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+    .info{
+        
+        .title{
+            font-weight: 700;
+            margin-bottom: 16px;
+            max-width: 70%;
+        }
+        .difficulty{
+            img{
+                margin-top: 4px;
+                margin-right: 2px;
+                &:nth-child(3){
+                    margin-right: 6px;
+                }
+            }
+        }
+    }
+    .code-languages{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-width: max-content;
+    }
+    .stats{
+        display: flex;
+        color: $gray-3;
+        .stat{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-right: 20px;
+        }
+    }
+    &:hover{
+        background-color: $gray-4;
+    }
+}
