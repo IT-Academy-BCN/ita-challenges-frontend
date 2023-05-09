@@ -1,32 +1,41 @@
 import {StarterService} from "./starter.service";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {TestBed} from "@angular/core/testing";
+import { hot, cold } from 'jasmine-marbles'
 
 describe('StarterService', () => {
 
-    let service: StarterService;
-    let httpMock: HttpTestingController;
+
+    let starterService: StarterService;
+    let httpClientSpy: any;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ HttpClientTestingModule ],
-            providers: [ StarterService ]
-        }).compileComponents();
 
-        service = TestBed.inject(StarterService);
-        httpMock = TestBed.inject(HttpTestingController);
+
+        //mock httpClient
+        httpClientSpy = jasmine.createSpy('httpClient');
+        httpClientSpy.get = jasmine.createSpy('get').and.returnValue('../assets/dummy/data-challenge.json');
+        //inject spy
+        starterService = new StarterService(httpClientSpy);
     });
 
+    it('Should be created', () => {
+        expect(starterService).toBeTruthy()
+    })
 
-    it('Get All Challenges Test', done => {
-        service.getAllChallenges().subscribe(res => {
-            expect(res).toBeTruthy();
-            done();
-        });
-    });
+    it('should correctly return mighty users (using jasmine-marbles)', () => {
+
+        // Here we define the Observable we expect to be returned by "getModifiedUsers"
+        const expectedObservable = cold('--a-b-c', {
+            a: 'Mighty Hans',
+            b: 'Mighty Martin',
+            c: 'Mighty Julia',
+        })
+        expect(starterService.getAllChallenges()).toBe('../assets/dummy/data-challenge.json');
+    })
+
+
+
+
 
 });
-
-
 
 

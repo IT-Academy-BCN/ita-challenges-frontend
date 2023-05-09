@@ -10,9 +10,7 @@ import {Router} from "@angular/router";
 
 export class StarterService {
 
-    constructor(private router: Router,
-                private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) { }
 
     getAllChallenges():Observable<Object>{
         /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
