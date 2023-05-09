@@ -13,6 +13,7 @@ import {CommonModule} from "@angular/common";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {StarterModule} from "./modules/starter/starter.module";
 import {ChallengeModule} from "./modules/challenge/challenge.module";
+import {SharedComponentsModule} from "./shared/components/shared-components.module";
 
 @NgModule({
   declarations: [

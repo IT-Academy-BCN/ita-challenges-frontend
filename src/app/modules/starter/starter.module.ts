@@ -8,11 +8,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
+import {SharedComponentsModule} from "../../shared/components/shared-components.module";
 
 @NgModule({
   declarations: [
-    StarterComponent,
-      ChallengeComponent
+    StarterComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,8 @@ import {ChallengeComponent} from "../../shared/components/challenge/challenge.co
     CoreModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    SharedComponentsModule
   ]
 })
 export class StarterModule { }

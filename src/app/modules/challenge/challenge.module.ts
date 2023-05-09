@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChallengeComponent } from '../../shared/components/challenge/challenge.component';
+import {SharedComponentsModule} from "../../shared/components/shared-components.module";
 
 
 
@@ -8,7 +9,8 @@ import { ChallengeComponent } from '../../shared/components/challenge/challenge.
   declarations: [
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedComponentsModule
   ]
 })
 export class ChallengeModule { }
