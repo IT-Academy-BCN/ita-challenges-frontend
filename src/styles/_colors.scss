@@ -1,19 +1,21 @@
 //BRAND COLORS
-$primary: #B91879;
+$primary:   #B91879;
 $secondary: #f9bb47;
 //STATE COLORS
-$info: #2F80ED;
-$success: #27AE60;
-$warning: #E2AA3B;
-$error: #EB5757;
+$info:      #2F80ED;
+$success:   #27AE60;
+$warning:   #E2AA3B;
+$danger:    #EB5757; //error
 //BLACK COLORS
-$black-1: #000000;
-$black-2: #1E1E1E;
-$black-3: #282828;
-$white: #FFFFFF;
+$black-1:   #000000;
+$black-2:   #1E1E1E;
+$black-3:   #282828;
+$white:     #FFFFFF;
 //GREY COLORS
-$gray-1: #333333;
-$gray-2: #4F4F4F;
-$gray-3: #7E7E7E;
-$gray-4: #EBEBEB;
+$gray-1:    #333333;
+$gray-2:    #4F4F4F;
+$gray-3:    #7E7E7E;
+$gray-4:    #EBEBEB;
 
+//SELECTORS
+$component-active-color: $primary;
