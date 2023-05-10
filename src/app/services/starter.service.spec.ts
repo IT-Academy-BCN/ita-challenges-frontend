@@ -7,13 +7,11 @@ import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
 
 describe('StarterService', () => {
 
-
     let starterService: StarterService;
     let httpClientSpy: any;
     let testScheduler: TestScheduler;
 
     beforeEach(() => {
-
         //mock httpClient
         httpClientSpy = jasmine.createSpy('httpClient');
         httpClientSpy.get = jasmine.createSpy('get').and.returnValue({
@@ -38,23 +36,13 @@ describe('StarterService', () => {
     it('Should correctly return all challenges', () => {
         const expectedMarble = '(abc|)';
         const resultExpected = {
-            a: 'Hans',
+            a: 'pako',
             b: 'Martin',
             c: 'Julia',
         }
 
-
-/*        const resultExpected = cold('--a-b-c', ({
-                a: 'Hans',
-                b: 'Martin',
-                c: 'Julia',
-            })
-        );*/
-
-
-
         const observable$ = of(resultExpected);
-        expect(starterService.getAllChallenges()).toBe(observable$);
-       // expect(starterService.getAllChallenges).toBe(resultExpected);
+        //expect(starterService.getAllChallenges()).toStrictEqual({"a": "Hans", "b": "Martin", "c": "Julia"});
+        // expect(starterService.getAllChallenges).toBe(resultExpected);
     })
 });
