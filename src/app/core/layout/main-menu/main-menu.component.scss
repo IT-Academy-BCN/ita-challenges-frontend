@@ -1,9 +1,10 @@
+@import "/src/styles.scss";
 .main-menu{
     height: 100%;
     a{
         position: relative;
         width: max-content;
-        color: #000;
+        color: $black-1;
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -21,11 +22,11 @@
             padding-left: 15px;
             //font-weight: bold;
             &::before{
-                background: #BA007C;
+                background: $primary;
             }
         }
         &:hover{
-            color:#BA007C;
+            color: $primary;
         }
         &::before{
             -moz-transition: all .15s ease-out;
@@ -42,9 +43,6 @@
             background: transparent;
             border-radius: 9px;
         }
-    }
-    #main-options{
-        margin-bottom: 175px;
     }
     #user-options{
         a{
