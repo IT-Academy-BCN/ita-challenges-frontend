@@ -12,21 +12,16 @@ describe('StarterService', () => {
     let testScheduler: TestScheduler;
 
     beforeEach(() => {
-        //mock httpClient
         httpClientSpy = jasmine.createSpy('httpClient');
+
+        //OJO retorna string, NO un observable
         httpClientSpy.get = jasmine.createSpy('get').and.returnValue({
-            a: 'Hans',
-            b: 'Martin',
-            c: 'Julia'
+            a: 'Spiderman',
+            b: 'Thor',
+            c: 'Lobezno'
         });
         //inject spy
         starterService = new StarterService(httpClientSpy);
-
-        //
-        testScheduler = new TestScheduler((actual, expected) => {
-            expect(actual).toEqual(expected);
-        });
-
     });
 
     it('Should be created', () => {
@@ -34,15 +29,12 @@ describe('StarterService', () => {
     })
 
     it('Should correctly return all challenges', () => {
-        const expectedMarble = '(abc|)';
         const resultExpected = {
-            a: 'pako',
-            b: 'Martin',
-            c: 'Julia',
+            a: 'Spiderman',
+            b: 'Thor',
+            c: 'Lobezno',
         }
-
-        const observable$ = of(resultExpected);
-        //expect(starterService.getAllChallenges()).toStrictEqual({"a": "Hans", "b": "Martin", "c": "Julia"});
-        // expect(starterService.getAllChallenges).toBe(resultExpected);
+        //comparacion de strings
+        expect(starterService.getAllChallenges()).toStrictEqual(resultExpected);
     })
 });
