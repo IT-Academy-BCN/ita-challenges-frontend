@@ -1,12 +1,15 @@
 .main-menu{
     height: 100%;
     a{
+        position: relative;
         width: max-content;
         color: #000;
         display: flex;
         align-items: center;
         text-decoration: none;
         margin-bottom: 38px;
+        padding-right: 15px;
+        padding-left: 0;
 
         -moz-transition: all .15s ease-out;
         -webkit-transition: all .15s ease-out;
@@ -14,16 +17,11 @@
         -o-transition: all .15s ease-out;
         transition: all .15s ease-out;
         &.active{
-            font-weight: bold;
+            padding-right: 0;
+            padding-left: 15px;
+            //font-weight: bold;
             &::before{
-                content: "";
-                display: block;
-                width: 9px;
-                height: 9px;
                 background: #BA007C;
-                margin-right: 6px;
-                margin-left: 9px;
-                border-radius: 9px;
             }
         }
         &:hover{
@@ -36,12 +34,13 @@
             -o-transition: all .15s ease-out;
             transition: all .15s ease-out;
             content: "";
+            position: absolute;
+            left: 0;
             display: block;
-            width: 0;
-            height: 0;
-            background: #BA007C;
-            margin-right: 9px;
-            border-radius: 0;
+            width: 9px;
+            height: 9px;
+            background: transparent;
+            border-radius: 9px;
         }
     }
     #main-options{

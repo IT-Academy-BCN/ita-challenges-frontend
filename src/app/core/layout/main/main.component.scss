@@ -1,0 +1,24 @@
+@import "/src/styles.scss";
+.container-fluid{
+    gap: 35px;
+    background-color: $gray-4;
+    nav{
+        display: flex;
+        flex-direction: column;
+        gap: 70px;
+        max-width: fit-content;
+        #logo{
+            max-width: 100%;
+            background-image: url('../../../../assets/img/logo.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-bottom: 24%;
+        }
+    }
+    main{
+        background-color: $white;
+        border-radius: 15px;
+        width: 100%;
+        padding: 50px 130px 50px 80px;
+    }
+}

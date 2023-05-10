@@ -1,6 +1,12 @@
 <app-header></app-header>
-<app-main-menu></app-main-menu>
-<p>main works!</p>
-<router-outlet></router-outlet>
-
+<div class="d-flex container-fluid">
+    <nav>
+        <div id="logo">
+        </div>
+        <app-main-menu></app-main-menu>
+    </nav>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</div>
 <app-footer></app-footer>
