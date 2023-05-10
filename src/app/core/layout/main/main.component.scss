@@ -1,9 +1,10 @@
 @import "/src/styles.scss";
 .container-fluid{
-    min-height: 100vh;
+    min-height: 100%;
     gap: 35px;
     background-color: $gray-4;
     nav{
+        padding-top: 10px;
         display: flex;
         flex-direction: column;
         gap: 70px;
