@@ -1,0 +1,10 @@
+$link-color:       #000000;
+$link-decoration:  none;
+
+.animated{
+    -moz-transition: all .15s ease-out;
+    -webkit-transition: all .15s ease-out;
+    -ms-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+}

@@ -1,6 +1,8 @@
-@import "/src/styles.scss";
+@import '../../../../styles.scss';
+
 .main-menu{
     height: 100%;
+    gap: 175px;
     a{
         position: relative;
         width: max-content;
@@ -17,6 +19,8 @@
         -ms-transition: all .15s ease-out;
         -o-transition: all .15s ease-out;
         transition: all .15s ease-out;
+
+
         &.active{
             padding-right: 0;
             padding-left: 15px;
@@ -26,6 +30,7 @@
             }
         }
         &:hover{
+            color: $primary;
             color: $primary;
         }
         &::before{
