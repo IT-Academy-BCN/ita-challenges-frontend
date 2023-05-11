@@ -17,6 +17,10 @@ $btn-disabled-opacity: .35;
     background-color: #AE8332;
     border-color: #AE8332;
 }
+.btn.btn-primary{
+    background-color: $primary;
+    border-color: #CE5DA1;
+}
 .btn.btn-primary[active]{
     background-color: #CE5DA1;
     border-color: #CE5DA1;

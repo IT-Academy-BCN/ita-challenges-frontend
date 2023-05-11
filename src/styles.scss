@@ -4,9 +4,6 @@
 @import 'styles/global';
 @import 'styles/fonts';
 
-/* Importing Bootstrap SCSS file. */
-@import "bootstrap/scss/bootstrap";
-
 /* Import font */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap");
@@ -21,4 +18,10 @@ body {
     margin: 0;
     padding: 30px 10px 50px;
     font-family: "Poppins", sans-serif;
+    app-root,
+    app-main{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 }
