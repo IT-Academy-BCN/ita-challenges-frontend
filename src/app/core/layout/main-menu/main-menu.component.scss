@@ -23,13 +23,12 @@
         &.active{
             padding-right: 0;
             padding-left: 15px;
-            //font-weight: bold;
+            font-weight: bold;
             &::before{
                 background: $primary;
             }
         }
         &:hover{
-            color: $primary;
             color: $primary;
         }
         &::before{
