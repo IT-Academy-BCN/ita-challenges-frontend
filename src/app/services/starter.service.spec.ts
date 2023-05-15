@@ -9,7 +9,6 @@ describe('StarterService', () => {
 
     let starterService: StarterService;
     let httpClientSpy: any;
-    let testScheduler: TestScheduler;
 
     beforeEach(() => {
         httpClientSpy = jasmine.createSpy('httpClient');
