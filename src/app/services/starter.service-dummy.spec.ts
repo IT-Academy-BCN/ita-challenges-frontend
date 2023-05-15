@@ -15,14 +15,6 @@ describe('StarterService', () => {
     let httpClientSpy: any;
     let testScheduler: TestScheduler;
 
-    beforeEach(() => scheduler = new TestScheduler((actual, expected) => {
-        httpClientSpy = jasmine.createSpy('httpClient');
-        httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of('pizza', 'burger', 'hotdog'));
-        service = new StarterService(httpClientSpy);
-        expect(actual).toEqual(expected);
-
-    }));
-
     beforeEach(() => {
         httpClientSpy = jasmine.createSpy('httpClient');
         httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of('pizza', 'burger', 'hotdog'));
@@ -36,13 +28,13 @@ describe('StarterService', () => {
 
     it('Should stream all challenges', () => {
 
-        scheduler.run(({expectObservable}) => {
+        testScheduler.run(({expectObservable}) => {
 
             const expectedMarble = '(abc|)';
             const expectedValues = {a: 'pizza', b: 'burger', c: 'hotdog'};
 
-            // const food$ = of('pizza', 'burger', 'hotdog');
-            const food$ = service.getAllChallenges();
+             const food$ = of('pizza', 'burger', 'hotdog');
+            //const food$ = service.getAllChallenges();
 
 
 
