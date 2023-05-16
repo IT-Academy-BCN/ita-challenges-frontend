@@ -1,0 +1,37 @@
+@import "/src/styles/colors";
+.resource-list-element{
+    border: 1px solid $gray-3;
+    border-radius: 20px;
+    padding: 18px  22px 9px 22px;
+    min-height: 110px;
+    cursor: pointer;
+    background-color: $white;
+    gap:12px;
+
+    .down-arrow,
+    .up-arrow{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        &::after,
+        &::before{
+            content: "";
+            display: block;
+            border-radius: 2px;
+            width: 15px;
+            background-color: $gray-3;
+            height: 2px;
+            transform: rotate(35deg);
+            margin-right: -4px;
+        }
+        &::after{
+            transform: rotate(-35deg);
+            margin-right: 0px;
+            margin-left: 1px;
+        }
+    }
+    .up-arrow{
+        transform: rotate(180deg);
+    }
+
+}
