@@ -6,7 +6,7 @@ import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {TestBed} from "@angular/core/testing";
 import {of} from "rxjs";
-import data from "./../../assets/dummy/data-challenge.json";
+import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
 
 
 /* Observable Test */
@@ -56,6 +56,8 @@ describe('StarterService', () => {
             const expectedMarble = '(abc|)';
             const expectedValues = {a: 'pizza', b: 'burger', c: 'hotdog'};
             const obs$ = service.getAllChallenges();
+
+            //contains dummy data - TODO use json file
             console.log(data);
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });
