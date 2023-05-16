@@ -16,13 +16,14 @@ export class StarterComponent {
   challenges: Challenge[] = [];
   params$!: Subscription;
   challengesSubs$!: Subscription;
+  idChallenge!: number;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private starterService: StarterService) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
-
+      alert('hola')
     });
 
   }
