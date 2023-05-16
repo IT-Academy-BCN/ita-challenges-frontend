@@ -4,6 +4,7 @@ import {MainComponent} from "./layout/main/main.component";
 import {StarterComponent} from "../modules/starter/starter/starter.component";
 import {StarterRoutingModule} from "../modules/starter/starter-routing.module";
 import {ChallengeComponent} from "../shared/components/challenge/challenge.component";
+import { ChallengeContainerComponent } from '../modules/challenge/challenge-container/challenge-container.component';
 
 const routes: Routes = [
     {
@@ -16,7 +17,8 @@ const routes: Routes = [
             },
             {
                 path: 'challenge/:idChallenge',
-                component: ChallengeComponent
+                //component: ChallengeComponent
+                component: ChallengeContainerComponent
             }
         ]
     }

@@ -1,0 +1,22 @@
+@import 'src/styles/colors.scss';
+
+.form{
+    padding-right: 50px;
+    margin-bottom: 2rem;
+}
+.form-check-input{
+    padding: .6rem;
+    &:checked {
+        background-color: $primary;
+        border-color: $primary;
+    }
+    &:focus{
+        box-shadow: none;
+    }
+}
+.form-check-label{
+    padding: .3rem 0 0 .3rem;
+}
+p{
+    font-weight: bold;
+}
