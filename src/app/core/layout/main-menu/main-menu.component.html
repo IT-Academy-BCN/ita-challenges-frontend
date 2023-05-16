@@ -1,4 +1,4 @@
-<nav class="main-menu d-flex flex-column ">
+<nav class="main-menu d-flex flex-column justify-content-between">
     <div id="main-options">
         <a [routerLink]="[ '/ita-challenge' ]" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
         <a [routerLink]="[ '/ita-challenge/challenge-list' ]" [routerLinkActive]="['active']" >Retos</a>
@@ -8,7 +8,13 @@
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Guías útiles</a>
     </div>
     <div id="user-options">
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Settings</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Mi espacio</a>
+        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >
+            <img src="../../../../assets/img/icon/setting.svg" alt="Settings"/>
+            Settings
+        </a>
+        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']">
+            <img src="../../../../assets/img/icon/user.svg" alt="User"/>
+            Mi espacio
+        </a>
     </div>
 </nav>

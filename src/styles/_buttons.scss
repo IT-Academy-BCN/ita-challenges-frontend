@@ -1,0 +1,84 @@
+$btn-padding-y: .6rem;
+$btn-padding-x: 3rem;
+$btn-padding-y-sm: .4rem;
+$btn-padding-x-sm: 2.8rem;
+$btn-padding-y-lg: .7rem;
+$btn-padding-x-lg: 3.2rem;
+$btn-radius: .7rem;
+$btn-radius-sm: .6rem;
+$btn-radius-lg: .8rem;
+$btn-disabled-opacity: .35;
+
+.btn{
+    padding: $btn-padding-y $btn-padding-x $btn-padding-y $btn-padding-x;
+    border-radius: $btn-radius;
+}
+.btn.btn-sm{
+    padding: $btn-padding-y-sm $btn-padding-x-sm $btn-padding-y-sm $btn-padding-x-sm;
+    border-radius: $btn-radius-sm;
+}
+.btn.btn-lg{
+    padding: $btn-padding-y-lg $btn-padding-x-lg $btn-padding-y-lg $btn-padding-x-lg;
+    border-radius: $btn-radius-lg;
+}
+.btn.btn-primary{
+    background-color: $primary;
+    border-color: $primary;
+}
+.btn.btn-primary[active]{
+    background-color: $primary-active;
+    border-color: $primary-active;
+}
+.btn.btnprimary:hover{
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+}
+.btn.btn-secondary{
+    background-color: $secondary;
+    border-color: $secondary;
+}
+.btn.btn-secondary[active]{
+    background-color: $secondary-active;
+    border-color: $secondary-active;
+}
+.btn.btn-secondary:hover{
+    background-color: $secondary-hover;
+    border-color: $secondary-hover;
+}
+.btn.btn-outline-primary, .btn.btn-outline-secondary{
+    border: 2px solid $gray-3;
+    color: $black-3;
+}
+.btn.btn-outline-primary[active]{
+    background-color: #E399CB;
+    border-color: $primary;
+    color: $black-3;
+}
+.btn.btn-outline-primary:hover{
+    background-color: #F1CCE5;
+    border-color: $primary-hover;
+    color: $black-3;
+}
+.btn.btn-outline-secondary[active]{
+    background-color: #fbd48c;
+    border-color: $secondary;
+    color: $black-3;
+}
+.btn.btn-outline-secondary:hover{
+    background-color: #F6D69A;
+    border-color: $secondary-hover;
+    color: $black-3;
+}
+.btn.btn-secondary,.btn.btn-success,.btn-warning,.btn.btn-error{
+    color: $white;
+}
+.btn.btn-primary[disabled],.btn.btn-secondary[disabled],
+.btn.btn-outline-primary[disabled], .btn.btn-outline-secondary[disabled]{
+    border-color: $disabled-color;
+    color: $disabled-color;
+}
+.btn.btn-round-icon{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}

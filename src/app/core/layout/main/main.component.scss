@@ -1,0 +1,31 @@
+@import "/src/styles/colors";
+.container-fluid{
+    min-height: 100%;
+    gap: 35px;
+    background-color: $gray-4;
+    nav{
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 70px;
+        max-width: fit-content;
+        min-height: 100%;
+        #logo{
+            max-width: 100%;
+            background-image: url('../../../../assets/img/logo.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-bottom: 24%;
+        }
+    }
+    main{
+        background-color: $white;
+        border-radius: 15px;
+        width: 100%;
+        min-height: 100%;
+        padding: 50px 130px 50px 80px;
+    }
+    app-main-menu{
+        height: 100%;
+    }
+}

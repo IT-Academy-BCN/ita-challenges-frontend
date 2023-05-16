@@ -1,9 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'styles/colors';
+@import 'styles/buttons';
+@import 'styles/global';
+@import 'styles/fonts';
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+html,
+body {
+    min-height: 100vh;
+    background-color: $gray-4;
+}
+body {
+    margin: 0;
+    padding: 30px 10px 50px;
+    font-family: "Poppins", sans-serif;
+    app-root,
+    app-main{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+}
