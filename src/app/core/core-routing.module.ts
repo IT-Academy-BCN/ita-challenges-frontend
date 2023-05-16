@@ -12,12 +12,15 @@ const routes: Routes = [
         component: MainComponent,
         children: [
             {
-                path: 'challenge-list',
+                path: 'challenge',
+                redirectTo: 'challenge/list'
+            },
+            {
+                path: 'challenge/list',
                 component: StarterComponent
             },
             {
                 path: 'challenge/:idChallenge',
-                //component: ChallengeComponent
                 component: ChallengeContainerComponent
             }
         ]

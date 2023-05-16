@@ -12,14 +12,7 @@
         margin-bottom: 38px;
         padding-right: 15px;
         padding-left: 0;
-
-        -moz-transition: all .15s ease-out;
-        -webkit-transition: all .15s ease-out;
-        -ms-transition: all .15s ease-out;
-        -o-transition: all .15s ease-out;
-        transition: all .15s ease-out;
-
-
+        
         &.active{
             padding-right: 0;
             padding-left: 15px;

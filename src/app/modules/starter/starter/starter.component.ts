@@ -23,7 +23,6 @@ export class StarterComponent {
               private starterService: StarterService) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
-      alert('hola')
     });
 
   }
