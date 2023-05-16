@@ -9,10 +9,12 @@ import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
 import {SharedComponentsModule} from "../../shared/components/shared-components.module";
+import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   declarations: [
-    StarterComponent
+    StarterComponent,
+    FiltersComponent
   ],
   imports: [
     CommonModule,
