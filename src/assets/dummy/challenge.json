@@ -1,0 +1,86 @@
+{
+  "id_challenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
+  "challenge_title": "Sociis Industries",
+  "level": "EASY",
+  "creation_date": "Mar 25, 2023",
+  "popularity": 105,
+  "details":{
+    "description": "mi. Aliquam gravida mauris ut mi. Duis risus odio, auctor vitae, aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet",
+    "examples": [
+      {
+        "id_example": "2dab6eaa-fdf4-4a93-8088-810a956e2bf8",
+        "example_text": "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec"
+      },
+      {
+        "id_example": "6c02025e-b06f-420a-bafb-28c737b18473",
+        "example_text": " Aliquam nec nisi maximus, venenatis"
+      },
+      {
+        "id_example": "70e9755e-9e83-41d3-853a-665f1f2a2f5c",
+        "example_text": "Mauris feugiat massa et suscipit malesuada."
+      },
+      {
+        "id_example": "bb7897b8-517d-4843-8c17-e347aba086ca",
+        "example_text": "Aenean quis maximus purus. Quisque sit amet"
+      }
+    ],
+    "notes": "Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum"
+  },
+  "languages": [
+    {
+      "id_language": "1",
+      "language_name": "Javascript"
+    },
+    {
+      "id_language": "2",
+      "language_name": "Java"
+    },
+    {
+      "id_language": "3",
+      "language_name": "PHP"
+    },
+    {
+      "id_language": "4",
+      "language_name": "Python"
+    }
+  ],
+  "solutions": [
+    {
+      "id_solution": "b0f0b102-c9d7-4b1b-9a6d-c63c9f33c8f6",
+      "solution_text": "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec"
+    },
+    {
+      "id_solution": "d82385c6-7735-432f-ae9f-e182d0ed3040",
+      "solution_text": "s a sodales nulla. Aliquam rutrum bibendum pulvinar. "
+    },
+    {
+      "id_solution": "2e3fd4f6-1fd7-4979-97ec-0354ca4acbcc",
+      "solution_text": "nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin"
+    }
+  ],
+  "resources": [
+    {
+      "id_resource": "e7b6b5a0-5b0a-4b0e-8b0a-9b0a0b0a0b0a",
+      "resource_description": "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec",
+      "author":"Ona Costa",
+      "generation_date":"Mar 25, 2023"
+    },
+    {
+      "id_resource": "51a0ec36-c500-4615-8910-460c1bed1495",
+      "resource_description": "Pellentesque a aliquet diam. Aliquam efficitur pharetra",
+      "author":"John Doe",
+      "generation_date":"Mar 25, 2023"
+    },
+    {
+      "id_resource": "959e09ae-9d65-45e2-9f95-f13b5e188492",
+      "resource_description": "Vivamus bibendum eros porttitor orci varius ultricies",
+      "author":"Emeka Okafor",
+      "generation_date":"Mar 25, 2023"
+    }
+  ],
+  "related": [
+    "40728c9c-a557-4d12-bf8f-3747d0924197",
+    "1aeb27aa-7d7d-46c7-b5b8-4a2354966cd0",
+    "5f71e51d-1e3e-44a2-bc97-158021f1a344"
+  ]
+}
