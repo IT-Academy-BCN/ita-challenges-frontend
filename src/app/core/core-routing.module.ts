@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {MainComponent} from "./layout/main/main.component";
-import {StarterComponent} from "../modules/starter/starter/starter.component";
+import {StarterComponent} from "../modules/starter/components/starter/starter.component";
 import {StarterRoutingModule} from "../modules/starter/starter-routing.module";
 import {ChallengeComponent} from "../shared/components/challenge/challenge.component";
 
