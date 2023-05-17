@@ -1,0 +1,48 @@
+@import "src/styles/colors";
+;
+.title{
+    font-weight: bold;
+    margin-bottom: 16px;
+    max-width: 100%;
+}
+.difficulty{
+    img{
+        margin-top: 4px;
+        margin-right: 2px;     
+    }
+}
+.stats{
+    display: flex;
+    color: $gray-3;
+    .stat{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 20px;
+    }
+}
+.button{
+    padding: .5rem 0 0 1.5rem;
+}
+h3{
+    margin: 0;
+}
+/*.nav{
+    border-bottom:  5px solid $gray-4;
+    margin-top: 2rem;
+    padding: 0;
+    border-radius: 2px;
+}
+.nav-link{
+    color: $gray-3;
+}
+.nav-link.active{
+    border: none;
+    bottom: -1px;
+    color: #e8e8e8;
+    padding-bottom: 5px;
+    border-bottom: 5px solid $primary;
+    height: 100%;
+    color: $black-3;
+    border-radius: 2px;
+}*/

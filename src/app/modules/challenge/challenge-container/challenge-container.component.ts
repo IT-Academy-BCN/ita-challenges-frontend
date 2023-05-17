@@ -16,12 +16,13 @@ export class ChallengeContainerComponent {
   challenges: Challenge[] = [];
   params$!: Subscription;
   challengesSubs$!: Subscription;
+  idChallenge!: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private challengeService: ChallengeService){
     this.params$ = this.activatedRoute.params.subscribe(params => {
-
+        this.idChallenge = params['idChallenge']
     });
   }
 
