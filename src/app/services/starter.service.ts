@@ -16,13 +16,13 @@ export class StarterService {
         /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
                     {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/dummy'
                         }
                     });*/
         return this.http.get('../assets/dummy/data-challenge.json',
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/dummy'
                 }
             });
     }
