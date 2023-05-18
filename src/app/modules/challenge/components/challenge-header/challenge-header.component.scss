@@ -1,0 +1,29 @@
+@import "src/styles/colors";
+;
+.title{
+    font-weight: bold;
+    margin-bottom: 16px;
+    max-width: 100%;
+}
+.difficulty{
+    img{
+        margin-top: 4px;
+        margin-right: 2px;     
+    }
+}
+.stats{
+    display: flex;
+    color: $gray-3;
+    .stat{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 20px;
+    }
+}
+.button{
+    padding: .5rem 0 0 1.5rem;
+}
+h3{
+    margin: 0;
+}
