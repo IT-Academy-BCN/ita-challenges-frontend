@@ -9,7 +9,8 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     imports: [],
     exports: [
-        ChallengeComponent
+        ChallengeComponent,
+        ResourceComponent
     ]
 })
 export class SharedComponentsModule { }

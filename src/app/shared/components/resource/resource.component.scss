@@ -7,6 +7,9 @@
     cursor: pointer;
     background-color: $white;
     gap:12px;
+    &:hover{
+        background-color: $gray-4;
+    }
     .title{
         margin: 0 0 4px;
     }
