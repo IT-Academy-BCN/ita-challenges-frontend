@@ -1,0 +1,68 @@
+@import "/src/styles/colors";
+.resource-list-element{
+    border: 1px solid $gray-3;
+    border-radius: 20px;
+    padding: 18px  22px 9px 22px;
+    min-height: 110px;
+    cursor: pointer;
+    background-color: $white;
+    gap:12px;
+    .title{
+        margin: 0 0 4px;
+    }
+    .description{
+        font-weight: 600;
+        color: $gray-3;
+        margin: 0;
+    }
+    .points{
+        margin: 0;
+    }
+    .down-arrow,
+    .up-arrow{
+        height: 16px;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        &::after,
+        &::before{
+            content: "";
+            display: block;
+            border-radius: 2px;
+            width: 11px;
+            background-color: $gray-3;
+            height: 2px;
+            transform: rotate(35deg);
+            margin-right: -4px;
+        }
+        &::after{
+            transform: rotate(-35deg);
+            margin-right: 0px;
+            margin-left: 1px;
+        }
+        &.red{
+            &::after,
+            &::before{
+                background-color: $danger;
+            }
+        }
+        &.green{
+            &::after,
+            &::before{
+                background-color: $success;
+            }
+        }
+    }
+    .up-arrow{
+        transform: rotate(180deg);
+    }
+    .user-img{
+        background-color: $gray-4;
+        border-radius: 50px;
+        max-width: 28px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+}
