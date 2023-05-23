@@ -1,4 +1,6 @@
 @import "src/styles/colors";
+@import "src/styles/fonts";
+
 .nav{
     border-bottom:  5px solid $gray-4;
     margin-top: 2rem;
@@ -17,4 +19,6 @@
 }
 .tab-content{
     margin-top: 3rem;
+    width: 75%;
+
 }
