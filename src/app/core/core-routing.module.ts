@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MainComponent} from "./layout/main/main.component";
-import {StarterComponent} from "../modules/starter/components/starter/starter.component";
-import {StarterRoutingModule} from "../modules/starter/starter-routing.module";
+import { MainComponent } from "./layout/main/main.component";
+import { StarterComponent } from "../modules/starter/components/starter/starter.component";
 import { ChallengeContainerComponent } from '../modules/challenge/components/challenge-container/challenge-container.component';
 
 const routes: Routes = [
@@ -11,17 +10,18 @@ const routes: Routes = [
         component: MainComponent,
         children: [
             {
-                path: 'challenge',
-                redirectTo: 'challenge/list'
+                path: 'challenges',
+                children:[
+                    {
+                        path: '',  
+                        component: StarterComponent,
+                    },
+                    {
+                        path: ':idChallenge', 
+                        component: ChallengeContainerComponent, 
+                    },
+                ]
             },
-            {
-                path: 'challenge/list',
-                component: StarterComponent
-            },
-            {
-                path: 'challenge/:idChallenge',
-                component: ChallengeContainerComponent
-            }
         ]
     }
 ];
