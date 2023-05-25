@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
 
+
 @NgModule({
     declarations: [
         ChallengeComponent,
