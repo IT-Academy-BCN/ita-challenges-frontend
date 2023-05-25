@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/ita-challenge/challenges/'}
+  { path: '', pathMatch: 'full', redirectTo: '/ita-challenge/challenges'}
 ];
 
 @NgModule({
