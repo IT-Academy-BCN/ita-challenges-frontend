@@ -4,25 +4,28 @@ import {Solution} from "./solution.model";
 import {Resource} from "./resource.model";
 
 export class Challenge {
-    idChallenge: string;
-    challengeTitle: string;
+    id_challenge: string;
+    challenge_title: string;
     level: string;
-    creationDate: Date;
-    challengeDetails: ChallengeDetails;
+    creation_date: Date;
+    popularity: number;
+    challenge_details: ChallengeDetails;
     languages: Language[] = [];
     solutions: Solution[] = [];
     resources: Resource[] = [];
     challengesRelated: string[] = [];
 
     constructor(element: any) {
-        this.idChallenge = element.id_challenge
-        this.challengeTitle = element.challenge_title;
+        this.id_challenge = element.id_challenge;
+        this.challenge_title = element.challenge_title;
         this.level = element.level;
-        this.creationDate = element.creation_date;
-        this.challengeDetails = element.details;
+        this.creation_date = element.creation_date;
+        this.popularity = element.popularity;
+        this.challenge_details = element.details;
 
         element.languages.forEach( (language: any) => {
             this.languages.push(language);
+            console.log("languages" + this.languages);
         });
 
         element.solutions.forEach( (solution: any) => {

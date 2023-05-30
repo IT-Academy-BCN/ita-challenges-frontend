@@ -7,14 +7,15 @@ import { StarterComponent } from './components/starter/starter.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
-import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
 import {SharedComponentsModule} from "../../shared/components/shared-components.module";
 import { StarterFiltersComponent } from './components/starter-filters/starter-filters.component';
+import { ChallengeService } from 'src/app/services/challenge.service';
+
 
 @NgModule({
   declarations: [
     StarterComponent,
-    StarterFiltersComponent
+    StarterFiltersComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +25,9 @@ import { StarterFiltersComponent } from './components/starter-filters/starter-fi
     ReactiveFormsModule,
     RouterModule,
     SharedComponentsModule
+  ],
+  providers: [
+    ChallengeService
   ]
 })
 export class StarterModule { }

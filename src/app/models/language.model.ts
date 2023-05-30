@@ -1,10 +1,10 @@
 export class Language {
 
-    idLanguage: number;
-    languageName: string;
+    id_language: number;
+    language_name: string;
 
     constructor(element: any) {
-        this.idLanguage = element.id_language;
-        this.languageName = element.language_name;
+        this.id_language = element.id_language;
+        this.language_name = element.language_name;
     }
 }
