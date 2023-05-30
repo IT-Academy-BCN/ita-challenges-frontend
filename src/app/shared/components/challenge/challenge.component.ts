@@ -23,6 +23,4 @@ export class ChallengeComponent {
   @Input() level = "";
   @Input() popularity!: number;
 
-  
-  ngOnInit(): void {}
 }
