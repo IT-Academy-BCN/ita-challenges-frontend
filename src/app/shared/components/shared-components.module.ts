@@ -3,10 +3,13 @@ import {ChallengeComponent} from "../../shared/components/challenge/challenge.co
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { CommonModule } from '@angular/common';
 import { StarterService } from 'src/app/services/starter.service';
+import { ResourceComponent } from './resource/resource.component';
+
 
 @NgModule({
     declarations: [
-        ChallengeComponent
+        ChallengeComponent,
+        ResourceComponent
     ],
     imports: [
         CommonModule,
@@ -16,7 +19,9 @@ import { StarterService } from 'src/app/services/starter.service';
     ],  
     providers: [
         StarterService,
-        ChallengeService
-      ]
+        ChallengeService,
+        ChallengeComponent,
+        ResourceComponent
+    ]
 })
 export class SharedComponentsModule { }
