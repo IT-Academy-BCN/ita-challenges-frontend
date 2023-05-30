@@ -1,10 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Challenge } from 'src/app/models/challenge.model';
-import { DataChallenge } from 'src/app/models/data-challenge.model';
+import { Component, Input} from '@angular/core';
 import { StarterService } from 'src/app/services/starter.service';
-import { StarterComponent } from 'src/app/modules/starter/components/starter/starter.component';
 
 
 @Component({
