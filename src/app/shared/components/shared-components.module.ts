@@ -15,13 +15,8 @@ import { ResourceComponent } from './resource/resource.component';
         CommonModule,
     ],
     exports: [
-        ChallengeComponent
-    ],  
-    providers: [
-        StarterService,
-        ChallengeService,
         ChallengeComponent,
         ResourceComponent
-    ]
+    ],  
 })
 export class SharedComponentsModule { }
