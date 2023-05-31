@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {TestBed} from "@angular/core/testing";
-import {of} from "rxjs";
+import {delay, of} from "rxjs";
 import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
 
 
@@ -54,9 +54,9 @@ describe('StarterService', () => {
 
         testScheduler.run(({expectObservable}) => {
 
-            const expectedMarble = '(a|)';
+            const expectedMarble = '---(a|)';
             const expectedValues = {a: data};
-            const obs$ = service.getAllChallenges();
+            const obs$ = service.getAllChallenges().pipe(delay(3));
 
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });
