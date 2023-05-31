@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ChallengeComponent } from './../../../../shared/components/challenge/challenge.component';
+import { ResourceComponent } from './../../../../shared/components/resource/resource.component';
 import { ChallengeInfoComponent } from './challenge-info.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -8,7 +11,8 @@ describe('ChallengeInfoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChallengeInfoComponent]
+      declarations: [ChallengeInfoComponent, ChallengeInfoComponent, ResourceComponent, ChallengeComponent],
+      imports: [RouterTestingModule]
     });
     fixture = TestBed.createComponent(ChallengeInfoComponent);
     component = fixture.componentInstance;

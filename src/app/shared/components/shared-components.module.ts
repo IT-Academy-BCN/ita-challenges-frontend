@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
 
@@ -8,7 +10,7 @@ import { ResourceComponent } from './resource/resource.component';
         ChallengeComponent,
         ResourceComponent
     ],
-    imports: [],
+    imports: [RouterModule],
     exports: [
         ChallengeComponent,
         ResourceComponent
