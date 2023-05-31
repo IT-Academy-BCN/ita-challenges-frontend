@@ -11,6 +11,7 @@ export class StarterFiltersComponent {
   @Output() filtersSelected = new EventEmitter<filterChallenge>();
 
   checkFilter(){
+    console.log('llamada emmit componente hijo')
     let filters = this.getAllFilters();
     this.filtersSelected.emit(filters);
   }

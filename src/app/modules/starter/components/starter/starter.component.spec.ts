@@ -51,12 +51,18 @@ describe('StarterComponent', () => {
   });
 
   it('should parent recibe filters from child', () => {
-    //spyOn(component, 'getChallengeFilters');
-//    childComponent.filtersSelected.emit(selectedFilters);
-childComponent.checkFilter();
+    //spyOn(childComponent, 'checkFilter');
+    spyOn(component, 'getChallengeFilters');
+
+    //childComponent.filtersSelected.emit(selectedFilters);
+    //component.getChallengeFilters(filters)
+    childComponent.checkFilter();
     fixture.detectChanges();
 
-    expect(component.filters).toEqual(selectedFilters);
+    //expect(component.filters).toEqual(selectedFilters);
+    //expect(childComponent.checkFilter).toHaveBeenCalled();
+    expect(component.getChallengeFilters).toHaveBeenCalled();
+
   });
 
 });

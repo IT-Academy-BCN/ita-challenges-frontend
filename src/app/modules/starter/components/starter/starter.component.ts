@@ -48,6 +48,7 @@ export class StarterComponent {
 
   }
   getChallengeFilters(filters: filterChallenge){
+    console.log('llamada componente padre desde emitter')
     this.filters = filters;
   }
 }
