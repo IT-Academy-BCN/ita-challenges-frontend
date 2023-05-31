@@ -9,7 +9,7 @@ import {of} from "rxjs";
 import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
 
 
-/* Observable Test */
+/* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
 
     let service: StarterService;
@@ -17,12 +17,13 @@ describe('StarterService', () => {
     let scheduler: TestScheduler;
     let httpClientSpy: any;
     let testScheduler: TestScheduler;
+    
 
     beforeEach(() => {
 
         //inject spy - TODO load data from json file
         httpClientSpy = jasmine.createSpy('httpClient');
-        httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of('pizza', 'burger', 'hotdog'));
+        httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
         service = new StarterService(httpClientSpy);
         testScheduler = new TestScheduler((actual, expected) => {
             expect(actual).toEqual(expected);
@@ -53,12 +54,10 @@ describe('StarterService', () => {
 
         testScheduler.run(({expectObservable}) => {
 
-            const expectedMarble = '(abc|)';
-            const expectedValues = {a: 'pizza', b: 'burger', c: 'hotdog'};
+            const expectedMarble = '(a|)';
+            const expectedValues = {a: data};
             const obs$ = service.getAllChallenges();
 
-            //contains dummy data - TODO use json file
-            console.log(data);
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });
 
