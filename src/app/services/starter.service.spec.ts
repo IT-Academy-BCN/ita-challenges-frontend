@@ -9,7 +9,7 @@ import {of} from "rxjs";
 import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
 
 
-/* Observable Test */
+/* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
 
     let service: StarterService;
