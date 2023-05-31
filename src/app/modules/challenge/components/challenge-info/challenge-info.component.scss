@@ -9,16 +9,28 @@
 }
 .nav-link{
     color: $gray-3;
+    border-top: #ffff;
+    border-left: #ffff;
+    border-right: #ffff;
+    border-bottom: 5px solid transparent;
 }
 .nav-link.active{
     border: none;
     border-bottom: 5px solid $primary;
-    height: 100%;
     color: $black-3;
-    border-radius: 2px;
 }
 .tab-content{
     margin-top: 3rem;
     width: 75%;
 
+}
+.title{
+    display: flex;
+}
+.title_link{
+    color: $primary;
+    text-decoration: none;
+    font-weight: bold;
+    align-self: center ;
+    padding: 1.5rem;
 }
