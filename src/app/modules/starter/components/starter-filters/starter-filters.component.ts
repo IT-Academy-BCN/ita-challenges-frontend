@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { filterChallenge } from 'src/app/models/filter-challenge.model';
 
 @Component({
@@ -8,11 +8,11 @@ import { filterChallenge } from 'src/app/models/filter-challenge.model';
 })
 export class StarterFiltersComponent {
 
-  constructor(){
-  }
+  @Output() filtersSelected = new EventEmitter<filterChallenge>();
 
   checkFilter(){
-    let filters = this.getAllFilters()
+    let filters = this.getAllFilters();
+    this.filtersSelected.emit(filters);
   }
 
   getAllFilters(){

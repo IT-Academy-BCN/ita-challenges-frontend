@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
+import { filterChallenge } from 'src/app/models/filter-challenge.model';
 
 @Component({
   selector: 'app-starter',
@@ -16,6 +17,7 @@ export class StarterComponent {
   challenges: Challenge[] = [];
   params$!: Subscription;
   challengesSubs$!: Subscription;
+  filters!: filterChallenge;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -45,5 +47,7 @@ export class StarterComponent {
     });
 
   }
-
+  getChallengeFilters(filters: filterChallenge){
+    this.filters = filters;
+  }
 }
