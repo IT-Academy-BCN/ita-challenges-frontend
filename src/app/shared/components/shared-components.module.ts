@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
-import { ChallengeService } from 'src/app/services/challenge.service';
 import { CommonModule } from '@angular/common';
-import { StarterService } from 'src/app/services/starter.service';
 import { ResourceComponent } from './resource/resource.component';
 
 
@@ -13,7 +12,7 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     imports: [
         CommonModule,
-    ],
+        RouterModule],
     exports: [
         ChallengeComponent,
         ResourceComponent
