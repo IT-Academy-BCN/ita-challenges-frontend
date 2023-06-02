@@ -18,6 +18,8 @@ export class StarterComponent {
   params$!: Subscription;
   challengesSubs$!: Subscription;
   filters!: filterChallenge;
+  sortBy: string = "popularity";
+
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -50,5 +52,13 @@ export class StarterComponent {
   getChallengeFilters(filters: filterChallenge){
     console.log('llamada componente padre desde emitter')
     this.filters = filters;
+    //TODO: llamar al endpoint
   }
+  changeSort(newSort: string){
+    if(newSort != this.sortBy){
+      this.sortBy = newSort;
+      //TODO: llamar al endpoint
+    }
+  }
+  
 }

@@ -51,16 +51,21 @@ describe('StarterComponent', () => {
   });
 
   it('should parent recibe filters from child', () => {
-    //spyOn(childComponent, 'checkFilter');
+    //const spy = spyOn(component, 'getChallengeFilters');
+    spyOn(childComponent, 'checkFilter');
     spyOn(component, 'getChallengeFilters');
+    
 
     //childComponent.filtersSelected.emit(selectedFilters);
-    //component.getChallengeFilters(filters)
     childComponent.checkFilter();
-    fixture.detectChanges();
+    //fixture.detectChanges();
+    //childFixture.detectChanges();
+    component.getChallengeFilters(filters);
+    //childComponent.filtersSelected.emit(filters);
 
     //expect(component.filters).toEqual(selectedFilters);
-    //expect(childComponent.checkFilter).toHaveBeenCalled();
+    //expect(spy).toHaveBeenCalled();
+    expect(childComponent.checkFilter).toHaveBeenCalled();
     expect(component.getChallengeFilters).toHaveBeenCalled();
 
   });
