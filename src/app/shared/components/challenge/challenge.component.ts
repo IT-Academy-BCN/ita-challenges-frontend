@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { StarterService } from 'src/app/services/starter.service';
+import { StarterService } from '../../../services/starter.service';
 
 
 @Component({
