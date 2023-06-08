@@ -1,8 +1,8 @@
 {
-  "id_challenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
-  "challenge_title": "Sociis Industries",
+  "idChallenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
+  "challengeTitle": "Sociis Industries",
   "level": "EASY",
-  "creation_date": "Mar 25, 2023",
+  "creationDate": "Mar 25, 2023",
   "popularity": 105,
   "details":{
     "description": "mi. Aliquam gravida mauris ut mi. Duis risus odio, auctor vitae, aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet",

@@ -1,26 +1,36 @@
 <div class="challenge-list-element d-flex flex-column justify-content-between" [routerLink]="['65031a0b-4fe3-4b8c-9d05-052ced6de781']">
     <div class="info d-flex align-items-start justify-content-between">
         <div class="d-flex align-items-start w-100">
-            <div class="difficulty">
+            <div class="difficulty" *ngIf="level == 'EASY'">
+                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+                <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+            </div>
+            <div class="difficulty" *ngIf="level == 'MEDIUM'">
                 <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
                 <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
                 <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
             </div>
+            <div class="difficulty" *ngIf="level == 'HARD'">
+                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+            </div>
             <div class="title">
-                [Geometry A-1] Locate point - to the right, to the left or on the vector?
+                {{challenge_title}}
             </div>
         </div>
-        <ul class="code-languages d-flex">
-            <li class="code-icon js">
-                <img src="../../../../assets/img/icon/js.svg" alt="Javascript">
+        <ul class="code-languages d-flex"  *ngFor="let language of languages">
+            <li class="code-icon js" *ngIf="language.id_language == '1'">  
+                <img src="../../../../assets/img/icon/js.svg" alt="1">
             </li>
-            <li class="code-icon python">
+            <li class="code-icon python" *ngIf="language.id_language == '2'">
                 <img src="../../../../assets/img/icon/python.svg" alt="Python">
             </li>
-            <li class="code-icon php">
+            <li class="code-icon php" *ngIf="language.id_language == '3'">
                 <img src="../../../../assets/img/icon/php.svg" alt="php">
             </li>
-            <li class="code-icon java">
+            <li class="code-icon java" *ngIf="language.id_language == '4'">
                 <img src="../../../../assets/img/icon/java.svg" alt="Java">
             </li>
         </ul>
@@ -40,7 +50,7 @@
         </span>
         <span class="stat">     
             <img src="../../../../assets/img/icon/clock.svg" alt="Date">
-            20 Dic 2023
+            {{creation_date}}
         </span>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ChallengeComponent } from './../../../../shared/components/challenge/challenge.component';
 import { ResourceComponent } from './../../../../shared/components/resource/resource.component';
 import { ChallengeInfoComponent } from './challenge-info.component';
@@ -12,7 +12,8 @@ describe('ChallengeInfoComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ChallengeInfoComponent, ChallengeInfoComponent, ResourceComponent, ChallengeComponent],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule,
+      HttpClientTestingModule]
     });
     fixture = TestBed.createComponent(ChallengeInfoComponent);
     component = fixture.componentInstance;

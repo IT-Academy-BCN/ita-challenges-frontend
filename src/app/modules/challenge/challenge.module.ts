@@ -21,7 +21,7 @@ import { RouterModule } from '@angular/router';
     SharedComponentsModule,
     CoreModule,
     ChallengeRoutingModule,
-    RouterModule
+    RouterModule,
   ]
 })
 export class ChallengeModule { }

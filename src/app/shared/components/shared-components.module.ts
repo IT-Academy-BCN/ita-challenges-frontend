@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
+import { CommonModule } from '@angular/common';
 import { ResourceComponent } from './resource/resource.component';
 
 
@@ -10,10 +10,12 @@ import { ResourceComponent } from './resource/resource.component';
         ChallengeComponent,
         ResourceComponent
     ],
-    imports: [RouterModule],
+    imports: [
+        CommonModule,
+        RouterModule],
     exports: [
         ChallengeComponent,
         ResourceComponent
-    ]
+    ],  
 })
 export class SharedComponentsModule { }

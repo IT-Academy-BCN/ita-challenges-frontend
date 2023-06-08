@@ -12,7 +12,7 @@ export class ChallengeService {
 
     constructor(private http: HttpClient) { }
 
-    getChallenge():Observable<Object>{
+    getAllChallenges():Observable<Object>{
         /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
                     {
                         headers: {

@@ -23,7 +23,8 @@ export class StarterComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private starterService: StarterService) {
+              private starterService: StarterService
+              ) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
 
@@ -33,6 +34,8 @@ export class StarterComponent {
 
   ngOnInit(): void {
     this.loadMasterData();
+    console.log(this.challenge);
+    console.dir(this.challenge);
   }
 
   ngOnDestroy() {
@@ -40,12 +43,9 @@ export class StarterComponent {
   }
 
   loadMasterData() {
-    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
+      this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
-
-      //TODO: remove this
-      console.log(this.challenges);
     });
 
   }
