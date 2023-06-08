@@ -5,6 +5,16 @@
     </div>
     <div class="col-9">
         <h2>Retos</h2>
+
+        <ul id="sortBy" class="d-flex justify-content-end gap-2">
+            <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
+                Popularidad
+            </li>
+            <li class="animated" [ngClass]="{'selected' : sortBy == 'date'}" (click)="changeSort('date')">
+                Fecha    
+            </li>
+        </ul>
+        
         <app-challenge
             *ngFor ="let challenge of challenges, let i = index"
             [challenge_title] = "challenge.challenge_title"
