@@ -1,10 +1,10 @@
+import { filterChallenge } from './../../../../models/filter-challenge.model';
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
-import { filterChallenge } from './../../../../models/filter-challenge.model';
 
 @Component({
   selector: 'app-starter',
