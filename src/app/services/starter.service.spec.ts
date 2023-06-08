@@ -21,7 +21,7 @@ describe('StarterService', () => {
 
     beforeEach(() => {
 
-        //inject spy - TODO load data from json file
+        //inject spy
         httpClientSpy = jasmine.createSpy('httpClient');
         httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
         service = new StarterService(httpClientSpy);
