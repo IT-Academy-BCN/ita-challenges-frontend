@@ -6,7 +6,6 @@ import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
 import { filterChallenge } from './../../../../models/filter-challenge.model';
 
-
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
@@ -20,7 +19,7 @@ export class StarterComponent {
   challengesSubs$!: Subscription;
   filters!: filterChallenge;
   sortBy: string = "popularity";
-
+  challenge = Challenge;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
