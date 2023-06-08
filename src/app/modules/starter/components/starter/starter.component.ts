@@ -34,8 +34,8 @@ export class StarterComponent {
 
   ngOnInit(): void {
     this.loadMasterData();
-    console.log(this.challenge);
-    console.dir(this.challenge);
+    console.log(this.challenges);
+    console.dir(this.challenges);
   }
 
   ngOnDestroy() {
