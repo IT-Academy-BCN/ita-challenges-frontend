@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterModalComponent } from './../../../modals/register-modal/register-modal.component';
 
 @Component({
   selector: 'app-challenge-header',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class ChallengeHeaderComponent {
 
+  constructor(private modalService: NgbModal) {}
+
+  openRegisterModal(){
+    this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
+  }
 }
