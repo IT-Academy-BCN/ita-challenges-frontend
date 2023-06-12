@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { ChallengeComponent } from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
 
 
@@ -12,7 +13,9 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     imports: [
         CommonModule,
-        RouterModule],
+        RouterModule,
+        NgbTooltipModule
+    ],
     exports: [
         ChallengeComponent,
         ResourceComponent

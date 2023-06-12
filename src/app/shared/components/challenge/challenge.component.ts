@@ -1,4 +1,5 @@
 import { Component, Input} from '@angular/core';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StarterService } from '../../../services/starter.service';
 
 
