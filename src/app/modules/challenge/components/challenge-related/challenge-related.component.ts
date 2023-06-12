@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {DataChallenge} from "../../../../models/data-challenge.model";
@@ -7,11 +7,11 @@ import { ChallengeService } from 'src/app/services/challenge.service';
 import { StarterService } from 'src/app/services/starter.service';
 
 @Component({
-  selector: 'app-challenge-container',
-  templateUrl: './challenge-container.component.html',
-  styleUrls: ['./challenge-container.component.scss']
+  selector: 'app-challenge-related',
+  templateUrl: './challenge-related.component.html',
+  styleUrls: ['./challenge-related.component.scss']
 })
-export class ChallengeContainerComponent {
+export class ChallengeRelatedComponent {
   idChallenge!: string | any;
   params$!: Subscription;
   jsonData: Challenge[] = [];
@@ -26,16 +26,15 @@ export class ChallengeContainerComponent {
     private route: ActivatedRoute,
     private challengeService: ChallengeService,
     private starterService: StarterService
-  ){
-    this.params$ =  this.route.paramMap.subscribe((params: ParamMap) => {
-      this.idChallenge = params.get('idChallenge')
+  ){ }
+   @Input() related: any = [];
 
-      console.log(this.idChallenge)
-
-    });
-  }
+   challenge_title: string | undefined
+   challenge_date: Date | undefined
+   challenge_level: string | undefined 
 
   ngOnInit(){
+    this.idChallenge = this.related;
     console.log(this.idChallenge)
    
     this.loadMasterData(this.idChallenge);
@@ -46,11 +45,14 @@ export class ChallengeContainerComponent {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
-      console.log(this.challenges)
    
     this.challengeService.getChallenge(id, this.challenges)
   .subscribe((challenge: Challenge) => {
     this.challenge = challenge;
+    console.log(this.challenge)
+    this.challenge_title = this.challenge.challenge_title;
+    this.challenge_date = this.challenge.creation_date;
+    this.challenge_level = this.challenge.level
   }); 
 });
 }
@@ -59,4 +61,5 @@ export class ChallengeContainerComponent {
     if (this.params$ != undefined) this.params$.unsubscribe();
   }
 }
+
 

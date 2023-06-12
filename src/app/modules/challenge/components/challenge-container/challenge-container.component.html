@@ -1,2 +1,11 @@
-<app-challenge-header></app-challenge-header>
-<app-challenge-info></app-challenge-info>
+<app-challenge-header 
+    [title] = "challenge.challenge_title"
+    [creation_date] = "challenge.creation_date"
+    [level] = "challenge.level">
+</app-challenge-header>
+<app-challenge-info
+    [details] = "challenge.details"
+    [related] = "challenge.related"
+    [resources] = "challenge.resources"
+    [solutions] = "challenge.solutions"
+></app-challenge-info>

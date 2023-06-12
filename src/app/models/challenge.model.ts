@@ -9,11 +9,11 @@ export class Challenge {
     level: string;
     creation_date: Date;
     popularity: number;
-    challenge_details: ChallengeDetails;
+    details: ChallengeDetails;
     languages: Language[] = [];
     solutions: Solution[] = [];
     resources: Resource[] = [];
-    challengesRelated: string[] = [];
+    related: string[] = [];
 
     constructor(element: any) {
         this.id_challenge = element.id_challenge;
@@ -21,7 +21,7 @@ export class Challenge {
         this.level = element.level;
         this.creation_date = element.creation_date;
         this.popularity = element.popularity;
-        this.challenge_details = element.details;
+        this.details = element.details;
 
         element.languages.forEach( (language: any) => {
             this.languages.push(language);
@@ -36,8 +36,8 @@ export class Challenge {
             this.resources.push(resource);
         });
 
-        element.challengesRelated.forEach( (challengeRelated: any) => {
-            this.challengesRelated.push(challengeRelated);
+        element.related.forEach( (challengeRelated: any) => {
+            this.related.push(challengeRelated);
         });
     }
 

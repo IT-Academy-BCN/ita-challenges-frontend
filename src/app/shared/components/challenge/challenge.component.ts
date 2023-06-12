@@ -12,10 +12,30 @@ export class ChallengeComponent {
 
   constructor(private starterService: StarterService){}
 
-  @Input() challenge_title = "";
+  @Input() idChallenge = "";
+  @Input() title = "";
   @Input() languages: any = [];
   @Input() creation_date!: Date;
   @Input() level = "";
   @Input() popularity!: number;
+ 
 
+  challenge_id:string | undefined
+  challenge_title: string | undefined
+  challenge_language: number | undefined
+  challenge_date: Date | undefined
+  challenge_level: string | undefined
+  challenge_popularity: number | undefined
+
+
+  ngOnInit(){
+    this.challenge_id = this.idChallenge;
+    this.challenge_title = this.title;
+    this.challenge_language = this.languages.id_laguage
+    this.challenge_date = this.creation_date
+    this.challenge_level = this.level
+    this.challenge_popularity = this.popularity
+
+  }
 }
+ 

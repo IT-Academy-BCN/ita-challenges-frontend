@@ -1,15 +1,27 @@
 <div>
     <div class="row">
-        <div class="col-9">
-            <p>Retos > Detalle</p>
+        <div class="col-6">
+            <p>Retos > <span id="color">Detalle</span></p>
             <div class="d-flex align-items-start">
-                <div class="difficulty col-1">
-                    <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                    <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                    <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+                <div class="difficulty">
+                    <div class="difficulty" *ngIf="level == 'EASY'">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+                    </div>
+                    <div class="difficulty" *ngIf="level == 'MEDIUM'">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
+                    </div>
+                    <div class="difficulty" *ngIf="level == 'HARD'">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                        <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
+                    </div>
                 </div>
-                <div class="title col-11">
-                    <h3>[Geometry A-1] Locate point - to the right, to the left or on the vector?</h3>
+                <div class="title">
+                    <h3>{{title}}</h3>
                 </div>
             </div>
             <div class="stats">
@@ -27,11 +39,11 @@
                 </span>
                 <span class="stat">     
                     <img src="../../../../assets/img/icon/clock.svg" alt="Date">
-                    20 Dic 2023
+                    {{creation_date}}
                 </span>
             </div>
         </div>
-        <div class="col-3 button">
+        <div class="col-6 button">
             <button class="btn btn-primary">Enviar solución</button>
         </div>
     </div>

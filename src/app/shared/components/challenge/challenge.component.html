@@ -1,4 +1,4 @@
-<div class="challenge-list-element d-flex flex-column justify-content-between" [routerLink]="['65031a0b-4fe3-4b8c-9d05-052ced6de781']">
+<div class="challenge-list-element d-flex flex-column justify-content-between" [routerLink]="[challenge_id]">
     <div class="info d-flex align-items-start justify-content-between">
         <div class="d-flex align-items-start w-100">
             <div class="difficulty" *ngIf="level == 'EASY'">
@@ -17,7 +17,7 @@
                 <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
             </div>
             <div class="title">
-                {{challenge_title}}
+                {{title}}
             </div>
         </div>
         <ul class="code-languages d-flex"  *ngFor="let language of languages">
