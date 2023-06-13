@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChallengeService } from 'src/app/services/challenge.service';
+import { ChallengeService } from '../../../services/challenge.service';
 
 @Component({
   selector: 'app-resource',

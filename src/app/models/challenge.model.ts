@@ -25,7 +25,6 @@ export class Challenge {
 
         element.languages.forEach( (language: any) => {
             this.languages.push(language);
-            console.log("languages" + this.languages);
         });
 
         element.solutions.forEach( (solution: any) => {

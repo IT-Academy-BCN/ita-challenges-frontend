@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { ChallengeService } from 'src/app/services/challenge.service';
 
 @Component({
   selector: 'app-challenge-header',
   templateUrl: './challenge-header.component.html',
   styleUrls: ['./challenge-header.component.scss'],
-  providers: [ChallengeService]
 })
 export class ChallengeHeaderComponent {
 
-  constructor(private challengeService: ChallengeService){}
+  constructor(){}
 
   @Input() title = "";
   @Input() creation_date!: Date;

@@ -26,7 +26,7 @@
     <div class="tab-pane container fade" id="solutions"> 
         <h3>Las soluciones están bloqueadas</h3>
         <span class="lock">
-            <img src="../../../../../assets/img/icon/lock.svg">
+            <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon">
             <p>Las soluciones permanecerán bloqueadas hasta que entregues el reto</p>
         </span>
     </div>
@@ -44,6 +44,9 @@
     </div>
     <div class="tab-pane container fade" id="related">
         <h3>Retos similares</h3>
-        <app-challenge-related  *ngFor="let relate of related"[related]="relate"></app-challenge-related>   
+        <app-challenge-related  
+            *ngFor="let relate of related"
+            [related]="relate">
+        </app-challenge-related>   
     </div>
 </div>

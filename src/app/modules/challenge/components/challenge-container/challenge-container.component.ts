@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
-import { ChallengeService } from 'src/app/services/challenge.service';
-import { StarterService } from 'src/app/services/starter.service';
+import { ChallengeService } from '../../../../services/challenge.service';
+import { ChallengeDetails } from 'src/app/models/challenge-details.model';
+import { Solution } from 'src/app/models/solution.model';
+import { Resource } from 'src/app/models/resource.model';
+import { Example } from 'src/app/models/challenge-example.model';
+import { Language } from 'src/app/models/language.model';
 
 @Component({
   selector: 'app-challenge-container',
@@ -12,20 +15,29 @@ import { StarterService } from 'src/app/services/starter.service';
   styleUrls: ['./challenge-container.component.scss']
 })
 export class ChallengeContainerComponent {
-  idChallenge!: string | any;
+  idChallenge: string | any;
   params$!: Subscription;
-  jsonData: Challenge[] = [];
   challenge!: Challenge;
-  dataChallenge!: DataChallenge;
-  challenges: Challenge[] = [];
-  challengesSubs$!: Subscription;
-  
+  challengeSubs$!: Subscription;
+  dataChallenge!: Challenge;
+
+  title = "";
+  creation_date!: Date;
+  level = "";
+  details!: ChallengeDetails;
+  related: string [] = [];
+  resources:  Resource[] = [];
+  solutions:  Solution[] = [];
+  description = "";
+  examples: Example[] = [];
+  notes = "";
+  popularity!: number;
+  languages: Language[] = [];
   
 
   constructor(
     private route: ActivatedRoute,
     private challengeService: ChallengeService,
-    private starterService: StarterService
   ){
     this.params$ =  this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge')
@@ -37,26 +49,33 @@ export class ChallengeContainerComponent {
 
   ngOnInit(){
     console.log(this.idChallenge)
-   
     this.loadMasterData(this.idChallenge);
-  
-
   }
-  loadMasterData(id: string) {
-    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
-      this.dataChallenge = new DataChallenge(resp);
-      this.challenges = this.dataChallenge.challenges;
-      console.log(this.challenges)
-   
-    this.challengeService.getChallenge(id, this.challenges)
-  .subscribe((challenge: Challenge) => {
-    this.challenge = challenge;
-  }); 
-});
-}
-  
+
   ngOnDestroy() {
     if (this.params$ != undefined) this.params$.unsubscribe();
+    if(this.challengeSubs$ != undefined) this.challengeSubs$.unsubscribe();
+  }
+
+
+  loadMasterData(id: string) {
+    this.challengeSubs$ = this.challengeService.getChallengeById(this.idChallenge).subscribe((challenge) => {
+      this.challenge = new Challenge(challenge); 
+      console.dir(this.challenge);
+      this.title = this.challenge.challenge_title;
+      this.creation_date = this.challenge.creation_date;
+      this.level = this.challenge.level;
+      this.details = this.challenge.details;
+      this.related = this.challenge.related;
+      this.resources = this.challenge.resources;
+      this.solutions = this.challenge.solutions;
+      this.description = this.challenge.details.description
+      this.examples = this.challenge.details.examples
+      this.notes = this.challenge.details.notes;
+      this.popularity = this.challenge.popularity;
+      this.languages = this.challenge.languages;
+
+    });
   }
 }
 

@@ -1,15 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChallengeRelatedComponent } from './challenge-related.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
+
+
+
 
 describe('ChallengeRelatedComponent', () => {
   let component: ChallengeRelatedComponent;
   let fixture: ComponentFixture<ChallengeRelatedComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ChallengeRelatedComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ChallengeRelatedComponent ],
+      imports: [RouterTestingModule,
+      HttpClientTestingModule]
+    })
+    .compileComponents();
     fixture = TestBed.createComponent(ChallengeRelatedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

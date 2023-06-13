@@ -18,6 +18,7 @@ export class ChallengeComponent {
   @Input() creation_date!: Date;
   @Input() level = "";
   @Input() popularity!: number;
+  @Input() id:any  = [];
  
 
   challenge_id:string | undefined
@@ -28,14 +29,14 @@ export class ChallengeComponent {
   challenge_popularity: number | undefined
 
 
+
   ngOnInit(){
     this.challenge_id = this.idChallenge;
     this.challenge_title = this.title;
-    this.challenge_language = this.languages.id_laguage
-    this.challenge_date = this.creation_date
-    this.challenge_level = this.level
-    this.challenge_popularity = this.popularity
-
+    this.challenge_language = this.languages.id_laguage;
+    this.challenge_date = this.creation_date;
+    this.challenge_level = this.level;
+    this.challenge_popularity = this.popularity;
   }
 }
  
