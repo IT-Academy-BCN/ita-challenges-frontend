@@ -1,7 +1,7 @@
 <div>
     <div class="row">
         <div class="col-7">
-            <p>Retos > <span id="color">Detalle</span></p>
+            <p>{{'modules.challenge.header.title' | translate}} > <span id="color">{{'modules.challenge.header.section' | translate}}</span></p>
             <div class="d-flex align-items-start">
                 <div class="difficulty">
                     <div class="difficulty" *ngIf="level == 'EASY'">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-5 button">
-            <button class="btn btn-primary">Enviar solución</button>
+            <button class="btn btn-primary">{{'modules.challenge.header.button' | translate}}</button>
         </div>
     </div>
 </div>

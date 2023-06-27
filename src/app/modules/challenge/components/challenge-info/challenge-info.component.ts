@@ -11,7 +11,6 @@ import { ChallengeService } from '../../../../services/challenge.service';
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent {
-  constructor(private challengeService: ChallengeService){}
 
   @Input() related: any = [];
   @Input() resources: any = [];

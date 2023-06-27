@@ -1,3 +1,35 @@
+@import "/src/styles/colors";
 h2{
     margin-bottom: 3rem;
+}
+ul{
+    list-style: none;
+    li{
+        display: flex;
+        font-weight: 700;
+        color: $gray-3;
+        gap: 2px;
+        cursor: pointer;
+        &::after{
+            content: "";
+            display: block;
+            width: 17px;
+            height: 17px;
+            background-image: url('../../../../../assets/img/icon/sort-selected.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            
+        }
+        &.selected{
+            color: $black-1;
+            font-weight: 700;
+            &::after{
+                opacity: 1;
+            }
+        }
+        &:not(.selected):hover{
+            color: $primary
+        }
+    }
 }

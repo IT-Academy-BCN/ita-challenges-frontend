@@ -23,7 +23,7 @@
         &.active{
             padding-right: 0;
             padding-left: 15px;
-            //font-weight: bold;
+            font-weight: bold;
             &::before{
                 background: $primary;
             }
@@ -49,7 +49,20 @@
     }
     #user-options{
         a{
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    #languages{
+        margin-top: 30px;
+        button{
+            border: none;
+            &:hover{
+                color: $primary;
+            } 
+        }
+        #middleBtn{
+            border-left: 1px solid $black-1;
+            border-right: 1px solid $black-1;
         }
     }
 }

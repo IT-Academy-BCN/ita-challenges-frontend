@@ -5,7 +5,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
-
+import { I18nModule } from 'src/assets/i18n/i18n.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { MainMenuComponent } from './layout/main-menu/main-menu.component';
     ],
     imports: [
         CommonModule,
-        CoreRoutingModule
+        CoreRoutingModule,
+        I18nModule, 
+        TranslateModule
     ]
 })
 export class CoreModule { }
