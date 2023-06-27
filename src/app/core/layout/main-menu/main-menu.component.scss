@@ -56,6 +56,8 @@
         margin-top: 30px;
         button{
             border: none;
+            background: transparent;
+            
             &:hover{
                 color: $primary;
             } 

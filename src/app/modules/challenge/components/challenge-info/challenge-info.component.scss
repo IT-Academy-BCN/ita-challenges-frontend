@@ -2,10 +2,13 @@
 @import "src/styles/fonts";
 
 .nav{
-    border-bottom:  5px solid $gray-4;
     margin-top: 2rem;
     padding: 0;
     border-radius: 2px;
+    margin-bottom: 3px;
+    box-shadow: 0px -4px 0px $gray-4 inset;
+    
+
 }
 .nav-link{
     color: $gray-3;
@@ -13,13 +16,18 @@
     border-left: #ffff;
     border-right: #ffff;
     border-bottom: 5px solid transparent;
+        &:hover{
+            border: none;
+            border-bottom: 5px solid $gray-3;
+        }
+        &.active{
+            border: none;
+            border-bottom: 5px solid $primary;
+            color: $black-3;
+            font-weight: bold;
+        }
 }
-.nav-link.active{
-    border: none;
-    border-bottom: 5px solid $primary;
-    color: $black-3;
-    font-weight: bold;
-}
+
 .tab-content{
     margin-top: 3rem;
     width: 75%;
