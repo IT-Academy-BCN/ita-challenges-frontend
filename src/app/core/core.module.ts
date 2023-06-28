@@ -5,6 +5,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
+import { ModalsModule } from '../modules/modals/modals.module';
 
 
 
@@ -21,7 +22,8 @@ import { MainMenuComponent } from './layout/main-menu/main-menu.component';
     ],
     imports: [
         CommonModule,
-        CoreRoutingModule
+        CoreRoutingModule,
+        ModalsModule
     ]
 })
 export class CoreModule { }
