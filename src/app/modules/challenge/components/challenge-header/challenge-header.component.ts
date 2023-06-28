@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ChallengeHeaderComponent {
 
-  constructor(){}
 
   @Input() title = "";
   @Input() creation_date!: Date;

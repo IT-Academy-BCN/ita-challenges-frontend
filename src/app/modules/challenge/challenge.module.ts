@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CoreModule,
     ChallengeRoutingModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
   ]
 })
 export class ChallengeModule { }

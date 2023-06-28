@@ -37,6 +37,8 @@ export class ChallengeRelatedComponent {
 
   ngOnInit(){   
     this.loadMasterData(this.idChallenge);
+    console.log(this.related);
+    console.log(this.title)
   }
 
   ngOnDestroy() {

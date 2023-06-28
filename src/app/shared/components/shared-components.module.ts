@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {ChallengeComponent} from "../../shared/components/challenge/challenge.component";
+import {ChallengeComponent} from "./challenge/challenge.component";
 import { CommonModule } from '@angular/common';
 import { ResourceComponent } from './resource/resource.component';
 
