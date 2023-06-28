@@ -1,6 +1,15 @@
 $link-color:       #000000;
 $link-decoration:  none;
 
+a{
+    cursor: pointer;
+    color: $link-color;
+    &:hover{
+        color: $link-color;
+        text-decoration: none;
+    }
+}
+
 .animated{
     -moz-transition: all .15s ease-out;
     -webkit-transition: all .15s ease-out;

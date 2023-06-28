@@ -25,9 +25,11 @@ $btn-disabled-opacity: .35;
     background-color: $primary;
     border-color: $primary;
 }
-.btn.btn-primary[active]{
-    background-color: $primary-active;
-    border-color: $primary-active;
+.btn.btn-primary:hover,
+.btn.btn-primary:active{
+    background-color: $white;
+    border-color: $primary;
+    color: $primary;
 }
 .btn.btnprimary:hover{
     background-color: $primary-hover;
