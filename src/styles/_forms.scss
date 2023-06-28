@@ -1,0 +1,12 @@
+input.form-control{
+    padding: 1rem 1.25rem;
+    border-radius: $btn-radius;
+    &:focus{
+        border-color: $primary;
+        box-shadow: 0 0 0 .25rem rgba(185, 24, 121, 0.25);
+    }
+    &::placeholder{
+        color: $black-1;
+
+    }
+}
