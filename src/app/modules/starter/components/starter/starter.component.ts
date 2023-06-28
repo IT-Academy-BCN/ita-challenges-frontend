@@ -1,4 +1,4 @@
-import { filterChallenge } from './../../../../models/filter-challenge.model';
+import { FilterChallenge } from './../../../../models/filter-challenge.model';
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -17,7 +17,7 @@ export class StarterComponent {
   challenges: Challenge[] = [];
   params$!: Subscription;
   challengesSubs$!: Subscription;
-  filters!: filterChallenge;
+  filters!: FilterChallenge;
   sortBy: string = "popularity";
   challenge = Challenge;
 
@@ -49,7 +49,7 @@ export class StarterComponent {
     });
 
   }
-  getChallengeFilters(filters: filterChallenge){
+  getChallengeFilters(filters: FilterChallenge){
     console.log('llamada componente padre desde emitter')
     this.filters = filters;
     //TODO: llamar al endpoint

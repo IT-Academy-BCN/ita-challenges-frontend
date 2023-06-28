@@ -52,7 +52,7 @@ describe('ChallengeService', () => {
 
             const expectedMarble = '---(a|)';
             const expectedValues = {a: data};
-            const obs$ = service.getChallenge().pipe(delay(3));
+            const obs$ = service.getChallengeById().pipe(delay(3));
 
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });

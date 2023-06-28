@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { filterChallenge } from 'src/app/models/filter-challenge.model';
+import { FilterChallenge } from 'src/app/models/filter-challenge.model';
 
 @Component({
   selector: 'app-starter-filters',
@@ -8,7 +8,7 @@ import { filterChallenge } from 'src/app/models/filter-challenge.model';
 })
 export class StarterFiltersComponent {
 
-  @Output() filtersSelected = new EventEmitter<filterChallenge>();
+  @Output() filtersSelected = new EventEmitter<FilterChallenge>();
 
   checkFilter(){
     console.log('llamada emmit componente hijo')
@@ -18,7 +18,7 @@ export class StarterFiltersComponent {
 
   getAllFilters(){
 
-    let filters: filterChallenge = {languages: [], levels: [], progress: []};
+    let filters: FilterChallenge = {languages: [], levels: [], progress: []};
 
     let languageFilters = document.getElementsByName('language');
     let levelFilters = document.getElementsByName('level');

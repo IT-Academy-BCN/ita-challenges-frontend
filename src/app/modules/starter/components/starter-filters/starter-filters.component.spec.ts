@@ -1,4 +1,4 @@
-import { filterChallenge } from 'src/app/models/filter-challenge.model';
+import { FilterChallenge } from 'src/app/models/filter-challenge.model';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StarterFiltersComponent } from './starter-filters.component';
@@ -6,7 +6,7 @@ import { StarterFiltersComponent } from './starter-filters.component';
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent;
   let fixture: ComponentFixture<StarterFiltersComponent>;
-  let filters: filterChallenge = {languages:[], levels: [], progress: []}
+  let filters: FilterChallenge = {languages:[], levels: [], progress: []}
 
   beforeEach(() => {
     TestBed.configureTestingModule({

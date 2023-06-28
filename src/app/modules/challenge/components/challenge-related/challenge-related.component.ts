@@ -5,6 +5,7 @@ import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
 import { ChallengeService } from '../../../../services/challenge.service';
 import { Language } from 'src/app/models/language.model';
+import { AsyncAction } from 'rxjs/internal/scheduler/AsyncAction';
 
 @Component({
   selector: 'app-challenge-related',
@@ -35,10 +36,8 @@ export class ChallengeRelatedComponent {
   languages: Language[] = [];
   id = "";
 
-  ngOnInit(){   
+  ngOnInit(){  
     this.loadMasterData(this.idChallenge);
-    console.log(this.related);
-    console.log(this.title)
   }
 
   ngOnDestroy() {
