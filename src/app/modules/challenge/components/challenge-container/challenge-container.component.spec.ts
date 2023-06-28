@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
+import { ChallengeRelatedComponent } from '../challenge-related/challenge-related.component';
 import { of } from 'rxjs';
 
 describe('ChallengeContainerComponent', () => {
@@ -18,7 +19,8 @@ describe('ChallengeContainerComponent', () => {
       declarations: [
         ChallengeContainerComponent, 
         ChallengeHeaderComponent,
-        ChallengeInfoComponent
+        ChallengeInfoComponent,
+        ChallengeRelatedComponent
       ],
       imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule],
       providers: [{
