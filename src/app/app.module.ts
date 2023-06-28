@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule} from "@angular/common/http";
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
+<<<<<<< HEAD
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule, HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
@@ -20,6 +24,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
+=======
+import {StarterModule} from "./modules/starter/starter.module";
+import {ChallengeModule} from "./modules/challenge/challenge.module";
+>>>>>>> c6f5bd08bad30ad02e45510fb02d248f9ba6b5f5
 
 @NgModule({
   declarations: [
@@ -33,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgbModule,
     HttpClientModule,
     StarterModule,
+<<<<<<< HEAD
     ChallengeModule, 
     I18nModule,
     TranslateModule.forRoot({
@@ -43,6 +52,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     })
+=======
+    ChallengeModule,
+>>>>>>> c6f5bd08bad30ad02e45510fb02d248f9ba6b5f5
   ],
   providers: [
   ],

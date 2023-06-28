@@ -1,14 +1,14 @@
-import {StarterService} from "./starter.service";
+import { ChallengeService } from "./challenge.service";
 import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
 import {HttpTestingController} from "@angular/common/http/testing";
 import {delay, of} from "rxjs";
-import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
+import data from "../../assets/dummy/challenge.json"; 
 
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
-describe('StarterService', () => {
+describe('ChallengeService', () => {
 
-    let service: StarterService;
+    let service: ChallengeService;
     let httpMock: HttpTestingController;
     let scheduler: TestScheduler;
     let httpClientSpy: any;
@@ -20,7 +20,7 @@ describe('StarterService', () => {
         //inject spy
         httpClientSpy = jasmine.createSpy('httpClient');
         httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
-        service = new StarterService(httpClientSpy);
+        service = new ChallengeService(httpClientSpy);
         testScheduler = new TestScheduler((actual, expected) => {
             expect(actual).toEqual(expected);
 
@@ -46,13 +46,13 @@ describe('StarterService', () => {
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
 
-    it('Should stream all challenges', () => {
+    it('Should stream a challenge', () => {
 
         testScheduler.run(({expectObservable}) => {
 
             const expectedMarble = '---(a|)';
             const expectedValues = {a: data};
-            const obs$ = service.getAllChallenges().pipe(delay(3));
+            const obs$ = service.getChallenge().pipe(delay(3));
 
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });

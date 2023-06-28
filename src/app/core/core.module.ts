@@ -7,6 +7,8 @@ import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
 import { I18nModule } from 'src/assets/i18n/i18n.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ModalsModule } from '../modules/modals/modals.module';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
         CommonModule,
         CoreRoutingModule,
         I18nModule, 
-        TranslateModule
+        TranslateModule,
+        ModalsModule
     ]
 })
 export class CoreModule { }
