@@ -13,7 +13,7 @@ import {ChallengeModule} from "./modules/challenge/challenge.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

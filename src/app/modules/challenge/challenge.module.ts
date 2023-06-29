@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
   
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
-    ChallengeContainerComponent
+    ChallengeContainerComponent,
   ],
   imports: [
     CommonModule,

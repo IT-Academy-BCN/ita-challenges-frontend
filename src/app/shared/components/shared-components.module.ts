@@ -4,12 +4,16 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { ChallengeComponent } from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
+import { SolutionsLoggedButtonComponent } from './solutions-logged-button/solutions-logged-button.component';
+import { SolutionsUnloggedButtonComponent } from './solutions-unlogged-button/solutions-unlogged-button.component';
 
 
 @NgModule({
     declarations: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        SolutionsLoggedButtonComponent,
+        SolutionsUnloggedButtonComponent
     ],
     imports: [
         CommonModule,
@@ -18,7 +22,9 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     exports: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        SolutionsLoggedButtonComponent,
+        SolutionsUnloggedButtonComponent
     ],  
 })
 export class SharedComponentsModule { }
