@@ -1,15 +1,15 @@
 export class Resource {
 
-    idResource: string;
-    resourceDescription: string;
+    id_resource: string;
+    resource_description: string;
     author: string;
-    generationDate: Date;
+    generation_date: Date;
 
     constructor(element: any) {
-        this.idResource = element.id_resource;
-        this.resourceDescription = element.resource_description;
+        this.id_resource = element.id_resource;
+        this.resource_description = element.resource_description;
         this.author = element.author;
-        this.generationDate = element.generation_date;
+        this.generation_date = element.generation_date;
     }
 
 }

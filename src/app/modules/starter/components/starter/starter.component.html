@@ -6,12 +6,13 @@
     <div class="col-9">
         <h2>Retos</h2>
         <app-challenge
-            *ngFor ="let challenge of challenges, let i = index"
-            [challenge_title] = "challenge.challenge_title"
+            *ngFor ="let challenge of challenges"
+            [title] = "challenge.challenge_title"
             [creation_date] = "challenge.creation_date"
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
+            [idChallenge] = "challenge.id_challenge"
         ></app-challenge>      
     </div>
 </div>

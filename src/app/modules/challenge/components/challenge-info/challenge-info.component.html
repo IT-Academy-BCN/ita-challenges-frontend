@@ -15,17 +15,37 @@
 </ul>
 <!--Nav panes-->
 <div class="tab-content">
-    <div class="tab-pane container show active" id="details">Details content</div>
-    <div class="tab-pane container fade" id="solutions">Solutions content</div>
+    <div class="tab-pane container show active" id="details" >
+       <h3>Descripción</h3>
+       <p>{{ description }}</p>
+       <h3>Ejemplos</h3>
+       <p *ngFor="let example of examples">{{ example.example_text}}</p>
+       <h3>Notas</h3>
+       <p>{{ notes}}</p>
+    </div>
+    <div class="tab-pane container fade" id="solutions"> 
+        <h3>Las soluciones están bloqueadas</h3>
+        <span class="lock">
+            <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon">
+            <p>Las soluciones permanecerán bloqueadas hasta que entregues el reto</p>
+        </span>
+    </div>
     <div class="tab-pane container fade" id="resources">
         <section class="title">
-            <h3>Recursos encontrados en ITA-Wiki</h3>
+            <h3 class="title_text">Recursos encontrados en ITA-Wiki</h3>
             <a class="title_link" href="#related">ir a ITA-Wiki ></a>
         </section>
-        <app-resource></app-resource>
+        <app-resource *ngFor="let resource of resources"
+            [author]="resource.author"
+            [date]="resource.generation_date"
+            [id]="resource.id_resource"
+            [description]="resource.resource_description">
+        </app-resource>
     </div>
     <div class="tab-pane container fade" id="related">
         <h3>Retos similares</h3>
-        <app-challenge></app-challenge>
+        <app-challenge-related  
+            [related]="related">
+        </app-challenge-related>   
     </div>
 </div>

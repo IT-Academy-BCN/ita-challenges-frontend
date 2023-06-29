@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -10,15 +10,21 @@ import {Router} from "@angular/router";
 
 export class ChallengeService {
 
-    constructor(private http: HttpClient) { }
+    
+    constructor(private http: HttpClient) {}
+  
+    getChallengeById(id: string):Observable<Object>{
 
-    getChallenge():Observable<Object>{
-        /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
+        //-----TO CHANGE----
+
+        /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`, 
                     {
                         headers: {
                             'Content-Type': 'application/dummy'
                         }
                     });*/
+
+
         return this.http.get('../assets/dummy/challenge.json',
             {
                 headers: {
@@ -26,5 +32,4 @@ export class ChallengeService {
                 }
             });
     }
-
 }

@@ -7,6 +7,7 @@ import { ChallengeContainerComponent } from './components/challenge-container/ch
 import { ChallengeRoutingModule } from './challenge-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
+import { ChallengeRelatedComponent } from './components/challenge-related/challenge-related.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
     ChallengeContainerComponent,
+    ChallengeRelatedComponent
   ],
   imports: [
     CommonModule,

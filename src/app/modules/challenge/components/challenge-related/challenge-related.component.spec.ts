@@ -1,20 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ResourceComponent } from './resource.component';
+import { ChallengeRelatedComponent } from './challenge-related.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
- 
-describe('ResourceComponent', () => {
-  let component: ResourceComponent;
-  let fixture: ComponentFixture<ResourceComponent>;
+
+
+
+
+
+describe('ChallengeRelatedComponent', () => {
+  let component: ChallengeRelatedComponent;
+  let fixture: ComponentFixture<ChallengeRelatedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResourceComponent],
+      declarations: [ ChallengeRelatedComponent ],
       imports: [RouterTestingModule,
-        HttpClientTestingModule]
+      HttpClientTestingModule]
     })
     .compileComponents();
-    fixture = TestBed.createComponent(ResourceComponent);
+    fixture = TestBed.createComponent(ChallengeRelatedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
