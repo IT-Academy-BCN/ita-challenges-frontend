@@ -8,7 +8,7 @@ describe('SolutionsUnloggedButtonComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SolutionsUnloggedButtonComponent]
+      declarations: [SolutionsUnloggedButtonComponent],
     });
     fixture = TestBed.createComponent(SolutionsUnloggedButtonComponent);
     component = fixture.componentInstance;

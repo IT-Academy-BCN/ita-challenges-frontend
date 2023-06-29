@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component';
+import { SendSolutionModalComponent } from '../../../modules/modals/send-solution-modal/send-solution-modal.component';
 
 @Component({
   selector: 'app-solutions-logged-button',
