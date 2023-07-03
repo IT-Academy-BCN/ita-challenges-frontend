@@ -52,7 +52,7 @@ describe('StarterService', () => {
 
             const expectedMarble = '---(a|)';
             const expectedValues = {a: data};
-            const obs$ = service.getAllChallenges().pipe(delay(3));
+            const obs$ = service.getAllChallenges(jasmine.any(Number) as unknown as number, jasmine.any(Number) as unknown as number).pipe(delay(3));
 
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });
