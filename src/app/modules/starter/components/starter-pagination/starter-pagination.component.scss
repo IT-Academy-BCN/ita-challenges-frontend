@@ -1,0 +1,22 @@
+@import 'src/styles/colors';
+
+.pagination{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .pagination__prev, .pagination__next{
+    width: 15%;
+        
+    }
+    .pagination__prev:hover, .pagination__next:hover{
+    color: $primary;
+    }
+
+    p{
+    padding: 0 .5rem 0 .5rem;
+    }
+}
+
+

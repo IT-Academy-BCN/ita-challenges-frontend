@@ -17,7 +17,12 @@ export class StarterComponent {
   params$!: Subscription;
   challengesSubs$!: Subscription;
   challenge = Challenge;
-  
+
+  page: number = 1;
+  totalPages!: number;
+  numChallenges!: number;
+  pageSize: number = 10;
+  listChallenges: any;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -27,21 +32,33 @@ export class StarterComponent {
     this.params$ = this.activatedRoute.params.subscribe(params => {
 
     });
-
   }
 
   ngOnInit(): void {
-    this.loadMasterData();
+    this.getChallengesByPage(this.page);
   }
 
   ngOnDestroy() {
     if (this.params$ != undefined) this.params$.unsubscribe();
+    if (this.challengesSubs$ != undefined) this.challengesSubs$.unsubscribe();
   }
 
-  loadMasterData() {
-      this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
+  getChallengesByPage(page: number) {
+      this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
+      this.numChallenges = this.challenges.length;
+      this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
+
+      const startIndex = (page -1) * 10;
+      const endindex = startIndex + 10;
+      this.listChallenges = this.challenges.slice(startIndex, endindex);
+      return this.listChallenges;
     });
+  }
+
+  goToPage(page: number){
+    this.page = page;
+    this.getChallengesByPage(page);
   }
 }

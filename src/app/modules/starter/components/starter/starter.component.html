@@ -6,13 +6,14 @@
     <div class="col-9">
         <h2>Retos</h2>
         <app-challenge
-            *ngFor ="let challenge of challenges"
+            *ngFor ="let challenge of listChallenges"
             [title] = "challenge.challenge_title"
             [creation_date] = "challenge.creation_date"
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
             [idChallenge] = "challenge.id_challenge"
-        ></app-challenge>      
+        ></app-challenge>   
+        <app-starter-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages" [numChallenges]="numChallenges"></app-starter-pagination>   
     </div>
 </div>

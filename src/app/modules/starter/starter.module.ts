@@ -10,12 +10,14 @@ import {RouterModule} from "@angular/router";
 import {SharedComponentsModule} from "../../shared/components/shared-components.module";
 import { StarterFiltersComponent } from './components/starter-filters/starter-filters.component';
 import { ChallengeService } from 'src/app/services/challenge.service';
+import { StarterPaginationComponent } from './components/starter-pagination/starter-pagination.component';
 
 
 @NgModule({
   declarations: [
     StarterComponent,
     StarterFiltersComponent,
+    StarterPaginationComponent,
   ],
   imports: [
     CommonModule,
