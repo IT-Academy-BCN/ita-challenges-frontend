@@ -8,6 +8,7 @@ import { ChallengeRoutingModule } from './challenge-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
 import { DetailsComponent } from './components/challenge-info/details/details.component';
+import { DetailsTextComponent } from './components/challenge-info/details/details-text/details-text.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { DetailsComponent } from './components/challenge-info/details/details.co
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
     ChallengeContainerComponent,
-    DetailsComponent
+    DetailsComponent,
+    DetailsTextComponent
   ],
   imports: [
     CommonModule,
