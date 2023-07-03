@@ -1,0 +1,19 @@
+@import 'src/styles/_fonts';
+
+:host{
+    display: block;
+    height: 400px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.solution-header{
+    padding: 8px 32px;
+    border-bottom: 1px solid black;
+    font-weight: 500;
+    font-size: $font-size-lg;
+}
+
+.solution-body{
+    padding: 32px;
+}
