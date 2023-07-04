@@ -1,0 +1,39 @@
+@import 'src/styles/_colors.scss';
+
+:host{
+    display: block;
+}
+
+.details-body{
+    gap: 50px;
+}
+
+
+.button-wrapper{
+
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+//     .checkmark {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         width: 1em;
+//         height: 1em;
+//         border-radius: 50%;
+//         background-color: #eee;
+// }
+
+}
+
+    input#showStatement{
+        cursor: pointer;
+        border-radius: 50%;
+        border: 1px solid red;
+    }

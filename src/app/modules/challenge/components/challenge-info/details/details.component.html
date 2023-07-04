@@ -1,3 +1,13 @@
-<p>
-  details works!
-</p>
+<div class="btn-row text-end mb-3">
+  <span class="right-span d-inline-flex">
+      <label for="showStatement" class="button-wrapper">
+        <input id="showStatement" type="checkbox" [(ngModel)]="showStatement">
+        <span class="checkmark ms-2"></span>
+        Mostrar enunciados
+      </label>
+  </span>
+</div>
+<div class="details-body d-flex">
+  <app-details-text *ngIf="showStatement"></app-details-text>
+  <app-solution></app-solution>
+</div>

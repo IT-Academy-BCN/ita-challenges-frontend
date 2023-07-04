@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsComponent implements OnInit {
 
+  showStatement = false;
+
   constructor() { }
 
   ngOnInit() {
