@@ -9,6 +9,8 @@ import { RegisterModalComponent } from './../../../modals/register-modal/registe
 })
 export class ChallengeHeaderComponent {
 
+  constructor(private modalService: NgbModal){}
+
   @Input() title = "";
   @Input() creation_date!: Date;
   @Input() level = "";
@@ -21,11 +23,9 @@ export class ChallengeHeaderComponent {
     this.challenge_title = this.title;
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
-  }
-
-  constructor(private modalService: NgbModal) {}
-
+}
   openRegisterModal(){
     this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
   }
+
 }

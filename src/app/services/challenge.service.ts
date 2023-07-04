@@ -18,8 +18,6 @@ export class ChallengeService {
         //-----TO CHANGE----
 
         /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`, 
-    getChallenge():Observable<Object>{
-        /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
                     {
                         headers: {
                             'Content-Type': 'application/dummy'
