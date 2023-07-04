@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
+import { FilterModalComponent } from 'src/app/modules/modals/filter-modal/filter-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-starter',
@@ -11,6 +13,7 @@ import { Challenge } from "../../../../models/challenge.model";
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
+  @ViewChild('modal') private modalContent!: FilterModalComponent;
 
   dataChallenge!: DataChallenge;
   challenges: Challenge[] = [];
@@ -45,5 +48,9 @@ export class StarterComponent {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
     });
+  }
+
+  openModal() {
+    this.modalContent.open();
   }
 }

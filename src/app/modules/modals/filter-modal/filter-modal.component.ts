@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-filter-modal',
   templateUrl: './filter-modal.component.html',
   styleUrls: ['./filter-modal.component.scss']
 })
-export class FilterModalComponent implements OnInit {
+export class FilterModalComponent {
+  @ViewChild('modal') private modalContent!: TemplateRef<FilterModalComponent>
 
-  constructor() { }
+  constructor(private modalService: NgbModal) {}
 
-  ngOnInit() {
-  }
+  open() {
+  this.modalService.open(this.modalContent, { size: 'lg' });
+}
 
 }

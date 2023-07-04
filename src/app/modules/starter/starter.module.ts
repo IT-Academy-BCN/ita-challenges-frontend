@@ -10,6 +10,7 @@ import {RouterModule} from "@angular/router";
 import {SharedComponentsModule} from "../../shared/components/shared-components.module";
 import { StarterFiltersComponent } from './components/starter-filters/starter-filters.component';
 import { ChallengeService } from 'src/app/services/challenge.service';
+import { ModalsModule } from '../modals/modals.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ChallengeService } from 'src/app/services/challenge.service';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    ModalsModule
   ],
   providers: [
     ChallengeService

@@ -4,7 +4,10 @@
         <app-starter-filters></app-starter-filters>
     </div>
     <div class="col-12 col-md-9">
-        <h2>Retos<img class="float-end d-md-none" alt="filter-icon" src="../../../../../assets/img/icon/Sort.svg"></h2>
+        <h2>Retos
+            <img class="float-end d-md-none" alt="filter-icon"
+            (click)="openModal()" src="../../../../../assets/img/icon/Sort.svg">
+        </h2>
         <app-challenge
             *ngFor ="let challenge of challenges, let i = index"
             [challenge_title] = "challenge.challenge_title"
@@ -15,3 +18,4 @@
         ></app-challenge>      
     </div>
 </div>
+<app-filter-modal #modal></app-filter-modal>

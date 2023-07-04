@@ -2,9 +2,14 @@ h2{
     margin-bottom: 3rem;
 }
 
+img[alt="filter-icon"]{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
     h2 {
         margin-bottom: 1rem;
         margin-top: 0.5rem;
     }
+
 }

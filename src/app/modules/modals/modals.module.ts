@@ -15,7 +15,7 @@ import { FilterModalComponent } from './filter-modal/filter-modal.component';
   imports: [
     CommonModule,
   ],
-  exports: [
+  exports: [
     RegisterModalComponent,
     FilterModalComponent
   ]
