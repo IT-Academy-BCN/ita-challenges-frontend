@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class ChallengeInfoComponent {
 
+  solutions = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
+
+  constructor() {
+    
+  }
+
 }

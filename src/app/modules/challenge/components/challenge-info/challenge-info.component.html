@@ -15,9 +15,13 @@
 </ul>
 <!--Nav panes-->
 <div class="tab-content">
-    <div class="tab-pane container show active" id="details"><app-details></app-details></div>
+    <div class="tab-pane container show active" id="details">
+        <app-details></app-details>
+    </div>
     <div class="tab-pane container fade" id="solutions">
-        <app-solution></app-solution>
+        <ng-container *ngFor="let solution of solutions">
+            <app-solution class="mb-4"></app-solution>
+        </ng-container>
     </div>
     <div class="tab-pane container fade" id="resources">
         <section class="title">
