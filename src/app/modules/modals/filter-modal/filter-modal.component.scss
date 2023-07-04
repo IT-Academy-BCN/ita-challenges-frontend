@@ -1,3 +1,5 @@
+@import '/src/styles/colors';
+
 .modal-dialog .modal-content{
     
     padding: 20px !important;
@@ -6,4 +8,8 @@
 
 div.modal-content{
     color: red;
+}
+
+.btn.btn-primary{
+    width: 196.2px;
 }
