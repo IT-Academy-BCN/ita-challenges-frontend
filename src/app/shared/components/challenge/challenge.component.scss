@@ -55,8 +55,22 @@
     }
 }
 
-@media screen and (max-width: 400px) {
-    .challenge-list-element .code-languages {
+@media screen and (max-width: 437px) {
+    .challenge-list-element {
+    
+        min-height: 80px;
+
+    .code-languages {
         display: none;
     }
+
+    .stats{
+        font-size: 10px;
+
+        .stat{
+            padding: 0px;
+        }
+    }
+
+}
 }
