@@ -9,27 +9,34 @@ import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.c
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
 import { ChallengeRelatedComponent } from '../challenge-related/challenge-related.component';
 import { of } from 'rxjs';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module';
+
 
 describe('ChallengeContainerComponent', () => {
   let component: ChallengeContainerComponent;
   let fixture: ComponentFixture<ChallengeContainerComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
-        ChallengeContainerComponent, 
-        ChallengeHeaderComponent,
-        ChallengeInfoComponent,
-        ChallengeRelatedComponent
-      ],
-      imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule],
+                    ChallengeContainerComponent, 
+                    ChallengeHeaderComponent,
+                    ChallengeInfoComponent,
+                    ChallengeRelatedComponent
+                  ],
+      imports: [
+                RouterTestingModule, 
+                HttpClientTestingModule, 
+                SharedComponentsModule,
+                I18nModule
+              ],
       providers: [{
         provide : ActivatedRoute, 
         useValue : {
             paramMap :  of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'}))
         }
       }] 
-      });
+    });
     fixture = TestBed.createComponent(ChallengeContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

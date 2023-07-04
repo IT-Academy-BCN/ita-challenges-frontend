@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChallengeHeaderComponent } from './challenge-header.component';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -8,7 +9,8 @@ describe('ChallengeHeaderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChallengeHeaderComponent]
+      declarations: [ ChallengeHeaderComponent ],
+      imports: [ I18nModule ]
     });
     fixture = TestBed.createComponent(ChallengeHeaderComponent);
     component = fixture.componentInstance;

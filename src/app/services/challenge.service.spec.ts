@@ -49,10 +49,11 @@ describe('ChallengeService', () => {
     it('Should stream a challenge', () => {
 
         testScheduler.run(({expectObservable}) => {
-
+            
+            const idChallenge = '1adfadf21fasdf2-adf'
             const expectedMarble = '---(a|)';
             const expectedValues = {a: data};
-            const obs$ = service.getChallengeById().pipe(delay(3));
+            const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
 
             expectObservable(obs$).toBe(expectedMarble, expectedValues);
         });
