@@ -12,7 +12,7 @@
             <img src="../../../../assets/img/icon/setting.svg" alt="Settings"/>
             Settings
         </a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']">
+        <a (click)="openRegisterModal()" [routerLinkActive]="['active']">
             <img src="../../../../assets/img/icon/user.svg" alt="User"/>
             Mi espacio
         </a>

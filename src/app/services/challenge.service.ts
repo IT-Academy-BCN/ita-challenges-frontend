@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Router} from "@angular/router";
+//import {environment} from "../../environments/environment";
+
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +18,8 @@ export class ChallengeService {
         //-----TO CHANGE----
 
         /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`, 
+    getChallenge():Observable<Object>{
+        /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
                     {
                         headers: {
                             'Content-Type': 'application/dummy'

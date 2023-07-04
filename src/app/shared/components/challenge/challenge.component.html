@@ -21,34 +21,25 @@
             </div>
         </div>
         <ul class="code-languages d-flex"  *ngFor="let language of languages">
-            <li class="code-icon js" *ngIf="language.id_language == '1'">  
-                <img src="../../../../assets/img/icon/js.svg" alt="1">
-            </li>
-            <li class="code-icon python" *ngIf="language.id_language == '2'">
-                <img src="../../../../assets/img/icon/python.svg" alt="Python">
-            </li>
-            <li class="code-icon php" *ngIf="language.id_language == '3'">
-                <img src="../../../../assets/img/icon/php.svg" alt="php">
-            </li>
-            <li class="code-icon java" *ngIf="language.id_language == '4'">
-                <img src="../../../../assets/img/icon/java.svg" alt="Java">
+            <li class="code-icon js">
+                <img src="../../../../assets/img/icon/language_icon_{{language.id_language}}.svg">
             </li>
         </ul>
     </div>
-    <div class="stats">
+    <div class="stats gap-3">
         <span class="stat">
             <img src="../../../../assets/img/icon/user.svg" alt="User">
             IT-Academy
         </span>
-        <span class="stat">  
+        <span class="stat" ngbTooltip="Empezado y finalizado">  
             <img src="../../../../assets/img/icon/bullseye.svg" alt="Bullseye">           
             87%
         </span>
-        <span class="stat">
+        <span class="stat" ngbTooltip="Veces guardado">
             <img src="../../../../assets/img/icon/bookmark.svg" alt="Bookmark">     
             82
         </span>
-        <span class="stat">     
+        <span class="stat" ngbTooltip="Fecha creación">     
             <img src="../../../../assets/img/icon/clock.svg" alt="Date">
             {{creation_date}}
         </span>
