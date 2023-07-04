@@ -1,35 +1,35 @@
 <div class="form">
     <p class="font-weight-bold">Lenguaje</p>
     <div class="form-check">
-        <input class="form-check-input check" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
-        <label class="form-check-label">Javascript</label>
+        <input class="form-check-input" type="checkbox" id="checkJs" name="language" value="1" (change)="checkFilter()">
+        <label class="form-check-label" for="checkJs">Javascript</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input check" type="checkbox" id="checkJava" name="java" value="java">
-        <label class="form-check-label">Java</label>
+        <input class="form-check-input" type="checkbox" id="checkJava" name="language" value="2" (change)="checkFilter()">
+        <label class="form-check-label" for="checkJava">Java</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkPhp" name="php" value="php">
-        <label class="form-check-label">PHP</label>
+        <input class="form-check-input" type="checkbox" id="checkPhp" name="language" value="3" (change)="checkFilter()">
+        <label class="form-check-label" for="checkPhp">PHP</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkPython" name="python" value="python">
-        <label class="form-check-label">Python</label>
+        <input class="form-check-input" type="checkbox" id="checkPython" name="language" value="4" (change)="checkFilter()">
+        <label class="form-check-label" for="checkPython">Python</label>
     </div>
 </div>
 <div class="form">
     <p>Dificultad</p>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkFacil" name="facil" value="facil">
-        <label class="form-check-label">Fácil</label>
+        <input class="form-check-input" type="checkbox" id="checkEasy" name="level" value="EASY" (change)="checkFilter()">
+        <label class="form-check-label" for="checkEasy">Fácil</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkMedia" name="media" value="media">
-        <label class="form-check-label">Media</label>
+        <input class="form-check-input" type="checkbox" id="checkMedium" name="level" value="MEDIUM" (change)="checkFilter()">
+        <label class="form-check-label" for="checkMedium">Media</label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
-        <label class="form-check-label">Difícil</label>
+        <input class="form-check-input" type="checkbox" id="checkHard" name="level" value="HARD" (change)="checkFilter()">
+        <label class="form-check-label" for="checkHard">Difícil</label>
     </div>
 </div>
 <div class="form">
