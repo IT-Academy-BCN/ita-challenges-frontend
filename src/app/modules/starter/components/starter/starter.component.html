@@ -1,9 +1,9 @@
 <div class="d-flex starter">
-    <div class="col-3">
+    <div class="d-none d-md-block col-3">
         <h2>Filtros</h2>
         <app-starter-filters></app-starter-filters>
     </div>
-    <div class="col-9">
+    <div class="col-12 col-md-9">
         <h2>Retos</h2>
         <app-challenge
             *ngFor ="let challenge of challenges, let i = index"
