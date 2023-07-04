@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component';
+import { RestrictedModalComponent } from '../../../modules/modals/restricted-modal/restricted-modal.component';
 
 @Component({
   selector: 'app-main-menu',
