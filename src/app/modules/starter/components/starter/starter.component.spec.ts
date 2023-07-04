@@ -5,15 +5,15 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import { StarterFiltersComponent } from '../starter-filters/starter-filters.component';
-import { filterChallenge } from 'src/app/models/filter-challenge.model';
+import { FilterChallenge } from 'src/app/models/filter-challenge.model';
 
 describe('StarterComponent', () => {
   let component: StarterComponent;
   let childComponent: StarterFiltersComponent;
   let fixture: ComponentFixture<StarterComponent>;
   let childFixture: ComponentFixture<StarterFiltersComponent>;
-  let filters: filterChallenge = {languages:[], levels: [], progress: []}
-  let selectedFilters: filterChallenge;
+  let filters: FilterChallenge = {languages:[], levels: [], progress: []}
+  let selectedFilters: FilterChallenge;
   
   beforeEach(async () => {
     await TestBed.configureTestingModule({
