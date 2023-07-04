@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegisterModalComponent } from './../../../modules/modals/register-modal/register-modal.component';
+import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -11,8 +11,7 @@ export class MainMenuComponent {
   
   constructor(private modalService: NgbModal){} 
   
-  openRegisterModal(){
-    this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
+  openRestrictedModal(){
+    this.modalService.open(RestrictedModalComponent, { centered : true, size : 'lg' })
   }
-
 }
