@@ -13,71 +13,71 @@
   <div class="form">
       <p class="fw-bold">Lenguaje</p>
       <div class="d-flex">
-        <div class="form-check">
-            <input class="form-check-input check" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
-            <label class="form-check-label">Javascript</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
+            <label for="checkJs" class="input-label">Javascript</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input check" type="checkbox" id="checkJava" name="java" value="java">
-            <label class="form-check-label">Java</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkJava" name="java" value="java">
+            <label class="input-label">Java</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkPhp" name="php" value="php">
-            <label class="form-check-label">PHP</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkPhp" name="php" value="php">
+            <label class="input-label">PHP</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkPython" name="python" value="python">
-            <label class="form-check-label">Python</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkPython" name="python" value="python">
+            <label class="input-label">Python</label>
           </div>
       </div>
   </div>
   <div class="form">
       <p class="fw-bold">Dificultad</p>
         <div class="d-flex">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkFacil" name="facil" value="facil">
-            <label class="form-check-label">Fácil</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkFacil" name="facil" value="facil">
+            <label class="input-label">Fácil</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkMedia" name="media" value="media">
-            <label class="form-check-label">Media</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkMedia" name="media" value="media">
+            <label class="input-label">Media</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
-            <label class="form-check-label">Difícil</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
+            <label class="input-label">Difícil</label>
         </div>
       </div>
   </div>
   <div class="form">
       <p class="fw-bold">Progreso</p>
-      <div class="d-flex">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
-            <label class="form-check-label">No empezados</label>
+      <div class="d-flex flex-wrap">
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
+            <label class="input-label">No empezados</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkStarted" name="started" value="started">
-            <label class="form-check-label">Falta completar</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
+            <label class="input-label">Falta completar</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkFinished" name="finished" value="finished">
-            <label class="form-check-label">Completados</label>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
+            <label class="input-label">Completados</label>
         </div>
       </div>
   </div>
 </div>
 
-<div class="modal-footer justify-content-center gap-3">
+<div class="modal-footer mt-4 gap-3 justify-content-center">
   <button
     type="button"
-    class="btn btn-lg btn-primary btn-change"
+    class="btn btn-lg btn-primary btn-change col-11 col-md-5"
     (click)="c('Save click')"
   >
     Aplicar
   </button>
   <button
     type="button"
-    class="btn btn-lg btn-outline-primary"
+    class="btn btn-lg btn-outline-primary col-11 col-md-5"
     (click)="d('Cross click')"
   >
     Cancelar
