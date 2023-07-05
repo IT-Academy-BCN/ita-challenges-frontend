@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-starter-pagination',
-  templateUrl: './starter-pagination.component.html',
-  styleUrls: ['./starter-pagination.component.scss']
+  selector: 'app-pagination',
+  templateUrl: './pagination.component.html',
+  styleUrls: ['./pagination.component.scss']
 })
-export class StarterPaginationComponent {
+export class PaginationComponent {
   @Input() page!: number;
-
   @Input() numChallenges!: number;
   @Input() totalPages!: number;
 
@@ -15,30 +14,19 @@ export class StarterPaginationComponent {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
-
-  siguiente(){
-
+  next(){
     this.page++;
-
-    this.pasarPagina();
-
+    this.changePage();
   }
 
-  anterior(){
-
+  prev(){
     this.page--;
-
-    this.pasarPagina();
-
+    this.changePage();
   }
 
-  pasarPagina(){
-
+  changePage(){
     this.paginaEmitter.emit(this.page);
-
   }
-
 }

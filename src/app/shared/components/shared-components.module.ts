@@ -6,14 +6,15 @@ import { ChallengeComponent } from "../../shared/components/challenge/challenge.
 import { ResourceComponent } from './resource/resource.component';
 import { SolutionsLoggedButtonComponent } from './solutions-logged-button/solutions-logged-button.component';
 import { SolutionsUnloggedButtonComponent } from './solutions-unlogged-button/solutions-unlogged-button.component';
-
+import { PaginationComponent } from './pagination/pagination.component'
 
 @NgModule({
     declarations: [
         ChallengeComponent,
         ResourceComponent,
         SolutionsLoggedButtonComponent,
-        SolutionsUnloggedButtonComponent
+        SolutionsUnloggedButtonComponent,
+        PaginationComponent
     ],
     imports: [
         CommonModule,
@@ -24,7 +25,8 @@ import { SolutionsUnloggedButtonComponent } from './solutions-unlogged-button/so
         ChallengeComponent,
         ResourceComponent,
         SolutionsLoggedButtonComponent,
-        SolutionsUnloggedButtonComponent
+        SolutionsUnloggedButtonComponent,
+        PaginationComponent
     ],  
 })
 export class SharedComponentsModule { }
