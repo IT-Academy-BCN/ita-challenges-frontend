@@ -1,0 +1,74 @@
+{
+    "components": {
+        "footer": { },
+        "header": { },
+        "mainMenu": {
+            "section0": {
+                "title": "Start"
+            },
+            "section1": {
+                "title": "Challenges"
+            },
+            "section2": {
+                "title": "Technical tests"
+            },
+            "section4": {
+                "title": "Create challenge"
+            },
+            "section5": {
+                "title": "Useful guides"
+            },
+            "section6": {
+                "title": "Settings"
+            },
+            "section7": {
+                "title": "My space"
+            }
+        }
+    },
+    "modules": {
+        "challenge": {
+            "header": {
+                "title": "Challenges",
+                "section":"Detail",
+                "button": "Send solution"
+            },
+            "info": {
+                "detailsTitle": "Details",
+                "solutionsTitle": "Solutions",
+                "resourcesTitle": "Resources",
+                "relatedTitle": "Related",
+                "description": "Description",
+                "examples": "Examples",
+                "notes": "Notes",
+                "blocked": "Solutions are blocked",
+                "blokedMsg": "Solutions will remain locked until you submit the challenge",
+                "resources": "Resources found on ITA-Wiki",
+                "resourcesLink": "Go to ITA-Wiki",
+                "related": "Similar challenges"
+            }
+        },
+        "starter": {
+            "filters": {
+                "lenguaje": "Languaje",
+                "dificulty": "Dificulty",
+                "easy": "Easy",
+                "medium": "Medium",
+                "hard": "Hard",
+                "progress": "Progress",
+                "noStarted": "Not started",
+                "started": "Needs completing",
+                "finished": "Completed"
+            },
+            "main": {
+                "section1": "Filters",
+                "section2": {
+                    "title": "Challenges",
+                    "popularity": "Popularity",
+                    "date": "Date"
+                }
+            }
+        }
+    }
+}
+      

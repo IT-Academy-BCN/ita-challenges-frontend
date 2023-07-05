@@ -7,6 +7,7 @@ import { ChallengeContainerComponent } from './components/challenge-container/ch
 import { ChallengeRoutingModule } from './challenge-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     CoreModule,
     ChallengeRoutingModule,
     RouterModule,
+    TranslateModule
   ]
 })
 export class ChallengeModule { }
