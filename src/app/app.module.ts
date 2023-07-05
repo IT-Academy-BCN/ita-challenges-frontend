@@ -23,7 +23,7 @@ import {ChallengeModule} from "./modules/challenge/challenge.module";
     NgbModule,
     HttpClientModule,
     StarterModule,
-    ChallengeModule,
+    ChallengeModule
   ],
   providers: [
   ],

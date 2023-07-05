@@ -4,12 +4,13 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { ChallengeComponent } from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
-
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
     declarations: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        PaginationComponent
     ],
     imports: [
         CommonModule,
@@ -18,7 +19,8 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     exports: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        PaginationComponent
     ],  
 })
 export class SharedComponentsModule { }
