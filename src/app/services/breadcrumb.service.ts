@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter } from 'rxjs';
-import { Breacrumb } from '../models/interfaces';
+import { Breadcrumb } from '../models/interfaces';
 import { Router, NavigationEnd, ActivatedRouteSnapshot, Data } from '@angular/router';
 
 @Injectable({ 
@@ -9,7 +9,7 @@ import { Router, NavigationEnd, ActivatedRouteSnapshot, Data } from '@angular/ro
 export class BreadcrumbService { 
  
   // Subject emitting the breadcrumb hierarchy 
-  private readonly _breadcrumbs$ = new BehaviorSubject<Breacrumb[]>([]); 
+  private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]); 
  
   // Observable exposing the breadcrumb hierarchy 
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable(); 
@@ -21,7 +21,7 @@ export class BreadcrumbService {
     ).subscribe(event => { 
       // Construct the breadcrumb hierarchy 
       const root = this.router.routerState.snapshot.root; 
-      const breadcrumbs: Breacrumb[] = []; 
+      const breadcrumbs: Breadcrumb[] = []; 
       this.addBreadcrumb(root, [], breadcrumbs); 
  
       // Emit the new hierarchy 
@@ -29,7 +29,7 @@ export class BreadcrumbService {
     }); 
   } 
  
-  private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breacrumb[]) { 
+  private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breadcrumb[]) { 
     if (route) { 
       // Construct the route URL 
       const routeUrl = parentUrl.concat(route.url.map(url => url.path)); 
