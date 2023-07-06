@@ -44,7 +44,9 @@ export class BreadcrumbService {
       } 
  
       // Add another element for the next route part 
-      this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs); 
+      if (route.firstChild) {
+        this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs);
+      }
     } 
   } 
  
