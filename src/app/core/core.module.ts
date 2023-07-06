@@ -6,6 +6,7 @@ import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
 import { ModalsModule } from '../modules/modals/modals.module';
+import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component';
 
 
 
@@ -14,7 +15,8 @@ import { ModalsModule } from '../modules/modals/modals.module';
         HeaderComponent,
         FooterComponent,
         MainComponent,
-        MainMenuComponent
+        MainMenuComponent,
+        MobileNavComponent
     ],
     exports: [
         HeaderComponent,
