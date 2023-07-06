@@ -11,7 +11,6 @@ const routes: Routes = [
         children: [
             {
                 path: 'challenges',
-                data: { breadcrumb: 'Retos'},
                 children:[
                     {
                         path: '',  
@@ -19,8 +18,7 @@ const routes: Routes = [
                     },
                     {
                         path: ':idChallenge', 
-                        component: ChallengeContainerComponent,
-                        data: { breadcrumb: 'Reto'}
+                        component: ChallengeContainerComponent, 
                     },
                 ]
             },
