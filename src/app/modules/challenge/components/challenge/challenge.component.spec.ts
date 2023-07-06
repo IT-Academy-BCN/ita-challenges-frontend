@@ -1,7 +1,7 @@
-import { SharedComponentsModule } from './../../../../shared/components/shared-components.module';
+import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChallengeContainerComponent } from './challenge-container.component';
+import { ChallengeComponent } from './challenge.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -10,15 +10,15 @@ import { ChallengeInfoComponent } from '../challenge-info/challenge-info.compone
 import { of } from 'rxjs';
 
 describe('ChallengeContainerComponent', () => {
-  let component: ChallengeContainerComponent;
-  let fixture: ComponentFixture<ChallengeContainerComponent>;
+  let component: ChallengeComponent;
+  let fixture: ComponentFixture<ChallengeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ChallengeContainerComponent, 
+        ChallengeComponent, 
         ChallengeHeaderComponent,
-        ChallengeInfoComponent
+        ChallengeInfoComponent,
       ],
       imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule],
       providers: [{
@@ -28,7 +28,7 @@ describe('ChallengeContainerComponent', () => {
         }
       }] 
       });
-    fixture = TestBed.createComponent(ChallengeContainerComponent);
+    fixture = TestBed.createComponent(ChallengeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

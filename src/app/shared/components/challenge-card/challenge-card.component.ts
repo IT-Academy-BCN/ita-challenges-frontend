@@ -3,16 +3,16 @@ import { StarterService } from '../../../services/starter.service';
 
 
 @Component({
-  selector: 'app-challenge',
-  templateUrl: './challenge.component.html',
-  styleUrls: ['./challenge.component.scss'],
+  selector: 'app-challenge-card',
+  templateUrl: './challenge-card.component.html',
+  styleUrls: ['./challenge-card.component.scss'],
   providers: [StarterService]
 })
-export class ChallengeComponent {
+export class ChallengeCardComponent {
 
   constructor(private starterService: StarterService){}
 
-  @Input() challenge_title = "";
+  @Input() title = "";
   @Input() languages: any = [];
   @Input() creation_date!: Date;
   @Input() level = "";

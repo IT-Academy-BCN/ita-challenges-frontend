@@ -13,13 +13,13 @@
                 Fecha    
             </li>
         </ul>
-        <app-challenge
+        <app-challenge-card
             *ngFor ="let challenge of challenges, let i = index"
-            [challenge_title] = "challenge.challenge_title"
+            [title] = "challenge.challenge_title"
             [creation_date] = "challenge.creation_date"
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
-        ></app-challenge>      
+        ></app-challenge-card>      
     </div>
 </div>
