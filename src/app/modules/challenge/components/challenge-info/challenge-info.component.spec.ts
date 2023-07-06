@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChallengeComponent } from '../../../../shared/components/challenge-card/challenge-card.component';
-import { ResourceComponent } from '../../../../shared/components/resource-card/resource-card.component';
+import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component';
+import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component';
 import { ChallengeInfoComponent } from './challenge-info.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ChallengeRelatedComponent } from '../challenge-related/challenge-related.component';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -15,9 +14,8 @@ describe('ChallengeInfoComponent', () => {
       declarations: [
                     ChallengeInfoComponent, 
                     ChallengeInfoComponent, 
-                    ResourceComponent, 
-                    ChallengeComponent, 
-                    ChallengeRelatedComponent
+                    ResourceCardComponent, 
+                    ChallengeCardComponent
                   ],
       imports: [
                 RouterTestingModule,
