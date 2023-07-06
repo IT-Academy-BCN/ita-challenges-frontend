@@ -1,4 +1,5 @@
-:host{
+nav{
+    display: none;
     position:fixed;
     top: 0;
     width: 100%;
@@ -7,4 +8,43 @@
     border-bottom-right-radius: 50px;
     background-color: black;
     color: white;
+}
+
+$navbar-light-toggler-border-color: none;
+$navbar-toggler-focus-width: none;
+$navbar-toggler-transition: none;
+
+.breadcrumb{
+    color:white;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar-toggler{
+    position:absolute;
+    top: 50%;
+    left: 2em;
+    transform: translate(-50%, -50%);
+    border: none;
+
+        &:focus{
+            box-shadow:none;
+        }
+
+        .navbar-toggler-icon{
+            background-image: url('../../../../../assets/img/icon/Hamburguer-white.svg');
+            color: white;
+            height: 1em;
+        }
+
+}
+
+// $navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !default;
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: flex;
+    }
 }
