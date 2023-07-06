@@ -34,9 +34,15 @@
         height: 100%;
     }
 
-    @media screen and (max-width: 631px) {
-        main {
-            padding: 20px 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .container-fluid{
+        padding: 0;
+        background-color: white;
+
+        main{
+            padding: 20px;
         }
     }
 }
