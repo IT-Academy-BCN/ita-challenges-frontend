@@ -1,37 +1,50 @@
 <!---Nav tabs-->
 <ul class="nav nav-tabs">
-    <li class="nav-item active">
-        <a class="nav-link active" data-bs-toggle="tab" href="#details">Detalles</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#solutions">Soluciones</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#resources">Recursos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#related">Relacionado</a>
-    </li>
+  <li class="nav-item active">
+    <a class="nav-link active" data-bs-toggle="tab" href="#details">Detalles</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#solutions">Soluciones</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#resources">Recursos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#related">Relacionado</a>
+  </li>
 </ul>
 <!--Nav panes-->
 <div class="tab-content">
-    <div class="tab-pane container show active" id="details">
-        <app-details></app-details>
+  <!--DETAILS TAB-->
+  <div class="tab-pane container show active" id="details">
+    <div class="d-block btn-row text-end mb-3">
+      <span class="right-span d-inline-flex">
+        <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
+        <label class="ms-1"> Mostrar enunciado </label>
+      </span>
     </div>
-    <div class="tab-pane container fade" id="solutions">
-        <ng-container *ngFor="let solution of solutions">
-            <app-solution class="mb-4"></app-solution>
-        </ng-container>
+    <div class="details-body d-flex">
+      <app-details-text *ngIf="showStatement"></app-details-text>
+      <app-solution></app-solution>
     </div>
-    <div class="tab-pane container fade" id="resources">
-        <section class="title">
-            <h3>Recursos encontrados en ITA-Wiki</h3>
-            <a class="title_link" href="#related">ir a ITA-Wiki ></a>
-        </section>
-        <app-resource></app-resource>
-    </div>
-    <div class="tab-pane container fade" id="related">
-        <h3>Retos similares</h3>
-        <app-challenge></app-challenge>
-    </div>
+  </div>
+  <!--SOLUTIONS TAB-->
+  <div class="tab-pane container fade" id="solutions">
+    <ng-container *ngFor="let solution of solutions">
+      <app-solution class="mb-4"></app-solution>
+    </ng-container>
+  </div>
+  <!--RESOURCES TAB-->
+  <div class="tab-pane container fade" id="resources">
+    <section class="title">
+      <h3>Recursos encontrados en ITA-Wiki</h3>
+      <a class="title_link" href="#related">ir a ITA-Wiki ></a>
+    </section>
+    <app-resource></app-resource>
+  </div>
+  <!--RELATED TAB-->
+  <div class="tab-pane container fade" id="related">
+    <h3>Retos similares</h3>
+    <app-challenge></app-challenge>
+  </div>
 </div>

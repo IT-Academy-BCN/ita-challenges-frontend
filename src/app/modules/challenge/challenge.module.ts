@@ -9,8 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ChallengeHeaderComponent } from './components/challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from './components/challenge-info/challenge-info.component';
 import { ChallengeContainerComponent } from './components/challenge-container/challenge-container.component';
-import { DetailsComponent } from './components/challenge-info/details/details.component';
-import { DetailsTextComponent } from './components/challenge-info/details/details-text/details-text.component';
+import { DetailsTextComponent } from './components/challenge-info/details-text/details-text.component';
 
 
 @NgModule({
@@ -19,7 +18,6 @@ import { DetailsTextComponent } from './components/challenge-info/details/detail
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
     ChallengeContainerComponent,
-    DetailsComponent,
     DetailsTextComponent
   ],
   imports: [
