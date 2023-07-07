@@ -13,10 +13,10 @@ export class ChallengeInfoComponent {
   initialActiveId = 1;
 
   tabNames: any = {
-  1: 'details',
-  2: 'solutions',
-  3: 'resources',
-  4: 'related'
+  1: 'Detalles',
+  2: 'Soluciones',
+  3: 'Recursos',
+  4: 'Relacionados'
 };
 
   constructor(private router: Router, private route: ActivatedRoute) { }
