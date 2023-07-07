@@ -6,7 +6,6 @@ import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
 import { ModalsModule } from '../modules/modals/modals.module';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 
 
@@ -15,8 +14,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
         HeaderComponent,
         FooterComponent,
         MainComponent,
-        MainMenuComponent,
-        BreadcrumbComponent
+        MainMenuComponent
     ],
     exports: [
         HeaderComponent,

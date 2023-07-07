@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from "./layout/main/main.component";
 import { StarterComponent } from "../modules/starter/components/starter/starter.component";
 import { ChallengeContainerComponent } from '../modules/challenge/components/challenge-container/challenge-container.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
 
 const routes: Routes = [
     {
