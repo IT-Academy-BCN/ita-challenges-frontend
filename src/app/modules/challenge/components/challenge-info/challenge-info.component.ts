@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { NgbNavChangeEvent, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -21,6 +21,12 @@ export class ChallengeInfoComponent {
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
+  ngOnInit() {
+    if (!this.route.snapshot.params['tab']) {
+      this.navigateToQueryParams("Detalles");
+    }
+  }
+
     ngAfterViewInit() {
     this.route.queryParams.subscribe(params => {
       const tab = params['tab'];
@@ -32,7 +38,11 @@ export class ChallengeInfoComponent {
   }
 
   onNavChange(changeEvent: NgbNavChangeEvent) {
-    this.router.navigate([], { queryParams: { tab: this.tabNames[changeEvent.nextId] }});
+    this.navigateToQueryParams( this.tabNames[changeEvent.nextId]);
+  }
+
+  navigateToQueryParams(paramValue:string) {
+    this.router.navigate([], { queryParams: { tab: paramValue }});
   }
 
 getTabId(tabName: string): number {
