@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
-import { BreadcrumbService } from '../../.../../../services/breadcrumb.service';
+import { BreadcrumbService } from '../../../services/breadcrumb.service';
 
 describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent;

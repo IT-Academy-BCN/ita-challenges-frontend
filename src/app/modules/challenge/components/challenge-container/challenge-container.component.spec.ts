@@ -1,15 +1,18 @@
-import { SharedComponentsModule } from './../../../../shared/components/shared-components.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChallengeContainerComponent } from './challenge-container.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SharedComponentsModule } from './../../../../shared/components/shared-components.module';
+import { ChallengeModule } from '../../challenge.module';
+
+import { BreadcrumbService } from '../../../../services/breadcrumb.service';
+
+import { ChallengeContainerComponent } from './challenge-container.component';
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
+
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
-import { BreadcrumbService } from '../../../../services/breadcrumb.service';
-import { ChallengeModule } from '../../challenge.module';
 
 describe('ChallengeContainerComponent', () => {
   let component: ChallengeContainerComponent;
