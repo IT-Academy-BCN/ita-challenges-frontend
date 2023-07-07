@@ -6,6 +6,7 @@ import { MainComponent } from './layout/main/main.component';
 import {CoreRoutingModule} from "./core-routing.module";
 import { MainMenuComponent } from './layout/main-menu/main-menu.component';
 import { ModalsModule } from '../modules/modals/modals.module';
+import { SharedComponentsModule } from '../shared/components/shared-components.module';
 
 
 
@@ -23,7 +24,8 @@ import { ModalsModule } from '../modules/modals/modals.module';
     imports: [
         CommonModule,
         CoreRoutingModule,
-        ModalsModule
+        ModalsModule,
+        SharedComponentsModule
     ]
 })
 export class CoreModule { }
