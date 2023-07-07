@@ -1,20 +1,34 @@
 <!---Nav tabs-->
-<ul class="nav nav-tabs">
-    <li class="nav-item active">
-        <a class="nav-link active" data-bs-toggle="tab" href="#details">Detalles</a>
+<ul ngbNav #nav="ngbNav" class="nav nav-tabs" (navChange)="onNavChange($event)" [activeId]="initialActiveId">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink href="#details">Detalles</a>
+        <ng-template ngbNavContent><p>Details content</p></ng-template>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#solutions">Soluciones</a>
+   <li [ngbNavItem]="2">
+    <a ngbNavLink href="#solutions">Soluciones</a>
+    <ng-template ngbNavContent>Solutions content</ng-template>
+  </li>
+    <li [ngbNavItem]="3">
+        <a ngbNavLink href="#resources">Recursos</a>
+        <ng-template ngbNavContent>
+            <section class="title">
+                <h3>Recursos encontrados en ITA-Wiki</h3>
+                <a class="title_link" href="#related">ir a ITA-Wiki ></a>
+            </section>
+        <app-resource></app-resource>
+        </ng-template>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#resources">Recursos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#related">Relacionado</a>
+<li [ngbNavItem]="4">
+        <a ngbNavLink href="#related">Relacionado</a>
+        <ng-template ngbNavContent>
+            <h3>Retos similares</h3>
+            <app-challenge></app-challenge>
+        </ng-template>
     </li>
 </ul>
+<div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
 <!--Nav panes-->
-<div class="tab-content">
+<!-- <div [ngbNavOutlet]="nav" class="tab-content mt-2">
     <div class="tab-pane container show active" id="details">Details content</div>
     <div class="tab-pane container fade" id="solutions">Solutions content</div>
     <div class="tab-pane container fade" id="resources">
@@ -28,4 +42,4 @@
         <h3>Retos similares</h3>
         <app-challenge></app-challenge>
     </div>
-</div>
+</div> -->
