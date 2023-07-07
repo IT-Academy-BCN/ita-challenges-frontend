@@ -5,6 +5,7 @@ import { HeaderComponent } from '../header/header.component';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from '../footer/footer.component';
+import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -13,7 +14,7 @@ describe('MainComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ MainComponent, HeaderComponent, MainMenuComponent, FooterComponent ],
-      imports: [RouterTestingModule],  
+      imports: [RouterTestingModule,SharedComponentsModule],  
     })
     .compileComponents();
 

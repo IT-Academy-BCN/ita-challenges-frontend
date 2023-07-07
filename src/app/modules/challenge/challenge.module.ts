@@ -5,7 +5,7 @@ import { ChallengeHeaderComponent } from './components/challenge-header/challeng
 import { ChallengeInfoComponent } from './components/challenge-info/challenge-info.component';
 import { ChallengeContainerComponent } from './components/challenge-container/challenge-container.component';
 import { ChallengeRoutingModule } from './challenge-routing.module';
-import { CoreModule } from 'src/app/core/core.module';
+import { CoreModule } from '../../core/core.module';
 import { RouterModule } from '@angular/router';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 

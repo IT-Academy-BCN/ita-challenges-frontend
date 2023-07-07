@@ -22,7 +22,7 @@ export class ChallengeInfoComponent {
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (!this.route.snapshot.params['tab']) {
+    if (this.route.snapshot.params && !this.route.snapshot!.params['tab']) {
       this.navigateToQueryParams("Detalles");
     }
   }
