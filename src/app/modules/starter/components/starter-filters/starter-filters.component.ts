@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FilterChallenge } from 'src/app/models/filter-challenge.model';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-starter-filters',
@@ -10,43 +11,44 @@ export class StarterFiltersComponent {
 
   @Output() filtersSelected = new EventEmitter<FilterChallenge>();
 
-  checkFilter(){
-    let filters = this.getAllFilters();
-    this.filtersSelected.emit(filters);
-    console.log('llamada emmit componente hijo:' + filters);
+  filtersForm;
+  constructor(private fb: FormBuilder) {
+    this.filtersForm = this.fb.nonNullable.group({
+      languages: this.fb.nonNullable.group({
+        javascript: false,
+        java: false,
+        php: false,
+        python: false
+      }),
+      levels: this.fb.nonNullable.group({
+        easy: false,
+        medium: false,
+        hard: false
+      }),
+      progress: this.fb.nonNullable.group({
+        noStarted: false,
+        started: false,
+        finished: false
+      })
+    });
+
+    this.filtersForm.valueChanges.subscribe(formValue => {
+      let filters: FilterChallenge = {languages: [], levels: [], progress: []};
+      Object.values(formValue.languages!).forEach((val, i) => {
+        if (val == true) { filters.languages.push(i) }
+      });
+      Object.entries(formValue.levels!).forEach(([key, val]) => {
+      if (val == true) { filters.levels.push(key) }
+          });
+      Object.values(formValue.progress!).forEach((val, i) => {
+      if (val == true) { filters.progress.push(i) }
+      });
+      this.filtersSelected.emit(filters);
+      console.log('llamada emmit componente hijo:' + filters.languages, filters.levels, filters.progress);
+    });
+
   }
 
 
-  getAllFilters(){
 
-    let filters: FilterChallenge = {languages: [], levels: [], progress: []};
-
-    let languageFilters = document.getElementsByName('language');
-    let levelFilters = document.getElementsByName('level');
-    /* let progressFilters = document.getElementsByName('progress'); */
-
-    languageFilters.forEach(element => {
-
-      let filter = (element as HTMLInputElement);
-
-      if(filter.checked) filters.languages.push(Number(filter.value));
-      
-    });
-
-    levelFilters.forEach(element => {
-
-      let filter = (element as HTMLInputElement);
-
-      if(filter.checked) filters.levels.push(filter.value);
-      
-    });
-
-    /* progressFilters.forEach(element => {
-
-      let filter = (element as HTMLInputElement);
-      if(filter.checked) filters.progress.push(Number(filter.value));
-      
-    }); */
-    return filters;
-  }
 }
