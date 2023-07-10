@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core';
 import { FilterChallenge } from 'src/app/models/filter-challenge.model';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-starter-filters',
@@ -12,6 +13,9 @@ export class StarterFiltersComponent {
   @Output() filtersSelected = new EventEmitter<FilterChallenge>();
 
   filtersForm;
+
+  private readonly destroyRef = inject(DestroyRef);
+  
   constructor(private fb: FormBuilder) {
     this.filtersForm = this.fb.nonNullable.group({
       languages: this.fb.nonNullable.group({
@@ -32,7 +36,7 @@ export class StarterFiltersComponent {
       })
     });
 
-    this.filtersForm.valueChanges.subscribe(formValue => {
+    this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
       let filters: FilterChallenge = {languages: [], levels: [], progress: []};
       Object.values(formValue.languages!).forEach((val, i) => {
         if (val == true) { filters.languages.push(i) }
