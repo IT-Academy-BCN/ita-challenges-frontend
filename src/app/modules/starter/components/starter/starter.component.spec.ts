@@ -10,8 +10,8 @@ import { By } from '@angular/platform-browser';
 
 describe('StarterComponent', () => {
   let component: StarterComponent;
-  let childComponent: StarterFiltersComponent;
   let fixture: ComponentFixture<StarterComponent>;
+  let childComponent: StarterFiltersComponent;
   let filters: FilterChallenge = {languages:[], levels: [], progress: []}
   let selectedFilters: FilterChallenge;
   
@@ -65,7 +65,7 @@ it('should receive filter values from child component when languagesForm changes
   fixture.detectChanges();
 
   expect(component.getChallengeFilters).toHaveBeenCalled();
-  expect(component.filters.languages).toContain(0);
+  expect(component.filters.languages).toContain(1);
 });
   
 it('should receive filter values from child component when levelsForm changes', () => {
@@ -87,7 +87,7 @@ it('should receive filter values from child component when progressForm changes'
   fixture.detectChanges();
 
   expect(component.getChallengeFilters).toHaveBeenCalled();
-  expect(component.filters.progress).toContain(0);
+  expect(component.filters.progress).toContain(1);
 })
 
   

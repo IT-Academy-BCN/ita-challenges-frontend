@@ -39,13 +39,13 @@ export class StarterFiltersComponent {
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
       let filters: FilterChallenge = {languages: [], levels: [], progress: []};
       Object.values(formValue.languages!).forEach((val, i) => {
-        if (val == true) { filters.languages.push(i) }
+        if (val == true) { filters.languages.push(i+1) }
       });
       Object.entries(formValue.levels!).forEach(([key, val]) => {
       if (val == true) { filters.levels.push(key) }
           });
       Object.values(formValue.progress!).forEach((val, i) => {
-      if (val == true) { filters.progress.push(i) }
+      if (val == true) { filters.progress.push(i+1) }
       });
       this.filtersSelected.emit(filters);
       console.log('llamada emmit componente hijo:' + filters.languages, filters.levels, filters.progress);
