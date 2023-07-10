@@ -1,20 +1,13 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
     <div id="main-options">
-        <a [routerLink]="[ '/ita-challenge' ]" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        <a  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" (click)="openRegisterModal()">
+            Mi espacio
+            <img src="../../../../assets/img/icon/user.svg" alt="User"/>
+        </a>
         <a [routerLink]="[ 'challenges' ]" [routerLinkActive]="['active']" >Retos</a>
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Pruebas técnicas</a>
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Hackathons</a>
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Crear reto</a>
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Guías útiles</a>
-    </div>
-    <div id="user-options">
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >
-            <img src="../../../../assets/img/icon/setting.svg" alt="Settings"/>
-            Settings
-        </a>
-        <a (click)="openRegisterModal()" [routerLinkActive]="['active']">
-            <img src="../../../../assets/img/icon/user.svg" alt="User"/>
-            Mi espacio
-        </a>
     </div>
 </nav>
