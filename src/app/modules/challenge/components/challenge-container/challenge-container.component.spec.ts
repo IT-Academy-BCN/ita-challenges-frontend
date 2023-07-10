@@ -1,12 +1,17 @@
-import { SharedComponentsModule } from './../../../../shared/components/shared-components.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChallengeContainerComponent } from './challenge-container.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SharedComponentsModule } from './../../../../shared/components/shared-components.module';
+import { ChallengeModule } from '../../challenge.module';
+
+import { BreadcrumbService } from '../../../../services/breadcrumb.service';
+
+import { ChallengeContainerComponent } from './challenge-container.component';
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
+
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('ChallengeContainerComponent', () => {
@@ -20,14 +25,21 @@ describe('ChallengeContainerComponent', () => {
         ChallengeHeaderComponent,
         ChallengeInfoComponent
       ],
-      imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule],
-      providers: [{
-        provide : ActivatedRoute, 
-        useValue : {
-            paramMap :  of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'}))
-        }
-      }] 
-      });
+      imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule, ChallengeModule],
+      providers: [
+        BreadcrumbService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {},
+            },
+            paramMap: of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'})),
+            queryParams: of({tab: 'Detalles'})
+          },
+        },
+      ]
+    });
     fixture = TestBed.createComponent(ChallengeContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -4,6 +4,7 @@ import { ChallengeComponent } from './../../../../shared/components/challenge/ch
 import { ResourceComponent } from './../../../../shared/components/resource/resource.component';
 import { ChallengeInfoComponent } from './challenge-info.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -13,7 +14,7 @@ describe('ChallengeInfoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ChallengeInfoComponent, ChallengeInfoComponent, ResourceComponent, ChallengeComponent],
       imports: [RouterTestingModule,
-      HttpClientTestingModule]
+      HttpClientTestingModule, NgbNavModule]
     });
     fixture = TestBed.createComponent(ChallengeInfoComponent);
     component = fixture.componentInstance;

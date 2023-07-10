@@ -4,12 +4,14 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { ChallengeComponent } from "../../shared/components/challenge/challenge.component";
 import { ResourceComponent } from './resource/resource.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 
 @NgModule({
     declarations: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        BreadcrumbComponent
     ],
     imports: [
         CommonModule,
@@ -18,7 +20,8 @@ import { ResourceComponent } from './resource/resource.component';
     ],
     exports: [
         ChallengeComponent,
-        ResourceComponent
+        ResourceComponent,
+        BreadcrumbComponent
     ],  
 })
 export class SharedComponentsModule { }

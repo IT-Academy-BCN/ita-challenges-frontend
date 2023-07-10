@@ -1,0 +1,3 @@
+<ng-container *ngFor="let breadcrumb of (breadcrumbs$ | async); let i = index">
+    <a [href]="breadcrumb.url"><span *ngIf="i>0"> > </span>{{ breadcrumb.label }}</a> 
+</ng-container>
