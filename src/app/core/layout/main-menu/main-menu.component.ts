@@ -14,5 +14,4 @@ export class MainMenuComponent {
   openRegisterModal(){
     this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
   }
-
 }
