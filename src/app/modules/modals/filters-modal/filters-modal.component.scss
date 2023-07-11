@@ -1,0 +1,54 @@
+@import "/src/styles/colors";
+
+p {
+  margin-bottom: 1rem;
+}
+
+.input-wrapper {
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  position: relative;
+  width: fit-content;
+  border-radius: 50%;
+
+  & .input-label {
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+    border: 1px solid $gray-2;
+    border-radius: 50px;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    color: $gray-2;
+  }
+}
+
+.pill-input {
+  position: absolute;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0px solid transparent;
+  top: 0%;
+  right: 0%;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 0;
+  }
+
+  &:hover + .input-label {
+    background-color: $primary;
+    border: 1px solid $primary;
+    color: white;
+  }
+
+  &:checked + .input-label {
+    background-color: $primary;
+    border: 1px solid $primary;
+    font-weight: bold;
+    color: white;
+  }
+}

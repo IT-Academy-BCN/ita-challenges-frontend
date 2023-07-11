@@ -1,0 +1,86 @@
+<ng-template #modal let-c="close" let-d="dismiss">
+<div class="modal-header align-items-center justify-between pb-0">
+  <h4 class="modal-title fw-bold">
+    Filtros
+  </h4>
+    <div class="close" data-bs-dismiss="modal" (click)="d('cross click')" aria-label="Close">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<div class="modal-body">
+  <div class="form">
+      <p class="fw-bold">Lenguaje</p>
+      <div class="d-flex">
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
+            <label for="checkJs" class="input-label">Javascript</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkJava" name="java" value="java">
+            <label class="input-label">Java</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkPhp" name="php" value="php">
+            <label class="input-label">PHP</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkPython" name="python" value="python">
+            <label class="input-label">Python</label>
+          </div>
+      </div>
+  </div>
+  <div class="form">
+      <p class="fw-bold">Dificultad</p>
+        <div class="d-flex">
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkFacil" name="facil" value="facil">
+            <label class="input-label">Fácil</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkMedia" name="media" value="media">
+            <label class="input-label">Media</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
+            <label class="input-label">Difícil</label>
+        </div>
+      </div>
+  </div>
+  <div class="form">
+      <p class="fw-bold">Progreso</p>
+      <div class="d-flex flex-wrap">
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
+            <label class="input-label">No empezados</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
+            <label class="input-label">Falta completar</label>
+        </div>
+        <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
+            <label class="input-label">Completados</label>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
+  <button
+    type="button"
+    class="btn btn-lg btn-primary btn-change col-11 col-md-5"
+    (click)="c('Save click')"
+  >
+    Aplicar
+  </button>
+  <button
+    type="button"
+    class="btn btn-lg btn-outline-primary col-11 col-md-5"
+    (click)="d('Cross click')"
+  >
+    Cancelar
+  </button>
+</div>
+</ng-template>

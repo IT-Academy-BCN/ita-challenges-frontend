@@ -2,8 +2,6 @@
 .challenge-list-element{
     border: 1px solid $gray-3;
     border-radius: 20px;
-    padding: 16px  35px;
-    margin-bottom: 1.5rem;
     min-height: 110px;
     cursor: pointer;
     background-color: $white;
@@ -33,6 +31,7 @@
         }
     }
     .code-languages{
+        display: flex;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -56,4 +55,24 @@
         border-color: $primary;
         box-shadow: inset 0px 0px 0px 2px $primary;
     }
+}
+
+@media screen and (max-width: 437px) {
+    .challenge-list-element {
+
+        min-height: 80px;
+
+    .code-languages {
+        display: none;
+    }
+
+    .stats{
+        font-size: 10px;
+
+        .stat{
+            padding: 0px;
+        }
+    }
+
+}
 }
