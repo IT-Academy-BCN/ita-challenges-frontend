@@ -12,7 +12,7 @@ export class ChallengeComponent {
 
   constructor(private starterService: StarterService){}
 
-  @Input() challenge_title = "";
+  @Input() title = "";
   @Input() languages: any = [];
   @Input() creation_date!: Date;
   @Input() level = "";
