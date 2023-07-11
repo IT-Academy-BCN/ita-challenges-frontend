@@ -1,20 +1,26 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
     <div id="main-options">
-        <a [routerLink]="[ '/ita-challenge' ]" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
-        <a [routerLink]="[ 'challenges' ]" [routerLinkActive]="['active']" >Retos</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Pruebas técnicas</a>
+        <a [routerLink]="[ '/ita-challenge' ]" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">{{'components.mainMenu.section0.title' | translate }}</a>
+        <a [routerLink]="[ 'challenges' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section1.title' | translate }}</a>
+        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section2.title'  | translate }}</a>
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Hackathons</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Crear reto</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Guías útiles</a>
+        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section4.title'  | translate }}</a>
+        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section5.title'  | translate }}</a>
     </div>
     <div id="user-options">
         <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >
             <img src="../../../../assets/img/icon/setting.svg" alt="Settings"/>
-            Settings
+            {{'components.mainMenu.section6.title'  | translate }}
         </a>
         <a (click)="openRegisterModal()" [routerLinkActive]="['active']">
             <img src="../../../../assets/img/icon/user.svg" alt="User"/>
-            Mi espacio
+            {{'components.mainMenu.section7.title'  | translate }}
         </a>
+    
+        <section id="languages">
+            <button (click)="changeLanguage('es')">ES</button>
+            <button id="middleBtn" (click)="changeLanguage('cat')">CAT</button>
+            <button (click)="changeLanguage('en')">EN</button>
+        </section>
     </div>
 </nav>

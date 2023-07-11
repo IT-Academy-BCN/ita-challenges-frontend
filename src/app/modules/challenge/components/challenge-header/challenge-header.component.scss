@@ -1,8 +1,8 @@
 @import "src/styles/colors";
 @import "src/styles/buttons";
+@import "src/styles/fonts";
 
 .title{
-    font-weight: bold;
     margin-bottom: 16px;
     max-width: 100%;
 }
@@ -50,4 +50,8 @@ h3{
         width: 1.5em;
         margin: .3rem;
     }
+}
+#color{
+    color: $primary;
+    font-weight: bold;
 }
