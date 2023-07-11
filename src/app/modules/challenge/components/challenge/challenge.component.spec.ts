@@ -1,7 +1,7 @@
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChallengeComponent } from './challenge.component';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -16,11 +16,16 @@ describe('ChallengeContainerComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ChallengeComponent, 
-        ChallengeHeaderComponent,
-        ChallengeInfoComponent,
-      ],
-      imports: [RouterTestingModule, HttpClientTestingModule, SharedComponentsModule],
+                    ChallengeComponent, 
+                    ChallengeHeaderComponent,
+                    ChallengeInfoComponent,
+                  ],
+      imports: [
+                RouterTestingModule, 
+                HttpClientTestingModule, 
+                SharedComponentsModule,
+                I18nModule
+                ],
       providers: [{
         provide : ActivatedRoute, 
         useValue : {

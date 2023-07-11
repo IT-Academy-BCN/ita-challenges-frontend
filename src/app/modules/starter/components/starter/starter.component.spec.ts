@@ -6,6 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import { StarterFiltersComponent } from '../starter-filters/starter-filters.component';
 import { FilterChallenge } from 'src/app/models/filter-challenge.model';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 
 describe('StarterComponent', () => {
   let component: StarterComponent;
@@ -24,7 +25,7 @@ describe('StarterComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,I18nModule
       ]
     })
     .compileComponents();

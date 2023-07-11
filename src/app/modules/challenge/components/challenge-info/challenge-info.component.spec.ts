@@ -4,6 +4,7 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component';
 import { ChallengeInfoComponent } from './challenge-info.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -19,7 +20,8 @@ describe('ChallengeInfoComponent', () => {
                   ],
       imports: [
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                I18nModule
               ]
     });
     fixture = TestBed.createComponent(ChallengeInfoComponent);
