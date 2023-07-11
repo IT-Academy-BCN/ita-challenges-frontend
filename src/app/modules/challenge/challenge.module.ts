@@ -8,7 +8,7 @@ import { ChallengeRoutingModule } from './challenge-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CoreModule,
     ChallengeRoutingModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
+    FormsModule
   ]
 })
 export class ChallengeModule { }

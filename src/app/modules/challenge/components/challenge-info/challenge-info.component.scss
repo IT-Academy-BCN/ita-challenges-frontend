@@ -22,29 +22,71 @@
 }
 .tab-content{
     margin-top: 3rem;
-    width: 75%;
+    width: 100%;
 }
 
 .title{
-    margin: 0;
-    padding: 0;
-    position: relative;
+    margin: 0;//
+    padding: 0;//
+    position: relative;//
     display: flex;
 }
 .title_link{
     color: $primary;
     text-decoration: none;
     font-weight: bold;
-    margin-left: 1.5rem;
-    padding-top: .23rem;
+    margin-left: 1.5rem;//
+    padding-top: .23rem;//
+    // align-self: center;
+    // padding: 1.5rem;
 }
 .title_text{
     margin-top: 0;
 }
+
+// .details-body {
+//     gap: 50px;
+// }
+
 .lock{
     display: flex;
     align-items: center;
 }
 .lock img{   
     margin:0 .2rem .3rem 0;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    cursor: pointer;
+
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 50%;
+    border: 2px solid $primary;
+    transform: translateY(0.15em);
+
+    //to center ::before element
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    background-color: $primary;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 0;
 }

@@ -1,58 +1,83 @@
 <!---Nav tabs-->
 <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#details">{{ 'modules.challenge.info.detailsTitle' | translate }}</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#solutions">{{ 'modules.challenge.info.solutionsTitle' | translate }}</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#resources">{{ 'modules.challenge.info.resourcesTitle' | translate }}</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#related">{{ 'modules.challenge.info.relatedTitle' | translate }}</a>
-    </li>
+  <li class="nav-item">
+    <a class="nav-link active" data-bs-toggle="tab" href="#details">{{
+      "modules.challenge.info.detailsTitle" | translate
+    }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#solutions">{{
+      "modules.challenge.info.solutionsTitle" | translate
+    }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#resources">{{
+      "modules.challenge.info.resourcesTitle" | translate
+    }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#related">{{
+      "modules.challenge.info.relatedTitle" | translate
+    }}</a>
+  </li>
 </ul>
 <!--Nav panes-->
+<!--DETAILS TAB-->
 <div class="tab-content">
-    <div class="tab-pane container show active" id="details" >
-       <h3>Descripción</h3>
-       <p>{{ description }}</p>
-       <h3>Ejemplos</h3>
-       <p *ngFor="let example of examples">{{ example.example_text}}</p>
-       <h3>Notas</h3>
-       <p>{{ notes}}</p>
+  <div class="tab-pane container show active" id="details">
+    <div class="d-block btn-row text-end mb-3">
+      <span class="right-span d-inline-flex">
+        <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
+        <label class="ms-1"> Mostrar enunciado </label>
+      </span>
     </div>
-    <div class="tab-pane container fade" id="solutions"> 
-        <h3>Las soluciones están bloqueadas</h3>
-        <span class="lock">
-            <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon">
-            <p>Las soluciones permanecerán bloqueadas hasta que entregues el reto</p>
-        </span>
+    <div class="details-body d-flex">
+      <div *ngIf="showStatement">
+        <h3 class="mt-0">Descripción</h3>
+        <p>{{ description }}</p>
+        <h3>Ejemplos</h3>
+        <p *ngFor="let example of examples">{{ example.example_text }}</p>
+        <h3>Notas</h3>
+        <p>{{ notes }}</p>
+      </div>
+      <app-solution></app-solution>
     </div>
-    <div class="tab-pane container fade" id="resources">
-        <section class="title">
-            <h3 class="title_text">Recursos encontrados en ITA-Wiki</h3>
-            <a class="title_link" href="#">ir a ITA-Wiki ></a>
-        </section>
-        <app-resource-card *ngFor="let resource of resources"
-            [author]="resource.author"
-            [date]="resource.generation_date"
-            [id]="resource.id_resource"
-            [description]="resource.resource_description">
-        </app-resource-card>
-    </div>
-    <div class="tab-pane container fade" id="related">
-        <h3>Retos similares</h3>
-        <app-challenge-card *ngFor="let relate of related"
-            [title] = "related_title"
-            [creation_date] = "related_creation_date"
-            [level] = "related_level"
-            [popularity] = "related_popularity"
-            [languages] = "related_languages"
-            [id] = "related_id">
-        </app-challenge-card>   
-
-       
-    </div>
+  </div>
+  <!--SOLUTIONS TAB-->
+  <div class="tab-pane container fade" id="solutions">
+    <h3>Las soluciones están bloqueadas</h3>
+    <span class="lock">
+      <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
+      <p>Las soluciones permanecerán bloqueadas hasta que entregues el reto</p>
+    </span>
+  </div>
+  <!--RESOURCES TAB-->
+  <div class="tab-pane container fade" id="resources">
+    <section class="title">
+      <h3 class="title_text">Recursos encontrados en ITA-Wiki</h3>
+      <a class="title_link" href="#">ir a ITA-Wiki ></a>
+    </section>
+    <app-resource-card
+      *ngFor="let resource of resources"
+      [author]="resource.author"
+      [date]="resource.generation_date"
+      [id]="resource.id_resource"
+      [description]="resource.resource_description"
+    >
+    </app-resource-card>
+  </div>
+  <!--RELATED TAB-->
+  <div class="tab-pane container fade" id="related">
+    <h3>Retos similares</h3>
+    <app-challenge-card
+      *ngFor="let relate of related"
+      [title]="related_title"
+      [creation_date]="related_creation_date"
+      [level]="related_level"
+      [popularity]="related_popularity"
+      [languages]="related_languages"
+      [id]="related_id"
+    >
+    </app-challenge-card>
+  </div>
 </div>
