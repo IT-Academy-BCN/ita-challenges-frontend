@@ -20,6 +20,9 @@
     color: $black-3;
     font-weight: bold;
 }
+li.related{
+    display: list-item;
+}
 .tab-content{
     margin-top: 3rem;
     width: 100%;
@@ -117,5 +120,45 @@ input[type="checkbox"]:focus-visible {
         app-solution{
             order: 1;
         }
+    }
+    :host{
+        overflow-x: auto;
+    }
+    //Afegir en cas que el dissenyador vulgui el botó Related també en responsive
+    ul.nav-tabs{
+    //     display: flex;
+    //     flex-wrap: nowrap;
+    //     overflow-x: scroll;
+    //     -webkit-overflow-scrolling: touch;
+    border: none;
+    }
+    .nav-link{
+        background-color: white;
+        color: $gray-3;
+        border: 1px solid $gray-3;
+        border-radius: 50px;
+        padding: 10 20px;
+        margin: 0 10px 0 0;
+        transition: 0.2s;
+
+        &.active{
+            background-color: $primary;
+            color: white;
+            border: 1px solid $primary;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        &:hover{
+            background-color: $primary;
+            color: white;
+            border: 1px solid $primary;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+    }
+}
+@media screen and (max-width: 560px) {
+    li.related{
+        display: none;
     }
 }
