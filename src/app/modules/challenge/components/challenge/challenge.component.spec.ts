@@ -8,6 +8,8 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
 import { of } from 'rxjs';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 describe('ChallengeContainerComponent', () => {
   let component: ChallengeComponent;
@@ -24,7 +26,9 @@ describe('ChallengeContainerComponent', () => {
                 RouterTestingModule, 
                 HttpClientTestingModule, 
                 SharedComponentsModule,
-                I18nModule
+                I18nModule,
+                NgbNavModule,
+                FormsModule
                 ],
       providers: [{
         provide : ActivatedRoute, 

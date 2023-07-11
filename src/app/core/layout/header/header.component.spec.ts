@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { By } from '@angular/platform-browser';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,7 +11,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      declarations: [HeaderComponent, MobileNavComponent]
     })
     .compileComponents();
 
@@ -19,5 +22,10 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+    it('should contain AppMobileNavComponent', () => {
+    const appMobileNavElement = fixture.debugElement.query(By.directive(MobileNavComponent));
+    expect(appMobileNavElement).not.toBeNull(); // Comprova que AppMobileNavComponent existeix dins d'AppComponent
   });
 });

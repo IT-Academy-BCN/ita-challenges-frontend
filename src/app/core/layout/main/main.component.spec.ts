@@ -5,6 +5,7 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from '../footer/footer.component';
 import { I18nModule } from '../../../../assets/i18n/i18n.module';
+import { MobileNavComponent } from '../header/mobile-nav/mobile-nav.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -16,7 +17,8 @@ describe('MainComponent', () => {
                     MainComponent, 
                     HeaderComponent, 
                     MainMenuComponent, 
-                    FooterComponent 
+                    FooterComponent,
+                    MobileNavComponent
                   ],
       imports: [
               RouterTestingModule,
