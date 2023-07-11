@@ -1,10 +1,12 @@
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { FilterChallenge } from './../../../../models/filter-challenge.model';
-import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
-import {Challenge} from "../../../../models/challenge.model";
+import { Challenge } from "../../../../models/challenge.model";
+import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-starter',
@@ -12,6 +14,7 @@ import {Challenge} from "../../../../models/challenge.model";
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
+  @ViewChild('modal') private modalContent!: FiltersModalComponent;
 
   dataChallenge!: DataChallenge;
   challenges: Challenge[] = [];
@@ -48,6 +51,11 @@ export class StarterComponent {
     });
 
   }
+
+  openModal() {
+    this.modalContent.open();
+  }
+
   getChallengeFilters(filters: FilterChallenge){
     console.log('llamada componente padre desde emitter')
     this.filters = filters;
