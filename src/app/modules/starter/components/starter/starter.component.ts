@@ -5,7 +5,7 @@ import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
-import { pageSize } from 'src/environments/environment';
+import { pageSize } from '../../../../../environments/environment';
 
 
 @Component({
