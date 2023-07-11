@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainMenuComponent } from './main-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { I18nModule } from '../../../../assets/i18n/i18n.module';
 
 describe('MainMenuComponent', () => {
   let component: MainMenuComponent;
@@ -10,7 +11,10 @@ describe('MainMenuComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ MainMenuComponent ],
-      imports: [RouterTestingModule],  
+      imports: [
+                RouterTestingModule, 
+                I18nModule
+              ],  
     })
     .compileComponents();
 

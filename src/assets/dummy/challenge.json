@@ -1,8 +1,8 @@
 {
-  "idChallenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
-  "challengeTitle": "Sociis Industries",
-  "level": "EASY",
-  "creationDate": "Mar 25, 2023",
+  "id_challenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
+  "challenge_title": "Sociis Industries",
+  "level": "MEDIUM",
+  "creation_date": "Mar 25, 2023",
   "popularity": 105,
   "details":{
     "description": "mi. Aliquam gravida mauris ut mi. Duis risus odio, auctor vitae, aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet",
@@ -28,19 +28,19 @@
   },
   "languages": [
     {
-      "id_language": "1",
+      "id_language": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
       "language_name": "Javascript"
     },
     {
-      "id_language": "2",
+      "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
       "language_name": "Java"
     },
     {
-      "id_language": "3",
+      "id_language": "1e047ea2-b787-49e7-acea-d79e92be3909",
       "language_name": "PHP"
     },
     {
-      "id_language": "4",
+      "id_language": "409c9fe8-74de-4db3-81a1-a55280cf92ef",
       "language_name": "Python"
     }
   ],

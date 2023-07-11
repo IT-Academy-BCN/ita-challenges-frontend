@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChallengeComponent } from './challenge.component';
+import { ChallengeCardComponent } from './challenge-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ChallengeComponent', () => {
-  let component: ChallengeComponent;
-  let fixture: ComponentFixture<ChallengeComponent>;
+  let component: ChallengeCardComponent;
+  let fixture: ComponentFixture<ChallengeCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChallengeComponent ],
+      declarations: [ ChallengeCardComponent ],
       imports: [RouterTestingModule,
       HttpClientTestingModule]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChallengeComponent);
+    fixture = TestBed.createComponent(ChallengeCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
