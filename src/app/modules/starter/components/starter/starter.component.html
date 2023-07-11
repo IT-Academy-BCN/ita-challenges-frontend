@@ -1,10 +1,11 @@
 <div class="d-flex starter">
-    <div class="col-3">
+    <div class="d-none d-md-block col-3">
         <h2>{{'modules.starter.main.section1' | translate}}</h2>
         <app-starter-filters></app-starter-filters>
     </div>
-    <div class="col-9">
-        <h2>{{'modules.starter.main.section2.title' | translate}}</h2>
+    <div class="col-12 col-md-9">
+        <h2>{{'modules.starter.main.section2.title' | translate}}<img class="float-end d-md-none" alt="filter-icon"
+            (click)="openModal()" src="../../../../../assets/img/icon/Sort.svg"></h2>
 
         <ul id="sortBy" class="d-flex justify-content-end gap-2">
             <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
@@ -24,3 +25,4 @@
         ></app-challenge-card>      
     </div>
 </div>
+<app-filters-modal #modal></app-filters-modal>

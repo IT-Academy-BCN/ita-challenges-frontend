@@ -3,6 +3,8 @@ nav{
     position:fixed;
     top: 0;
     width: 100%;
+    left:50%;
+    transform: translate(-50%, 0%);
     height: 2rem;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
