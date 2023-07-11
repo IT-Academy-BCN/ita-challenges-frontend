@@ -34,8 +34,6 @@ export class StarterComponent {
 
   ngOnInit(): void {
     this.loadMasterData();
-    console.log(this.challenges);
-    console.dir(this.challenges);
   }
 
   ngOnDestroy() {
@@ -46,6 +44,7 @@ export class StarterComponent {
       this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
+      console.log(this.challenges);
     });
 
   }
