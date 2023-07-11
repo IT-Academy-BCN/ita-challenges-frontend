@@ -10,6 +10,9 @@
    2.2 [Git configurations](#22-git-configurations)\
    2.3 [Daily Procedure](#23-daily-procedure)\
    2.4 [Work with cards Procedure](#24-work-with-cards-procedure)\
+    2.4.1 [Assigning yourself a task-card](#241-assigning-yourself-a-task-card)
+    2.4.2 [Assigning yourself a task-card](#242-working-on-a-class)
+    2.4.3 [Assigning yourself a task-card](#243-pull-requests)
    2.5 [Points to consider when doing a PR](#25-points-to-consider-when-doing-a-pr)\
    2.6 [Scrum metodology](#26-scrum-metodology)
 
@@ -145,7 +148,7 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ## 2.4 Work with cards Procedure
-### Assigning yourself a task-card
+### 2.4.1 Assigning yourself a task-card
 - The project has been planned in several stages called ["Epic"](https://github.com/orgs/IT-Academy-BCN/projects/13).
 
 - Each Epic is further divided into "tasks", which are generally created by the mentor. To organize the task distribution, this [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with four columns is used:
@@ -158,7 +161,7 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 
 - The tasks on the dashboard are actually "Issues" on Github. Therefore, these Issues can have labels (such as "Epic3", "Design", "Testing") that help provide an idea of the task's content.
 
-### Working on a task
+### 2.4.2 Working on a task
 -Once you have a task assigned, you will need to create a new branch dedicated exclusively to that task. The branch name format should always be "feature/#X", where "X" is the task number (which can be found at the end of the task title). For example, if your task is number 101, you would create a branch named "feature/#101".
 
 The typical flow is as follows:
@@ -178,7 +181,7 @@ The typical flow is as follows:
 
 There isn't a set way to do commits. You can follow the style of "conventional commits" (there is an extension in VSCode that can assist you with them): [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). In any case, it is important that your commits are descriptive, clearly indicating where the change was made and what it consists of.
 
-### Pull requests
+### 2.4.3 Pull requests
 -Once you have finished working on your feature branch, you are almost ready to make the Pull request (PR). Before doing so, pull the last changes of the remote develop branch and merge them into your feature branch (see 2.3 Daily Procedure)
 -Make sure to run the tests: "npm test" (also, you can run "npm test:watch" whenever you start working on the code to quickly catch any issues).
 -Push the branch to the remote and ensure that automatic tests (like SonarCloud) pass: you will be notified of the results of the tests right after pushing. If your PR doesn't pass the test, review the log messages to find and solve the problems before you try a new PR. In that case, remember to pull and push again.
