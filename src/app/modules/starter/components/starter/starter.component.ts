@@ -24,7 +24,7 @@ export class StarterComponent {
   page: number = 1;
   totalPages!: number;
   numChallenges!: number;
-  pageSize: number = 10;
+  pageSize: number = 7;
   listChallenges: any;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -54,8 +54,8 @@ export class StarterComponent {
       this.numChallenges = this.challenges.length;
       this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
 
-      const startIndex = (page -1) * 10;
-      const endindex = startIndex + 10;
+      const startIndex = (page -1) * this.pageSize;
+      const endindex = startIndex + this.pageSize;
       this.listChallenges = this.challenges.slice(startIndex, endindex);
       
       return this.listChallenges;
