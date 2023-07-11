@@ -47,9 +47,9 @@ describe('StarterComponent', () => {
   it('should receive filter values from child component when it emits', () => {
     const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
     const expectedFilters: FilterChallenge = {
-      languages: [0],
+      languages: [1],
       levels: ['easy'],
-      progress: [0]
+      progress: [1]
     };
     
     childComponent.filtersSelected.emit(expectedFilters);
@@ -95,9 +95,9 @@ it('should receive filter values from child component when progressForm changes'
 it('should receive all filter values from child component', () => {
   const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
   const expectedFilters: FilterChallenge = {
-    languages: [0],
+    languages: [1],
     levels: ['easy'],
-    progress: [0]
+    progress: [1]
   };
 
   childComponent.filtersForm.get('languages')!.get('javascript')!.setValue(true);
@@ -107,7 +107,7 @@ it('should receive all filter values from child component', () => {
   fixture.whenStable().then(() => {
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(expectedFilters);
-    expect(component.filters).toContain(expectedFilters);
+    expect(component.filters).toEqual(expectedFilters);
   });
 });
 

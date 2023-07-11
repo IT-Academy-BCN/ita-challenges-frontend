@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 
 import { StarterFiltersComponent } from './starter-filters.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent;
@@ -12,7 +13,7 @@ describe('StarterFiltersComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [StarterFiltersComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, I18nModule],
       providers: [FormBuilder]
     })
     .compileComponents();
