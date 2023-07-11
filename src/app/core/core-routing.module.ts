@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from "./layout/main/main.component";
 import { StarterComponent } from "../modules/starter/components/starter/starter.component";
-import { ChallengeContainerComponent } from '../modules/challenge/components/challenge-container/challenge-container.component';
+import { ChallengeComponent } from '../modules/challenge/components/challenge/challenge.component';
 
 const routes: Routes = [
     {
@@ -18,7 +18,7 @@ const routes: Routes = [
                     },
                     {
                         path: ':idChallenge', 
-                        component: ChallengeContainerComponent, 
+                        component: ChallengeComponent, 
                     },
                 ]
             },
