@@ -45,7 +45,15 @@
 }
 
 .details-body {
+    flex-direction: row;
     gap: 1.5rem;
+
+    .details-text{
+        order: 1;
+    }
+    app-solution{
+        order: 2;
+    }
 }
 
 .lock{
@@ -89,4 +97,17 @@ input[type="checkbox"]:checked::before {
 
 input[type="checkbox"]:focus-visible {
     outline: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .details-body {
+        flex-direction: column;
+
+        .details-text{
+            order: 2;
+        }
+        app-solution{
+            order: 1;
+        }
+    }
 }
