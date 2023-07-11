@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { ChallengeComponent } from "../../shared/components/challenge/challenge.component";
-import { ResourceComponent } from './resource/resource.component';
+import { ChallengeCardComponent } from "./challenge-card/challenge-card.component";
+import { ResourceCardComponent } from './resource-card/resource-card.component';
 
 
 @NgModule({
     declarations: [
-        ChallengeComponent,
-        ResourceComponent
+        ChallengeCardComponent,
+        ResourceCardComponent
     ],
     imports: [
         CommonModule,
@@ -17,8 +17,8 @@ import { ResourceComponent } from './resource/resource.component';
         NgbTooltipModule
     ],
     exports: [
-        ChallengeComponent,
-        ResourceComponent
+        ChallengeCardComponent,
+        ResourceCardComponent
     ],  
 })
 export class SharedComponentsModule { }

@@ -1,0 +1,74 @@
+{
+    "components": {
+        "footer": { },
+        "header": { },
+        "mainMenu": {
+            "section0": {
+                "title": "Inicio"
+            },
+            "section1": {
+                "title": "Retos"
+            },
+            "section2": {
+                "title": "Pruevas técnicas"
+            },
+            "section4": {
+                "title": "Crear reto"
+            },
+            "section5": {
+                "title": "Guías útiles"
+            },
+            "section6": {
+                "title": "Ajustes"
+            },
+            "section7": {
+                "title": "Mi espacio"
+            }
+        }
+    },
+    "modules": {
+        "challenge": {
+            "header": {
+                "title": "Retos",
+                "section":"Detalle",
+                "button": "Enviar solución"
+            },
+            "info": {
+                "detailsTitle": "Detalles",
+                "solutionsTitle": "Soluciones",
+                "resourcesTitle": "Recursos",
+                "relatedTitle": "Relacionado",
+                "description": "Descripción",
+                "examples": "Ejemplos",
+                "notes": "Notas",
+                "blocked": "Las soluciones están bloqueadas",
+                "blokedMsg": "Las soluciones permanecerán bloqueadas hasta que entregues el reto",
+                "resources": "Recursos encontrados en ITA-Wiki",
+                "resourcesLink": "ir a ITA-Wiki",
+                "related": "Retos similares"
+            }
+        },
+        "starter": {
+            "filters": {
+                "lenguaje": "Lenguaje",
+                "dificulty": "Dificultad",
+                "easy": "Facil",
+                "medium": "Media",
+                "hard": "Difícil",
+                "progress": "Progreso",
+                "noStarted": "No empezados",
+                "started": "Falta completar",
+                "finished": "Completados"
+            },
+            "main": {
+                "section1": "Filtros",
+                "section2": {
+                    "title": "Retos",
+                    "popularity": "Popularidad",
+                    "date": "Fecha"
+                }
+            }
+        }
+    }
+}
+      
