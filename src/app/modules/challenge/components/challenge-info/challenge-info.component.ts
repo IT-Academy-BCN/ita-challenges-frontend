@@ -27,6 +27,9 @@ export class ChallengeInfoComponent {
   @Input() languages: Language[] = []
 
   showStatement = false;
+  isLogged = true;
+
+  solutionsDummy = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
 
   idChallenge!: string | any;
   params$!: Subscription;

@@ -45,11 +45,22 @@
   </div>
   <!--SOLUTIONS TAB-->
   <div class="tab-pane container fade" id="solutions">
-    <h3>Las soluciones están bloqueadas</h3>
-    <span class="lock">
-      <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
-      <p>Las soluciones permanecerán bloqueadas hasta que entregues el reto</p>
-    </span>
+    <!--restricted (no user logged)-->
+    <div class="restricted" *ngIf="!isLogged">
+      <h3>Las soluciones están bloqueadas</h3>
+      <span class="lock">
+        <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
+        <p>
+          Las soluciones permanecerán bloqueadas hasta que entregues el reto
+        </p>
+      </span>
+    </div>
+    <!--unrestricted (user logged)-->
+    <div class="unrestricted" *ngIf="isLogged">
+      <ng-container *ngFor="let solution of solutionsDummy; let i = index">
+        <app-solution [number]="i+1" class="mb-4"></app-solution>
+      </ng-container>
+    </div>
   </div>
   <!--RESOURCES TAB-->
   <div class="tab-pane container fade" id="resources">
