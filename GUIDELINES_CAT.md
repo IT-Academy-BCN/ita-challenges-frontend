@@ -30,7 +30,6 @@
 8. [**PROVES**](#8-proves)
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 1. ENLLAÇOS DEL PROJECTE
 ## 1.1 Enllaços del projecte
@@ -209,8 +208,7 @@ https://scrumguides.org/
     9. Manipulació del DOM:
         -Evita manipular directament el DOM, utilitza la vinculació de dades, directives integrades d'Angular, ViewChild/ren...
         -Per a manipulació de DOM de baix nivell, utilitza Renderer2
-- Llenguatges: utilitza únicament l'anglès per al codi (pots utilitzar altres llenguatges per als comentaris)
-----------------------------------------------------------------
+- Llenguatges: utilitza **únicament l'anglès per al codi** (pots utilitzar altres llenguatges per als comentaris)
 ----------------------------------------------------------------
 
 # 4. STACK
@@ -229,13 +227,11 @@ Intenta no sobrecarregar el projecte amb biblioteques.
    - JWT: 
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 5. REQUISITS
 - Node.js: Assegura't de tenir Node.js instal·lat al teu sistema. Pots descarregar-Lo des del lloc web oficial de Node.js.
 - Git bash: el necessitaràs per contribuir al projecte.
 
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 6. INSTAL·LACIÓ
@@ -247,7 +243,6 @@ Intenta no sobrecarregar el projecte amb biblioteques.
     (o 'npm i') per instal·lar totes les dependències del projecte especificades en l'arxiu package.json.
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 7. DESENVOLUPAMENT
 Per a propòsits de desenvolupament, utilitza el comandament
@@ -255,7 +250,6 @@ Per a propòsits de desenvolupament, utilitza el comandament
         ng serve
 per iniciar el servidor de desenvolupament. Això compilarà el projecte i el servirà localment, permetent-te veure i interactuar amb ell al teu navegador.
 
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 8. PROVES

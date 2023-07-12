@@ -10,9 +10,9 @@
    2.2 [Configuraciones de Git](#22-configuraciones-de-git)\
    2.3 [Procedimiento diario](#23-procedimiento-diario)\
    2.4 [Procedimiento de trabajo con tarjetas](#24-procedimiento-de-trabajo-con-tarjetas)\
-    2.4.1 [Asignarte una tarjeta de tareas](#241-asignarte-una-tarjeta-de-tareas)
-    2.4.2 [Trabajar en una tarea](#242-trabajar-en-una-tarea)
-    2.4.3 [Pull request](#243-pull-request)
+    2.4.1 [Asignarte una tarjeta de tareas](#241-asignarte-una-tarjeta-de-tareas)\
+    2.4.2 [Trabajar en una tarea](#242-trabajar-en-una-tarea)\
+    2.4.3 [Pull request](#243-pull-request)\
    2.5 [Metodología Scrum](#25-metodología-scrum)
 
 3. [**REGLAS DE CÓDIGO**](#3-reglas-de-código)
@@ -30,24 +30,21 @@
 8. [**PRUEBAS**](#8-pruebas)
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 1. ENLACES DEL PROYECTO
-## 1.1 Enlaces del proyecto
+### 1. ENLACES DEL PROYECTO
+#### 1.1 Enlaces del proyecto
 - [GITHUB](https://github.com/IT-Academy-BCN/ita-challenges-frontend)
 - [Frontend Sprint Backlog](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1)
 - [Product Backlog](https://github.com/orgs/IT-Academy-BCN/projects/13/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design)
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 2. PROCEDIMIENTOS DE TRABAJO
+### 2. PROCEDIMIENTOS DE TRABAJO
 
-## 2.1 Primeras tareas a realizar en el proyecto
-### 0. Pide permiso para colaborar en el proyecto
-
-### 1. Añade tu nombre al archivo contributors.md
+#### 2.1 Primeras tareas a realizar en el proyecto
+* Pide permiso para colaborar en el proyecto
+* Añade tu nombre al archivo contributors.md. Para ello:
 
 1. Clona el repositorio de Github ita-challenges-frontend en tu sistema local:
 
@@ -77,13 +74,12 @@
 
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-## 2.2 Configuraciones de Git
+#### 2.2 Configuraciones de Git
 
 Configuraciones de Git necesarias para prevenir problemas
 
-### 2.2.1 Git ignore
+##### 2.2.1 Git ignore
 
 1. Edita el archivo .gitignore:
 Ahora puedes editar el archivo ".gitignore" para incluir cualquier patrón de archivos o directorio específicos que quieras que Git ignore en todos tus proyectos. Recuerda guardar el archivo después de hacer cualquier cambio.
@@ -97,7 +93,7 @@ Una buena práctica es incluir archivos que contengan datos sensibles (como arch
 4. .gitignore global vs local:
 Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de Git. Si tienes archivos que hay que ignorar que son específicos de un solo proyecto, considera usar un archivo ".gitignore" local dentro del directorio de ese proyecto.
 
-### 2.2.2 Autocrlf
+##### 2.2.2 Autocrlf
 
 1. Abre Git Bash.
 2. Ejecuta el siguiente comando para configurar Git para que convierta los saltos de línea a CRLF cuando se hace un checkout de un archivo:
@@ -105,7 +101,7 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
        git config --global core.autocrlf true
 3. Todos los archivos nuevos que se creen tendrán un salto de línea LF. Sin embargo, cuando los archivos se comprueban en tu máquina, Git convertirá estos saltos de línea a CRLF. Cuando se hace un commit de archivos a tu repositorio, Git volverá a convertir los saltos de línea a LF.
 
-### 2.2.3 Safe CRLF
+##### 2.2.3 Safe CRLF
 
 1. Abre Git Bash.
 2. Ejecuta el siguiente comando para configurar Git para que reciba una advertencia cuando intentas hacer un commit de un archivo con saltos de línea CRLF o cuando intentas convertir estos archivos con saltos de línea CRLF a LF:
@@ -113,7 +109,7 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
        git config --global core.safecrlf warn
 3. Con esta configuración, si intentas hacer un commit de un archivo con saltos de línea CRLF, recibirás una advertencia. La misma advertencia se producirá si intentas convertir un archivo con saltos de línea CRLF a LF.
 
-## 2.3 Procedimiento diario
+#### 2.3 Procedimiento diario
 
 El procedimiento a seguir cada día sería este:
 
@@ -138,18 +134,18 @@ El procedimiento a seguir cada día sería este:
 
 ----------------------------------------------------------------
 
-## 2.4 Procedimiento de trabajo con tarjetas
+#### 2.4 Procedimiento de trabajo con tarjetas
 
 Las tarjetas de tareas están organizadas según su estado de desarrollo. Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 
-### 2.4.1 Asignarte una tarjeta de tareas
+##### 2.4.1 Asignarte una tarjeta de tareas
 
 1. Ve a la vista del proyecto en Github.
 2. En la columna "Backlog", selecciona una tarjeta que no esté asignada.
 3. Haz clic sobre la tarjeta y asígnatela.
 4. Mueve la tarjeta a la columna "Doing".
 
-### 2.4.2 Trabajar en una tarea
+##### 2.4.2 Trabajar en una tarea
 
 1. Crea una nueva rama para la tarea.
 
@@ -161,7 +157,7 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
        git commit -m "descripción de los cambios"
        git push origin nombre-de-la-rama-tarea
 
-### 2.4.3 Pull request
+##### 2.4.3 Pull request
 
 1. Crea una pull request en GitHub desde tu rama de tareas a la rama "develop".
 2. Asigna a un revisor de código.
@@ -171,19 +167,18 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 
 ----------------------------------------------------------------
 
-## 2.5 Metodología SCRUM
+#### 2.5 Metodología SCRUM
 
 [Guía Scrum](https://scrumguides.org/)
 
--Reuniones diarias para plantear dificultades y bloqueantes que tengas
--Reuniones quincenales más profundas (jueves)
--Reuniones ocasionales con el cliente
--Trabajo por Epics > Tareas (sprints)
+- Reuniones diarias para plantear dificultades y bloqueantes que tengas
+- Reuniones quincenales más profundas (jueves)
+- Reuniones ocasionales con el cliente
+- Trabajo por Epics > Tareas (sprints)
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 3. REGLAS DE CÓDIGO
+### 3. REGLAS DE CÓDIGO
 - [Clean code](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
 - [Principios SOLID](https://en.wikipedia.org/wiki/SOLID)
 - [Guía de estilo de Angular](https://angular.io/guide/styleguide). Puntos principales:
@@ -218,15 +213,14 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
         -Para manipulación de DOM de bajo nivel, utiliza Renderer2
 - Idiomas: utiliza únicamente el inglés para el código (puedes usar otros idiomas para los comentarios)
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 4. STACK
+### 4. STACK
 
-## 4.1 Framework
+#### 4.1 Framework
 Angular 16.0.1
 
-## 4.2 Librerías
-Intenta no sobrecargar el proyecto con librerías.
+#### 4.2 Librerías
+Intenta no sobrecargar el proyecto con librerías innecesarias.
    - Bootstrap: 5.2
    - ngBootstrap: 15.0.0
    - "jasmine-marbles": "^0.9.2",
@@ -236,16 +230,14 @@ Intenta no sobrecargar el proyecto con librerías.
    - JWT: 
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 5. REQUISITOS
+### 5. REQUISITOS
 - Node.js: Asegúrate de tener Node.js instalado en tu sistema. Puedes descargarlo desde el sitio web oficial de Node.js.
 - Git bash: lo necesitarás para contribuir al proyecto.
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 6. INSTALACIÓN
+### 6. INSTALACIÓN
 1. Abre una terminal o una línea de comandos.
 2. Navega hasta el directorio raíz del proyecto.
 3. Ejecuta el comando
@@ -254,18 +246,16 @@ Intenta no sobrecargar el proyecto con librerías.
     (o 'npm i') para instalar todas las dependencias del proyecto especificadas en el archivo package.json.
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 7. DESARROLLO
+### 7. DESARROLLO
 Para propósitos de desarrollo, utiliza el comando
 
         ng serve
 para iniciar el servidor de desarrollo. Esto compilará el proyecto y lo servirá localmente, permitiéndote ver e interactuar con él en tu navegador.
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
-# 8. PRUEBAS
+### 8. PRUEBAS
 Para ejecutar las pruebas, utiliza el comando
 
     npm test

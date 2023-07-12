@@ -29,8 +29,6 @@
 
 8. [**TESTING**](#6-installation)
 
-
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 1. PROJECT'S LINKS
@@ -40,7 +38,6 @@
 - [Product Backlog](https://github.com/orgs/IT-Academy-BCN/projects/13/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design)
 
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 2. WORK PROCEDURES
@@ -192,7 +189,6 @@ https://scrumguides.org/
 -Work by Epics > Tasks (Sprints)
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 3. CODING GUIDELINES
 - [Clean Code](8https://www.freecodecamp.org/news/clean-coding-for-beginners/)
@@ -227,8 +223,7 @@ https://scrumguides.org/
     9. DOM manipulation:
         -Avoid directly manipulating the DOM, use data-binding, Angular built-in directives, ViewChild/ren...
         -For low-level DOM manipulation, use Renderer2
-- Languages: use only English for the code (you can use other languages for comments)
-----------------------------------------------------------------
+- Languages: use **only English** for the code (you can use other languages for comments)
 ----------------------------------------------------------------
 
 # 4. STACK
@@ -247,13 +242,11 @@ Try not to overload the project with libraries.
    - JWT: 
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 5. REQUISITES
 - Node.js: Make sure you have Node.js installed on your system. You can download it from the official Node.js website.
 - Git bash: you will need it  to contribute to the project.
 
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 6. INSTALLATION
@@ -265,7 +258,6 @@ Try not to overload the project with libraries.
     (or 'npm i') to install all the project dependencies specified in the package.json file.
 
 ----------------------------------------------------------------
-----------------------------------------------------------------
 
 # 7. DEVELOPMENT
 For development purposes, use the command
@@ -273,7 +265,6 @@ For development purposes, use the command
         ng serve
 to start the development server. This will compile the project and serve it locally, enabling you to view and interact with it in your browser.
 
-----------------------------------------------------------------
 ----------------------------------------------------------------
 
 # 8. TESTING
