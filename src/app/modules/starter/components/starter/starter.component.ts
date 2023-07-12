@@ -48,11 +48,13 @@ export class StarterComponent {
     });
 
   }
+
   getChallengeFilters(filters: FilterChallenge){
-    console.log('llamada componente padre desde emitter')
+    console.log('llamada componente padre desde emitter: '+ filters.languages, filters.levels, filters.progress)
     this.filters = filters;
     //TODO: llamar al endpoint
   }
+
   changeSort(newSort: string){
     if(newSort != this.sortBy){
       this.sortBy = newSort;

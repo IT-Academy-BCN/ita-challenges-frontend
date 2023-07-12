@@ -7,6 +7,7 @@ import { ChallengeComponent } from './components/challenge/challenge.component';
 import { ChallengeRoutingModule } from './challenge-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
+import { ModalsModule } from '../modals/modals.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 
@@ -22,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CoreModule,
     ChallengeRoutingModule,
     RouterModule,
+    ModalsModule,
     TranslateModule
   ]
 })
