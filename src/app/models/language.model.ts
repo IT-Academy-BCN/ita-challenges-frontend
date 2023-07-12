@@ -1,6 +1,6 @@
 export class Language {
 
-    id_language: number;
+    id_language: string;
     language_name: string;
 
     constructor(element: any) {
