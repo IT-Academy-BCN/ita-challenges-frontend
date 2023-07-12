@@ -1,7 +1,7 @@
 <div class="d-flex starter">
     <div class="col-3">
         <h2>{{'modules.starter.main.section1' | translate}}</h2>
-        <app-starter-filters></app-starter-filters>
+        <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
     </div>
     <div class="col-9">
         <h2>{{'modules.starter.main.section2.title' | translate}}</h2>
