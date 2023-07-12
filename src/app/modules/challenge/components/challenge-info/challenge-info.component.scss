@@ -18,19 +18,33 @@
     border: none;
     border-bottom: 5px solid $primary;
     color: $black-3;
+    font-weight: bold;
 }
 .tab-content{
     margin-top: 3rem;
     width: 75%;
-
 }
+
 .title{
+    margin: 0;
+    padding: 0;
+    position: relative;
     display: flex;
 }
 .title_link{
     color: $primary;
     text-decoration: none;
     font-weight: bold;
-    align-self: center ;
-    padding: 1.5rem;
+    margin-left: 1.5rem;
+    padding-top: .23rem;
+}
+.title_text{
+    margin-top: 0;
+}
+.lock{
+    display: flex;
+    align-items: center;
+}
+.lock img{   
+    margin:0 .2rem .3rem 0;
 }

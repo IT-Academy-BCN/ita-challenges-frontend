@@ -1,26 +1,28 @@
 <div class="d-flex starter">
     <div class="col-3">
-        <h2>Filtros</h2>
-        <app-starter-filters></app-starter-filters>
+        <h2>{{'modules.starter.main.section1' | translate}}</h2>
+        <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
     </div>
     <div class="col-9">
-        <h2>Retos</h2>
+        <h2>{{'modules.starter.main.section2.title' | translate}}</h2>
+
         <ul id="sortBy" class="d-flex justify-content-end gap-2">
             <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
-                Popularidad
+                {{'modules.starter.main.section2.popularity' | translate}}
             </li>
             <li class="animated" [ngClass]="{'selected' : sortBy == 'date'}" (click)="changeSort('date')">
-                Fecha    
+                {{'modules.starter.main.section2.date' | translate}}    
             </li>
         </ul>
-        <app-challenge
-            *ngFor ="let challenge of listChallenges, let i = index"
-            [challenge_title] = "challenge.challenge_title"
+        <app-challenge-card
+            *ngFor ="let challenge of challenges, let i = index"
+            [title] = "challenge.challenge_title"
             [creation_date] = "challenge.creation_date"
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
-        ></app-challenge>      
+        ></app-challenge-card>  
         <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages" [numChallenges]="numChallenges"></app-pagination>
+             
     </div>
 </div>

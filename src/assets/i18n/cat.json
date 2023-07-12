@@ -1,0 +1,74 @@
+{
+    "components": {
+        "footer": { },
+        "header": { },
+        "mainMenu": {
+            "section0": {
+                "title": "Inici"
+            },
+            "section1": {
+                "title": "Reptes"
+            },
+            "section2": {
+                "title": "Proves tècniques"
+            },
+            "section4": {
+                "title": "Crear repte"
+            },
+            "section5": {
+                "title": "Guies útils"
+            },
+            "section6": {
+                "title": "Arranjaments"
+            },
+            "section7": {
+                "title": "El meu espai"
+            }
+        }
+    },
+    "modules": {
+        "challenge": {
+            "header": {
+                "title": "Reptes",
+                "section":"Detall",
+                "button": "Enviar solució"
+            },
+            "info": {
+                "detailsTitle": "Detalls",
+                "solutionsTitle": "Solucions",
+                "resourcesTitle": "Recursos",
+                "relatedTitle": "Relacionat",
+                "description": "Descripció",
+                "examples": "Exemples",
+                "notes": "Notes",
+                "blocked": "Les solucions estan bloquejades",
+                "blokedMsg": "Les solucions romandran bloquejades fins que lliuris el repte",
+                "resources": "Recursos tobats a ITA-Wiki",
+                "resourcesLink": "Anar a ITA-Wiki",
+                "related": "Reptes similars"
+            }
+        },
+        "starter": {
+            "filters": {
+                "lenguaje": "Llenguatje",
+                "dificulty": "Dificultat",
+                "easy": "Fàcil",
+                "medium": "Mitja",
+                "hard": "Difícil",
+                "progress": "Progrès",
+                "noStarted": "No començats",
+                "started": "Falta completar",
+                "finished": "Completats"
+            },
+            "main": {
+                "section1": "Filtres",
+                "section2": {
+                    "title": "Reptes",
+                    "popularity": "Popularitat",
+                    "date": "Data"
+                }
+            }
+        }
+    }
+}
+      
