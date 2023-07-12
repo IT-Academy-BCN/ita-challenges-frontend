@@ -3,27 +3,32 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from "./layout/main/main.component";
 import { StarterComponent } from "../modules/starter/components/starter/starter.component";
 import { ChallengeComponent } from '../modules/challenge/components/challenge/challenge.component';
+import { ProfileComponent } from '../modules/profile/components/profile/profile.component';
 
 const routes: Routes = [
     {
         path: 'ita-challenge',
         component: MainComponent,
-        children: [
-            {
-                path: 'challenges',
-                children:[
-                    {
-                        path: '',  
-                        component: StarterComponent,
-                    },
-                    {
-                        path: ':idChallenge', 
-                        component: ChallengeComponent, 
-                    },
-                ]
-            },
-        ]
-    }
+            children: [
+                {
+                    path: 'profile',
+                    component: ProfileComponent,
+                },
+                {    
+                    path: 'challenges',
+                    children:[
+                        {
+                            path: '',  
+                            component: StarterComponent,
+                        },
+                        {
+                            path: ':idChallenge', 
+                            component: ChallengeComponent, 
+                        },
+                    ]
+                },
+            ]
+        }
 ];
 
 @NgModule({
