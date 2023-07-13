@@ -21,6 +21,8 @@
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
-        ></app-challenge-card>      
+        ></app-challenge-card>  
+        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages" [numChallenges]="numChallenges"></app-pagination>
+             
     </div>
 </div>

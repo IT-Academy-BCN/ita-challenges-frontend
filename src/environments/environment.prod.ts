@@ -8,3 +8,5 @@ export const environment = {
   BACKEND_TOKEN: ''
 
 };
+
+export const pageSize:number = 8;

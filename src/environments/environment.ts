@@ -5,5 +5,7 @@ export const environment = {
   BACKEND_ALL_CHALLENGES: '/challenges',
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
-  BACKEND_TOKEN: ''
+  BACKEND_TOKEN: '',
+  
 };
+export const pageSize:number = 8;
