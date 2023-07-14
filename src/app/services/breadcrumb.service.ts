@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter } from 'rxjs';
+import { BehaviorSubject, Subscription, filter } from 'rxjs';
 import { Breadcrumb } from '../models/breadcrumb';
 import { Router, NavigationEnd, ActivatedRouteSnapshot, Data } from '@angular/router';
 
@@ -8,8 +8,9 @@ import { Router, NavigationEnd, ActivatedRouteSnapshot, Data } from '@angular/ro
 }) 
 export class BreadcrumbService { 
  
-  private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]); 
+  _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]); 
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable(); 
+  subs: Subscription = this.breadcrumbs$.subscribe(res => console.log(res));
  
   constructor(private router: Router) { 
     this.router.events.pipe( 
@@ -24,7 +25,8 @@ export class BreadcrumbService {
     const breadcrumbs: Breadcrumb[] = []; 
     this.addBreadcrumb(root, [], breadcrumbs); 
 
-    this._breadcrumbs$.next(breadcrumbs); 
+      this._breadcrumbs$.next(breadcrumbs); 
+      console.log(breadcrumbs);
   }
  
 private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breadcrumb[]) { 
@@ -37,7 +39,8 @@ private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadc
                 label: this.getLabel(route.data), 
                 url: '/' + routeUrl.join('/') 
             }; 
-            breadcrumbs.push(breadcrumb); 
+          breadcrumbs.push(breadcrumb); 
+          console.log(breadcrumbs)
         }
 
         if (route.firstChild) {
@@ -46,6 +49,7 @@ private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadc
             // Check if route has query param tab (challenge-info selected tab)
             if(route.queryParamMap.has('tab')) {
                 breadcrumbs[breadcrumbs.length - 1].label += ' > ' + route.queryParamMap.get('tab');
+              console.log(route.queryParamMap.get('tab'));
             }
         }
     } 
