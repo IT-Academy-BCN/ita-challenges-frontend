@@ -6,6 +6,5 @@ export const environment = {
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
-  
+  pageSize: 8
 };
-export const pageSize:number = 8;
