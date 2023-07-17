@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component';
 
 @Component({
@@ -25,7 +26,11 @@ export class ChallengeHeaderComponent {
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
   }
-  
+
+  openSendSolutionModal(){
+    this.modalService.open(SendSolutionModalComponent, { centered : true, size : 'lg' })
+  }
+
   openRestrictedModal(){
       this.modalService.open(RestrictedModalComponent, { centered : true, size : 'lg' })
   }
