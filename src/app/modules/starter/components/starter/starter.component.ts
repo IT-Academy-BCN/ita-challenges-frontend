@@ -5,6 +5,8 @@ import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
+import { environment } from '../../../../../environments/environment';
+
 
 @Component({
   selector: 'app-starter',
@@ -21,6 +23,12 @@ export class StarterComponent {
   sortBy: string = "popularity";
   challenge = Challenge;
 
+  page: number = 1;
+  totalPages!: number;
+  numChallenges!: number;
+  listChallenges: any;
+  pageSize = environment.pageSize;
+
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private starterService: StarterService
@@ -33,20 +41,32 @@ export class StarterComponent {
   }
 
   ngOnInit(): void {
-    this.loadMasterData();
+    this.getChallengesByPage(this.page);
   }
 
   ngOnDestroy() {
     if (this.params$ != undefined) this.params$.unsubscribe();
+    if (this.challengesSubs$ != undefined) this.challengesSubs$.unsubscribe();
   }
 
-  loadMasterData() {
-      this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
+  getChallengesByPage(page: number) {
+    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
       this.dataChallenge = new DataChallenge(resp);
       this.challenges = this.dataChallenge.challenges;
-      console.log(this.challenges);
-    });
+      this.numChallenges = this.challenges.length;
+      this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
 
+      const startIndex = (page -1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      this.listChallenges = this.challenges.slice(startIndex, endIndex);
+      
+      return this.listChallenges;
+    });
+  }
+
+  goToPage(page: number){
+    this.page = page;
+    this.getChallengesByPage(page);
   }
 
   getChallengeFilters(filters: FilterChallenge){
@@ -54,7 +74,6 @@ export class StarterComponent {
     this.filters = filters;
     //TODO: llamar al endpoint
   }
-
   changeSort(newSort: string){
     if(newSort != this.sortBy){
       this.sortBy = newSort;
