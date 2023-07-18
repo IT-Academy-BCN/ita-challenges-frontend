@@ -1,0 +1,5 @@
+<div *ngIf="numChallenges" class="pagination">
+    <div class="pagination__prev col-3"><a *ngIf="page > 1" (click)="prev()"> < </a></div>
+    <p>Página {{page}} de {{totalPages}}</p>
+    <div class="pagination__next col-3"><a *ngIf="page < totalPages" (click)="next()"> > </a></div>  
+</div>
