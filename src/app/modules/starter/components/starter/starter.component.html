@@ -15,12 +15,14 @@
             </li>
         </ul>
         <app-challenge-card
-            *ngFor ="let challenge of challenges, let i = index"
+            *ngFor ="let challenge of listChallenges, let i = index"
             [title] = "challenge.challenge_title"
             [creation_date] = "challenge.creation_date"
             [level] = "challenge.level"
             [popularity] = "challenge.popularity"
             [languages] = "challenge.languages"
-        ></app-challenge-card>      
+        ></app-challenge-card>  
+        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages" [numChallenges]="numChallenges"></app-pagination>
+             
     </div>
 </div>
