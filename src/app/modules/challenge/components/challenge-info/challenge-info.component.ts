@@ -26,7 +26,7 @@ export class ChallengeInfoComponent {
   @Input() popularity!: number;
   @Input() languages: Language[] = []
 
-
+  showStatement = false;
 
   idChallenge!: string | any;
   params$!: Subscription;
