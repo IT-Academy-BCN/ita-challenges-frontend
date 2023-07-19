@@ -41,15 +41,27 @@
 .title_text{
     margin-top: 0;
 }
+
+.details-body {
+    flex-direction: row;
+    gap: 1.5rem;
+
+    .details-text{
+        order: 1;
+    }
+    app-solution{
+        order: 2;
+    }
+}
+
 .lock{
     display: flex;
     align-items: center;
 }
+
 .lock img{   
     margin:0 .2rem .3rem 0;
 }
-
-
 
 input[type="checkbox"] {
     -webkit-appearance: none;

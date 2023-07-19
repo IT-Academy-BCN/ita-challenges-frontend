@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ChallengeDetails } from 'src/app/models/challenge-details.model';
 import { Example } from 'src/app/models/challenge-example.model';
 import { Language } from 'src/app/models/language.model';
@@ -6,6 +6,7 @@ import { ChallengeService } from '../../../../services/challenge.service';
 import { Subscription } from 'rxjs';
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-challenge-info',
@@ -15,6 +16,7 @@ import { Challenge } from "../../../../models/challenge.model";
 })
 export class ChallengeInfoComponent {
   constructor(private challengeService: ChallengeService){}
+  @ViewChild('nav') nav!: NgbNav;
 
   @Input() related: any = [];
   @Input() resources: any = [];
@@ -26,7 +28,11 @@ export class ChallengeInfoComponent {
   @Input() popularity!: number;
   @Input() languages: Language[] = []
 
+  solutionsDummy = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
+
   showStatement = false;
+  isLogged = true;
+  activeId = 1;
 
   idChallenge!: string | any;
   params$!: Subscription;

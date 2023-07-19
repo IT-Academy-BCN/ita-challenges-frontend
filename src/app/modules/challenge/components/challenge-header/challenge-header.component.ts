@@ -17,7 +17,7 @@ export class ChallengeHeaderComponent {
   @Input() creation_date!: Date;
   @Input() level = "";
 
-  challenge_title: string | undefined
+  challenge_title: string | undefined = 'hola';
   challenge_date: Date | undefined
   challenge_level: string | undefined
   
