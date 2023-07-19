@@ -12,8 +12,6 @@ html,
 body {
     min-height: 100vh;
     background-color: $gray-4;
-}
-body {
     margin: 0;
     padding: 12px 10px 50px;
     font-family: "Poppins", sans-serif;
@@ -22,5 +20,10 @@ body {
         display: flex;
         flex-direction: column;
         height: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0;
     }
 }
