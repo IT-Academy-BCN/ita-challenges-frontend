@@ -47,7 +47,7 @@
         <!--unrestricted (user logged)-->
         <div class="unrestricted" *ngIf="isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
-            <app-solution [number]="i+1" class="mb-4"></app-solution>
+            <app-solution [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
           </ng-container>
         </div>
         </div>

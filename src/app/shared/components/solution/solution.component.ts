@@ -16,7 +16,7 @@ type Language = 'javascript' | 'java' | 'python' | 'php';
   styleUrls: ['./solution.component.scss']
 })
 export class SolutionComponent {
-  @ViewChild('myTextArea') myTextArea!: ElementRef;
+  @ViewChild('editorSolution') editorSolution!: ElementRef;
   editor: any;
 
   @Input() number?: number;
@@ -65,15 +65,26 @@ export class SolutionComponent {
         return;
     }
 
-    let state = EditorState.create({
-      doc: comment,
+    let state: EditorState;
+    if (this.isUserSolution){
+      state = EditorState.create({
+        doc: comment,
+        extensions: [
+          minimalSetup,
+          languageExtension
+        ]
+      });
+    }else{
+      state = EditorState.create({
+      doc: 'Respuesta de ejemplo, no se puede modificar',
       extensions: [
         minimalSetup,
-        languageExtension
+        languageExtension,
+        EditorView.editable.of(false)
       ]
     });
-
-    this.editor = new EditorView({ state, parent: this.myTextArea.nativeElement });
+  }
+    this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement });
   }
 
 }
