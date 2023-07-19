@@ -10,6 +10,7 @@ import { ChallengeInfoComponent } from '../challenge-info/challenge-info.compone
 import { of } from 'rxjs';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent;
@@ -20,7 +21,8 @@ describe('ChallengeComponent', () => {
       declarations: [
                     ChallengeComponent, 
                     ChallengeHeaderComponent,
-                    ChallengeInfoComponent,
+                  ChallengeInfoComponent,
+                    SolutionComponent
                   ],
       imports: [
                 RouterTestingModule, 
@@ -32,8 +34,14 @@ describe('ChallengeComponent', () => {
                 ],
       providers: [{
         provide : ActivatedRoute, 
-        useValue : {
-            paramMap :  of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'}))
+        useValue: {
+          queryParams: of({}),
+            paramMap :  of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'})),
+          snapshot: {
+            queryParams: {
+            tab: 'someTab'
+          }
+            }
         }
       }] 
       });

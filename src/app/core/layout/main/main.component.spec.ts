@@ -5,7 +5,8 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from '../footer/footer.component';
 import { I18nModule } from '../../../../assets/i18n/i18n.module';
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
+import { MobileNavComponent } from '../../../core/layout/header/mobile-nav/mobile-nav.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -17,11 +18,12 @@ describe('MainComponent', () => {
                     MainComponent, 
                     HeaderComponent, 
                     MainMenuComponent, 
-                    FooterComponent 
+                    FooterComponent,
+                    MobileNavComponent
                   ],
       imports: [
               RouterTestingModule,
-        I18nModule,
+              I18nModule,
               SharedComponentsModule
             ],  
     })
