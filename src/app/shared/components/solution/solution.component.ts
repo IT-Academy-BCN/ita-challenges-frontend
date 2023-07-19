@@ -19,7 +19,15 @@ export class SolutionComponent {
   @ViewChild('editorSolution') editorSolution!: ElementRef;
   editor: any;
 
-  @Input() number?: number;
+  @Input() set number(value: number | undefined) {
+  setTimeout(() => {
+    this._number = value;
+  }, 0);
+}
+get number() {
+  return this._number;
+}
+  private _number?: number;
   @Input() languageExt: Language = 'javascript';
 
   @Input() isUserSolution = false;

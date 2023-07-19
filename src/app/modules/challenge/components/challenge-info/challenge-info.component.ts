@@ -64,15 +64,18 @@ export class ChallengeInfoComponent {
     this.loadRelatedChallenge(this.related_id);
   }
 
-    ngAfterViewInit() {
-    this.route.queryParams.subscribe(params => {
-      const tab = params['tab'];
-      if (tab) {
-        const tabId = this.getTabId(tab);
+ngAfterViewInit() {
+  this.route.queryParams.subscribe(params => {
+    const tab = params['tab'];
+    if (tab) {
+      const tabId = this.getTabId(tab);
+      setTimeout(() => {
+        this.activeId = tabId;
         this.nav.select(tabId);
-      }
-    });
-  }
+      });
+    }
+  });
+}
 
   loadRelatedChallenge(id: string) {
     this.challengeSubs$ = this.challengeService.getChallengeById(this.related_id).subscribe((challenge) => {
