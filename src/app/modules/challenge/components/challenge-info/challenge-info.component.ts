@@ -6,7 +6,8 @@ import { ChallengeService } from '../../../../services/challenge.service';
 import { Subscription } from 'rxjs';
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
-import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-challenge-info',
@@ -15,7 +16,7 @@ import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent {
-  constructor(private challengeService: ChallengeService){}
+  constructor(private challengeService: ChallengeService, private router: Router, private route: ActivatedRoute){}
   @ViewChild('nav') nav!: NgbNav;
 
   @Input() related: any = [];
@@ -34,6 +35,13 @@ export class ChallengeInfoComponent {
   isLogged = true;
   activeId = 1;
 
+    tabNames: any = {
+  1: 'Detalles',
+  2: 'Soluciones',
+  3: 'Recursos',
+  4: 'Relacionados'
+};
+
   idChallenge!: string | any;
   params$!: Subscription;
   jsonData: Challenge[] = [];
@@ -49,12 +57,22 @@ export class ChallengeInfoComponent {
   related_languages: Language[] = [];
   related_id = this.related;
 
-  ngOnInit(){
+  ngOnInit() {
+      if (!this.route.snapshot!.queryParams['tab']) {
+      this.navigateToQueryParams("Detalles");
+    }
     this.loadRelatedChallenge(this.related_id);
   }
 
-
-
+    ngAfterViewInit() {
+    this.route.queryParams.subscribe(params => {
+      const tab = params['tab'];
+      if (tab) {
+        const tabId = this.getTabId(tab);
+        this.nav.select(tabId);
+      }
+    });
+  }
 
   loadRelatedChallenge(id: string) {
     this.challengeSubs$ = this.challengeService.getChallengeById(this.related_id).subscribe((challenge) => {
@@ -67,6 +85,19 @@ export class ChallengeInfoComponent {
       this.related_id = this.related;      
     });
   }
+
+    onNavChange(changeEvent: NgbNavChangeEvent) {
+    this.navigateToQueryParams( this.tabNames[changeEvent.nextId]);
+  }
+
+  navigateToQueryParams(paramValue:string) {
+    this.router.navigate([], { queryParams: { tab: paramValue }});
+  }
+
+getTabId(tabName: string): number {
+  const tabId = Object.keys(this.tabNames).find(key => this.tabNames[key] === tabName);
+  return tabId ? Number(tabId) : this.activeId;
+}
 
 
 }
