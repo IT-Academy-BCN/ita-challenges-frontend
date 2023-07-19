@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component';
-import { SendSolutionService } from 'src/app/services/send-solution.service';
 
 @Component({
   selector: 'app-challenge-header',
@@ -11,7 +10,7 @@ import { SendSolutionService } from 'src/app/services/send-solution.service';
 })
 export class ChallengeHeaderComponent {
 
-  constructor(private modalService: NgbModal, private solutionService: SendSolutionService){}
+  constructor(private modalService: NgbModal){}
 
   
   @Input() title = "";
@@ -21,8 +20,6 @@ export class ChallengeHeaderComponent {
   challenge_title: string | undefined = 'hola';
   challenge_date: Date | undefined
   challenge_level: string | undefined
-
-  userLoggedIn = true;
   
   ngOnInit(){
     this.challenge_title = this.title;
@@ -34,13 +31,7 @@ export class ChallengeHeaderComponent {
     this.modalService.open(SendSolutionModalComponent, { centered : true, size : 'lg' })
   }
 
-  clickSendButton() {
-    if (!this.userLoggedIn) {
-      this.modalService.open(RestrictedModalComponent, { centered: true, size: 'lg' })
-    } else {
-      this.solutionService.subject.next(2);
-    }
+  openRestrictedModal(){
+      this.modalService.open(RestrictedModalComponent, { centered : true, size : 'lg' })
   }
-
-
 }
