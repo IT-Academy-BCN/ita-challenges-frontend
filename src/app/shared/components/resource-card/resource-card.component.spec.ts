@@ -14,6 +14,8 @@ describe('ResourceComponent', () => {
         HttpClientTestingModule]
     })
     .compileComponents();
+  });
+  beforeEach(() => {
     fixture = TestBed.createComponent(ResourceCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -22,4 +24,22 @@ describe('ResourceComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should initialize input correctly', () => {
+    component.author = "John Doe";
+    component.date = new Date;
+    component.id = "x4815y162342z";
+    component.description = "lorem ipsum";
+
+    expect(component.author).toEqual('John Doe');
+    expect(component.date).toBeDefined();
+    expect(component.id).toEqual('x4815y162342z');
+    expect(component.description).toEqual('lorem ipsum');
+
+
+
+  })
+
+
+
 });

@@ -15,17 +15,4 @@ export class ResourceCardComponent {
   @Input() id = "";
   @Input() description = "";
 
-
-  resource_author: string | undefined
-  resource_date: Date | undefined
-  resource_id: string | undefined
-  resource_description: string | undefined
-
-  ngOnInit(){
-    this.resource_author = this.author;
-    this.resource_date = this.date;
-    this.resource_id = this.id;
-    this.resource_description = this.description;
-  }
-
 }
