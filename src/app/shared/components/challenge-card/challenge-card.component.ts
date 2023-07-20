@@ -16,5 +16,6 @@ export class ChallengeCardComponent {
   @Input() creation_date!: Date;
   @Input() level = "";
   @Input() popularity!: number;
+  @Input() id = "";
 
 }
