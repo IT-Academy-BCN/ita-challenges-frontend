@@ -38,7 +38,7 @@ export class ChallengeHeaderComponent {
     if (!this.userLoggedIn) {
       this.modalService.open(RestrictedModalComponent, { centered: true, size: 'lg' })
     } else {
-      this.solutionService.subject.next(2);
+      this.solutionService.subjectSendSolution.next(2);
     }
   }
 

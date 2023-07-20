@@ -36,7 +36,7 @@ describe('BreadcrumbService', () => {
 });
 
 
-    it('should emit breadcrumb when there is a NavigationEnd event (with 1 route segment)', (done) => {
+    it('should emit correct breadcrumb when there is a NavigationEnd event (with 1 route segment)', (done) => {
         service.breadcrumbs$.subscribe((breadcrumbs) => {
             expect(breadcrumbs).toEqual([{
                 label: 'breadcrumb label',
@@ -62,7 +62,7 @@ const fakeSnapshot: ActivatedRouteSnapshot = {
         eventsSubject.next(new NavigationEnd(1, '/test', '/test'));
     });
 
-    it('should emit breadcrumb when there is a NavigationEnd event (with multiple route segments)', (done) => {
+    it('should emit correct breadcrumb when there is a NavigationEnd event (with multiple route segments)', (done) => {
     service.breadcrumbs$.subscribe((breadcrumbs) => {
         expect(breadcrumbs).toEqual([
             { label: 'breadcrumb label 1', url: '/test1' },
@@ -112,7 +112,7 @@ const fakeSnapshot: ActivatedRouteSnapshot = {
     eventsSubject.next(new NavigationEnd(1, '/test1/test2/test3', '/test1/test2/test3'));
     });
     
-    it('should emit breadcrumb when there is a NavigationEnd event (with multiple route segments + query params)', (done) => {
+    it('should emit correct breadcrumb when there is a NavigationEnd event (with multiple route segments + query params)', (done) => {
     service.breadcrumbs$.subscribe((breadcrumbs) => {
         expect(breadcrumbs).toEqual([
             { label: 'breadcrumb label 1', url: '/test1' },

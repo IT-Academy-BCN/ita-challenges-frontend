@@ -7,6 +7,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { I18nModule } from '../../../../assets/i18n/i18n.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 import { MobileNavComponent } from '../../../core/layout/header/mobile-nav/mobile-nav.component';
+import { SendSolutionService } from '../../../services/send-solution.service';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -25,7 +26,8 @@ describe('MainComponent', () => {
               RouterTestingModule,
               I18nModule,
               SharedComponentsModule
-            ],  
+      ],  
+      providers: [SendSolutionService]
     })
     .compileComponents();
 
