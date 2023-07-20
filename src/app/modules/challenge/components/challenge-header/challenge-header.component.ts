@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component';
-import { SendSolutionService } from 'src/app/services/send-solution.service';
+import { SendSolutionService } from '../../../../services/send-solution.service';
 
 @Component({
   selector: 'app-challenge-header',

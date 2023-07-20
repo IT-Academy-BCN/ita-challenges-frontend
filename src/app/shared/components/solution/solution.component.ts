@@ -6,7 +6,7 @@ import { python } from '@codemirror/lang-python';
 import { java } from '@codemirror/lang-java';
 import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
-import { SendSolutionService } from 'src/app/services/send-solution.service';
+import { SendSolutionService } from '../../../services/send-solution.service';
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
