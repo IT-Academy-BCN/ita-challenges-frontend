@@ -51,8 +51,8 @@ get number() {
     let comment: string = '// Escribe aquí tu código';
     switch (this.languageExt) {
       case 'javascript':
-        languageExtension = javascript();
-        console.log("Selected language: javascript");
+        languageExtension = javascript({typescript:true});
+        console.log("Selected language: javascript (typescript)");
         break;
       case 'python':
         languageExtension = python();
