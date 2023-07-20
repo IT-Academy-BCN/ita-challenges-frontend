@@ -35,7 +35,7 @@ describe('StarterService', () => {
     it('should get all challenges', () => {
         const page = 1;
         const pageSize = environment.pageSize;
-      const dummyData: any = [dataDummy];
+        const dummyData: any = [dataDummy.results];
 
 
     service.getAllChallenges(page, pageSize).subscribe(data => {
