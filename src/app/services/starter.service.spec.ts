@@ -40,6 +40,7 @@ describe('StarterService', () => {
 
     service.getAllChallenges(page, pageSize).subscribe(data => {
       expect(data).toEqual(dummyData);
+      console.log(dummyData);
     });
 
 

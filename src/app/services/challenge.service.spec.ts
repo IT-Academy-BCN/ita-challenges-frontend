@@ -1,31 +1,71 @@
-import { ChallengeService } from "./challenge.service";
-import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
-import {HttpTestingController} from "@angular/common/http/testing";
-import {delay, of} from "rxjs";
-import data from "../../assets/dummy/challenge.json"; 
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ChallengeService } from './challenge.service';
 
-
-/* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('ChallengeService', () => {
+  let service: ChallengeService;
+  let httpMock: HttpTestingController;
 
-    let service: ChallengeService;
-    let httpMock: HttpTestingController;
-    let scheduler: TestScheduler;
-    let httpClientSpy: any;
-    let testScheduler: TestScheduler;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ChallengeService]
+    });
+
+    service = TestBed.inject(ChallengeService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify(); 
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should fetch challenge by id', () => {
+    const dummyChallenge = { id_challenge: '1adfadf21fasdf2-adf', challenge_title: 'Sociis Industries' };
+
+    service.getChallengeById('1adfadf21fasdf2-adf').subscribe(res => {
+      expect(res).toEqual(dummyChallenge);
+    });
+
+    const req = httpMock.expectOne('../assets/dummy/challenge.json');
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyChallenge);
+  });
+
+});
+
+// import { ChallengeService } from "./challenge.service";
+// import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
+// import {HttpTestingController} from "@angular/common/http/testing";
+// import {delay, of} from "rxjs";
+// import data from "../../assets/dummy/challenge.json"; 
+
+
+// /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
+// describe('ChallengeService', () => {
+
+//     let service: ChallengeService;
+//     let httpMock: HttpTestingController;
+//     let scheduler: TestScheduler;
+//     let httpClientSpy: any;
+//     let testScheduler: TestScheduler;
     
 
-    beforeEach(() => {
+//     beforeEach(() => {
 
-        //inject spy
-        httpClientSpy = jasmine.createSpy('httpClient');
-        httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
-        service = new ChallengeService(httpClientSpy);
-        testScheduler = new TestScheduler((actual, expected) => {
-            expect(actual).toEqual(expected);
+//         //inject spy
+//         httpClientSpy = jasmine.createSpy('httpClient');
+//         httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
+//         service = new ChallengeService(httpClientSpy);
+//         testScheduler = new TestScheduler((actual, expected) => {
+//             expect(actual).toEqual(expected);
 
-        });
-    });
+//         });
+//     });
 
 
     /*
@@ -46,20 +86,20 @@ describe('ChallengeService', () => {
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
 
-    it('Should stream a challenge', () => {
+//     it('Should stream a challenge', () => {
 
-        testScheduler.run(({expectObservable}) => {
-            const idChallenge = "1adfadf21fasdf2-adf" 
-            const expectedMarble = '---(a|)';
-            const expectedValues = {a: data};
-            const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
+//         testScheduler.run(({expectObservable}) => {
+//             const idChallenge = "1adfadf21fasdf2-adf" 
+//             const expectedMarble = '---(a|)';
+//             const expectedValues = {a: data};
+//             const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
 
-            expectObservable(obs$).toBe(expectedMarble, expectedValues);
-        });
+//             expectObservable(obs$).toBe(expectedMarble, expectedValues);
+//         });
 
-    });
+//     });
 
-});
+// });
 
 
 
