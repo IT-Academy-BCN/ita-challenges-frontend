@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "serve",
+			"command": "ng",
+			"args": ["serve", "-o"],
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Tests",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "test"],
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Tests Watch",
+			"type": "shell",
+			"command": "npm",
+			"args": ["test", "--", "--watch"],
+			"problemMatcher": []
+		}
+	]
+}

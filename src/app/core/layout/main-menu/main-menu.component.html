@@ -1,6 +1,7 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
     <div id="main-options">
-        <a  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" (click)="openLoginModal()">
+        <a  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" (click)="openLoginModal()"
+        data-testid="loginModalLink">
             {{'components.mainMenu.section7.title'  | translate }}
             <img src="../../../../assets/img/icon/user.svg" alt="User"/>
         </a>
@@ -12,9 +13,9 @@
     </div>
     <div id="user-options">
         <section id="languages">
-            <button (click)="changeLanguage('es')">ES</button>
-            <button id="middleBtn" (click)="changeLanguage('cat')">CAT</button>
-            <button (click)="changeLanguage('en')">EN</button>
+            <button data-testid="es" (click)="changeLanguage('es')">ES</button>
+            <button data-testid="cat" id="middleBtn" (click)="changeLanguage('cat')">CAT</button>
+            <button data-testid="en" (click)="changeLanguage('en')">EN</button>
         </section>
     </div>
 </nav>
