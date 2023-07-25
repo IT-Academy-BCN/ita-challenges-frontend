@@ -11,6 +11,7 @@ import {ChallengeModule} from "./modules/challenge/challenge.module";
 import { I18nModule } from '../assets/i18n/i18n.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { ProfileModule } from './modules/profile/profile.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     StarterModule,
     ChallengeModule,
+    ProfileModule,
     I18nModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
