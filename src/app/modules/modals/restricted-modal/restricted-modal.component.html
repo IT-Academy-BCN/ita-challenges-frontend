@@ -1,6 +1,6 @@
 
 <div class="modal-header align-items-center justify-content-end pb-0">
-    <div class="close" data-bs-dismiss="modal" (click)="closeModal()" aria-label="Close">
+    <div class="close" data-testid="closeModal" data-bs-dismiss="modal" (click)="closeModal()" aria-label="Close">
         <span></span>
         <span></span>
     </div>
@@ -13,8 +13,8 @@
                 <p>Regístrate para subir, etregar y ver soluciones a los retos</p>
             </div>
             <div class="modal-footer d-flex flex-column gap-3 mb-3">
-                <button type="submit" class="btn btn-primary w-100"(click)="openRegisterModal()">Registrarme</button>
-                <button type="submit" class="btn btn-outline-primary w-100" (click)="openLoginModal()">Entrar</button>
+                <button data-testid="openRegister" type="submit" class="btn btn-primary w-100"(click)="openRegisterModal()">Registrarme</button>
+                <button data-testid="openLogin" type="submit" class="btn btn-outline-primary w-100" (click)="openLoginModal()">Entrar</button>
             </div>
     </div>
 </div>
