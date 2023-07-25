@@ -9,6 +9,8 @@ import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
 import { ModalsModule } from '../modals/modals.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { TranslateModule } from '@ngx-translate/core';
     ChallengeRoutingModule,
     RouterModule,
     ModalsModule,
-    TranslateModule
+    TranslateModule,
+    FormsModule,
+    NgbNavModule
   ]
 })
 export class ChallengeModule { }

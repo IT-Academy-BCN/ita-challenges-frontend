@@ -1,11 +1,12 @@
 import { FilterChallenge } from './../../../../models/filter-challenge.model';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
 import { environment } from '../../../../../environments/environment';
+import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
+  @ViewChild('modal') private modalContent!: FiltersModalComponent;
 
   dataChallenge!: DataChallenge;
   challenges: Challenge[] = [];
@@ -67,6 +69,10 @@ export class StarterComponent {
   goToPage(page: number){
     this.page = page;
     this.getChallengesByPage(page);
+  }
+
+  openModal() {
+  this.modalContent.open();
   }
 
   getChallengeFilters(filters: FilterChallenge){

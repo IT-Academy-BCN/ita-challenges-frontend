@@ -5,13 +5,17 @@ import { CommonModule } from '@angular/common';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ChallengeCardComponent } from "./challenge-card/challenge-card.component";
 import { ResourceCardComponent } from './resource-card/resource-card.component';
+import { SolutionComponent } from './solution/solution.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 
 @NgModule({
     declarations: [
         PaginationComponent,
         ChallengeCardComponent,
-        ResourceCardComponent
+        ResourceCardComponent,
+        SolutionComponent,
+        BreadcrumbComponent
     ],
     imports: [
         CommonModule,
@@ -21,7 +25,9 @@ import { ResourceCardComponent } from './resource-card/resource-card.component';
     exports: [
         PaginationComponent,
         ChallengeCardComponent,
-        ResourceCardComponent
+        ResourceCardComponent,
+        SolutionComponent,
+        BreadcrumbComponent
     ],  
 })
 export class SharedComponentsModule { }
