@@ -1,86 +1,87 @@
-<ng-template #modal let-c="close" let-d="dismiss">
 <div class="modal-header align-items-center justify-between pb-0">
   <h4 class="modal-title fw-bold">
     Filtros
   </h4>
-    <div class="close" data-bs-dismiss="modal" (click)="d('cross click')" aria-label="Close">
+    <div class="close" data-bs-dismiss="modal" (click)="modalService.dismissAll()" aria-label="Close">
         <span></span>
         <span></span>
     </div>
 </div>
 
 <div class="modal-body">
-  <div class="form">
-      <p class="fw-bold">Lenguaje</p>
+  <form [formGroup]="filtersForm">
+  <div class="form" formGroupName="languages">
+      <p class="fw-bold">Lenguajes</p>
       <div class="d-flex">
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
+            <input class="pill-input" type="checkbox" id="checkJs" formControlName="javascript">
             <label for="checkJs" class="input-label">Javascript</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkJava" name="java" value="java">
+            <input class="pill-input" type="checkbox" id="checkJava" formControlName="java">
             <label class="input-label">Java</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkPhp" name="php" value="php">
+            <input class="pill-input" type="checkbox" id="checkPhp" formControlName="php">
             <label class="input-label">PHP</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkPython" name="python" value="python">
+            <input class="pill-input" type="checkbox" id="checkPython" formControlName="python">
             <label class="input-label">Python</label>
           </div>
       </div>
   </div>
-  <div class="form">
+  <div class="form" formGroupName="levels">
       <p class="fw-bold">Dificultad</p>
         <div class="d-flex">
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkFacil" name="facil" value="facil">
+            <input class="pill-input" type="checkbox" id="checkEasy" formControlName="easy">
             <label class="input-label">Fácil</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkMedia" name="media" value="media">
+            <input class="pill-input" type="checkbox" id="checkMedium" formControlName="medium">
             <label class="input-label">Media</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
+            <input class="pill-input" type="checkbox" id="checkHard" formControlName="hard">
             <label class="input-label">Difícil</label>
         </div>
       </div>
   </div>
-  <div class="form">
+  <div class="form" formGroupName="progress">
       <p class="fw-bold">Progreso</p>
       <div class="d-flex flex-wrap">
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
+            <input class="pill-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
             <label class="input-label">No empezados</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
+            <input class="pill-input" type="checkbox" id="checkStarted" formControlName="started">
             <label class="input-label">Falta completar</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
+            <input class="pill-input" type="checkbox" id="checkFinished" formControlName="finished">
             <label class="input-label">Completados</label>
         </div>
       </div>
   </div>
+  </form>
 </div>
 
 <div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
   <button
+    data-testid="applyButton"
     type="button"
     class="btn btn-lg btn-primary btn-change col-11 col-md-5"
-    (click)="c('Save click')"
+    (click)="applyFiltersAndClose('Save click')"
   >
     Aplicar
   </button>
   <button
     type="button"
     class="btn btn-lg btn-outline-primary col-11 col-md-5"
-    (click)="d('Cross click')"
+    (click)="modalService.dismissAll()"
   >
     Cancelar
   </button>
 </div>
-</ng-template>

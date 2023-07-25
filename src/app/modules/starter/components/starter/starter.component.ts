@@ -7,6 +7,7 @@ import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
 import { environment } from '../../../../../environments/environment';
 import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filt
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
-  @ViewChild('modal') private modalContent!: FiltersModalComponent;
 
   dataChallenge!: DataChallenge;
   challenges: Challenge[] = [];
@@ -33,7 +33,8 @@ export class StarterComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private starterService: StarterService
+    private starterService: StarterService,
+              private modalService: NgbModal
               ) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
@@ -72,7 +73,7 @@ export class StarterComponent {
   }
 
   openModal() {
-  this.modalContent.open();
+  this.modalService.open(FiltersModalComponent, { size: 'lg' });
   }
 
   getChallengeFilters(filters: FilterChallenge){

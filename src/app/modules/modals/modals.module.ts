@@ -5,6 +5,8 @@ import { LoginModalComponent } from './login-modal/login-modal.component';
 import { SendSolutionModalComponent } from './send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from './restricted-modal/restricted-modal.component';
 import { FiltersModalComponent } from './filters-modal/filters-modal.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,6 +20,8 @@ import { FiltersModalComponent } from './filters-modal/filters-modal.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     RegisterModalComponent,
