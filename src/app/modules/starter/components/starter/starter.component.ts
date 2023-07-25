@@ -6,7 +6,7 @@ import {StarterService} from "../../../../services/starter.service";
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
 import { environment } from '../../../../../environments/environment';
-import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import { FiltersModalComponent } from '../../../modals/filters-modal/filters-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 

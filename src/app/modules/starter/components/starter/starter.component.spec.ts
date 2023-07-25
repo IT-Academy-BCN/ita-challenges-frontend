@@ -8,6 +8,8 @@ import { StarterFiltersComponent } from '../starter-filters/starter-filters.comp
 import { FilterChallenge } from 'src/app/models/filter-challenge.model';
 import { By } from '@angular/platform-browser';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
+import { FiltersModalComponent } from '../../../modals/filters-modal/filters-modal.component';
+
 
 describe('StarterComponent', () => {
   let component: StarterComponent;
@@ -20,7 +22,8 @@ describe('StarterComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ 
         StarterComponent,
-        StarterFiltersComponent
+        StarterFiltersComponent,
+        FiltersModalComponent
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
