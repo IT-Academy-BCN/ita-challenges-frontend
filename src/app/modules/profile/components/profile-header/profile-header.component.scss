@@ -1,0 +1,61 @@
+@import "src/styles/colors";
+
+
+.user{
+    display: flex;
+    align-items: center;
+    color: $black-1;
+    .image{
+        background-color: $gray-4;
+        border-radius: 100%;
+        padding: .2rem 2rem .6rem 2rem;
+        width: 2rem;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        
+        img{
+            width: 5rem;
+            height:3rem;
+        }
+    }
+}
+
+.col-9{
+    padding: 0;
+    margin: 0;
+    p{
+        margin: 0;
+        color: $gray-3;
+    }
+    h2{
+        margin: 0;
+    }
+}
+.stats{
+    color: $gray-1;
+    font-weight: bold;
+    margin-top: 2rem;
+    img{
+        width: 1.2rem;
+       
+    }  
+    #folder{
+            width: 1.1rem;
+        }
+    .stat{
+        margin-right: 1rem;
+    }
+    .progress{
+    width: 80%;
+    height: .8rem;
+    margin-top: 1rem;
+    
+        .progress-bar{
+            background-color: $primary;
+            border-radius: 10px;
+            width: 65%;
+        }
+   
+    }
+}
