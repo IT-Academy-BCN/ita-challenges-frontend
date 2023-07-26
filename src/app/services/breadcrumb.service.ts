@@ -48,7 +48,7 @@ private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadc
         } else {
             // Check if route has query param tab (challenge-info selected tab)
             if(route.queryParamMap.has('tab')) {
-                breadcrumbs[breadcrumbs.length - 1].label += ' > ' + route.queryParamMap.get('tab');
+              breadcrumbs[breadcrumbs.length - 1].label += ' (' + route.queryParamMap.get('tab') + ')';
               console.log(route.queryParamMap.get('tab'));
             }
         }
