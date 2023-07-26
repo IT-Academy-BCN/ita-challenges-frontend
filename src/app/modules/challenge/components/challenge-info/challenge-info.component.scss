@@ -22,7 +22,7 @@
 }
 .tab-content{
     margin-top: 3rem;
-    width: 75%;
+    width: 100%;
 }
 
 .title{
@@ -41,10 +41,120 @@
 .title_text{
     margin-top: 0;
 }
+
+.details-body {
+    flex-direction: row;
+    gap: 1.5rem;
+
+    .details-text{
+        order: 1;
+    }
+    app-solution{
+        order: 2;
+    }
+}
+
 .lock{
     display: flex;
     align-items: center;
 }
+
 .lock img{   
     margin:0 .2rem .3rem 0;
+}
+
+button.btn.btn-primary.send-solution{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: .6rem 3rem;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    cursor: pointer;
+
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 50%;
+    border: 2px solid $primary;
+    transform: translateY(0.15em);
+
+    //to center ::before element
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    background-color: $primary;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .details-body {
+        flex-direction: column;
+
+        .details-text{
+            order: 2;
+        }
+        app-solution{
+            order: 1;
+        }
+    }
+    :host{
+        overflow-x: auto;
+    }
+    //Afegir en cas que el dissenyador vulgui el botó Related també en responsive
+    ul.nav-tabs{
+    //     display: flex;
+    //     flex-wrap: nowrap;
+    //     overflow-x: scroll;
+    //     -webkit-overflow-scrolling: touch;
+    border: none;
+    }
+    .nav-link{
+        background-color: white;
+        color: $gray-3;
+        border: 1px solid $gray-3;
+        border-radius: 50px;
+        padding: 10 20px;
+        margin: 0 10px 0 0;
+        transition: 0.2s;
+
+        &.active{
+            background-color: $primary;
+            color: white;
+            border: 1px solid $primary;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        &:hover{
+            background-color: $primary;
+            color: white;
+            border: 1px solid $primary;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+    }
+}
+@media screen and (max-width: 560px) {
+    li.related{
+        display: none;
+    }
 }

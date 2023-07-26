@@ -25,7 +25,8 @@ describe('StarterComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule,I18nModule
+        HttpClientTestingModule,
+        I18nModule
       ]
     })
     .compileComponents();
