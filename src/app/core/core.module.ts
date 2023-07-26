@@ -9,6 +9,7 @@ import { ModalsModule } from '../modules/modals/modals.module';
 import { I18nModule } from 'src/assets/i18n/i18n.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component';
+import { SharedComponentsModule } from '../shared/components/shared-components.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.compon
         ModalsModule,
         I18nModule, 
         TranslateModule,
+        SharedComponentsModule
     ]
 })
 export class CoreModule { }

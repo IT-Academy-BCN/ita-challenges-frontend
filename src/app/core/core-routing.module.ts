@@ -12,20 +12,24 @@ const routes: Routes = [
         children: [
             {
                 path: 'challenges',
+                data: { breadcrumb: 'Retos'},
                 children:[
                     {
                         path: '',  
                         component: StarterComponent,
+                        data: { breadcrumb: null}
                     },
                     {
                         path: ':idChallenge', 
                         component: ChallengeComponent, 
+                        data: { breadcrumb: 'Reto'}
                     },
                 ]
             },
             {
                 path: 'profile',
                 component: ProfileComponent,
+                data: { breadcrumb: 'Perfil'}
             }
         ]
     }
