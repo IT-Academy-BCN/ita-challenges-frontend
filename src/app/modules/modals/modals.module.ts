@@ -4,6 +4,7 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { SendSolutionModalComponent } from './send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from './restricted-modal/restricted-modal.component';
+import { FiltersModalComponent } from './filters-modal/filters-modal.component';
 
 
 
@@ -12,7 +13,8 @@ import { RestrictedModalComponent } from './restricted-modal/restricted-modal.co
     RegisterModalComponent,
     LoginModalComponent,
     SendSolutionModalComponent,
-    RestrictedModalComponent
+    RestrictedModalComponent,
+    FiltersModalComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,9 @@ import { RestrictedModalComponent } from './restricted-modal/restricted-modal.co
   exports: [
     RegisterModalComponent,
     LoginModalComponent,
-    RestrictedModalComponent
+    SendSolutionModalComponent,
+    RestrictedModalComponent,
+    FiltersModalComponent
   ]
 })
 export class ModalsModule { }

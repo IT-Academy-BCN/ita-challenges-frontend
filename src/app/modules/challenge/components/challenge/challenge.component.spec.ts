@@ -10,10 +10,11 @@ import { ChallengeInfoComponent } from '../challenge-info/challenge-info.compone
 import { of } from 'rxjs';
 import { ChallengeService } from '../../../../services/challenge.service';
 import { By } from '@angular/platform-browser';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
 
-
-
-describe('ChallengeContainerComponent', () => {
+describe('ChallengeComponent', () => {
   let component: ChallengeComponent;
   let fixture: ComponentFixture<ChallengeComponent>;
   let mockChallengeService: any;
@@ -30,19 +31,28 @@ describe('ChallengeContainerComponent', () => {
           ChallengeComponent, 
           ChallengeHeaderComponent,
           ChallengeInfoComponent,
+          SolutionComponent
       ],
       imports: [
           RouterTestingModule, 
           HttpClientTestingModule, 
           SharedComponentsModule,
-          I18nModule
+          I18nModule,
+          NgbNavModule,
+          FormsModule
       ],
       providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of(convertToParamMap({ idChallenge: '123' })),
-          },
+          provide : ActivatedRoute, 
+        useValue: {
+          queryParams: of({}),
+          paramMap :  of(convertToParamMap({idChallenge: '123'})),
+          snapshot: {
+            queryParams: {
+              tab: 'someTab'
+            }
+          }
+        },
         },
         {
           provide: ChallengeService,
@@ -50,7 +60,8 @@ describe('ChallengeContainerComponent', () => {
         },
       ],
     }).compileComponents();
-      });
+  });              
+
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeComponent);
     component = fixture.componentInstance;
@@ -177,8 +188,5 @@ describe('ChallengeContainerComponent', () => {
     expect(challengeInfoComponent.popularity).toBe(component.popularity);
     expect(challengeInfoComponent.languages).toEqual(component.languages);
 
-
-  })
-
-
+  });
 });

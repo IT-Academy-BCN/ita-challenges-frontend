@@ -6,6 +6,11 @@ import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { ChallengeService } from '../../../../services/challenge.service';
 import { of } from 'rxjs';
 
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
+import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component';
+import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -16,11 +21,16 @@ describe('ChallengeInfoComponent', () => {
    await TestBed.configureTestingModule({
       declarations: [
             ChallengeInfoComponent, 
+            ResourceCardComponent, 
+            ChallengeCardComponent,
+            SolutionComponent
       ],
       imports: [
             RouterTestingModule,
             HttpClientTestingModule,
-            I18nModule
+            I18nModule,
+            FormsModule,
+            NgbNavModule
       ],
       providers: [
         ChallengeService
@@ -28,6 +38,7 @@ describe('ChallengeInfoComponent', () => {
     }).compileComponents();
   });
   beforeEach(() => {
+                  
     fixture = TestBed.createComponent(ChallengeInfoComponent);
     component = fixture.componentInstance;
     challengeService = TestBed.inject(ChallengeService);

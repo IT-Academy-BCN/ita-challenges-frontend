@@ -9,6 +9,7 @@ import {SharedComponentsModule} from "../../shared/components/shared-components.
 import { StarterFiltersComponent } from './components/starter-filters/starter-filters.component';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ModalsModule } from '../modals/modals.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     RouterModule,
     SharedComponentsModule,
-    TranslateModule
+    TranslateModule,
+    ModalsModule
   ],
   providers: [
     ChallengeService
