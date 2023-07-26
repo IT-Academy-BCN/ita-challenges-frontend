@@ -64,21 +64,6 @@ describe('ChallengeService', () => {
 
 });
 
-
-// /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
-// describe('ChallengeService', () => {
-
-    
-
-//     beforeEach(() => {
-
-//         //inject spy
-
-//         service = new ChallengeService(httpClientSpy);
-
-//     });
-
-
     /*
     Some explanations:
     RxJs introduced the following syntax when writing marble tests in our code
@@ -96,10 +81,6 @@ describe('ChallengeService', () => {
         - ab--# : An Observable that emits a on frame two, b on frame three and an error on frame six.
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
-
-
-
-// });
 
 
 
