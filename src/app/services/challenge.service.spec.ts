@@ -1,10 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ChallengeService } from './challenge.service';
+import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
+import {delay, of} from "rxjs";
+import data from "../../assets/dummy/challenge.json"; 
 
 describe('ChallengeService', () => {
   let service: ChallengeService;
+  let serviceInjected: ChallengeService;
   let httpMock: HttpTestingController;
+  let scheduler: TestScheduler;
+  let httpClientSpy: any;
+  let testScheduler: TestScheduler;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,8 +19,14 @@ describe('ChallengeService', () => {
       providers: [ChallengeService]
     });
 
-    service = TestBed.inject(ChallengeService);
     httpMock = TestBed.inject(HttpTestingController);
+    httpClientSpy = jasmine.createSpy('httpClient');
+    httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
+    service = new ChallengeService(httpClientSpy);
+    serviceInjected = TestBed.inject(ChallengeService);
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
   });
 
   afterEach(() => {
@@ -27,7 +40,7 @@ describe('ChallengeService', () => {
   it('should fetch challenge by id', () => {
     const dummyChallenge = { id_challenge: '1adfadf21fasdf2-adf', challenge_title: 'Sociis Industries' };
 
-    service.getChallengeById('1adfadf21fasdf2-adf').subscribe(res => {
+    serviceInjected.getChallengeById('1adfadf21fasdf2-adf').subscribe(res => {
       expect(res).toEqual(dummyChallenge);
     });
 
@@ -36,35 +49,33 @@ describe('ChallengeService', () => {
     req.flush(dummyChallenge);
   });
 
-});
+    it('Should stream a challenge', () => {
 
-// import { ChallengeService } from "./challenge.service";
-// import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
-// import {HttpTestingController} from "@angular/common/http/testing";
-// import {delay, of} from "rxjs";
-// import data from "../../assets/dummy/challenge.json"; 
+      testScheduler.run(({expectObservable}) => {
+          const idChallenge = "1adfadf21fasdf2-adf" 
+          const expectedMarble = '---(a|)';
+          const expectedValues = {a: data};
+          const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
+
+          expectObservable(obs$).toBe(expectedMarble, expectedValues);
+      });
+
+  });
+
+});
 
 
 // /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 // describe('ChallengeService', () => {
 
-//     let service: ChallengeService;
-//     let httpMock: HttpTestingController;
-//     let scheduler: TestScheduler;
-//     let httpClientSpy: any;
-//     let testScheduler: TestScheduler;
     
 
 //     beforeEach(() => {
 
 //         //inject spy
-//         httpClientSpy = jasmine.createSpy('httpClient');
-//         httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
-//         service = new ChallengeService(httpClientSpy);
-//         testScheduler = new TestScheduler((actual, expected) => {
-//             expect(actual).toEqual(expected);
 
-//         });
+//         service = new ChallengeService(httpClientSpy);
+
 //     });
 
 
@@ -86,18 +97,7 @@ describe('ChallengeService', () => {
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
 
-//     it('Should stream a challenge', () => {
 
-//         testScheduler.run(({expectObservable}) => {
-//             const idChallenge = "1adfadf21fasdf2-adf" 
-//             const expectedMarble = '---(a|)';
-//             const expectedValues = {a: data};
-//             const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
-
-//             expectObservable(obs$).toBe(expectedMarble, expectedValues);
-//         });
-
-//     });
 
 // });
 
