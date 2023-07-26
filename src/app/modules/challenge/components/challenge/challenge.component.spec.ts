@@ -9,6 +9,9 @@ import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.c
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
 import { of } from 'rxjs';
 import { ChallengeService } from '../../../../services/challenge.service';
+import { By } from '@angular/platform-browser';
+
+
 
 describe('ChallengeContainerComponent', () => {
   let component: ChallengeComponent;
@@ -123,5 +126,59 @@ describe('ChallengeContainerComponent', () => {
     expect(component.popularity).toBe(0);
     expect(component.languages).toEqual([]);
   });
-;
+
+  it('should pass the input property value to the child  header component', () => {
+    const challenge = {
+      challenge_title: 'Test Challenge',
+      creation_date: new Date(),
+      level: 'Easy',
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    fixture.detectChanges();
+
+    const challengeHeaderComponent = fixture.debugElement.query(By.directive(ChallengeHeaderComponent)).componentInstance;
+    
+    expect(challengeHeaderComponent.title).toBe(component.title);
+    expect(challengeHeaderComponent.creation_date).toBe(component.creation_date);
+    expect(challengeHeaderComponent.level).toBe(component.level);
+  });
+
+  it('should pass the input property value to the child  info component', () => {
+    const challenge = {
+      details: {
+        description: 'Test Challenge Description',
+        examples: [],
+        notes: 'Test Challenge Notes',
+      },
+      related: [],
+      resources: [],
+      solutions: [],
+      popularity: 0,
+      languages: [],
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    fixture.detectChanges();
+
+    const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance;
+    
+    expect(challengeInfoComponent.details).toBeDefined();
+    expect(challengeInfoComponent.details.description).toBe(component.details.description);
+    expect(challengeInfoComponent.details.examples).toEqual(component.details.examples);
+    expect(challengeInfoComponent.details.notes).toBe(component.details.notes);
+    expect(challengeInfoComponent.related).toEqual(component.related);
+    expect(challengeInfoComponent.resources).toEqual(component.resources);
+    expect(challengeInfoComponent.solutions).toEqual(component.solutions);
+    expect(challengeInfoComponent.popularity).toBe(component.popularity);
+    expect(challengeInfoComponent.languages).toEqual(component.languages);
+
+
+  })
+
+
 });

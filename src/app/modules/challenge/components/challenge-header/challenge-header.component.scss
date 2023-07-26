@@ -41,7 +41,7 @@ h3{
 }
 .solutionSent{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     color: $primary;
     font-weight: bold;

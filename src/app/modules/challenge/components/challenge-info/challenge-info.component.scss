@@ -7,6 +7,9 @@
     padding: 0;
     border-radius: 2px;
 }
+.nav-item{
+    margin: -.2rem;
+}
 .nav-link{
     color: $gray-3;
     border-top: #ffff;
@@ -14,17 +17,21 @@
     border-right: #ffff;
     border-bottom: 5px solid transparent;
 }
+.nav-link:hover{
+    border-bottom: 5px solid $gray-2;
+
+}
 .nav-link.active{
     border: none;
     border-bottom: 5px solid $primary;
     color: $black-3;
     font-weight: bold;
 }
+
 .tab-content{
     margin-top: 3rem;
     width: 75%;
 }
-
 .title{
     margin: 0;
     padding: 0;
