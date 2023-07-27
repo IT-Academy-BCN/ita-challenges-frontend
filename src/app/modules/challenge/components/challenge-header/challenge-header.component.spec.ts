@@ -1,11 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { ChallengeHeaderComponent } from './challenge-header.component';
+import { SendSolutionService } from '../../../../services/send-solution.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component';
+import { HttpClient } from '@angular/common/http';
 
 
 describe('ChallengeHeaderComponent', () => {
@@ -21,10 +23,11 @@ describe('ChallengeHeaderComponent', () => {
       imports: [ 
           I18nModule,
           RouterTestingModule,
-          HttpClientTestingModule 
+          HttpClientTestingModule
         ],
       providers: [
-          NgbModal
+          NgbModal,
+          SendSolutionService
       ]
     }).compileComponents();
 
@@ -55,9 +58,10 @@ describe('ChallengeHeaderComponent', () => {
     expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg'});
   });
 
-  it('should open restricted modal', () => {
-  spyOn(modalService, 'open').and.stub();
-  component.openRestrictedModal();
+  it('should open restricted modal if user is not logged in', () => {
+    spyOn(modalService, 'open').and.stub();
+    component.userLoggedIn = false;
+    component.clickSendButton();
 
   expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
   });

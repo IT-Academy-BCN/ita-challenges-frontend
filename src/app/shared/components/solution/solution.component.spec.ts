@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { SolutionComponent } from './solution.component';
+import { SendSolutionService } from '../../../services/send-solution.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SolutionComponent', () => {
   let component: SolutionComponent;
@@ -11,7 +13,9 @@ describe('SolutionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SolutionComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [SolutionComponent],
+      providers: [SendSolutionService]
     })
     .compileComponents();
   }));

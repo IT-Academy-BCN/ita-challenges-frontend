@@ -53,9 +53,6 @@ export class ChallengeInfoComponent {
     this.loadRelatedChallenge(this.related_id);
   }
 
-
-
-
   loadRelatedChallenge(id: string) {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge); 
