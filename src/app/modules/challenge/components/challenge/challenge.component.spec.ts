@@ -8,6 +8,8 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component';
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component';
 import { of } from 'rxjs';
+import { ChallengeService } from '../../../../services/challenge.service';
+import { By } from '@angular/platform-browser';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
@@ -15,39 +17,59 @@ import { SolutionComponent } from '../../../../shared/components/solution/soluti
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent;
   let fixture: ComponentFixture<ChallengeComponent>;
+  let mockChallengeService: any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+
+  beforeEach(async() => {
+    mockChallengeService = {
+      getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({})),
+    };
+
+    await TestBed.configureTestingModule({
+      
       declarations: [
-                    ChallengeComponent, 
-                    ChallengeHeaderComponent,
-                  ChallengeInfoComponent,
-                    SolutionComponent
-                  ],
+          ChallengeComponent, 
+          ChallengeHeaderComponent,
+          ChallengeInfoComponent,
+          SolutionComponent
+      ],
       imports: [
-                RouterTestingModule, 
-                HttpClientTestingModule, 
-                SharedComponentsModule,
-                I18nModule,
-                NgbNavModule,
-                FormsModule
-                ],
-      providers: [{
-        provide : ActivatedRoute, 
+          RouterTestingModule, 
+          HttpClientTestingModule, 
+          SharedComponentsModule,
+          I18nModule,
+          NgbNavModule,
+          FormsModule
+      ],
+      providers: [
+        {
+          provide : ActivatedRoute, 
         useValue: {
           queryParams: of({}),
-            paramMap :  of(convertToParamMap({idChallenge: '1adfadf21fasdf2-adf'})),
+          paramMap :  of(convertToParamMap({idChallenge: '123'})),
           snapshot: {
             queryParams: {
-            tab: 'someTab'
-          }
+              tab: 'someTab'
             }
-        }
-      }] 
-      });
+          }
+        },
+        },
+        {
+          provide: ChallengeService,
+          useValue: mockChallengeService,
+        },
+      ],
+    }).compileComponents();
+  });              
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
   it('should create and get idChallenge param', () => {
@@ -58,4 +80,113 @@ describe('ChallengeComponent', () => {
     expect(component.idChallenge).not.toContain(' ');
   });
 
+  it('should call getChallengeById when loadMasterdata is called', () => {
+  
+    const challenge = {
+      challenge_title: 'Test Challenge',
+      creation_date: new Date(),
+      level: 'Easy',
+      details: {
+        description: 'Test Challenge Description',
+        examples: [],
+        notes: 'Test Challenge Notes',
+      },
+      related: [],
+      resources: [],
+      solutions: [],
+      popularity: 0,
+      languages: [],
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    expect(mockChallengeService.getChallengeById).toHaveBeenCalledWith('123');
+  });
+
+  it('should set challenge details when loadMasterdata is called', () => {
+
+    const challenge = {
+      challenge_title: 'Test Challenge',
+      creation_date: new Date(),
+      level: 'Easy',
+      details: {
+        description: 'Test Challenge Description',
+        examples: [],
+        notes: 'Test Challenge Notes',
+      },
+      related: [],
+      resources: [],
+      solutions: [],
+      popularity: 0,
+      languages: [],
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    expect(component.title).toBe('Test Challenge');
+    expect(component.creation_date).toBeDefined();
+    expect(component.level).toBe('Easy');
+    expect(component.details.description).toBe('Test Challenge Description');
+    expect(component.details.examples).toEqual([]);
+    expect(component.details.notes).toBe('Test Challenge Notes');
+    expect(component.related).toEqual([]);
+    expect(component.resources).toEqual([]);
+    expect(component.solutions).toEqual([]);
+    expect(component.popularity).toBe(0);
+    expect(component.languages).toEqual([]);
+  });
+
+  it('should pass the input property value to the child  header component', () => {
+    const challenge = {
+      challenge_title: 'Test Challenge',
+      creation_date: new Date(),
+      level: 'Easy',
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    fixture.detectChanges();
+
+    const challengeHeaderComponent = fixture.debugElement.query(By.directive(ChallengeHeaderComponent)).componentInstance;
+    
+    expect(challengeHeaderComponent.title).toBe(component.title);
+    expect(challengeHeaderComponent.creation_date).toBe(component.creation_date);
+    expect(challengeHeaderComponent.level).toBe(component.level);
+  });
+
+  it('should pass the input property value to the child  info component', () => {
+    const challenge = {
+      details: {
+        description: 'Test Challenge Description',
+        examples: [],
+        notes: 'Test Challenge Notes',
+      },
+      related: [],
+      resources: [],
+      solutions: [],
+      popularity: 0,
+      languages: [],
+    };
+    mockChallengeService.getChallengeById.and.returnValue(of(challenge));
+
+    component.loadMasterData('123');
+
+    fixture.detectChanges();
+
+    const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance;
+    
+    expect(challengeInfoComponent.details).toBeDefined();
+    expect(challengeInfoComponent.details.description).toBe(component.details.description);
+    expect(challengeInfoComponent.details.examples).toEqual(component.details.examples);
+    expect(challengeInfoComponent.details.notes).toBe(component.details.notes);
+    expect(challengeInfoComponent.related).toEqual(component.related);
+    expect(challengeInfoComponent.resources).toEqual(component.resources);
+    expect(challengeInfoComponent.solutions).toEqual(component.solutions);
+    expect(challengeInfoComponent.popularity).toBe(component.popularity);
+    expect(challengeInfoComponent.languages).toEqual(component.languages);
+
+  });
 });

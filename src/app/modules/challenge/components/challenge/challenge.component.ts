@@ -41,11 +41,13 @@ export class ChallengeComponent {
   ){
     this.params$ =  this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge')
+      console.log(this.idChallenge)
     });
   }
 
   ngOnInit(){
     this.loadMasterData(this.idChallenge);
+    console.log(this.idChallenge)
   }
 
   ngOnDestroy() {
@@ -69,8 +71,6 @@ export class ChallengeComponent {
       this.notes = this.challenge.details.notes;
       this.popularity = this.challenge.popularity;
       this.languages = this.challenge.languages;
-      console.log(this.title);
-      console.log(this.description)
     });
   }
 }

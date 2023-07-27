@@ -32,7 +32,7 @@ export class ChallengeInfoComponent {
 
   solutionsDummy = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
 
-  showStatement = false;
+  showStatement = true;
   isLogged = true;
   activeId = 1;
 
@@ -76,11 +76,11 @@ export class ChallengeInfoComponent {
   }
 
   loadRelatedChallenge(id: string) {
-    this.challengeSubs$ = this.challengeService.getChallengeById(this.related_id).subscribe((challenge) => {
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge); 
-      this.related_title = this.challenge.challenge_title;
-      this.related_creation_date = this.challenge.creation_date;
-      this.related_level = this.challenge.level;
+      this.related_title = this.challenge?.challenge_title;
+      this.related_creation_date = this.challenge?.creation_date;
+      this.related_level = this.challenge?.level;
       this.related_popularity = this.challenge.popularity;
       this.related_languages = this.challenge.languages;
       this.related_id = this.related;      

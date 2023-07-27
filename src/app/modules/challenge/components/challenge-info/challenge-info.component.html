@@ -9,7 +9,7 @@
         <div class="tab-content">
             <div class="d-block btn-row text-end mb-3">
               <span class="right-span d-inline-flex">
-                <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
+                <input type="checkbox" name="checkbox" [(ngModel)]="showStatement"/>
                 <label class="ms-1"> Mostrar enunciado </label>
               </span>
             </div>
@@ -59,19 +59,21 @@
     }}</a>
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
-      <div class="tab-content">
-          <section class="title">
-            <h3 class="title_text">Recursos encontrados en ITA-Wiki</h3>
-            <a class="title_link" href="#">ir a ITA-Wiki ></a>
-          </section>
-          <app-resource-card
-            *ngFor="let resource of resources"
-            [author]="resource.author"
-            [date]="resource.generation_date"
-            [id]="resource.id_resource"
-            [description]="resource.resource_description"
-          >
-          </app-resource-card>
+        <div class="tab-content info-card">
+            <section class="title">
+                <h3 class="title_text">Recursos encontrados en ITA-Wiki</h3>
+                <a class="title_link" href="#">ir a ITA-Wiki ></a>
+            </section>
+            <section class="info-card">
+                <app-resource-card
+                    *ngFor="let resource of resources"
+                    [author]="resource.author"
+                    [date]="resource.generation_date"
+                    [id]="resource.id_resource"
+                    [description]="resource.resource_description"
+                >
+                </app-resource-card>
+            </section>
           </div>
     </ng-template>
   </li>
@@ -80,19 +82,21 @@
       "modules.challenge.info.relatedTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
-      <!--RELATED TAB-->
-      <div class="tab-content">
-        <h3>Retos similares</h3>
-        <app-challenge-card
-          *ngFor="let relate of related"
-          [title]="related_title"
-          [creation_date]="related_creation_date"
-          [level]="related_level"
-          [popularity]="related_popularity"
-          [languages]="related_languages"
-          [id]="related_id"
-        >
-        </app-challenge-card>
+        <!--RELATED TAB-->
+        <div class="tab-content">
+            <h3>Retos similares</h3>
+            <section class="info-card">
+                <app-challenge-card
+                *ngFor="let relate of related"
+                [title]="related_title"
+                [creation_date]="related_creation_date"
+                [level]="related_level"
+                [popularity]="related_popularity"
+                [languages]="related_languages"
+                [id]="related_id"
+                >
+                </app-challenge-card>
+            </section>
         </div>
     </ng-template>
   </li>
