@@ -9,7 +9,6 @@ import { StarterService } from '../../../services/starter.service';
   providers: [StarterService]
 })
 export class ChallengeCardComponent {
-
   constructor(private starterService: StarterService){}
 
   @Input() title = "";
@@ -17,5 +16,6 @@ export class ChallengeCardComponent {
   @Input() creation_date!: Date;
   @Input() level = "";
   @Input() popularity!: number;
+  @Input() id = "";
 
 }
