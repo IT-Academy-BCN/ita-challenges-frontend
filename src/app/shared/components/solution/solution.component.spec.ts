@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { SolutionComponent } from './solution.component';
-import { SendSolutionService } from '../../../services/send-solution.service';
+import { SolutionService } from '../../../services/solution.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SolutionComponent', () => {
@@ -15,7 +15,7 @@ describe('SolutionComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [SolutionComponent],
-      providers: [SendSolutionService]
+      providers: [SolutionService]
     })
     .compileComponents();
   }));

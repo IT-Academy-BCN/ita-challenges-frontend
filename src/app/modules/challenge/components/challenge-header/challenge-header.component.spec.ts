@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { ChallengeHeaderComponent } from './challenge-header.component';
-import { SendSolutionService } from '../../../../services/send-solution.service';
+import { SolutionService } from '../../../../services/solution.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +27,7 @@ describe('ChallengeHeaderComponent', () => {
         ],
       providers: [
           NgbModal,
-          SendSolutionService
+          SolutionService
       ]
     }).compileComponents();
 

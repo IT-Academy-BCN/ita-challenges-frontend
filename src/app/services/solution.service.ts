@@ -5,14 +5,14 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SendSolutionService {
+export class SolutionService {
 
     subject = new BehaviorSubject(1);
     obs$ = this.subject.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  sendSolutionToBackend(solution: string) {
+  sendSolution(solution: string) {
     console.log("Data sent to backend: " + solution);
     // this.http.get();
   }

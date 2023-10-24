@@ -44,6 +44,7 @@
     "jest-jasmine2": "^29.5.0",
     "jest-preset-angular": "^13.1.1",
     "jquery": "^3.6.4",
+    "moment": "^2.29.4",
     "playwright": "^1.33.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

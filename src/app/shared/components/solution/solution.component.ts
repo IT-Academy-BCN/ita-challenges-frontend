@@ -6,7 +6,7 @@ import { python } from '@codemirror/lang-python';
 import { java } from '@codemirror/lang-java';
 import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
-import { SendSolutionService } from '../../../services/send-solution.service';
+import { SolutionService } from '../../../services/solution.service';
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
@@ -32,12 +32,12 @@ get number() {
 
   @Input() isUserSolution = false;
 
-  constructor(private solutionService: SendSolutionService) { }
+  constructor(private solutionService: SolutionService) { }
 
   ngOnInit(): void {
     this.solutionService.obs$.subscribe(res => {
       if (this.editor && this.isUserSolution) {
-        this.solutionService.sendSolutionToBackend(this.editor.state.doc.toString());
+        this.solutionService.sendSolution(this.editor.state.doc.toString());
       }
     });
   }
