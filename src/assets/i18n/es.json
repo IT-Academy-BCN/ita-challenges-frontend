@@ -45,7 +45,8 @@
                 "blokedMsg": "Las soluciones permanecerán bloqueadas hasta que entregues el reto",
                 "resources": "Recursos encontrados en ITA-Wiki",
                 "resourcesLink": "ir a ITA-Wiki",
-                "related": "Retos similares"
+                "related": "Retos similares",
+                "showStatement": "Mostrar enunciado"
             }
         },
         "starter": {

@@ -45,7 +45,8 @@
                 "blokedMsg": "Solutions will remain locked until you submit the challenge",
                 "resources": "Resources found on ITA-Wiki",
                 "resourcesLink": "Go to ITA-Wiki",
-                "related": "Similar challenges"
+                "related": "Similar challenges",
+                "showStatement": "Show statement"
             }
         },
         "starter": {
