@@ -52,8 +52,7 @@
         }
     }
     &:hover{
-        border-color: $primary;
-        box-shadow: inset 0px 0px 0px 2px $primary;
+        background-color: $gray-4;
     }
 }
 
