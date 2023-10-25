@@ -15,11 +15,11 @@
             </div>
             <div class="details-body d-flex">
               <div *ngIf="showStatement" class="details-text">
-                <h3 class="mt-0">Descripción</h3>
+                <h3 class="mt-0">{{'modules.challenge.info.description' | translate }}</h3>
                 <p>{{ description }}</p>
-                <h3>Ejemplos</h3>
+                <h3>{{'modules.challenge.info.examples' | translate }}</h3>
                 <p *ngFor="let example of examples">{{ example.example_text }}</p>
-                <h3>Notas</h3>
+                <h3>{{'modules.challenge.info.notes' | translate }}</h3>
                 <p>{{ notes }}</p>
               </div>
               <app-solution [isUserSolution]="true" [languageExt]="'java'"></app-solution>
