@@ -46,7 +46,8 @@
                 "resources": "Resources found on ITA-Wiki",
                 "resourcesLink": "Go to ITA-Wiki",
                 "related": "Similar challenges",
-                "showStatement": "Show statement"
+                "showStatement": "Show statement", 
+                "solution": "Solution"
             }
         },
         "starter": {
