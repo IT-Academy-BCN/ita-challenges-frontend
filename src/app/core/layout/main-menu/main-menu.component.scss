@@ -1,70 +1,85 @@
 @import "/src/styles/colors";
-.main-menu{
-    height: 500px;
-    gap: 175px;
-    a{
-        position: relative;
-        width: max-content;
-        color: $black-1;
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 38px;
-        padding-right: 15px;
-        padding-left: 0;
 
-        -moz-transition: all .15s ease-out;
-        -webkit-transition: all .15s ease-out;
-        -ms-transition: all .15s ease-out;
-        -o-transition: all .15s ease-out;
-        transition: all .15s ease-out;
+.main-menu {
+	height: 500px;
+	gap: 175px;
 
+	a {
+		position: relative;
+		width: max-content;
+		color: $black-1;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		margin-bottom: 38px;
+		padding-right: 15px;
+		padding-left: 0;
 
-        &.active{
-            padding-right: 0;
-            padding-left: 15px;
-            //font-weight: bold;
-            &::before{
-                background: $primary;
-            }
-        }
-        &:hover{
-            color: $primary;
-        }
-        &::before{
-            -moz-transition: all .15s ease-out;
-            -webkit-transition: all .15s ease-out;
-            -ms-transition: all .15s ease-out;
-            -o-transition: all .15s ease-out;
-            transition: all .15s ease-out;
-            content: "";
-            position: absolute;
-            left: 0;
-            display: block;
-            width: 9px;
-            height: 9px;
-            background: transparent;
-            border-radius: 9px;
-        }
-    }
-    #user-options{
-        a{
-            margin-bottom: 20px;
-        }
-    }
-    #languages{
-        margin-top: 30px;
-        button{
-            border: none;
-            background: transparent;
-            
-            &:hover{
-                color: $primary;
-            } 
-        }
-        #middleBtn{
-            border-left: 1px solid $black-1;
-            border-right: 1px solid $black-1;
-        }
-    }
+		-moz-transition: all 0.15s ease-out;
+		-webkit-transition: all 0.15s ease-out;
+		-ms-transition: all 0.15s ease-out;
+		-o-transition: all 0.15s ease-out;
+		transition: all 0.15s ease-out;
+
+		&.active {
+			padding-right: 0;
+			padding-left: 15px;
+
+			&::before {
+				background: $primary;
+			}
+		}
+
+		&:hover {
+			color: $primary;
+		}
+
+		&::before {
+			-moz-transition: all 0.15s ease-out;
+			-webkit-transition: all 0.15s ease-out;
+			-ms-transition: all 0.15s ease-out;
+			-o-transition: all 0.15s ease-out;
+			transition: all 0.15s ease-out;
+			content: "";
+			position: absolute;
+			left: 0;
+			display: block;
+			width: 9px;
+			height: 9px;
+			background: transparent;
+			border-radius: 9px;
+		}
+	}
+
+	.userOptions {
+		margin-top: 100px; // Agregar un margen superior de 100px a .userOptions
+
+		a {
+			// Estilos de tus enlaces dentro de .userOptions
+		}
+	}
+
+	#user-options {
+		a {
+			// Estilos de tus enlaces dentro de #user-options
+		}
+	}
+
+	#languages {
+		margin-bottom: 30px;
+
+		button {
+			border: none;
+			background: transparent;
+
+			&:hover {
+				color: $primary;
+			}
+		}
+
+		#middleBtn {
+			border-left: 1px solid $black-1;
+			border-right: 1px solid $black-1;
+		}
+	}
 }
