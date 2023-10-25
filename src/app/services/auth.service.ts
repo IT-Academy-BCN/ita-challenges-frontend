@@ -1,4 +1,4 @@
-import * as moment from "moment";
+import moment from "moment";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
@@ -22,15 +22,10 @@ export class AuthService {
      * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
      */
     login(email:string, password:string ) {
-/*        return this.http.post<User>('/users/login', {email, password})
-            .do(res => this.setLocalStorage)
-            .shareReplay();*/
+        //return this.http.post();
     }
 
-    /**
-     * see https://dev.to/zachgoll/the-ultimate-guide-to-passport-js-k2l
-     */
-/*    private setLocalStorage(authResult) {
+    private setLocalStorage(authResult:any) {
 
         // Takes the JWT expiresIn value and add that number of seconds
         // to the current "moment" in time to get an expiry date
@@ -47,10 +42,11 @@ export class AuthService {
     logout() {
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
-    }*/
+    }
 
     // Returns true as long as the current time is less than the expiry date
-/*    public isLoggedIn() {
+    public isLoggedIn() {
+
         return moment().isBefore(this.getExpiration());
     }
 
@@ -60,7 +56,7 @@ export class AuthService {
 
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration);
+        const expiresAt = expiration !=null ? JSON.parse(expiration) : '';
         return moment(expiresAt);
-    }*/
+    }
 }
