@@ -7,6 +7,7 @@ import { ChallengeCardComponent } from "./challenge-card/challenge-card.componen
 import { ResourceCardComponent } from './resource-card/resource-card.component';
 import { SolutionComponent } from './solution/solution.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     imports: [
         CommonModule,
         RouterModule,
+        TranslateModule,
         NgbTooltipModule
     ],
     exports: [
