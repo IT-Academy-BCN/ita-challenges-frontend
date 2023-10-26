@@ -7,6 +7,7 @@ import { java } from '@codemirror/lang-java';
 import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
 import { SolutionService } from '../../../services/solution.service';
+import {TranslateService} from "@ngx-translate/core";
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
@@ -32,7 +33,8 @@ get number() {
 
   @Input() isUserSolution = false;
 
-  constructor(private solutionService: SolutionService) { }
+  constructor(private solutionService: SolutionService,
+              private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.solutionService.obs$.subscribe(res => {
@@ -48,7 +50,14 @@ get number() {
 
   createEditor() {
     let languageExtension;
-    let comment: string = '// Escribe aquí tu código';
+    //let comment: string = '// Escribe aquí tu código';//acceso a pipe
+
+    let comment: string = this.translateService.instant('modules.challenge.info.solution');
+
+    console.log("********"+comment);
+
+
+
     switch (this.languageExt) {
       case 'javascript':
         languageExtension = javascript({typescript:true});
