@@ -1,20 +1,52 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
-    <div id="main-options">
-        <a  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" (click)="openLoginModal()">
-            {{'components.mainMenu.section7.title'  | translate }}
-            <img src="../../../../assets/img/icon/user.svg" alt="User"/>
-        </a>
-        <a [routerLink]="[ 'challenges' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section1.title' | translate }}</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section2.title'  | translate }}</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >Hackathons</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section4.title'  | translate }}</a>
-        <a [routerLink]="[ '#' ]" [routerLinkActive]="['active']" >{{'components.mainMenu.section5.title'  | translate }}</a>
-    </div>
-    <div id="user-options">
-        <section id="languages">
-            <button (click)="changeLanguage('es')">ES</button>
-            <button id="middleBtn" (click)="changeLanguage('cat')">CAT</button>
-            <button (click)="changeLanguage('en')">EN</button>
-        </section>
-    </div>
+	<div id="main-options">
+	
+		<a [routerLink]="['#']" [routerLinkActive]="['active']">Inicio</a>
+
+		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
+			"components.mainMenu.section1.title" | translate
+		}}</a>
+		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+			"components.mainMenu.section2.title" | translate
+		}}</a>
+		<a [routerLink]="['#']" [routerLinkActive]="['active']">Hackathons</a>
+		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+			"components.mainMenu.section4.title" | translate
+		}}</a>
+		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+			"components.mainMenu.section5.title" | translate
+		}}</a>
+
+		<!-- settings funciona -->
+		<div
+			class="userOptions  d-none d-md-flex flex-column justify-content-center"
+		>
+			<a
+				class="mb-2"
+				[routerLink]="['#']"
+				[routerLinkActive]="['active']"
+			>
+				<img
+					src="../../../../assets/img/icon/setting.svg"
+					alt="Settings"
+				/>
+				{{ "components.mainMenu.section6.title" | translate }}
+			</a>
+			<a
+				[routerLinkActive]="['active']"
+				[routerLinkActiveOptions]="{ exact: true }"
+				(click)="openLoginModal()"
+			>
+				<img src="../../../../assets/img/icon/user.svg" alt="User" />
+				{{ "components.mainMenu.section7.title" | translate }}
+			</a>
+		</div>
+	</div>
+	<div id="user-options">
+		<section id="languages">
+			<button (click)="changeLanguage('es')">ES</button>
+			<button id="middleBtn" (click)="changeLanguage('cat')">CAT</button>
+			<button (click)="changeLanguage('en')">EN</button>
+		</section>
+	</div>
 </nav>
