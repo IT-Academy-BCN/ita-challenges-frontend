@@ -33,6 +33,20 @@ get number() {
 
   @Input() isUserSolution = false;
 
+/* code added by valerio */
+  private textRemoved = false;
+
+  handleClick(event: MouseEvent) {
+    if (!this.textRemoved) {
+      // Check if the text has not been removed yet
+      const div = event.target as HTMLDivElement;
+      div.textContent = ''; // Remove the text
+      this.textRemoved = true; // Set the flag to indicate that the text has been removed
+    }
+  }
+
+  /* code added by valerio */
+
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
 
@@ -48,13 +62,14 @@ get number() {
     this.createEditor();
   }
 
+  //nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
   createEditor() {
     let languageExtension;
     //let comment: string = '// Escribe aquí tu código';//acceso a pipe
 
-    let comment: string = this.translateService.instant('modules.challenge.info.solution');
+   //  let comment: string = this.translateService.instant('modules.challenge.info.solution');
 
-    console.log("********"+comment);
+    //console.log("********"+comment); 
 
 
 
@@ -65,7 +80,7 @@ get number() {
         break;
       case 'python':
         languageExtension = python();
-        comment = '# Escribe aquí tu código';
+        //comment = '# Escribe aquí tu código';
         console.log("Selected language: python");
         break;
       case 'java':
@@ -74,7 +89,7 @@ get number() {
         break;
       case 'php':
         languageExtension = php();
-        comment = '/* Escribe aquí tu código */';
+        //comment = '/* Escribe aquí tu código */';
         console.log("Selected language: php");
         break;
       default:
@@ -85,7 +100,7 @@ get number() {
     let state: EditorState;
     if (this.isUserSolution){
       state = EditorState.create({
-        doc: comment,
+        //doc: comment,
         extensions: [
           minimalSetup,
           languageExtension

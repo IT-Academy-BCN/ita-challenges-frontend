@@ -47,7 +47,8 @@
                 "resourcesLink": "Go to ITA-Wiki",
                 "related": "Similar challenges",
                 "showStatement": "Show statement", 
-                "solution": "Solution"
+                "solution": "Solution",
+                "solutionCode": "Write your code here"
             }
         },
         "starter": {

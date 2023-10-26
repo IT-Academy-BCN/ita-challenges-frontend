@@ -47,7 +47,8 @@
                 "resourcesLink": "Anar a ITA-Wiki",
                 "related": "Reptes similars",
                 "showStatement": "Mostrar enunciat",
-                "solution": "Solució"
+                "solution": "Solució",
+                "solutionCode": "Escriu el teu codi aquí"
             }
         },
         "starter": {
