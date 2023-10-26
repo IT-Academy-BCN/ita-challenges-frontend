@@ -1,27 +1,28 @@
 @import "/src/styles/colors";
 
-.userOptions{
-    padding: 0 1.5rem .5rem 0;
-    a{
-        text-decoration: none;
-  
-        &:hover{
-            color: $primary;
-        }
-        &::before{
-            -moz-transition: all .15s ease-out;
-            -webkit-transition: all .15s ease-out;
-            -ms-transition: all .15s ease-out;
-            -o-transition: all .15s ease-out;
-            transition: all .15s ease-out;
-            content: "";
-            position: absolute;
-            left: 0;
-            display: block;
-            width: 9px;
-            height: 9px;
-            background: transparent;
-            border-radius: 9px;
-        } 
- }
+.userOptions {
+	padding: 0 1.5rem 0.5rem 0;
+    
+	a {
+		text-decoration: none;
+
+		&:hover {
+			color: $primary;
+		}
+		&::before {
+			-moz-transition: all 0.15s ease-out;
+			-webkit-transition: all 0.15s ease-out;
+			-ms-transition: all 0.15s ease-out;
+			-o-transition: all 0.15s ease-out;
+			transition: all 0.15s ease-out;
+			content: "";
+			position: absolute;
+			left: 0;
+			display: block;
+			width: 9px;
+			height: 9px;
+			background: transparent;
+			border-radius: 9px;
+		}
+	}
 }

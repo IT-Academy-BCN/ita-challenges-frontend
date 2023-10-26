@@ -1,8 +1,10 @@
 @import "/src/styles/colors";
-.main-menu{
+
+.main-menu {
     height: 500px;
     gap: 175px;
-    a{
+
+    a {
         position: relative;
         width: max-content;
         color: $black-1;
@@ -19,19 +21,20 @@
         -o-transition: all .15s ease-out;
         transition: all .15s ease-out;
 
-
-        &.active{
+        &.active {
             padding-right: 0;
             padding-left: 15px;
-            //font-weight: bold;
-            &::before{
+
+            &::before {
                 background: $primary;
             }
         }
-        &:hover{
+
+        &:hover {
             color: $primary;
         }
-        &::before{
+
+        &::before {
             -moz-transition: all .15s ease-out;
             -webkit-transition: all .15s ease-out;
             -ms-transition: all .15s ease-out;
@@ -47,22 +50,34 @@
             border-radius: 9px;
         }
     }
-    #user-options{
-        a{
-            margin-bottom: 20px;
+
+    .userOptions {
+        margin-top: 100px; // Agregar un margen superior de 100px a .userOptions
+
+        a {
+            // Estilos de tus enlaces dentro de .userOptions
         }
     }
-    #languages{
-        margin-top: 30px;
-        button{
+
+    #user-options {
+        a {
+            // Estilos de tus enlaces dentro de #user-options
+        }
+    }
+
+    #languages {
+        margin-bottom: 30px;
+
+        button {
             border: none;
             background: transparent;
-            
-            &:hover{
+
+            &:hover {
                 color: $primary;
-            } 
+            }
         }
-        #middleBtn{
+
+        #middleBtn {
             border-left: 1px solid $black-1;
             border-right: 1px solid $black-1;
         }
