@@ -108,7 +108,7 @@ get number() {
       });
     }else{
       state = EditorState.create({
-      doc: 'Respuesta de ejemplo, no se puede modificar',
+      // doc: 'Respuesta de ejemplo, no se puede modificar',
       extensions: [
         minimalSetup,
         languageExtension,

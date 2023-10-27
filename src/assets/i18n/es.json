@@ -48,7 +48,8 @@
                 "related": "Retos similares",
                 "showStatement": "Mostrar enunciado",
                 "solution": "Solución",
-                "solutionCode": "Escribe tu código aquí"
+                "solutionCode": "Escribe tu código aquí",
+                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar"
             }
         },
         "starter": {

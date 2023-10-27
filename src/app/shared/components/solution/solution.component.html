@@ -3,6 +3,11 @@
 </div>
 <div class="solution-body">
   <div #editorSolution contentEditable="true" class="editable-div" (click)="handleClick($event)">
-    {{ "modules.challenge.info.solutionCode" | translate }}
+    <ng-container *ngIf="isUserSolution">
+      {{ "modules.challenge.info.solutionCode" | translate }}
+    </ng-container>
+  </div>
+  <div *ngIf="!isUserSolution" class="non-editable-text">
+    {{ "modules.challenge.info.solutionsChallenge" | translate }}
   </div>
 </div>
