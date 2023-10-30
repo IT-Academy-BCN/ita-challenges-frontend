@@ -1,6 +1,8 @@
 import moment from "moment";
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { Observable, catchError, map, throwError } from "rxjs";
 
 @Injectable()
 export class AuthService {
@@ -24,6 +26,22 @@ export class AuthService {
     login(email:string, password:string ) {
         //return this.http.post();
     }
+
+
+    register(dni: any, email: any, password: any, repeatpassword: any): Observable<void> {
+        const body = { dni: dni, email: email, password: password, repeatpassword: repeatpassword}
+        return this.http.post<void>(`${environment.BACKEND_BASE_URL}/api/v1/auth/register`, body)
+          .pipe(
+            map(() => {
+              // You can navigate to a login page or do something else after successful registration
+            }),
+            catchError((error: HttpErrorResponse) => {
+              // Handle error here (show an error message)
+              return throwError(error);
+            })
+          );
+      }
+
 
     private setLocalStorage(authResult:any) {
 

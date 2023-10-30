@@ -12,6 +12,7 @@ import { I18nModule } from '../assets/i18n/i18n.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ProfileModule } from './modules/profile/profile.module';
+import { AuthService } from './services/auth.service';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
