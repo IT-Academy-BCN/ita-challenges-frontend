@@ -48,7 +48,7 @@
                 "related": "Reptes similars",
                 "showStatement": "Mostrar enunciat",
                 "solution": "Solució",
-                "solutionCode": "Escriu el teu codi aquí",
+                "solutionCode": "// Escriu el teu codi aquí",
                 "solutionsChallenge": "Resposta d'exemple, no es pot modificar"
 
             }

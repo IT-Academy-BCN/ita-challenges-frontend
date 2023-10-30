@@ -45,8 +45,6 @@ get number() {
     }
   }
 
-  /* code added by valerio */
-
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
 
@@ -65,35 +63,21 @@ get number() {
   //nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
   createEditor() {
     let languageExtension;
-    //let comment: string = '// Escribe aquí tu código';//acceso a pipe
-
-   //  let comment: string = this.translateService.instant('modules.challenge.info.solution');
-
-    //console.log("********"+comment); 
-
-
 
     switch (this.languageExt) {
       case 'javascript':
         languageExtension = javascript({typescript:true});
-        console.log("Selected language: javascript (typescript)");
         break;
       case 'python':
         languageExtension = python();
-        //comment = '# Escribe aquí tu código';
-        console.log("Selected language: python");
         break;
       case 'java':
         languageExtension = java();
-        console.log("Selected language: java");
         break;
       case 'php':
         languageExtension = php();
-        //comment = '/* Escribe aquí tu código */';
-        console.log("Selected language: php");
         break;
       default:
-        console.error(`Unsupported language: ${this.languageExt}`);
         return;
     }
 
