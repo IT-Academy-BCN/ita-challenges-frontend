@@ -28,7 +28,6 @@ export class RegisterModalComponent {
 
 
     register() {
-      console.log('Valores del formulario:', this.registerForm.value);
       if (this.registerForm.valid) {
         const dni = this.registerForm.get("dni")?.value || "";
         const email = this.registerForm.get("email")?.value || "";
@@ -37,8 +36,10 @@ export class RegisterModalComponent {
     
         this.newUser = new User(dni, email, password, repeatpassword);
     
+        console.log('*************', this.newUser)
         this.authService.register(this.newUser).subscribe({
           next: (userData) => {
+            console.log('from register ts file' , userData)
             // actions like redirecting user to another page 
           },
           error: (errorData) => {
