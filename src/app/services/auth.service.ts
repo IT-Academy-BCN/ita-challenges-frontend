@@ -3,9 +3,12 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Observable, catchError, map, throwError } from "rxjs";
+import { User } from "../models/user.model";
 
 @Injectable()
 export class AuthService {
+  newUser: User | undefined
+
 
     /**
      * Gives us access to the Angular HTTP client so we can make requests to
@@ -28,19 +31,19 @@ export class AuthService {
     }
 
 
-    register(dni: any, email: any, password: any, repeatpassword: any): Observable<void> {
-        const body = { dni: dni, email: email, password: password, repeatpassword: repeatpassword}
-        return this.http.post<void>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`, body)
-          .pipe(
-            map(() => {
-              // You can navigate to a login page or do something else after successful registration
-            }),
-            catchError((error: HttpErrorResponse) => {
-              // Handle error here (show an error message)
-              return throwError(error);
-            })
-          );
-      }
+    register(user: User): Observable<void> {
+      return this.http.post<void>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`, user)
+        .pipe(
+          map(() => {
+            // You can navigate to a login page or do something else after successful registration
+          }),
+          catchError((error: HttpErrorResponse) => {
+            //  Handle error here (show an error message)
+            return throwError(error);
+          })
+        );
+    }
+    
 
 
     private setLocalStorage(authResult:any) {
