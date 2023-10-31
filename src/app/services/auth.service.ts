@@ -30,7 +30,7 @@ export class AuthService {
 
     register(dni: any, email: any, password: any, repeatpassword: any): Observable<void> {
         const body = { dni: dni, email: email, password: password, repeatpassword: repeatpassword}
-        return this.http.post<void>(`${environment.BACKEND_BASE_URL}/api/v1/auth/register`, body)
+        return this.http.post<void>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`, body)
           .pipe(
             map(() => {
               // You can navigate to a login page or do something else after successful registration
