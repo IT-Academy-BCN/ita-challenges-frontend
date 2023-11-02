@@ -5,6 +5,7 @@ export const environment = {
   BACKEND_ITA_WIKI_BASE_URL: 'https://dev.api.itadirectory.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES: '/challenges',
   BACKEND_REGISTER: '/auth/register',
+  BACKEND_LOGIN:'/auth/login',
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
