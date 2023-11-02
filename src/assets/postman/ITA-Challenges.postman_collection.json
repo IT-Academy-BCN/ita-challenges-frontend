@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "9ae0e0c7-909a-41ca-9a88-5676d1f3552c",
+		"name": "ITA-Challenges",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1005741"
+	},
+	"item": [
+		{
+			"name": "SSO - Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"jonatan@gmail.es\",\n  \"dni\": \"16793813H\",\n  \"specialization\": \"cln1fjzif000008mdcsfq64c2\",\n  \"name\": \"Jonatan\",\n  \"accept\": true,\n  \"role\": \"ADMIN\",\n   \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\",\n  \"confirmPassword\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/auth/register",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"api",
+						"itadirectory",
+						"eurecatacademy",
+						"org"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SSO - Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dni\": \"39620910Y\",\n  \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"api",
+						"itadirectory",
+						"eurecatacademy",
+						"org"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SSO - Get Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"api",
+						"itadirectory",
+						"eurecatacademy",
+						"org"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
