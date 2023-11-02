@@ -32,9 +32,9 @@ export class RegisterModalComponent {
         const dni = this.registerForm.get("dni")?.value || "";
         const email = this.registerForm.get("email")?.value || "";
         const password = this.registerForm.get("password")?.value || "";
-        const repeatpassword = this.registerForm.get("repeatpassword")?.value || "";
+        const confirmPassword = this.registerForm.get("repeatpassword")?.value || "";
     
-        this.newUser = new User(dni, email, password, repeatpassword);
+        this.newUser = new User(dni, email, password, confirmPassword);
     
         console.log('*************', this.newUser)
         this.authService.register(this.newUser).subscribe({
