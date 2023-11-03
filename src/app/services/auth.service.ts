@@ -2,18 +2,28 @@ import moment from "moment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { Observable, catchError, map, throwError } from "rxjs";
+import { BehaviorSubject, Observable, catchError, map, throwError } from "rxjs";
 import { User } from "../models/user.model";
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
-    newUser: User | undefined;
+    // newUser: User | undefined;
+    private userSubject: BehaviorSubject<User>;
+    public user: Observable<User>;
 
     /**
      * Gives us access to the Angular HTTP client so we can make requests to
      * our Express app
      */
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) {
+        this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+        this.user = this.userSubject.asObservable();
+    }
+
+    public get currentUser(): User {
+        return this.userSubject.value;
+    }
 
     /**
      * Passes the username and password that the user typed into the application
@@ -26,14 +36,14 @@ export class AuthService {
      * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
      */
     login(dni: string, password: string): Observable<User> {
-        return this.http.post<User>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`, { dni, password })
+        return this.http
+            .post<User>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`, { dni, password })
             .pipe(
                 map((user) => {
                     console.log(user)
                     this.setLocalStorage(user);
                     return user;
                 })
-
             );
     }
 
@@ -90,5 +100,5 @@ export class AuthService {
         const expiresAt = expiration != null ? JSON.parse(expiration) : "";
         return moment(expiresAt);
     }
-    
+
 }
