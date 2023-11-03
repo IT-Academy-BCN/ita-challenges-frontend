@@ -30,6 +30,7 @@ export class AuthService {
             .pipe(
                 map((user) => {
                     console.log(user)
+                    this.setLocalStorage(user);
                     return user;
                 })
 
@@ -37,12 +38,12 @@ export class AuthService {
     }
 
     register(user: User): Observable<void> {
-        const userJSON = JSON.stringify(user)
-        console.log('from auth service register', userJSON)
+        // const userJSON = user
+        console.log('from auth service register', user)
         return this.http
             .post<void>(
                 `${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
-                userJSON  // transformar en JSON
+                user  // transformar en JSON
 
             )
             .pipe(
