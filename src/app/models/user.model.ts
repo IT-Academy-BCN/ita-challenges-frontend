@@ -3,16 +3,16 @@ export class User {
 	email: string;
 	password: string;
 	confirmPassword: string;
-	//token?: string;
-	//specialization?: string;
-	//name?: string;
-	//accept?: boolean;
+	token?: string;
+	specialization?: string;
+	name?: string;
+	accept?: boolean;
 
 	constructor(
 		dni: string,
 		email: string,
 		password: string,
-		confirmPassword: string
+		confirmPassword: string,
 		// specialization: string,
 		// name: string,
 		// accept: boolean

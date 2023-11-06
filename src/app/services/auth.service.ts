@@ -75,11 +75,12 @@ export class AuthService {
 
             // Simular la solicitud con datos de un archivo dummy
             return this.http
-                .post('../assets/dummy/user-register.json', user) 
+                .get<any>('../assets/dummy/response-register.json') 
                 .pipe(
                     map((authResult: any) => {
                         this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
                         console.log('from auth service ', authResult);
+						return authResult; // Devuelve el resultado del registro
                     }),
                     catchError((error: HttpErrorResponse) => {
                         // Maneja el error aquí (muestra un mensaje de error)
