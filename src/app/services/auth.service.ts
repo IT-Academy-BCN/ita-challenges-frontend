@@ -38,7 +38,7 @@ export class AuthService {
 	 * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
 	 */
 	login(dni: string, password: string): Observable<User> {
-		return this.http
+		/* return this.http
 			.post<User>(
 				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`,
 				{ dni, password }
@@ -49,7 +49,25 @@ export class AuthService {
 					this.setLocalStorage(user);
 					return user;
 				})
-			);
+			); */
+
+
+			return this.http
+                .get<any>('../assets/dummy/user-login.json') 
+                .pipe(
+                    map((authResult: any) => {
+                        this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
+                        console.log('from auth service login ', authResult);
+						return authResult; // Devuelve el resultado del registro
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        // Maneja el error aquí (muestra un mensaje de error)
+                        console.log('porque da error', error)
+                        return throwError(error);
+                    })
+                );
+
+
 	}
 
 	register(user: User): Observable<void> {
