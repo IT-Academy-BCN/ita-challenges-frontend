@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { environment } from "src/environments/environment";
+import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable, catchError, map, throwError } from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
