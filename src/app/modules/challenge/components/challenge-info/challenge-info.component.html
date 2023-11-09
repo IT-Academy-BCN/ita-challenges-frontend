@@ -7,12 +7,14 @@
     }}</a>
       <ng-template ngbNavContent>
         <div class="tab-content">
+          <!-- show statement / mostrar enunciado -->
             <div class="d-block btn-row text-end mb-3">
               <span class="right-span d-inline-flex">
                 <input type="checkbox" name="checkbox" [(ngModel)]="showStatement"/>
                 <label class="ms-1">{{'modules.challenge.info.showStatement' | translate }}</label>
               </span>
             </div>
+            <!-- description of statement on the left of the box where you put your code for the solution  -->
             <div class="details-body d-flex">
               <div *ngIf="showStatement" class="details-text">
                 <h3 class="mt-0">{{'modules.challenge.info.description' | translate }}</h3>
