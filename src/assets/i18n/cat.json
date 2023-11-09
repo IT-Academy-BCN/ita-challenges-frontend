@@ -49,7 +49,9 @@
                 "showStatement": "Mostrar enunciat",
                 "solution": "Solució",
                 "solutionCode": "// Escriu el teu codi aquí",
-                "solutionsChallenge": "Resposta d'exemple, no es pot modificar"
+                "solutionsChallenge": "Resposta d'exemple, no es pot modificar",
+                "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
+
 
             }
         },

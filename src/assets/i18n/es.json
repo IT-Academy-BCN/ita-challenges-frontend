@@ -49,7 +49,8 @@
                 "showStatement": "Mostrar enunciado",
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
-                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar"
+                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
+                "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
         "starter": {

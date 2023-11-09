@@ -33,18 +33,17 @@
     }}</a>
     <ng-template ngbNavContent>
         <!--SOLUTIONS TAB-->
-        <!--restricted (no user logged)-->
+        <!--users can only see other solutions if they sent theirs-->
         <div class="tab-content">
         <div class="restricted" *ngIf="!isLogged">
           <h3>Las soluciones están bloqueadas</h3>
           <span class="lock">
             <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
             <p>
-              Las soluciones permanecerán bloqueadas hasta que entregues el reto
-            </p>
+              {{ 'modules.challenge.info.solutionsLocked' | translate }}            </p>
           </span>
         </div>
-        <!--unrestricted (user logged)-->
+        <!--if users sent thei solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
             <app-solution [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>

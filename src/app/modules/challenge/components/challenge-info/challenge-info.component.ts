@@ -31,7 +31,7 @@ export class ChallengeInfoComponent {
   solutionsDummy = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
 
   showStatement = true;
-  isLogged = true;
+  isLogged = false;
   activeId = 1;
 
   idChallenge!: string | any;
