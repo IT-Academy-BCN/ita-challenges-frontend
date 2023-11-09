@@ -50,6 +50,7 @@
                 "solution": "Solution",
                 "solutionCode": "// Write your code here",
                 "solutionsChallenge": "Example answer, cannot be modified",
+                "solutionsTitleLocked":"The solutions are locked.",
                 "solutionsLocked": "Solutions will remain locked until you submit the challenge"
 
 

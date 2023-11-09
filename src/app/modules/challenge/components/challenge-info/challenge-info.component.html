@@ -36,7 +36,7 @@
         <!--users can only see other solutions if they sent theirs-->
         <div class="tab-content">
         <div class="restricted" *ngIf="!isLogged">
-          <h3>Las soluciones están bloqueadas</h3>
+          <h3>{{ 'modules.challenge.info.solutionsTitleLocked' | translate }}</h3>
           <span class="lock">
             <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
             <p>

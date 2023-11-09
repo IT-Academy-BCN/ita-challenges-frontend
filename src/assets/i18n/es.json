@@ -50,6 +50,7 @@
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
+                "solutionsTitleLocked":"Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
