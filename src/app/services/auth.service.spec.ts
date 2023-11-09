@@ -1,6 +1,6 @@
 import moment from "moment";
 import { AuthService } from "./auth.service";
-import { of } from "rxjs";
+import { of, throwError } from "rxjs";
 import { TestScheduler } from "rxjs/testing";
 
 // Mocking the dependencies: HttpClient and Router
@@ -85,7 +85,9 @@ describe("AuthService", () => {
 	it("should return true if the user is logged in", () => {
 		// Simular que el usuario está conectado
 		const expiresAt = moment().add(1, "hour").valueOf(); // Configura un tiempo de expiración válido en el futuro
-		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+		(localStorage.getItem as jest.Mock).mockReturnValue(
+			JSON.stringify(expiresAt)
+		);
 
 		const result = authService.isLoggedIn();
 		expect(result).toBeTruthy();
@@ -94,7 +96,9 @@ describe("AuthService", () => {
 	it("should return false if the user is logged out", () => {
 		// Simular que el usuario está desconectado
 		const expiresAt = moment().subtract(1, "hour").valueOf(); // Configura un tiempo de expiración en el pasado
-		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+		(localStorage.getItem as jest.Mock).mockReturnValue(
+			JSON.stringify(expiresAt)
+		);
 
 		const result = authService.isLoggedOut();
 		expect(result).toBeTruthy();
@@ -103,11 +107,63 @@ describe("AuthService", () => {
 	it("should return the expiration time", () => {
 		// Simular un tiempo de expiración específico en el almacenamiento local
 		const expiresAt = moment().add(1, "hour").valueOf(); // Configura un tiempo de expiración en el futuro
-		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+		(localStorage.getItem as jest.Mock).mockReturnValue(
+			JSON.stringify(expiresAt)
+		);
 
 		const result = authService.getExpiration();
 		expect(result).toBeTruthy();
 	});
+
+	// ... (El resto de tu archivo de prueba aquí)
+
+	it("should simulate a successful login", () => {
+		// Datos de usuario ficticios que esperamos recibir después de un login exitoso
+		const dummyUser = {
+			dni: "12345678D",
+			token: "fake-jwt-token",
+		};
+
+		// Configurar el HttpClient mock para devolver nuestros datos de usuario ficticios cuando se llama a get
+		httpClientMock.get.mockReturnValue(of(dummyUser));
+
+		testScheduler.run(({ expectObservable }) => {
+			// Diagrama de mármol representando la secuencia esperada del observable
+			const expectedMarble = "(a|)"; // Emisión 'a' seguida de la conclusión '|'
+			// Valores que representa el 'a' en el diagrama de mármol
+			const expectedValues = { a: dummyUser };
+
+			// Llamada al método login, que devuelve un Observable
+			const obs$ = authService.login("12345678D", "password");
+
+			// Afirmar que el observable se comporta como se espera
+			expectObservable(obs$).toBe(expectedMarble, expectedValues);
+		});
+
+		// Verificar que se llamó a setLocalStorage (si tu servicio hace eso tras el login)
+		expect(localStorage.setItem).toHaveBeenCalled();
+	});
+
+	it("should handle login error", () => {
+		// Simular un error de HttpClient
+		const errorResponse = new Error("Error de autenticación");
+
+		// Configurar el HttpClient mock para lanzar un error cuando se llama a get
+		httpClientMock.get.mockReturnValue(throwError(() => errorResponse));
+
+		testScheduler.run(({ expectObservable }) => {
+			// Diagrama de mármol representando la secuencia esperada del observable
+			const expectedMarble = "#"; // Emisión de error
+
+			// Llamada al método login, que devuelve un Observable
+			const obs$ = authService.login("12345678D", "password");
+
+			// Afirmar que el observable se comporta como se espera
+			expectObservable(obs$).toBe(expectedMarble, null, errorResponse);
+		});
+	});
+
+	// ... (El resto de tus casos de prueba aquí)
 
 	// Add more test cases as needed
 });
