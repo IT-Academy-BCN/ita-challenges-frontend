@@ -115,7 +115,6 @@ describe("AuthService", () => {
 		expect(result).toBeTruthy();
 	});
 
-	// ... (El resto de tu archivo de prueba aquí)
 
 	it("should simulate a successful login", () => {
 		// Datos de usuario ficticios que esperamos recibir después de un login exitoso
@@ -163,7 +162,4 @@ describe("AuthService", () => {
 		});
 	});
 
-	// ... (El resto de tus casos de prueba aquí)
-
-	// Add more test cases as needed
 });
