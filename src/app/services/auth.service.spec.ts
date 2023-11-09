@@ -1,3 +1,4 @@
+import moment from "moment";
 import { AuthService } from "./auth.service";
 import { of } from "rxjs";
 import { TestScheduler } from "rxjs/testing";
@@ -81,5 +82,32 @@ describe("AuthService", () => {
 		expect(localStorage.setItem).toHaveBeenCalled();
 	});
 
-	// Add more test cases as needed...
+	it("should return true if the user is logged in", () => {
+		// Simular que el usuario está conectado
+		const expiresAt = moment().add(1, "hour").valueOf(); // Configura un tiempo de expiración válido en el futuro
+		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+
+		const result = authService.isLoggedIn();
+		expect(result).toBeTruthy();
+	});
+
+	it("should return false if the user is logged out", () => {
+		// Simular que el usuario está desconectado
+		const expiresAt = moment().subtract(1, "hour").valueOf(); // Configura un tiempo de expiración en el pasado
+		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+
+		const result = authService.isLoggedOut();
+		expect(result).toBeTruthy();
+	});
+
+	it("should return the expiration time", () => {
+		// Simular un tiempo de expiración específico en el almacenamiento local
+		const expiresAt = moment().add(1, "hour").valueOf(); // Configura un tiempo de expiración en el futuro
+		(localStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(expiresAt));
+
+		const result = authService.getExpiration();
+		expect(result).toBeTruthy();
+	});
+
+	// Add more test cases as needed
 });
