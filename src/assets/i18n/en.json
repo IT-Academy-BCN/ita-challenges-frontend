@@ -31,7 +31,8 @@
             "header": {
                 "title": "Challenges",
                 "section":"Detail",
-                "button": "Send solution"
+                "button": "Send solution",
+                "toolTip": "Log in to submit the solution."
             },
             "info": {
                 "detailsTitle": "Details",

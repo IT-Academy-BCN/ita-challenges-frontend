@@ -31,7 +31,8 @@
             "header": {
                 "title": "Retos",
                 "section":"Detalle",
-                "button": "Enviar solución"
+                "button": "Enviar solución",
+                "toolTip": "Inicia sesión para enviar la solución."
             },
             "info": {
                 "detailsTitle": "Detalles",

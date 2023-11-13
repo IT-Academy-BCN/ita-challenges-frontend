@@ -31,7 +31,8 @@
             "header": {
                 "title": "Reptes",
                 "section":"Detall",
-                "button": "Enviar solució"
+                "button": "Enviar solució",
+                "toolTip": "Inicia sessió per enviar la solució."
             },
             "info": {
                 "detailsTitle": "Detalls",
