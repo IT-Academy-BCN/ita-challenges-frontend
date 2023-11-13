@@ -9,9 +9,9 @@
         <div class="tab-content">
           <!-- show statement / mostrar enunciado -->
             <div class="d-block btn-row text-end mb-3">
-              <span class="right-span d-inline-flex">
+              <span *ngIf="isLogged" class="right-span d-inline-flex">
                 <input type="checkbox" name="checkbox" [(ngModel)]="showStatement"/>
-                <label class="ms-1">{{'modules.challenge.info.showStatement' | translate }}</label>
+                <label  class="ms-1">{{'modules.challenge.info.showStatement' | translate }}</label>
               </span>
             </div>
             <!-- description of statement on the left of the box where you put your code for the solution  -->
@@ -24,7 +24,8 @@
                 <h3>{{'modules.challenge.info.notes' | translate }}</h3>
                 <p>{{ notes }}</p>
               </div>
-              <app-solution [isUserSolution]="true" [languageExt]="'java'"></app-solution>
+              <!-- only if user logeed in -->
+              <app-solution *ngIf="isLogged" style="background-color: greenyellow;" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
             </div>
           </div>
      </ng-template>
@@ -48,7 +49,7 @@
         <!--if users sent thei solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
-            <app-solution [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
+            <app-solution  [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
           </ng-container>
         </div>
         </div>
