@@ -45,10 +45,13 @@
         </div>
         <!-------if not logged show this------>
         <div class="w-25 mt-4 button d-none d-md-inline-block">
-            <button class="btn btn-primary" (click)="clickSendButton()" title="{{'modules.challenge.header.toolTip' | translate }}">
+            <button class="btn btn-primary" 
+                    (click)="userLoggedIn ? clickSendButton() : openLoginModal()" 
+                    title="{{'modules.challenge.header.toolTip' | translate }}">
                 {{'modules.challenge.header.button' | translate }}
             </button>
         </div>
+        
         
         <!------ if logged show this------>
         <!--
