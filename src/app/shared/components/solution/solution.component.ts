@@ -48,10 +48,17 @@ get number() {
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
 
+  private lastSentSolution: string = '';
+
+
   ngOnInit(): void {
-    this.solutionService.obs$.subscribe(res => {
+    this.solutionService.solutionSent$.subscribe((value) => {
       if (this.editor && this.isUserSolution) {
-        this.solutionService.sendSolution(this.editor.state.doc.toString());
+        const currentSolution = this.editor.state.doc.toString();
+        if (currentSolution !== this.lastSentSolution) {
+          this.solutionService.sendSolution(currentSolution);
+          this.lastSentSolution = currentSolution;
+        }
       }
     });
   }

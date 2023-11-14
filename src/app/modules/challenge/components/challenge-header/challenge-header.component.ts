@@ -24,29 +24,35 @@ export class ChallengeHeaderComponent {
 	challenge_date: Date | undefined;
 	challenge_level: string | undefined;
 
-	userLoggedIn = true; //& tiene que ser true para que el usuario pueda mandar su solucion
+	isLogged: boolean = true //& tiene que estar en true para que este logueado 
+	solutionSent: boolean = false
+
 
 	ngOnInit() {
 		this.challenge_title = this.title;
 		this.challenge_date = this.creation_date;
 		this.challenge_level = this.level;
+
+		this.solutionService.solutionSent$.subscribe((value) => {
+			this.solutionSent = value;
+		  });
 	}
 
 	openSendSolutionModal() {
 		this.modalService.open(SendSolutionModalComponent, {
 			centered: true,
 			size: "lg",
-		});
+		})
 	}
 
 	clickSendButton() {
-		if (!this.userLoggedIn) {
+		if (!this.isLogged) {
 			this.modalService.open(RestrictedModalComponent, {
 				centered: true,
 				size: "lg",
 			});
 		} else {
-			this.solutionService.subject.next(2);
+			this.solutionService.sendSolution(''); // Puedes pasar la solución como argumento si es necesario
 		}
 	}
 
