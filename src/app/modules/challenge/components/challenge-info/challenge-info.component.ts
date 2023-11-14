@@ -8,6 +8,7 @@ import { DataChallenge } from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
 import { NgbNav } from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from "src/app/services/auth.service";
+import { SolutionService } from "src/app/services/solution.service";
 
 @Component({
 	selector: "app-challenge-info",
@@ -16,9 +17,13 @@ import { AuthService } from "src/app/services/auth.service";
 	providers: [ChallengeService],
 })
 export class ChallengeInfoComponent {
+
+	isUserSolution: boolean = true;
+
 	constructor(
 		private challengeService: ChallengeService,
-		private authService: AuthService
+		private authService: AuthService,
+		private solutionService: SolutionService
 	) {}
 	@ViewChild("nav") nav!: NgbNav;
 
@@ -54,9 +59,13 @@ export class ChallengeInfoComponent {
 	related_id = this.related;
 
 	ngOnInit() {
+		this.solutionService.solutionSent$.subscribe((value) => {
+			this.isUserSolution = !value;});
 		//this.isLogged = this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
+		
 	}
+
 
 	loadRelatedChallenge(id: string) {
 		this.challengeSubs$ = this.challengeService
