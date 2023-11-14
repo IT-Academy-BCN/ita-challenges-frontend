@@ -1,0 +1,11 @@
+{
+	"dni": "01875580E",
+	"email": "julia123@gmail.cat",
+	"password": "test123",
+	"confirmPassword": "test123",
+	"specialization": "cln1fjzif000008mdcsfq64c2",
+	"name": "olivia",
+	"role": "ADMIN",
+	"accept": true,
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
