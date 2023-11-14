@@ -46,7 +46,7 @@
         <!-------if not logged show this------>
         <div class="w-25 mt-4 button d-none d-md-inline-block">
             <button class="btn btn-primary" 
-                    (click)="userLoggedIn ? clickSendButton() : openLoginModal()" 
+                    (click)="clickSendButton() " 
                     title="{{'modules.challenge.header.toolTip' | translate }}">
                 {{'modules.challenge.header.button' | translate }}
             </button>
@@ -54,16 +54,16 @@
         
         
         <!------ if logged show this------>
-        <!--
+        
         <div class="col-3 button">
             <button class="btn btn-sm btn-outline-primary">Cancelar</button>
             <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">Aceptar</button>
-        </div>-->
+        </div>
         <!-----if solution sent show this---->
-        <!--
+        
         <div class="solutionSent col-3">
             <p>Solución enviada</p> 
             <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
-        </div>-->
+        </div>
     </div>
 </div>

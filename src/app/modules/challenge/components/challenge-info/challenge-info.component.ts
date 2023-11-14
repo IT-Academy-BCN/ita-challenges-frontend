@@ -35,7 +35,7 @@ export class ChallengeInfoComponent {
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged!: boolean;
+	isLogged: boolean = true //& tiene que estar en tru para que este logueado 
 	activeId = 1;
 
 	idChallenge!: string | any;
@@ -54,7 +54,7 @@ export class ChallengeInfoComponent {
 	related_id = this.related;
 
 	ngOnInit() {
-		this.isLogged = this.authService.isLoggedIn();
+		//this.isLogged = this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
 	}
 

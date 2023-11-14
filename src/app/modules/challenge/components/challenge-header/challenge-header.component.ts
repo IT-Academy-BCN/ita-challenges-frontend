@@ -24,7 +24,7 @@ export class ChallengeHeaderComponent {
 	challenge_date: Date | undefined;
 	challenge_level: string | undefined;
 
-	userLoggedIn = false; //& tiene que ser ture para que el usuario pueda mandar su solucion
+	userLoggedIn = true; //& tiene que ser true para que el usuario pueda mandar su solucion
 
 	ngOnInit() {
 		this.challenge_title = this.title;
@@ -50,10 +50,5 @@ export class ChallengeHeaderComponent {
 		}
 	}
 
-	openLoginModal() {
-		this.modalService.open(LoginModalComponent, {
-			centered: true,
-			size: "lg",
-		});
-	}
+
 }
