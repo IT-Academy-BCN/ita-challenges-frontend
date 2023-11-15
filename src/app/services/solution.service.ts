@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,10 @@ export class SolutionService {
     console.log("Data sent to backend: " + solution);
     // this.http.get();
     this.updateSolutionSentState(true); // Cuando se haya enviado la solución, actualiza el estado
+  }
+
+  public getSolutions(filePath: string): Observable<any> {
+    return this.http.get(filePath);
   }
 
 }

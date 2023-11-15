@@ -8,6 +8,7 @@ import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
 import { SolutionService } from '../../../services/solution.service';
 import {TranslateService} from "@ngx-translate/core";
+import { environment } from 'src/environments/environment';
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
@@ -45,6 +46,8 @@ get number() {
     }
   }
 
+  languages: any[] = [];
+
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
 
@@ -61,6 +64,9 @@ get number() {
         }
       }
     });
+    this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
+      this.languages = data.languages
+    })
   }
 
   ngAfterViewInit() {

@@ -11,5 +11,6 @@ export const environment = {
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
-  pageSize: 8
+  pageSize: 8,
+  BACKEND_DUMMY_SOLUTION :'../assets/dummy/challenge.json'
 };
