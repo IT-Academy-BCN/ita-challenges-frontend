@@ -15,7 +15,7 @@
 	<div *ngIf="!isUserSolution" class="non-editable-text">
 		<!-- solutions from other users go here  -->
 		<!-- {{ "modules.challenge.info.solutionsChallenge" | translate }} -->
-		<pre *ngFor="let language of languages">{{ language.language_name }}</pre>
+		<pre *ngFor="let solution of solutions">{{ solution.solution_text }}</pre>
 
 	</div>
 </div>

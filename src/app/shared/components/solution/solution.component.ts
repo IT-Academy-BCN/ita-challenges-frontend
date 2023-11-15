@@ -46,7 +46,7 @@ get number() {
     }
   }
 
-  languages: any[] = [];
+  solutions: any[] = [];
 
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
@@ -65,7 +65,7 @@ get number() {
       }
     });
     this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
-      this.languages = data.languages
+      this.solutions = data.solutions
     })
   }
 
