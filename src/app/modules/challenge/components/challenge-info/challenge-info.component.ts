@@ -40,7 +40,7 @@ export class ChallengeInfoComponent {
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged: boolean = true //& tiene que estar en true para que este logueado 
+	isLogged: boolean = true //& tiene que estar en true para que este logueado (LO DEJAMOS EN TRUE PARA FORZAR EL LOGIN HASTA TENER ACCESO A AUTHSERVICE)
 	activeId = 1;
 
 	idChallenge!: string | any;
