@@ -56,14 +56,16 @@
         <!------ if logged show this------>
         <!-- <ng-template #isLoggedUser > -->
         <div class="col-3 button" *ngIf="!solutionSent; else solutionSentSection" >
-            <button class="btn btn-sm btn-outline-primary">Cancelar</button>
-            <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">Aceptar</button>
+            <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate }}</button>
+            <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
+                {{'modules.challenge.header.buttonAccept' | translate }}
+            </button>
         </div>
     <!-- </ng-template> -->
         <!-----if solution sent show this---->
         <ng-template #solutionSentSection>
         <div class="solutionSent col-3" *ngIf="solutionSent===true">
-            <p>Solución enviada</p> 
+            <p>{{'modules.challenge.header.solutionSend' | translate }}</p> 
             <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
         </div>
     </ng-template>

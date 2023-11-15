@@ -32,7 +32,10 @@
                 "title": "Retos",
                 "section":"Detalle",
                 "button": "Enviar solución",
-                "toolTip": "Inicia sesión para enviar la solución."
+                "toolTip": "Inicia sesión para enviar la solución.",
+                "buttonAccept": "Aceptar",
+                "buttonCancel": "Cancelar",
+                "solutionSend": "Solución enviada"
             },
             "info": {
                 "detailsTitle": "Detalles",

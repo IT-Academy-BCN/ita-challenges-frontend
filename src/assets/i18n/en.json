@@ -32,7 +32,10 @@
                 "title": "Challenges",
                 "section":"Detail",
                 "button": "Send solution",
-                "toolTip": "Log in to submit the solution."
+                "toolTip": "Log in to submit the solution.",
+                "buttonAccept": "Accept",
+                "buttonCancel": "Cancel",
+                "solutionSend": "Solution sent"
             },
             "info": {
                 "detailsTitle": "Details",

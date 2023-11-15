@@ -32,7 +32,10 @@
                 "title": "Reptes",
                 "section":"Detall",
                 "button": "Enviar solució",
-                "toolTip": "Inicia sessió per enviar la solució."
+                "toolTip": "Inicia sessió per enviar la solució.",
+                "buttonAccept": "Acceptar",
+                "buttonCancel": "Cancel.lar",
+                "solutionSend": "Solució enviada"
             },
             "info": {
                 "detailsTitle": "Detalls",
