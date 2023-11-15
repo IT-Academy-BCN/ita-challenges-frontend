@@ -38,7 +38,7 @@
         <!--SOLUTIONS TAB-->
         <!--users can only see other solutions if they sent theirs-->
         <div class="tab-content">
-        <div class="restricted" *ngIf="!isLogged">
+        <div class="restricted" *ngIf="isUserSolution">
           <h3>{{ 'modules.challenge.info.solutionsTitleLocked' | translate }}</h3>
           <span class="lock">
             <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
@@ -47,7 +47,7 @@
           </span>
         </div>
         <!--if users sent thei solution they can now see other solutions-->
-        <div class="unrestricted" *ngIf="isLogged">
+        <div class="unrestricted" *ngIf=" !isUserSolution && isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
             <app-solution  [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
           </ng-container>
