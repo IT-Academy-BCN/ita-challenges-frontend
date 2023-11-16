@@ -86,7 +86,13 @@
                 "openRegisterModal": "¿No tienes cuenta?, crear una"
             },
             "register": {
-                
+                "title": "Registro",
+                "id": "DNI o NIE",
+                "email": "Email",
+                "password": "Contraseña",
+                "repeatPassword": "Repetir Contraseña",
+                "button": "Registro",
+                "openRegisterModal": "¿Tienes cuenta?, acceder"  
             },
             "restricted":{
 

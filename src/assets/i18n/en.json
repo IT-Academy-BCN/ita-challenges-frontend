@@ -89,7 +89,13 @@
                 "openRegisterModal": "Don't have an account? Create one"
             },
             "register": {
-                
+                "title": "Register",
+                "id": "ID",
+                "email": "Email",
+                "password": "Password",
+                "repeatPassword": "Repeat Password",
+                "button": "Register",
+                "openRegisterModal": "Do you have an account?, log in" 
             },
             "restricted":{
 
