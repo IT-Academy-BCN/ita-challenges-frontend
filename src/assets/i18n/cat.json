@@ -55,7 +55,7 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Llenguatje",
+                "language": "Llenguatje",
                 "dificulty": "Dificultat",
                 "easy": "Fàcil",
                 "medium": "Mitja",

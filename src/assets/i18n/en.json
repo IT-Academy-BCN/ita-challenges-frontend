@@ -57,7 +57,7 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Languaje",
+                "language": "Language",
                 "dificulty": "Dificulty",
                 "easy": "Easy",
                 "medium": "Medium",
