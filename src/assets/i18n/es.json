@@ -72,6 +72,28 @@
                     "date": "Fecha"
                 }
             }
+        },
+        "modals": {
+            "filters": {
+                
+            },
+            "login": {
+                "title": "Login",
+                "id": "DNI o NIE",
+                "password": "Contraseña",
+                "textEnd": "Recordar/cambiar contraseña",
+                "button": "Login",
+                "openRegisterModal": "¿No tienes cuenta?, crear una"
+            },
+            "register": {
+                
+            },
+            "restricted":{
+
+            },
+            "send-solution":{
+
+            }
         }
     }
 }

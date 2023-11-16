@@ -73,6 +73,28 @@
                     "date": "Data"
                 }
             }
+        },
+        "modals": {
+            "filters": {
+                
+            },
+            "login": {
+                "title": "Login",
+                "id": "DNI o NIE",
+                "password": "Contrasenya",
+                "textEnd": "Recordar/canviar contrasenya",
+                "button": "Login",
+                "openRegisterModal": "No tens compte?, crear-ne una"
+            },
+            "register": {
+                
+            },
+            "restricted":{
+
+            },
+            "send-solution":{
+
+            }
         }
     }
 }

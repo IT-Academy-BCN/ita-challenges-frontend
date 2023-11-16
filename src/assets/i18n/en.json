@@ -75,7 +75,31 @@
                     "date": "Date"
                 }
             }
+        },
+        "modals": {
+            "filters": {
+                
+            },
+            "login": {
+                "title": "Login",
+                "id": "ID",
+                "password": "Password",
+                "textEnd": "Remember/change password",
+                "button": "Login",
+                "openRegisterModal": "Don't have an account? Create one"
+            },
+            "register": {
+                
+            },
+            "restricted":{
+
+            },
+            "send-solution":{
+
+            }
         }
     }
 }
+
+
       

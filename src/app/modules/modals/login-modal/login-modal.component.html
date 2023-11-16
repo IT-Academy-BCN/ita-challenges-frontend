@@ -8,16 +8,16 @@
 <div class="d-flex justify-content-center">
     <form class="d-flex flex-column just-content-center gap-3 col-12 col-md-5">
         <div class="modal-body d-flex flex-column gap-3 pt-0">
-            <h2 class="modal-title">Login</h2>
+            <h2 class="modal-title">{{'modules.modals.login.title' | translate}}</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
-                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE">
-                <input formControlName="password" class="form-control" type="password" name="password" placeholder="Contraseña">
-                <a class="text-end">Recordar/cambiar contraseña</a>
+                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="{{'modules.modals.login.id' | translate}}">
+                <input formControlName="password" class="form-control" type="password" name="password" placeholder="{{'modules.modals.login.password' | translate}}">
+                <a class="text-end">{{'modules.modals.login.textEnd' | translate}}</a>
             </div>
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-            <h3><a (click)="openRegisterModal()">¿No tienes cuenta?, crear una</a></h3>
+            <button type="submit" class="btn btn-primary w-100">{{'modules.modals.login.title' | translate}}</button>
+            <h3><a (click)="openRegisterModal()">{{'modules.modals.login.openRegisterModal' | translate}}</a></h3>
         </div>
     </form>
 </div>
