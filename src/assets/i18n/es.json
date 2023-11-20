@@ -60,7 +60,7 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Lenguaje",
+                "language": "Lenguaje",
                 "dificulty": "Dificultad",
                 "easy": "Facil",
                 "medium": "Media",
@@ -77,6 +77,34 @@
                     "popularity": "Popularidad",
                     "date": "Fecha"
                 }
+            }
+        },
+        "modals": {
+            "filters": {
+                
+            },
+            "login": {
+                "title": "Login",
+                "id": "DNI o NIE",
+                "password": "Contraseña",
+                "textEnd": "Recordar/cambiar contraseña",
+                "button": "Login",
+                "openRegisterModal": "¿No tienes cuenta?, crear una"
+            },
+            "register": {
+                "title": "Registro",
+                "id": "DNI o NIE",
+                "email": "Email",
+                "password": "Contraseña",
+                "repeatPassword": "Repetir Contraseña",
+                "button": "Registro",
+                "openRegisterModal": "¿Tienes cuenta?, acceder"  
+            },
+            "restricted":{
+
+            },
+            "send-solution":{
+
             }
         }
     }

@@ -8,17 +8,17 @@
 <div class="d-flex justify-content-center">
     <form class="d-flex flex-column just-content-center gap-3 col-12 col-md-5">
         <div class="modal-body d-flex flex-column gap-3 pt-0">
-            <h2 class="modal-title">Registro</h2>
+            <h2 class="modal-title">{{'modules.modals.register.title' | translate}}</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
-                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE">
-                <input formControlName="email" class="form-control" type="email" name="email" placeholder="Email">
-                <input formControlName="password" class="form-control" type="password" name="password" placeholder="Contraseña">
-                <input formControlName="repeatpassword" class="form-control" type="password" name="repeatpassword" placeholder="Repetir contraseña">
+                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="{{'modules.modals.register.id' | translate}}">
+                <input formControlName="email" class="form-control" type="email" name="email" placeholder="{{'modules.modals.register.email' | translate}}">
+                <input formControlName="password" class="form-control" type="password" name="password" placeholder="{{'modules.modals.register.password' | translate}}">
+                <input formControlName="repeatpassword" class="form-control" type="password" name="repeatpassword" placeholder="{{'modules.modals.register.repeatPassword' | translate}}">
             </div>
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
-            <button type="submit" class="btn btn-primary w-100">Registro</button>
-            <h3><a (click)="openLoginModal()">¿Tienes cuenta?, acceder</a></h3>
+            <button type="submit" class="btn btn-primary w-100">{{'modules.modals.register.button' | translate}}</button>
+            <h3><a (click)="openLoginModal()">{{'modules.modals.register.openRegisterModal' | translate}}</a></h3>
         </div>
     </form>
 </div>

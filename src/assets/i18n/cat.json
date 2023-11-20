@@ -63,7 +63,7 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Llenguatje",
+                "language": "Llenguatje",
                 "dificulty": "Dificultat",
                 "easy": "Fàcil",
                 "medium": "Mitja",
@@ -80,6 +80,34 @@
                     "popularity": "Popularitat",
                     "date": "Data"
                 }
+            }
+        },
+        "modals": {
+            "filters": {
+                
+            },
+            "login": {
+                "title": "Login",
+                "id": "DNI o NIE",
+                "password": "Contrasenya",
+                "textEnd": "Recordar/canviar contrasenya",
+                "button": "Login",
+                "openRegisterModal": "No tens compte?, crear-ne una"
+            },
+            "register": {
+                "title": "Registre",
+                "id": "DNI o NIE",
+                "email": "Email",
+                "password": "Contrasenya",
+                "repeatPassword": "Repetir Contrasenya",
+                "button": "Registre",
+                "openRegisterModal": "Tens compte?, accedir" 
+            },
+            "restricted":{
+
+            },
+            "send-solution":{
+
             }
         }
     }
