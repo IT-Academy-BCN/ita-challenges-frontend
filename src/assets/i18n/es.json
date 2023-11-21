@@ -81,7 +81,21 @@
         },
         "modals": {
             "filters": {
-                
+                "filterTitle": "Filtros",
+                "programmingLanguages": "Lenguajes",
+                "difficulty" : {
+                    "difficultyTitle" : "Dificultad",
+                    "easy": "Fácil",
+                    "medium": "Media",
+                    "difficult": "Difícil"
+                },"progress" : {
+                    "progressTitle": "Progreso",
+                    "notStarted" : "No empezados",
+                    "notCompleted": "Falta completar",
+                    "completed": "Completados"                  
+                }
+
+
             },
             "login": {
                 "title": "Login",

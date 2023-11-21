@@ -84,7 +84,23 @@
         },
         "modals": {
             "filters": {
-                
+                "filterTitle": "Filtres",
+                "programmingLanguages": "llenguatges",
+                "difficulty" : {
+                    "difficultyTitle" : "Dificultat",
+                    "easy": "Fàcil",
+                    "medium": "Mitjana",
+                    "difficult": "Difícil"
+                },
+                "progress" : {
+                    "progressTitle": "Progrés",
+
+                    "notStarted" : "No començats",
+                    "notCompleted": "Falta completar",
+                    "completed": "Completats"                  
+                }
+
+
             },
             "login": {
                 "title": "Login",

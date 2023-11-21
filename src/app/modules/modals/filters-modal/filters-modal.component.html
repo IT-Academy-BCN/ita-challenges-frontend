@@ -1,7 +1,8 @@
 <ng-template #modal let-c="close" let-d="dismiss">
 <div class="modal-header align-items-center justify-between pb-0">
   <h4 class="modal-title fw-bold">
-    Filtros
+    {{'modules.modals.filters.filterTitle' | translate}}
+
   </h4>
     <div class="close" data-bs-dismiss="modal" (click)="d('cross click')" aria-label="Close">
         <span></span>
@@ -11,7 +12,8 @@
 
 <div class="modal-body">
   <div class="form">
-      <p class="fw-bold">Lenguaje</p>
+      <p class="fw-bold">    {{'modules.modals.filters.programmingLanguages' | translate}}
+      </p>
       <div class="d-flex">
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
@@ -32,36 +34,36 @@
       </div>
   </div>
   <div class="form">
-      <p class="fw-bold">Dificultad</p>
-        <div class="d-flex">
+    <p class="fw-bold">{{'modules.modals.filters.difficulty.difficultyTitle' | translate}}</p>
+    <div class="d-flex">
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkFacil" name="facil" value="facil">
-            <label class="input-label">Fácil</label>
+            <label class="input-label">{{'modules.modals.filters.difficulty.easy' | translate}}</label>
         </div>
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkMedia" name="media" value="media">
-            <label class="input-label">Media</label>
+            <label class="input-label">{{'modules.modals.filters.difficulty.medium' | translate}}</label>
         </div>
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
-            <label class="input-label">Difícil</label>
+            <label class="input-label"> {{'modules.modals.filters.difficulty.difficult' | translate}} </label>
         </div>
       </div>
   </div>
   <div class="form">
-      <p class="fw-bold">Progreso</p>
+      <p class="fw-bold">{{'modules.modals.filters.progress.progressTitle' | translate}}</p>
       <div class="d-flex flex-wrap">
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
-            <label class="input-label">No empezados</label>
+            <label class="input-label">{{'modules.modals.filters.progress.notStarted' | translate}}</label>
         </div>
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
-            <label class="input-label">Falta completar</label>
+            <label class="input-label">{{'modules.modals.filters.progress.notCompleted' | translate}}</label>
         </div>
         <div class="input-wrapper">
             <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
-            <label class="input-label">Completados</label>
+            <label class="input-label">{{'modules.modals.filters.progress.completed' | translate}}</label>
         </div>
       </div>
   </div>
