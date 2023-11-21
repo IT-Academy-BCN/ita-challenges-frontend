@@ -101,6 +101,9 @@
                 "openRegisterModal": "¿Tienes cuenta?, acceder"  
             },
             "restricted":{
+                "modalTitleRestricted": "Acceso restringido",
+                "registerButton": "Registrame",
+                "enterButton": "Entrar"
 
             },
             "send-solution":{

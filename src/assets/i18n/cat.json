@@ -104,6 +104,9 @@
                 "openRegisterModal": "Tens compte?, accedir" 
             },
             "restricted":{
+                "modalTitleRestricted": "Accés Restringit",
+                "registerButton": "Dóna'm d'alta",
+                "enterButton": "Entrar"
 
             },
             "send-solution":{

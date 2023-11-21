@@ -104,6 +104,10 @@
                 "openRegisterModal": "Do you have an account?, log in" 
             },
             "restricted":{
+                "modalTitleRestricted": "Restricted Access",
+                "registerButton": "Sign me-up",
+                "enterButton": "Enter"
+
 
             },
             "send-solution":{
