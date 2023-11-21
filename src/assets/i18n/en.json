@@ -111,7 +111,10 @@
 
             },
             "send-solution":{
-
+                "title": "¿Are you sure?",
+                "textEnd": "once the code is sent it cannot be edited",
+                "acceptButton": "Accept",
+                "cancelButton": "Cancel"
             }
         }
     }

@@ -110,7 +110,10 @@
 
             },
             "send-solution":{
-
+                "title": "¿Estàs segur/a?",
+                "textEnd": "un cop enviat el codi no es pot editar",
+                "acceptButton": "Acceptar",
+                "cancelButton": "Cancel.lar"
             }
         }
     }
