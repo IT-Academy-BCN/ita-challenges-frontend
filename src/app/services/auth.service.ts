@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { environment } from '../../environments/environment';
+import { environment } from "../../environments/environment";
 import { BehaviorSubject, Observable, catchError, map, throwError } from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
@@ -51,48 +51,46 @@ export class AuthService {
 				})
 			); */
 
-
-			return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_LOGIN}`) 
-                .pipe(
-                    map((authResult: any) => {
-                        this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-                        console.log('from auth service login ', authResult);
-						return authResult; // Devuelve el resultado del registro
-                    }),
-                    catchError((error: HttpErrorResponse) => {
-                        // Maneja el error aquí (muestra un mensaje de error)
-                        console.log('porque da error', error)
-                        return throwError(error);
-                    })
-                );
-
-
+		return this.http.get<any>(`${environment.BACKEND_DUMMY_LOGIN}`).pipe(
+			map((authResult: any) => {
+				this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
+				console.log("from auth service login ", authResult);
+				return authResult; // Devuelve el resultado del registro
+			}),
+			catchError((error: HttpErrorResponse) => {
+				// Maneja el error aquí (muestra un mensaje de error)
+				console.log("porque da error", error);
+				return throwError(error);
+			})
+		);
 	}
 
 	register(user: User): Observable<void> {
-		// const userJSON = user
-		/*  console.log('from auth service register', user)
-        return this.http
-            .post<void>(
-                `${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
-                user  // transformar en JSON
+		//const userJSON = user;
+		console.log("from auth service register 11111", user);
+		return this.http
+			.post<void>(
+				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
+				user 
+			)
+			.pipe(
+				map((authResult: any) => {
+					if (authResult && authResult.expiresIn) {
+						this.setLocalStorage(authResult);
+						console.log("from auth service register", authResult);
+					} else {
+						throw new Error('Invalid authentication result');
+					}
+				}),
+				catchError((error: HttpErrorResponse) => {
+					console.log("Error during registration", error);
+					return throwError(error);
+				})
+			);
+	}
 
-            )
-            .pipe(
-                map((authResult: any) => {
-                    this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-                    console.log('from auth service ', authResult);
-                }),
-                catchError((error: HttpErrorResponse) => {
-                    //  Handle error here (show an error message)
-                    return throwError(error);
-                })
-            ); */
-            console.log('from auth service register', user);
-
-            // Simular la solicitud con datos de un archivo dummy
-            return this.http
+		// Simular la solicitud con datos de un archivo dummy
+		/* return this.http
                 .get<any>(`${environment.BACKEND_DUMMY_REGISTER}`) 
                 .pipe(
                     map((authResult: any) => {
@@ -105,8 +103,8 @@ export class AuthService {
                         console.log('porque da error', error)
                         return throwError(error);
                     })
-                );
-	}
+                ); */
+	
 
 	private setLocalStorage(authResult: any) {
 		// Takes the JWT expiresIn value and add that number of seconds
