@@ -2,7 +2,14 @@ import moment from "moment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "../../environments/environment";
-import { BehaviorSubject, Observable, catchError, map, throwError } from "rxjs";
+import {
+	BehaviorSubject,
+	Observable,
+	catchError,
+	map,
+	tap,
+	throwError,
+} from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
 
@@ -71,17 +78,32 @@ export class AuthService {
 		return this.http
 			.post<void>(
 				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
-				user 
+				{
+					dni: user.dni,
+					email: user.email,
+					password: user.password,
+					confirmPassword: user.confirmPassword,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
 			)
+
 			.pipe(
-				map((authResult: any) => {
-					if (authResult && authResult.expiresIn) {
-						this.setLocalStorage(authResult);
-						console.log("from auth service register", authResult);
-					} else {
-						throw new Error('Invalid authentication result');
-					}
-				}),
+				tap((res) => console.log("tap", res)),
+				/* 	map((authResult: any) => {
+						if (authResult && authResult.expiresIn) {
+							this.setLocalStorage(authResult);
+							console.log(
+								"from auth service register",
+								authResult
+							);
+						} else {
+							throw new Error("Invalid authentication result");
+						}
+					}), */
 				catchError((error: HttpErrorResponse) => {
 					console.log("Error during registration", error);
 					return throwError(error);
@@ -89,8 +111,8 @@ export class AuthService {
 			);
 	}
 
-		// Simular la solicitud con datos de un archivo dummy
-		/* return this.http
+	// Simular la solicitud con datos de un archivo dummy
+	/* return this.http
                 .get<any>(`${environment.BACKEND_DUMMY_REGISTER}`) 
                 .pipe(
                     map((authResult: any) => {
@@ -104,7 +126,6 @@ export class AuthService {
                         return throwError(error);
                     })
                 ); */
-	
 
 	private setLocalStorage(authResult: any) {
 		// Takes the JWT expiresIn value and add that number of seconds
