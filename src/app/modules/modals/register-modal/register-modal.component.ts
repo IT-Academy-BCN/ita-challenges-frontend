@@ -36,12 +36,15 @@ export class RegisterModalComponent {
 				this.registerForm.get("password")?.value ?? "",
 				this.registerForm.get("repeatpassword")?.value ?? ""
 			);
-      console.log(user, 'from register-modal********')
+      console.log('from register-modal********', user)
 			this.authService.register(user).subscribe({
-				next: (userData) => {},
+				next: (userData) => {
+					console.log(userData)
+				},
 				error: (errorData) => {
-					console.error(errorData);
-					this.registerError = errorData;
+					console.error("Error during registration", errorData);
+					this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
+				
 				},
 			});
 		}
