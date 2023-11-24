@@ -38,7 +38,7 @@ export class RegisterModalComponent {
 			);
       console.log(user, 'from register-modal********')
 			this.authService.register(user).subscribe({
-				next: (userData) => {},
+				next: (userData) => {console.log('userData ' , userData)},
 				error: (errorData) => {
 					console.error(errorData);
 					this.registerError = errorData;

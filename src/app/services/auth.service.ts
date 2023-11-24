@@ -92,18 +92,14 @@ export class AuthService {
 			)
 
 			.pipe(
-				tap((res) => console.log("tap", res)),
-				/* 	map((authResult: any) => {
-						if (authResult && authResult.expiresIn) {
-							this.setLocalStorage(authResult);
-							console.log(
-								"from auth service register",
-								authResult
-							);
-						} else {
-							throw new Error("Invalid authentication result");
-						}
-					}), */
+				map((authResult: any) => {
+					if (authResult && authResult.expiresIn) {
+						this.setLocalStorage(authResult);
+						console.log("from auth service register", authResult);
+					} else {
+						throw new Error("Invalid authentication result");
+					}
+				}),
 				catchError((error: HttpErrorResponse) => {
 					console.log("Error during registration", error);
 					return throwError(error);
