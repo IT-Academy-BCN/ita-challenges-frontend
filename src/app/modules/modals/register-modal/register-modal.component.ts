@@ -5,6 +5,7 @@ import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { Validators, FormBuilder } from "@angular/forms";
 import { AuthService } from "src/app/services/auth.service";
 import { User } from "src/app/models/user.model";
+import { environment } from "src/environments/environment";
 
 @Component({
 	selector: "app-register-modal",
@@ -36,12 +37,19 @@ export class RegisterModalComponent {
 				this.registerForm.get("password")?.value ?? "",
 				this.registerForm.get("repeatpassword")?.value ?? ""
 			);
-      console.log(user, 'from register-modal********')
+
+           // Agrega el itineraryId desde environment
+        user.itineraryId = environment.ITINERARY_ID;
+        
+      console.log('from register-modal********', user)
 			this.authService.register(user).subscribe({
-				next: (userData) => {},
+				next: (userData) => {
+					console.log(userData)
+				},
 				error: (errorData) => {
-					console.error(errorData);
-					this.registerError = errorData;
+					console.error("Error during registration", errorData);
+					this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
+				
 				},
 			});
 		}
