@@ -73,6 +73,33 @@ export class AuthService {
 	}
 
 	register(user: User): Observable<void> {
+		user.itineraryId = environment.ITINERARY_ID;
+	
+		return this.http
+			.post<void>(
+				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
+				user
+			)
+			.pipe(
+				tap((authResult: any) => {
+					// Si hay datos (no es un 204), procesa el resultado
+					if (authResult ) {
+						this.setLocalStorage(authResult);
+					} else {
+						// Si es un 204, simplemente notifica que el registro fue exitoso
+						console.log("Registration successful");
+					}
+				}),
+				catchError((error: HttpErrorResponse) => {
+					console.log("Error during registration", error);
+					console.log("Server response:", error.error); // Muestra la respuesta del servidor
+					return throwError(error);
+				})
+			);
+	}
+	
+
+	/* register(user: User): Observable<void> {
 		  // Agrega el campo itineraryId al objeto user
 		  user.itineraryId = environment.ITINERARY_ID;
 
@@ -100,7 +127,7 @@ export class AuthService {
 					return throwError(error);
 				})
 			);
-	}
+	} */
 
 	// Simular la solicitud con datos de un archivo dummy
 	/* return this.http
@@ -119,10 +146,13 @@ export class AuthService {
                 ); */
 
 				private setLocalStorage(authResult: any) {
-					if (authResult && authResult.expiresIn) {
+					if (authResult ) {
+						
 						// Takes the JWT expiresIn value and add that number of seconds
 						// to the current "moment" in time to get an expiry date
-						const expiresAt = moment().add(authResult.expiresIn, "second");
+						const expiresAt = moment().add(5, "seconds");
+
+						//nota para frontend: el registro nos da codigo 204 y por lo tanto no crea ningun token. por eso hemos quitado la propiedad authResult.expiresIn del registro y del setlocalStograge
 				
 						// Stores our JWT token and its expiry date in localStorage
 						localStorage.setItem("id_token", authResult.idToken);
