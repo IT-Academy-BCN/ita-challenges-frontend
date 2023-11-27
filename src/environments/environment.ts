@@ -8,6 +8,7 @@ export const environment = {
   BACKEND_DUMMY_REGISTER: '../assets/dummy/user-register.json',
   BACKEND_LOGIN:'/auth/login',
   BACKEND_DUMMY_LOGIN: '../assets/dummy/user-login.json',
+  ITINERARY_ID: "clpb8t1cc000008k0cg1icvl4",
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',

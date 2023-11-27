@@ -66,8 +66,8 @@ export class AuthService {
 	}
 
 	register(user: User): Observable<void> {
-		 // Convierte el objeto User a su representación JSON
-		//  const userJSON = JSON.stringify(user);
+		  // Agrega el campo itineraryId al objeto user
+		  user.itineraryId = environment.ITINERARY_ID;
 
 		console.log("from auth service register 11111", user);
 		return this.http
@@ -87,6 +87,7 @@ export class AuthService {
 				}),
 				catchError((error: HttpErrorResponse) => {
 					console.log("Error during registration", error);
+					console.log("Server response:", error.error); // Muestra la respuesta del servidor
 					return throwError(error);
 				})
 			);
