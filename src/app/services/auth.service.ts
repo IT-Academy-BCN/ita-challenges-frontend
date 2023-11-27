@@ -45,7 +45,7 @@ export class AuthService {
 	 * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
 	 */
 	login(dni: string, password: string): Observable<User> {
-		/* return this.http
+		return this.http
 			.post<User>(
 				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`,
 				{ dni, password }
@@ -56,43 +56,37 @@ export class AuthService {
 					this.setLocalStorage(user);
 					return user;
 				})
-			); */
+			); 
 
-		return this.http.get<any>(`${environment.BACKEND_DUMMY_LOGIN}`).pipe(
-			map((authResult: any) => {
-				this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-				console.log("from auth service login ", authResult);
-				return authResult; // Devuelve el resultado del registro
-			}),
-			catchError((error: HttpErrorResponse) => {
-				// Maneja el error aquí (muestra un mensaje de error)
-				console.log("porque da error", error);
-				return throwError(error);
-			})
-		);
+		// return this.http.get<any>(`${environment.BACKEND_DUMMY_LOGIN}`).pipe(
+		// 	map((authResult: any) => {
+		// 		this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
+		// 		console.log("from auth service login ", authResult);
+		// 		return authResult; // Devuelve el resultado del registro
+		// 	}),
+		// 	catchError((error: HttpErrorResponse) => {
+		// 		// Maneja el error aquí (muestra un mensaje de error)
+		// 		console.log("porque da error", error);
+		// 		return throwError(error);
+		// 	})
+		// );
 	}
 
 	register(user: User): Observable<void> {
-		//const userJSON = user;
+		  // Agrega el campo itineraryId al objeto user
+		  user.itineraryId = environment.ITINERARY_ID;
+
 		console.log("from auth service register 11111", user);
 		return this.http
 			.post<void>(
 				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
-				{
-					dni: user.dni,
-					email: user.email,
-					password: user.password,
-					confirmPassword: user.confirmPassword,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
+
+				user
 			)
 
 			.pipe(
 				map((authResult: any) => {
+					console.log("Response from server:", authResult);
 					if (authResult && authResult.expiresIn) {
 						this.setLocalStorage(authResult);
 						console.log("from auth service register", authResult);
@@ -102,6 +96,7 @@ export class AuthService {
 				}),
 				catchError((error: HttpErrorResponse) => {
 					console.log("Error during registration", error);
+					console.log("Server response:", error.error); // Muestra la respuesta del servidor
 					return throwError(error);
 				})
 			);
@@ -123,15 +118,21 @@ export class AuthService {
                     })
                 ); */
 
-	private setLocalStorage(authResult: any) {
-		// Takes the JWT expiresIn value and add that number of seconds
-		// to the current "moment" in time to get an expiry date
-		const expiresAt = moment().add(authResult.expiresIn, "second");
-
-		// Stores our JWT token and its expiry date in localStorage
-		localStorage.setItem("id_token", authResult.idToken);
-		localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-	}
+				private setLocalStorage(authResult: any) {
+					if (authResult && authResult.expiresIn) {
+						// Takes the JWT expiresIn value and add that number of seconds
+						// to the current "moment" in time to get an expiry date
+						const expiresAt = moment().add(authResult.expiresIn, "second");
+				
+						// Stores our JWT token and its expiry date in localStorage
+						localStorage.setItem("id_token", authResult.idToken);
+						localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+					} else {
+						// Handle the case where expiresIn is not present in authResult
+						console.error("Invalid authentication result: expiresIn is missing", authResult);
+						// You may choose to throw an error, log a message, or handle it in another way
+					}
+				}
 
 	// By removing the token from localStorage, we have essentially "lost" our
 	// JWT in space and will need to re-authenticate with the Express app to get

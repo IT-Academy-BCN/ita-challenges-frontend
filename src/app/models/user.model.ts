@@ -4,7 +4,7 @@ export class User {
 	password: string;
 	confirmPassword: string;
 	token?: string;
-	specialization?: string;
+	itineraryId?: string;
 	name?: string;
 	accept?: boolean;
 
@@ -13,7 +13,7 @@ export class User {
 		email: string,
 		password: string,
 		confirmPassword: string,
-		// specialization: string,
+		itineraryId?: string,
 		// name: string,
 		// accept: boolean
 	) {
@@ -21,7 +21,7 @@ export class User {
 		this.email = email;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
-		// this.specialization = specialization;
+		this.itineraryId = itineraryId;
 		// this.name = name;
 		// this.accept = accept;
 	}
