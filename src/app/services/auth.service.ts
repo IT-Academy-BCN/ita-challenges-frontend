@@ -7,6 +7,7 @@ import {
 	Observable,
 	catchError,
 	map,
+	of,
 	tap,
 	throwError,
 } from "rxjs";
@@ -56,7 +57,7 @@ export class AuthService {
 					this.setLocalStorage(user);
 					return user;
 				})
-			); 
+			);
 
 		// return this.http.get<any>(`${environment.BACKEND_DUMMY_LOGIN}`).pipe(
 		// 	map((authResult: any) => {
@@ -74,7 +75,7 @@ export class AuthService {
 
 	register(user: User): Observable<void> {
 		user.itineraryId = environment.ITINERARY_ID;
-	
+
 		return this.http
 			.post<void>(
 				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
@@ -83,7 +84,7 @@ export class AuthService {
 			.pipe(
 				tap((authResult: any) => {
 					// Si hay datos (no es un 204), procesa el resultado
-					if (authResult ) {
+					if (authResult) {
 						this.setLocalStorage(authResult);
 					} else {
 						// Si es un 204, simplemente notifica que el registro fue exitoso
@@ -97,7 +98,6 @@ export class AuthService {
 				})
 			);
 	}
-	
 
 	/* register(user: User): Observable<void> {
 		  // Agrega el campo itineraryId al objeto user
@@ -145,37 +145,85 @@ export class AuthService {
                     })
                 ); */
 
-				private setLocalStorage(authResult: any) {
-					if (authResult ) {
-						
-						// Takes the JWT expiresIn value and add that number of seconds
-						// to the current "moment" in time to get an expiry date
-						const expiresAt = moment().add(5, "seconds");
+	private setLocalStorage(authResult: any) {
+		if (authResult) {
+			console.log(authResult , '******************************')
+			// Takes the JWT expiresIn value and add that number of seconds
+			// to the current "moment" in time to get an expiry date
+			const expiresAt = moment().add(5, "seconds");
 
-						//nota para frontend: el registro nos da codigo 204 y por lo tanto no crea ningun token. por eso hemos quitado la propiedad authResult.expiresIn del registro y del setlocalStograge
-				
-						// Stores our JWT token and its expiry date in localStorage
-						localStorage.setItem("id_token", authResult.idToken);
-						localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-					} else {
-						// Handle the case where expiresIn is not present in authResult
-						console.error("Invalid authentication result: expiresIn is missing", authResult);
-						// You may choose to throw an error, log a message, or handle it in another way
-					}
-				}
+			//nota para frontend: el registro nos da codigo 204 y por lo tanto no crea ningun token. por eso hemos quitado la propiedad authResult.expiresIn del registro y del setlocalStograge
+
+			// Stores our JWT token and its expiry date in localStorage
+			localStorage.setItem("authToken", authResult.authToken);
+			console.log("authToken", authResult.authToken);
+			localStorage.setItem(
+				"expires_at",
+				JSON.stringify(expiresAt.valueOf())
+			);
+		} else {
+			// Handle the case where expiresIn is not present in authResult
+			console.error(
+				"Invalid authentication result: expiresIn is missing",
+				authResult
+			);
+			// You may choose to throw an error, log a message, or handle it in another way
+		}
+	}
 
 	// By removing the token from localStorage, we have essentially "lost" our
 	// JWT in space and will need to re-authenticate with the Express app to get
 	// another one.
 	logout() {
-		localStorage.removeItem("id_token");
+		localStorage.removeItem("authToken");
 		localStorage.removeItem("expires_at");
 	}
 
 	// Returns true as long as the current time is less than the expiry date
-	public isLoggedIn() {
-		return moment().isBefore(this.getExpiration());
+	public isLoggedIn(): Observable<boolean> {
+		console.log('Checking if user is logged in');
+	
+		const expiration = localStorage.getItem("expires_at");
+		const expiresAt = JSON.parse(expiration || "null");
+	
+		console.log('Token expires at:', expiresAt);
+	
+		if (!expiresAt || moment().isAfter(moment(expiresAt))) {
+			console.log('Token has expired, logging out');
+			this.logout(); // Si el token ha expirado según la caducidad local, realiza el logout
+			return of(false);
+		}
+	
+		const token = localStorage.getItem("authToken");
+		if (!token) {
+			console.log('No token found, user is not logged in');
+			return of(false); // Si no hay token, retorna false
+		}
+	
+		console.log('Token found, validating token with server');
+	
+		// Hacer la llamada al endpoint para validar el token
+		return this.http
+			.post<boolean>(
+				"https://dev.sso.itawiki.eurecatacademy.org/api/v1/tokens/validate",
+				{ token }
+			)
+			.pipe(
+				map((isValid) => {
+					console.log('Token validation result:', isValid);
+					if (!isValid) {
+						this.logout(); // Si el token no es válido según el servidor, realiza el logout
+					}
+					return isValid;
+				}),
+				catchError((error) => {
+					console.error('Error validating token:', error);
+					this.logout();
+					return of(false); // En caso de error, asume que el token no es válido y realiza el logout
+				})
+			);
 	}
+	
 
 	isLoggedOut() {
 		return !this.isLoggedIn();
@@ -187,3 +235,4 @@ export class AuthService {
 		return moment(expiresAt);
 	}
 }
+// llamar el token del ususario para ver si esta valido o no con endpoin de token
