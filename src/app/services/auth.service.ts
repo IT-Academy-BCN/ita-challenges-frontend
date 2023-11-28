@@ -58,19 +58,6 @@ export class AuthService {
 					return user;
 				})
 			);
-
-		// return this.http.get<any>(`${environment.BACKEND_DUMMY_LOGIN}`).pipe(
-		// 	map((authResult: any) => {
-		// 		this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-		// 		console.log("from auth service login ", authResult);
-		// 		return authResult; // Devuelve el resultado del registro
-		// 	}),
-		// 	catchError((error: HttpErrorResponse) => {
-		// 		// Maneja el error aquí (muestra un mensaje de error)
-		// 		console.log("porque da error", error);
-		// 		return throwError(error);
-		// 	})
-		// );
 	}
 
 	register(user: User): Observable<void> {
@@ -99,55 +86,11 @@ export class AuthService {
 			);
 	}
 
-	/* register(user: User): Observable<void> {
-		  // Agrega el campo itineraryId al objeto user
-		  user.itineraryId = environment.ITINERARY_ID;
 
-		console.log("from auth service register 11111", user);
-		return this.http
-			.post<void>(
-				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_REGISTER}`,
-
-				user
-			)
-
-			.pipe(
-				map((authResult: any) => {
-					console.log("Response from server:", authResult);
-					if (authResult && authResult.expiresIn) {
-						this.setLocalStorage(authResult);
-						console.log("from auth service register", authResult);
-					} else {
-						throw new Error("Invalid authentication result");
-					}
-				}),
-				catchError((error: HttpErrorResponse) => {
-					console.log("Error during registration", error);
-					console.log("Server response:", error.error); // Muestra la respuesta del servidor
-					return throwError(error);
-				})
-			);
-	} */
-
-	// Simular la solicitud con datos de un archivo dummy
-	/* return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_REGISTER}`) 
-                .pipe(
-                    map((authResult: any) => {
-                        this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-                        console.log('from auth service ', authResult);
-						return authResult; // Devuelve el resultado del registro
-                    }),
-                    catchError((error: HttpErrorResponse) => {
-                        // Maneja el error aquí (muestra un mensaje de error)
-                        console.log('porque da error', error)
-                        return throwError(error);
-                    })
-                ); */
 
 	private setLocalStorage(authResult: any) {
 		if (authResult) {
-			console.log(authResult , '******************************')
+			console.log(authResult, '******************************')
 			// Takes the JWT expiresIn value and add that number of seconds
 			// to the current "moment" in time to get an expiry date
 			const expiresAt = moment().add(5, "seconds");
@@ -161,6 +104,7 @@ export class AuthService {
 				"expires_at",
 				JSON.stringify(expiresAt.valueOf())
 			);
+
 		} else {
 			// Handle the case where expiresIn is not present in authResult
 			console.error(
@@ -169,6 +113,7 @@ export class AuthService {
 			);
 			// You may choose to throw an error, log a message, or handle it in another way
 		}
+		this.isLoggedIn();
 	}
 
 	// By removing the token from localStorage, we have essentially "lost" our
@@ -182,26 +127,32 @@ export class AuthService {
 	// Returns true as long as the current time is less than the expiry date
 	public isLoggedIn(): Observable<boolean> {
 		console.log('Checking if user is logged in');
-	
+
 		const expiration = localStorage.getItem("expires_at");
 		const expiresAt = JSON.parse(expiration || "null");
-	
+
 		console.log('Token expires at:', expiresAt);
-	
-		if (!expiresAt || moment().isAfter(moment(expiresAt))) {
+
+		if (expiresAt) {
 			console.log('Token has expired, logging out');
-			this.logout(); // Si el token ha expirado según la caducidad local, realiza el logout
+			//  Programa la expiración del token después de 10 segundos. 
+			// Este fragmento de código utiliza setTimeout para programar la expiración del token almacenado en localStorage después de 10 segundos, desencadenando automáticamente la función de logout.
+			//  setTimeout(() => {
+			// 	console.log('Token expired after 10 seconds');
+			// 	this.logout(); // Llama a la función de logout cuando el token expire
+			// }, 10000); // 10,000 milisegundos es igual a 30 segundos
+			// this.logout(); // Si el token ha expirado según la caducidad local, realiza el logout
 			return of(false);
 		}
-	
+
 		const token = localStorage.getItem("authToken");
 		if (!token) {
 			console.log('No token found, user is not logged in');
 			return of(false); // Si no hay token, retorna false
 		}
-	
+
 		console.log('Token found, validating token with server');
-	
+
 		// Hacer la llamada al endpoint para validar el token
 		return this.http
 			.post<boolean>(
@@ -223,7 +174,7 @@ export class AuthService {
 				})
 			);
 	}
-	
+
 
 	isLoggedOut() {
 		return !this.isLoggedIn();
@@ -235,4 +186,4 @@ export class AuthService {
 		return moment(expiresAt);
 	}
 }
-// llamar el token del ususario para ver si esta valido o no con endpoin de token
+
