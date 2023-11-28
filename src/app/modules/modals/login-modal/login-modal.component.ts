@@ -52,7 +52,7 @@ export class LoginModalComponent {
         complete: () => {
           console.log('Login Completo')
           // this.router.navigateByUrl('/')
-          this.loginForm.reset()
+          this.closeModal();
         }
       });
 
