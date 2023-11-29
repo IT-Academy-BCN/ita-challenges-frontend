@@ -57,8 +57,9 @@ export class ChallengeComponent {
 
 
   loadMasterData(id: string) {
-    this.challengeSubs$ = this.challengeService.getChallengeById(this.idChallenge).subscribe((challenge) => {
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge); 
+      console.log(challenge)
       this.title = this.challenge.challenge_title;
       this.creation_date = this.challenge.creation_date;
       this.level = this.challenge.level;

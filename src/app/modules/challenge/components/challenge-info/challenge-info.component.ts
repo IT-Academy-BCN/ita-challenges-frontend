@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import {DataChallenge} from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
 import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-challenge-info',
@@ -52,9 +53,12 @@ export class ChallengeInfoComponent {
   ngOnInit(){
     this.loadRelatedChallenge(this.related_id);
   }
-
+  
   loadRelatedChallenge(id: string) {
+
+    console.log(id)
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
+      console.log(challenge)
       this.challenge = new Challenge(challenge); 
       this.related_title = this.challenge?.challenge_title;
       this.related_creation_date = this.challenge?.creation_date;
@@ -62,6 +66,9 @@ export class ChallengeInfoComponent {
       this.related_popularity = this.challenge.popularity;
       this.related_languages = this.challenge.languages;
       this.related_id = this.related;      
+    },
+    (error) => {
+      console.error('Error al cargar desafío relacionado:', error);
     });
   }
 

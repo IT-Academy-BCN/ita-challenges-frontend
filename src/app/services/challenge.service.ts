@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-//import {environment} from "../../environments/environment";
-
+import { environment } from "src/environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -15,21 +14,14 @@ export class ChallengeService {
   
     getChallengeById(id: string):Observable<Object>{
 
-        //-----TO CHANGE----
-
-        /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`, 
+        const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_CHALLENGES_BY_ID}${id}`
+        console.log(url)
+        
+        return this.http.get(url, 
                     {
                         headers: {
-                            'Content-Type': 'application/dummy'
+                            'Content-Type': 'application/json' 
                         }
-                    });*/
-
-
-        return this.http.get('../assets/dummy/challenge.json',
-            {
-                headers: {
-                    'Content-Type': 'application/dummy'
-                }
-            });
+                    });
     }
 }
