@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthService } from './../../../services/auth.service';
 
 import { RegisterModalComponent } from './register-modal.component';
 

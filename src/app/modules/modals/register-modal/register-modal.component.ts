@@ -1,11 +1,11 @@
+import { environment } from './../../../../environments/environment';
+import { User } from './../../../models/user.model';
 
 import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { Validators, FormBuilder } from "@angular/forms";
-import { AuthService } from "src/app/services/auth.service";
-import { User } from "src/app/models/user.model";
-import { environment } from "src/environments/environment";
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
 	selector: "app-register-modal",

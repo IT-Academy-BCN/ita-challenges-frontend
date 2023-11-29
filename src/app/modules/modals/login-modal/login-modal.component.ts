@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
+import { User } from "src/app/models/user.model";
 
 @Component({
   selector: 'app-login-modal',
