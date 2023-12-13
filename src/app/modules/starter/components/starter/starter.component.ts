@@ -56,16 +56,16 @@ export class StarterComponent {
 
 
       console.log(resp);
-/*      this.dataChallenge = new DataChallenge(resp);
-      this.challenges = this.dataChallenge.challenges;
-      this.numChallenges = this.challenges.length;
-      this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
+      // this.dataChallenge = new DataChallenge(resp);
+      // this.challenges = this.dataChallenge.challenges;
+      // this.numChallenges = this.challenges.length;
+      // this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
 
-      const startIndex = (page -1) * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      this.listChallenges = this.challenges.slice(startIndex, endIndex);*/
+      // const startIndex = (page -1) * this.pageSize;
+      // const endIndex = startIndex + this.pageSize;
+      // this.listChallenges = this.challenges.slice(startIndex, endIndex);
       
-      return this.listChallenges;
+      this.listChallenges = resp;
     });
   }
 
