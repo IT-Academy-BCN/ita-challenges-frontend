@@ -73,7 +73,8 @@
               "browserTarget": "ita-challenges-frontend:build:production"
             },
             "development": {
-              "browserTarget": "ita-challenges-frontend:build:development"
+              "browserTarget": "ita-challenges-frontend:build:development",
+              "proxyConfig": "proxy.conf.dev.json"
             }
           },
           "defaultConfiguration": "development"
