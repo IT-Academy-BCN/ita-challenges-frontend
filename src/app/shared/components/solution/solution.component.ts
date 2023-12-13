@@ -8,6 +8,10 @@ import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
 import { SolutionService } from '../../../services/solution.service';
 import {TranslateService} from "@ngx-translate/core";
+import { linter } from '@codemirror/lint';
+import { Diagnostic } from '@codemirror/lint';
+
+
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
@@ -17,8 +21,9 @@ type Language = 'javascript' | 'java' | 'python' | 'php';
   styleUrls: ['./solution.component.scss']
 })
 export class SolutionComponent {
-  @ViewChild('editorSolution') editorSolution!: ElementRef;
-  editor: any;
+  @ViewChild('editor') private editorContainer!: ElementRef;
+  private editor?: EditorView;
+  @Input() languageExt: string = 'javascript';
 
   @Input() set number(value: number | undefined) {
   setTimeout(() => {
@@ -29,7 +34,6 @@ get number() {
   return this._number;
 }
   private _number?: number;
-  @Input() languageExt: Language = 'javascript';
 
   @Input() isUserSolution = false;
 
@@ -61,46 +65,46 @@ get number() {
   }
 
   //nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
-  createEditor() {
-    let languageExtension;
+  private createEditor(): void {
+    let extensions = [];
 
-    switch (this.languageExt) {
-      case 'javascript':
-        languageExtension = javascript({typescript:true});
-        break;
-      case 'python':
-        languageExtension = python();
-        break;
-      case 'java':
-        languageExtension = java();
-        break;
-      case 'php':
-        languageExtension = php();
-        break;
-      default:
-        return;
+    if (this.languageExt === 'javascript') {
+      extensions.push(javascript());
+      // Aquí puedes agregar otras extensiones de CodeMirror necesarias para tu editor
+
+      // Agrega el linter
+      extensions.push(linter(myLinterFunction));
     }
 
-    let state: EditorState;
-    if (this.isUserSolution){
-      state = EditorState.create({
-        //doc: comment,
-        extensions: [
-          minimalSetup,
-          languageExtension
-        ]
-      });
-    }else{
-      state = EditorState.create({
-      // doc: 'Respuesta de ejemplo, no se puede modificar',
-      extensions: [
-        minimalSetup,
-        languageExtension,
-        EditorView.editable.of(false)
-      ]
+    if(this.languageExt === 'java') {
+      extensions.push(java());
+
+
+      extensions.push(linter(myLinterFunction));
+
+    }
+
+    // Agrega configuraciones adicionales para otros lenguajes aquí
+
+    this.editor = new EditorView({
+      state: EditorState.create({
+        extensions: extensions
+      }),
+      parent: this.editorContainer.nativeElement
     });
-  }
-    this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement });
   }
 
 }
+
+
+function myLinterFunction(view: EditorView) {
+  // Aquí iría la lógica de tu linter personalizado
+  // Por ejemplo, puedes marcar ciertas palabras o patrones como errores
+
+  let diagnostics: any  = [];
+  // Ejemplo: agrega lógica para crear diagnósticos basados en el contenido de 'view'
+
+  return diagnostics;
+}
+
+
