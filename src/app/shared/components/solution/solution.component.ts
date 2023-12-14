@@ -9,7 +9,7 @@ import { basicSetup, minimalSetup } from 'codemirror';
 import { SolutionService } from '../../../services/solution.service';
 import {TranslateService} from "@ngx-translate/core";
 import { linter } from '@codemirror/lint';
-import { Diagnostic } from '@codemirror/lint';
+import {  Diagnostic } from '@codemirror/lint';
 
 
 
@@ -97,15 +97,30 @@ get number() {
 }
 
 
-function myLinterFunction(view: EditorView) {
-  // Aquí iría la lógica de tu linter personalizado
-  // Por ejemplo, puedes marcar ciertas palabras o patrones como errores
+type Severity = 'error' | 'warning' | 'info'; // Define expected severity values
 
-  let diagnostics: any  = [];
-  // Ejemplo: agrega lógica para crear diagnósticos basados en el contenido de 'view'
+
+function myLinterFunction(view: EditorView): Diagnostic[] {
+  let diagnostics: Diagnostic[] = [];
+  const doc = view.state.doc;
+
+  for (let lineNumber = 0; lineNumber < doc.lines; lineNumber++) {
+    const line = doc.line(lineNumber + 1);
+
+    const varIndex = line.text.indexOf('var');
+    if (varIndex !== -1) {
+      diagnostics.push({
+        from: line.from + varIndex,
+        to: line.from + varIndex + 3,
+        severity: 'warning' as Severity, // Use the Severity type
+        message: "Evita usar 'var'; usa 'let' o 'const' en su lugar."
+      });
+    }
+  }
 
   return diagnostics;
 }
+
 
 
 
