@@ -7,12 +7,14 @@
     }}</a>
       <ng-template ngbNavContent>
         <div class="tab-content">
+          <!-- show statement / mostrar enunciado -->
             <div class="d-block btn-row text-end mb-3">
-              <span class="right-span d-inline-flex">
+              <span *ngIf="isLogged" class="right-span d-inline-flex">
                 <input type="checkbox" name="checkbox" [(ngModel)]="showStatement"/>
-                <label class="ms-1">{{'modules.challenge.info.showStatement' | translate }}</label>
+                <label  class="ms-1">{{'modules.challenge.info.showStatement' | translate }}</label>
               </span>
             </div>
+            <!-- description of statement on the left of the box where you put your code for the solution  -->
             <div class="details-body d-flex">
               <div *ngIf="showStatement" class="details-text">
                 <h3 class="mt-0">{{'modules.challenge.info.description' | translate }}</h3>
@@ -22,7 +24,8 @@
                 <h3>{{'modules.challenge.info.notes' | translate }}</h3>
                 <p>{{ notes }}</p>
               </div>
-              <app-solution [isUserSolution]="true" [languageExt]="'java'"></app-solution>
+              <!-- only if user logeed in -->
+              <app-solution *ngIf="isLogged && isUserSolution" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
             </div>
           </div>
      </ng-template>
@@ -33,21 +36,21 @@
     }}</a>
     <ng-template ngbNavContent>
         <!--SOLUTIONS TAB-->
-        <!--restricted (no user logged)-->
+        <!--users can only see other solutions if they sent theirs-->
         <div class="tab-content">
-        <div class="restricted" *ngIf="!isLogged">
-          <h3>Las soluciones están bloqueadas</h3>
+        <div class="restricted" *ngIf="isUserSolution">
+          <h3>{{ 'modules.challenge.info.solutionsTitleLocked' | translate }}</h3>
           <span class="lock">
             <img src="../../../../../assets/img/icon/lock.svg" alt="lock icon" />
             <p>
-              Las soluciones permanecerán bloqueadas hasta que entregues el reto
-            </p>
+              {{ 'modules.challenge.info.solutionsLocked' | translate }}            </p>
           </span>
         </div>
-        <!--unrestricted (user logged)-->
-        <div class="unrestricted" *ngIf="isLogged">
+        <!--if users sent thei solution they can now see other solutions-->
+        <div class="unrestricted" *ngIf=" !isUserSolution && isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
-            <app-solution [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
+            <app-solution  [number]="i+1" [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"></app-solution>
+          <!-- esta en solution.component.html -->
           </ng-container>
         </div>
         </div>

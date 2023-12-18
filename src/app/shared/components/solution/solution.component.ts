@@ -8,6 +8,7 @@ import { php } from '@codemirror/lang-php';
 import { basicSetup, minimalSetup } from 'codemirror';
 import { SolutionService } from '../../../services/solution.service';
 import {TranslateService} from "@ngx-translate/core";
+import { environment } from 'src/environments/environment';
 
 type Language = 'javascript' | 'java' | 'python' | 'php';
 
@@ -45,15 +46,27 @@ get number() {
     }
   }
 
+  solutions: any[] = [];
+
   constructor(private solutionService: SolutionService,
               private translateService: TranslateService) { }
 
+  private lastSentSolution: string = '';
+
+
   ngOnInit(): void {
-    this.solutionService.obs$.subscribe(res => {
+    this.solutionService.solutionSent$.subscribe((value) => {
       if (this.editor && this.isUserSolution) {
-        this.solutionService.sendSolution(this.editor.state.doc.toString());
+        const currentSolution = this.editor.state.doc.toString();
+        if (currentSolution !== this.lastSentSolution) {
+          this.solutionService.sendSolution(currentSolution);
+          this.lastSentSolution = currentSolution;
+        }
       }
     });
+    this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
+      this.solutions = data.solutions
+    })
   }
 
   ngAfterViewInit() {
