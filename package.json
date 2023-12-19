@@ -3,7 +3,7 @@
   "version": "1.0.7-SNAPSHOT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.dev.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
