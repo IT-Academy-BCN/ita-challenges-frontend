@@ -48,7 +48,6 @@ export class StarterFiltersComponent {
       if (val == true) { filters.progress.push(i+1) }
       });
       this.filtersSelected.emit(filters);
-      console.log('llamada emmit componente hijo:' + filters.languages, filters.levels, filters.progress);
     });
 
   }

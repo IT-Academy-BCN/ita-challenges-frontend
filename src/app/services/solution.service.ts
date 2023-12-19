@@ -23,8 +23,6 @@ export class SolutionService {
   }
 
   sendSolution(solution: string) {
-    console.log("Data sent to backend: " + solution);
-    // this.http.get();
     this.updateSolutionSentState(true); // Cuando se haya enviado la solución, actualiza el estado
   }
 
