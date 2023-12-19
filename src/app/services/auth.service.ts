@@ -53,7 +53,7 @@ export class AuthService {
 
 
 			return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_LOGIN}`) 
+                .get<any>(`${environment.BACKEND_SSO_LOGIN}`)
                 .pipe(
                     map((authResult: any) => {
                         this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
@@ -93,7 +93,7 @@ export class AuthService {
 
             // Simular la solicitud con datos de un archivo dummy
             return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_REGISTER}`) 
+                .get<any>(`${environment.BACKEND_SSO_REGISTER}`)
                 .pipe(
                     map((authResult: any) => {
                         this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
