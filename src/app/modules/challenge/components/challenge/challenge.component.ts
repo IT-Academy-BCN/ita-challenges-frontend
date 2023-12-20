@@ -25,41 +25,38 @@ export class ChallengeComponent {
   creation_date!: Date;
   level = "";
   details!: ChallengeDetails;
-  related: string [] = [];
-  resources:  Resource[] = [];
-  solutions:  Solution[] = [];
+  related: string[] = [];
+  resources: Resource[] = [];
+  solutions: Solution[] = [];
   description = "";
   examples: Example[] = [];
   notes = "";
   popularity!: number;
   languages: Language[] = [];
-  
+
 
   constructor(
     private route: ActivatedRoute,
     private challengeService: ChallengeService,
-  ){
-    this.params$ =  this.route.paramMap.subscribe((params: ParamMap) => {
+  ) {
+    this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge')
-      console.log(this.idChallenge)
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.loadMasterData(this.idChallenge);
-    console.log(this.idChallenge)
   }
 
   ngOnDestroy() {
     if (this.params$ != undefined) this.params$.unsubscribe();
-    if(this.challengeSubs$ != undefined) this.challengeSubs$.unsubscribe();
+    if (this.challengeSubs$ != undefined) this.challengeSubs$.unsubscribe();
   }
 
 
   loadMasterData(id: string) {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge); 
-      console.log(challenge)
+      this.challenge = new Challenge(challenge);
       this.title = this.challenge.challenge_title;
       this.creation_date = this.challenge.creation_date;
       this.level = this.challenge.level;

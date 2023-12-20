@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-12 col-md-7">
+        <div class="w-75">
             <p>Retos > <span id="color">Detalle</span></p>
             <div class="d-flex align-items-start">
                 <div class="difficulty">
@@ -44,20 +44,30 @@
             </div>
         </div>
         <!-------if not logged show this------>
-        <div class="col-3 button d-none d-md-inline-block">
-            <button class="btn btn-primary" (click)="clickSendButton()">{{'modules.challenge.header.button' | translate }}</button>
+        <div class="w-25 mt-4 button d-none d-md-inline-block" *ngIf="isLogged===false">
+            <button class="btn btn-primary" 
+                    (click)="clickSendButton() " 
+                    title="{{'modules.challenge.header.toolTip' | translate }}">
+                {{'modules.challenge.header.button' | translate }}
+            </button>
         </div>
+        
+        
         <!------ if logged show this------>
-        <!--
-        <div class="col-3 button">
-            <button class="btn btn-sm btn-outline-primary">Cancelar</button>
-            <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">Aceptar</button>
-        </div>-->
+        <!-- <ng-template #isLoggedUser > -->
+        <div class="col-3 button" *ngIf="!solutionSent; else solutionSentSection" >
+            <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate }}</button>
+            <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
+                {{'modules.challenge.header.buttonAccept' | translate }}
+            </button>
+        </div>
+    <!-- </ng-template> -->
         <!-----if solution sent show this---->
-        <!--
-        <div class="solutionSent col-3">
-            <p>Solución enviada</p> 
+        <ng-template #solutionSentSection>
+        <div class="solutionSent col-3" *ngIf="solutionSent===true">
+            <p>{{'modules.challenge.header.solutionSend' | translate }}</p> 
             <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
-        </div>-->
+        </div>
+    </ng-template>
     </div>
 </div>

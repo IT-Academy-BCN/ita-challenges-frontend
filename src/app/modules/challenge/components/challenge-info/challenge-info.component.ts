@@ -1,76 +1,83 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { ChallengeDetails } from 'src/app/models/challenge-details.model';
-import { Example } from 'src/app/models/challenge-example.model';
-import { Language } from 'src/app/models/language.model';
-import { ChallengeService } from '../../../../services/challenge.service';
-import { Subscription } from 'rxjs';
-import {DataChallenge} from "../../../../models/data-challenge.model";
+import { Component, Input, ViewChild } from "@angular/core";
+import { ChallengeDetails } from "src/app/models/challenge-details.model";
+import { Example } from "src/app/models/challenge-example.model";
+import { Language } from "src/app/models/language.model";
+import { ChallengeService } from "../../../../services/challenge.service";
+import { Subscription } from "rxjs";
+import { DataChallenge } from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
-import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
-import { environment } from 'src/environments/environment';
+import { NgbNav } from "@ng-bootstrap/ng-bootstrap";
+import { AuthService } from "src/app/services/auth.service";
+import { SolutionService } from "src/app/services/solution.service";
 
 @Component({
-  selector: 'app-challenge-info',
-  templateUrl: './challenge-info.component.html',
-  styleUrls: ['./challenge-info.component.scss'],
-  providers: [ChallengeService]
+	selector: "app-challenge-info",
+	templateUrl: "./challenge-info.component.html",
+	styleUrls: ["./challenge-info.component.scss"],
+	providers: [ChallengeService],
 })
 export class ChallengeInfoComponent {
-  constructor(private challengeService: ChallengeService){}
-  @ViewChild('nav') nav!: NgbNav;
 
-  @Input() related: any = [];
-  @Input() resources: any = [];
-  @Input() details!: ChallengeDetails;
-  @Input() solutions: any = [];
-  @Input() description!: string;
-  @Input() examples: Example[] = [];
-  @Input() notes!: string;
-  @Input() popularity!: number;
-  @Input() languages: Language[] = []
+	isUserSolution: boolean = true;
 
-  solutionsDummy = [{solutionName: 'dummy1'}, {solutionName: 'dummy2'}];
+	constructor(
+		private challengeService: ChallengeService,
+		private authService: AuthService,
+		private solutionService: SolutionService
+	) {}
+	@ViewChild("nav") nav!: NgbNav;
 
-  showStatement = true;
-  isLogged = true;
-  activeId = 1;
+	@Input() related: any = [];
+	@Input() resources: any = [];
+	@Input() details!: ChallengeDetails;
+	@Input() solutions: any = [];
+	@Input() description!: string;
+	@Input() examples: Example[] = [];
+	@Input() notes!: string;
+	@Input() popularity!: number;
+	@Input() languages: Language[] = [];
 
-  idChallenge!: string | any;
-  params$!: Subscription;
-  jsonData: Challenge[] = [];
-  challenge!: Challenge;
-  dataChallenge!: DataChallenge;
-  challenges: Challenge[] = [];
-  challengeSubs$!: Subscription;
-  
-  related_title = "";
-  related_creation_date!: Date;
-  related_level = "";
-  related_popularity!: number;
-  related_languages: Language[] = [];
-  related_id = this.related;
+	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
-  ngOnInit(){
-    this.loadRelatedChallenge(this.related_id);
-  }
-  
-  loadRelatedChallenge(id: string) {
+	showStatement = true;
+	isLogged: boolean = true //& tiene que estar en true para que este logueado (LO DEJAMOS EN TRUE PARA FORZAR EL LOGIN HASTA TENER ACCESO A AUTHSERVICE)
+	activeId = 1;
 
-    console.log(id)
-    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      console.log(challenge)
-      this.challenge = new Challenge(challenge); 
-      this.related_title = this.challenge?.challenge_title;
-      this.related_creation_date = this.challenge?.creation_date;
-      this.related_level = this.challenge?.level;
-      this.related_popularity = this.challenge.popularity;
-      this.related_languages = this.challenge.languages;
-      this.related_id = this.related;      
-    },
-    (error) => {
-      console.error('Error al cargar desafío relacionado:', error);
-    });
-  }
+	idChallenge!: string | any;
+	params$!: Subscription;
+	jsonData: Challenge[] = [];
+	challenge!: Challenge;
+	dataChallenge!: DataChallenge;
+	challenges: Challenge[] = [];
+	challengeSubs$!: Subscription;
+
+	related_title = "";
+	related_creation_date!: Date;
+	related_level = "";
+	related_popularity!: number;
+	related_languages: Language[] = [];
+	related_id = this.related;
+
+	ngOnInit() {
+		this.solutionService.solutionSent$.subscribe((value) => {
+			this.isUserSolution = !value;});
+		//this.isLogged = this.authService.isLoggedIn();
+		this.loadRelatedChallenge(this.related_id);
+		
+	}
 
 
+	loadRelatedChallenge(id: string) {
+		this.challengeSubs$ = this.challengeService
+			.getChallengeById(id)
+			.subscribe((challenge) => {
+				this.challenge = new Challenge(challenge);
+				this.related_title = this.challenge?.challenge_title;
+				this.related_creation_date = this.challenge?.creation_date;
+				this.related_level = this.challenge?.level;
+				this.related_popularity = this.challenge.popularity;
+				this.related_languages = this.challenge.languages;
+				this.related_id = this.related;
+			});
+	}
 }
