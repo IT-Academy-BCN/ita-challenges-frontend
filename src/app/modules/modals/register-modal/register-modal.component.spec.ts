@@ -46,8 +46,10 @@ describe('RegisterModalComponent', () => {
     tick();
     fixture.detectChanges();
   
-    expect(spyRegister).toHaveBeenCalledWith(expect.any(User));
+    // Assuming User is the correct type that register method expects
+    expect(spyRegister).toHaveBeenCalledWith(jasmine.any(User));
   }));
+  
   
 
   it('should handle registration error', fakeAsync(() => {
