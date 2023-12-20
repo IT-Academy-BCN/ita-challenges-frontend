@@ -31,7 +31,11 @@
             "header": {
                 "title": "Retos",
                 "section":"Detalle",
-                "button": "Enviar solución"
+                "button": "Enviar solución",
+                "toolTip": "Inicia sesión para enviar la solución.",
+                "buttonAccept": "Aceptar",
+                "buttonCancel": "Cancelar",
+                "solutionSend": "Solución enviada"
             },
             "info": {
                 "detailsTitle": "Detalles",
@@ -49,7 +53,9 @@
                 "showStatement": "Mostrar enunciado",
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
-                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar"
+                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
+                "solutionsTitleLocked":"Las soluciones están bloqueadas",
+                "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
         "starter": {
