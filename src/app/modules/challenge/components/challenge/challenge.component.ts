@@ -41,13 +41,11 @@ export class ChallengeComponent {
   ) {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge')
-      console.log(this.idChallenge)
     });
   }
 
   ngOnInit() {
     this.loadMasterData(this.idChallenge);
-    console.log(this.idChallenge)
   }
 
   ngOnDestroy() {

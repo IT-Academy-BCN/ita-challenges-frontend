@@ -55,7 +55,6 @@ export class StarterComponent {
     this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
 
 
-      console.log(resp);
       // this.dataChallenge = new DataChallenge(resp);
       // this.challenges = this.dataChallenge.challenges;
       // this.numChallenges = this.challenges.length;
@@ -79,7 +78,6 @@ export class StarterComponent {
   }
 
   getChallengeFilters(filters: FilterChallenge){
-    console.log('llamada componente padre desde emitter: '+ filters.languages, filters.levels, filters.progress)
     this.filters = filters;
     //TODO: llamar al endpoint
   }
