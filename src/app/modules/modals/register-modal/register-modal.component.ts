@@ -51,6 +51,7 @@ export class RegisterModalComponent {
 				},
 			});
 		}
+		this.closeModal();
 	}
 	closeModal() {
 		this.modalService.dismissAll();

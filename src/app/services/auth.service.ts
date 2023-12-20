@@ -16,14 +16,9 @@ import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthService {
-	// newUser: User | undefined;
 	private userSubject: BehaviorSubject<User>;
 	public user: Observable<User>;
 
-	/**
-	 * Gives us access to the Angular HTTP client so we can make requests to
-	 * our Express app
-	 */
 	constructor(private http: HttpClient, private router: Router) {
 		this.userSubject = new BehaviorSubject(
 			JSON.parse(localStorage.getItem("user")!)
@@ -35,44 +30,19 @@ export class AuthService {
 		return this.userSubject.value;
 	}
 
-	/**
-	 * Passes the username and password that the user typed into the application
-	 * and sends a POST request to our Express server login route, which will
-	 * authenticate the credentials and return a JWT token if they are valid
-	 *
-	 * The `res` object (has our JWT in it) is passed to the setLocalStorage
-	 * method below
-	 *
-	 * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
-	 */
 	login(dni: string, password: string): Observable<User> {
-		// return this.http
-		// 	.post<User>(
-		// 		`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`,
-		// 		{ dni, password }
-		// 	)
-		// 	.pipe(
-		// 		map((user) => {
-		// 			console.log(user);
-		// 			this.setLocalStorage(user);
-		// 			return user;
-		// 		})
-			// ); */
-
-
-			return this.http
-                .get<any>(`${environment.BACKEND_SSO_LOGIN}`)
-                .pipe(
-                    map((authResult: any) => {
-                        this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-						return authResult; // Devuelve el resultado del registro
-                    }),
-                    catchError((error: HttpErrorResponse) => {
-                        return throwError(error);
-                    })
-                );
-
-
+		return this.http
+			.post<User>(
+				`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_LOGIN}`,
+				{ dni, password }
+			)
+			.pipe(
+				map((user) => {
+					console.log(user);
+					this.setLocalStorage(user);
+					return user;
+				})
+			); 
 	}
 
 	register(user: User): Observable<void> {
@@ -100,7 +70,6 @@ export class AuthService {
 				})
 			);
 	}
-
 
 
 	private setLocalStorage(authResult: any) {
