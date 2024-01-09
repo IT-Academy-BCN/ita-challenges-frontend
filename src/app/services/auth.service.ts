@@ -83,7 +83,9 @@ export class AuthService {
 
 			// Stores our JWT token and its expiry date in localStorage
 			localStorage.setItem("authToken", authResult.authToken);
-			console.log("authToken", authResult.authToken);
+			localStorage.setItem("refreshToken", authResult.refreshToken);
+
+			// console.log("authToken", authResult.authToken);
 			localStorage.setItem(
 				"expires_at",
 				JSON.stringify(expiresAt.valueOf())
@@ -105,6 +107,7 @@ export class AuthService {
 	// another one.
 	logout() {
 		localStorage.removeItem("authToken");
+		localStorage.removeItem("refreshToken");
 		localStorage.removeItem("expires_at");
 	}
 
@@ -112,13 +115,16 @@ export class AuthService {
 	public isLoggedIn(): Observable<boolean> {
 		console.log('Checking if user is logged in');
 
-		const expiration = localStorage.getItem("expires_at");
-		const expiresAt = JSON.parse(expiration || "null");
+		// const expiration = localStorage.getItem("refreshToken");
+		// const expiresAt = JSON.parse(expiration || "null");
 
-		console.log('Token expires at:', expiresAt);
+		const token = localStorage.getItem("authToken");
+		const refreshToken = localStorage.getItem("refreshToken");
 
-		if (expiresAt) {
-			console.log('Token has expired, logging out');
+		console.log('refreshToken:', refreshToken);
+
+		// if (!refreshToken) {
+		// 	console.log('Token has expired, logging out');
 			//  Programa la expiración del token después de 10 segundos. 
 			// Este fragmento de código utiliza setTimeout para programar la expiración del token almacenado en localStorage después de 10 segundos, desencadenando automáticamente la función de logout.
 			//  setTimeout(() => {
@@ -126,11 +132,12 @@ export class AuthService {
 			// 	this.logout(); // Llama a la función de logout cuando el token expire
 			// }, 10000); // 10,000 milisegundos es igual a 30 segundos
 			// this.logout(); // Si el token ha expirado según la caducidad local, realiza el logout
-			return of(false);
-		}
+			// return of(false);
+		// }
 
-		const token = localStorage.getItem("authToken");
-		if (!token) {
+		
+
+		if (!token && !refreshToken) {
 			console.log('No token found, user is not logged in');
 			return of(false); // Si no hay token, retorna false
 		}
