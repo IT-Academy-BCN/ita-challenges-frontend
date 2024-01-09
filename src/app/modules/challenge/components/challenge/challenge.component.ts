@@ -46,6 +46,7 @@ export class ChallengeComponent {
 
   ngOnInit() {
     this.loadMasterData(this.idChallenge);
+  
   }
 
   ngOnDestroy() {
@@ -55,8 +56,9 @@ export class ChallengeComponent {
 
 
   loadMasterData(id: string) {
-    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge);
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge: any) => {
+
+      this.challenge = new Challenge(challenge.results[0])
       this.title = this.challenge.challenge_title;
       this.creation_date = this.challenge.creation_date;
       this.level = this.challenge.level;

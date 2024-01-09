@@ -14,7 +14,8 @@ export class ChallengeService {
   
     getChallengeById(id: string):Observable<Object>{
 
-        const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}${id}`
+        console.log(id)
+        const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}/${id}`
         console.log(url)
         
         return this.http.get(url, 

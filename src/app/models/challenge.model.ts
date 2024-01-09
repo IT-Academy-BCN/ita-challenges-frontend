@@ -23,21 +23,28 @@ export class Challenge {
         this.popularity = element.popularity;
         this.details = element.details;
 
-        element.languages.forEach( (language: any) => {
-            this.languages.push(language);
-        });
-
-        element.solutions.forEach( (solution: any) => {
-            this.solutions.push(solution);
-        });
-
-        element.resources.forEach( (resource: any) => {
-            this.resources.push(resource);
-        });
-
-        element.related.forEach( (challengeRelated: any) => {
-            this.related.push(challengeRelated);
-        });
+        if (element.languages) {
+            element.languages.forEach( (language: any) => {
+                this.languages.push(language);
+            });
+            
+        }
+        if (element.solutions) {
+            element.solutions.forEach( (solution: any) => {
+                this.solutions.push(solution);
+            });
+            
+        }
+        if (element.resources) {
+            element.resources.forEach( (resource: any) => {
+                this.resources.push(resource);
+            });
+        }
+        if (element.related) {
+            element.related.forEach( (challengeRelated: any) => {
+                this.related.push(challengeRelated);
+            });
+        }
     }
 
 
