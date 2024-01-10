@@ -142,7 +142,10 @@ export class AuthService {
 			return of(false); // Si no hay token, retorna false
 		}
 
-		console.log('Token found, validating token with server');
+		if (token && refreshToken) {
+			console.log('Token found, validating token with server');
+			// return of(false); // Si no hay token, retorna false
+		}
 
 		// Hacer la llamada al endpoint para validar el token
 		return this.http

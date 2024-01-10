@@ -1,5 +1,8 @@
 <!---Nav tabs-->
+<!-- <app-restricted-modal *ngIf="!isLogged" (click)="openRestrictedModal()">  </app-restricted-modal> -->
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
+
+
   <!--DETAILS TAB-->
   <li [ngbNavItem]="1">
     <a href="#details" ngbNavLink>{{
@@ -25,10 +28,20 @@
                 <p>{{ notes }}</p>
               </div>
               <!-- only if user logeed in -->
-              <app-solution *ngIf="isLogged " style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
+              <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
+
+              <ng-container *ngIf="isLogged">
+                <app-solution
+                  style="background-color: white;"
+                  [isUserSolution]="true"
+                  [languageExt]="'java'"
+                ></app-solution>
+              </ng-container>
+              <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
+
             </div>
           </div>
-     </ng-template>
+        </ng-template>
   </li>
   <li [ngbNavItem]="2">
     <a href="#solutions" ngbNavLink>{{

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restricted-modal',
@@ -9,10 +10,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./restricted-modal.component.scss']
 })
 export class RestrictedModalComponent {
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal,  private router: Router) {}
 
   closeModal() {
     this.modalService.dismissAll();
+    // this.router.navigateByUrl('/');) 
   }
   
   openLoginModal(){

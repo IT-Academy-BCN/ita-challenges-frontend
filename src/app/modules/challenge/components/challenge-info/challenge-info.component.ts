@@ -6,9 +6,10 @@ import { ChallengeService } from "../../../../services/challenge.service";
 import { Subscription } from "rxjs";
 import { DataChallenge } from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
-import { NgbNav } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbNav } from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from "src/app/services/auth.service";
 import { SolutionService } from "src/app/services/solution.service";
+import { RestrictedModalComponent } from "src/app/modules/modals/restricted-modal/restricted-modal.component";
 
 @Component({
 	selector: "app-challenge-info",
@@ -23,8 +24,9 @@ export class ChallengeInfoComponent {
 	constructor(
 		private challengeService: ChallengeService,
 		private authService: AuthService,
-		private solutionService: SolutionService
-	) {}
+		private solutionService: SolutionService,
+		private modalService: NgbModal
+	) { }
 	@ViewChild("nav") nav!: NgbNav;
 
 	@Input() related: any = [];
@@ -40,8 +42,9 @@ export class ChallengeInfoComponent {
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged: boolean = true //& tiene que estar en true para que este logueado (LO DEJAMOS EN TRUE PARA FORZAR EL LOGIN HASTA TENER ACCESO A AUTHSERVICE)
+	isLogged: boolean = false 
 	activeId = 1;
+	solutionSent: boolean = false
 
 	idChallenge!: string | any;
 	params$!: Subscription;
@@ -60,10 +63,25 @@ export class ChallengeInfoComponent {
 
 	ngOnInit() {
 		this.solutionService.solutionSent$.subscribe((value) => {
-			this.isUserSolution = !value;});
-		//this.isLogged = this.authService.isLoggedIn();
+			this.isUserSolution = !value;
+		});
+		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
-		
+
+		const token = localStorage.getItem('authToken');
+		const refreshToken = localStorage.getItem('refreshToken');
+
+
+
+		if (token && refreshToken) {
+			this.isLogged = true;
+		}
+		if (!this.isLogged) {
+			this.openRestrictedModal();
+		}
+
+		this.loadRelatedChallenge(this.related_id);
+
 	}
 
 
@@ -80,4 +98,9 @@ export class ChallengeInfoComponent {
 				this.related_id = this.related;
 			});
 	}
+
+	openRestrictedModal() {
+		this.modalService.open(RestrictedModalComponent, { backdrop: 'static', centered: true, size: 'lg' });
+	}
 }
+
