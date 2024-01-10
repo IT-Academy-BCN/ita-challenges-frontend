@@ -18,7 +18,6 @@ import { RestrictedModalComponent } from "src/app/modules/modals/restricted-moda
 	providers: [ChallengeService],
 })
 export class ChallengeInfoComponent {
-
 	isUserSolution: boolean = true;
 
 	constructor(
@@ -26,7 +25,7 @@ export class ChallengeInfoComponent {
 		private authService: AuthService,
 		private solutionService: SolutionService,
 		private modalService: NgbModal
-	) { }
+	) {}
 	@ViewChild("nav") nav!: NgbNav;
 
 	@Input() related: any = [];
@@ -42,9 +41,9 @@ export class ChallengeInfoComponent {
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged: boolean = false 
+	isLogged: boolean = false;
 	activeId = 1;
-	solutionSent: boolean = false
+	solutionSent: boolean = false;
 
 	idChallenge!: string | any;
 	params$!: Subscription;
@@ -68,10 +67,14 @@ export class ChallengeInfoComponent {
 		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
 
-		const token = localStorage.getItem('authToken');
-		const refreshToken = localStorage.getItem('refreshToken');
+		this.checkIfUserIsLoggedIn();
 
+		this.loadRelatedChallenge(this.related_id);
+	}
 
+	checkIfUserIsLoggedIn() {
+		const token = localStorage.getItem("authToken");
+		const refreshToken = localStorage.getItem("refreshToken");
 
 		if (token && refreshToken) {
 			this.isLogged = true;
@@ -79,11 +82,7 @@ export class ChallengeInfoComponent {
 		if (!this.isLogged) {
 			this.openRestrictedModal();
 		}
-
-		this.loadRelatedChallenge(this.related_id);
-
 	}
-
 
 	loadRelatedChallenge(id: string) {
 		this.challengeSubs$ = this.challengeService
@@ -100,7 +99,10 @@ export class ChallengeInfoComponent {
 	}
 
 	openRestrictedModal() {
-		this.modalService.open(RestrictedModalComponent, { backdrop: 'static', centered: true, size: 'lg' });
+		this.modalService.open(RestrictedModalComponent, {
+			backdrop: "static",
+			centered: true,
+			size: "lg",
+		});
 	}
 }
-
