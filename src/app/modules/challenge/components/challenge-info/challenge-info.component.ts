@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { AfterContentChecked, Component, Input, ViewChild } from "@angular/core";
 import { ChallengeDetails } from "src/app/models/challenge-details.model";
 import { Example } from "src/app/models/challenge-example.model";
 import { Language } from "src/app/models/language.model";
@@ -17,15 +17,17 @@ import { RestrictedModalComponent } from "src/app/modules/modals/restricted-moda
 	styleUrls: ["./challenge-info.component.scss"],
 	providers: [ChallengeService],
 })
-export class ChallengeInfoComponent {
+export class ChallengeInfoComponent implements AfterContentChecked {
 	isUserSolution: boolean = true;
 
 	constructor(
 		private challengeService: ChallengeService,
 		private authService: AuthService,
 		private solutionService: SolutionService,
-		private modalService: NgbModal
+		private modalService: NgbModal,
 	) {}
+	
+
 	@ViewChild("nav") nav!: NgbNav;
 
 	@Input() related: any = [];
@@ -66,10 +68,16 @@ export class ChallengeInfoComponent {
 		});
 		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
-
 		this.checkIfUserIsLoggedIn();
+	}
 
-		this.loadRelatedChallenge(this.related_id);
+	ngAfterContentChecked(): void {
+		const token = localStorage.getItem("authToken");
+		const refreshToken = localStorage.getItem("refreshToken");
+
+		if (token && refreshToken) {
+			this.isLogged = true;
+		}
 	}
 
 	checkIfUserIsLoggedIn() {
