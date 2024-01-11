@@ -76,63 +76,70 @@ export class AuthService {
 
 	private setLocalStorage(authResult: any) {
 		if (authResult) {
-			console.log(authResult, '******************************')
+			console.log(authResult, "******************************");
 			const expiresAt = moment().add(5, "seconds");
 
 			localStorage.setItem("authToken", authResult.authToken);
 			localStorage.setItem("refreshToken", authResult.refreshToken);
-			localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-
+			localStorage.setItem(
+				"expires_at",
+				JSON.stringify(expiresAt.valueOf())
+			);
 		} else {
-			console.error("Invalid authentication result: expiresIn is missing", authResult);
+			console.error(
+				"Invalid authentication result: expiresIn is missing",
+				authResult
+			);
 			throw new Error("Invalid authentication result: no data found");
 		}
 		this.isLoggedIn();
 	}
 
-	private logout() {
+	public logout() {
 		localStorage.removeItem("authToken");
 		localStorage.removeItem("refreshToken");
 		localStorage.removeItem("expires_at");
 	}
 
 	public isLoggedIn(): Observable<boolean> {
-		console.log('Checking if user is logged in');
+		console.log("Checking if user is logged in");
 		const token = localStorage.getItem("authToken") ?? "";
 		const refreshToken = localStorage.getItem("refreshToken");
 
-		console.log('refreshToken:', refreshToken);
+		console.log("refreshToken:", refreshToken);
 
 		if (!token && !refreshToken) {
-			console.log('No token found, user is not logged in');
+			console.log("No token found, user is not logged in");
 			return of(false);
 		}
 
 		if (token && refreshToken) {
-			console.log('Token found, validating token with server');
+			console.log("Token found, validating token with server");
 		}
 
 		return this.validateTokenOnServer(token);
 	}
 
 	private validateTokenOnServer(token: string): Observable<boolean> {
-		return this.http.post<boolean>(
-			"https://dev.sso.itawiki.eurecatacademy.org/api/v1/tokens/validate",
-			{ token }
-		).pipe(
-			map((isValid) => {
-				console.log('Token validation result:', isValid);
-				if (!isValid) {
+		return this.http
+			.post<boolean>(
+				"https://dev.sso.itawiki.eurecatacademy.org/api/v1/tokens/validate",
+				{ token }
+			)
+			.pipe(
+				map((isValid) => {
+					console.log("Token validation result:", isValid);
+					if (!isValid) {
+						this.logout();
+					}
+					return isValid;
+				}),
+				catchError((error) => {
+					console.error("Error validating token:", error);
 					this.logout();
-				}
-				return isValid;
-			}),
-			catchError((error) => {
-				console.error('Error validating token:', error);
-				this.logout();
-				return of(false);
-			})
-		);
+					return of(false);
+				})
+			);
 	}
 
 	public isLoggedOut() {
@@ -142,8 +149,7 @@ export class AuthService {
 	public getExpiration() {
 		const expiration = localStorage.getItem("expires_at");
 		const expiresAt = expiration != null ? JSON.parse(expiration) : null;
-		console.log(expiresAt)
+		console.log(expiresAt);
 		return moment(expiresAt);
 	}
 }
-
