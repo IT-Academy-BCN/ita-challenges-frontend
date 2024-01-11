@@ -33,7 +33,7 @@
                 "section":"Detall",
                 "button": "Enviar solució",
                 "toolTip": "Inicia sessió per enviar la solució.",
-                "buttonAccept": "Acceptar",
+                "buttonAccept": "Enviar",
                 "buttonCancel": "Cancel.lar",
                 "solutionSend": "Solució enviada"
             },

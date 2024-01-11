@@ -33,7 +33,7 @@
                 "section":"Detail",
                 "button": "Send solution",
                 "toolTip": "Log in to submit the solution.",
-                "buttonAccept": "Accept",
+                "buttonAccept": "Send",
                 "buttonCancel": "Cancel",
                 "solutionSend": "Solution sent"
             },

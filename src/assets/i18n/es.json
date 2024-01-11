@@ -33,7 +33,7 @@
                 "section":"Detalle",
                 "button": "Enviar solución",
                 "toolTip": "Inicia sesión para enviar la solución.",
-                "buttonAccept": "Aceptar",
+                "buttonAccept": "Enviar",
                 "buttonCancel": "Cancelar",
                 "solutionSend": "Solución enviada"
             },
