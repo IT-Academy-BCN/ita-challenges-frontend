@@ -60,7 +60,7 @@ describe('ChallengeHeaderComponent', () => {
 
   it('should open restricted modal if user is not logged in', () => {
     spyOn(modalService, 'open').and.stub();
-    component.userLoggedIn = false;
+    component.isLogged = false;
     component.clickSendButton();
 
   expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SolutionService } from 'src/app/services/solution.service';
+import { SolutionService } from '../../../services/solution.service';
+
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -8,7 +9,6 @@ import { SolutionService } from 'src/app/services/solution.service';
   styleUrls: ['./send-solution-modal.component.scss']
 })
 export class SendSolutionModalComponent {
-  // solutionSent = false;
   constructor(private modalService: NgbModal, private solutionService: SolutionService) {}
 
   acceptSolution() {

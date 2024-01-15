@@ -93,9 +93,11 @@
                     "notStarted" : "No empezados",
                     "notCompleted": "Falta completar",
                     "completed": "Completados"                  
+                },
+                "button":{
+                    "applyButton": "Applicar",
+                    "cancelButton": "Cancelar"
                 }
-
-
             },
             "login": {
                 "title": "Login",

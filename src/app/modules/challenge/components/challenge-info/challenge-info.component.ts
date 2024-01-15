@@ -7,8 +7,7 @@ import { Subscription } from "rxjs";
 import { DataChallenge } from "../../../../models/data-challenge.model";
 import { Challenge } from "../../../../models/challenge.model";
 import { NgbNav } from "@ng-bootstrap/ng-bootstrap";
-import { AuthService } from "src/app/services/auth.service";
-import { SolutionService } from "src/app/services/solution.service";
+import { SolutionService } from "../../../../services/solution.service";
 
 @Component({
 	selector: "app-challenge-info",
@@ -22,7 +21,6 @@ export class ChallengeInfoComponent {
 
 	constructor(
 		private challengeService: ChallengeService,
-		private authService: AuthService,
 		private solutionService: SolutionService
 	) {}
 	@ViewChild("nav") nav!: NgbNav;

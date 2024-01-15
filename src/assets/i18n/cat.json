@@ -94,13 +94,14 @@
                 },
                 "progress" : {
                     "progressTitle": "Progrés",
-
                     "notStarted" : "No començats",
                     "notCompleted": "Falta completar",
                     "completed": "Completats"                  
+                },
+                "button":{
+                    "applyButton": "Aplicar",
+                    "cancelButton": "Cancel.lar"
                 }
-
-
             },
             "login": {
                 "title": "Login",
