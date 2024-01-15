@@ -53,16 +53,18 @@ export class StarterComponent {
 
   getChallengesByPage(page: number) {
     this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
-      this.dataChallenge = new DataChallenge(resp);
-      this.challenges = this.dataChallenge.challenges;
-      this.numChallenges = this.challenges.length;
-      this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
 
-      const startIndex = (page -1) * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      this.listChallenges = this.challenges.slice(startIndex, endIndex);
+
+      // this.dataChallenge = new DataChallenge(resp);
+      // this.challenges = this.dataChallenge.challenges;
+      // this.numChallenges = this.challenges.length;
+      // this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
+
+      // const startIndex = (page -1) * this.pageSize;
+      // const endIndex = startIndex + this.pageSize;
+      // this.listChallenges = this.challenges.slice(startIndex, endIndex);
       
-      return this.listChallenges;
+      this.listChallenges = resp;
     });
   }
 
@@ -76,7 +78,6 @@ export class StarterComponent {
   }
 
   getChallengeFilters(filters: FilterChallenge){
-    console.log('llamada componente padre desde emitter: '+ filters.languages, filters.levels, filters.progress)
     this.filters = filters;
     //TODO: llamar al endpoint
   }

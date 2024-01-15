@@ -8,6 +8,7 @@ import { SolutionService } from '../../../services/solution.service';
   templateUrl: './send-solution-modal.component.html',
   styleUrls: ['./send-solution-modal.component.scss']
 })
+
 export class SendSolutionModalComponent {
   constructor(private modalService: NgbModal, private solutionService: SolutionService) {}
 

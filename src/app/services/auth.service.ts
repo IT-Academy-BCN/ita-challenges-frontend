@@ -53,16 +53,13 @@ export class AuthService {
 
 
 			return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_LOGIN}`) 
+                .get<any>(`${environment.BACKEND_SSO_LOGIN}`)
                 .pipe(
                     map((authResult: any) => {
                         this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-                        console.log('from auth service login ', authResult);
 						return authResult; // Devuelve el resultado del registro
                     }),
                     catchError((error: HttpErrorResponse) => {
-                        // Maneja el error aquí (muestra un mensaje de error)
-                        console.log('porque da error', error)
                         return throwError(error);
                     })
                 );
@@ -89,20 +86,17 @@ export class AuthService {
                     return throwError(error);
                 })
             ); */
-            console.log('from auth service register', user);
 
             // Simular la solicitud con datos de un archivo dummy
             return this.http
-                .get<any>(`${environment.BACKEND_DUMMY_REGISTER}`) 
+                .get<any>(`${environment.BACKEND_SSO_REGISTER}`)
                 .pipe(
                     map((authResult: any) => {
                         this.setLocalStorage(authResult); // Llama a setLocalStorage con el resultado de autenticación
-                        console.log('from auth service ', authResult);
 						return authResult; // Devuelve el resultado del registro
                     }),
                     catchError((error: HttpErrorResponse) => {
                         // Maneja el error aquí (muestra un mensaje de error)
-                        console.log('porque da error', error)
                         return throwError(error);
                     })
                 );

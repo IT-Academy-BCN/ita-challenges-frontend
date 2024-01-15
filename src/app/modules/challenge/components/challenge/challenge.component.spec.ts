@@ -13,6 +13,7 @@ import { By } from '@angular/platform-browser';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent;
@@ -58,6 +59,7 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService,
         },
+        AuthService,
       ],
     }).compileComponents();
   });              

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component';
 import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component';
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -33,7 +34,8 @@ describe('ChallengeInfoComponent', () => {
             NgbNavModule
       ],
       providers: [
-        ChallengeService
+        ChallengeService,
+        AuthService,
       ]
     }).compileComponents();
   });

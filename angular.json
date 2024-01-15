@@ -70,10 +70,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ita-challenges-frontend:build:production"
+              "buildTarget": "ita-challenges-frontend:build:production"
             },
             "development": {
-              "browserTarget": "ita-challenges-frontend:build:development"
+              "proxyConfig": "proxy.conf.dev.json",
+              "buildTarget": "ita-challenges-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ita-challenges-frontend:build"
+            "buildTarget": "ita-challenges-frontend:build"
           }
         },
         "test": {
