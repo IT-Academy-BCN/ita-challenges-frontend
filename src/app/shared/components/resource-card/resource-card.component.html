@@ -1,19 +1,23 @@
 <div class="resource-list-element d-flex justify-content-start animated mb-4">
-    <div class="d-flex flex-column justify-content-start">
-        <div class="up-arrow"></div>
-        <h3 class="points">100</h3>
-        <div class="down-arrow"></div>
-    </div>
-    <div class="resource-details d-flex flex-column">
-        <h3 class="title">Resource title</h3>
-        <p class="description">
-            {{ description }}
-        </p>
-        <div class="user-details d-flex mt-auto align-items-center">
-            <img class="user-img" [src]="['../../../../assets/img/users/user-1.png']" alt="Nombre Usuario"/> 
-            <span class="description">
-                 {{ author }}, {{ date }}
-            </span>
-        </div>
-    </div>
+	<div class="d-flex flex-column justify-content-start">
+		<div class="up-arrow"></div>
+		<h3 class="points">100</h3>
+		<div class="down-arrow"></div>
+	</div>
+	<div class="resource-details d-flex flex-column">
+		<h3 class="title">{{ resourceTitle }}</h3>
+		<p class="description">
+			{{ resourceDescription }}
+		</p>
+		<div class="user-details d-flex mt-auto align-items-center">
+			<img
+				class="user-img"
+				[src]="['../../../../assets/img/users/user-1.png']"
+				alt="{{ userAuthor }}"
+			/>
+			<span class="description" style="border: 3px solid green">
+				{{ userAuthor }}, {{ date }}
+			</span>
+		</div>
+	</div>
 </div>
