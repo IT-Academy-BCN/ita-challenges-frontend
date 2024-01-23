@@ -72,8 +72,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	}
 
 	ngAfterContentChecked(): void {
-		const token = localStorage.getItem("authToken");
-		const refreshToken = localStorage.getItem("refreshToken");
+		const token = localStorage.getItem("authToken");//TODO
+		const refreshToken = localStorage.getItem("refreshToken");//TODO
 
 		if (token && refreshToken) {
 			this.isLogged = true;
@@ -81,8 +81,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	}
 
 	checkIfUserIsLoggedIn() {
-		const token = localStorage.getItem("authToken");
-		const refreshToken = localStorage.getItem("refreshToken");
+		const token = localStorage.getItem("authToken");//TODO
+		const refreshToken = localStorage.getItem("refreshToken");//TODO
 
 		if (token && refreshToken) {
 			this.isLogged = true;

@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   appVersion: require('../../package.json').version,
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
-  BACKEND_ITA_WIKI_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
+  BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES: '/challenge/challenges',
   BACKEND_SSO_REGISTER: '/auth/register',
   BACKEND_SSO_LOGIN:'/auth/login',

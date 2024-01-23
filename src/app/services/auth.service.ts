@@ -22,6 +22,8 @@ export class AuthService {
 
 	constructor(private http: HttpClient, private router: Router) {
 		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
+
+		console.log("*******"+JSON.stringify(this.userSubject));
 		this.user = this.userSubject.asObservable();
 	}
 
@@ -31,7 +33,7 @@ export class AuthService {
 
 	public login(dni: string, password: string): Observable<User> {
 		return this.http.post<User>(
-			`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_SSO_LOGIN}`,
+			`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_LOGIN}`,
 			{ dni, password }
 		)
 			.pipe(
@@ -48,7 +50,7 @@ export class AuthService {
 	public register(user: User): Observable<void> {
 		user.itineraryId = environment.ITINERARY_ID;
 
-		return this.http.post<void>(`${environment.BACKEND_ITA_WIKI_BASE_URL}${environment.BACKEND_SSO_REGISTER}`,
+		return this.http.post<void>(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_REGISTER}`,
 			user
 		)
 			.pipe(

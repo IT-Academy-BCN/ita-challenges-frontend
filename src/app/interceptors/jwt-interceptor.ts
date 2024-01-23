@@ -22,7 +22,20 @@ export class JwtInterceptor implements HttpInterceptor {
 
     const currentUser = this.authService.currentUser;
     const isLoggedIn = currentUser && currentUser.token;
-    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_WIKI_BASE_URL);
+    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_SSO_BASE_URL);
+
+    console.log('***************************');
+      console.log(currentUser);
+      console.log(isLoggedIn);
+      console.log(isApiUrl);
+
+
+
+
+
+
+
+
     if (isLoggedIn && isApiUrl) {
         request = request.clone({
             setHeaders: { Authorization: `Bearer ${currentUser.token}` }
@@ -30,18 +43,6 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request);
-    // let modifiedRequest = request;
-    //const isApiUrl = request.url.startsWith(environment.BACKEND_BASE_URL);
-    // if (TOKEN != null) {
-    //   modifiedRequest = request.clone({ headers: request.headers.set(AUTHORIZATION, BEARER + TOKEN) });
-    // }
-    // return next.handle(modifiedRequest).pipe( //redireccionar si alguna petición arroja 401 - Forbidden
-    //   catchError((error) => {
-    //     if (error.status === 401) {
-    //       this.router.navigateByUrl('/login');
-    //     }
-    //     return throwError(() => new Error(error.message));
-    //   }));
   }
 }
 export const interceptorProvider = [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}];
