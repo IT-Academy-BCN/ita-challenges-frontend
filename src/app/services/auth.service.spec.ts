@@ -2,7 +2,6 @@ import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { of, throwError } from "rxjs";
-import moment from "moment";
 
 describe("AuthService", () => {
 	let authService: AuthService;
