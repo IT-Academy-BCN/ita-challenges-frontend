@@ -15,28 +15,19 @@ const TOKEN = environment.BACKEND_TOKEN;
 })
 export class JwtInterceptor implements HttpInterceptor {
 
+
   constructor(private router: Router,
-    private authService: AuthService) { }
+              private authService: AuthService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    console.log('***************************INTERCEPTOR');
+    const currentUser = this.authService.currentUser;
 
+    console.log("~~~~~~~~~~~"+JSON.stringify(currentUser));
 
-
-/*    const currentUser = this.authService.currentUser;
-    const isLoggedIn = currentUser && currentUser.token;
-    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_SSO_BASE_URL);*/
-
-/*      console.log(currentUser);
-      console.log(isLoggedIn);
-      console.log(isApiUrl);*/
-
-    /*    if (isLoggedIn && isApiUrl) {
-        request = request.clone({
-            setHeaders: { Authorization: `Bearer ${currentUser.token}` }
-        });
-    }*/
+    this.authService.user.subscribe((user) => {
+        console.log("#########"+JSON.stringify(user));
+    });
 
     return next.handle(request);
   }

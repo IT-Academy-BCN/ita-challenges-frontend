@@ -30,7 +30,7 @@ export class RegisterModalComponent {
 
 	register() {
 		console.log("Valores del formulario:", this.registerForm.value);
-		if (this.registerForm.valid) {
+/*		if (this.registerForm.valid) {
 			const user = new User(
 				this.registerForm.get("dni")?.value ?? "", // Usa '' como valor predeterminado
 				this.registerForm.get("email")?.value ?? "", // Usa '' como valor predeterminado
@@ -41,7 +41,7 @@ export class RegisterModalComponent {
            // Agrega el itineraryId desde environment
         user.itineraryId = environment.ITINERARY_ID;
         
-      console.log('from register-modal********', user)
+      console.log('from register-modal********', user)*/
 /*			this.authService.register(user).subscribe({
 				next: (userData) => {console.log('userData ' , userData)},
 				error: (errorData) => {
@@ -49,8 +49,8 @@ export class RegisterModalComponent {
 					this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
 				
 				},
-			});*/
-		}
+			});
+		}*/
 		this.closeModal();
 	}
 	closeModal() {
