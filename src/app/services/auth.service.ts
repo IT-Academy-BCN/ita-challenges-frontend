@@ -19,11 +19,11 @@ export class AuthService {
 
 	private readonly anonym: string = "anonym";
 	private userSubject: BehaviorSubject<User>;
-	public user: Observable<User>;
+	public user$: Observable<User>;
 
 	constructor(private http: HttpClient, private router: Router) {
 		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
-		this.user = this.userSubject.asObservable();
+		this.user$ = this.userSubject.asObservable();
 	}
 
 	/**
@@ -40,8 +40,11 @@ export class AuthService {
 	/**
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
-	public register(dni: string, email:string, password: string, confirmPassword:string){
+	public register(dni: string, email:string, password: string, confirmPassword:string): User{
 
+
+
+		return this.currentUser;
 
 	}
 

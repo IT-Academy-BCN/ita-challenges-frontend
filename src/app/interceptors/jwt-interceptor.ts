@@ -25,7 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     console.log("~~~~~~~~~~~"+JSON.stringify(currentUser));
 
-    this.authService.user.subscribe((user) => {
+    this.authService.user$.subscribe((user) => {
         console.log("#########"+JSON.stringify(user));
     });
 
