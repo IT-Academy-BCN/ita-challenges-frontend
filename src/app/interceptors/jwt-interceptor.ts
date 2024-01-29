@@ -20,27 +20,23 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const currentUser = this.authService.currentUser;
+    console.log('***************************INTERCEPTOR');
+
+
+
+/*    const currentUser = this.authService.currentUser;
     const isLoggedIn = currentUser && currentUser.token;
-    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_SSO_BASE_URL);
+    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_SSO_BASE_URL);*/
 
-    console.log('***************************');
-      console.log(currentUser);
+/*      console.log(currentUser);
       console.log(isLoggedIn);
-      console.log(isApiUrl);
+      console.log(isApiUrl);*/
 
-
-
-
-
-
-
-
-    if (isLoggedIn && isApiUrl) {
+    /*    if (isLoggedIn && isApiUrl) {
         request = request.clone({
             setHeaders: { Authorization: `Bearer ${currentUser.token}` }
         });
-    }
+    }*/
 
     return next.handle(request);
   }

@@ -32,7 +32,7 @@ export class LoginModalComponent {
 
       console.log('*************', this.loginForm)
 
-      this.authService.login(dni, password).subscribe({
+/*      this.authService.login(dni, password).subscribe({
         next: (userData) => {
           console.log(userData, "login")
           // actions like redirecting user to another page 
@@ -55,7 +55,7 @@ export class LoginModalComponent {
           // this.router.navigateByUrl('/')
           this.closeModal();
         }
-      });
+      });*/
 
     }
     else {

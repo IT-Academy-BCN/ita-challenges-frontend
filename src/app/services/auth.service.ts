@@ -17,17 +17,17 @@ import { Router } from "@angular/router";
 @Injectable()
 export class AuthService {
 
-	private userSubject: BehaviorSubject<User>;
-	public user: Observable<User>;
+/*	private userSubject: BehaviorSubject<User>;
+	public user: Observable<User>;*/
 
 	constructor(private http: HttpClient, private router: Router) {
-		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
+		//this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
 
-		console.log("*******"+JSON.stringify(this.userSubject));
-		this.user = this.userSubject.asObservable();
+		//console.log("*******"+JSON.stringify(this.userSubject));
+		//this.user = this.userSubject.asObservable();
 	}
 
-	public get currentUser(): User {
+	/*public get currentUser(): User {
 		return this.userSubject.value;
 	}
 
@@ -125,5 +125,5 @@ export class AuthService {
 	public getExpiration() {
 		const expiration = localStorage.getItem("expires_at");
 		return expiration != null ? JSON.parse(expiration) : null;
-	}
+	}*/
 }

@@ -42,14 +42,14 @@ export class RegisterModalComponent {
         user.itineraryId = environment.ITINERARY_ID;
         
       console.log('from register-modal********', user)
-			this.authService.register(user).subscribe({
+/*			this.authService.register(user).subscribe({
 				next: (userData) => {console.log('userData ' , userData)},
 				error: (errorData) => {
 					console.error("Error during registration", errorData);
 					this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
 				
 				},
-			});
+			});*/
 		}
 		this.closeModal();
 	}
