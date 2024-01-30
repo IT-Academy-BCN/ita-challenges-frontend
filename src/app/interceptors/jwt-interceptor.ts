@@ -20,14 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
               private authService: AuthService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const currentUser = this.authService.currentUser;
-
-    console.log("~~~~~~~~~~~"+JSON.stringify(currentUser));
-
-    this.authService.user$.subscribe((user) => {
-        console.log("#########"+JSON.stringify(user));
-    });
+    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL);
 
     return next.handle(request);
   }

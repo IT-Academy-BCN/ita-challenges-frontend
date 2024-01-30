@@ -22,7 +22,7 @@ export class StarterService {
             'Content-Type' : 'application/json'
         })
 
-        return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
+        return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
             {
                 //params,
                 headers
