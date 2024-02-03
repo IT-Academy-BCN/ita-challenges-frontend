@@ -6,3 +6,4 @@
 - Helena Polo - https://github.com/HelenaPolo
 - Lorena Ponsico - https://github.com/LorenaPonsico
 - Valerio Paradiso - https://github.com/valerioprds
+- Samir Comas - https://github.com/sacom14
