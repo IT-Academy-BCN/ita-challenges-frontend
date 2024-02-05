@@ -6,3 +6,4 @@
 - Helena Polo - https://github.com/HelenaPolo
 - Lorena Ponsico - https://github.com/LorenaPonsico
 - Valerio Paradiso - https://github.com/valerioprds
+- Lara Del Rio Garcia - https://github.com/laradelrio
