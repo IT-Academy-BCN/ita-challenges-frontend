@@ -14,6 +14,12 @@ import {
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
 
+interface loginResponse {
+	id: string;
+	authToken: string;
+	refreshToken: string;
+}
+
 @Injectable()
 export class AuthService {
 
@@ -21,7 +27,8 @@ export class AuthService {
 	private userSubject: BehaviorSubject<User>;
 	public user$: Observable<User>;
 
-	constructor(private http: HttpClient, private router: Router) {
+	constructor(private http: HttpClient,
+				private router: Router) {
 		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
 		this.user$ = this.userSubject.asObservable();
 	}
@@ -37,22 +44,51 @@ export class AuthService {
 		return this.userSubject.value;
 	}
 
+	public set currentUser(user: User) {
+		this.userSubject.next(user);
+		localStorage.setItem("user", JSON.stringify(user));
+	}
+
 	/**
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
-	public register(dni: string, email:string, password: string, confirmPassword:string): User{
+	public register(user:User): Observable<any>{
 
-
-
-		return this.currentUser;
-
+		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
+			{
+				'dni': 'user.dni',
+				'password': user.password,
+				'confirmPassword':user.confirmPassword,
+				'email': user.email,
+				'itineraryId': user.itineraryId
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 	}
+
 
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public login(dni: string, password: string) {
+	public login(user:User) {
 
+		this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
+			{
+				'dni': user.dni,
+				'password': user.password
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).subscribe((resp: loginResponse) => {
+				this.currentUser = new User(resp.id);
+				localStorage.setItem("authToken", resp.authToken);
+				localStorage.setItem("refreshToken", resp.refreshToken);
+			});
 	}
 
 
