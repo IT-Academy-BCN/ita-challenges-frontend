@@ -1,16 +1,16 @@
 export class User {
 	idUser: string;
 	dni?: string;
-	email?: string;
 	password?: string;
+	email?: string;
 	confirmPassword?: string;
 	itineraryId?: string;
 
 	constructor(
 		idUser: string,
 		dni?: string,
-		email?: string,
 		password?: string,
+		email?: string,
 		confirmPassword?: string,
 		itineraryId?: string
 	) {

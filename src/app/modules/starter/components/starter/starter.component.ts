@@ -7,6 +7,8 @@ import {DataChallenge} from "../../../../models/data-challenge.model";
 import {Challenge} from "../../../../models/challenge.model";
 import { environment } from '../../../../../environments/environment';
 import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import {AuthService} from "../../../../services/auth.service";
+import {User} from "../../../../models/user.model";
 
 
 @Component({
@@ -33,8 +35,9 @@ export class StarterComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private starterService: StarterService
-              ) {
+              private starterService: StarterService,
+              private authService: AuthService
+  ) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
 
@@ -54,16 +57,16 @@ export class StarterComponent {
   getChallengesByPage(page: number) {
     this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
 
+      //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TODO DEVELOPMENT ONLY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      console.log('User Starter Component: ' + this.authService.currentUser.idUser);
 
-      // this.dataChallenge = new DataChallenge(resp);
-      // this.challenges = this.dataChallenge.challenges;
-      // this.numChallenges = this.challenges.length;
-      // this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
+      if(this.authService.currentUser.idUser === 'anonym') {
+        const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
+        this.authService.login(loggedUser);
+        console.log(this.authService.currentUser.idUser);
+      }
 
-      // const startIndex = (page -1) * this.pageSize;
-      // const endIndex = startIndex + this.pageSize;
-      // this.listChallenges = this.challenges.slice(startIndex, endIndex);
-      
+      //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       this.listChallenges = resp;
     });
   }
@@ -74,7 +77,7 @@ export class StarterComponent {
   }
 
   openModal() {
-  this.modalContent.open();
+    this.modalContent.open();
   }
 
   getChallengeFilters(filters: FilterChallenge){
@@ -87,5 +90,5 @@ export class StarterComponent {
       //TODO: llamar al endpoint
     }
   }
-  
+
 }
