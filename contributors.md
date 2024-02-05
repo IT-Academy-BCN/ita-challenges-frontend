@@ -7,3 +7,4 @@
 - Lorena Ponsico - https://github.com/LorenaPonsico
 - Valerio Paradiso - https://github.com/valerioprds
 - Lara Del Rio Garcia - https://github.com/laradelrio
+- Samir Comas - https://github.com/sacom14
