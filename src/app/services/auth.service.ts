@@ -1,6 +1,6 @@
 import { add } from "date-fns";
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import {
 	BehaviorSubject,
@@ -13,11 +13,14 @@ import {
 } from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
+
 
 interface loginResponse {
 	id: string;
 	authToken: string;
 	refreshToken: string;
+	expiresAt: string;
 }
 
 @Injectable()
@@ -28,8 +31,9 @@ export class AuthService {
 	public user$: Observable<User>;
 
 	constructor(private http: HttpClient,
-				private router: Router) {
-		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));
+				private router: Router,
+				private cookieService: CookieService) {
+		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));//TODO - use cookies instead local storage
 		this.user$ = this.userSubject.asObservable();
 	}
 
@@ -39,14 +43,14 @@ export class AuthService {
 	public get currentUser(): User {
 		if(this.userSubject.value===null) {
 			this.userSubject.next(new User(this.anonym));
-			localStorage.setItem("user", JSON.stringify(this.userSubject.value));
+			this.cookieService.set('id_user', this.anonym);
 		}
 		return this.userSubject.value;
 	}
 
 	public set currentUser(user: User) {
 		this.userSubject.next(user);
-		localStorage.setItem("user", JSON.stringify(user));
+		this.cookieService.set('id_user', user.idUser);
 	}
 
 	/**
@@ -69,6 +73,21 @@ export class AuthService {
 			});
 	}
 
+	public getToken() {
+		return this.cookieService.get('authToken');
+	}
+
+	public getRefreshToken() {
+		return this.cookieService.get('refreshToken');
+	}
+
+	public getExpiresAt() {
+		return this.cookieService.get('expires_at');
+	}
+
+	public getIdUser() {
+		return this.cookieService.get('id');
+	}
 
 	/**
 	 * Log in with a user. Set user as current user.
@@ -86,17 +105,21 @@ export class AuthService {
 				}
 			}).subscribe((resp: loginResponse) => {
 				this.currentUser = new User(resp.id);
-				localStorage.setItem("authToken", resp.authToken);
-				localStorage.setItem("refreshToken", resp.refreshToken);
+				this.cookieService.set('authToken', resp.authToken);
+				this.cookieService.set('refreshToken', resp.refreshToken);
+				this.cookieService.set('expires_at', resp.expiresAt);
+				this.cookieService.set('id_user', resp.id);
 			});
 	}
 
 
 	public logout() {
-		localStorage.removeItem("user");
-		localStorage.removeItem("authToken");
-		localStorage.removeItem("refreshToken");
-		localStorage.removeItem("expires_at");
+		this.cookieService.delete('authToken');
+		this.cookieService.delete('refreshToken');
+		this.cookieService.delete('expires_at');
+		this.cookieService.delete('id_user');
+		this.currentUser = new User(this.anonym);
+		this.router.navigate(['/login']);
 	}
 
 }
