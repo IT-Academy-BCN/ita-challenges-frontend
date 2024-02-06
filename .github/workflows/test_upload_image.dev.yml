@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Checkout code
+        uses: actions/checkout@v3
+      -
         name: Load env from file
         run: |
           echo "Loading env vars from .env file"
@@ -17,7 +20,8 @@ jobs:
           do
             key=$(echo $key | tr '.' '_')
             echo "$key=$value" >> $GITHUB_ENV
-            done < conf/.env.CI.dev
+          done < conf/.env.CI.dev
+          echo "Done"
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -34,5 +38,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
+          context: ${{ env.MICROSERVICE_DEPLOY }}
           push: true
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
