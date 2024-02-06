@@ -23,7 +23,7 @@ interface loginResponse {
 	expiresAt: string;
 }
 
-interface getUserResponse {
+interface UserResponse {
 	dni: string,
 	email: string,
 	role: string
@@ -40,7 +40,7 @@ export class AuthService {
 	constructor(private http: HttpClient,
 		private router: Router,
 		private cookieService: CookieService) {
-		this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));//TODO - use cookies instead local storage
+		this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
 		this.user$ = this.userSubject.asObservable();
 
 	}
@@ -135,7 +135,7 @@ export class AuthService {
 		 * get User Data  and store it in the cookie
 		 */
 	public getUser() {
-		this.http.post<getUserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_GET_USER),
+		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_GET_USER),
 			{
 				'authToken': this.cookieService.get('authToken'),
 			},
