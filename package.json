@@ -45,6 +45,7 @@
     "jest-jasmine2": "^29.5.0",
     "jest-preset-angular": "^13.1.4",
     "jquery": "^3.6.4",
+    "ngx-cookie-service": "^17.1.0",
     "playwright": "^1.33.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
