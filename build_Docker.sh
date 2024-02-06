@@ -37,10 +37,10 @@ then
 
 ng build --configuration production
 
-docker build -t=${REGISTRY_NAME}:nginx-itachallenge-${NGINX_FRONTEND_TAG} .
+docker build -t=${REGISTRY_NAME}:nginx-itachallenge-${MICROSERVICE_VERSION} .
 
 #upload image to DockerHub
 if [ ${ENV} = "dev" ] || [ ${ENV} = "pre" ];
 then
-  docker push ${REGISTRY_NAME}:itachallenge-nginx-${NGINX_FRONTEND_TAG}
+  docker push ${REGISTRY_NAME}:itachallenge-nginx-${MICROSERVICE_VERSION}
 fi
