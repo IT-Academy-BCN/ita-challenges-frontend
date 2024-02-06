@@ -42,5 +42,5 @@ docker build -t=${REGISTRY_NAME}:nginx-itachallenge-${NGINX_FRONTEND_TAG} .
 #upload image to DockerHub
 if [ ${ENV} = "dev" ] || [ ${ENV} = "pre" ];
 then
-  docker push ${REGISTRY_NAME}:nginx-itachallenge-${NGINX_FRONTEND_TAG}
+  docker push ${REGISTRY_NAME}:itachallenge-nginx-${NGINX_FRONTEND_TAG}
 fi

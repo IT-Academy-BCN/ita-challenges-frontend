@@ -105,6 +105,9 @@ export class AuthService {
 				}
 			}).subscribe((resp: loginResponse) => {
 				this.currentUser = new User(resp.id);
+				//TODO - pending enable HttpOnly and Secure flags in the cookies
+			    //strict -> sameSite. HttpOnly only will able to set in the server side
+				//this.cookieService.set('authToken', resp.authToken, undefined, '/', undefined, true, 'Strict');
 				this.cookieService.set('authToken', resp.authToken);
 				this.cookieService.set('refreshToken', resp.refreshToken);
 				this.cookieService.set('expires_at', resp.expiresAt);

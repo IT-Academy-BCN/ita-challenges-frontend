@@ -58,7 +58,7 @@ describe('LoginModalComponent', () => {
     component.loginForm.setValue({ dni: '12345678', password: 'password' });
     authServiceMock.login.mockReturnValue(of({}));
     component.login();
-    expect(authServiceMock.login).toHaveBeenCalled();
+    expect(authServiceMock.login).toHaveBeenCalled();//TODO - fix this
   });
 
   it('should handle login success', () => {
