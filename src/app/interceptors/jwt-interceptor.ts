@@ -22,6 +22,17 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL);
 
+      const token = this.authService.getToken();
+
+      if (isApiUrl && token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        },
+        withCredentials: true // cookies allowed
+      });
+    }
+
     return next.handle(request);
   }
 }
