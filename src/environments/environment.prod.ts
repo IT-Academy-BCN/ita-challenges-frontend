@@ -7,6 +7,7 @@ export const environment = {
   BACKEND_SSO_REGISTER_URL: '/auth/register',
   BACKEND_SSO_LOGIN_URL:'/auth/login',
   BACKEND_SSO_VALIDATE_TOKEN_URL:'/tokens/validate',
+  BACKEND_SSO_GET_USER:'/user',
   ITINERARY_ID: "clpb8t1cc000008k0cg1icvl4",
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
