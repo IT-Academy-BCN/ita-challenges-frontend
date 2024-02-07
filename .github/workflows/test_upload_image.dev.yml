@@ -42,7 +42,8 @@ jobs:
       - name: Build
         run:  |
           npx ng build --configuration production
-          cp -r dist/* .
+          cp -r dist/* ${GITHUB_WORKSPACE}
+          ls -l ${GITHUB_WORKSPACE}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
