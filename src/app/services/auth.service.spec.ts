@@ -1,13 +1,14 @@
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 import { of, throwError } from "rxjs";
 
 describe("AuthService", () => {
 	let authService: AuthService;
 	let httpClientMock: any;
 	let routerMock: any;
-
+	let cookieService: CookieService;
 	beforeEach(() => {
 		httpClientMock = {
 			post: jest.fn(),
@@ -15,26 +16,26 @@ describe("AuthService", () => {
 		routerMock = {
 			navigate: jest.fn(),
 		};
-		authService = new AuthService(httpClientMock, routerMock);
+		authService = new AuthService(httpClientMock, routerMock, cookieService);
 
-		// Mock localStorage
-		const localStorageMock = (function () {
-			let store : any= {};
+		// Mock Cookies
+		const cookiesMock = (function () {
+			let store: any = {};
 			return {
-				getItem: jest.fn((key) => store[key] || null),
-				setItem: jest.fn((key, value) => {
-					store[key] = value.toString();
+				get: jest.fn((name) => {
+					return name + '=' + store[name];
 				}),
-				removeItem: jest.fn((key) => {
-					delete store[key];
+				set: jest.fn((name, value) => {
+					store[name] = value;
 				}),
-				clear: jest.fn(() => {
-					store = {};
+				delete: jest.fn((name) => {
+					delete store[name];
 				}),
 			};
 		})();
-		Object.defineProperty(window, "localStorage", {
-			value: localStorageMock,
+		Object.defineProperty(window.document, "cookiesFile", {
+			writable: true,
+			value: cookiesMock,
 		});
 	});
 
