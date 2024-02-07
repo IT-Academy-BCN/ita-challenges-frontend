@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run:  |
           npx ng build --configuration production
-          cp -r dist/* ${{GITHUB_WORKSPACE}}
+          cp -r dist/* ${GITHUB_WORKSPACE}
 
       -
         name: Set up QEMU
