@@ -42,7 +42,6 @@ jobs:
       - name: Build
         run:  |
           npx ng build --configuration production
-          ls -l dist/ita-challenges-frontend
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
