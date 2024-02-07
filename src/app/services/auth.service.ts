@@ -46,12 +46,11 @@ export class AuthService {
 	}
 
 	/**
-	 * Creates a new anonymous user if there is no user in the local storage.
+	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
 	public get currentUser(): User {
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
-			this.cookieService.set('id_user', this.anonym);
 			this.cookieService.set('id_user', this.anonym);
 		}
 		return this.userSubject.value;
