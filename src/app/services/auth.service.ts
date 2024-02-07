@@ -52,6 +52,7 @@ export class AuthService {
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
 			this.cookieService.set('id_user', this.anonym);
+			this.cookieService.set('id_user', this.anonym);
 		}
 		return this.userSubject.value;
 	}
