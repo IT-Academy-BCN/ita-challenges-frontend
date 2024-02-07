@@ -13,6 +13,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
