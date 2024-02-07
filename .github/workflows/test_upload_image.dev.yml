@@ -41,7 +41,7 @@ jobs:
 
       - name: Build
         run:  |
-          ng build --configuration production
+          npx ng build --configuration production
           cp dist/* .
 
       -
