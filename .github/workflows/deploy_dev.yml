@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js 
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -30,7 +30,7 @@ jobs:
     steps:
       -
         name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Load env from file
         run: |
@@ -80,3 +80,16 @@ jobs:
           context: .
           push: true
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_URL }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            ./deploy_dev.sh
