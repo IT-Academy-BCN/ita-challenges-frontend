@@ -42,9 +42,7 @@ jobs:
       - name: Build
         run:  |
           npx ng build --configuration production
-          mkdir deploy
           cp -r dist/* .
-          ls -l .
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
