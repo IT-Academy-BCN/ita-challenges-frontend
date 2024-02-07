@@ -145,7 +145,7 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 - The tasks on the dashboard are actually "Issues" on Github. Therefore, these Issues can have labels (such as "Epic3", "Design", "Testing") that help provide an idea of the task's content.
 
 ### 2.4.2 Working on a task
--Once you have a task assigned, you will need to create a new branch dedicated exclusively to that task. The branch name format should always be "feature/#X", where "X" is the task number (which can be found at the end of the task title). For example, if your task is number 101, you would create a branch named "feature/#101".
+-Once you have a task assigned, you will need to create a new branch dedicated exclusively to that task. **The branch name format should always be "feature/#X"**, where "X" is the task number (which can be found at the end of the task title). For example, if your task is number 101, you would create a branch named "feature/#101".
 
 The typical flow is as follows:
 - Create a branch, make changes and commit:

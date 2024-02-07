@@ -146,9 +146,9 @@ Les targetes de tasques estan organitzades segons el seu estat de desenvolupamen
 
 ### 2.4.2 Treballar en una tasca
 
-1. Crea una nova branca per a la tasca.
+1. Crea una nova branca **utilitzant el format "feature#numeroDeLaTarjeta"**. Es refereix al número de la targeta del Spring Backlog. Per exemple:
 
-         git switch -c nom-de-la-branca-tasca
+         git checkout -b feature#123
 2. Treballa en la teva tasca. Realitza commits freqüentment.
 3. Quan hagis finalitzat la tasca, puja els canvis al repositori.
 

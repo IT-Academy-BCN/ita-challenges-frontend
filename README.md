@@ -2,7 +2,7 @@
 
 ### Guidelines
 
-Please, read the [Guidelines (EN)](GUIDELINES_EN.md), [Guidelines (CAT)](GUIDELINES_CAT.md) or [Guidelines (ES)](GUIDELINES_ES.md) before contributing.
+Please, read the [Guidelines (EN)](GUIDELINES_EN.md), [Guidelines (CAT)](GUIDELINES_CA) or [Guidelines (ES)](GUIDELINES_ES.md) before contributing.
 
 ### Contributors
 

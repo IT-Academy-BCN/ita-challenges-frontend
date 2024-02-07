@@ -147,9 +147,9 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 
 ##### 2.4.2 Trabajar en una tarea
 
-1. Crea una nueva rama para la tarea.
+1. Crea una nueva rama para la tarea **utilizando el formato "feature#numeroDeLaTarjeta"**. Se refiere al número de la tarjeta del Sprint Backlog. Por ejemplo:
 
-       git switch -c nombre-de-la-rama-tarea
+       git checkout -b feature#123
 2. Trabaja en tu tarea. Realiza commits con frecuencia.
 3. Cuando hayas finalizado la tarea, sube los cambios al repositorio.
 
