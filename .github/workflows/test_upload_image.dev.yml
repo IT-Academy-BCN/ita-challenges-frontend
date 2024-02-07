@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run:  |
           npx ng build --configuration production
-          cp -r dist/ita-challenges-frontend ${GITHUB_WORKSPACE}/.
+          ls -l dist/ita-challenges-frontend
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
