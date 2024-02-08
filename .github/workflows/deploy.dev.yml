@@ -92,7 +92,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            ./deploy_frontend_dev.sh
-          env:
-            VAR1: itachallenge-nginx
-            VAR2: ${{ env.MICROSERVICE_VERSION }}
+            ./deploy_frontend_dev.sh itachallenge-nginx ${{ env.MICROSERVICE_VERSION }}
+            
