@@ -1,4 +1,5 @@
-name: Angular GitHub CI
+name: Pull Request Sonar Analysis
+
 on:
   push:
     branches:

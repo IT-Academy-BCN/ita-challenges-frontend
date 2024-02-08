@@ -6,26 +6,26 @@ on:
       - workflow
 
 jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  #sonarcloud:
+    #runs-on: ubuntu-latest
+    #steps:
+      #- uses: actions/checkout@v4
+        #with:
+          #fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      #- name: Setup Node.js
+        #uses: actions/setup-node@v4
+        #with:
+          #node-version: '20'
 
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #- name: SonarCloud Scan
+        #uses: sonarsource/sonarcloud-github-action@master
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   docker:
-    needs: sonarcloud
+    #needs: sonarcloud
     runs-on: ubuntu-latest
     steps:
       -
@@ -93,3 +93,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             ./deploy_frontend_dev.sh
+          env:
+            VAR1: itachallenge-nginx
+            VAR2: ${{ env.MICROSERVICE_VERSION }}
