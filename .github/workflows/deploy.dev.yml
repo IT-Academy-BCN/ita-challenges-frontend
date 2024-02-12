@@ -87,10 +87,20 @@ jobs:
     needs: docker
     runs-on: ubuntu-latest
     steps:
-      - name: Load env from file
+      -
+        name: Load env from file
         run: |
-          echo "Tracing vars: ${{ env.MICROSERVICE_VERSION }}"
-      - name: Execute SSH
+          echo "Loading env vars from .env file"
+          while IFS='=' read -r key value
+          do
+            key=$(echo $key | tr '.' '_')
+            echo "$key=$value" >> $GITHUB_ENV
+            echo "$key=$value"
+          done < conf/.env.CI.dev
+          echo "Done"
+
+      -
+        name: Execute SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST_URL }}
