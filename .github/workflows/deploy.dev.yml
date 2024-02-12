@@ -93,6 +93,8 @@ jobs:
           host: ${{ secrets.SSH_HOST_URL }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          run: | 
+            echo "Microservice version: ${{ env.MICROSERVICE_VERSION }}"
           script: |
             ./deploy_frontend_dev.sh itachallenge-nginx ${{ env.MICROSERVICE_VERSION }}
             
