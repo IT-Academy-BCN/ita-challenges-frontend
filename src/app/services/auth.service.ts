@@ -64,6 +64,8 @@ export class AuthService {
 
 		let tercero ='Otro mas';
 
+		let porfinpuedo = 'ya lo he conseguido';
+
 		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
 			{
 				'dni': 'user.dni',
