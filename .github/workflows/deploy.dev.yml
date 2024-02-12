@@ -87,14 +87,15 @@ jobs:
     needs: docker
     runs-on: ubuntu-latest
     steps:
+      - name: Load env from file
+        run: |
+          echo "Tracing vars: ${{ env.MICROSERVICE_VERSION }}"
       - name: Execute SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST_URL }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          run: |
-            echo "Tracing vars: ${{ env.MICROSERVICE_VERSION }}"
-          #script: |
-            #./deploy_frontend_dev.sh itachallenge-nginx ${{ env.MICROSERVICE_VERSION }}
+          script: |
+            ./deploy_frontend_dev.sh itachallenge-nginx ${{ env.MICROSERVICE_VERSION }}
             
