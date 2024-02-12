@@ -13,7 +13,7 @@ import {
 } from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
-import {CookieService} from "ngx-cookie-service";
+import { CookieService } from "ngx-cookie-service";
 
 
 interface loginResponse {
@@ -21,6 +21,12 @@ interface loginResponse {
 	authToken: string;
 	refreshToken: string;
 	expiresAt: string;
+}
+
+interface UserResponse {
+	dni: string,
+	email: string,
+	role: string
 }
 
 @Injectable()
@@ -33,12 +39,12 @@ export class AuthService {
 	constructor(private http: HttpClient,
 				private router: Router,
 				private cookieService: CookieService) {
-		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));//TODO - use cookies instead local storage
+		this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
 		this.user$ = this.userSubject.asObservable();
 	}
 
 	/**
-	 * Creates a new anonymous user if there is no user in the local storage.
+	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
 	public get currentUser(): User {
 		if(this.userSubject.value===null) {
@@ -105,9 +111,6 @@ export class AuthService {
 				}
 			}).subscribe((resp: loginResponse) => {
 				this.currentUser = new User(resp.id);
-				//TODO - pending enable HttpOnly and Secure flags in the cookies
-			    //strict -> sameSite. HttpOnly only will able to set in the server side
-				//this.cookieService.set('authToken', resp.authToken, undefined, '/', undefined, true, 'Strict');
 				this.cookieService.set('authToken', resp.authToken);
 				this.cookieService.set('refreshToken', resp.refreshToken);
 				this.cookieService.set('expires_at', resp.expiresAt);
@@ -125,4 +128,96 @@ export class AuthService {
 		this.router.navigate(['/login']);
 	}
 
+	/**
+		 * get User Data  and store it in the cookie
+		 */
+
+	public getUser() {
+		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_GET_USER),
+			{
+				'authToken': this.cookieService.get('authToken'),
+			},
+		).subscribe({
+			next: (res) => {
+				let user: User = {
+					'idUser': this.cookieService.get('id_user'),
+					'dni': res.dni,
+					'email': res.email,
+				}
+
+				const userCookie = this.cookieService.get('user');
+				try {
+					if (userCookie) {
+						this.userSubject = new BehaviorSubject(JSON.parse(userCookie));
+					}
+				} catch (error) {
+					console.error('Error parsing user cookie:', error);
+				}
+				this.cookieService.set('user', JSON.stringify(user))
+				this.userSubject.next(user)
+			},
+			error: err => { console.error(err) }
+		})
+	}
+
+	/* Check if the user is  Logged in*/
+	public async isUserLoggedIn() {
+		let isUserLoggedIn: boolean = false;
+		let authToken = this.cookieService.get('authToken');
+		let authTokenValid = await this.checkToken(authToken);
+		if (authTokenValid) {
+			isUserLoggedIn = true;
+		} else {
+			let refreshToken = this.cookieService.get('authToken');
+			isUserLoggedIn = await this.checkToken(refreshToken);
+		}
+		return isUserLoggedIn;
+	}
+
+	/* return if token valid */
+	async checkToken(token: string): Promise<boolean> {
+		if (token) {
+			let isTokenExpired = this.tokenExpired(token);
+			if (!isTokenExpired) {
+				let isTokenValid = this.isTokenValid(token);
+				if (await isTokenValid) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Check if the token is expired
+	private tokenExpired(token: string) {
+		const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+		return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+	}
+
+	/* See if token is valid */
+	public isTokenValid(token: string): Promise<boolean> {
+
+		return new Promise<boolean>((reject, resolve) => {
+
+			this.http.post(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_VALIDATE_TOKEN_URL),
+				{
+					"authToken": "string"
+				},
+				{
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+				.subscribe({
+					next: (resp: any) => {
+						if (resp.status == 200) {
+							resolve(true);
+						} else {
+							reject(false);
+						}
+					},
+					error: (err) => { resolve(false) },
+				});
+		})
+	}
 }
