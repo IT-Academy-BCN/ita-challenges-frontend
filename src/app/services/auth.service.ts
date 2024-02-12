@@ -58,6 +58,8 @@ export class AuthService {
 	 */
 	public register(user:User): Observable<any>{
 
+		let test = 'Esto es una prueba';
+
 		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
 			{
 				'dni': 'user.dni',
