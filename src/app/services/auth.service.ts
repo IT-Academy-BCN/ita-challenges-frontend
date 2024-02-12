@@ -223,20 +223,3 @@ export class AuthService {
 }
 
 
-
-/*
-git switch feature#188   (nos movemos a la rama principal)
-git pull feature#188 (te descargas todas las actualizaciones de la rama)
-git checkout -b feature#188L (te creas tu rama y te cambias a ella)
-git merge feature#188 (en tu rama, haces un merge del featur#188)
-git add .
-git commit -m ""
-
-git push --set-upstream origin feature#188L (subes al remoto primera y única vez tu rama)
-git push (después solo lo tienes que hacer así). o así : git push origin feature#188L
-
-git switch feature#188 (cambias a la rama principal nuestra)
-git merge feature#188L (haces merges de los cambios de tu rama)
-git push origin feature#188
-*/
-
