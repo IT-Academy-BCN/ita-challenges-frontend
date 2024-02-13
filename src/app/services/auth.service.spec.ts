@@ -119,4 +119,7 @@ describe("AuthService", () => {
 		expect(localStorage.removeItem).toHaveBeenCalledWith("expires_at");
 	});
 
+	it("should getUser correctly", () => {
+
+	});
 });
