@@ -11,17 +11,31 @@ describe("AuthService", () => {
 	let routerMock: any;
 
 	beforeEach(() => {
-		cookieServiceMock = {
-			set: jest.fn(),
-			get: jest.fn(),
-		};
 		httpClientMock = {
 			post: jest.fn(),
 		};
 		routerMock = {
 			navigate: jest.fn(),
 		};
+		cookieServiceMock =  (function () {
+			let cookies: {[key:string]:any} = {};
+			return {
+				get: jest.fn((key) => cookies[key] || null), 
+				set: jest.fn((key, value) => {
+					cookies[key] = value;
+				}),
+				delete: jest.fn((key) => {
+					delete cookies[key];
+				}),
+			};
+		})();
+		Object.defineProperty(window, "cookies", {
+			writable: true,
+			value: cookieServiceMock,
+		});
+
 		authService = new AuthService(httpClientMock, routerMock, cookieServiceMock);
+
 	});
 
 	it('should return the auth token from the cookie', (done) => {
@@ -29,7 +43,6 @@ describe("AuthService", () => {
 		// Establece el token de autenticación en la cookie
 		cookieServiceMock.set('authToken', expectedToken);
 
-		console.log('resultado: ', cookieServiceMock.set('authToken', expectedToken));
 		const actualToken = authService.getToken();
 
 		expect(cookieServiceMock.get).toHaveBeenCalled();
@@ -38,15 +51,15 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should get refresh token from cookie", (done) => {
-		//arrange
+	it("should get refresh Token from cookie", (done) => {
 		let mockRefreshToken = 'mockRefreshToken';
 		cookieServiceMock.set('refreshToken', mockRefreshToken);
-		//act
-		let refreshToken = authService.getRefreshToken();
-		//assert
+
+		const refreshToken = authService.getRefreshToken();
+		expect(cookieServiceMock.set).toHaveBeenCalled();
 		expect(cookieServiceMock.get).toHaveBeenCalled();
-		// expect(refreshToken).toBe(mockRefreshToken);
+		expect(refreshToken).toBe(mockRefreshToken);
+
 		done();
 	})
 
