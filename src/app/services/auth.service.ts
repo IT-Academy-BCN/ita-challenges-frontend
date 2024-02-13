@@ -95,7 +95,9 @@ export class AuthService {
 	}
 
 	public getUserFromCookie() {
-		return this.cookieService.get('user');
+		let stringifiedUSer = this.cookieService.get('user');
+		let user = JSON.parse(stringifiedUSer);
+		return user;
 	}
 
 	/**

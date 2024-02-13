@@ -17,10 +17,10 @@ describe("AuthService", () => {
 		routerMock = {
 			navigate: jest.fn(),
 		};
-		cookieServiceMock =  (function () {
-			let cookies: {[key:string]:any} = {};
+		cookieServiceMock = (function () {
+			let cookies: { [key: string]: any } = {};
 			return {
-				get: jest.fn((key) => cookies[key] || null), 
+				get: jest.fn((key) => cookies[key] || null),
 				set: jest.fn((key, value) => {
 					cookies[key] = value;
 				}),
@@ -62,6 +62,25 @@ describe("AuthService", () => {
 
 		done();
 	})
+
+	it("should return user from Cookie", (done) => {
+		let mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+
+		cookieServiceMock.set('user', JSON.stringify(mockUser));
+
+		const user = authService.getUserFromCookie();
+
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(user).toMatchObject(mockUser)
+
+		done();
+	})
+
 
 	it("should login successfully", (done) => {
 		const mockUser = { authToken: "12345", refreshToken: "67890" };
