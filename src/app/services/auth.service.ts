@@ -14,13 +14,13 @@ import {
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { fakeAsync } from '@angular/core/testing';
 
 
 interface loginResponse {
 	id: string;
 	authToken: string;
 	refreshToken: string;
-	expiresAt: string;
 }
 
 interface UserResponse {
@@ -56,14 +56,14 @@ export class AuthService {
 	public get currentUser(): User {
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
-			this.cookieService.set('id_user', this.anonym);
+			this.cookieService.set('user', this.anonym);
 		}
 		return this.userSubject.value;
 	}
 
 	public set currentUser(user: User) {
 		this.userSubject.next(user);
-		this.cookieService.set('id_user', user.idUser);
+		this.cookieService.set('user', JSON.stringify(user));
 	}
 
 	/**
@@ -94,12 +94,8 @@ export class AuthService {
 		return this.cookieService.get('refreshToken');
 	}
 
-	public getExpiresAt() {
-		return this.cookieService.get('expires_at');
-	}
-
-	public getIdUser() {
-		return this.cookieService.get('id');
+	public getUserFromCookie() {
+		return this.cookieService.get('user');
 	}
 
 	/**
@@ -120,8 +116,7 @@ export class AuthService {
 				this.currentUser = new User(resp.id);
 				this.cookieService.set('authToken', resp.authToken);
 				this.cookieService.set('refreshToken', resp.refreshToken);
-				this.cookieService.set('expires_at', resp.expiresAt);
-				this.cookieService.set('id_user', resp.id);
+				this.cookieService.set('user', JSON.stringify(this.currentUser));
 			});
 	}
 
@@ -129,39 +124,32 @@ export class AuthService {
 	public logout() {
 		this.cookieService.delete('authToken');
 		this.cookieService.delete('refreshToken');
-		this.cookieService.delete('expires_at');
-		this.cookieService.delete('id_user');
+		this.cookieService.delete('user');
 		this.currentUser = new User(this.anonym);
 		this.router.navigate(['/login']);
 	}
 
 	/**
-		 * get User Data  and store it in the cookie
+		 * get User Data 
+		 * and store it in the cookie
 		 */
 
-	public getUser() {
+	public getLoggedUserData() {
 		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
 			{
 				'authToken': this.cookieService.get('authToken'),
 			},
 		).subscribe({
 			next: (res) => {
-				let user: User = {
-					'idUser': this.cookieService.get('id_user'),
+				let user: User = JSON.parse(this.getUserFromCookie());
+
+				let userData: User = {
+					'idUser': user.idUser,
 					'dni': res.dni,
 					'email': res.email,
-				}
+				};
 
-				const userCookie = this.cookieService.get('user');
-				try {
-					if (userCookie) {
-						this.userSubject = new BehaviorSubject(JSON.parse(userCookie));
-					}
-				} catch (error) {
-					console.error('Error parsing user cookie:', error);
-				}
-				this.cookieService.set('user', JSON.stringify(user))
-				this.userSubject.next(user)
+				this.currentUser = userData;
 			},
 			error: err => { console.error(err) }
 		})
