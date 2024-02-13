@@ -133,7 +133,7 @@ export class AuthService {
 		 */
 
 	public getUser() {
-		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_GET_USER),
+		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
 			{
 				'authToken': this.cookieService.get('authToken'),
 			},
