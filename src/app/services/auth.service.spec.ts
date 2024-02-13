@@ -41,6 +41,17 @@ describe("AuthService", () => {
 		});
 	});
 
+	it('should return the auth token from the cookie', () => {
+		const expectedToken = 'testAuthToken';
+		// Establece el token de autenticación en la cookie
+		cookieServiceMock.set('authToken', expectedToken);
+	
+		const actualToken = authService.getToken();
+		
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(actualToken).toEqual(expectedToken);
+	});
+	
 	it("should get refresh Token from cookie", (done) => {
 		//arrange
 		let mockRefreshToken = 'mockRefreshToken';
@@ -120,7 +131,6 @@ describe("AuthService", () => {
 	it("should logout correctly", () => {
 		localStorage.setItem("authToken", "12345");
 		localStorage.setItem("refreshToken", "67890");
-
 		authService.logout();
 
 		expect(localStorage.removeItem).toHaveBeenCalledWith("authToken");

@@ -37,17 +37,24 @@ export class AuthService {
 	public user$: Observable<User>;
 
 	constructor(private http: HttpClient,
-				private router: Router,
-				private cookieService: CookieService) {
-		this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
+		private router: Router,
+		private cookieService: CookieService) {
+
+		// Verificar si la cookie 'user' está definida
+		const userCookie = this.cookieService.get('user');
+		const initialUser = userCookie ? JSON.parse(userCookie) : null;
+
+		this.userSubject = new BehaviorSubject(initialUser);
 		this.user$ = this.userSubject.asObservable();
+		// this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
+		// this.user$ = this.userSubject.asObservable();
 	}
 
 	/**
 	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
 	public get currentUser(): User {
-		if(this.userSubject.value===null) {
+		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
 			this.cookieService.set('id_user', this.anonym);
 		}
@@ -62,13 +69,13 @@ export class AuthService {
 	/**
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
-	public register(user:User): Observable<any>{
+	public register(user: User): Observable<any> {
 
 		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
 			{
 				'dni': 'user.dni',
 				'password': user.password,
-				'confirmPassword':user.confirmPassword,
+				'confirmPassword': user.confirmPassword,
 				'email': user.email,
 				'itineraryId': user.itineraryId
 			},
@@ -98,7 +105,7 @@ export class AuthService {
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public login(user:User) {
+	public login(user: User) {
 
 		this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
 			{
