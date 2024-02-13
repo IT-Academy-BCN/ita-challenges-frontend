@@ -22,24 +22,21 @@ describe("AuthService", () => {
 		};
 		authService = new AuthService(httpClientMock, routerMock, cookieServiceMock);
 
-		// Mock localStorage
-		const localStorageMock = (function () {
-			let store : any= {};
+		// Mock Cookie Storage
+		const cookiesStorageMock = (function () {
+			let cookies : any= {};
 			return {
-				getItem: jest.fn((key) => store[key] || null),
-				setItem: jest.fn((key, value) => {
-					store[key] = value.toString();
+				get: jest.fn((key) => cookies[key] || null),
+				set: jest.fn((key, value) => {
+					cookies[key] = value.toString();
 				}),
-				removeItem: jest.fn((key) => {
-					delete store[key];
-				}),
-				clear: jest.fn(() => {
-					store = {};
+				delete: jest.fn((key) => {
+					delete cookies[key];
 				}),
 			};
 		})();
-		Object.defineProperty(window, "localStorage", {
-			value: localStorageMock,
+		Object.defineProperty(window, "cookies", {
+			value: cookiesStorageMock,
 		});
 	});
 
