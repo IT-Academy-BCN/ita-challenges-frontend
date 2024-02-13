@@ -101,7 +101,6 @@ jobs:
             echo "$key=$value"
           done < conf/.env.CI.dev
           echo "Done"
-
       -
         name: Execute SSH
         uses: appleboy/ssh-action@master
