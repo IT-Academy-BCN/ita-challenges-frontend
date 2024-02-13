@@ -1,6 +1,7 @@
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 import { of, throwError } from "rxjs";
 
 describe("AuthService", () => {
@@ -39,6 +40,17 @@ describe("AuthService", () => {
 			value: cookiesStorageMock,
 		});
 	});
+
+	it("should get refresh Token from cookie", (done) => {
+		//arrange
+		let mockRefreshToken = 'mockRefreshToken';
+		cookieServiceMock.set('refreshToken', 'mockRefreshToken');
+		//act
+		let refreshToken = authService.getRefreshToken();
+		//assert
+		expect(cookieServiceMock.get.toHaveBeenCalled());
+		expect(refreshToken).toBe(mockRefreshToken);
+	})
 
 	it("should login successfully", (done) => {
 		const mockUser = { authToken: "12345", refreshToken: "67890" };
