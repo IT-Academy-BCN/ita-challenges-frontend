@@ -108,7 +108,6 @@ describe("AuthService", () => {
 	it("should logout correctly", () => {
 		localStorage.setItem("authToken", "12345");
 		localStorage.setItem("refreshToken", "67890");
-
 		authService.logout();
 
 		expect(localStorage.removeItem).toHaveBeenCalledWith("authToken");
