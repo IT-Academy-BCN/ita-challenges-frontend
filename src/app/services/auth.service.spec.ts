@@ -40,6 +40,18 @@ describe("AuthService", () => {
 		});
 	});
 
+	it('should return the auth token from the cookie', () => {
+		const expectedToken = 'testAuthToken';
+		// Establece el token de autenticación en la cookie
+		cookieServiceMock.set('authToken', expectedToken);
+	
+		const actualToken = authService.getToken();
+		
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(actualToken).toEqual(expectedToken);
+	});
+	
+
 	it("should login successfully", (done) => {
 		const mockUser = { authToken: "12345", refreshToken: "67890" };
 		httpClientMock.post.mockReturnValue(of(mockUser));
