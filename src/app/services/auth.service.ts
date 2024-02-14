@@ -94,7 +94,7 @@ export class AuthService {
 		return this.cookieService.get('refreshToken');
 	}
 
-	public getUserID() {
+	public getUserIdFromCookie() {
 		let stringifiedUSer = this.cookieService.get('user');
 		let user = JSON.parse(stringifiedUSer);
 		return user.idUser;
@@ -144,7 +144,7 @@ export class AuthService {
 		).subscribe({
 			next: (res) => {
 				let user: User = this.currentUser;
-				
+
 				let userData: User = {
 					'idUser': user.idUser,
 					'dni': res.dni,

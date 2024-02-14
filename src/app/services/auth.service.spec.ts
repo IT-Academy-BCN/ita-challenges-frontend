@@ -67,7 +67,7 @@ describe("AuthService", () => {
 		done();
 	})
 
-	it("should return user from Cookie", (done) => {
+	it("should return userId from cookie", (done) => {
 		let mockUser = {
 			idUser: 'mockIdUser',
 			dni: 'mockDni',
@@ -76,14 +76,14 @@ describe("AuthService", () => {
 
 		cookieServiceMock.set('user', JSON.stringify(mockUser));
 
-		const user = authService.getUserFromCookie();
+		const userId = authService.getUserIdFromCookie();
 
 		expect(cookieServiceMock.set).toHaveBeenCalled();
 		expect(cookieServiceMock.get).toHaveBeenCalled();
-		expect(user).toMatchObject(mockUser)
+		expect(userId).toEqual(mockUser.idUser)
 
 		done();
-	})
+	});
 
 
 	it("should login successfully", (done) => {
