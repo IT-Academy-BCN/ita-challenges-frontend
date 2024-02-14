@@ -1,7 +1,9 @@
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { addYears } from "date-fns";
 import { CookieService } from "ngx-cookie-service";
+import { mock } from "node:test";
 import { of, throwError } from "rxjs";
 
 describe("AuthService", () => {
@@ -38,10 +40,39 @@ describe("AuthService", () => {
 
 	});
 
-	it ('should return the current user', (done) => {
+	it('should return the current user when user is NOT FOUND in cookies', (done) => {
 
+		const anonymMock = 'anonym';
+
+		cookieServiceMock.get.mockReturnValue(null); // Set cookie service to return null
+
+		const user = authService.currentUser;
+
+		expect(user).toBeDefined();
+		expect(user.idUser).toBe(anonymMock);
+
+		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+
+		done();
 	});
 
+	it('should return the current user when user IS FOUND in cookies', (done) => {
+
+		const mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+		authService.currentUser = mockUser
+
+		const user = authService.currentUser;
+
+		expect(user).toBeDefined();
+		expect(user).toBe(mockUser);
+		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+
+		done();
+	});
 	it('should return the auth token from the cookie', (done) => {
 		const expectedToken = 'testAuthToken';
 		// Establece el token de autenticación en la cookie
