@@ -70,7 +70,7 @@ export class AuthService {
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
 	public register(user: User): Observable<any> {
-
+		
 		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
 			{
 				'dni': user.dni,

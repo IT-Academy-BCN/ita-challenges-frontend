@@ -144,7 +144,6 @@ describe("AuthService", () => {
 		done();
 	});
 
-
 	it("should login successfully", (done) => {
 		const mockUser = { authToken: "12345", refreshToken: "67890" };
 		// httpClientMock.post.mockReturnValue(of(mockUser));
@@ -244,7 +243,13 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should getUser correctly", () => {
+	it("shoul return user logged true", (done) => {
+
+		let authToken = 'testAuthToken';
+		cookieServiceMock.set('authToken', authToken);
+		
+
+		done();
 	});
 
 
