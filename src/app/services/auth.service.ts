@@ -73,11 +73,12 @@ export class AuthService {
 
 		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
 			{
-				'dni': 'user.dni',
-				'password': user.password,
-				'confirmPassword': user.confirmPassword,
+				'dni': user.dni,
 				'email': user.email,
-				'itineraryId': user.itineraryId
+				'name': user.name,
+				'itineraryId': user.itineraryId,
+				'password': user.password,
+				'confirmPassword': user.confirmPassword,		
 			},
 			{
 				headers: {
