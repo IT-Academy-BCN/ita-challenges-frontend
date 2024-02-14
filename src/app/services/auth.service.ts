@@ -174,7 +174,7 @@ export class AuthService {
 	/* return if token valid */
 	async checkToken(token: string): Promise<boolean> {
 		if (token) {
-			let isTokenExpired = this.tokenExpired(token);
+			let isTokenExpired = this.isTokenExpired(token);
 			if (!isTokenExpired) {
 				let isTokenValid = this.isTokenValid(token);
 				if (await isTokenValid) {
@@ -186,9 +186,9 @@ export class AuthService {
 	}
 
 	// Check if the token is expired
-	private tokenExpired(token: string) {
-		const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-		return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+	public isTokenExpired(token: string): boolean {
+		const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+		return Math.floor(new Date().getTime() / 1000) >= expiry;
 	}
 
 	/* See if token is valid */
