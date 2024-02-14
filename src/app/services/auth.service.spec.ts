@@ -73,6 +73,7 @@ describe("AuthService", () => {
 
 		done();
 	});
+
 	it('should return the auth token from the cookie', (done) => {
 		const expectedToken = 'testAuthToken';
 		// Establece el token de autenticación en la cookie
@@ -182,14 +183,28 @@ describe("AuthService", () => {
 					});*/
 	});
 
-	it("should logout correctly", () => {
-		localStorage.setItem("authToken", "12345");
-		localStorage.setItem("refreshToken", "67890");
-		authService.logout();
+	it("should logout correctly", (done) => {
 
-		expect(localStorage.removeItem).toHaveBeenCalledWith("authToken");
-		expect(localStorage.removeItem).toHaveBeenCalledWith("refreshToken");
-		expect(localStorage.removeItem).toHaveBeenCalledWith("expires_at");
+		let user = 'user';
+		let authToken = 'testAuthToken';
+		let refreshToken = 'testRefreshAuthToken';
+
+		cookieServiceMock.set('user', user);
+		cookieServiceMock.set('authToken', authToken);
+		cookieServiceMock.set('refreshToken', refreshToken)
+
+		authService.logout();
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("user");
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("authToken");
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("refreshToken");
+
+		let currentUser = authService.currentUser;
+		expect(currentUser.idUser).toBe('anonym');
+
+		expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+		done();
 	});
 
 	it("should getUser correctly", () => {

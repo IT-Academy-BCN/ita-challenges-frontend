@@ -122,12 +122,11 @@ export class AuthService {
 			});
 	}
 
-
 	public logout() {
 		this.cookieService.delete('authToken');
 		this.cookieService.delete('refreshToken');
 		this.cookieService.delete('user');
-		this.currentUser = new User(this.anonym);
+		this.currentUser;
 		this.router.navigate(['/login']);
 	}
 
