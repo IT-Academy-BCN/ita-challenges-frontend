@@ -94,10 +94,10 @@ export class AuthService {
 		return this.cookieService.get('refreshToken');
 	}
 
-	public getUserFromCookie() {
+	public getUserID() {
 		let stringifiedUSer = this.cookieService.get('user');
 		let user = JSON.parse(stringifiedUSer);
-		return user;
+		return user.idUser;
 	}
 
 	/**
@@ -143,8 +143,8 @@ export class AuthService {
 			},
 		).subscribe({
 			next: (res) => {
-				let user: User = JSON.parse(this.getUserFromCookie());
-
+				let user: User = this.currentUser;
+				
 				let userData: User = {
 					'idUser': user.idUser,
 					'dni': res.dni,

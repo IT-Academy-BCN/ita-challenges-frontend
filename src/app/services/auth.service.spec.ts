@@ -38,6 +38,10 @@ describe("AuthService", () => {
 
 	});
 
+	it ('should return the current user', (done) => {
+
+	});
+
 	it('should return the auth token from the cookie', (done) => {
 		const expectedToken = 'testAuthToken';
 		// Establece el token de autenticación en la cookie
@@ -158,6 +162,7 @@ describe("AuthService", () => {
 	});
 
 	it("should getUser correctly", () => {
-
 	});
+
+
 });
