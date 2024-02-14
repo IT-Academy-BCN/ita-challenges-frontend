@@ -224,9 +224,9 @@ describe("AuthService", () => {
 
 		authService.register(testUser)
 		.subscribe({
-			error: (res) => {
-				expect(res).toBeTruthy();
-				expect(res).toEqual(mockResponse);
+			error: (err) => {
+				expect(err).toBeTruthy();
+				expect(err).toEqual(mockResponse);
 			}
 		});
 
