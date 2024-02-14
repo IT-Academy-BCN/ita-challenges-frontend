@@ -100,7 +100,7 @@ describe("AuthService", () => {
 
 		done();
 	});
-	
+
 	it('should return the auth token from the cookie', (done) => {
 		const expectedToken = 'testAuthToken';
 		// Establece el token de autenticación en la cookie
@@ -191,17 +191,17 @@ describe("AuthService", () => {
 		};
 
 		authService.register(testUser)
-		.subscribe({
-			next: (res) => {
-				expect(res).toBeTruthy();
-				expect(res).toEqual(mockResponse);
-			}
-		});
+			.subscribe({
+				next: (res) => {
+					expect(res).toBeTruthy();
+					expect(res).toEqual(mockResponse);
+				}
+			});
 
 		// Check for correct requests: should have made one POST request from expected URL
 		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
 		expect(req.request.method).toEqual("POST");
-	
+
 		req.flush(mockResponse);
 		done();
 	});
@@ -222,17 +222,17 @@ describe("AuthService", () => {
 		};
 
 		authService.register(testUser)
-		.subscribe({
-			error: (err) => {
-				expect(err).toBeTruthy();
-				expect(err).toEqual(mockResponse);
-			}
-		});
+			.subscribe({
+				error: (err) => {
+					expect(err).toBeTruthy();
+					expect(err).toEqual(mockResponse);
+				}
+			});
 
 		// Check for correct requests: should have made one POST request from expected URL
 		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
 		expect(req.request.method).toEqual("POST");
-	
+
 		req.flush(mockResponse);
 		done();
 	});
@@ -261,13 +261,18 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("shoul return user logged true", (done) => {
+	it("should return isUserLoggedIn false", async () => {
+		// TODO
+		const expectedAuthToken = 'testAuthToken';
+		const expectedRefreshToken = 'testRefreshToken';
 
-		let authToken = 'testAuthToken';
-		cookieServiceMock.set('authToken', authToken);
-		
+		cookieServiceMock.set('authToken', expectedAuthToken);
+		cookieServiceMock.set('refreshToken', expectedRefreshToken);
 
-		done();
+		const isUserLoggedIn = await authService.isUserLoggedIn();
+
+		expect(isUserLoggedIn).toBe(false);
+
 	});
 
 
