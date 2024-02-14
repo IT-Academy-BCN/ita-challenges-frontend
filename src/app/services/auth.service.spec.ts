@@ -49,24 +49,6 @@ describe("AuthService", () => {
 		authService = new AuthService(httpClient, routerMock, cookieServiceMock);
 	});
 
-	it('should set current user in cookie and in behavior subject', (done) => {
-		let testUser = {
-			idUser: 'mockIdUser',
-			dni: 'mockDni',
-			email: 'mockEmail',
-		};
-
-		authService.currentUser = testUser;
-
-		expect(cookieServiceMock.set).toHaveBeenCalled();
-
-		authService.user$.subscribe(user => {
-			expect(user).toBe(testUser);
-		})
-
-		done();
-	});
-
 	it('should return the current user when user is NOT FOUND in cookies', (done) => {
 
 		const anonymMock = 'anonym';
@@ -101,6 +83,24 @@ describe("AuthService", () => {
 		done();
 	});
 
+	it('should set current user in cookie and in behavior subject', (done) => {
+		let testUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail',
+		};
+
+		authService.currentUser = testUser;
+
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+
+		authService.user$.subscribe(user => {
+			expect(user).toBe(testUser);
+		})
+
+		done();
+	});
+	
 	it('should return the auth token from the cookie', (done) => {
 		const expectedToken = 'testAuthToken';
 		// Establece el token de autenticación en la cookie
