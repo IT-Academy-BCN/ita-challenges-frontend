@@ -133,8 +133,8 @@ export class AuthService {
 	/**
 		 * get User Data 
 		 * and store it in the cookie
-		 */
-
+	*/
+	
 	public getLoggedUserData() {
 		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
 			{
