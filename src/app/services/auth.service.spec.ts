@@ -192,9 +192,11 @@ describe("AuthService", () => {
 		};
 
 		authService.register(testUser)
-		.subscribe((res) => {
-			expect(res).toBeTruthy();
-			expect(res).toEqual(mockResponse);
+		.subscribe({
+			next: (res) => {
+				expect(res).toBeTruthy();
+				expect(res).toEqual(mockResponse);
+			}
 		});
 
 		// Check for correct requests: should have made one POST request from expected URL
@@ -206,18 +208,34 @@ describe("AuthService", () => {
 	});
 
 	it("should handle registration error", (done) => {
-		const error = "Registration failed";
-		// httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
+		let testUser = {
+			idUser: '',
+			dni: 'testDni',
+			email: 'testEmail',
+			name: 'testName',
+			itineraryId: 'testItinerary',
+			password: 'testPassword',
+			confirmPassword: 'testConfirmPassword',
+		};
 
-		/*		authService
-					.register({ dni: "123", password: "password" } as any)
-					.subscribe({
-						next: () => {},
-						error: (e) => {
-							expect(e.message).toBe(error);
-							done();
-						},
-					});*/
+		let mockResponse = {
+			"message": "email or dni already exists"
+		};
+
+		authService.register(testUser)
+		.subscribe({
+			error: (res) => {
+				expect(res).toBeTruthy();
+				expect(res).toEqual(mockResponse);
+			}
+		});
+
+		// Check for correct requests: should have made one POST request from expected URL
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
+		expect(req.request.method).toEqual("POST");
+	
+		req.flush(mockResponse);
+		done();
 	});
 
 	it("should logout correctly", (done) => {
