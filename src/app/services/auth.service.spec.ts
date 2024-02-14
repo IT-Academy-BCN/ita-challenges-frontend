@@ -1,19 +1,29 @@
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { of, throwError } from "rxjs";
+import { TestBed } from "@angular/core/testing";
+import { environment } from "src/environments/environment";
 
 describe("AuthService", () => {
 	let authService: AuthService;
 	let cookieServiceMock: any;
-	let httpClientMock: any;
 	let routerMock: any;
+	let httpClient: HttpClient;
+	let httpClientMock: HttpTestingController;
 
 	beforeEach(() => {
-		httpClientMock = {
-			post: jest.fn(),
-		};
+
+		TestBed.configureTestingModule({ // set up the testing module with required dependencies.
+			imports: [HttpClientTestingModule]
+		});
+
+		// Inject the http service and test controller for each test
+		httpClient = TestBed.inject(HttpClient); //TestBed.inject is used to inject into the test suite
+		httpClientMock = TestBed.inject(HttpTestingController);
+
 		routerMock = {
 			navigate: jest.fn(),
 		};
@@ -34,8 +44,7 @@ describe("AuthService", () => {
 			value: cookieServiceMock,
 		});
 
-		authService = new AuthService(httpClientMock, routerMock, cookieServiceMock);
-
+		authService = new AuthService(httpClient, routerMock, cookieServiceMock);
 	});
 
 	it('should set current user in cookie and in behavior subject', (done) => {
@@ -52,7 +61,7 @@ describe("AuthService", () => {
 		authService.user$.subscribe(user => {
 			expect(user).toBe(testUser);
 		})
-		
+
 		done();
 	});
 
@@ -102,7 +111,7 @@ describe("AuthService", () => {
 
 	it("should login successfully", (done) => {
 		const mockUser = { authToken: "12345", refreshToken: "67890" };
-		httpClientMock.post.mockReturnValue(of(mockUser));
+		// httpClientMock.post.mockReturnValue(of(mockUser));
 
 		/*		authService.login("username", "password").subscribe((user) => {
 					expect(user).toEqual(mockUser);
@@ -120,7 +129,7 @@ describe("AuthService", () => {
 
 	it("should handle login error", (done) => {
 		const error = "Login failed";
-		httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
+		// httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
 
 		/*		authService.login("username", "password").subscribe({
 					next: () => {},
@@ -132,27 +141,37 @@ describe("AuthService", () => {
 	});
 
 	it("should register successfully", (done) => {
-		const mockUser = { authToken: "12345", refreshToken: "67890" };
-		httpClientMock.post.mockReturnValue(of(mockUser));
+		let testUser = {
+			idUser: '',
+			dni: 'testDni',
+			email: 'testEmail',
+			name: 'testName',
+			itineraryId: 'testItinerary',
+			password: 'testPassword',
+			confirmPassword: 'testConfirmPassword',
+		};
 
-		/*		authService
-					.register({ dni: "123", password: "password" } as any)
-					.subscribe(() => {
-						expect(localStorage.setItem).toHaveBeenCalledWith(
-							"authToken",
-							"12345"
-						);
-						expect(localStorage.setItem).toHaveBeenCalledWith(
-							"refreshToken",
-							"67890"
-						);
-						done();
-					});*/
+		let mockResponse = {
+			"id": "testId",
+		};
+
+		authService.register(testUser)
+		.subscribe((res) => {
+			expect(res).toBeTruthy();
+			expect(res).toEqual(mockResponse);
+		});
+
+		// Check for correct requests: should have made one POST request from expected URL
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
+		expect(req.request.method).toEqual("POST");
+	
+		req.flush(mockResponse);
+		done();
 	});
 
 	it("should handle registration error", (done) => {
 		const error = "Registration failed";
-		httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
+		// httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
 
 		/*		authService
 					.register({ dni: "123", password: "password" } as any)
