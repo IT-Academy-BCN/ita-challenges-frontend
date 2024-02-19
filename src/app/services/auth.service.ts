@@ -75,15 +75,17 @@ export class AuthService {
 	}
 	
 	public getToken() {
-		return true;
+		return this.cookieService.get('authToken');
 	}
 
 	public getRefreshToken() {
-		return true;
+		return this.cookieService.get('refreshToken')
 	}
 
 	public getUserIdFromCookie() {
-		return true;
+		let stringifiedUSer = this.cookieService.get('user');
+		let user = JSON.parse(stringifiedUSer);
+		return user.idUser;
 	}
 
 	/**
