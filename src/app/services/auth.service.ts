@@ -91,8 +91,17 @@ export class AuthService {
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public login() {//todo: recibe => user:User
-		return true;
+	public loginRequest(user: User): Observable<any> {
+		return this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
+			{
+				'dni': user.dni,
+				'password': user.password
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
 	}
 
 	public logout() {

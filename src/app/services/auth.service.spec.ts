@@ -145,15 +145,58 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should login successfully", (done) => {
-		const test = authService.login();
-		expect(test).toEqual(test);
+	it("should make successful login request", (done) => {
+		let testUser = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockResponse = {
+			"authToken": "testAuthToken",
+			"refreshToken": "testRefreshToken",
+			"id": "testId"
+		};
+
+		authService.loginRequest(testUser)
+			.subscribe({
+				next: (res) => {
+					expect(res).toBeTruthy();
+					expect(res).toEqual(mockResponse);
+				}
+			});
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
+		expect(req.request.method).toEqual("POST");
+
+		req.flush(mockResponse);
 		done();
 	});
 
-	it("should handle login error", (done) => {
-		const test = authService.login();
-		expect(test).toEqual(test);
+
+	it("should make UNsuccessful login request", (done) => {
+		let testUser = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockResponse = {
+			"message": "Invalid Credentials"
+		};
+
+		authService.loginRequest(testUser)
+			.subscribe({
+				error: (err) => {
+					expect(err).toBeTruthy();
+					expect(err).toEqual(mockResponse);
+				}
+			});
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
+		expect(req.request.method).toEqual("POST");
+
+		req.flush(mockResponse);
 		done();
 	});
 
