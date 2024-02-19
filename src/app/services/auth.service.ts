@@ -54,7 +54,7 @@ export class AuthService {
 	/**
 	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
-	public get currentUser(): User { //todo: change for :User
+	public get currentUser(): User { 
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
 			this.cookieService.set('user', this.anonym);
@@ -63,7 +63,8 @@ export class AuthService {
 	}
 
 	public set currentUser(user: User) {
-		const tru = true;
+		this.userSubject.next(user);
+		this.cookieService.set('user', JSON.stringify(user));
 	}
 
 	/**

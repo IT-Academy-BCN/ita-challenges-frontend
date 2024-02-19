@@ -52,20 +52,53 @@ describe("AuthService", () => {
 	});
 
 	it('should return the current user when user is NOT FOUND in cookies', (done) => {
-		const test = authService.currentUser;
-		expect(test).toEqual(true);
+		const anonymMock = 'anonym';
+
+		cookieServiceMock.get.mockReturnValue(null); // Set cookie service to return null
+
+		const user = authService.currentUser;
+
+		expect(user).toBeDefined();
+		expect(user.idUser).toBe(anonymMock);
+
+		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+
 		done();
 	});
 
 	it('should return the current user when user IS FOUND in cookies', (done) => {
-		const test = authService.currentUser;
-		expect(test).toEqual(true);
+		const mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+		
+		authService.currentUser = mockUser;
+
+		const user = authService.currentUser;
+
+		expect(user).toBeDefined();
+		expect(user).toBe(mockUser);
+		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+
 		done();
 	});
 
 	it('should set current user in cookie and in behavior subject', (done) => {
-		const test = authService.currentUser;
-		expect (test).toEqual(true);
+		let testUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail',
+		};
+
+		authService.currentUser = testUser;
+
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+
+		authService.user$.subscribe(user => {
+			expect(user).toBe(testUser);
+		})
+
 		done();
 	});
 
