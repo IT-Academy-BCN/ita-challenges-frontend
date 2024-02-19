@@ -109,7 +109,7 @@ export class AuthService {
 	/* return if token valid */
 	async checkToken(token: string): Promise<boolean> {
 
-		return false;
+		return true;
 	}
 
 	// Check if the token is expired
