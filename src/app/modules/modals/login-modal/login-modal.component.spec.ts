@@ -55,6 +55,7 @@ describe('LoginModalComponent', () => {
   });
 
   it('should call authService.login if form is valid', () => {
+    //TODO revise this test
     // component.loginForm.setValue({ dni: '12345678', password: 'password' });
     // authServiceMock.login.mockReturnValue(of({}));
     // component.login();
@@ -62,6 +63,7 @@ describe('LoginModalComponent', () => {
   });
 
   it('should handle login success', () => {
+    //TODO revise this test
     // component.loginForm.setValue({ dni: '12345678', password: 'password' });
     // authServiceMock.login.mockReturnValue(of({}));
     // component.login();
@@ -69,7 +71,7 @@ describe('LoginModalComponent', () => {
   });
 
   it('should handle login error', () => {
-    
+    //TODO revise this test
     // component.loginForm.setValue({ dni: '12345678', password: 'password' });
     // const errorResponse = { error: { message: 'Login failed' } };
     // authServiceMock.login.mockReturnValue(throwError(() => errorResponse));

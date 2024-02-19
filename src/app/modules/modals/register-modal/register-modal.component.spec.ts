@@ -34,6 +34,7 @@ describe('RegisterModalComponent', () => {
   });
 
   it('should register user on valid form submission', fakeAsync(() => {
+    //TODO revise this test
     // const spyRegister = spyOn(authService, 'register').and.returnValue(of({}));
     // component.registerForm.setValue({
     //   dni: '12345678',
@@ -53,6 +54,7 @@ describe('RegisterModalComponent', () => {
 
 
   it('should handle registration error', fakeAsync(() => {
+    //TODO revise this test
     //     spyOn(authService, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
 
     //     component.registerForm.setValue({

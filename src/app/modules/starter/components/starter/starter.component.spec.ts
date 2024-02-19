@@ -17,6 +17,7 @@ describe('StarterComponent', () => {
   let selectedFilters: FilterChallenge;
   
   beforeEach(async () => {
+    //TODO configure before Each properly 
     // await TestBed.configureTestingModule({
     //   declarations: [ 
     //     StarterComponent,
@@ -38,14 +39,17 @@ describe('StarterComponent', () => {
   });
 
   it('should create', () => {
+    //TODO revise this test
     // expect(component).toBeTruthy();
   });
 
   it('should create child', () => {
+    //TODO revise this test
     // expect(childComponent).toBeTruthy();
   });
 
   it('should receive filter values from child component when it emits', () => {
+    //TODO revise this test
     // const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
     // const expectedFilters: FilterChallenge = {
     //   languages: [1],
@@ -60,6 +64,7 @@ describe('StarterComponent', () => {
   });
 
 it('should receive filter values from child component when languagesForm changes', () => {
+  //TODO revise this test
   // spyOn(component, 'getChallengeFilters').and.callThrough();
 
   // childComponent.filtersForm.controls['languages'].setValue({javascript: true, java:false, php: false, python: false});
@@ -71,6 +76,7 @@ it('should receive filter values from child component when languagesForm changes
 });
   
 it('should receive filter values from child component when levelsForm changes', () => {
+  //TODO revise this test
   // spyOn(component, 'getChallengeFilters').and.callThrough();
 
   // childComponent.filtersForm.controls['levels'].setValue({easy: true, medium: false, hard: false});
@@ -82,6 +88,7 @@ it('should receive filter values from child component when levelsForm changes', 
 });
 
 it('should receive filter values from child component when progressForm changes', () => {
+  //TODO revise this test
   // spyOn(component, 'getChallengeFilters').and.callThrough();
 
   // childComponent.filtersForm.controls['progress'].setValue({noStarted: true, started:false, finished: false});
@@ -94,6 +101,7 @@ it('should receive filter values from child component when progressForm changes'
 
   
 it('should receive all filter values from child component', () => {
+  //TODO revise this test
   // const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
   // const expectedFilters: FilterChallenge = {
   //   languages: [1],
