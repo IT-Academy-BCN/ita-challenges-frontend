@@ -96,9 +96,12 @@ export class AuthService {
 	}
 
 	public logout() {
-		return true;
+		this.cookieService.delete('authToken');
+		this.cookieService.delete('refreshToken');
+		this.cookieService.delete('user');
+		this.currentUser;
+		this.router.navigate(['/login']);
 	}
-
 	/**
 		 * get User Data 
 		 * and store it in the cookie
@@ -121,9 +124,9 @@ export class AuthService {
 
 	// Check if the token is expired
 	public isTokenExpired(token: string): boolean {
-		return true;
+		const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+		return Math.floor(new Date().getTime() / 1000) >= expiry;
 	}
-
 	/* See if token is valid */
 	public isTokenValid(token: string): boolean { //todo: Promise<boolean>
 		return true;

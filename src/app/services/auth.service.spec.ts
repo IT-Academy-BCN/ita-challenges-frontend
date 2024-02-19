@@ -170,14 +170,26 @@ describe("AuthService", () => {
 	});
 
 	it("should logout correctly", (done) => {
-		const test = authService.logout();
-		expect(test).toEqual(true);
-		done();
-	});
 
-	it("should logout error", (done) => {
-		const test = authService.logout();
-		expect(test).toEqual(true);
+		let user = 'user';
+		let authToken = 'testAuthToken';
+		let refreshToken = 'testRefreshAuthToken';
+
+		cookieServiceMock.set('user', user);
+		cookieServiceMock.set('authToken', authToken);
+		cookieServiceMock.set('refreshToken', refreshToken)
+
+		authService.logout();
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("user");
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("authToken");
+		expect(cookieServiceMock.delete).toHaveBeenCalledWith("refreshToken");
+
+		let currentUser = authService.currentUser;
+		expect(currentUser.idUser).toBe('anonym');
+
+		expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
 		done();
 	});
 
@@ -214,14 +226,19 @@ describe("AuthService", () => {
 	});
 
 	it("should return isTokenExpired TRUE", (done) => {
-		const test = authService.isTokenExpired('test');
-		expect(test).toEqual(true);
+		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MTY0NjYyNzk3NCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.bJcS2VgrPsgc0mPDRFhS_hvrx4ftj6NgR13IO25D7Ag';
+
+		let isTokenExpired = authService.isTokenExpired(token);
+		expect(isTokenExpired).toEqual(true);
 		done();
 	});
 
 	it("should return isTokenExpired FALSE", (done) => {
-		const test = authService.isTokenExpired('test');
-		expect(test).toEqual(true);
+		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
+
+		let isTokenExpired = authService.isTokenExpired(token);
+		
+		expect(isTokenExpired).toEqual(false);
 		done();
 	});
 
