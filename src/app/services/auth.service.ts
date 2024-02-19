@@ -54,7 +54,7 @@ export class AuthService {
 	/**
 	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
-	public get currentUser(): User { 
+	public get currentUser(): User {
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
 			this.cookieService.set('user', this.anonym);
@@ -73,7 +73,7 @@ export class AuthService {
 	public register(): boolean { //todo: Observavble<any>  y recibe user:User
 		return true;
 	}
-	
+
 	public getToken() {
 		return this.cookieService.get('authToken');
 	}
@@ -106,7 +106,7 @@ export class AuthService {
 		 * get User Data 
 		 * and store it in the cookie
 	*/
-	
+
 	public getLoggedUserData() {
 		return true;
 	}
