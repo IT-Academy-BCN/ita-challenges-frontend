@@ -15,6 +15,7 @@ import { User } from "../models/user.model";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { fakeAsync } from '@angular/core/testing';
+import { BlobOptions } from "buffer";
 
 
 interface loginResponse {
@@ -53,82 +54,42 @@ export class AuthService {
 	/**
 	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
-	public get currentUser(): User {
-		if (this.userSubject.value === null) {
-			this.userSubject.next(new User(this.anonym));
-			this.cookieService.set('user', this.anonym);
-		}
-		return this.userSubject.value;
+	public get currentUser(): boolean { //todo: change for :User
+		return true;
 	}
 
 	public set currentUser(user: User) {
-		this.userSubject.next(user);
-		this.cookieService.set('user', JSON.stringify(user));
+		const tru = true;
 	}
 
 	/**
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
-	public register(user: User): Observable<any> {
-		
-		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
-			{
-				'dni': user.dni,
-				'email': user.email,
-				'name': user.name,
-				'itineraryId': user.itineraryId,
-				'password': user.password,
-				'confirmPassword': user.confirmPassword,		
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
+	public register(): boolean { //todo: Observavble<any>  y recibe user:User
+		return true;
 	}
-
+	
 	public getToken() {
-		return this.cookieService.get('authToken');
+		return true;
 	}
 
 	public getRefreshToken() {
-		return this.cookieService.get('refreshToken');
+		return true;
 	}
 
 	public getUserIdFromCookie() {
-		let stringifiedUSer = this.cookieService.get('user');
-		let user = JSON.parse(stringifiedUSer);
-		return user.idUser;
+		return true;
 	}
 
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public login(user: User) {
-
-		this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
-			{
-				'dni': user.dni,
-				'password': user.password
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).subscribe((resp: loginResponse) => {
-				this.currentUser = new User(resp.id);
-				this.cookieService.set('authToken', resp.authToken);
-				this.cookieService.set('refreshToken', resp.refreshToken);
-				this.cookieService.set('user', JSON.stringify(this.currentUser));
-			});
+	public login() {//todo: recibe => user:User
+		return true;
 	}
 
 	public logout() {
-		this.cookieService.delete('authToken');
-		this.cookieService.delete('refreshToken');
-		this.cookieService.delete('user');
-		this.currentUser;
-		this.router.navigate(['/login']);
+		return true;
 	}
 
 	/**
@@ -137,85 +98,28 @@ export class AuthService {
 	*/
 	
 	public getLoggedUserData() {
-		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
-			{
-				'authToken': this.cookieService.get('authToken'),
-			},
-		).subscribe({
-			next: (res) => {
-				let user: User = this.currentUser;
-
-				let userData: User = {
-					'idUser': user.idUser,
-					'dni': res.dni,
-					'email': res.email,
-				};
-
-				this.currentUser = userData;
-			},
-			error: err => { console.error(err) }
-		})
+		return true;
 	}
 
 	/* Check if the user is  Logged in*/
 	public async isUserLoggedIn() {
-		let isUserLoggedIn: boolean = false;
-		let authToken = this.cookieService.get('authToken');
-		let authTokenValid = await this.checkToken(authToken);
-		if (authTokenValid) {
-			isUserLoggedIn = true;
-		} else {
-			let refreshToken = this.cookieService.get('authToken');
-			isUserLoggedIn = await this.checkToken(refreshToken);
-		}
-		return isUserLoggedIn;
+		return true;
 	}
 
 	/* return if token valid */
 	async checkToken(token: string): Promise<boolean> {
-		if (token) {
-			let isTokenExpired = this.isTokenExpired(token);
-			if (!isTokenExpired) {
-				let isTokenValid = this.isTokenValid(token);
-				if (await isTokenValid) {
-					return true;
-				}
-			}
-		}
+
 		return false;
 	}
 
 	// Check if the token is expired
 	public isTokenExpired(token: string): boolean {
-		const expiry = JSON.parse(atob(token.split('.')[1])).exp;
-		return Math.floor(new Date().getTime() / 1000) >= expiry;
+		return true;
 	}
 
 	/* See if token is valid */
-	public isTokenValid(token: string): Promise<boolean> {
-
-		return new Promise<boolean>((reject, resolve) => {
-
-			this.http.post(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_VALIDATE_TOKEN_URL),
-				{
-					"authToken": "string"
-				},
-				{
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				})
-				.subscribe({
-					next: (resp: any) => {
-						if (resp.status == 200) {
-							resolve(true);
-						} else {
-							reject(false);
-						}
-					},
-					error: (err) => { resolve(false) },
-				});
-		})
+	public isTokenValid(token: string): boolean { //todo: Promise<boolean>
+		return true;
 	}
 }
 
