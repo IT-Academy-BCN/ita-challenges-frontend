@@ -70,20 +70,45 @@ describe("AuthService", () => {
 	});
 
 	it('should return the auth token from the cookie', (done) => {
-		const test = authService.getToken();
-		expect(test).toEqual(true);
+		const expectedToken = 'testAuthToken';
+		// Establece el token de autenticaciÃ³n en la cookie
+		cookieServiceMock.set('authToken', expectedToken);
+
+		const actualToken = authService.getToken();
+
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+		expect(actualToken).toEqual(expectedToken);
 		done();
 	});
 
 	it("should get refresh Token from cookie", (done) => {
-		const test = authService.getRefreshToken();
-		expect(test).toEqual(true);
+		let mockRefreshToken = 'mockRefreshToken';
+		cookieServiceMock.set('refreshToken', mockRefreshToken);
+
+		const refreshToken = authService.getRefreshToken();
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(refreshToken).toBe(mockRefreshToken);
+
 		done();
 	})
 
 	it("should return userId from cookie", (done) => {
-		const test = authService.getUserIdFromCookie();
-		expect(test).toEqual(true);
+		let mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+
+		cookieServiceMock.set('user', JSON.stringify(mockUser));
+
+		const userId = authService.getUserIdFromCookie();
+
+		expect(cookieServiceMock.set).toHaveBeenCalled();
+		expect(cookieServiceMock.get).toHaveBeenCalled();
+		expect(userId).toEqual(mockUser.idUser)
+
 		done();
 	});
 
