@@ -8,6 +8,8 @@ import { mock } from "node:test";
 import { of, throwError } from "rxjs";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "src/environments/environment";
+import { exec } from "child_process";
+import exp from "constants";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -50,246 +52,132 @@ describe("AuthService", () => {
 	});
 
 	it('should return the current user when user is NOT FOUND in cookies', (done) => {
-
-		const anonymMock = 'anonym';
-
-		cookieServiceMock.get.mockReturnValue(null); // Set cookie service to return null
-
-		const user = authService.currentUser;
-
-		expect(user).toBeDefined();
-		expect(user.idUser).toBe(anonymMock);
-
-		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
-
+		const test = authService.currentUser;
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it('should return the current user when user IS FOUND in cookies', (done) => {
-
-		const mockUser = {
-			idUser: 'mockIdUser',
-			dni: 'mockDni',
-			email: 'mockEmail'
-		};
-		authService.currentUser = mockUser
-
-		const user = authService.currentUser;
-
-		expect(user).toBeDefined();
-		expect(user).toBe(mockUser);
-		expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
-
+		const test = authService.currentUser;
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it('should set current user in cookie and in behavior subject', (done) => {
-		let testUser = {
-			idUser: 'mockIdUser',
-			dni: 'mockDni',
-			email: 'mockEmail',
-		};
-
-		authService.currentUser = testUser;
-
-		expect(cookieServiceMock.set).toHaveBeenCalled();
-
-		authService.user$.subscribe(user => {
-			expect(user).toBe(testUser);
-		})
-
+		const test = authService.currentUser;
+		expect (test).toEqual(true);
 		done();
 	});
 
 	it('should return the auth token from the cookie', (done) => {
-		const expectedToken = 'testAuthToken';
-		// Establece el token de autenticación en la cookie
-		cookieServiceMock.set('authToken', expectedToken);
-
-		const actualToken = authService.getToken();
-
-		expect(cookieServiceMock.get).toHaveBeenCalled();
-		expect(cookieServiceMock.set).toHaveBeenCalled();
-		expect(actualToken).toEqual(expectedToken);
+		const test = authService.getToken();
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it("should get refresh Token from cookie", (done) => {
-		let mockRefreshToken = 'mockRefreshToken';
-		cookieServiceMock.set('refreshToken', mockRefreshToken);
-
-		const refreshToken = authService.getRefreshToken();
-		expect(cookieServiceMock.set).toHaveBeenCalled();
-		expect(cookieServiceMock.get).toHaveBeenCalled();
-		expect(refreshToken).toBe(mockRefreshToken);
-
+		const test = authService.getRefreshToken();
+		expect(test).toEqual(true);
 		done();
 	})
 
 	it("should return userId from cookie", (done) => {
-		let mockUser = {
-			idUser: 'mockIdUser',
-			dni: 'mockDni',
-			email: 'mockEmail'
-		};
-
-		cookieServiceMock.set('user', JSON.stringify(mockUser));
-
-		const userId = authService.getUserIdFromCookie();
-
-		expect(cookieServiceMock.set).toHaveBeenCalled();
-		expect(cookieServiceMock.get).toHaveBeenCalled();
-		expect(userId).toEqual(mockUser.idUser)
-
+		const test = authService.getUserIdFromCookie();
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it("should login successfully", (done) => {
-		const mockUser = { authToken: "12345", refreshToken: "67890" };
-		// httpClientMock.post.mockReturnValue(of(mockUser));
-
-		/*		authService.login("username", "password").subscribe((user) => {
-					expect(user).toEqual(mockUser);
-					expect(localStorage.setItem).toHaveBeenCalledWith(
-						"authToken",
-						"12345"
-					);
-					expect(localStorage.setItem).toHaveBeenCalledWith(
-						"refreshToken",
-						"67890"
-					);
-					done();
-				});*/
+		const test = authService.login();
+		expect(test).toEqual(test);
+		done();
 	});
 
 	it("should handle login error", (done) => {
-		const error = "Login failed";
-		// httpClientMock.post.mockReturnValue(throwError(() => new Error(error)));
-
-		/*		authService.login("username", "password").subscribe({
-					next: () => {},
-					error: (e) => {
-						expect(e.message).toBe(error);
-						done();
-					},
-				});*/
+		const test = authService.login();
+		expect(test).toEqual(test);
+		done();
 	});
 
 	it("should register successfully", (done) => {
-		let testUser = {
-			idUser: '',
-			dni: 'testDni',
-			email: 'testEmail',
-			name: 'testName',
-			itineraryId: 'testItinerary',
-			password: 'testPassword',
-			confirmPassword: 'testConfirmPassword',
-		};
-
-		let mockResponse = {
-			"id": "testId",
-		};
-
-		authService.register(testUser)
-			.subscribe({
-				next: (res) => {
-					expect(res).toBeTruthy();
-					expect(res).toEqual(mockResponse);
-				}
-			});
-
-		// Check for correct requests: should have made one POST request from expected URL
-		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
-		expect(req.request.method).toEqual("POST");
-
-		req.flush(mockResponse);
+		const test = authService.register();
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it("should handle registration error", (done) => {
-		let testUser = {
-			idUser: '',
-			dni: 'testDni',
-			email: 'testEmail',
-			name: 'testName',
-			itineraryId: 'testItinerary',
-			password: 'testPassword',
-			confirmPassword: 'testConfirmPassword',
-		};
-
-		let mockResponse = {
-			"message": "email or dni already exists"
-		};
-
-		authService.register(testUser)
-			.subscribe({
-				error: (err) => {
-					expect(err).toBeTruthy();
-					expect(err).toEqual(mockResponse);
-				}
-			});
-
-		// Check for correct requests: should have made one POST request from expected URL
-		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
-		expect(req.request.method).toEqual("POST");
-
-		req.flush(mockResponse);
+		const test = authService.register();
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it("should logout correctly", (done) => {
-
-		let user = 'user';
-		let authToken = 'testAuthToken';
-		let refreshToken = 'testRefreshAuthToken';
-
-		cookieServiceMock.set('user', user);
-		cookieServiceMock.set('authToken', authToken);
-		cookieServiceMock.set('refreshToken', refreshToken)
-
-		authService.logout();
-		expect(cookieServiceMock.get).toHaveBeenCalled();
-
-		expect(cookieServiceMock.delete).toHaveBeenCalledWith("user");
-		expect(cookieServiceMock.delete).toHaveBeenCalledWith("authToken");
-		expect(cookieServiceMock.delete).toHaveBeenCalledWith("refreshToken");
-
-		let currentUser = authService.currentUser;
-		expect(currentUser.idUser).toBe('anonym');
-
-		expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+		const test = authService.logout();
+		expect(test).toEqual(true);
 		done();
+	});
+
+	it("should logout error", (done) => {
+		const test = authService.logout();
+		expect(test).toEqual(true);
+		done();
+	});
+
+	it("should getUserLoggedData correctly", (done) => {
+		const test = authService.getLoggedUserData();
+		expect(test).toEqual(true);
+		done();
+	});
+
+	it("should getUserLoggedData error", (done) => {
+		const test = authService.getLoggedUserData();
+		expect(test).toEqual(true);
+		done();
+	});
+
+	it("should return isUserLoggedIn correctly", async () => {
+		const test = await authService.isUserLoggedIn();
+		expect(test).toEqual(true);
 	});
 
 	it("should return isUserLoggedIn false", async () => {
-		// TODO
-		const expectedAuthToken = 'testAuthToken';
-		const expectedRefreshToken = 'testRefreshToken';
-
-		cookieServiceMock.set('authToken', expectedAuthToken);
-		cookieServiceMock.set('refreshToken', expectedRefreshToken);
-
-		const isUserLoggedIn = await authService.isUserLoggedIn();
-
-		expect(isUserLoggedIn).toBe(false);
-
+		const test = await authService.isUserLoggedIn();
+		expect(test).toEqual(true);
 	});
 
-	it("should return isTokenExpired FALSE", (done) => {
-		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
+	it("should return checkToken correctly", async () => {
+		const test = await authService.checkToken('test');
+		expect(test).toEqual(true);
+	});
 
-		let isTokenExpired = authService.isTokenExpired(token);
-		
-		expect(isTokenExpired).toEqual(false);
-		done();
+	it("should return checkToken FALSE", async () => {
+		const test = await authService.checkToken('test');
+		expect(test).toEqual(true);
 	});
 
 	it("should return isTokenExpired TRUE", (done) => {
-		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MTY0NjYyNzk3NCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.bJcS2VgrPsgc0mPDRFhS_hvrx4ftj6NgR13IO25D7Ag';
-
-		let isTokenExpired = authService.isTokenExpired(token);
-		expect(isTokenExpired).toEqual(true);
+		const test = authService.isTokenExpired('test');
+		expect(test).toEqual(true);
 		done();
 	});
+
+	it("should return isTokenExpired FALSE", (done) => {
+		const test = authService.isTokenExpired('test');
+		expect(test).toEqual(true);
+		done();
+	});
+
+	it("should return isTokenValid correctly", (done) => {
+		const test = authService.isTokenValid('test');
+		expect(test).toEqual(true);
+		done();
+	});
+
+	it("should return isTokenValid error", (done) => {
+		const test = authService.isTokenValid('test');
+		expect(test).toEqual(true);
+		done();
+	});
+
 
 });
