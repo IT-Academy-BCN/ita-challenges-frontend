@@ -86,7 +86,7 @@ export class AuthService {
 				}
 			});
 	}
-
+	
 	public getToken() {
 		return this.cookieService.get('authToken');
 	}
