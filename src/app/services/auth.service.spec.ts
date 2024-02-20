@@ -307,13 +307,16 @@ describe("AuthService", () => {
 	});
 
 	it("should return checkToken correctly", async () => {
-		const test = await authService.checkToken('test');
-		expect(test).toEqual(true);
-	});
 
+		let validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
+		const result = await authService.checkToken(validToken);
+        expect(result).toBe(true);
+	});
+	
 	it("should return checkToken FALSE", async () => {
-		const test = await authService.checkToken('test');
-		expect(test).toEqual(true);
+		let expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MTY0NjYyNzk3NCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.bJcS2VgrPsgc0mPDRFhS_hvrx4ftj6NgR13IO25D7Ag';
+		const result = await authService.checkToken(expiredToken);
+		expect(result).toBe(false);
 	});
 
 	it("should return isTokenExpired TRUE", (done) => {

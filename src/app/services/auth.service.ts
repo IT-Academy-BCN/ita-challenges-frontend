@@ -144,8 +144,16 @@ export class AuthService {
 
 	/* return if token valid */
 	async checkToken(token: string): Promise<boolean> {
-
-		return true;
+		if (token) {
+			let isTokenExpired = this.isTokenExpired(token);
+			if (!isTokenExpired) {
+				let isTokenValid = this.isTokenValid(token);
+				if (await isTokenValid) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	// Check if the token is expired
