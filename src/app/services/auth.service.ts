@@ -117,7 +117,24 @@ export class AuthService {
 	*/
 
 	public getLoggedUserData() {
-		return true;
+		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
+			{
+				'authToken': this.cookieService.get('authToken'),
+			},
+		).subscribe({
+			next: (res) => {
+				let user: User = this.currentUser;
+				
+				let userData: User = {
+					'idUser': user.idUser,
+					'dni': res.dni,
+					'email': res.email,
+				};
+
+				this.currentUser = userData;
+			},
+			error: err => { console.error(err) }
+		})
 	}
 
 	/* Check if the user is  Logged in*/

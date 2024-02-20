@@ -1,4 +1,4 @@
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
@@ -6,10 +6,11 @@ import { addYears } from "date-fns";
 import { CookieService } from "ngx-cookie-service";
 import { mock } from "node:test";
 import { of, throwError } from "rxjs";
-import { TestBed } from "@angular/core/testing";
+import { TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { exec } from "child_process";
 import exp from "constants";
+import { error } from "console";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -72,7 +73,7 @@ describe("AuthService", () => {
 			dni: 'mockDni',
 			email: 'mockEmail'
 		};
-		
+
 		authService.currentUser = mockUser;
 
 		const user = authService.currentUser;
@@ -236,17 +237,64 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should getUserLoggedData correctly", (done) => {
-		const test = authService.getLoggedUserData();
-		expect(test).toEqual(true);
+	it("should getLoggedUserData correctly", fakeAsync(() => {
+
+		let testAuthToken = 'testAuthToken';
+		const mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+
+		const mockResponse = {
+			dni: "string",
+			email: "user@example.cat",
+			role: "ADMIN"
+		}
+
+		cookieServiceMock.set('authToken', testAuthToken);
+		authService.currentUser = mockUser;
+
+		const user = authService.currentUser;
+		authService.getLoggedUserData();
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+		expect(req.request.method).toEqual('POST');
+
+		req.flush(mockResponse);
+		tick()
+		expect(authService.currentUser).toEqual({
+			idUser: mockUser.idUser,
+			dni: mockResponse.dni, // Updated with server response
+			email: mockResponse.email, // Updated with server response
+		});
+
+		expect(user).toBeDefined();
+		expect(user).toBe(mockUser);
+	}));
+
+	it("should handle error in getLoggedUserData", (done) => {
+
+		spyOn(console, 'error'); //spy console.error
+
+		// Simulamos un evento de progreso para indicar un error
+		const errorEvent = new ProgressEvent('error', {
+			lengthComputable: false,
+			loaded: 0,
+			total: 0,
+		});
+
+		authService.getLoggedUserData();
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+
+		req.error(errorEvent);
+		
+		expect(console.error).toHaveBeenCalled;
+
 		done();
+
 	});
 
-	it("should getUserLoggedData error", (done) => {
-		const test = authService.getLoggedUserData();
-		expect(test).toEqual(true);
-		done();
-	});
 
 	it("should return isUserLoggedIn correctly", async () => {
 		const test = await authService.isUserLoggedIn();
@@ -280,7 +328,7 @@ describe("AuthService", () => {
 		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
 
 		let isTokenExpired = authService.isTokenExpired(token);
-		
+
 		expect(isTokenExpired).toEqual(false);
 		done();
 	});
