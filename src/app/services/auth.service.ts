@@ -16,6 +16,7 @@ import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
+import {TokenService} from "./token.service";
 
 
 interface loginResponse {
@@ -39,7 +40,8 @@ export class AuthService {
 
 	constructor(private http: HttpClient,
 		private router: Router,
-		private cookieService: CookieService) {
+		private cookieService: CookieService,
+				private tokenService: TokenService) {
 
 		// Verificar si la cookie 'user' está definida
 		const userCookie = this.cookieService.get('user');
@@ -74,13 +76,6 @@ export class AuthService {
 		return true;
 	}
 
-	public getToken() {
-		return this.cookieService.get('authToken');
-	}
-
-	public getRefreshToken() {
-		return this.cookieService.get('refreshToken')
-	}
 
 	public getUserIdFromCookie() {
 		let stringifiedUSer = this.cookieService.get('user');
@@ -122,22 +117,6 @@ export class AuthService {
 
 	/* Check if the user is  Logged in*/
 	public async isUserLoggedIn() {
-		return true;
-	}
-
-	/* return if token valid */
-	async checkToken(token: string): Promise<boolean> {
-
-		return true;
-	}
-
-	// Check if the token is expired
-	public isTokenExpired(token: string): boolean {
-		const expiry = JSON.parse(atob(token.split('.')[1])).exp;
-		return Math.floor(new Date().getTime() / 1000) >= expiry;
-	}
-	/* See if token is valid */
-	public isTokenValid(token: string): boolean { //todo: Promise<boolean>
 		return true;
 	}
 }

@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from "rxjs/operators";
 import { AuthService } from '../services/auth.service';
+import {TokenService} from "../services/token.service";
 
 const AUTHORIZATION = environment.AUTHORIZATION;
 const BEARER = environment.BEARER;
@@ -16,13 +17,18 @@ const TOKEN = environment.BACKEND_TOKEN;
 export class JwtInterceptor implements HttpInterceptor {
 
 
-  constructor(private router: Router,
-              private authService: AuthService) { }
+  constructor(private tokenService: TokenService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    //const token = this.authService.getToken();
+
+    /*    let authService = this.injector.get(AuthService);
+
+
     const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL);
 
-      const token = this.authService.getToken();
+      const token = authService.getToken();
 
       if (isApiUrl && token) {
       request = request.clone({
@@ -31,9 +37,9 @@ export class JwtInterceptor implements HttpInterceptor {
         },
         withCredentials: true // cookies allowed
       });
-    }
+    }*/
 
     return next.handle(request);
   }
 }
-export const interceptorProvider = [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}];
+//export const interceptorProvider = [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}];

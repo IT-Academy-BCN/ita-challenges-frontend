@@ -4,7 +4,7 @@ import { LoginModalComponent } from './../../../modules/modals/login-modal/login
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-main-menu',
+  selector: '   app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss']
 })
