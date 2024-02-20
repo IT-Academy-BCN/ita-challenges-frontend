@@ -1,17 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { addYears } from "date-fns";
-import { CookieService } from "ngx-cookie-service";
-import { mock } from "node:test";
-import { of, tap, throwError } from "rxjs";
+import { of, tap } from "rxjs";
 import { TestBed, fakeAsync, tick} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
-import { exec } from "child_process";
-import exp from "constants";
 import { User } from "../models/user.model";
-import { error } from "console";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -228,7 +221,7 @@ describe("AuthService", () => {
 
 	});
 
-	it('should ERRORRRR login succeeds', (done) => {
+	it('should reject with error message when login fails', (done) => {
 		const mockUser: User = {
 			idUser: '',
 			dni: 'testDni',
