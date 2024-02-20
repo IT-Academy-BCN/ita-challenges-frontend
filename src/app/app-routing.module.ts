@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {JwtInterceptor} from "./interceptors/jwt-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthService} from "./services/auth.service";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/ita-challenge/challenges'}
