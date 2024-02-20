@@ -5,11 +5,12 @@ import { Router } from "@angular/router";
 import { addYears } from "date-fns";
 import { CookieService } from "ngx-cookie-service";
 import { mock } from "node:test";
-import { of, throwError } from "rxjs";
-import { TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { of, tap, throwError } from "rxjs";
+import { TestBed, fakeAsync, tick} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { exec } from "child_process";
 import exp from "constants";
+import { User } from "../models/user.model";
 import { error } from "console";
 
 describe("AuthService", () => {
@@ -73,7 +74,7 @@ describe("AuthService", () => {
 			dni: 'mockDni',
 			email: 'mockEmail'
 		};
-
+		
 		authService.currentUser = mockUser;
 
 		const user = authService.currentUser;
@@ -198,6 +199,61 @@ describe("AuthService", () => {
 		expect(req.request.method).toEqual("POST");
 
 		req.flush(mockResponse);
+		done();
+	});
+
+	it('should set user cookies and resolve when login succeeds', (done) => {
+		const mockUser: User = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockResponse = { // response we expect from the loginRequest function.
+			"authToken": "testAuthToken",
+			"refreshToken": "testRefreshToken",
+			"id": "testId"
+		};
+
+		//spyOn function to mock the behavior of the loginRequest function. 
+		spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
+
+		authService.login(mockUser).then((returnValue) => {
+			expect(returnValue).toBeNull();
+			expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken');
+			expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken');
+			expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')));
+			done();
+		})
+
+	});
+
+	it('should ERRORRRR login succeeds', (done) => {
+		const mockUser: User = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockErrorMessage = 'Invalid Credentials';
+		let mockErrorResponse = { // response we expect from the loginRequest function.
+			message: mockErrorMessage
+		};
+
+		spyOn(authService, 'loginRequest').and.returnValue(
+			of({}).pipe(
+				tap(() => {
+					throw { status: 401, error: mockErrorResponse };
+				})
+			)
+		);
+
+		authService.login(mockUser).then(() => {
+			done.fail('Login should have failed');
+		}).catch((error) => {
+			expect(error).toEqual(mockErrorMessage);
+			done();
+		});
 		done();
 	});
 
@@ -331,7 +387,7 @@ describe("AuthService", () => {
 		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
 
 		let isTokenExpired = authService.isTokenExpired(token);
-
+		
 		expect(isTokenExpired).toEqual(false);
 		done();
 	});
