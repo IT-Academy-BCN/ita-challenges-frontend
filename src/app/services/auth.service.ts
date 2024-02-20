@@ -54,7 +54,7 @@ export class AuthService {
 	/**
 	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
-	public get currentUser(): User { 
+	public get currentUser(): User {
 		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
 			this.cookieService.set('user', this.anonym);
@@ -73,7 +73,7 @@ export class AuthService {
 	public register(): boolean { //todo: Observavble<any>  y recibe user:User
 		return true;
 	}
-	
+
 	public getToken() {
 		return this.cookieService.get('authToken');
 	}
@@ -104,6 +104,21 @@ export class AuthService {
 			})
 	}
 
+	public login(user: User): Promise<any> {
+		return new Promise((resolve, reject) => {
+			this.loginRequest(user).subscribe({
+				next: (resp: loginResponse) => {
+					this.currentUser = new User(resp.id);
+					this.cookieService.set('authToken', resp.authToken);
+					this.cookieService.set('refreshToken', resp.refreshToken);
+					this.cookieService.set('user', JSON.stringify(this.currentUser));
+					resolve(null);
+				},
+				error: (err) => { reject( err.message ) },
+			})
+		});
+	}
+
 	public logout() {
 		this.cookieService.delete('authToken');
 		this.cookieService.delete('refreshToken');
@@ -115,7 +130,7 @@ export class AuthService {
 		 * get User Data 
 		 * and store it in the cookie
 	*/
-	
+
 	public getLoggedUserData() {
 		return true;
 	}
