@@ -62,8 +62,8 @@ export class StarterComponent {
 
       if(this.authService.currentUser.idUser === 'anonym') {
         const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
-        this.authService.login(loggedUser);
-        console.log(this.authService.currentUser.idUser);
+        //this.authService.login(loggedUser);
+        //console.log(this.authService.currentUser.idUser);
       }
 
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
