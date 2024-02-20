@@ -99,6 +99,21 @@ export class AuthService {
 			})
 	}
 
+	public login(user: User): Promise<any> {
+		return new Promise((resolve, reject) => {
+			this.loginRequest(user).subscribe({
+				next: (resp: loginResponse) => {
+					this.currentUser = new User(resp.id);
+					this.cookieService.set('authToken', resp.authToken);
+					this.cookieService.set('refreshToken', resp.refreshToken);
+					this.cookieService.set('user', JSON.stringify(this.currentUser));
+					resolve(null);
+				},
+				error: (err) => { reject( err.message ) },
+			})
+		});
+	}
+
 	public logout() {
 		this.cookieService.delete('authToken');
 		this.cookieService.delete('refreshToken');
@@ -112,7 +127,24 @@ export class AuthService {
 	*/
 
 	public getLoggedUserData() {
-		return true;
+		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
+			{
+				'authToken': this.cookieService.get('authToken'),
+			},
+		).subscribe({
+			next: (res) => {
+				let user: User = this.currentUser;
+
+				let userData: User = {
+					'idUser': user.idUser,
+					'dni': res.dni,
+					'email': res.email,
+				};
+
+				this.currentUser = userData;
+			},
+			error: err => { console.error(err) }
+		})
 	}
 
 	/* Check if the user is  Logged in*/

@@ -206,6 +206,61 @@ describe("AuthService", () => {
 		done();
 	});
 
+	it('should set user cookies and resolve when login succeeds', (done) => {
+		const mockUser: User = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockResponse = { // response we expect from the loginRequest function.
+			"authToken": "testAuthToken",
+			"refreshToken": "testRefreshToken",
+			"id": "testId"
+		};
+
+		//spyOn function to mock the behavior of the loginRequest function.
+		spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
+
+		authService.login(mockUser).then((returnValue) => {
+			expect(returnValue).toBeNull();
+			expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken');
+			expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken');
+			expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')));
+			done();
+		})
+
+	});
+
+	it('should reject with error message when login fails', (done) => {
+		const mockUser: User = {
+			idUser: '',
+			dni: 'testDni',
+			password: 'testPassword',
+		};
+
+		let mockErrorMessage = 'Invalid Credentials';
+		let mockErrorResponse = { // response we expect from the loginRequest function.
+			message: mockErrorMessage
+		};
+
+		spyOn(authService, 'loginRequest').and.returnValue(
+			of({}).pipe(
+				tap(() => {
+					throw { status: 401, error: mockErrorResponse };
+				})
+			)
+		);
+
+		authService.login(mockUser).then(() => {
+			done.fail('Login should have failed');
+		}).catch((error) => {
+			expect(error).toEqual(mockErrorMessage);
+			done();
+		});
+		done();
+	});
+
 	it("should register successfully", (done) => {
 		const test = authService.register();
 		expect(test).toEqual(true);
@@ -242,17 +297,64 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should getUserLoggedData correctly", (done) => {
-		const test = authService.getLoggedUserData();
-		expect(test).toEqual(true);
+	it("should getLoggedUserData correctly", fakeAsync(() => {
+
+		let testAuthToken = 'testAuthToken';
+		const mockUser = {
+			idUser: 'mockIdUser',
+			dni: 'mockDni',
+			email: 'mockEmail'
+		};
+
+		const mockResponse = {
+			dni: "string",
+			email: "user@example.cat",
+			role: "ADMIN"
+		}
+
+		cookieServiceMock.set('authToken', testAuthToken);
+		authService.currentUser = mockUser;
+
+		const user = authService.currentUser;
+		authService.getLoggedUserData();
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+		expect(req.request.method).toEqual('POST');
+
+		req.flush(mockResponse);
+		tick()
+		expect(authService.currentUser).toEqual({
+			idUser: mockUser.idUser,
+			dni: mockResponse.dni, // Updated with server response
+			email: mockResponse.email, // Updated with server response
+		});
+
+		expect(user).toBeDefined();
+		expect(user).toBe(mockUser);
+	}));
+
+	it("should handle error in getLoggedUserData", (done) => {
+
+		spyOn(console, 'error'); //spy console.error
+
+		// Simulamos un evento de progreso para indicar un error
+		const errorEvent = new ProgressEvent('error', {
+			lengthComputable: false,
+			loaded: 0,
+			total: 0,
+		});
+
+		authService.getLoggedUserData();
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+
+		req.error(errorEvent);
+
+		expect(console.error).toHaveBeenCalled;
+
 		done();
+
 	});
 
-	it("should getUserLoggedData error", (done) => {
-		const test = authService.getLoggedUserData();
-		expect(test).toEqual(true);
-		done();
-	});
 
 	it("should return isUserLoggedIn correctly", async () => {
 		const test = await authService.isUserLoggedIn();
@@ -265,46 +367,44 @@ describe("AuthService", () => {
 	});
 
 	it("should return checkToken correctly", async () => {
-/*		const test = await authService.checkToken('test');
-		expect(test).toEqual(true);*/
-		expect(true).toBe(true);
+
+		let validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
+		const result = await authService.checkToken(validToken);
+        expect(result).toBe(true);
 	});
 
 	it("should return checkToken FALSE", async () => {
-/*		const test = await authService.checkToken('test');
-		expect(test).toEqual(true);*/
-		expect(true).toBe(true);
+		let expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MTY0NjYyNzk3NCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.bJcS2VgrPsgc0mPDRFhS_hvrx4ftj6NgR13IO25D7Ag';
+		const result = await authService.checkToken(expiredToken);
+		expect(result).toBe(false);
 	});
 
 	it("should return isTokenExpired TRUE", (done) => {
 		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MTY0NjYyNzk3NCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.bJcS2VgrPsgc0mPDRFhS_hvrx4ftj6NgR13IO25D7Ag';
 
-/*		let isTokenExpired = authService.isTokenExpired(token);
-		expect(isTokenExpired).toEqual(true);*/
-		expect(true).toBe(true);
+		let isTokenExpired = authService.isTokenExpired(token);
+		expect(isTokenExpired).toEqual(true);
 		done();
 	});
 
 	it("should return isTokenExpired FALSE", (done) => {
 		let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY2MjU5NzQsImV4cCI6MzIwMzE3MTAwMCwidXNlcl9pZCI6IjEyMzQ1Njc4OSIsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIn0.GlYqDGpU3ny3t5myeYJUb3zya5L4M9EIRbFZk8b98cY';
 
-/*		let isTokenExpired = authService.isTokenExpired(token);
-		expect(isTokenExpired).toEqual(false);*/
-		expect(true).toBe(true);
+		let isTokenExpired = authService.isTokenExpired(token);
+
+		expect(isTokenExpired).toEqual(false);
 		done();
 	});
 
 	it("should return isTokenValid correctly", (done) => {
-/*		const test = authService.isTokenValid('test');
-		expect(test).toEqual(true);*/
-		expect(true).toBe(true);
+		const test = authService.isTokenValid('test');
+		expect(test).toEqual(true);
 		done();
 	});
 
 	it("should return isTokenValid error", (done) => {
-/*		const test = authService.isTokenValid('test');
-		expect(test).toEqual(true);*/
-		expect(true).toBe(true);
+		const test = authService.isTokenValid('test');
+		expect(test).toEqual(true);
 		done();
 	});
 
