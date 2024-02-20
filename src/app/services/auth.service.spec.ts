@@ -6,10 +6,13 @@ import { addYears } from "date-fns";
 import { CookieService } from "ngx-cookie-service";
 import { mock } from "node:test";
 import { of, throwError } from "rxjs";
-import { TestBed } from "@angular/core/testing";
+import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { exec } from "child_process";
 import exp from "constants";
+import {tap} from "rxjs/operators";
+import {User} from "../models/user.model";
+import {TokenService} from "./token.service";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -17,6 +20,7 @@ describe("AuthService", () => {
 	let routerMock: any;
 	let httpClient: HttpClient;
 	let httpClientMock: HttpTestingController;
+	let tokenServiceMock: TokenService;
 
 	beforeEach(() => {
 
