@@ -11,8 +11,16 @@
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
                 <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE">
                 <input formControlName="email" class="form-control" type="email" name="email" placeholder="Email">
+                <input formControlName="name" class="form-control" type="text" name="email" placeholder="Username">
+                <select formControlName="itineraryId" class="form-select" placeholder="Especialización">
+                    <option value="" class="text-muted">Especialización</option>
+                    @for( itinerary of itineraries; track itinerary.id ){
+                        <option [value]="itinerary.id">{{itinerary.name}}</option>
+                    }
+                </select>
+                <!-- <input formControlName="es" class="form-control" type="email" name="email" placeholder="Especialización"> -->
                 <input formControlName="password" class="form-control" type="password" name="password" placeholder="Contraseña">
-                <input formControlName="repeatpassword" class="form-control" type="password" name="repeatpassword" placeholder="Repetir contraseña">
+                <input formControlName="confirmPassword" class="form-control" type="password" name="confirmPassword" placeholder="Repetir contraseña">
             </div>
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">

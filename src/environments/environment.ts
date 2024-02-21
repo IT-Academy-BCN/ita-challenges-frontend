@@ -6,6 +6,7 @@ export const environment = {
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
   BACKEND_SSO_LOGIN_URL:'/auth/login',
+  BACKEND_SSO_ITINERARIES: '/itineraries',
   BACKEND_SSO_VALIDATE_TOKEN_URL:'/tokens/validate',
   BACKEND_SSO_POST_USER:'/users/me',
   ITINERARY_ID: "clpb8t1cc000008k0cg1icvl4",
