@@ -36,12 +36,10 @@ export class StarterComponent {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private starterService: StarterService,
-              //private authService: AuthService
+              private authService: AuthService
   ) {
 
-    this.params$ = this.activatedRoute.params.subscribe(params => {
-
-    });
+    this.params$ = this.activatedRoute.params.subscribe(params => {});
 
   }
 
@@ -56,21 +54,8 @@ export class StarterComponent {
 
   getChallengesByPage(page: number) {
 
-    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
-
-      //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TODO DEVELOPMENT ONLY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      //console.log('User Starter Component: ' + this.authService.currentUser.idUser);
-
-/*      if(this.authService.currentUser.idUser === 'anonym') {
-        const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
-        this.authService.login(loggedUser);
-        console.log(this.authService.currentUser.idUser);
-      }*/
-
-      this.listChallenges = resp;
-    });
-
-
+    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize)
+        .subscribe(resp => this.listChallenges = resp);
   }
 
   openModal() {

@@ -16,30 +16,21 @@ const TOKEN = environment.BACKEND_TOKEN;
 })
 export class JwtInterceptor implements HttpInterceptor {
 
-
   constructor(private tokenService: TokenService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    //const token = this.authService.getToken();
-
-    /*    let authService = this.injector.get(AuthService);
-
-
+    const token = this.tokenService.token;
     const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL);
 
-      const token = authService.getToken();
-
-      if (isApiUrl && token) {
+    if (isApiUrl && token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         },
         withCredentials: true // cookies allowed
       });
-    }*/
-
+    }
     return next.handle(request);
   }
 }
-//export const interceptorProvider = [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}];
