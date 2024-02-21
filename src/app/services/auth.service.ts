@@ -99,11 +99,9 @@ export class AuthService {
 		return new Promise((resolve, reject) => {
 			this.registerRequest(user).subscribe({
 				next: (resp: registerResponse) => {
-					if(resp){
-						alert('Success register, wait for the account validation'); //todo: change to modal
+					resolve(null);
 						// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
 						// this.modifyUserWithAdmin(resp.id);
-					}
 				},
 				error: (err) => { reject(err.message)}
 			});

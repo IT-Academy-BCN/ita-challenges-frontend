@@ -1,0 +1,16 @@
+@import 'src/styles/colors.scss';
+
+input, select{
+    margin-bottom: 10px;
+}
+
+.form-check-input{
+    padding: .6rem;
+    &:checked {
+        background-color: $primary;
+        border-color: $primary;
+    }
+    &:focus{
+        box-shadow: none;
+    }
+}

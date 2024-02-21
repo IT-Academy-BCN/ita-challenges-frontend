@@ -25,6 +25,7 @@ export class RegisterModalComponent implements OnInit {
 		itineraryId: ["", Validators.required],
 		password: ["", Validators.required],
 		confirmPassword: ["", Validators.required],
+		legalTermsAccepted: ["", Validators.required],
 	});
 
 	constructor(
@@ -39,7 +40,36 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	register() {
-		console.log("Valores del formulario:", this.registerForm.value);
+		this.registerError = '';
+		if(this.registerForm.valid){
+			let user: User = {
+				idUser: '',
+				dni: `${this.registerForm.get('dni')?.value}`,
+				email: `${this.registerForm.get('email')?.value}`,
+				name: `${this.registerForm.get('name')?.value}`,
+				itineraryId: `${this.registerForm.get('itinerary')?.value}`,
+				password: `${this.registerForm.get('password')?.value}`,
+				confirmPassword: `${this.registerForm.get('confirmPassword')?.value}`,
+			}
+			let registerResp = this.authService.register(user)
+			.then( (res) => {this.openSuccessfulRegisterModal(res)})
+			.catch( (err) => this.notifyErrorRegister(err));
+		}
+	}
+
+	openSuccessfulRegisterModal( res: any){
+	//TODO create modal
+			alert('Success register, wait for the account validation'); //todo: change to moda
+	}
+
+	notifyErrorRegister(err:any){
+		if( (typeof err.message) === "string"){
+			this.registerError = err.message;
+		} else {
+			this.registerError = 'Error en el registro';
+		}
+	}
+		
 /*		if (this.registerForm.valid) {
 			const user = new User(
 				this.registerForm.get("dni")?.value ?? "", // Usa '' como valor predeterminado
@@ -61,8 +91,8 @@ export class RegisterModalComponent implements OnInit {
 				},
 			});
 		}*/
-		this.closeModal();
-	}
+	// 	this.closeModal();
+	// }
 	closeModal() {
 		this.modalService.dismissAll();
 	}
