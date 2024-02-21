@@ -182,7 +182,6 @@ describe("AuthService", () => {
 		done();
 	});
 
-
 	it("should make UNsuccessful login request", (done) => {
 		let testUser = {
 			idUser: '',
@@ -264,15 +263,122 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it("should register successfully", (done) => {
-		const test = authService.register();
-		expect(test).toEqual(true);
+	it("should register request successfully", (done) => {
+		const mockUser = {
+			idUser:'',
+			dni: 'mockUserDni',
+			email: 'mockUserEmail',
+			name: 'mockUserName',
+			itineraryId: 'mockUserIteneraryId',
+			password:'mockUserPassword',
+			confirmPassword: 'mockUserConfirmPassword',
+		};
+
+		const mockResponse = {
+			id: 'mockIdResponse'
+		}
+
+		authService.registerRequest(mockUser)
+			.subscribe({
+				next: (res) => {
+					expect(res).toBeTruthy();
+					expect(res).toEqual(mockResponse);
+				}
+			});
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
+		expect(req.request.method).toEqual("POST");
+
+		req.flush(mockResponse);
 		done();
 	});
 
-	it("should handle registration error", (done) => {
-		const test = authService.register();
-		expect(test).toEqual(true);
+	it("should register request UNsuccessful", (done) => {
+		const mockUser = {
+			idUser:'mockIdResponse',
+			dni: 'mockUserDni',
+			email: 'mockUserEmail',
+			name: 'mockUserName',
+			itineraryId: 'mockUserIteneraryId',
+			password:'mockUserPassword',
+			confirmPassword: 'mockUserConfirmPassword',
+		};
+
+		const mockResponse = {
+			id: 'mockIdResponse'
+		}
+
+		authService.loginRequest(mockUser)
+			.subscribe({
+				error: (err) => {
+					expect(err).toBeTruthy();
+					expect(err).toEqual(mockResponse);
+				}
+			});
+
+		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
+		expect(req.request.method).toEqual("POST");
+
+		req.flush(mockResponse);
+		done();
+	});
+
+	it ("should show success register modal", (done) => {
+		const mockUser = {
+			idUser:'mockIdResponse',
+			dni: 'mockUserDni',
+			email: 'mockUserEmail',
+			name: 'mockUserName',
+			itineraryId: 'mockUserIteneraryId',
+			password:'mockUserPassword',
+			confirmPassword: 'mockUserConfirmPassword',
+		};
+
+		const mockResponse = {
+			id: 'mockIdResponse'
+		}
+
+		//spyOn function to mock the behavior of the loginRequest function. 
+		spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
+
+		authService.register(mockUser).then((returnValue) => {
+			expect(returnValue).toBeTruthy();
+			expect(returnValue).toEqual(mockResponse);
+			done();
+		});
+		done();
+	});
+
+	it ("should show UNsuccessly register modal", (done) => {
+		const mockUser = {
+			idUser:'mockIdResponse',
+			dni: 'mockUserDni',
+			email: 'mockUserEmail',
+			name: 'mockUserName',
+			itineraryId: 'mockUserIteneraryId',
+			password:'mockUserPassword',
+			confirmPassword: 'mockUserConfirmPassword',
+		};
+
+		let mockErrorMessage = 'Invalid data';
+		let mockErrorResponse = { // response we expect from the loginRequest function.
+			message: mockErrorMessage
+		};
+
+		spyOn(authService, 'registerRequest').and.returnValue(
+			of({}).pipe(
+				tap(() => {
+					throw { status: 401, error: mockErrorResponse };
+				})
+			)
+		);
+
+		authService.register(mockUser).then(() => {
+			done.fail('Register should have failed');
+		}).catch((error) => {
+			expect(error).toEqual(mockErrorMessage);
+			done();
+		});
 		done();
 	});
 
