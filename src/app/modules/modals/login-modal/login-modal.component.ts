@@ -54,7 +54,7 @@ export class LoginModalComponent {
     if ((typeof err.message) === "string") {
       this.loginError = err.message;
     } else {
-      this.loginError = 'Error en el registro';
+      this.loginError = 'Error en el login';
     }
   }
 
