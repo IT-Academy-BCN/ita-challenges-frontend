@@ -24,7 +24,7 @@ export class LoginModalComponent {
 
   loginForm = this.formBuilder.group({
     dni: ['', Validators.required],
-    password: ['', Validators.required, Validators.pattern(this.validatorsService.passwordPattern)]
+    password: ['', Validators.required]
   });
 
   public login(): void {
