@@ -38,7 +38,6 @@ export class TokenService {
 
     /* return if token valid */
     async checkToken(token: string): Promise<boolean> {
-
         return true;
     }
 }
