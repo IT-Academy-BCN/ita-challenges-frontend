@@ -24,7 +24,7 @@ export class LoginModalComponent {
 
   loginForm = this.formBuilder.group({
     dni: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required, Validators.pattern(this.validatorsService.passwordPattern)]
   });
 
   public login(): void {
@@ -54,7 +54,7 @@ export class LoginModalComponent {
     if ((typeof err.message) === "string") {
       this.loginError = err.message;
     } else {
-      this.loginError = 'Error en el registro';
+      this.loginError = 'Error en el login';
     }
   }
 
