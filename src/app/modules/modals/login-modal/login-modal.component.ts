@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from "src/app/models/user.model";
-import { ValidatiorsService } from 'src/app/services/validatiors.service';
+import { ValidatorsService } from 'src/app/services/validators.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -17,7 +17,7 @@ export class LoginModalComponent {
   constructor(private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private validatorsService: ValidatiorsService,
+    private validatorsService: ValidatorsService,
     private router: Router) { }
 
   loginError: string = "";
@@ -42,7 +42,7 @@ export class LoginModalComponent {
     }
   };
   public isValidField(field: string) {
-    return this.validatorsService.isValidField(this.loginForm, field);
+    return this.validatorsService.isValidInput(field, this.loginForm);
   };
 
   public openSuccessfulLoginModal(res: any) {
