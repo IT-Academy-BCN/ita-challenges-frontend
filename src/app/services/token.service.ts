@@ -8,22 +8,25 @@ export class TokenService {
 
     constructor(private cookieService: CookieService) { }
 
-    private token: string | null = null;
-
-    setToken(token: string): void {
-        this.token = token;
+    public set authToken(token: string) {
+        this.cookieService.set('authToken', token);
     }
 
-    public getToken() {
+    public get authToken() {
         return this.cookieService.get('authToken');
     }
 
-    public getRefreshToken() {
+    public set refreshToken(token: string) {
+        this.cookieService.set('authToken', token);
+    }
+
+    public get refreshToken() {
         return this.cookieService.get('refreshToken')
     }
 
-    clearToken(): void {
-        this.token = null;
+    public clearTokens(): void {
+        this.cookieService.set('authToken', '');
+        this.cookieService.set('refreshToken', '');
     }
 
     // Check if the token is expired
@@ -38,6 +41,7 @@ export class TokenService {
 
     /* return if token valid */
     async checkToken(token: string): Promise<boolean> {
+
         return true;
     }
 }

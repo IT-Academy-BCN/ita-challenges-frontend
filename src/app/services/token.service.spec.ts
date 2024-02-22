@@ -10,65 +10,38 @@ import { TestBed } from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { exec } from "child_process";
 import exp from "constants";
+import {TokenService} from "./token.service";
 
 describe("Token Service Tests", () => {
-    let authService: AuthService;
+
+    let tokenService: TokenService;
     let cookieServiceMock: any;
-    let routerMock: any;
-    let httpClient: HttpClient;
-    let httpClientMock: HttpTestingController;
 
     beforeEach(() => {
-
-        TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-            imports: [HttpClientTestingModule]
-        });
+        cookieServiceMock = { get: jest.fn(), set: jest.fn()};
     });
 
-    it("test", (done) => {
-        expect(true).toBe(true);
-        done();
-    });
+    it('Should return the auth token from the cookie', (done) => {
+        const dummyToken = '1111111222222233333';
+        cookieServiceMock.get.mockReturnValue('1111111222222233333');
+        tokenService = new TokenService(cookieServiceMock);
 
-    //todo: need mockTokenService
-    // it("should return isUserLoggedIn correctly", async () => {
-    // 	const test = await authService.isUserLoggedIn();
-    // 	expect(test).toEqual(true);
-    // });
-
-    // it("should return isUserLoggedIn false", async () => {
-    // 	const test = await authService.isUserLoggedIn();
-    // 	expect(test).toEqual(true);
-    // });
-
-
-    it('should return the auth token from the cookie', (done) => {
-        const expectedToken = 'testAuthToken';
-        // Establece el token de autenticaciÃ³n en la cookie
-        cookieServiceMock.set('authToken', expectedToken);
-
-        //TODO JVR - Pending tests review
-        /*
-                const actualToken = authService.getToken();
-
-                expect(cookieServiceMock.get).toHaveBeenCalled();
-                expect(cookieServiceMock.set).toHaveBeenCalled();
-                expect(actualToken).toEqual(expectedToken);*/
-        expect(true).toBe(true);
-
+        const actualToken = tokenService.authToken;
+        expect(cookieServiceMock.get).toHaveBeenCalledTimes(1);
+        expect(cookieServiceMock.get).toHaveBeenCalled();
+        expect(actualToken).toEqual(dummyToken);
         done();
     });
 
     it("should get refresh Token from cookie", (done) => {
         let mockRefreshToken = 'mockRefreshToken';
-        cookieServiceMock.set('refreshToken', mockRefreshToken);
+        cookieServiceMock.get.mockReturnValue(mockRefreshToken);
+        tokenService = new TokenService(cookieServiceMock);
 
-        /*		const refreshToken = authService.getRefreshToken();
-                expect(cookieServiceMock.set).toHaveBeenCalled();
-                expect(cookieServiceMock.get).toHaveBeenCalled();
-                expect(refreshToken).toBe(mockRefreshToken);*/
-        expect(true).toBe(true);
-
+        const refreshToken = tokenService.refreshToken;
+        expect(cookieServiceMock.get).toHaveBeenCalledTimes(1);
+        expect(cookieServiceMock.get).toHaveBeenCalled();
+        expect(refreshToken).toEqual(mockRefreshToken);
         done();
     })
 
