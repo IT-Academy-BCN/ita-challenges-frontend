@@ -9,6 +9,9 @@
     <form [formGroup]="registerForm" class=" my-4 mx-sm-0 mx-lg-5 ps-5 pe-5 row">
         <div class="col-sm-12 col-lg-6">
             <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE">
+            @if(isValidInput('name')){
+            <p class="text-danger form-text ps-3"> {{getInputError('dni')}}</p>
+            }
         </div>
         <div class="col-sm-12 col-lg-6">
             <input formControlName="email" class="form-control" type="email" name="email" placeholder="Email">
