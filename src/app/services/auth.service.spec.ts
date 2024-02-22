@@ -521,5 +521,4 @@ describe("AuthService", () => {
 		done();
 	});
 
-
 });

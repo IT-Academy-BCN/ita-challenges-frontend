@@ -1,11 +1,19 @@
-input.form-control, select.form-select{
+// Sobrescribe las reglas CSS de Bootstrap para el color de fondo de las opciones en hover
+.form-select option:hover {
+    color: red !important;
+}
+
+input.form-control,
+select.form-select {
     padding: 1rem 1.25rem;
     border-radius: $btn-radius;
-    &:focus{
+
+    &:focus {
         border-color: $primary;
         box-shadow: 0 0 0 .25rem rgba(185, 24, 121, 0.25);
     }
-    &::placeholder{
+
+    &::placeholder {
         color: $black-1;
 
     }
