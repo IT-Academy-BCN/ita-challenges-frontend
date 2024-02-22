@@ -94,16 +94,16 @@ export class AuthService {
 				}
 			})
 	}
-	
+
 	public register(user: User): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.registerRequest(user).subscribe({
 				next: (resp: registerResponse) => {
 					resolve(null);
-						// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
-						// this.modifyUserWithAdmin(resp.id);
+					// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
+					// this.modifyUserWithAdmin(resp.id);
 				},
-				error: (err) => { reject(err.message)}
+				error: (err) => { reject(err.message) }
 			});
 		});
 	}
@@ -117,7 +117,7 @@ export class AuthService {
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public loginRequest(user: User): Observable<any> {
+	public loginRequest(user: User): Observable<loginResponse> {
 		return this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
 			{
 				'dni': user.dni,
@@ -127,7 +127,7 @@ export class AuthService {
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			})
+			});
 	}
 
 	public login(user: User): Promise<any> {
