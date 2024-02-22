@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from "src/app/models/user.model";
+import { ValidatiorsService } from 'src/app/services/validatiors.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -12,6 +13,13 @@ import { User } from "src/app/models/user.model";
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
+
+  constructor(private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private validatorsService: ValidatiorsService,
+    private router: Router) { }
+
   loginError: string = "";
 
   loginForm = this.formBuilder.group({
@@ -19,58 +27,42 @@ export class LoginModalComponent {
     password: ['', Validators.required]
   });
 
-  constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router) { }
-
-
-  login() {
+  public login(): void {
+    this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      const dni = this.loginForm.get("dni")?.value || "";
-      const password = this.loginForm.get("password")?.value || "";
+      let user: User = {
+        idUser: '',
+        dni: `${this.loginForm.get('dni')?.value}`,
+        password: `${this.loginForm.get('password')?.value}`,
+      }
 
-      console.log('*************', this.loginForm)
-
-/*      this.authService.login(dni, password).subscribe({
-        next: (userData) => {
-          console.log(userData, "login")
-          // actions like redirecting user to another page 
-        },
-        error: (errorData) => {
-          console.error(errorData);
-          if (typeof errorData.error === 'string') {
-            // Si errorData.error es una cadena de texto, es probable que sea el mensaje de error.
-            this.loginError = errorData.error;
-          } else if (errorData.error && errorData.error.message) {
-            // Si errorData.error.message existe, asumimos que es el mensaje de error.
-            this.loginError = errorData.error.message;
-          } else {
-            // Si no se puede determinar el mensaje de error, mostrar un mensaje genérico.
-            this.loginError = 'Hubo un error en el inicio de sesión';
-          }
-        },
-        complete: () => {
-          console.log('Login Completo')
-          // this.router.navigateByUrl('/')
-          this.closeModal();
-        }
-      });*/
-
+      let registerResp = this.authService.login(user)
+			.then( (res) => {this.openSuccessfulLoginModal(res)})
+			.catch( (err) => this.notifyErrorLogin(err));
     }
-    else {
-      // alert('error al ingresar datos')
-      this.loginForm.markAllAsTouched()
-    }
+  };
+  public isValidField(field: string) {
+    return this.validatorsService.isValidField(this.loginForm, field);
+  };
+
+  public openSuccessfulLoginModal(res: any) {
+    //TODO create routing to the page after success login
+    alert('Success login');
   }
 
-
+  public notifyErrorLogin(err: any) {
+    if ((typeof err.message) === "string") {
+      this.loginError = err.message;
+    } else {
+      this.loginError = 'Error en el registro';
+    }
+  }
 
   closeModal() {
     this.modalService.dismissAll();
   }
-  openRegisterModal(){
+  openRegisterModal() {
     this.closeModal();
-    this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
+    this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
 }

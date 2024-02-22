@@ -94,7 +94,7 @@ export class AuthService {
 				}
 			})
 	}
-
+	
 	public register(user: User): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.registerRequest(user).subscribe({
