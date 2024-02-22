@@ -13,6 +13,7 @@ import exp from "constants";
 import {tap} from "rxjs/operators";
 import {User} from "../models/user.model";
 import {TokenService} from "./token.service";
+import { resolve } from "path";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -344,6 +345,7 @@ describe("AuthService", () => {
 		authService.register(mockUser).then((returnValue) => {
 			expect(returnValue).toBeTruthy();
 			expect(returnValue).toEqual(mockResponse);
+			expect(resolve).toEqual(null);
 			done();
 		});
 		done();
