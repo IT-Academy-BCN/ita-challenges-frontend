@@ -13,14 +13,21 @@ import {
 } from "rxjs";
 import { User } from "../models/user.model";
 import { Router } from "@angular/router";
-import {CookieService} from "ngx-cookie-service";
+import { CookieService } from "ngx-cookie-service";
+import { fakeAsync } from '@angular/core/testing';
+import { BlobOptions } from "buffer";
 
 
 interface loginResponse {
 	id: string;
 	authToken: string;
 	refreshToken: string;
-	expiresAt: string;
+}
+
+interface UserResponse {
+	dni: string,
+	email: string,
+	role: string
 }
 
 @Injectable()
@@ -31,46 +38,40 @@ export class AuthService {
 	public user$: Observable<User>;
 
 	constructor(private http: HttpClient,
-				private router: Router,
-				private cookieService: CookieService) {
-		this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")!));//TODO - use cookies instead local storage
+		private router: Router,
+		private cookieService: CookieService) {
+
+		// Verificar si la cookie 'user' está definida
+		const userCookie = this.cookieService.get('user');
+		const initialUser = userCookie ? JSON.parse(userCookie) : null;
+
+		this.userSubject = new BehaviorSubject(initialUser);
 		this.user$ = this.userSubject.asObservable();
+		// this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
+		// this.user$ = this.userSubject.asObservable();
 	}
 
 	/**
-	 * Creates a new anonymous user if there is no user in the local storage.
+	 * Creates a new anonymous user if there is no user in the cookies.
 	 */
 	public get currentUser(): User {
-		if(this.userSubject.value===null) {
+		if (this.userSubject.value === null) {
 			this.userSubject.next(new User(this.anonym));
-			this.cookieService.set('id_user', this.anonym);
+			this.cookieService.set('user', this.anonym);
 		}
 		return this.userSubject.value;
 	}
 
 	public set currentUser(user: User) {
 		this.userSubject.next(user);
-		this.cookieService.set('id_user', user.idUser);
+		this.cookieService.set('user', JSON.stringify(user));
 	}
 
 	/**
 	 * Register a user and log in with the new user. Set new user as current user.
 	 */
-	public register(user:User): Observable<any>{
-
-		return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
-			{
-				'dni': 'user.dni',
-				'password': user.password,
-				'confirmPassword':user.confirmPassword,
-				'email': user.email,
-				'itineraryId': user.itineraryId
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
+	public register(): boolean { //todo: Observavble<any>  y recibe user:User
+		return true;
 	}
 
 	public getToken() {
@@ -78,23 +79,20 @@ export class AuthService {
 	}
 
 	public getRefreshToken() {
-		return this.cookieService.get('refreshToken');
+		return this.cookieService.get('refreshToken')
 	}
 
-	public getExpiresAt() {
-		return this.cookieService.get('expires_at');
-	}
-
-	public getIdUser() {
-		return this.cookieService.get('id');
+	public getUserIdFromCookie() {
+		let stringifiedUSer = this.cookieService.get('user');
+		let user = JSON.parse(stringifiedUSer);
+		return user.idUser;
 	}
 
 	/**
 	 * Log in with a user. Set user as current user.
 	 */
-	public login(user:User) {
-
-		this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
+	public loginRequest(user: User): Observable<any> {
+		return this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
 			{
 				'dni': user.dni,
 				'password': user.password
@@ -103,26 +101,45 @@ export class AuthService {
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).subscribe((resp: loginResponse) => {
-				this.currentUser = new User(resp.id);
-				//TODO - pending enable HttpOnly and Secure flags in the cookies
-			    //strict -> sameSite. HttpOnly only will able to set in the server side
-				//this.cookieService.set('authToken', resp.authToken, undefined, '/', undefined, true, 'Strict');
-				this.cookieService.set('authToken', resp.authToken);
-				this.cookieService.set('refreshToken', resp.refreshToken);
-				this.cookieService.set('expires_at', resp.expiresAt);
-				this.cookieService.set('id_user', resp.id);
-			});
+			})
 	}
-
 
 	public logout() {
 		this.cookieService.delete('authToken');
 		this.cookieService.delete('refreshToken');
-		this.cookieService.delete('expires_at');
-		this.cookieService.delete('id_user');
-		this.currentUser = new User(this.anonym);
+		this.cookieService.delete('user');
+		this.currentUser;
 		this.router.navigate(['/login']);
 	}
+	/**
+		 * get User Data 
+		 * and store it in the cookie
+	*/
 
+	public getLoggedUserData() {
+		return true;
+	}
+
+	/* Check if the user is  Logged in*/
+	public async isUserLoggedIn() {
+		return true;
+	}
+
+	/* return if token valid */
+	async checkToken(token: string): Promise<boolean> {
+
+		return true;
+	}
+
+	// Check if the token is expired
+	public isTokenExpired(token: string): boolean {
+		const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+		return Math.floor(new Date().getTime() / 1000) >= expiry;
+	}
+	/* See if token is valid */
+	public isTokenValid(token: string): boolean { //todo: Promise<boolean>
+		return true;
+	}
 }
+
+

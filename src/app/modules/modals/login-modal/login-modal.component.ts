@@ -59,7 +59,7 @@ export class LoginModalComponent {
 
     }
     else {
-      alert('error al ingresar datos')
+      // alert('error al ingresar datos')
       this.loginForm.markAllAsTouched()
     }
   }
