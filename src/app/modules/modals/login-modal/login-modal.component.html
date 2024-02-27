@@ -9,15 +9,16 @@
         <div class="modal-body d-flex flex-column gap-3 pt-0">
             <h2 class="modal-title">Login</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
-                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE">
-                <input formControlName="password" class="form-control" type="password" name="password"
-                    placeholder="Contraseña">
-                @if (isValidField('password'))
-                {
-                <span class="form-text text-danger">
-                    Debe introducir una contraseña mínima de 2 caracteres
-                </span>
+                <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE"
+                [ngClass]="!isValidInput('dni') ? 'form-control' : 'form-control is-invalid'">
+                @if(isValidInput('dni')){
+                <p class="text-danger form-text ps-3"> {{getInputError('dni')}}</p>
                 }
+                <input formControlName="password" class="form-control" type="password" name="password"
+                    placeholder="Contraseña" [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'">
+                    @if(isValidInput('password')){
+                    <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
+                    }
                 <a class="text-end">Recordar/cambiar contraseña</a>
             </div>
         </div>
