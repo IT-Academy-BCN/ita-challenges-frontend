@@ -23,8 +23,8 @@ export class LoginModalComponent {
   loginError: string = "";
 
   loginForm = this.formBuilder.group({
-    dni: ['', Validators.required],
-    password: ['', Validators.required]
+    dni: ['', Validators.required, this.validatorsService.isValidDni],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   public login(): void {
@@ -65,4 +65,12 @@ export class LoginModalComponent {
     this.closeModal();
     this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
+  
+	isValidInput(input: string ): boolean | null {
+		return this.validatorsService.isValidInput(input, this.loginForm);
+	}
+
+	getInputError(field: string): string {
+		return this.validatorsService.getInputError(field, this.loginForm);
+	}
 }
