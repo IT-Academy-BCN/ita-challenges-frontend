@@ -43,6 +43,9 @@ jobs:
           done < conf/.env.CI.dev
           echo "Done"
 
+      - name: Convert nginx.conf encoding to us-ascii
+        run: iconv -f UTF-8 -t US-ASCII nginx_conf/nginx.conf -o nginx_conf/nginx.conf
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
