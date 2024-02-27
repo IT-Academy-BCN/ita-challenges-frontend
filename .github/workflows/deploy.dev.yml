@@ -3,7 +3,7 @@ name: Upload Image to Docker Hub
 on:
   push:
     branches:
-      - main
+      - workflow
 
 jobs:
   #sonarcloud:
@@ -43,8 +43,18 @@ jobs:
           done < conf/.env.CI.dev
           echo "Done"
 
-      - name: Convert nginx.conf encoding to us-ascii
-        run: iconv -f UTF-8 -t US-ASCII nginx_conf/nginx.conf -o nginx_conf/nginx.conf
+      - name: Setup git-crypt
+        run: | 
+          sudo apt-get update
+          sudo apt-get install -y git-crypt
+
+      - name: Decrypt secrets
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: |
+          echo "$GIT_CRYPT_KEY" | base64 --decode > git_crypt.key
+          git-crypt unlock git_crypt.key
+          rm git_crypt.key
 
       - name: Use Node.js
         uses: actions/setup-node@v4
