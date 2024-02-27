@@ -3,7 +3,7 @@ name: Upload Image to Docker Hub
 on:
   push:
     branches:
-      - main
+      - workflow
 
 jobs:
   #sonarcloud:
@@ -85,31 +85,3 @@ jobs:
           push: true
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
 
-  deploy:
-    needs: docker
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Checkout code
-        uses: actions/checkout@v4
-      -
-        name: Load env from file
-        run: |
-          echo "Loading env vars from .env file"
-          while IFS='=' read -r key value
-          do
-            key=$(echo $key | tr '.' '_')
-            echo "$key=$value" >> $GITHUB_ENV
-            echo "$key=$value"
-          done < conf/.env.CI.dev
-          echo "Done"
-      -
-        name: Execute SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_URL }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            ./deploy_frontend_dev.sh itachallenge-nginx ${{ env.MICROSERVICE_VERSION }}
-            
