@@ -115,7 +115,18 @@ The autocrlf setting handles line-ending differences between different operating
 5. Alternative solutions: While enabling autocrlf is a common approach, there are alternative methods to handle line-ending differences. These include using the .gitattributes file or manually adjusting line endings. Consider the specific needs of your project and choose the approach that best suits your requirements.
 
 
-----------------------------------------------------------------
+### 2.2.3 File Mode
+
+To avoid problems with file permissions, it is recommended to set the filemode configuration to false. This will prevent Git from tracking changes to file permissions.
+Execute globally
+
+        git config --global core.filemode false
+
+or locally
+
+        git config core.filemode false
+
+---------------------------------------------------------------
 
 
 ## 2.3 Daily Procedure
