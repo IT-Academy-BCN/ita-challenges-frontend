@@ -3,6 +3,8 @@ name: Pull Request Sonar Analysis
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - develop
 
 jobs:
   sonarcloud:
