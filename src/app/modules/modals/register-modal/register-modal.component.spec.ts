@@ -6,6 +6,9 @@ import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
 
+import { ItinerariesService } from './../../../services/itineraries.service';
+import { ValidatorsService } from './../../../services/validators.service';
+
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;

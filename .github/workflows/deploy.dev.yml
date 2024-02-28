@@ -1,9 +1,11 @@
-name: Upload Image to Docker Hub
+name: Upload Image to Docker Hub & Deploy to Dev
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - workflow
+      - develop
 
 jobs:
   #sonarcloud:
@@ -26,6 +28,7 @@ jobs:
 
   docker:
     #needs: sonarcloud
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       -
@@ -39,8 +42,22 @@ jobs:
           do
             key=$(echo $key | tr '.' '_')
             echo "$key=$value" >> $GITHUB_ENV
+            echo "$key=$value"
           done < conf/.env.CI.dev
           echo "Done"
+
+      - name: Setup git-crypt
+        run: | 
+          sudo apt-get update
+          sudo apt-get install -y git-crypt
+
+      - name: Decrypt secrets
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: |
+          echo "$GIT_CRYPT_KEY" | base64 --decode > git_crypt.key
+          git-crypt unlock git_crypt.key
+          rm git_crypt.key
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -82,10 +99,26 @@ jobs:
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
 
   deploy:
+    if: github.event.pull_request.merged == true
     needs: docker
     runs-on: ubuntu-latest
     steps:
-      - name: Execute SSH
+      -
+        name: Checkout code
+        uses: actions/checkout@v4
+      -
+        name: Load env from file
+        run: |
+          echo "Loading env vars from .env file"
+          while IFS='=' read -r key value
+          do
+            key=$(echo $key | tr '.' '_')
+            echo "$key=$value" >> $GITHUB_ENV
+            echo "$key=$value"
+          done < conf/.env.CI.dev
+          echo "Done"
+      -
+        name: Execute SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST_URL }}
