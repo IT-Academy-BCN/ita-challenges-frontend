@@ -6,5 +6,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [ita-challenges-frontend-x.x.xx-RELEASE] - 2024-xx-xx
 *
 
-### [ita-challenges-frontend-2.0.43-RELEASE] - 2024-02-27
+### [ita-challenges-frontend-2.0.45-RELEASE] - 2024-02-28
 * CI enabled
