@@ -1,9 +1,6 @@
 name: Pull Request Sonar Analysis
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     types: [opened, synchronize, reopened]
 
