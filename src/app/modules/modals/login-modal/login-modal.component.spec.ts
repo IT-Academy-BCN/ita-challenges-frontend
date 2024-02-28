@@ -7,6 +7,7 @@ import { of, throwError } from 'rxjs';
 import { User } from "src/app/models/user.model";
 
 import { LoginModalComponent } from './login-modal.component';
+import { error } from 'node:console';
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent;
@@ -17,7 +18,8 @@ describe('LoginModalComponent', () => {
 
   beforeEach(async () => {
     authServiceMock = {
-      login: jest.fn()
+      login: jest.fn(),
+      notifyErrorLogin: jest.fn(),
     };
     routerMock = {
       navigateByUrl: jest.fn()
@@ -37,15 +39,13 @@ describe('LoginModalComponent', () => {
         { provide: NgbModal, useValue: modalServiceMock }
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LoginModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create login component correctly', () => {
     expect(component).toBeTruthy();
   });
 
@@ -54,34 +54,44 @@ describe('LoginModalComponent', () => {
     expect(authServiceMock.login).not.toHaveBeenCalled();
   });
 
-  it('should call authService.login if form is valid', () => {
-    //TODO revise this test
-    // component.loginForm.setValue({ dni: '12345678', password: 'password' });
-    // authServiceMock.login.mockReturnValue(of({}));
-    // component.login();
-    // expect(authServiceMock.login).toHaveBeenCalled();//TODO - fix this
+  it('should call authService.login and success response if form is valid', async () => {
+
+    component.loginForm.setValue({ dni: '12345678Z', password: 'password' });
+    authServiceMock.login.mockReturnValue(of({
+      idUser: '',
+      dni: component.loginForm.get('dni')?.value,
+      password: component.loginForm.get('password')?.value,
+    }));
+    component.login();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    expect(authServiceMock.login).toHaveBeenCalled();
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+    // expect(modalServiceMock.open).toHaveBeenCalled(); //todo: need the succesfull modal
+
   });
 
-  it('should handle login success', () => {
-    //TODO revise this test
-    // component.loginForm.setValue({ dni: '12345678', password: 'password' });
-    // authServiceMock.login.mockReturnValue(of({}));
-    // component.login();
-    // expect(modalServiceMock.dismissAll).toHaveBeenCalled();
-  });
+  it('should handle login error', async () => {
+    component.loginForm.setValue({ dni: '12345678Z', password: 'password' });
+    let errorResponse = { error: { message: 'Error en el login' } };
 
-  it('should handle login error', () => {
-    //TODO revise this test
-    // component.loginForm.setValue({ dni: '12345678', password: 'password' });
-    // const errorResponse = { error: { message: 'Login failed' } };
-    // authServiceMock.login.mockReturnValue(throwError(() => errorResponse));
-    // component.login();
-    // expect(component.loginError).toEqual('Login failed');
+    spyOn(authServiceMock, 'login').and.returnValue(Promise.reject(errorResponse));
+    
+    await component.login();
+    
+    await new Promise(resolve => setTimeout(resolve, 100));
+    expect(component.loginError).toEqual(errorResponse.error.message);
   });
 
   it('should open register modal', () => {
     component.openRegisterModal();
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
     expect(modalServiceMock.open).toHaveBeenCalled();
+  });
+
+  it('should close login modal', () => {
+    component.openRegisterModal();
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   });
 });
