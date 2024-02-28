@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { AuthService } from "./auth.service";
 import { HttpClient } from "@angular/common/http";
@@ -180,7 +181,7 @@ describe("AuthService", () => {
 		done();
 	});
 
-	it('should set user cookies and resolve when login succeeds', (done) => {
+	it('should set user cookies and resolve when login succeeds', async () => {
 		const mockUser: User = {
 			idUser: '',
 			dni: 'testDni',
@@ -196,17 +197,21 @@ describe("AuthService", () => {
 		//spyOn function to mock the behavior of the loginRequest function. 
 		spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
 
-		authService.login(mockUser).then((returnValue) => {
-			expect(returnValue).toBeNull();
-			expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken');
-			expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken');
-			expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')));
-			done();
-		})
+		try{
+			authService.login(mockUser).then((returnValue) => {
+				expect(returnValue).toBeNull();
+				expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken');
+				expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken');
+				expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')));
+			})
+		} catch (error) {
+			fail('Login failed');
+		}
+
 
 	});
 
-	it('should reject with error message when login fails', (done) => {
+	it('should reject with error message when login fails', async () => {
 		const mockUser: User = {
 			idUser: '',
 			dni: 'testDni',
@@ -226,13 +231,13 @@ describe("AuthService", () => {
 			)
 		);
 
-		authService.login(mockUser).then(() => {
-			done.fail('Login should have failed');
-		}).catch((error) => {
-			expect(error).toEqual(mockErrorMessage);
-			done();
-		});
-		done();
+		try {
+			await authService.login(mockUser);
+			fail('Login should have failed');
+			
+		} catch (error:any) {
+			expect(error.error.message).toEqual(mockErrorMessage);
+		}
 	});
 
 	it("should register request successfully", (done) => {
