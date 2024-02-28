@@ -117,9 +117,11 @@ Para evitar que git monitorice los cambios de permisos de los archivos, ejecuta 
 
        git config --global core.fileMode false
 
-Esto evitará que git marque los archivos como modificados cuando cambien sus permisos, en todos los repositorios de tu sistema. Si prefieres que no se aplique a todos, ejecuta solamente
+Esto evitará que git marque los archivos como modificados cuando cambien sus permisos, en todos los repositorios de tu sistema. Si prefieres que no se aplique a todos, ejecuta solamente:
 
         git config core.fileMode false
+
+----------------------------------------------------------------
 
 #### 2.3 Procedimiento diario
 
