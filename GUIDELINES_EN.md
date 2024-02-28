@@ -29,6 +29,9 @@
 
 8. [**TESTING**](#6-installation)
 
+9. [**DEPLOY**](#9-deploy)
+
+
 ----------------------------------------------------------------
 
 # 1. PROJECT'S LINKS
@@ -275,3 +278,18 @@ This will execute the test suite and provide feedback on the test results.
 If you prefer to run the tests in watch mode, which automatically re-runs the tests whenever a file changes, use the command
 
     npm run test:watch.
+
+----------------------------------------------------------------
+
+# 9. DEPLOY
+
+Project development is deployed on develop server through Continuous Integration, not manually.
+All features developed are deployed on the develop server for testing when are approved. When you finish a feature, follow next steps:
+- Make sure your feature branch is up to date with the develop branch.
+- Make sure the name of your feature branch is right (feature/#X).
+- Follow semantic versioning (https://semver.org/), and update version number in package.json.
+- Update version number (property MICROSERVICE_VERSION) at file .env.CI.dev as well. Make sure both versions are the same. There should be a white line at the end of the file.
+- Make necesary annotations at file CHANGELOG.md 
+- Make commit with message "X.X.X-RELEASE" (X.X.X is the new version) onto your feature branch.
+- Push your changes to the remote repository.
+- Create a pull request from your feature branch to the develop branch.

@@ -29,6 +29,8 @@
 
 8. [**PRUEBAS**](#8-pruebas)
 
+9. [**DEPLOY**](#9-deploy) 
+
 ----------------------------------------------------------------
 
 ### 1. ENLACES DEL PROYECTO
@@ -263,3 +265,19 @@ Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre
 Si prefieres ejecutar las pruebas en modo de vigilancia, que reejecuta automáticamente las pruebas cuando un archivo cambia, utiliza el comando
 
     npm run test:watch.
+
+----------------------------------------------------------------
+
+### 9. DEPLOY
+
+El desarrollo del proyecto es desplegado en un servidor de desarrollo mediante integración continua. No es necesario realizar un deploy manual.
+Todas las features desarrolladas, cuando son aprobadas, se despliegan en el servidor de desarrollo.
+Cuando termines de desarrollar la feature correspondiente (asegúrate de que la branch tenga la nomenclatura correcta), sigue los siguientes pasos:
+- Según las normas de versionado semántico (https://semver.org/), actualiza el número de versión en el archivo package.json.
+- Actualiza también el número de versión de la propiedad MICROSERVICE_VERSION en el archivo .env.CI.dev. Ten en cuenta que debes dejar una línea en blanco al final del archivo.
+  - Asegúrate de que ambas versiones coinciden.
+- Introduce las anotaciones necesarias en el archivo CHANGELOG.md. No olvides poner el número de issue al que pertenece la nueva versión.
+- Realiza un commit con el mensaje "X.X.X-RELEASE" (donde X.X.X es la nueva versión).
+- Realiza el push de la branch a la que pertenece la feature.
+- Realiza la PR correspondiente.
+
