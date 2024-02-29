@@ -10,7 +10,7 @@ export class ItinerariesService {
     
   constructor(private http: HttpClient) {}
 
-  getChallenges(): Promise<Itinerary[]>{
+  getItineraries(): Promise<Itinerary[]>{
     return new Promise((resolve, reject) =>
       this.http.get<Itinerary[]>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
       .subscribe({

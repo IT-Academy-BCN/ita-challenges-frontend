@@ -1,21 +1,16 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder, FormsModule, AbstractControl } from '@angular/forms';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
-
-
 import { ItinerariesService } from './../../../services/itineraries.service';
-import { ValidatorsService } from './../../../services/validators.service';
-import { combineConfig } from '@codemirror/state';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;
   let modalServiceMock: any;
-  // let formBuilderMock: any;
   let authServiceMock: any;
   let itinerariesServiceMock: any;
   let validatorsServiceMock: any;
@@ -32,7 +27,7 @@ describe('RegisterModalComponent', () => {
     }
 
     itinerariesServiceMock = {
-      getChallenges: jest.fn().mockResolvedValue(of([])),
+      getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3']),
     }
 
     await TestBed.configureTestingModule({
@@ -147,5 +142,12 @@ describe('RegisterModalComponent', () => {
     component.openLoginModal();
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   });
+
+  it('should get itineraries', fakeAsync(() => {
+    let respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3'];
+    tick()
+    component.getItineraries();
+    expect(component.itineraries).toEqual(respMock);
+  }));
 
 });
