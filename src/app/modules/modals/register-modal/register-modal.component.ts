@@ -62,17 +62,17 @@ export class RegisterModalComponent implements OnInit {
 				dni: `${this.registerForm.get('dni')?.value}`,
 				email: `${this.registerForm.get('email')?.value}`,
 				name: `${this.registerForm.get('name')?.value}`,
-				itineraryId: `${this.registerForm.get('itinerary')?.value}`,
+				itineraryId: `${this.registerForm.get('itineraryId')?.value}`,
 				password: `${this.registerForm.get('password')?.value}`,
 				confirmPassword: `${this.registerForm.get('confirmPassword')?.value}`,
 			}
 			let registerResp = this.authService.register(user)
-				.then((res) => { this.openSuccessfulRegisterModal(res) })
+				.then((res) => { this.openSuccessfulRegisterModal() })
 				.catch((err) => this.notifyErrorRegister(err));
 		}
 	}
 
-	openSuccessfulRegisterModal(res: any) {
+	openSuccessfulRegisterModal() {
 		//TODO create modal
 		alert('Success register, wait for the account validation'); //todo: change to moda
 		this.closeModal();

@@ -9,6 +9,7 @@ import { User } from '../../../models/user.model';
 
 import { ItinerariesService } from './../../../services/itineraries.service';
 import { ValidatorsService } from './../../../services/validators.service';
+import { combineConfig } from '@codemirror/state';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
@@ -27,7 +28,7 @@ describe('RegisterModalComponent', () => {
     };
 
     authServiceMock = {
-      register: jest.fn(),
+      register: jest.fn().mockResolvedValue(of([])),
     }
 
     itinerariesServiceMock = {
@@ -55,54 +56,75 @@ describe('RegisterModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should register user on valid form submission', fakeAsync(() => {
-  //   // spyOn(authServiceMock, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
-  //   component.registerForm.setValue({
-  //     dni: '12345678Z',
-  //     email: 'test@example.com',
-  //     name: 'testName',
-  //     itineraryId: 'testItinerary',
-  //     password: 'testPassword',
-  //     confirmPassword: 'testPassword',
-  //     legalTermsAccepted: true,
-  //   });
+  it('should register user successfully ', fakeAsync(() => {
+    spyOn(component, 'openSuccessfulRegisterModal');
+    jest.spyOn(window, 'alert');
+    component.registerForm.setValue({
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'testPassword',
+      confirmPassword: 'testPassword',
+      legalTermsAccepted: true,
+    });
 
-  //   component.register();
+    let testUser: User = {
+      idUser: '',
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'testPassword',
+      confirmPassword: 'testPassword',
+    }
 
-  //   tick();
-    // expect(component.registerError).toEqual('');
-    // expect(component.registerForm.touched).toEqual(true);
-    // console.log(component.registerForm.get('dni')?.valid)
-    // console.log(component.registerForm.get('email')?.valid)
-    // console.log(component.registerForm.get('name')?.valid)
-    // console.log(component.registerForm.get('itineraryId')?.valid)
-    // console.log(component.registerForm.get('password')?.valid)
-    // console.log(component.registerForm.get('confirmPassword')?.valid)
-    // console.log(component.registerForm.get('legalTermsAccepted')?.valid, component.registerForm.get('legalTermsAccepted')?.value, )
+    component.register();
+
+    tick();
+    expect(component.registerError).toEqual('');
+    expect(component.registerForm.touched).toEqual(true);
+    expect(component.registerForm.valid).toEqual(true);
+    expect(authServiceMock.register).toHaveBeenCalledWith(testUser);
+    expect(component.openSuccessfulRegisterModal).toHaveBeenCalled();
+  }));
+  
+  it('should handle register error', fakeAsync(() => {
+    spyOn(component, 'notifyErrorRegister');
     
-    // expect(component.registerForm.valid).toEqual(true);
+    spyOn(authServiceMock, 'register').and.returnValue(Promise.reject('')); 
+
+    component.registerForm.setValue({
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'testPassword',
+      confirmPassword: 'testPassword',
+      legalTermsAccepted: true,
+    });
     
+    let testUser: User = {
+      idUser: '',
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'testPassword',
+      confirmPassword: 'testPassword',
+    }
 
+    component.register();
 
-  // }));
+    tick();
+    expect(component.registerError).toEqual('');
+    expect(component.registerForm.touched).toEqual(true);
+    expect(component.registerForm.valid).toEqual(true);
+    expect(authServiceMock.register).toHaveBeenCalled();
+    expect(authServiceMock.register).toHaveBeenCalledWith(testUser);
+    expect(component.notifyErrorRegister).toHaveBeenCalled();
+  }));
 
-
-
-  // it('should handle registration error', fakeAsync(() => {
-  //TODO revise this test
-  //     spyOn(authService, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
-
-  //     component.registerForm.setValue({
-  //       dni: '12345678',
-  //       email: 'test@example.com',
-  //       password: 'password123',
-  //       repeatpassword: 'password123',
-  //     });
-
-  //     component.register();
-  //     tick();
-
-  //     expect(component.registerError).toEqual('Registration failed');
-  // }));
+  
 
 });
