@@ -122,7 +122,7 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	async getItineraries() {
-		await this.itinerariesService.getChallenges()
+		await this.itinerariesService.getItineraries()
 			.then((itineraries) => this.itineraries = itineraries);
 	}
 }
