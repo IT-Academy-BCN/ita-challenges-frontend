@@ -6,7 +6,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 export function httpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 
-                                './assets/i18n/', 
+                                '/assets/i18n/',
                                 '.json');
 }
 
