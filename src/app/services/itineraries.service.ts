@@ -16,7 +16,6 @@ export class ItinerariesService {
       .subscribe({
         next: (res) => resolve( res ),
         error: (err) => reject([])
-
       })
       )
   }
