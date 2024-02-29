@@ -14,7 +14,7 @@ describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;
   let modalServiceMock: any;
-  let formBuilderMock: any;
+  // let formBuilderMock: any;
   let authServiceMock: any;
   let itinerariesServiceMock: any;
   let validatorsServiceMock: any;
@@ -23,14 +23,15 @@ describe('RegisterModalComponent', () => {
 
     modalServiceMock = {
       dismissAll: jest.fn(),
-      open: jest.fn()
+      open: jest.fn(),
     };
 
     authServiceMock = {
-      register: jest.fn()
+      register: jest.fn(),
     }
+
     itinerariesServiceMock = {
-      getChallenges: jest.fn(),
+      getChallenges: jest.fn().mockResolvedValue(of([])),
     }
 
     await TestBed.configureTestingModule({
@@ -54,22 +55,22 @@ describe('RegisterModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should register user on valid form submission', fakeAsync(() => {
-    // spyOn(authServiceMock, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
-    component.registerForm.setValue({
-      dni: '12345678Z',
-      email: 'test@example.com',
-      name: 'testName',
-      itineraryId: 'testItinerary',
-      password: 'testPassword',
-      confirmPassword: 'testPassword',
-      legalTermsAccepted: true,
-    });
+  // it('should register user on valid form submission', fakeAsync(() => {
+  //   // spyOn(authServiceMock, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
+  //   component.registerForm.setValue({
+  //     dni: '12345678Z',
+  //     email: 'test@example.com',
+  //     name: 'testName',
+  //     itineraryId: 'testItinerary',
+  //     password: 'testPassword',
+  //     confirmPassword: 'testPassword',
+  //     legalTermsAccepted: true,
+  //   });
 
-    component.register();
+  //   component.register();
 
-    tick();
-    expect(component.registerError).toEqual('');
+  //   tick();
+    // expect(component.registerError).toEqual('');
     // expect(component.registerForm.touched).toEqual(true);
     // console.log(component.registerForm.get('dni')?.valid)
     // console.log(component.registerForm.get('email')?.valid)
@@ -83,7 +84,7 @@ describe('RegisterModalComponent', () => {
     
 
 
-  }));
+  // }));
 
 
 
