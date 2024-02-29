@@ -1,6 +1,9 @@
 name: Upload Image to Docker Hub & Deploy to Dev
 
 on:
+  push:
+    branches:
+      - develop
   pull_request:
     types:
       - closed
@@ -9,6 +12,7 @@ on:
 
 jobs:
   #sonarcloud:
+    #if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     #runs-on: ubuntu-latest
     #steps:
       #- uses: actions/checkout@v4
@@ -28,7 +32,7 @@ jobs:
 
   docker:
     #needs: sonarcloud
-    if: github.event.pull_request.merged == true
+    if: (github.event_name == 'push' ) || (github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       -
@@ -99,7 +103,7 @@ jobs:
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
 
   deploy:
-    if: github.event.pull_request.merged == true
+    if: (github.event_name == 'push' ) || (github.event.pull_request.merged == true)
     needs: docker
     runs-on: ubuntu-latest
     steps:

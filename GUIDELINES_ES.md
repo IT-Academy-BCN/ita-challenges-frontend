@@ -111,6 +111,16 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
        git config --global core.safecrlf warn
 3. Con esta configuración, si intentas hacer un commit de un archivo con saltos de línea CRLF, recibirás una advertencia. La misma advertencia se producirá si intentas convertir un archivo con saltos de línea CRLF a LF.
 
+#### 2.2.4 File Mode
+
+Para evitar que git monitorice los cambios de permisos de los archivos, ejecuta el siguiente comando:
+
+       git config --global core.fileMode false
+
+Esto evitará que git marque los archivos como modificados cuando cambien sus permisos, en todos los repositorios de tu sistema. Si prefieres que no se aplique a todos, ejecuta solamente
+
+        git config core.fileMode false
+
 #### 2.3 Procedimiento diario
 
 El procedimiento a seguir cada día sería este:
