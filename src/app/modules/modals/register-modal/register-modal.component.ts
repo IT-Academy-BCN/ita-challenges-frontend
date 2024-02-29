@@ -79,8 +79,8 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	notifyErrorRegister(err: any) {
-		if ((typeof err.message) === "string") {
-			this.registerError = err.message;
+		if ((typeof err.error.message) === "string") {
+			this.registerError = err.error.message;
 		} else {
 			this.registerError = 'Error en el registro';
 		}
