@@ -26,8 +26,11 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/i18n",
+              "src/assets/img",
+              "src/assets/img/icon",
+              "src/assets/img/users"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

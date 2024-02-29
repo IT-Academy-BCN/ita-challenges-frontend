@@ -106,6 +106,14 @@ Recorda, el fitxer ".gitignore" global s'aplicarà a tots els teus projectes de 
          git config --global core.safecrlf warn
 3. Amb aquesta configuració, si intentes fer un commit d'un fitxer amb salts de línia CRLF, rebràs una advertència. La mateixa advertència es produirà si intentes convertir un fitxer amb salts de línia CRLF a LF.
 
+### 2.2.4 File Mode
+Per evitar que git monitori els canvis de permisos dels arxius, executa el següent comando: 
+
+         git config --global core.safecrlf warn
+Això evitarà que git marqui els arxius com modificadors quan canviïn els permisos, en tots els repositoris del teu sistema. Si prefereixes que no s'apliqui a tots, executa únicament:
+
+         git config core.fileMode false
+
 ----------------------------------------------------------------
 
 ## 2.3 Procediment diari
@@ -260,3 +268,18 @@ Això executarà el conjunt de proves i proporcionarà retroalimentació sobre e
 Si prefereixes executar les proves en mode de vigilància, que reexecuta automàticament les proves quan un arxiu canvia, utilitza el comandament
 
     npm run test:watch.
+
+----------------------------------------------------------------
+
+### 9. DEPLOY
+
+El desenvolupament del projecte desplegat en un servidor de desenvolupament mitjançant integració continua. No és necessari realitzar un deploy manual.
+Totes les features desenvolupades, quan són aprovades, es despleguen en el servidor de desenvolupament.
+Quan finalitzis el desenvolupament de la feature corresponent (assegura't que la branch tingui la nomenclatura correcta), segueix els següents passos:
+- Segons les normes de versionat semàntic (https://semver.org/), actualitza el número de versió en l'arxiu package.json.
+- Actualitza també el número de versió de la propietat MICROSERVICE_VERSION en l'arxiu .env.CI.dev. Tingues en compte que has de deixar una línia en blanc al final de l'arxiu.
+- Assegura't que ambdues versions coincideixen.
+- Introdueix les anotacions necessàries en l'arxiu CHANGELOG.md. No oblidis posar el número de issue del que forma part la nova versió.
+- Realitza un commit amb el missatge "X.X.X-RELEASE (on X.X.X és la nova versió).
+- Realitza el push de la branch a què pertany la feature.
+- Realitza la PR corresponent.
