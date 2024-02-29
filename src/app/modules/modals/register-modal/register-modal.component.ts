@@ -26,7 +26,7 @@ export class RegisterModalComponent implements OnInit {
 		itineraryId: ["", Validators.required],
 		password: ["", [Validators.required, Validators.minLength(6)]],
 		confirmPassword: ["", [Validators.required, Validators.minLength(6)] ],
-		legalTermsAccepted: ["", Validators.required, this.validatorsService.checkBoxChecked],
+		legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked],
 	},{
 		validators: [
 			this.validatorsService.isSamePassword('password', 'confirmPassword'),
@@ -86,29 +86,6 @@ export class RegisterModalComponent implements OnInit {
 		}
 	}
 
-	/*		if (this.registerForm.valid) {
-				const user = new User(
-					this.registerForm.get("dni")?.value ?? "", // Usa '' como valor predeterminado
-					this.registerForm.get("email")?.value ?? "", // Usa '' como valor predeterminado
-					this.registerForm.get("password")?.value ?? "",
-					this.registerForm.get("repeatpassword")?.value ?? ""
-				);
-	
-			   // Agrega el itineraryId desde environment
-			user.itineraryId = environment.ITINERARY_ID;
-		    
-		  console.log('from register-modal********', user)*/
-	/*			this.authService.register(user).subscribe({
-					next: (userData) => {console.log('userData ' , userData)},
-					error: (errorData) => {
-						console.error("Error during registration", errorData);
-						this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
-					
-					},
-				});
-			}*/
-	// 	this.closeModal();
-	// }
 	closeModal() {
 		this.modalService.dismissAll();
 	}
