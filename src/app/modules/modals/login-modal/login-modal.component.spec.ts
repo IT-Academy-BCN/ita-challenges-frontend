@@ -45,13 +45,15 @@ describe('LoginModalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create login component correctly', () => {
+  it('should create login component correctly', (done) => {
     expect(component).toBeTruthy();
+    done();
   });
 
-  it('should not call authService.login if form is invalid', () => {
+  it('should not call authService.login if form is invalid', (done) => {
     component.login();
     expect(authServiceMock.login).not.toHaveBeenCalled();
+    done();
   });
 
   it('should call authService.login and success response if form is valid', async () => {
@@ -84,14 +86,16 @@ describe('LoginModalComponent', () => {
     expect(component.loginError).toEqual(errorResponse.error.message);
   });
 
-  it('should open register modal', () => {
+  it('should open register modal', (done) => {
     component.openRegisterModal();
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
     expect(modalServiceMock.open).toHaveBeenCalled();
+    done();
   });
 
-  it('should close login modal', () => {
+  it('should close login modal', (donde) => {
     component.openRegisterModal();
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+    donde();
   });
 });
