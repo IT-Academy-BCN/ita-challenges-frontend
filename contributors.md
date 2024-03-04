@@ -8,3 +8,4 @@
 - Valerio Paradiso - https://github.com/valerioprds
 - Lara Del Rio Garcia - https://github.com/laradelrio
 - Samir Comas - https://github.com/sacom14
+- Joaquin Capel - https://github.com/JoaquinCapel
