@@ -4,6 +4,7 @@ export const environment = {
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
   BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
+  BACKEND_SSO_ITINERARIES: '/itineraries',
   BACKEND_SSO_LOGIN_URL:'/auth/login',
   BACKEND_SSO_POST_USER:'/users/me',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
