@@ -59,8 +59,8 @@ describe('RegisterModalComponent', () => {
       email: 'test@example.com',
       name: 'testName',
       itineraryId: 'testItinerary',
-      password: 'testPassword',
-      confirmPassword: 'testPassword',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
       legalTermsAccepted: true,
     });
 
@@ -70,8 +70,8 @@ describe('RegisterModalComponent', () => {
       email: 'test@example.com',
       name: 'testName',
       itineraryId: 'testItinerary',
-      password: 'testPassword',
-      confirmPassword: 'testPassword',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
     }
 
     component.register();
@@ -94,8 +94,8 @@ describe('RegisterModalComponent', () => {
       email: 'test@example.com',
       name: 'testName',
       itineraryId: 'testItinerary',
-      password: 'testPassword',
-      confirmPassword: 'testPassword',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
       legalTermsAccepted: true,
     });
     
@@ -105,8 +105,8 @@ describe('RegisterModalComponent', () => {
       email: 'test@example.com',
       name: 'testName',
       itineraryId: 'testItinerary',
-      password: 'testPassword',
-      confirmPassword: 'testPassword',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
     }
 
     component.register();

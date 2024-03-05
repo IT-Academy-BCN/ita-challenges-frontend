@@ -80,7 +80,7 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	notifyErrorRegister(err: any) {
-			this.registerError = 'Error en el registro, puede ser que ya estés registrado';
+		this.registerError = 'Error en el registro, puede ser que ya estés registrado';
 	}
 
 	closeModal() {
