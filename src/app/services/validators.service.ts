@@ -28,17 +28,21 @@ export class ValidatorsService {
             errorMessage = 'Email Erróneo';
             break;
           case 'minlength':
-            errorMessage = `Mínimo ${errors['minlength']['requiredLength']} catacteres`;
+            errorMessage = `Mínimo ${errors['minlength']['requiredLength']} carácteres`;
             break;
           case 'isValidDni':
             errorMessage = `DNI inválido`;
             break;
           case 'notSamePassword':
-            errorMessage = `Las contraseñas no coinciden`
+            errorMessage = `Las contraseñas no coinciden`;
+            break;
+          case 'invalidPassword':
+            errorMessage = `Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales`;
             break;
           case 'pattern':
-            errorMessage = `Format incorrecto`
+            errorMessage = `Format0 incorrecto`;
             break;
+          
         }
       }
       return errorMessage;
@@ -61,7 +65,7 @@ export class ValidatorsService {
         return of(null);
       }
   
-      return of({ isValidDni: false });;
+      return of({ isValidDni: false });
     }
   
     public isSamePassword(password: string, confirmPassword: string) {
@@ -83,6 +87,17 @@ export class ValidatorsService {
         return of(null)
       }
       return of({notChecked: true});
+    }
+
+    isValidPassword(control: AbstractControl): Observable<ValidationErrors | null>{
+      let password: string = control.value;
+      let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]+$/;
+  
+      if (passwordRegex.test(password)) {
+        return of(null);
+      }
+
+      return of({ invalidPassword: true });
     }
 
 }

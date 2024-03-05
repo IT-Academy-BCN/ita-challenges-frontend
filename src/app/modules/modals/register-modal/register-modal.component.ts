@@ -24,8 +24,8 @@ export class RegisterModalComponent implements OnInit {
 		email: ["", [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
 		name: ["", Validators.required],
 		itineraryId: ["", Validators.required],
-		password: ["", [Validators.required, Validators.minLength(6)]],
-		confirmPassword: ["", [Validators.required, Validators.minLength(6)] ],
+		password: ["", [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword],
+		confirmPassword: ["", [Validators.required, Validators.minLength(8)] ],
 		legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked],
 	},{
 		validators: [
