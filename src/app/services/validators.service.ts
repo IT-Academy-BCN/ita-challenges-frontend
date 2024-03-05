@@ -36,6 +36,9 @@ export class ValidatorsService {
           case 'notSamePassword':
             errorMessage = `Las contraseñas no coinciden`;
             break;
+          case 'notChecked':
+            errorMessage = `Casilla obligatoria`;
+            break;
           case 'invalidPassword':
             errorMessage = `Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales`;
             break;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,18 +14,18 @@ import { ValidatorsService } from 'src/app/services/validators.service';
 })
 export class LoginModalComponent {
 
-  constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private validatorsService: ValidatorsService,
-    private router: Router) { }
-
   loginError: string = "";
 
   loginForm = this.formBuilder.group({
     dni: ['', Validators.required, this.validatorsService.isValidDni],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  constructor(private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private validatorsService: ValidatorsService,
+    private router: Router) { }
 
   public async login(): Promise<void> {
     this.loginForm.markAllAsTouched();

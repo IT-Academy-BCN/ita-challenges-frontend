@@ -24,7 +24,7 @@ export class RegisterModalComponent implements OnInit {
 		email: ["", [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
 		name: ["", Validators.required],
 		itineraryId: ["", Validators.required],
-		password: ["", [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword],
+		password: ["", [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword ],
 		confirmPassword: ["", [Validators.required, Validators.minLength(8)] ],
 		legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked],
 	},{
@@ -43,6 +43,7 @@ export class RegisterModalComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getItineraries();
+		this.registerForm.markAsUntouched()
 	}	
 
 	isValidInput(input: string ): boolean | null {
@@ -79,11 +80,7 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	notifyErrorRegister(err: any) {
-		if ((typeof err.error.message) === "string") {
-			this.registerError = err.error.message;
-		} else {
-			this.registerError = 'Error en el registro';
-		}
+			this.registerError = 'Error en el registro, puede ser que ya estés registrado';
 	}
 
 	closeModal() {

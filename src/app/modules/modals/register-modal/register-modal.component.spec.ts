@@ -120,16 +120,10 @@ describe('RegisterModalComponent', () => {
     expect(component.notifyErrorRegister).toHaveBeenCalled();
   }));
 
-  it('should set registerError message when error is a string', () => {
-    let mockError = { error: { message: 'Error Message' } };
-    component.notifyErrorRegister(mockError);
-    expect(component.registerError).toEqual('Error Message')
-  });
-
-  it('should set default error message when error is not a string', () => {
+  it('should set default error message when register error', () => {
     const mockError= { error: { message: { mockKey: 'mockValue' } } };
     component.notifyErrorRegister(mockError);
-    expect(component.registerError).toEqual('Error en el registro');
+    expect(component.registerError).toEqual('Error en el registro, puede ser que ya estés registrado');
 });
 
   it('should open login modal', () => {
