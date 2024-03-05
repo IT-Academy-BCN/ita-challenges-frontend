@@ -21,6 +21,9 @@
                     }
                 <a class="text-end">Recordar/cambiar contraseña</a>
             </div>
+            @if(loginError != ""){
+                <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError}}</p>
+                }
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
             <button (click)="login()" type="submit" class="btn btn-primary w-100">Login</button>

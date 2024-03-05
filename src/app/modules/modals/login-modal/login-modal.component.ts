@@ -56,7 +56,6 @@ export class LoginModalComponent {
   }
 
   public notifyErrorLogin(err: any) {
-    
     if ((typeof err.error.message) === "string") {
       this.loginError = err.error.message;
     } else {
@@ -68,6 +67,7 @@ export class LoginModalComponent {
   closeModal() {
     this.modalService.dismissAll();
   }
+
   openRegisterModal() {
     this.closeModal();
     this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
