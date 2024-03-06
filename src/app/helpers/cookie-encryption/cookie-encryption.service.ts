@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as crypto from 'crypto-browserify';
-import { CookieService } from 'ngx-cookie-service';
-
+import { CookieService } from 'ngx-cookie-service'; // Ensure this import is correct
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +21,12 @@ export class CookieEncryptionService {
     return encryptedValue;
   }
 
-    
   //Establece la cookie con el valor encriptado
   setEncryptedCookie(name: string, value: string): void {
     const encryptedValue = this.encryptValue(value);
-    this.cookieService.set(name, encryptedValue);
+    this.cookieService.set(name, encryptedValue); 
+  
   }
-
 
   //Desencripta el valor de la cookie
   decryptValue(encryptedValue: string): string {
@@ -36,9 +34,6 @@ export class CookieEncryptionService {
     let decryptedValue = decipher.update(encryptedValue, 'hex', 'utf8') + decipher.final('utf8');
     return decryptedValue;
   }
-      
-
-
 }
 
 
