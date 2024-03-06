@@ -10,17 +10,20 @@
             <h2 class="modal-title">Login</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
                 <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE"
-                [ngClass]="!isValidInput('dni') ? 'form-control' : 'form-control is-invalid'">
+                [ngClass]="!isValidInput('dni') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
                 @if(isValidInput('dni')){
                 <p class="text-danger form-text ps-3"> {{getInputError('dni')}}</p>
                 }
                 <input formControlName="password" class="form-control" type="password" name="password"
-                    placeholder="Contraseña" [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'">
+                    placeholder="Contraseña" [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
                     @if(isValidInput('password')){
                     <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
                     }
                 <a class="text-end">Recordar/cambiar contraseña</a>
             </div>
+            @if(loginError != ""){
+                <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError}}</p>
+                }
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
             <button (click)="login()" type="submit" class="btn btn-primary w-100">Login</button>

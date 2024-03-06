@@ -130,19 +130,21 @@ export class AuthService {
 			});
 	}
 
-	public login(user: User): Promise<any> {
-		return new Promise((resolve, reject) => {
-			this.loginRequest(user).subscribe({
-				next: (resp: loginResponse) => {
-					this.currentUser = new User(resp.id);
-					this.cookieService.set('authToken', resp.authToken);
-					this.cookieService.set('refreshToken', resp.refreshToken);
-					this.cookieService.set('user', JSON.stringify(this.currentUser));
-					resolve(null);
-				},
-				error: (err) => { reject(err.message) },
-			})
-		});
+	public async login(user: User): Promise<any> {
+
+		try {
+			let resp = await this.loginRequest(user).toPromise();
+			if (!resp) {
+				throw new Error("Empty response");
+			}
+			this.currentUser = new User(resp.id);
+			this.cookieService.set('authToken', resp.authToken);
+			this.cookieService.set('refreshToken', resp.refreshToken);
+			this.cookieService.set('user', JSON.stringify(this.currentUser));
+			return resp;
+		} catch (err) {
+			throw err;
+		}
 	}
 
 	public logout() {

@@ -1,76 +1,147 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { of, throwError } from 'rxjs';
+import { ReactiveFormsModule, FormBuilder, FormsModule, AbstractControl } from '@angular/forms';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
 import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
-
 import { ItinerariesService } from './../../../services/itineraries.service';
-import { ValidatorsService } from './../../../services/validators.service';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;
-  let authService: AuthService;
-  let modalService: NgbModal;
+  let modalServiceMock: any;
+  let authServiceMock: any;
+  let itinerariesServiceMock: any;
+  let validatorsServiceMock: any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+
+    modalServiceMock = {
+      dismissAll: jest.fn(),
+      open: jest.fn(),
+    };
+
+    authServiceMock = {
+      register: jest.fn().mockResolvedValue(of([])),
+    }
+
+    itinerariesServiceMock = {
+      getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3']),
+    }
+
+    await TestBed.configureTestingModule({
       declarations: [RegisterModalComponent],
-      imports: [ReactiveFormsModule],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule],
       providers: [
-        NgbModal,
-        { provide: AuthService, useValue: { register: jest.fn() } as any },
-      ],
-    });
+        FormBuilder,
+        { provide: NgbModal, useValue: modalServiceMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: ItinerariesService, useValue: itinerariesServiceMock },
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterModalComponent);
     component = fixture.componentInstance;
-    authService = TestBed.inject(AuthService);
-    modalService = TestBed.inject(NgbModal);
     fixture.detectChanges();
+
   });
 
-  it('should create', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should register user on valid form submission', fakeAsync(() => {
-    //TODO revise this test
-    // const spyRegister = spyOn(authService, 'register').and.returnValue(of({}));
-    // component.registerForm.setValue({
-    //   dni: '12345678',
-    //   email: 'test@example.com',
-    //   password: 'password123',
-    //   repeatpassword: 'password123',
-    // });
+  it('should register user successfully ', fakeAsync(() => {
+    spyOn(component, 'openSuccessfulRegisterModal');
+    jest.spyOn(window, 'alert');
+    component.registerForm.setValue({
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
+      legalTermsAccepted: true,
+    });
 
-    // component.register();
-    // tick();
-    // fixture.detectChanges();
+    let testUser: User = {
+      idUser: '',
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
+    }
 
-    // // Assuming User is the correct type that register method expects
-    // expect(spyRegister).toHaveBeenCalledWith(jasmine.any(User));
-  }));
+    component.register();
 
-
-
-  it('should handle registration error', fakeAsync(() => {
-    //TODO revise this test
-    //     spyOn(authService, 'register').and.returnValue(throwError({ error: 'Registration failed' }));
-
-    //     component.registerForm.setValue({
-    //       dni: '12345678',
-    //       email: 'test@example.com',
-    //       password: 'password123',
-    //       repeatpassword: 'password123',
-    //     });
-
-    //     component.register();
-    //     tick();
-
-    //     expect(component.registerError).toEqual('Registration failed');
+    tick();
+    expect(component.registerError).toEqual('');
+    expect(component.registerForm.touched).toEqual(true);
+    expect(component.registerForm.valid).toEqual(true);
+    expect(authServiceMock.register).toHaveBeenCalledWith(testUser);
+    expect(component.openSuccessfulRegisterModal).toHaveBeenCalled();
   }));
   
+  it('should handle register error', fakeAsync(() => {
+    spyOn(component, 'notifyErrorRegister');
+    
+    spyOn(authServiceMock, 'register').and.returnValue(Promise.reject('')); 
+
+    component.registerForm.setValue({
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
+      legalTermsAccepted: true,
+    });
+    
+    let testUser: User = {
+      idUser: '',
+      dni: '12345678Z',
+      email: 'test@example.com',
+      name: 'testName',
+      itineraryId: 'testItinerary',
+      password: 'TestPassword1',
+      confirmPassword: 'TestPassword1',
+    }
+
+    component.register();
+
+    tick();
+    expect(component.registerError).toEqual('');
+    expect(component.registerForm.touched).toEqual(true);
+    expect(component.registerForm.valid).toEqual(true);
+    expect(authServiceMock.register).toHaveBeenCalled();
+    expect(authServiceMock.register).toHaveBeenCalledWith(testUser);
+    expect(component.notifyErrorRegister).toHaveBeenCalled();
+  }));
+
+  it('should set default error message when register error', () => {
+    const mockError= { error: { message: { mockKey: 'mockValue' } } };
+    component.notifyErrorRegister(mockError);
+    expect(component.registerError).toEqual('Error en el registro, puede ser que ya estés registrado');
+});
+
+  it('should open login modal', () => {
+    component.openLoginModal();
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+    expect(modalServiceMock.open).toHaveBeenCalled();
+  });
+
+  it('should close register modal', () => {
+    component.openLoginModal();
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+  });
+
+  it('should get itineraries', fakeAsync(() => {
+    let respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3'];
+    tick()
+    component.getItineraries();
+    expect(component.itineraries).toEqual(respMock);
+  }));
+
 });

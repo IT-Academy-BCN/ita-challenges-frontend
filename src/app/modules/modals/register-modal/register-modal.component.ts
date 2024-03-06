@@ -24,9 +24,9 @@ export class RegisterModalComponent implements OnInit {
 		email: ["", [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
 		name: ["", Validators.required],
 		itineraryId: ["", Validators.required],
-		password: ["", [Validators.required, Validators.minLength(6)]],
-		confirmPassword: ["", [Validators.required, Validators.minLength(6)] ],
-		legalTermsAccepted: ["", Validators.required, this.validatorsService.checkBoxChecked],
+		password: ["", [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword ],
+		confirmPassword: ["", [Validators.required, Validators.minLength(8)] ],
+		legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked],
 	},{
 		validators: [
 			this.validatorsService.isSamePassword('password', 'confirmPassword'),
@@ -43,6 +43,7 @@ export class RegisterModalComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getItineraries();
+		this.registerForm.markAsUntouched()
 	}	
 
 	isValidInput(input: string ): boolean | null {
@@ -62,53 +63,26 @@ export class RegisterModalComponent implements OnInit {
 				dni: `${this.registerForm.get('dni')?.value}`,
 				email: `${this.registerForm.get('email')?.value}`,
 				name: `${this.registerForm.get('name')?.value}`,
-				itineraryId: `${this.registerForm.get('itinerary')?.value}`,
+				itineraryId: `${this.registerForm.get('itineraryId')?.value}`,
 				password: `${this.registerForm.get('password')?.value}`,
 				confirmPassword: `${this.registerForm.get('confirmPassword')?.value}`,
 			}
 			let registerResp = this.authService.register(user)
-				.then((res) => { this.openSuccessfulRegisterModal(res) })
+				.then((res) => { this.openSuccessfulRegisterModal() })
 				.catch((err) => this.notifyErrorRegister(err));
 		}
 	}
 
-	openSuccessfulRegisterModal(res: any) {
+	openSuccessfulRegisterModal() {
 		//TODO create modal
 		alert('Success register, wait for the account validation'); //todo: change to moda
 		this.closeModal();
 	}
 
 	notifyErrorRegister(err: any) {
-		if ((typeof err.message) === "string") {
-			this.registerError = err.message;
-		} else {
-			this.registerError = 'Error en el registro';
-		}
+		this.registerError = 'Error en el registro, puede ser que ya estés registrado';
 	}
 
-	/*		if (this.registerForm.valid) {
-				const user = new User(
-					this.registerForm.get("dni")?.value ?? "", // Usa '' como valor predeterminado
-					this.registerForm.get("email")?.value ?? "", // Usa '' como valor predeterminado
-					this.registerForm.get("password")?.value ?? "",
-					this.registerForm.get("repeatpassword")?.value ?? ""
-				);
-	
-			   // Agrega el itineraryId desde environment
-			user.itineraryId = environment.ITINERARY_ID;
-		    
-		  console.log('from register-modal********', user)*/
-	/*			this.authService.register(user).subscribe({
-					next: (userData) => {console.log('userData ' , userData)},
-					error: (errorData) => {
-						console.error("Error during registration", errorData);
-						this.registerError = errorData.error || 'Error en el registro'; // Accede a la propiedad error de HttpErrorResponse
-					
-					},
-				});
-			}*/
-	// 	this.closeModal();
-	// }
 	closeModal() {
 		this.modalService.dismissAll();
 	}
@@ -122,7 +96,7 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	async getItineraries() {
-		await this.itinerariesService.getChallenges()
+		await this.itinerariesService.getItineraries()
 			.then((itineraries) => this.itineraries = itineraries);
 	}
 }
