@@ -7,13 +7,627 @@
 	},
 	"item": [
 		{
-			"name": "SSO - Register",
+			"name": "SSO",
+			"item": [
+				{
+					"name": "SSO - Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dni\": \"32983483B\",\n  \"email\": \"jonatan@pp.com\",\n  \"name\": \"Jonatan\",\n  \"itineraryId\": \"clpb8tc17000208l90u4h0wqn\",\n  \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\",\n  \"confirmPassword\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dns}}/api/v1/auth/register",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SSO - Login Admin User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dni\": \"32983483B\",\n  \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dns}}/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SSO - Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dni\": \"32983483B\",\n  \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dns}}/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SSO - Get Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/users",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ITA-Wiki",
+			"item": [
+				{
+					"name": "Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/types",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Topics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/topics",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Itineraries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/itinerary",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"itinerary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/categories",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resources/Topic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/resources/topic/clpjkx4540009jz0ips2i30ca",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources",
+								"topic",
+								"clpjkx4540009jz0ips2i30ca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resources/Topic/Slug (Category)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{dns}}/api/v1/resources/topic/slug/fonaments-bbdd",
+							"protocol": "https",
+							"host": [
+								"{{dns}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources",
+								"topic",
+								"slug",
+								"fonaments-bbdd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "External Network Container",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/test",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Internal Network Container",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://172.18.0.9:8762/test",
+					"protocol": "http",
+					"host": [
+						"172",
+						"18",
+						"0",
+						"9"
+					],
+					"port": "8762",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gateway External Network",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/test",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gateway External Network DNS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{dns}}:{{port}}/test",
+					"protocol": "http",
+					"host": [
+						"{{dns}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gateway Internal Network",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://172.18.0.8:9080/test",
+					"protocol": "http",
+					"host": [
+						"172",
+						"18",
+						"0",
+						"8"
+					],
+					"port": "9080",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mock/test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/test",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Challentes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/itachallenge/api/v1/challenge/challenges",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"challenge",
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Challenges/test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/itachallenge/api/v1/challenge/test",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"challenge",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Challenges/{idChallenge}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8762/itachallenge/api/v1/challenge/challenges/2bfc1a9e-30e3-40b2-9e97-8db7c5a4e9e4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"challenge",
+						"challenges",
+						"2bfc1a9e-30e3-40b2-9e97-8db7c5a4e9e4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Challenges/{idChallenge}/related",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8762/itachallenge/api/v1/challenge/challenges/2bfc1a9e-30e3-40b2-9e97-8db7c5a4e9e4/related?offset=0&limit=3",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8762",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"challenge",
+						"challenges",
+						"2bfc1a9e-30e3-40b2-9e97-8db7c5a4e9e4",
+						"related"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Languages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/itachallenge/api/v1/challenge/language",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"challenge",
+						"language"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/solution",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"uuid_challenge\": \"1e8f64e2-6d68-4ae1-9425-8102d0ab61d3\",\n\"uuid_language\": \"09fabe32-7362-4bfb-ac05-b7bf854c6e0f\",\n\"uuid_user\": \"76f906d8-8d02-4a61-892e-83744b685fd2\",\n\"status\": \"ENsssDED\",\n\"solution_text\": \"Mi solutionssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/itachallenge/api/v1/user/solution",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"user",
+						"solution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8764/itachallenge/api/v1/user/test",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8764",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"user",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/bookmarks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8764/itachallenge/api/v1/user/bookmarks/a75fa943-6bc9-4e62-b1db-d43d15b149c7",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8764",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"user",
+						"bookmarks",
+						"a75fa943-6bc9-4e62-b1db-d43d15b149c7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/bookmark",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"uuid_challenge\": \"866853b8-ae7d-4daf-8c82-5e6f653e0fc1\",\n\"uuid_language\": \"09fabe32-7362-4bfb-ac05-b7bf854c6e0f\",\n\"uuid_user\": \"76f906d8-8d02-4a61-892e-83744b685fd2\",\n\"bookmarked\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:8764/itachallenge/api/v1/user/bookmark",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8764",
+					"path": [
+						"itachallenge",
+						"api",
+						"v1",
+						"user",
+						"bookmark"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Validate",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"jonatan@gmail.es\",\n  \"dni\": \"16793813H\",\n  \"specialization\": \"cln1fjzif000008mdcsfq64c2\",\n  \"name\": \"Jonatan\",\n  \"accept\": true,\n  \"role\": \"ADMIN\",\n   \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\",\n  \"confirmPassword\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+					"raw": "{\n    \"authToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InZjd2ZxOXE3ZWg2d3o1YW5ybnVxMDlrMiIsImlhdCI6MTcwNjYwNTc2MSwiZXhwIjoxNzA2NjA2NjYxfQ.ARE0nekkXr5mvffo8l1xt1jyvszWH5Ahz09JvIKEEIg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,36 +635,31 @@
 					}
 				},
 				"url": {
-					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/auth/register",
-					"protocol": "https",
+					"raw": "http://{{ip}}:8762/itachallenge/api/v1/auth/validate",
+					"protocol": "http",
 					"host": [
-						"dev",
-						"api",
-						"itadirectory",
-						"eurecatacademy",
-						"org"
+						"{{ip}}"
 					],
+					"port": "8762",
 					"path": [
+						"itachallenge",
 						"api",
 						"v1",
 						"auth",
-						"register"
+						"validate"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "SSO - Login",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Score",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"dni\": \"39620910Y\",\n  \"password\": \"rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77\"\n}",
+					"raw": "{\n\"uuid_challenge\": \"123e4567-e89b-12d3-a456-426614174000\",\n\"uuid_language\": \"12e4567-e89b-12d3-a456-426614174000\",\n\"solution_text\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,54 +667,17 @@
 					}
 				},
 				"url": {
-					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/auth/login",
-					"protocol": "https",
+					"raw": "{{ip}}:{{port}}/itachallenge/api/v1/score/score",
 					"host": [
-						"dev",
-						"api",
-						"itadirectory",
-						"eurecatacademy",
-						"org"
+						"{{ip}}"
 					],
+					"port": "{{port}}",
 					"path": [
+						"itachallenge",
 						"api",
 						"v1",
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "SSO - Get Users",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://dev.api.itadirectory.eurecatacademy.org/api/v1/users",
-					"protocol": "https",
-					"host": [
-						"dev",
-						"api",
-						"itadirectory",
-						"eurecatacademy",
-						"org"
-					],
-					"path": [
-						"api",
-						"v1",
-						"users"
+						"score",
+						"score"
 					]
 				}
 			},
