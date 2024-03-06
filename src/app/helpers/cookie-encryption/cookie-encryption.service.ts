@@ -15,7 +15,7 @@ export class CookieEncryptionService {
     this.secretKey = crypto.randomBytes(32).toString('hex'); // Genera una clave secreta aleatoria
   }
 
-  //Encriptar el valor de la cookie
+  //Encripta el valor de la cookie
   encryptValue(value: string): string {
     let cipher = crypto.createCipher('aes-256-cbc', this.secretKey);
     let encryptedValue = cipher.update(value, 'utf8', 'hex') + cipher.final('hex');
@@ -23,15 +23,19 @@ export class CookieEncryptionService {
   }
 
     
-  //Establecer la cookie con el valor encriptado
+  //Establece la cookie con el valor encriptado
   setEncryptedCookie(name: string, value: string): void {
     const encryptedValue = this.encryptValue(value);
     this.cookieService.set(name, encryptedValue);
   }
 
 
-  //Desencriptar el valor de la cookie
-    
+  //Desencripta el valor de la cookie
+  decryptValue(encryptedValue: string): string {
+    let decipher = crypto.createDecipher('aes-256-cbc', this.secretKey);
+    let decryptedValue = decipher.update(encryptedValue, 'hex', 'utf8') + decipher.final('utf8');
+    return decryptedValue;
+  }
       
 
 
