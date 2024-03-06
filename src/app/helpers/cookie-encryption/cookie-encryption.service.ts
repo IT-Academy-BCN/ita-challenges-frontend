@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as crypto from 'crypto-browserify'
+import * as crypto from 'crypto-browserify';
 import { CookieService } from 'ngx-cookie-service';
 
 
