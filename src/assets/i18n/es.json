@@ -94,5 +94,18 @@
                 "registerRedirect": "¿No tienes cuenta?, crear una."
             }
         }
+
+    },
+    "services":{
+        "validators":{
+            "required": "Campo obligatorio",
+            "email": "Email Erróneo",
+            "minlength": "carácteres mínimo",
+            "isValidDni": "DNI inválido",
+            "notSamePassword": "Las contraseñas no coinciden",
+            "notChecked": "Casilla obligatoria",
+            "invalidPassword": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
+            "pattern": "Formato incorrecto"
+        }
     }
 }
