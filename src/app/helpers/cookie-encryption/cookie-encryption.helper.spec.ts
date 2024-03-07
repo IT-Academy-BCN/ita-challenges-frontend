@@ -17,12 +17,17 @@ jest.mock('crypto-browserify', () => ({
   }),
 }));
 
+/**
+ * Pruebas para CookieEncryptionService.
+ */
 describe('CookieEncryptionService', () => {
   let service: CookieEncryptionService;
   let mockCookieService: any;
 
   beforeEach(() => {
-    // Crea un objeto con funciones simuladas para cada método en CookieService
+    /**
+      * Crea un objeto con funciones simuladas para cada método en CookieService
+      */
     mockCookieService = {
       get: jest.fn(),
       set: jest.fn(),
@@ -35,26 +40,40 @@ describe('CookieEncryptionService', () => {
       ],
     });
 
-    // Crea una nueva instancia del servicio con el servicio de cookies simulado
+    /**
+      * Crea una nueva instancia del servicio con el servicio de cookies simulado
+      */
     service = new CookieEncryptionService(mockCookieService);
 
   });
 
-
+  /**
+   * Prueba que el servicio se crea correctamente.
+   */
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
+
+  /**
+   * Prueba que el servicio encripta correctamente un valor.
+   */
   it('should encrypt value', () => {
     const result = service.encryptValue('test');
     expect(result).toEqual('encryptedValuePartencryptedValueFinal');
   });
 
+  /**
+   * Prueba que el servicio establece correctamente una cookie encriptada.
+   */
   it('should set encrypted cookie', () => {
     service.setEncryptedCookie('test', 'value');
     expect(mockCookieService.set).toHaveBeenCalledWith('test', 'encryptedValuePartencryptedValueFinal');
   });
 
+  /**
+   * Prueba que el servicio desencripta correctamente un valor.
+   */
   it('should decrypt value', () => {
     const result = service.decryptValue('test');
     expect(result).toEqual('decryptedValuePartdecryptedValueFinal');
