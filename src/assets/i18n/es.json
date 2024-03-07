@@ -78,6 +78,16 @@
                     "date": "Fecha"
                 }
             }
+        },
+        "modals": {
+            "register":{
+                "title": "Registro",
+                "specialization": "Especialización",
+                "password": "Contraseña",
+                "repeat": "Repetir contraseña",
+                "legalTerms": "Acepto términos legales",
+                "loginRedirect": "¿Tienes cuenta?, acceder"
+            }
         }
     }
 }
