@@ -9,6 +9,7 @@ import { AuthService } from './../../../services/auth.service';
 import { ItinerariesService } from './../../../services/itineraries.service';
 import { Itinerary } from 'src/app/models/itinerary.interface';
 import { ValidatorsService } from 'src/app/services/validators.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: "app-register-modal",
@@ -38,7 +39,8 @@ export class RegisterModalComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
 		private itinerariesService: ItinerariesService,
-		private validatorsService: ValidatorsService,){
+		private validatorsService: ValidatorsService,
+		private translate: TranslateService){
 	}
 
 	ngOnInit(): void {
@@ -80,7 +82,7 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	notifyErrorRegister(err: any) {
-		this.registerError = 'Error en el registro, puede ser que ya estés registrado';
+		this.registerError =   this.translate.instant('modules.modals.register.errorMsg');
 	}
 
 	closeModal() {
