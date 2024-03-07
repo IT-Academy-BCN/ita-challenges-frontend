@@ -88,8 +88,11 @@
                 "legalTerms": "Acepto términos legales",
                 "loginRedirect": "¿Tienes cuenta?, acceder",
                 "errorMsg": "Error en el registro, puede ser que ya estés registrado"
+            },
+            "login":{
+                "forgotPassword": "Recordar/cambiar contraseña",
+                "registerRedirect": "¿No tienes cuenta?, crear una."
             }
         }
     }
 }
-      
