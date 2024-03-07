@@ -38,13 +38,13 @@ export class RegisterModalComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
 		private itinerariesService: ItinerariesService,
-		private validatorsService: ValidatorsService,
-	) { }
+		private validatorsService: ValidatorsService,){
+	}
 
 	ngOnInit(): void {
 		this.getItineraries();
 		this.registerForm.markAsUntouched()
-	}	
+	}
 
 	isValidInput(input: string ): boolean | null {
 		return this.validatorsService.isValidInput(input, this.registerForm);
