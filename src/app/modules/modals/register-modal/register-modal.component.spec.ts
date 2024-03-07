@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder, FormsModule, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
 import { ItinerariesService } from './../../../services/itineraries.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
@@ -13,7 +14,7 @@ describe('RegisterModalComponent', () => {
   let modalServiceMock: any;
   let authServiceMock: any;
   let itinerariesServiceMock: any;
-  let validatorsServiceMock: any;
+  let translateService: TranslateService;
 
   beforeEach(async () => {
 
@@ -32,7 +33,7 @@ describe('RegisterModalComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [RegisterModalComponent],
-      imports: [FormsModule, ReactiveFormsModule, NgbModule],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule, TranslateModule.forRoot()],
       providers: [
         FormBuilder,
         { provide: NgbModal, useValue: modalServiceMock },
@@ -45,6 +46,7 @@ describe('RegisterModalComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
+    translateService = TestBed.inject(TranslateService);
   });
 
   it('should create register component', () => {
@@ -121,10 +123,11 @@ describe('RegisterModalComponent', () => {
   }));
 
   it('should set default error message when register error', () => {
-    const mockError= { error: { message: { mockKey: 'mockValue' } } };
+    const mockError = { error: { message: { mockKey: 'mock Error' } } };
+    spyOn(translateService, 'instant').and.returnValue('Error en el registro, puede ser que ya estés registrado');
     component.notifyErrorRegister(mockError);
-    expect(component.registerError).toEqual('Error en el registro, puede ser que ya estés registrado');
-});
+    expect(component.registerError).toBe('Error en el registro, puede ser que ya estés registrado');
+  });
 
   it('should open login modal', () => {
     component.openLoginModal();

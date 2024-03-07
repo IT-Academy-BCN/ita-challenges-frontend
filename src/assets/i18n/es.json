@@ -86,7 +86,8 @@
                 "password": "Contraseña",
                 "repeat": "Repetir contraseña",
                 "legalTerms": "Acepto términos legales",
-                "loginRedirect": "¿Tienes cuenta?, acceder"
+                "loginRedirect": "¿Tienes cuenta?, acceder",
+                "errorMsg": "Error en el registro, puede ser que ya estés registrado"
             }
         }
     }
