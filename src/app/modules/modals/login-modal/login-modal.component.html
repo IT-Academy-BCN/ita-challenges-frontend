@@ -15,11 +15,12 @@
                 <p class="text-danger form-text ps-3"> {{getInputError('dni')}}</p>
                 }
                 <input formControlName="password" class="form-control" type="password" name="password"
-                    placeholder="Contraseña" [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                    [placeholder]="'modules.modals.register.password' | translate" 
+                    [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
                     @if(isValidInput('password')){
                     <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
                     }
-                <a class="text-end">Recordar/cambiar contraseña</a>
+                <a class="text-end">{{ 'modules.modals.login.forgotPassword' | translate }}</a>
             </div>
             @if(loginError != ""){
                 <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError}}</p>
@@ -27,7 +28,7 @@
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
             <button (click)="login()" type="submit" class="btn btn-primary w-100">Login</button>
-            <h3><a (click)="openRegisterModal()">¿No tienes cuenta?, crear una</a></h3>
+            <h3><a (click)="openRegisterModal()"></a>{{ 'modules.modals.login.registerRedirect' | translate }}</h3>
         </div>
     </form>
 </div>
