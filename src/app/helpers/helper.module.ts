@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CookieEncryptionService } from './cookie-encryption/cookie-encryption.service'
+import { CookieEncryptionService } from './cookie-encryption/cookie-encryption.helper'
 
 
 

@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthService } from './services/auth.service';
+import { HelperModule } from './helpers/helper.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChallengeModule,
     ProfileModule,
     I18nModule,
+    HelperModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {

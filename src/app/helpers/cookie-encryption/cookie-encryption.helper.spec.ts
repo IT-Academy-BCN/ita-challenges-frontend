@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CookieEncryptionService } from './cookie-encryption.service';
+import { CookieEncryptionService } from './cookie-encryption.helper';
 import { CookieService } from 'ngx-cookie-service';
 import * as crypto from 'crypto-browserify';
 
