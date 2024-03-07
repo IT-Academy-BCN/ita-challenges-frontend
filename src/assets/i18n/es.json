@@ -1,7 +1,7 @@
 {
     "components": {
-        "footer": { },
-        "header": { },
+        "footer": {},
+        "header": {},
         "mainMenu": {
             "section0": {
                 "title": "Inicio"
@@ -30,7 +30,7 @@
         "challenge": {
             "header": {
                 "title": "Retos",
-                "section":"Detalle",
+                "section": "Detalle",
                 "button": "Enviar solución",
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
@@ -54,7 +54,7 @@
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
-                "solutionsTitleLocked":"Las soluciones están bloqueadas",
+                "solutionsTitleLocked": "Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
@@ -80,7 +80,7 @@
             }
         },
         "modals": {
-            "register":{
+            "register": {
                 "title": "Registro",
                 "specialization": "Especialización",
                 "password": "Contraseña",
@@ -89,18 +89,17 @@
                 "loginRedirect": "¿Tienes cuenta?, acceder",
                 "errorMsg": "Error en el registro, puede ser que ya estés registrado"
             },
-            "login":{
+            "login": {
                 "forgotPassword": "Recordar/cambiar contraseña",
                 "registerRedirect": "¿No tienes cuenta?, crear una."
             }
         }
-
     },
-    "services":{
-        "validators":{
+    "services": {
+        "validators": {
             "required": "Campo obligatorio",
             "email": "Email Erróneo",
-            "minlength": "carácteres mínimo",
+            "minLength": "carácteres mínimo",
             "isValidDni": "DNI inválido",
             "notSamePassword": "Las contraseñas no coinciden",
             "notChecked": "Casilla obligatoria",

@@ -33,7 +33,7 @@ export class ValidatorsService {
           errorMessage = this.translate.instant('services.validators.email');
           break;
         case 'minlength':
-          errorMessage = `${errors['minlength']['requiredLength']} ${this.translate.instant('services.validators.minlength')}`;
+          errorMessage = `${errors['minlength']['requiredLength']} ${this.translate.instant('services.validators.minLength')}`;
           break;
         case 'isValidDni':
           errorMessage = this.translate.instant('services.validators.isValidDni');

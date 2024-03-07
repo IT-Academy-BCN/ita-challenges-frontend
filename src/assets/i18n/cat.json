@@ -55,10 +55,7 @@
                 "solutionCode": "// Escriu el teu codi aquí",
                 "solutionsChallenge": "Resposta d'exemple, no es pot modificar",
                 "solutionsTitleLocked":"Les solucions estan bloquejades.",
-
                 "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
-
-
             }
         },
         "starter": {
@@ -81,7 +78,33 @@
                     "date": "Data"
                 }
             }
+        },
+        "modals": {
+            "register": {
+                "title": "Registre",
+                "specialization": "Especialització",
+                "password": "Contrasenya",
+                "repeat": "Repetir contrasenya",
+                "legalTerms": "Accepto termes legals",
+                "loginRedirect": "Ja tens un compte?, accedeix",
+                "errorMsg": "Error en el registre, potser ja estàs registrat"
+            },
+            "login": {
+                "forgotPassword": "Recordar/Canviar contrasenya",
+                "registerRedirect": "No tens un compte? Crea'n una"
+            }
+        }
+    },
+    "services": {
+        "validators": {
+            "required": "Camp Obligatori",
+            "email": "Email erroni",
+            "minLength": "caràcters mínim",
+            "isValidDni": "DNI invàlid",
+            "notSamePassword": "Les contrasenyes no coincideixen",
+            "notChecked": "Casella obligatòria",
+            "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
+            "pattern": "Format incorrecte"
         }
     }
-}
-      
+}   
