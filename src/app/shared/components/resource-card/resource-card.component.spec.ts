@@ -91,15 +91,14 @@ describe('ResourceComponent', () => {
   it('should ngOnInit handle error from service', (done) => {
     const errorMessage = 'Error fetching resources';
 
-    resourcesServiceMock.getResources.mockReturnValue(throwError(errorMessage));
-
+    resourcesServiceMock.getResources.mockReturnValue(throwError(() => new Error(errorMessage)));
+  
     fixture.detectChanges();
-
+  
     fixture.whenStable().then(() => {
       expect(component.resources).toEqual([]);
+      done();
     });
-
-    done();
   });
 
 });
