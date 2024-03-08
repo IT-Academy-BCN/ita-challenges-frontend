@@ -11,14 +11,14 @@ export class ResourcesService {
 
   constructor(private http: HttpClient) { }
 
-  getResources():Observable<ResourceResponse>{
+  getResources(): Observable<ResourceResponse> {
 
     //todo: need change the env api request.
     return this.http.get<ResourceResponse>(`${environment.BACKEND_DUMMY_RESOURCES}`,
-    {
+      {
         headers: {
-            'Content-Type': 'application/dummy'
+          'Content-Type': 'application/dummy'
         }
-    });
-}
+      });
+  }
 }
