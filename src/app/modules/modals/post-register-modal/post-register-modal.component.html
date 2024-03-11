@@ -1,1 +1,29 @@
-<p>post-register-modal works!</p>
+<div class="modal-header align-items-center justify-content-end pb-0">
+
+	<div class="close" data-bs-dismiss="modal" (click)="closeModal()" aria-label="Close">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+	<div
+		class="d-flex flex-column justify-content-center gap-3 col-12 col-md-5 form"
+	>
+		<div class="modal-body d-flex flex-column gap-3 pt-0 ">
+            <figure class="w-100 d-flex justify-content-center">
+                <img src="../../../../assets/img/icon/mail.webp" alt="envelope" />
+            </figure>
+			
+			<h2 class="modal-title">{{ 'modules.modals.postRegister.title' | translate }}</h2>
+			<p>{{ 'modules.modals.postRegister.body' | translate }}</p>
+		</div>
+		<div class="modal-footer d-flex flex-column gap-3 mb-3">
+			<button
+				type="submit"
+				class="btn btn-primary w-100" (click)="closeModal()">
+				{{ 'modules.modals.postRegister.btn' | translate }}
+			</button>
+		</div>
+	</div>
+</div>
+

@@ -92,6 +92,11 @@
             "login": {
                 "forgotPassword": "Recordar/cambiar contraseña",
                 "registerRedirect": "¿No tienes cuenta?, crear una."
+            },
+            "postRegister": {
+                "title": "Registro con éxito",
+                "body": "Un mentor debe validar su registro. Espere la confirmación por correo electrónico antes de iniciar la sesión.",
+                "btn":"De acuerdo"
             }
         }
     },

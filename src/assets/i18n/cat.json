@@ -92,6 +92,11 @@
             "login": {
                 "forgotPassword": "Recordar/Canviar contrasenya",
                 "registerRedirect": "No tens un compte? Crea'n una"
+            },
+            "postRegister": {
+                "title": "Registre Exitós",
+                "body": "Un mentor ha de validar el seu registre. Esperi la confirmació per correu electrònic abans d'iniciar sessió,",
+                "btn":"D'acord"
             }
         }
     },
