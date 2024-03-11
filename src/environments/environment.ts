@@ -14,5 +14,9 @@ export const environment = {
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
   pageSize: 8,
-  BACKEND_DUMMY_SOLUTION :'../assets/dummy/challenge.json'
+  BACKEND_DUMMY_SOLUTION :'../assets/dummy/challenge.json',
+  HTTP_CODE_SUCCESS: 200,
+  HTTP_CODE_BAD_REQUEST: 400,
+  HTTP_CODE_UNAUTHORIZED: 401,
+  HTTP_CODE_FORBIDDEN: 403,
 };

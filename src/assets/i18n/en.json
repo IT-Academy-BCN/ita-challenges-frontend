@@ -81,6 +81,12 @@
                     "date": "Date"
                 }
             }
+        },"modals": {
+            "login":{
+                "invalidInput": "incorrect user or password",
+                "notActive": "Inactivated User. Await the confirmation email",
+                "generalError": "Login Error"
+            }
         }
     }
 }

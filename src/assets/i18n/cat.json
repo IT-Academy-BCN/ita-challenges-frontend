@@ -81,6 +81,12 @@
                     "date": "Data"
                 }
             }
+        },"modals": {
+            "login":{
+                "invalidInput": "Usuari o contrasenya incorrectes",
+                "notActive": "Usuari desactivat. Esperi al correu electrònic de confirmació",
+                "generalError": "Error en iniciar sessió"
+            }
         }
     }
 }

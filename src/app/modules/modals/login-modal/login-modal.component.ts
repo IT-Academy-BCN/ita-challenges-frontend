@@ -6,6 +6,8 @@ import { AuthService } from './../../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from "src/app/models/user.model";
 import { ValidatorsService } from 'src/app/services/validators.service';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-modal',
@@ -25,7 +27,8 @@ export class LoginModalComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private validatorsService: ValidatorsService,
-    private router: Router) { }
+    private router: Router,
+    private translate: TranslateService) { }
 
   public async login(): Promise<void> {
     this.loginForm.markAllAsTouched();
@@ -56,12 +59,13 @@ export class LoginModalComponent {
   }
 
   public notifyErrorLogin(err: any) {
-    if ((typeof err.error.message) === "string") {
-      this.loginError = err.error.message;
+    if (err.status === environment.HTTP_CODE_UNAUTHORIZED || err.status === environment.HTTP_CODE_BAD_REQUEST) {
+      this.loginError = this.translate.instant('modules.modals.login.invalidInput');
+    } else if (err.status === environment.HTTP_CODE_FORBIDDEN) {
+      this.loginError = this.translate.instant('modules.modals.login.notActive');
     } else {
-      this.loginError = 'Error en el login';
+      this.loginError = this.translate.instant('modules.modals.login.generalError');
     }
-
   }
 
   closeModal() {

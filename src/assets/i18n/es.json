@@ -78,6 +78,12 @@
                     "date": "Fecha"
                 }
             }
+        },"modals": {
+            "login":{
+                "invalidInput": "Usuario o contraseña incorrecto",
+                "notActive": "Usuario desactivado. Espere al email de confirmación",
+                "generalError": "Error en el login"
+            }
         }
     }
 }
