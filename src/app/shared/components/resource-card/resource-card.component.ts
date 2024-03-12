@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { ResourceResponse } from './../../../interfaces/resource.interface';
+import { ResourceResponse } from '../../../models/resource.interface';
 import { Resource } from 'src/app/models/resource.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { ChallengeService } from '../../../services/challenge.service';
