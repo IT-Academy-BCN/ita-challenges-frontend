@@ -101,11 +101,15 @@ export class AuthService {
 				next: (resp: registerResponse) => {
 					resolve(null);
 					// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
-					// this.modifyUserWithAdmin(resp.id);
+					this.modifyUserWithAdmin(resp.id);
 				},
 				error: (err) => { reject(err.message) }
 			});
 		});
+	}
+
+	private modifyUserWithAdmin(userId: string){
+		
 	}
 
 	public getUserIdFromCookie() {
