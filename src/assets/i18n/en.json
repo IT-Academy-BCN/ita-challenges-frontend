@@ -91,6 +91,11 @@
             "login":{
                 "forgotPassword": "Remember/Change password",
                 "registerRedirect": "¿Don't have an account?, create one"
+            },
+            "postRegister": {
+                "title": "Registration Successful",
+                "body": "A mentor must validate your registration. Please wait for email confirmation before logging in.",
+                "btn":"Okay"
             }
         }
     },
