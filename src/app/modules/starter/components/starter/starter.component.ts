@@ -69,21 +69,24 @@ export class StarterComponent {
 
       this.listChallenges = resp;
     });
+  }
 
 
+  addChallengesTranslation(challenges: object){
+    let challengesValues = Object.values(challenges);
+    console.log(challengesValues[0])
+    console.log(challengesValues)
+      
   }
 
   openModal() {
     this.modalContent.open();
   }
 
-
-
   goToPage(page: number){
     this.page = page;
     this.getChallengesByPage(page);
   }
-
 
   getChallengeFilters(filters: FilterChallenge){
     this.filters = filters;
