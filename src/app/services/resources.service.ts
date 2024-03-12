@@ -13,7 +13,7 @@ export class ResourcesService {
 
   getResources(): Observable<ResourceResponse> {
     //todo: need change the env api request.
-    return this.http.get<ResourceResponse>(`${environment.BACKEND_SSO_RESOURSES}`,
+    return this.http.get<ResourceResponse>(`${environment.BACKEND_SSO_RESOURCES}`,
       {
         headers: {
           'Content-Type': 'application/dummy'

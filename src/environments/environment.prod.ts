@@ -8,7 +8,7 @@ export const environment = {
   BACKEND_SSO_LOGIN_URL:'/auth/login',
   BACKEND_SSO_POST_USER:'/users/me',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
-  BACKEND_SSO_RESOURCES:'../assets/dummy/resourses.json',
+  BACKEND_SSO_RESOURCES:'../assets/dummy/resources.json',
   BACKEND_SSO_SOLUTION :'../assets/dummy/challenge.json',
   BACKEND_SSO_VALIDATE_TOKEN_URL:'/tokens/validate',
   ITINERARY_ID: "clpb8t1cc000008k0cg1icvl4",
