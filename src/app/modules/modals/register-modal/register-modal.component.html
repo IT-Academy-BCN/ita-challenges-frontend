@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="w-100">
-    <h2 class="modal-title text-center w-100">Registro</h2>
+    <h2 class="modal-title text-center w-100"> {{ 'modules.modals.register.title' | translate }}    </h2>
     <form [formGroup]="registerForm" class=" my-4 mx-sm-0 mx-lg-5 ps-5 pe-5 row">
         <div class="col-sm-12 col-lg-6">
             <input formControlName="dni" type="text" name="dni" placeholder="DNI"
@@ -29,9 +29,9 @@
             }
         </div>
         <div class="col-sm-12 col-lg-6">
-            <select formControlName="itineraryId" class="form-select" placeholder="Especialización"
+            <select formControlName="itineraryId" class="form-select" 
                 [ngClass]="!isValidInput('name') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
-                <option value="" class="text-muted">Especialización</option>
+                <option value="" class="text-muted"> {{'modules.modals.register.specialization' | translate}}</option>
                 @for( itinerary of itineraries; track itinerary.id ){
                 <option [value]="itinerary.id">{{itinerary.name}}</option>
                 }
@@ -42,7 +42,7 @@
         </div>
         <div class="col-sm-12 col-lg-6">
             <input formControlName="password" class="form-control" type="password" name="password"
-                placeholder="Contraseña"
+                [placeholder]="'modules.modals.register.password' | translate"
                 [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
             @if(isValidInput('password')){
             <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
@@ -50,7 +50,7 @@
         </div>
         <div class="col-sm-12 col-lg-6">
             <input formControlName="confirmPassword" type="password" name="confirmPassword"
-                placeholder="Repetir contraseña"
+                [placeholder]="'modules.modals.register.repeat' | translate"
                 [ngClass]="!isValidInput('confirmPassword') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
             @if(isValidInput('confirmPassword')){
             <p class="text-danger form-text ps-3"> {{getInputError('confirmPassword')}}</p>
@@ -65,7 +65,7 @@
                 <div class="w-100">
                     <input formControlName="legalTermsAccepted" class="form-check-input ms-1 mb-1 " type="checkbox" value=""
                         id="flexCheckDefault" [tabIndex]="-1">
-                    <label class="form-check-label fs-6 ps-2 pt-1" for="flexCheckDefault"> Acepto términos legales </label>
+                    <label class="form-check-label fs-6 ps-2 pt-1" for="flexCheckDefault"> {{ 'modules.modals.register.legalTerms' | translate }} </label>
                 </div>
                 @if(isValidInput('legalTermsAccepted')){
                     <p class="text-danger form-text ps-5 col-12"> {{getInputError('legalTermsAccepted')}}</p>
@@ -73,11 +73,11 @@
             </div>
 
             <div class="col-sm-12 col-lg-6 d-flex align-items-center ">
-                <button (click)="register()" type="submit" class="btn btn-primary w-100">Registro</button>
+                <button (click)="register()" type="submit" class="btn btn-primary w-100">{{ 'modules.modals.register.title' | translate }} </button>
             </div>
         </div>
         <div class="modal-footer">
-            <h3 class="w-100 text-center mt-5"><a (click)="openLoginModal()">¿Tienes cuenta?, acceder</a></h3>
+            <h3 class="w-100 text-center mt-5"><a (click)="openLoginModal()">{{ 'modules.modals.register.loginRedirect' | translate }}</a></h3>
         </div>
     </form>
 </div>

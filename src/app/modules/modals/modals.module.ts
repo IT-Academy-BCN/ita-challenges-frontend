@@ -7,6 +7,7 @@ import { RestrictedModalComponent } from './restricted-modal/restricted-modal.co
 import { FiltersModalComponent } from './filters-modal/filters-modal.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -19,7 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FiltersModalComponent
   ],
   imports: [
-    CommonModule, ReactiveFormsModule
+    CommonModule, 
+    ReactiveFormsModule, 
+    TranslateModule
   ],
   exports: [
     RegisterModalComponent,
