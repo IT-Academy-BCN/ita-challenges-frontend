@@ -53,9 +53,10 @@ export class ChallengeHeaderComponent {
 				size: "lg",
 			});
 		} else {
-			this.solutionService.sendSolution(''); 
-		}
+			this.solutionService.sendSolution('');
+		} 
 	}
 
-
 }
+
+
