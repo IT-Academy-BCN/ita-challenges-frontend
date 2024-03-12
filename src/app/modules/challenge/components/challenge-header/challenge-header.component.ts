@@ -4,7 +4,7 @@ import { SendSolutionModalComponent } from "./../../../modals/send-solution-moda
 import { RestrictedModalComponent } from "./../../../modals/restricted-modal/restricted-modal.component";
 import { SolutionService } from "../../../../services/solution.service";
 import { AuthService } from "src/app/services/auth.service";
-import { LoginModalComponent } from "src/app/modules/modals/login-modal/login-modal.component";
+
 
 @Component({
 	selector: "app-challenge-header",
