@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { ChallengeHeaderComponent } from './challenge-header.component';
 import { SolutionService } from '../../../../services/solution.service';
+import { AuthService } from "src/app/services/auth.service";
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -60,7 +61,8 @@ describe('ChallengeHeaderComponent', () => {
 
   it('should open restricted modal if user is not logged in', () => {
     spyOn(modalService, 'open').and.stub();
-    component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
+    //component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
+    component.authService.isUserLoggedIn(); 
     component.clickSendButton();
 
   expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
