@@ -3,6 +3,9 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
 
+### [ita-challenges-frontend-2.0.61-RELEASE] - 2024-03-13
+* Delete iteneraries service and implement the method on chalenges.service
+
 ### [ita-challenges-frontend-2.0.56-RELEASE] - 2024-03-11
 * Delete restricted-modal pop-up on challenges list
 
