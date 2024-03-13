@@ -4,11 +4,13 @@ import { CookieEncryptionService } from './cookie-encryption/cookie-encryption.h
 
 
 
+
 @NgModule({
   providers: [CookieEncryptionService],
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+  
   ]
 })
 export class HelperModule { }

@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { CookieEncryptionService } from './cookie-encryption.helper';
 import { CookieService } from 'ngx-cookie-service';
+import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import * as crypto from 'crypto-browserify';
+import { ItinerariesService } from 'src/app/services/itineraries.service';
 
 jest.mock('crypto-browserify', () => ({
   randomBytes: jest.fn().mockReturnValue({
@@ -24,7 +27,7 @@ describe('CookieEncryptionService', () => {
   let service: CookieEncryptionService;
   let mockCookieService: any;
 
-  beforeEach(() => {
+  beforeEach(async() => {
     /**
       * Crea un objeto con funciones simuladas para cada método en CookieService
       */
@@ -34,16 +37,21 @@ describe('CookieEncryptionService', () => {
       delete: jest.fn(),
     };
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      declarations: [ RegisterModalComponent, ItinerariesService ],
       providers: [
         { provide: CookieService, useValue: mockCookieService },
+        CookieEncryptionService,
       ],
-    });
-
+    })
+    .compileComponents();
+  
     /**
       * Crea una nueva instancia del servicio con el servicio de cookies simulado
       */
-    service = new CookieEncryptionService(mockCookieService);
+    //service = new CookieEncryptionService(mockCookieService);
+    service = TestBed.inject(CookieEncryptionService);
 
   });
 
