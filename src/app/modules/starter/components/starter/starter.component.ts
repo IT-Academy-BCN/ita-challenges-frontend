@@ -1,14 +1,14 @@
 import { FilterChallenge } from './../../../../models/filter-challenge.model';
 import { Component, ViewChild } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {StarterService} from "../../../../services/starter.service";
-import {DataChallenge} from "../../../../models/data-challenge.model";
-import {Challenge} from "../../../../models/challenge.model";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { StarterService } from "../../../../services/starter.service";
+import { DataChallenge } from "../../../../models/data-challenge.model";
+import { Challenge } from "../../../../models/challenge.model";
 import { environment } from '../../../../../environments/environment';
 import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
-import {AuthService} from "../../../../services/auth.service";
-import {User} from "../../../../models/user.model";
+import { AuthService } from "../../../../services/auth.service";
+import { User } from "../../../../models/user.model";
 
 
 @Component({
@@ -34,9 +34,9 @@ export class StarterComponent {
   pageSize = environment.pageSize;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private starterService: StarterService,
-              //private authService: AuthService
+    private router: Router,
+    private starterService: StarterService,
+    //private authService: AuthService
   ) {
 
     this.params$ = this.activatedRoute.params.subscribe(params => {
@@ -61,39 +61,31 @@ export class StarterComponent {
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TODO DEVELOPMENT ONLY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       //console.log('User Starter Component: ' + this.authService.currentUser.idUser);
 
-/*      if(this.authService.currentUser.idUser === 'anonym') {
-        const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
-        this.authService.login(loggedUser);
-        console.log(this.authService.currentUser.idUser);
-      }*/
+      /*      if(this.authService.currentUser.idUser === 'anonym') {
+              const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
+              this.authService.login(loggedUser);
+              console.log(this.authService.currentUser.idUser);
+            }*/
 
       this.listChallenges = resp;
     });
-  }
-
-
-  addChallengesTranslation(challenges: object){
-    let challengesValues = Object.values(challenges);
-    console.log(challengesValues[0])
-    console.log(challengesValues)
-      
   }
 
   openModal() {
     this.modalContent.open();
   }
 
-  goToPage(page: number){
+  goToPage(page: number) {
     this.page = page;
     this.getChallengesByPage(page);
   }
 
-  getChallengeFilters(filters: FilterChallenge){
+  getChallengeFilters(filters: FilterChallenge) {
     this.filters = filters;
     //TODO: llamar al endpoint
   }
-  changeSort(newSort: string){
-    if(newSort != this.sortBy){
+  changeSort(newSort: string) {
+    if (newSort != this.sortBy) {
       this.sortBy = newSort;
       //TODO: llamar al endpoint
     }
