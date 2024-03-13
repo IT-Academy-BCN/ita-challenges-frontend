@@ -7,13 +7,14 @@ import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
 import { ItinerariesService } from './../../../services/itineraries.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ChallengeService } from 'src/app/services/challenge.service';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;
   let modalServiceMock: any;
   let authServiceMock: any;
-  let itinerariesServiceMock: any;
+  let challengeServiceMock: any;
   let translateService: TranslateService;
 
   beforeEach(async () => {
@@ -27,7 +28,7 @@ describe('RegisterModalComponent', () => {
       register: jest.fn().mockResolvedValue(of([])),
     }
 
-    itinerariesServiceMock = {
+    challengeServiceMock = {
       getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3']),
     }
 
@@ -38,7 +39,8 @@ describe('RegisterModalComponent', () => {
         FormBuilder,
         { provide: NgbModal, useValue: modalServiceMock },
         { provide: AuthService, useValue: authServiceMock },
-        { provide: ItinerariesService, useValue: itinerariesServiceMock },
+        { provide: ChallengeService, useValue: challengeServiceMock },
+
       ]
     }).compileComponents();
 
@@ -140,7 +142,7 @@ describe('RegisterModalComponent', () => {
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   });
 
-  it('should get itineraries', fakeAsync(() => {
+  it('should get itineraries B', fakeAsync(() => {
     let respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3'];
     tick()
     component.getItineraries();
