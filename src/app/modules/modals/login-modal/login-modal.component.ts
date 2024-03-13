@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,12 +14,6 @@ import { ValidatorsService } from 'src/app/services/validators.service';
 })
 export class LoginModalComponent {
 
-  constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private validatorsService: ValidatorsService,
-    private router: Router) { }
-
   loginError: string = "";
 
   loginForm = this.formBuilder.group({
@@ -27,7 +21,13 @@ export class LoginModalComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  public login(): void {
+  constructor(private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private validatorsService: ValidatorsService,
+    private router: Router) { }
+
+  public async login(): Promise<void> {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
       let user: User = {
@@ -36,41 +36,48 @@ export class LoginModalComponent {
         password: `${this.loginForm.get('password')?.value}`,
       }
 
-      let registerResp = this.authService.login(user)
-			.then( (res) => {this.openSuccessfulLoginModal(res)})
-			.catch( (err) => this.notifyErrorLogin(err));
+      try {
+        let res = await this.authService.login(user);
+        this.openSuccessfulLoginModal(res);
+      } catch (err) {
+        this.notifyErrorLogin(err);
+      }
     }
   };
+
   public isValidField(field: string) {
     return this.validatorsService.isValidInput(field, this.loginForm);
   };
 
   public openSuccessfulLoginModal(res: any) {
+    this.closeModal();
     //TODO create routing to the page after success login
     alert('Success login');
   }
 
   public notifyErrorLogin(err: any) {
-    if ((typeof err.message) === "string") {
-      this.loginError = err.message;
+    if ((typeof err.error.message) === "string") {
+      this.loginError = err.error.message;
     } else {
       this.loginError = 'Error en el login';
     }
+
   }
 
   closeModal() {
     this.modalService.dismissAll();
   }
+
   openRegisterModal() {
     this.closeModal();
     this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
-  
-	isValidInput(input: string ): boolean | null {
-		return this.validatorsService.isValidInput(input, this.loginForm);
-	}
 
-	getInputError(field: string): string {
-		return this.validatorsService.getInputError(field, this.loginForm);
-	}
+  isValidInput(input: string): boolean | null {
+    return this.validatorsService.isValidInput(input, this.loginForm);
+  }
+
+  getInputError(field: string): string {
+    return this.validatorsService.getInputError(field, this.loginForm);
+  }
 }
