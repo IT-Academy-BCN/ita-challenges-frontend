@@ -19,7 +19,15 @@
    
 4. [**STACK**](#4-stack)\
    4.1 [Framework](#41-framework)\
-   4.2 [Librerías](#42-librerías)
+   4.2 [Librerías](#42-librerías)asdasdasD
+   ASd
+   AsdA
+   SdA
+   D
+   aD
+   asD
+   aV
+   avasfas
 
 5. [**REQUISITOS**](#5-requisitos)
 
@@ -37,7 +45,8 @@
 #### 1.1 Enlaces del proyecto
 - [GITHUB](https://github.com/IT-Academy-BCN/ita-challenges-frontend)
 - [Frontend Sprint Backlog](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1)
-- [Product Backlog](https://github.com/orgs/IT-Academy-BCN/projects/13/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
+- [Product Backlog](https://github.casdasdasdasd
+om/orgs/IT-Academy-BCN/projects/13/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design)
 
 ----------------------------------------------------------------
