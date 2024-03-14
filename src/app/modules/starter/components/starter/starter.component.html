@@ -5,27 +5,23 @@
     </div>
     <div class="col-12 col-md-9">
         <h2>{{'modules.starter.main.section2.title' | translate}} <img class="float-end d-md-none" alt="filter-icon"
-            (click)="openModal()" src="../../../../../assets/img/icon/sort.svg"></h2>
+                (click)="openModal()" src="../../../../../assets/img/icon/sort.svg"></h2>
 
         <ul id="sortBy" class="d-flex justify-content-end gap-2">
             <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
                 {{'modules.starter.main.section2.popularity' | translate}}
             </li>
             <li class="animated" [ngClass]="{'selected' : sortBy == 'date'}" (click)="changeSort('date')">
-                {{'modules.starter.main.section2.date' | translate}}    
+                {{'modules.starter.main.section2.date' | translate}}
             </li>
         </ul>
-        <app-challenge-card
-            *ngFor ="let challenge of listChallenges, let i = index"
-            [title] = "challenge.challenge_title"
-            [creation_date] = "challenge.creation_date"
-            [level] = "challenge.level"
-            [popularity] = "challenge.popularity"
-            [languages] = "challenge.languages"
-            [id] = "challenge.id_challenge"
-        ></app-challenge-card>  
-        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages" [numChallenges]="numChallenges"></app-pagination>
-             
+        <app-challenge-card *ngFor="let challenge of listChallenges, let i = index" [title]="challenge.challenge_title"
+            [creation_date]="challenge.creation_date" [level]="challenge.level" [popularity]="challenge.popularity"
+            [languages]="challenge.languages" [id]="challenge.id_challenge"></app-challenge-card>
+        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages"
+            [numChallenges]="numChallenges"></app-pagination>
+
     </div>
 </div>
 <app-filters-modal #modal></app-filters-modal>
+<p> HASODFTWGZSVDXHVEFOUWEIRFDÑOBUSOAEVPY SGTWshu</p>

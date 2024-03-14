@@ -10,7 +10,7 @@
    2.2 [Configuracions de Git](#22-configuracions-de-git)\
    2.3 [Procediment diari](#23-procediment-diari)\
    2.4 [Procediment de treball amb targetes](#24-procediment-de-treball-amb-targetes)\
-    2.4.1 [Assignar-te una targeta de tasques](#241-assignar-te-una-targeta-de-tasques)
+    2.4.1 [Assignafxdcgbhjkml,ñhgiuyfugtkmlijoktfuynbn ijoudtrhfscxnr-te una targeta de tasques](#241-assignar-te-una-targeta-de-tasques)
     2.4.2 [Treballar en una tasca](#242-treballar-en-una-tasca)
     2.4.3 [Pull request](#243-pull-request)
    2.5 [Metodologia Scrum](#25-metodologia-scrum)
