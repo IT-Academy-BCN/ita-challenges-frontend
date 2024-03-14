@@ -8,6 +8,7 @@ import { User } from "src/app/models/user.model";
 
 import { LoginModalComponent } from './login-modal.component';
 import { error } from 'node:console';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent;
@@ -31,7 +32,7 @@ describe('LoginModalComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [LoginModalComponent],
-      imports: [FormsModule, ReactiveFormsModule, NgbModule],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule, TranslateModule.forRoot()],
       providers: [
         FormBuilder,
         { provide: AuthService, useValue: authServiceMock },

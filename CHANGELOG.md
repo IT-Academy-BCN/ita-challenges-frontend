@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
 
+### [ita-challenges-frontend-2.0.60-RELEASE] - 2024-03-07
+* Change rename environment and delete dummy variables name" 
+
+### [ita-challenges-frontend-2.0.53-RELEASE] - 2024-03-07
+* Translate login, register and validator service
+
 ### [ita-challenges-frontend-2.0.52-RELEASE] - 2024-02-29
 * Fixing register and login basic functionalities 
 

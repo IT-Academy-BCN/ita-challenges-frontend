@@ -68,7 +68,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 		});
 		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
-		this.checkIfUserIsLoggedIn();
+		// this.checkIfUserIsLoggedIn();
 	}
 
 	ngAfterContentChecked(): void {
@@ -77,18 +77,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
 		if (token && refreshToken) {
 			this.isLogged = true;
-		}
-	}
-
-	checkIfUserIsLoggedIn() {
-		const token = localStorage.getItem("authToken");//TODO
-		const refreshToken = localStorage.getItem("refreshToken");//TODO
-
-		if (token && refreshToken) {
-			this.isLogged = true;
-		}
-		if (!this.isLogged) {
-			this.openRestrictedModal();
 		}
 	}
 
@@ -105,12 +93,5 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 				this.related_id = this.related;
 			});
 	}
-
-	openRestrictedModal() {
-		this.modalService.open(RestrictedModalComponent, {
-			backdrop: "static",
-			centered: true,
-			size: "lg",
-		});
-	}
+	
 }
