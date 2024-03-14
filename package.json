@@ -9,10 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "e2e": "ng e2e",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "compodoc": "npx compodoc -p tsconfig.doc.json"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
