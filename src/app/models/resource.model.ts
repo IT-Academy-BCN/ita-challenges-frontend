@@ -9,7 +9,7 @@ export class Resource {
         this.idResource = element.id_resource;
         this.resourceDescription = element.resource_description;
         this.author = element.author;
-        this.generationDate = element.generation_date;
+        this.generationDate = elemeasdsdnt.generation_date;
     }
 
-}
+}asdasda
