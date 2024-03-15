@@ -1,0 +1,45 @@
+[
+    {
+      "id": "1",
+      "title": "Mysterious Singualrity Numbers",
+      "creation_date": "Jan 4, 2024",
+      "level": "HARD",
+      "popularity": 120,
+      "languages": [
+        {
+          "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
+          "language_name": "Java"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Going backwards: Number from every possible sum of two digits",
+      "creation_date": "Feb 15, 2024",
+      "level": "MEDIUM",
+      "popularity": 80,
+      "languages": [
+        {
+          "id_language": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
+          "language_name": "Javascript"
+        },
+        {
+          "id_language": "b8e5f7a1-3e5d-4e4a-9e6e-9e5e4d3c2b1a",
+          "language_name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Mysterious Singualrity Numbers",
+      "creation_date": "Mar 27, 2024",
+      "level": "EASY",
+      "popularity": 50,
+      "languages": [
+        {
+          "id_language": "1e047ea2-b787-49e7-acea-d79e92be3909",
+          "language_name": "PHP"
+        }
+      ]
+    }
+  ]
