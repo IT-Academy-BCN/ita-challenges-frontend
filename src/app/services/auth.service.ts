@@ -109,26 +109,18 @@ export class AuthService {
 		});
 	}
 
-	private async modifyUserWithAdmin(registerUserId: string) {
-		const userAdmin = {
+	public async modifyUserWithAdmin(registerUserId: string) {
+		const userAdmin = { //todo: need to improve the security and a real ADMIN account
 			'idUser': '',
 			'dni': '32983483B',
 			'password': 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77'
 		}
-		//logged as admin => llamamos al metodo login pasandole los valores de user:User (dni y password).
 		await this.login(userAdmin);
-		//take admin authtoken from cookiesServies? PUEDE QUE SE PUEDA QUITAR ESTE PASO
 		try {
-			//getLoggedUserData (para saber el rol del logeado) => metodo getLoggedUserData() => recibimos
 			let userLoggedData = await this.getLoggedUserData();
-			console.log('userData', userLoggedData)
-			if (userLoggedData.role === 'REGISTERED') { //todo: change 'REGISTERED' for 'ADMIN'
-				//si es tiene role: ADMIN se llama al http req de PATCH
-				console.log('authtoken cookies', this.cookieService.get('authToken'));
+			if (userLoggedData.role === 'ADMIN') {
 				await firstValueFrom(
-					//en el path (params: id del logieado (userIdI))
-					//en el path (body: authToken: (del admin de cookiesServices) y el valor a cambiarm en este caso status: ACTIVE
-					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
+					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`?id=${registerUserId}`)),
 						{
 							'authToken': this.cookieService.get('authToken'),
 							'status': 'ACTIVE',
@@ -142,7 +134,6 @@ export class AuthService {
 			} else {
 				throw new Error("The logged-in user is not an admin.");
 			}
-			//logout admin
 			this.logout;
 		} catch (error) {
 			console.error("Error modifying user with admin:", error);
@@ -173,7 +164,6 @@ export class AuthService {
 	}
 
 	public async login(user: User): Promise<any> {
-		console.log(user);
 		try {
 			let resp = await this.loginRequest(user).toPromise();
 			if (!resp) {
@@ -183,7 +173,6 @@ export class AuthService {
 			this.cookieService.set('authToken', resp.authToken);
 			this.cookieService.set('refreshToken', resp.refreshToken);
 			this.cookieService.set('user', JSON.stringify(this.currentUser));
-			console.log('token', resp.authToken);
 			return resp;
 		} catch (err) {
 			throw err;
