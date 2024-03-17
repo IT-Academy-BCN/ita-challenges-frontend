@@ -7,6 +7,7 @@ export const environment = {
   BACKEND_SSO_ITINERARIES: '/itineraries',
   BACKEND_SSO_LOGIN_URL:'/auth/login',
   BACKEND_SSO_POST_USER:'/users/me',
+  BACKEND_SSO_PATCH_USER:'/users/me',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
   BACKEND_SSO_RESOURCES:'../assets/dummy/resources.json',
   BACKEND_SSO_SOLUTION :'../assets/dummy/challenge.json',

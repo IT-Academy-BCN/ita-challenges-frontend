@@ -1,23 +1,25 @@
 import { add } from "date-fns";
-import { Injectable } from "@angular/core";
+import { AbstractType, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import {
 	BehaviorSubject,
 	Observable,
 	catchError,
+	firstValueFrom,
 	map,
 	of,
 	tap,
 	throwError,
 } from "rxjs";
 import { User } from "../models/user.model";
-import { Router } from "@angular/router";
+import { ResolveEnd, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
 import { TokenService } from "./token.service";
 import { error } from "console";
+import { resolve } from "path";
 
 
 interface loginResponse {
@@ -100,7 +102,6 @@ export class AuthService {
 			this.registerRequest(user).subscribe({
 				next: (resp: registerResponse) => {
 					resolve(null);
-					// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
 					this.modifyUserWithAdmin(resp.id);
 				},
 				error: (err) => { reject(err.message) }
@@ -108,8 +109,45 @@ export class AuthService {
 		});
 	}
 
-	private modifyUserWithAdmin(userId: string){
-		
+	private async modifyUserWithAdmin(registerUserId: string) {
+		const userAdmin = {
+			'idUser': '',
+			'dni': '32983483B',
+			'password': 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77'
+		}
+		//logged as admin => llamamos al metodo login pasandole los valores de user:User (dni y password).
+		await this.login(userAdmin);
+		//take admin authtoken from cookiesServies? PUEDE QUE SE PUEDA QUITAR ESTE PASO
+		try {
+			//getLoggedUserData (para saber el rol del logeado) => metodo getLoggedUserData() => recibimos
+			let userLoggedData = await this.getLoggedUserData();
+			console.log('userData', userLoggedData)
+			if (userLoggedData.role === 'REGISTERED') { //todo: change 'REGISTERED' for 'ADMIN'
+				//si es tiene role: ADMIN se llama al http req de PATCH
+				console.log('authtoken cookies', this.cookieService.get('authToken'));
+				await firstValueFrom(
+					//en el path (params: id del logieado (userIdI))
+					//en el path (body: authToken: (del admin de cookiesServices) y el valor a cambiarm en este caso status: ACTIVE
+					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
+						{
+							'authToken': this.cookieService.get('authToken'),
+							'status': 'ACTIVE',
+						},
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							}
+						})
+				);
+			} else {
+				throw new Error("The logged-in user is not an admin.");
+			}
+			//logout admin
+			this.logout;
+		} catch (error) {
+			console.error("Error modifying user with admin:", error);
+			throw error;
+		}
 	}
 
 	public getUserIdFromCookie() {
@@ -135,7 +173,7 @@ export class AuthService {
 	}
 
 	public async login(user: User): Promise<any> {
-
+		console.log(user);
 		try {
 			let resp = await this.loginRequest(user).toPromise();
 			if (!resp) {
@@ -145,6 +183,7 @@ export class AuthService {
 			this.cookieService.set('authToken', resp.authToken);
 			this.cookieService.set('refreshToken', resp.refreshToken);
 			this.cookieService.set('user', JSON.stringify(this.currentUser));
+			console.log('token', resp.authToken);
 			return resp;
 		} catch (err) {
 			throw err;
@@ -163,25 +202,28 @@ export class AuthService {
 		 * and store it in the cookie
 	*/
 
-	public getLoggedUserData() {
-		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
-			{
-				'authToken': this.cookieService.get('authToken'),
-			},
-		).subscribe({
-			next: (res) => {
-				let user: User = this.currentUser;
+	public getLoggedUserData(): Promise<UserResponse> {
+		return new Promise<UserResponse>((resolve, reject) => {
+			this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
+				{
+					'authToken': this.cookieService.get('authToken'),
+				},
+			).subscribe({
+				next: (res) => {
+					let user: User = this.currentUser;
 
-				let userData: User = {
-					'idUser': user.idUser,
-					'dni': res.dni,
-					'email': res.email,
-				};
+					let userData: User = {
+						'idUser': user.idUser,
+						'dni': res.dni,
+						'email': res.email,
+					};
 
-				this.currentUser = userData;
-			},
-			error: err => { console.error(err) }
-		})
+					this.currentUser = userData;
+					resolve(res);
+				},
+				error: err => { reject(err.message) }
+			})
+		});
 	}
 
 	/* Check if the user is  Logged in*/
