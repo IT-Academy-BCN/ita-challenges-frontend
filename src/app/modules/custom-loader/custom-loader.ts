@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, map } from 'rxjs';
+import { Challenges } from 'src/app/models/challenges.interface';
 
 @Component({
   selector: 'app-custom-loader',
@@ -14,52 +15,36 @@ export class CustomLoader implements TranslateLoader {
 
   getTranslation(lang: string): Observable<any> {
 
-    return this.http.get(`../../../assets/i18n/${lang}.json`).pipe(
-      map((res: any) => {
-        let langs: string[] = ['cat', 'en', 'es']
-        let resp: any = {
-          challenges:
-          {
-            "_id": {
-              "$uuid": "dcacb291-b4aa-4029-8e9b-284c8ca80296"
-            },
-            "challenge_title": {
-              "ES": "Titulo en español",
-              "CAT": "Títol en català",
-              "EN": "Descending Order"
-            },
-          }
-        };
+    return this.http.get<Challenges>(`../../../assets/dummy/challenge-out.json`).pipe(
+      map((res: Challenges) => {
+        let langVersion: any[] = [];
+        let langUpperCase = lang.toUpperCase();
 
-        let langUpperCase = lang.toUpperCase()
-        let file = resp.challenges.challenge_title[langUpperCase];
+        res.forEach((challenge) => {
+          let examples = "";
 
-        let translation: string = 
-        ` {
-          challenges:
-            {
-              "_id": {
-                "$uuid": "dcacb291-b4aa-4029-8e9b-284c8ca80296"
-              },
-              "challenge_title": "${resp.challenges.challenge_title[langUpperCase]}"
-            },
-        }`
+          challenge.detail.examples.forEach((example) => {
+            examples += `"${example._id.$uuid}": "${example.example_text[langUpperCase]}",`
+          })
 
-        let translationJSON = JSON.parse(translation);
-        console.log(translationJSON)
+          examples = JSON.parse(`{${examples.slice(0, (examples.length - 1))}}`)
 
-        let newJSONContent = { ...translationJSON, ...require(`../../../assets/i18n/${lang}.json`) }
+          langVersion.push({
+            "challenge_title": challenge.challenge_title[langUpperCase],
+            "description": challenge.detail.description[langUpperCase],
+            examples,
+            "notes": challenge.detail.notes[langUpperCase]
+
+          });
+        })
+
+        let challenges = { "challenges": langVersion };
+
+        let newJSONContent = { ...challenges, ...require(`../../../assets/i18n/${lang}.json`) }
 
         return newJSONContent;
       }))
   }
-  // const targetPath = '../../../../../assets/i18n/es.json'
-  // tar.writeFile(targetPath, newJSONContent, () => {
-  //   console.log(`Successfully generated environment.development.ts`);
-  // });
-  // let challengesValues = Object.values(challenges);
-  // console.log(challengesValues[0])
-  // console.log(challengesValues)
 
 }
 

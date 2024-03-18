@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
 import { AuthService } from "../../../../services/auth.service";
 import { User } from "../../../../models/user.model";
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class StarterComponent {
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private starterService: StarterService,
+    public translate: TranslateService
     //private authService: AuthService
   ) {
 
