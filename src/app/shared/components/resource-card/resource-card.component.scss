@@ -69,5 +69,10 @@
         height: auto;
         margin-right: 10px;
     }
+}
 
+@media (max-width: 768px){
+    .resource-list-element{
+        margin-inline-start: 0px;
+    }
 }

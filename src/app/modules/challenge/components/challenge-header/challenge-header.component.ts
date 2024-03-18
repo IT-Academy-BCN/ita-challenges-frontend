@@ -24,7 +24,7 @@ export class ChallengeHeaderComponent {
 	challenge_date: Date | undefined;
 	challenge_level: string | undefined;
 
-	isLogged: boolean = true //& tiene que estar en true para que este logueado 
+	isLogged: boolean = false //& tiene que estar en true para que este logueado 
 	solutionSent: boolean = false
 
 
