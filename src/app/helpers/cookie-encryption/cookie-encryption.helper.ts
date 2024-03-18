@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 
-export class CookieEncryptionService {
+export class CookieEncryptionHelper {
   /**
    * Clave secreta utilizada para la encriptación y desencriptación.
    */
