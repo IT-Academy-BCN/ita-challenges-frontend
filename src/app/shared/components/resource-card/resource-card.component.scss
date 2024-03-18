@@ -6,6 +6,8 @@
     min-height: 110px;
     cursor: pointer;
     background-color: $white;
+    max-width: 400px;
+    margin-inline-start: 15px;
     gap:12px;
     &:hover{
         background-color: $gray-4;

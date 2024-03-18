@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 export class Resource {
 
     idResource: string;
@@ -11,5 +12,4 @@ export class Resource {
         this.author = element.author;
         this.generationDate = element.generation_date;
     }
-
 }

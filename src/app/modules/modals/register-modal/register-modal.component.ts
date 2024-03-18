@@ -9,6 +9,8 @@ import { AuthService } from './../../../services/auth.service';
 import { ItinerariesService } from './../../../services/itineraries.service';
 import { Itinerary } from 'src/app/models/itinerary.interface';
 import { ValidatorsService } from 'src/app/services/validators.service';
+import { TranslateService } from '@ngx-translate/core';
+import { PostRegisterModalComponent } from '../post-register-modal/post-register-modal.component';
 
 @Component({
 	selector: "app-register-modal",
@@ -39,12 +41,13 @@ export class RegisterModalComponent implements OnInit {
 		private authService: AuthService,
 		private itinerariesService: ItinerariesService,
 		private validatorsService: ValidatorsService,
-	) { }
+		private translate: TranslateService){
+	}
 
 	ngOnInit(): void {
 		this.getItineraries();
 		this.registerForm.markAsUntouched()
-	}	
+	}
 
 	isValidInput(input: string ): boolean | null {
 		return this.validatorsService.isValidInput(input, this.registerForm);
@@ -74,13 +77,16 @@ export class RegisterModalComponent implements OnInit {
 	}
 
 	openSuccessfulRegisterModal() {
-		//TODO create modal
-		alert('Success register, wait for the account validation'); //todo: change to moda
 		this.closeModal();
+		this.modalService.open(PostRegisterModalComponent, {
+			backdrop: "static",
+			centered: true,
+			size: "lg",
+		});
 	}
 
 	notifyErrorRegister(err: any) {
-		this.registerError = 'Error en el registro, puede ser que ya estés registrado';
+		this.registerError =   this.translate.instant('modules.modals.register.errorMsg');
 	}
 
 	closeModal() {

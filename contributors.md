@@ -9,3 +9,4 @@
 - Lara Del Rio Garcia - https://github.com/laradelrio
 - Samir Comas - https://github.com/sacom14
 - Elisenda López - https://github.com/Elisenda-LV
+- Joaquin Capel - https://github.com/JoaquinCapel

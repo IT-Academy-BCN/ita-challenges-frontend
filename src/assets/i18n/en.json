@@ -56,9 +56,6 @@
                 "solutionsChallenge": "Example answer, cannot be modified",
                 "solutionsTitleLocked":"The solutions are locked.",
                 "solutionsLocked": "Solutions will remain locked until you submit the challenge"
-
-
-               
             }
         },
         "starter": {
@@ -81,7 +78,37 @@
                     "date": "Date"
                 }
             }
+        },"modals": {
+            "register":{
+                "title": "Register",
+                "specialization": "Specialization",
+                "password": "Password",
+                "repeat": "Repeat Password",
+                "legalTerms": "Accept legal terms",
+                "loginRedirect": "¿Already have an account?, login",
+                "errorMsg": "Register, you might already be registered"
+            },
+            "login":{
+                "forgotPassword": "Remember/Change password",
+                "registerRedirect": "¿Don't have an account?, create one"
+            },
+            "postRegister": {
+                "title": "Registration Successful",
+                "body": "A mentor must validate your registration. Please wait for email confirmation before logging in.",
+                "btn":"Okay"
+            }
+        }
+    },
+    "services":{
+        "validators":{
+            "required": "Required Field",
+            "email": "Incorrect email",
+            "minLength": "minimum characters",
+            "isValidDni": "Invalid DNI",
+            "notSamePassword": "Passwords don't match",
+            "notChecked": "Required",
+            "invalidPassword": "Minimum  1 uppercase and 1 lower case letter, 1 number, and no special characters",
+            "pattern": "Invalid format"
         }
     }
 }
-      
