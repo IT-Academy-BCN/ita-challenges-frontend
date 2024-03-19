@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthService } from './services/auth.service';
-import { HelperModule } from './helpers/helper.module';
+import {CookieEncryptionHelper} from "./helpers/cookie-encryption.helper";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,7 +25,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-   
   ],
   imports: [
     BrowserModule,
@@ -38,7 +37,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChallengeModule,
     ProfileModule,
     I18nModule,
-    HelperModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {
@@ -49,7 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
-    AuthService
+    AuthService,
+    CookieEncryptionHelper
   ],
   bootstrap: [AppComponent]
 })
