@@ -44,29 +44,34 @@
             </div>
         </div>
         <!-------if not logged show this------>
-        <div class="w-25 mt-4 button d-none d-md-inline-block" *ngIf="isLogged===false; else isLoggedUser">
+        @if (!isLogged) {
+        <div class="w-25 mt-4 button d-none d-md-inline-block">
             <button class="btn btn-primary" (click)="clickSendButton() "
                 title="{{'modules.challenge.header.toolTip' | translate }}">
                 {{'modules.challenge.header.button' | translate }}
             </button>
         </div>
-
+        } @else {
         <!------ if logged show this------>
-        <ng-template #isLoggedUser>
-            <div class="col-3 button d-none d-md-flex" *ngIf="!solutionSent; else solutionSentSection">
-                <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate
-                    }}</button>
-                <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
-                    {{'modules.challenge.header.buttonAccept' | translate }}
-                </button>
-            </div>
-        </ng-template>
+        @if (!solutionSent) {
+        <div class="col-3 button d-none d-md-flex">
+            <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate
+                }}</button>
+            <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
+                {{'modules.challenge.header.buttonAccept' | translate }}
+            </button>
+        </div>
+        } @else {
         <!-----if solution sent show this---->
-        <ng-template #solutionSentSection>
-            <div class="solutionSent col-3" *ngIf="solutionSent===true">
-                <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-                <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
-            </div>
-        </ng-template>
+        <div class="solutionSent col-3 d-none d-md-flex">
+            <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
+            <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
+        </div>
+        }
+
+        }
+
+
+
     </div>
 </div>
