@@ -39,18 +39,16 @@ p {
     outline: 0;
   }
 
-  &:hover + .input-label {
-    background-color: $primary;
-    border: 1px solid $primary;
-    color: white;
-  }
-
   &:checked + .input-label {
     background-color: $primary;
-    border: 1px solid $primary;
-    font-weight: bold;
+    border: none;
+    font-weight: 700;
     color: white;
   }
+}
+
+.input-label {
+  line-height: 16px;
 }
 
 .modal-footer button {
