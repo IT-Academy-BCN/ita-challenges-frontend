@@ -1,4 +1,7 @@
 @import "/src/styles/colors";
+@import "/src/styles/buttons";
+@import "/src/styles/fonts";
+
 h2{
     margin-bottom: 3rem;
 }
@@ -37,9 +40,12 @@ ul{
     }
 }
 
+
+
 @media screen and (max-width: 768px) {
     h2 {
         margin-bottom: 1rem;
         margin-top: 0.5rem;
     }
+   
 }
