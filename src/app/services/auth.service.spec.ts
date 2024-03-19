@@ -470,14 +470,18 @@ describe("AuthService", () => {
 		spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin));
 		spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData));
 		
-		// Llama a modifyUserWithAdmin y maneja la promesa devuelta
 		authService.modifyUserWithAdmin(mockRegisterUserId).then(() => {
+			const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER);
+			expect(reqAdmin.request.method).toEqual('GET');
+			reqAdmin.flush(mockResAfterLogin);
+
+
 			expect(mockLoggedUserData.role).toBe('ADMIN');
 			expect(authService.login).toHaveBeenCalledWith(userAdminMock);
 			expect(authService.getLoggedUserData).toHaveBeenCalled();
 
 
-			const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}?id=${mockRegisterUserId}`);
+			const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`);
 			expect(req.request.method).toEqual('PATCH');
 			expect(req.request.headers.get('Content-Type')).toEqual('application/json');
 			req.flush(mockResponse);

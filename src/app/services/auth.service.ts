@@ -110,17 +110,19 @@ export class AuthService {
 	}
 
 	public async modifyUserWithAdmin(registerUserId: string) {
-		const userAdmin = { //todo: need to improve the security and a real ADMIN account
-			'idUser': '',
-			'dni': '32983483B',
-			'password': 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77'
+		const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER));
+
+		if(userAdmin){
+			await this.login(userAdmin);
+		} else{
+			console.error('Admin acount not found');
 		}
-		await this.login(userAdmin);
+				
 		try {
 			let userLoggedData = await this.getLoggedUserData();
 			if (userLoggedData.role === 'ADMIN') {
 				await firstValueFrom(
-					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`?id=${registerUserId}`)),
+					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
 						{
 							'authToken': this.cookieService.get('authToken'),
 							'status': 'ACTIVE',
