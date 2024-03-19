@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, map } from 'rxjs';
 import { Challenges } from 'src/app/models/challenges.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-custom-loader',
@@ -47,4 +48,3 @@ export class CustomLoader implements TranslateLoader {
   }
 
 }
-
