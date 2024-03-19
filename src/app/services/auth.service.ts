@@ -167,7 +167,7 @@ export class AuthService {
 
 	public async login(user: User): Promise<any> {
 		try {
-			let resp = await this.loginRequest(user).toPromise();
+			let resp = await firstValueFrom(this.loginRequest(user));
 			if (!resp) {
 				throw new Error("Empty response");
 			}
