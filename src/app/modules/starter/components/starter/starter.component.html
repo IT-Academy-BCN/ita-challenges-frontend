@@ -4,10 +4,13 @@
         <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
     </div>
     <div class="col-12 col-md-9">
-        <h2>{{'modules.starter.main.section2.title' | translate}} <img class="float-end d-md-none" alt="filter-icon"
-            (click)="openModal()" src="../../../../../assets/img/icon/sort.svg"></h2>
+       <!--  <h2>{{'modules.starter.main.section2.title' | translate}} <img class="float-end d-md-none" alt="filter-icon"
+            (click)="openModal()" src="../../../../../assets/img/icon/sort.svg"></h2> -->
 
-        <ul id="sortBy" class="d-flex justify-content-end gap-2">
+        <h2>{{'modules.starter.main.section2.title' | translate}}<button class="btn.btn-lg float-end d-md-none" 
+            (click)="openModal()">Filtrar</button></h2>
+
+        <ul id="sortBy" class="d-flex justify-content-end gap-2 d-sm-none">
             <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
                 {{'modules.starter.main.section2.popularity' | translate}}
             </li>
