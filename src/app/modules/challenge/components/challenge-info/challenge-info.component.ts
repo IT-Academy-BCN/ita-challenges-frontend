@@ -96,8 +96,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	}
 
 	getRelated(): void {
-		this.challengeService.getRelated('challenge').subscribe(data => {
-		  this.related = data as any[];
+		this.challengeService.getRelated(this.related_id).subscribe(data => {
+		  this.related = data as any[];		  
 		});
 	  }
 	

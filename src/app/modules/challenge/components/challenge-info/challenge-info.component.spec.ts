@@ -92,4 +92,43 @@ describe('ChallengeInfoComponent', () => {
     });
   });
 
+  // describe('getRelated', () => {
+  //   it('should call challengeService.getRelated with the related_id', () => {
+  //     const getRelatedSpy = spyOn(challengeService, 'getRelated').and.returnValue(of({}));
+  //     component.related_id = '123';
+  //     component.getRelated();
+
+  //     expect(getRelatedSpy).toHaveBeenCalledTimes(1);
+  //     expect(getRelatedSpy).toHaveBeenCalledWith('123');
+  //   });
+  // });
+
+  it('should call getRelated from challengeService and set the response to related', () => {
+    const response = [{id: '1'}, {id: '2'}];
+    component.related_id = '123';
+    spyOn(challengeService, 'getRelated').and.returnValue(of(response));
+
+    component.getRelated();
+
+    setTimeout(() => {
+        expect(challengeService.getRelated).toHaveBeenCalledWith('123');
+        expect(component.related).toEqual(response);
+        done();
+    }, 0);
 });
+
+//   it('should call getRelated from challengeService and set the response to related', () => {
+//     const response = [{id: '1'}, {id: '2'}];
+//     spyOn(challengeService, 'getRelated').and.returnValue(of(response));
+
+//     component.ngOnInit();
+//     fixture.detectChanges();
+
+//     expect(challengeService.getRelated).toHaveBeenCalledWith('challenge');
+//     expect(component.related).toEqual(response);
+// });
+});
+function done() {
+  throw new Error('Function not implemented.');
+}
+
