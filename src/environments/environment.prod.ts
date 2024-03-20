@@ -16,4 +16,5 @@ export const environment = {
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
   pageSize: 8,
+  BACKEND_ITA_RELATED_BASE_URL: '../assets/dummy/related.json'
 };

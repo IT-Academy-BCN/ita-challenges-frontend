@@ -100,12 +100,12 @@
             <section class="info-card">
                 <app-challenge-card
                 *ngFor="let relate of related"
-                [title]="related_title"
-                [creation_date]="related_creation_date"
-                [level]="related_level"
-                [popularity]="related_popularity"
-                [languages]="related_languages"
-                [id]="related_id"
+                [title]="relate.title"
+                [creation_date]="relate.creation_date"
+                [level]="relate.level"
+                [popularity]="relate.popularity"
+                [languages]="relate.languages"
+                [id]="relate.id"
                 >
                 </app-challenge-card>
             </section>

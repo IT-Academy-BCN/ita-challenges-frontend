@@ -59,6 +59,17 @@ describe('ChallengeService', () => {
 
     });
 
+    it('Should stream related challenges', () => {
+        testScheduler.run(({expectObservable}) => {
+            const idChallenge = "1adfadf21fasdf2-adf";
+            const expectedMarble = '---(a|)';
+            const expectedValues = {a: data};
+            const obs$ = service.getRelated(idChallenge).pipe(delay(3));
+    
+            expectObservable(obs$).toBe(expectedMarble, expectedValues);
+        });
+    });
+
 });
 
 

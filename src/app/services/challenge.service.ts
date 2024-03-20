@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-//import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -32,4 +32,9 @@ export class ChallengeService {
                 }
             });
     }
+
+    getRelated(id: string): Observable<Object> {
+        const url = `${environment.BACKEND_ITA_RELATED_BASE_URL}`;
+        return this.http.get(url);
+      }
 }

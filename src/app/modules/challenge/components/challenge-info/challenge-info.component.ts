@@ -67,6 +67,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 			this.isUserSolution = !value;
 		});
 		// this.authService.isLoggedIn();
+		this.getRelated();
 		this.loadRelatedChallenge(this.related_id);
 		// this.checkIfUserIsLoggedIn();
 	}
@@ -93,5 +94,10 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 				this.related_id = this.related;
 			});
 	}
-	
+
+	getRelated(): void {
+		this.challengeService.getRelated(this.related_id).subscribe(data => {
+		  this.related = data as any[];		  
+		});
+	  }
 }

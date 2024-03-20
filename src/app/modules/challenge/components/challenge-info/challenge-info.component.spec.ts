@@ -92,4 +92,22 @@ describe('ChallengeInfoComponent', () => {
     });
   });
 
+  it('should call getRelated from challengeService and set the response to related', () => {
+    const response = [{ id: '1' }, { id: '2' }];
+    component.related_id = '123';
+    spyOn(challengeService, 'getRelated').and.returnValue(of(response));
+
+    component.getRelated();
+
+    setTimeout(() => {
+      expect(challengeService.getRelated).toHaveBeenCalledWith('123');
+      expect(component.related).toEqual(response);
+      done();
+    }, 0);
+  });
+
 });
+function done() {
+  throw new Error('Function not implemented.');
+}
+
