@@ -100,5 +100,4 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 		  this.related = data as any[];		  
 		});
 	  }
-	
 }
