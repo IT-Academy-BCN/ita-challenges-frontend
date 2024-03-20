@@ -181,21 +181,29 @@ export class AuthService {
 	}
 
 	/* Check if the user is  Logged in*/
-	public async isUserLoggedIn() { //TODO: neec tokenService first
-		// let isUserLoggedIn: boolean = false;
-		// let authToken = this.cookieService.get('authToken');
-		// let authTokenValid = await this.checkToken(authToken);
-		// if (authTokenValid) {
-		// 	isUserLoggedIn = true;
-		// } else {
-		// 	let refreshToken = this.cookieService.get('authToken');
-		// 	isUserLoggedIn = await this.checkToken(refreshToken);
-		// }
-		// return isUserLoggedIn;
+	public async isUserLoggedIn(): Promise<boolean>  { 
+		let isUserLoggedIn: boolean = false;
+		let authToken = this.cookieService.get('authToken');
+		let authTokenValid = await this.checkToken(authToken);
+			if (authTokenValid) {
+				isUserLoggedIn = true;
+			} else {
+				let refreshToken = this.cookieService.get('refreshToken');
+				isUserLoggedIn = await this.checkToken(refreshToken);
+		}
+		
+		return isUserLoggedIn;
+		
 	}
 
 	/* return if token valid */
 	async checkToken(token: string): Promise<boolean> {
+		if (!token) {
+			return false;
+		}
+		if (this.isTokenExpired(token)) {
+			return false;
+		}
 
 		return true;
 	}
