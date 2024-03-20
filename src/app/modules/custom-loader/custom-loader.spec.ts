@@ -8,7 +8,6 @@ describe('CustomLoader', () => {
     let httpClientMock: HttpTestingController;
     let httpClient: HttpClient
     let customLoader: CustomLoader;
-    // let fixture: ComponentFixture<CustomLoader>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -18,8 +17,6 @@ describe('CustomLoader', () => {
         httpClient = TestBed.inject(HttpClient);
         httpClientMock = TestBed.inject(HttpTestingController);
         customLoader = TestBed.inject(CustomLoader);
-        // customLoader = fixture.componentInstance;
-        // fixture.detectChanges();
     });
 
     it('should create custom-loader correctly', (done) => {
@@ -90,9 +87,7 @@ describe('CustomLoader', () => {
         expect(req.request.method).toEqual("GET");
         req.flush(mockResponse);
 
-        expect(fileWithTranslation).toEqual({ ...expectedResponse, ...require(`../../../assets/i18n/es.json`) })
-        console.log(fileWithTranslation)
-        console.log(fileWithTranslation.challenges[0].examples)
+        expect(fileWithTranslation).toEqual({ ...expectedResponse, ...require(`../../../assets/i18n/${mockLang}.json`) })
         done();
     });
 
