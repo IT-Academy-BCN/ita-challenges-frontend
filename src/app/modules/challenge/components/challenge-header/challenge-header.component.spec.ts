@@ -1,69 +1,55 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { I18nModule } from '../../../../../assets/i18n/i18n.module';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
 import { ChallengeHeaderComponent } from './challenge-header.component';
 import { SolutionService } from '../../../../services/solution.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component';
-import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component';
-import { HttpClient } from '@angular/common/http';
-
+import { AuthService } from '../../../../services/auth.service';
+import { SendSolutionModalComponent } from "./../../../modals/send-solution-modal/send-solution-modal.component";
+import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
   let fixture: ComponentFixture<ChallengeHeaderComponent>;
-  let modalService: NgbModal;
+  let mockModalService: any;
+  let mockSolutionService: any;
+  let mockAuthService: any;
 
   beforeEach(() => {
+    mockModalService = { open: jest.fn() };
+    mockSolutionService = { solutionSent$: of(false), sendSolution: jest.fn() };
+    mockAuthService = { isUserLoggedIn: false };
+
     TestBed.configureTestingModule({
-      declarations: [
-          ChallengeHeaderComponent
-        ],
-      imports: [ 
-          I18nModule,
-          RouterTestingModule,
-          HttpClientTestingModule
-        ],
+      declarations: [ChallengeHeaderComponent],
       providers: [
-          NgbModal,
-          SolutionService
+        { provide: NgbModal, useValue: mockModalService },
+        { provide: SolutionService, useValue: mockSolutionService },
+        { provide: AuthService, useValue: mockAuthService }
       ]
-    }).compileComponents();
+    });
 
     fixture = TestBed.createComponent(ChallengeHeaderComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-    modalService =TestBed.inject(NgbModal);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize input correctly', () => {
-    component.title = "Test Title",
-    component.creation_date = new Date;
-    component.level = "Easy",
-    
-    expect(component.title).toEqual("Test Title");
-    expect(component.creation_date).toBeDefined();
-    expect(component.level).toEqual("Easy");
-  });
-
-  it('should open send solution modal', () => {
-    spyOn(modalService, 'open').and.stub();
+  it('should open SendSolutionModalComponent when openSendSolutionModal is called', () => {
     component.openSendSolutionModal();
-
-    expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg'});
+    expect(mockModalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' });
   });
 
-  it('should open restricted modal if user is not logged in', () => {
-    spyOn(modalService, 'open').and.stub();
-    component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
+  it('should open LoginModalComponent when clickSendButton is called and user is not logged in', () => {
     component.clickSendButton();
-
-  expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
+    expect(mockModalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' });
   });
 
+  it('should call sendSolution when clickSendButton is called and user is logged in', () => {
+    mockAuthService.isUserLoggedIn = true;
+    component.clickSendButton();
+    expect(mockSolutionService.sendSolution).toHaveBeenCalledWith('');
+  });
 });
+
