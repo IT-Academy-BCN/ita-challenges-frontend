@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class CookieEncryptionHelper {
 
   //generación de secret key
   constructor(private cookieService: CookieService) {
-    this.generateSecretKey('your-password').then(key => {
+    const password = environment.SECRET_PASSWORD;
+    this.generateSecretKey(password).then(key => {
       this.secretKey = key;
     });
   }
