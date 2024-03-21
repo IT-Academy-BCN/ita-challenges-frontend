@@ -34,44 +34,55 @@ describe('CustomLoader', () => {
                         "example_id": "Ejemplo en español",
                     },
                     "description": "Descripción en español",
-                    "notes": "Notas en español"
+                    "note": "Nota en español"
                 }
             ]
         };
 
-        let mockResponse = [
-            {
-                "challenge_title": {
-                    "ES": "Titulo en español",
-                    "CAT": "Titulo en cat",
-                    "EN": "Title in english",
-                },
-                "detail": {
-                    "examples": [
-                        {
-                            "_id": {
-                                "$uuid": "example_id"
+        let mockResponse =
+            [
+                {
+                    "id_challenge": "2bfc1a9e-30e3-40b2-9e97-8db7c5a4e9e4",
+                    "challenge_title": {
+                        "es": "Titulo en español",
+                        "cat": "Títol en català",
+                        "en": "Title in english"
+                    },
+                    "level": "mockLevel",
+                    "creation_date": "2018-09-09",
+                    "detail": {
+                        "description": {
+                            "es": "Descripción en español",
+                            "cat": "Descripció en català",
+                            "en": "Description in english."
+                        },
+                        "examples": [
+                            {
+                                "idExample": "example_id",
+                                "exampleText": {
+                                    "es": "Ejemplo en español",
+                                    "cat": "Exemple en català",
+                                    "en": "Example in english"
+                                }
                             },
-                            "example_text": {
-                                "ES": "Ejemplo en español",
-                                "CAT": "Ejemplo en catalan",
-                                "EN": "Example in english"
-                            }
+                        ],
+                        "note": {
+                            "es": "Nota en español",
+                            "cat": "Nota en català",
+                            "en": "Note in english"
+                        }
+                    },
+                    "languages": [
+                        {
+                            "id_language": "mock Language Id",
+                            "language_name": "mock Language Name"
                         }
                     ],
-                    "description": {
-                        "ES": "Descripción en español",
-                        "CAT": "Descrip en cat",
-                        "EN": "Desc en english"
-                    },
-                    "notes": {
-                        "ES": "Notas en español",
-                        "CAT": "Notas en cat",
-                        "EN": "Notes in english"
-                    }
+                    "solutions": [
+                        "mock solution"
+                    ]
                 }
-            }
-        ];
+            ];
 
         let fileWithTranslation: any;
 
@@ -80,14 +91,15 @@ describe('CustomLoader', () => {
                 next: (res) => {
                     expect(res).toBeTruthy();
                     fileWithTranslation = res;
+                    console.log(res)
                 }
             });
 
-        const req = httpClientMock.expectOne('../../../assets/dummy/challenge-out.json');
+        const req = httpClientMock.expectOne(environment.BACKEND_ITA_CHALLENGE_BASE_URL.concat(environment.BACKEND_ALL_CHALLENGES_URL));
         expect(req.request.method).toEqual("GET");
         req.flush(mockResponse);
 
-        expect(fileWithTranslation).toEqual({ ...expectedResponse, ...require(`../../../assets/i18n/${mockLang}.json`) })
+        expect(fileWithTranslation).toEqual({ ...expectedResponse, ...require(`../../../assets/i18n/es.json`) })
         done();
     });
 
