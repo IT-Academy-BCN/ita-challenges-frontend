@@ -7,7 +7,7 @@
 <div class="d-flex justify-content-center">
     <form [formGroup]="loginForm" class="d-flex flex-column just-content-center gap-3 col-12 col-md-5">
         <div class="modal-body d-flex flex-column gap-3 pt-0">
-            <h2 class="modal-title">Login</h2>
+            <h2 class="modal-title text-center">Login</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
                 <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE"
                 [ngClass]="!isValidInput('dni') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
@@ -20,7 +20,7 @@
                     @if(isValidInput('password')){
                     <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
                     }
-                <a class="text-end">{{ 'modules.modals.login.forgotPassword' | translate }}</a>
+                <a id="change-password" class="text-end">{{ 'modules.modals.login.forgotPassword' | translate }}</a>
             </div>
             @if(loginError != ""){
                 <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError}}</p>
