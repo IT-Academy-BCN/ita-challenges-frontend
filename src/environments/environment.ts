@@ -16,4 +16,5 @@ export const environment = {
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
   pageSize: 8,
+  SECRET_PASSWORD:'985a459f34645aec05f978bfda43aebd2212f70542d3100e16c862c0f329d323',
 };
