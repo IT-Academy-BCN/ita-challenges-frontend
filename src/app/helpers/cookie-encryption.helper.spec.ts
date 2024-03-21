@@ -4,20 +4,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-/*jest.mock('crypto-browserify', () => ({
-  randomBytes: jest.fn().mockReturnValue({
-    toString: jest.fn().mockReturnValue('randomKey')
-  }),
-  createCipher: jest.fn().mockReturnValue({
-    update: jest.fn().mockReturnValue('encryptedValuePart'),
-    final: jest.fn().mockReturnValue('encryptedValueFinal')
-  }),
-  createDecipher: jest.fn().mockReturnValue({
-    update: jest.fn().mockReturnValue('decryptedValuePart'),
-    final: jest.fn().mockReturnValue('decryptedValueFinal')
-  }),
-}));*/
-
 /**
  * Pruebas para CookieEncryptionService.
  */
