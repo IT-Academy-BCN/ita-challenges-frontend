@@ -16,25 +16,24 @@ export class CustomLoader implements TranslateLoader {
 
   getTranslation(lang: string): Observable<any> {
 
-    return this.http.get<Challenges>(`../../../assets/dummy/challenge-out.json`).pipe(
+    return this.http.get<Challenges>(environment.BACKEND_ITA_CHALLENGE_BASE_URL.concat(environment.BACKEND_ALL_CHALLENGES_URL)).pipe(
       map((res: Challenges) => {
         let langVersion: any[] = [];
-        let langUpperCase = lang.toUpperCase();
-
+        
         res.forEach((challenge) => {
           let examples = "";
 
           challenge.detail.examples.forEach((example) => {
-            examples += `"${example._id.$uuid}": "${example.example_text[langUpperCase]}",`
+            examples += `"${example.idExample}": "${example.exampleText[lang]}",`
           })
 
           examples = JSON.parse(`{${examples.slice(0, (examples.length - 1))}}`)
 
           langVersion.push({
-            "challenge_title": challenge.challenge_title[langUpperCase],
-            "description": challenge.detail.description[langUpperCase],
+            "challenge_title": challenge.challenge_title[lang],
+            "description": challenge.detail.description[lang],
             examples,
-            "notes": challenge.detail.notes[langUpperCase]
+            "note": challenge.detail.note !== null ? challenge.detail.note[lang] : null
 
           });
         })
