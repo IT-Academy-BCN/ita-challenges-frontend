@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, type OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-mobile-nav',
@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mobile-nav.component.scss']
 })
 export class MobileNavComponent implements OnInit {
+  constructor () { }
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit () {
   }
-
 }

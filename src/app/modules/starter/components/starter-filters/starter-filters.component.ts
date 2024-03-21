@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core';
-import { FilterChallenge } from 'src/app/models/filter-challenge.model';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core'
+import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
+import { FormGroup, FormControl, type FormBuilder } from '@angular/forms'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-starter-filters',
@@ -9,14 +9,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['./starter-filters.component.scss']
 })
 export class StarterFiltersComponent {
+  @Output() filtersSelected = new EventEmitter<FilterChallenge>()
 
-  @Output() filtersSelected = new EventEmitter<FilterChallenge>();
+  filtersForm
 
-  filtersForm;
+  private readonly destroyRef = inject(DestroyRef)
 
-  private readonly destroyRef = inject(DestroyRef);
-  
-  constructor(private fb: FormBuilder) {
+  constructor (private readonly fb: FormBuilder) {
     this.filtersForm = this.fb.nonNullable.group({
       languages: this.fb.nonNullable.group({
         javascript: false,
@@ -34,24 +33,20 @@ export class StarterFiltersComponent {
         started: false,
         finished: false
       })
-    });
+    })
 
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
-      let filters: FilterChallenge = {languages: [], levels: [], progress: []};
+      const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
       Object.values(formValue.languages!).forEach((val, i) => {
-        if (val == true) { filters.languages.push(i+1) }
-      });
+        if (val) { filters.languages.push(i + 1) }
+      })
       Object.entries(formValue.levels!).forEach(([key, val]) => {
-      if (val == true) { filters.levels.push(key) }
-          });
+        if (val) { filters.levels.push(key) }
+      })
       Object.values(formValue.progress!).forEach((val, i) => {
-      if (val == true) { filters.progress.push(i+1) }
-      });
-      this.filtersSelected.emit(filters);
-    });
-
+        if (val) { filters.progress.push(i + 1) }
+      })
+      this.filtersSelected.emit(filters)
+    })
   }
-
-
-
 }

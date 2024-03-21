@@ -1,34 +1,28 @@
-import { ChallengeService } from "./challenge.service";
-import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
-import {HttpTestingController} from "@angular/common/http/testing";
-import {delay, of} from "rxjs";
-import data from "../../assets/dummy/challenge.json"; 
-
+import { ChallengeService } from './challenge.service'
+import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
+import { type HttpTestingController } from '@angular/common/http/testing'
+import { delay, of } from 'rxjs'
+import data from '../../assets/dummy/challenge.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('ChallengeService', () => {
+  let service: ChallengeService
+  let httpMock: HttpTestingController
+  let scheduler: TestScheduler
+  let httpClientSpy: any
+  let testScheduler: TestScheduler
 
-    let service: ChallengeService;
-    let httpMock: HttpTestingController;
-    let scheduler: TestScheduler;
-    let httpClientSpy: any;
-    let testScheduler: TestScheduler;
-    
+  beforeEach(() => {
+    // inject spy
+    httpClientSpy = jasmine.createSpy('httpClient')
+    httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data))
+    service = new ChallengeService(httpClientSpy)
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected)
+    })
+  })
 
-    beforeEach(() => {
-
-        //inject spy
-        httpClientSpy = jasmine.createSpy('httpClient');
-        httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
-        service = new ChallengeService(httpClientSpy);
-        testScheduler = new TestScheduler((actual, expected) => {
-            expect(actual).toEqual(expected);
-
-        });
-    });
-
-
-    /*
+  /*
     Some explanations:
     RxJs introduced the following syntax when writing marble tests in our code
         - ' ' the whitespace is a unique character that will not be interpreted; it can be used to align your marble string.
@@ -46,25 +40,14 @@ describe('ChallengeService', () => {
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
 
-    it('Should stream a challenge', () => {
+  it('Should stream a challenge', () => {
+    testScheduler.run(({ expectObservable }) => {
+      const idChallenge = '1adfadf21fasdf2-adf'
+      const expectedMarble = '---(a|)'
+      const expectedValues = { a: data }
+      const obs$ = service.getChallengeById(idChallenge).pipe(delay(3))
 
-        testScheduler.run(({expectObservable}) => {
-            const idChallenge = "1adfadf21fasdf2-adf" 
-            const expectedMarble = '---(a|)';
-            const expectedValues = {a: data};
-            const obs$ = service.getChallengeById(idChallenge).pipe(delay(3));
-
-            expectObservable(obs$).toBe(expectedMarble, expectedValues);
-        });
-
-    });
-
-});
-
-
-
-
-
-
-
-
+      expectObservable(obs$).toBe(expectedMarble, expectedValues)
+    })
+  })
+})

@@ -1,47 +1,46 @@
-import { Injectable } from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
+import { Injectable } from '@angular/core'
+import { type CookieService } from 'ngx-cookie-service'
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TokenService {
+  constructor (private readonly cookieService: CookieService) { }
 
-    constructor(private cookieService: CookieService) { }
+  public set authToken (token: string) {
+    this.cookieService.set('authToken', token)
+  }
 
-    public set authToken(token: string) {
-        this.cookieService.set('authToken', token);
-    }
+  public get authToken () {
+    return this.cookieService.get('authToken')
+  }
 
-    public get authToken() {
-        return this.cookieService.get('authToken');
-    }
+  public set refreshToken (token: string) {
+    this.cookieService.set('authToken', token)
+  }
 
-    public set refreshToken(token: string) {
-        this.cookieService.set('authToken', token);
-    }
+  public get refreshToken () {
+    return this.cookieService.get('refreshToken')
+  }
 
-    public get refreshToken() {
-        return this.cookieService.get('refreshToken')
-    }
+  public clearTokens (): void {
+    this.cookieService.set('authToken', '')
+    this.cookieService.set('refreshToken', '')
+  }
 
-    public clearTokens(): void {
-        this.cookieService.set('authToken', '');
-        this.cookieService.set('refreshToken', '');
-    }
+  // Check if the token is expired
+  public isTokenExpired (token: string): boolean {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp
+    return Math.floor(new Date().getTime() / 1000) >= expiry
+  }
 
-    // Check if the token is expired
-    public isTokenExpired(token: string): boolean {
-        const expiry = JSON.parse(atob(token.split('.')[1])).exp;
-        return Math.floor(new Date().getTime() / 1000) >= expiry;
-    }
-    /* See if token is valid */
-    public isTokenValid(token: string): boolean { //todo: Promise<boolean>
-        return true;
-    }
+  /* See if token is valid */
+  public isTokenValid (token: string): boolean { // todo: Promise<boolean>
+    return true
+  }
 
-    /* return if token valid */
-    async checkToken(token: string): Promise<boolean> {
-
-        return true;
-    }
+  /* return if token valid */
+  async checkToken (token: string): Promise<boolean> {
+    return true
+  }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, ViewChild, TemplateRef, EventEmitter } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Output, Input, ViewChild, type TemplateRef, EventEmitter } from '@angular/core'
+import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-filters-modal',
@@ -7,12 +7,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./filters-modal.component.scss']
 })
 export class FiltersModalComponent {
-  @ViewChild('modal') private modalContent!: TemplateRef<FiltersModalComponent>
+  @ViewChild('modal') private readonly modalContent!: TemplateRef<FiltersModalComponent>
 
-  constructor(private modalService: NgbModal) {}
+  constructor (private readonly modalService: NgbModal) {}
 
-  open() {
-  this.modalService.open(this.modalContent, { size: 'lg' });
-}
-
+  open () {
+    this.modalService.open(this.modalContent, { size: 'lg' })
+  }
 }

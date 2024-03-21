@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LoginModalComponent } from './../../../modules/modals/login-modal/login-modal.component';
-import { TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core'
+import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { LoginModalComponent } from './../../../modules/modals/login-modal/login-modal.component'
+import { type TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: '   app-main-menu',
@@ -9,19 +9,18 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent {
-  
-  constructor(private modalService: NgbModal,
-              private translate: TranslateService){
-                translate.addLangs(['en', 'es', 'cat']);
-                translate.setDefaultLang('es');
-                translate.use('es'); 
-              } 
-  
-  openLoginModal(){
-    this.modalService.open(LoginModalComponent, { centered : true, size : 'lg' })
+  constructor (private readonly modalService: NgbModal,
+    private readonly translate: TranslateService) {
+    translate.addLangs(['en', 'es', 'cat'])
+    translate.setDefaultLang('es')
+    translate.use('es')
   }
 
-  changeLanguage(language: string): void {
-    this.translate.use(language);
+  openLoginModal () {
+    this.modalService.open(LoginModalComponent, { centered: true, size: 'lg' })
+  }
+
+  changeLanguage (language: string): void {
+    this.translate.use(language)
   }
 }

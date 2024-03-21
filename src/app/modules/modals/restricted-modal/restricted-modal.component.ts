@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
-import { RegisterModalComponent } from '../register-modal/register-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core'
+import { LoginModalComponent } from '../login-modal/login-modal.component'
+import { RegisterModalComponent } from '../register-modal/register-modal.component'
+import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { type Router } from '@angular/router'
 
 @Component({
   selector: 'app-restricted-modal',
@@ -10,20 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./restricted-modal.component.scss']
 })
 export class RestrictedModalComponent {
-  constructor(private modalService: NgbModal,  private router: Router) {}
+  constructor (private readonly modalService: NgbModal, private readonly router: Router) {}
 
-  closeModal() {
-    this.modalService.dismissAll();
-    // this.router.navigateByUrl('/');) 
-  }
-  
-  openLoginModal(){
-    this.closeModal();
-    this.modalService.open(LoginModalComponent, { centered : true, size : 'lg' })
+  closeModal () {
+    this.modalService.dismissAll()
+    // this.router.navigateByUrl('/');)
   }
 
-  openRegisterModal(){
-    this.closeModal();
-    this.modalService.open(RegisterModalComponent, { centered : true, size : 'lg' })
+  openLoginModal () {
+    this.closeModal()
+    this.modalService.open(LoginModalComponent, { centered: true, size: 'lg' })
+  }
+
+  openRegisterModal () {
+    this.closeModal()
+    this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
 }

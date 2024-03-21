@@ -1,6 +1,5 @@
-import { Component, Input} from '@angular/core';
-import { StarterService } from '../../../services/starter.service';
-
+import { Component, Input } from '@angular/core'
+import { StarterService } from '../../../services/starter.service'
 
 @Component({
   selector: 'app-challenge-card',
@@ -9,13 +8,12 @@ import { StarterService } from '../../../services/starter.service';
   providers: [StarterService]
 })
 export class ChallengeCardComponent {
-  constructor(private starterService: StarterService){}
+  constructor (private readonly starterService: StarterService) {}
 
-  @Input() title = "";
-  @Input() languages: any = [];
-  @Input() creation_date!: Date;
-  @Input() level = "";
-  @Input() popularity!: number;
-  @Input() id = "";
-
+  @Input() title = ''
+  @Input() languages: any = []
+  @Input() creation_date!: Date
+  @Input() level = ''
+  @Input() popularity!: number
+  @Input() id = ''
 }
