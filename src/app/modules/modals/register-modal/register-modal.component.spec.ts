@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
-import { ItinerariesService } from './../../../services/itineraries.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ChallengeService } from 'src/app/services/challenge.service';
 
