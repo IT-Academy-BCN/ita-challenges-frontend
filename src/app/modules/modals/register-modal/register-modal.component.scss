@@ -5,6 +5,7 @@ input, select{
 }
 
 .form-check-input{
+    border-color: $black-1;
     padding: .6rem;
     &:checked {
         background-color: $primary;
@@ -13,4 +14,8 @@ input, select{
     &:focus{
         box-shadow: none;
     }
+}
+
+#legalTerms label a {
+    text-decoration: underline;
 }
