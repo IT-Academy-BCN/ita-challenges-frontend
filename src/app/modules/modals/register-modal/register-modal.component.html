@@ -41,17 +41,37 @@
             }
         </div>
         <div class="col-sm-12 col-lg-6">
-            <input formControlName="password" class="form-control" type="password" name="password"
-                [placeholder]="'modules.modals.register.password' | translate"
-                [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+            <div class="password-container d-flex no-wrap align-items-stretch"
+                [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'">
+                <input formControlName="password" class="p-0 m-0" [type]="showPassword ? 'text' : 'password'" name="password"
+                    [placeholder]="'modules.modals.register.password' | translate" 
+                    [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                <span (click)="togglePasswordMode()">
+                    @if (!showPassword) {
+                        <img src="../../../../assets/img/icon/eye-slash.svg" alt="Hide password">
+                    }@else {
+                        <img src="../../../../assets/img/icon/eye.svg" alt="Show password">
+                    }
+                </span>
+            </div> 
             @if(isValidInput('password')){
             <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
             }
         </div>
         <div class="col-sm-12 col-lg-6">
-            <input formControlName="confirmPassword" type="password" name="confirmPassword"
-                [placeholder]="'modules.modals.register.repeat' | translate"
-                [ngClass]="!isValidInput('confirmPassword') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+            <div class="password-container d-flex no-wrap align-items-stretch"
+                [ngClass]="!isValidInput('confirmPassword') ? 'form-control' : 'form-control is-invalid'">
+                <input formControlName="confirmPassword" class="p-0 m-0" [type]="showPassword ? 'text' : 'password'" name="confirmPassword"
+                    [placeholder]="'modules.modals.register.repeat' | translate" 
+                    [ngClass]="!isValidInput('confirmPassword') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                <span (click)="togglePasswordMode()">
+                    @if (!showPassword) {
+                        <img src="../../../../assets/img/icon/eye-slash.svg" alt="Hide password">
+                    }@else {
+                        <img src="../../../../assets/img/icon/eye.svg" alt="Show password">
+                    }
+                </span>
+            </div> 
             @if(isValidInput('confirmPassword')){
             <p class="text-danger form-text ps-3"> {{getInputError('confirmPassword')}}</p>
             }

@@ -35,6 +35,8 @@ export class RegisterModalComponent implements OnInit {
 		]
 	});
 
+	showPassword: boolean = false;
+
 	constructor(
 		private modalService: NgbModal,
 		private formBuilder: FormBuilder,
@@ -104,5 +106,9 @@ export class RegisterModalComponent implements OnInit {
 	async getItineraries() {
 		await this.itinerariesService.getItineraries()
 			.then((itineraries) => this.itineraries = itineraries);
+	}
+
+	togglePasswordMode(): void {
+		this.showPassword = !this.showPassword;
 	}
 }
