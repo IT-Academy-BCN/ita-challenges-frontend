@@ -2,6 +2,10 @@
     font-weight: 700;
 }
 
+#change-password {
+    font-size: 1rem;
+}
+
 @media screen and (max-width: 767px) {
     .modal-body {
         gap: 3.2rem !important;
@@ -9,10 +13,6 @@
 
     input::placeholder {
         color: #969696;
-    }
-
-    #change-password {
-        font-size: 1rem;
     }
 
     .modal-footer {
