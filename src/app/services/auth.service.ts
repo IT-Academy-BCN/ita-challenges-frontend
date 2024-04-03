@@ -1,18 +1,19 @@
 import { add } from "date-fns";
-import { Injectable } from "@angular/core";
+import { AbstractType, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import {
 	BehaviorSubject,
 	Observable,
 	catchError,
+	firstValueFrom,
 	map,
 	of,
 	tap,
 	throwError,
 } from "rxjs";
 import { User } from "../models/user.model";
-import { Router } from "@angular/router";
+import { ResolveEnd, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
@@ -102,12 +103,45 @@ export class AuthService {
 			this.registerRequest(user).subscribe({
 				next: (resp: registerResponse) => {
 					resolve(null);
-					// //TODO: Pasar el id del resp al back para que el admin cambie el "Accept" a true, o status "Activate";
-					// this.modifyUserWithAdmin(resp.id);
+					this.modifyUserWithAdmin(resp.id);
 				},
 				error: (err) => { reject(err.message) }
 			});
 		});
+	}
+
+	public async modifyUserWithAdmin(registerUserId: string) {
+		const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER));
+
+		if(userAdmin){
+			await this.login(userAdmin);
+		} else{
+			console.error('Admin acount not found');
+		}
+				
+		try {
+			let userLoggedData = await this.getLoggedUserData();
+			if (userLoggedData.role === 'ADMIN') {
+				await firstValueFrom(
+					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
+						{
+							'authToken': this.cookieService.get('authToken'),
+							'status': 'ACTIVE',
+						},
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							}
+						})
+				);
+			} else {
+				throw new Error("The logged-in user is not an admin.");
+			}
+			this.logout;
+		} catch (error) {
+			console.error("Error modifying user with admin:", error);
+			throw error;
+		}
 	}
 
 	public getUserIdFromCookie() {
@@ -133,9 +167,8 @@ export class AuthService {
 	}
 
 	public async login(user: User): Promise<any> {
-
 		try {
-			let resp = await this.loginRequest(user).toPromise();
+			let resp = await firstValueFrom(this.loginRequest(user));
 			if (!resp) {
 				throw new Error("Empty response");
 			}
@@ -161,25 +194,28 @@ export class AuthService {
 		 * and store it in the cookie
 	*/
 
-	public getLoggedUserData() {
-		this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
-			{
-				'authToken': this.cookieService.get('authToken'),
-			},
-		).subscribe({
-			next: (res) => {
-				let user: User = this.currentUser;
+	public getLoggedUserData(): Promise<UserResponse> {
+		return new Promise<UserResponse>((resolve, reject) => {
+			this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
+				{
+					'authToken': this.cookieService.get('authToken'),
+				},
+			).subscribe({
+				next: (res) => {
+					let user: User = this.currentUser;
 
-				let userData: User = {
-					'idUser': user.idUser,
-					'dni': res.dni,
-					'email': res.email,
-				};
+					let userData: User = {
+						'idUser': user.idUser,
+						'dni': res.dni,
+						'email': res.email,
+					};
 
-				this.currentUser = userData;
-			},
-			error: err => { console.error(err) }
-		})
+					this.currentUser = userData;
+					resolve(res);
+				},
+				error: err => { reject(err.message) }
+			})
+		});
 	}
 
 	/* Check if the user is  Logged in*/
