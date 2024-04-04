@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { MobileNavComponent } from './mobile-nav.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('MobileNavComponent', () => {
   let component: MobileNavComponent;
@@ -11,7 +12,8 @@ describe('MobileNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileNavComponent ]
+      declarations: [ MobileNavComponent ],
+      imports: [TranslateModule.forRoot()]
     })
     .compileComponents();
   }));
