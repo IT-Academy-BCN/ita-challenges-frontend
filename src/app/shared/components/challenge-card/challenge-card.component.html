@@ -20,13 +20,13 @@
                 {{title}}
             </div>
         </div>
-        <ul class="code-languages d-flex"  *ngFor="let language of languages">
+        <ul class="code-languages d-none d-md-flex"  *ngFor="let language of languages">
             <li class="code-icon js">
                 <img src="../../../../assets/img/icon/language_icon_{{language.language_name}}.svg"  alt="Language Icon">
             </li>
         </ul>
     </div>
-    <div class="stats gap-1 gap-md-3">
+    <div class="stats gap-1 gap-md-3 d-flex justify-content-evenly">
         <span class="stat">
             <img src="../../../../assets/img/icon/user.svg" alt="User">
             IT-Academy
