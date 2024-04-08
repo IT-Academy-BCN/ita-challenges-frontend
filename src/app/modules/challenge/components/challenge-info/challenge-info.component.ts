@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, ViewChild } from "@angular/core";
+import { AfterContentChecked, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { ChallengeDetails } from "src/app/models/challenge-details.model";
 import { Example } from "src/app/models/challenge-example.model";
 import { Language } from "src/app/models/language.model";
@@ -25,8 +25,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 		private authService: AuthService,
 		private solutionService: SolutionService,
 		private modalService: NgbModal,
-	) {}
-	
+	) { }
+
 
 	@ViewChild("nav") nav!: NgbNav;
 
@@ -39,12 +39,15 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	@Input() notes!: string;
 	@Input() popularity!: number;
 	@Input() languages: Language[] = [];
+	@Input() activeId: number = 1;
+	// @Output() activeId: number = 1;
+	@Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>();
 
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
 	isLogged: boolean = false;
-	activeId = 1;
+	// activeId = 1;
 	solutionSent: boolean = false;
 
 	idChallenge!: string | any;
@@ -93,5 +96,11 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 				this.related_id = this.related;
 			});
 	}
-	
+
+	onActiveIdChange(newActiveId: number) {
+		if (this.activeIdChange) {
+			this.activeId = newActiveId;
+			this.activeIdChange.emit(this.activeId);
+		}
+	}
 }

@@ -3,7 +3,8 @@
     <app-challenge-header
         [title] = "title"
         [creation_date] = "creation_date"
-        [level] = "level">
+        [level] = "level"
+        [activeId] = "activeId">
     </app-challenge-header>
 
     <app-challenge-info
@@ -16,5 +17,7 @@
         [notes] = "notes"
         [popularity] = "popularity"
         [languages] = "languages"
+        [activeId]= "activeId" 
+        (activeIdChange)="onActiveIdChange($event)">
 >   </app-challenge-info>
 </div>

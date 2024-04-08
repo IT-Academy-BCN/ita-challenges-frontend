@@ -4,7 +4,7 @@
 
 
   <!--DETAILS TAB-->
-  <li [ngbNavItem]="1">
+  <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
     <a href="#details" ngbNavLink>{{
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
@@ -43,7 +43,7 @@
           </div>
         </ng-template>
   </li>
-  <li [ngbNavItem]="2">
+  <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
     <a href="#solutions" ngbNavLink>{{
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
@@ -69,7 +69,7 @@
         </div>
     </ng-template>
   </li>
-  <li [ngbNavItem]="3">
+  <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
     <a href="#resources" ngbNavLink>{{
       "modules.challenge.info.resourcesTitle" | translate
     }}</a>
@@ -89,7 +89,7 @@
           </div>
     </ng-template>
   </li>
-  <li [ngbNavItem]="4" class="related">
+  <li [ngbNavItem]="4" class="related" (click)="onActiveIdChange(4)">
     <a href="#related" ngbNavLink>{{
       "modules.challenge.info.relatedTitle" | translate
     }}</a>

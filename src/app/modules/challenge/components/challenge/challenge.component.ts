@@ -33,7 +33,7 @@ export class ChallengeComponent {
   notes = "";
   popularity!: number;
   languages: Language[] = [];
-
+  activeId: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +54,10 @@ export class ChallengeComponent {
   }
 
 
+  onActiveIdChange(newActiveId: number) {
+    this.activeId = newActiveId;
+  }
+  
   loadMasterData(id: string) {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge);
