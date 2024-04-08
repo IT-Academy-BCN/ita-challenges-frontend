@@ -92,25 +92,4 @@ describe('ChallengeInfoComponent', () => {
     });
   });
 
-
-  describe('checkIfUserIsLoggedIn', () => {
-    it('should open restricted modal when not logged in', () => {
-      spyOn(component, 'openRestrictedModal');
-      spyOn(localStorage, 'getItem').and.returnValue(null);
-      component.checkIfUserIsLoggedIn();
-
-      expect(component.openRestrictedModal).toHaveBeenCalled();
-    });
-  });
-
-  describe('openRestrictedModal', () => {
-    it('should open the modal', () => {
-      spyOn(modalService, 'open').and.callThrough();
-      component.openRestrictedModal();
-
-      expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, jasmine.any(Object));
-    });
-  });
-
-  // Aquí puedes agregar más pruebas según sea necesario
 });

@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder, FormsModule, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { RegisterModalComponent } from './register-modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
-import { ItinerariesService } from './../../../services/itineraries.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ChallengeService } from 'src/app/services/challenge.service';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;
   let fixture: ComponentFixture<RegisterModalComponent>;
   let modalServiceMock: any;
   let authServiceMock: any;
-  let itinerariesServiceMock: any;
-  let validatorsServiceMock: any;
+  let challengeServiceMock: any;
+  let translateService: TranslateService;
 
   beforeEach(async () => {
 
@@ -26,18 +27,19 @@ describe('RegisterModalComponent', () => {
       register: jest.fn().mockResolvedValue(of([])),
     }
 
-    itinerariesServiceMock = {
+    challengeServiceMock = {
       getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3']),
     }
 
     await TestBed.configureTestingModule({
       declarations: [RegisterModalComponent],
-      imports: [FormsModule, ReactiveFormsModule, NgbModule],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule, TranslateModule.forRoot()],
       providers: [
         FormBuilder,
         { provide: NgbModal, useValue: modalServiceMock },
         { provide: AuthService, useValue: authServiceMock },
-        { provide: ItinerariesService, useValue: itinerariesServiceMock },
+        { provide: ChallengeService, useValue: challengeServiceMock },
+
       ]
     }).compileComponents();
 
@@ -45,6 +47,7 @@ describe('RegisterModalComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
+    translateService = TestBed.inject(TranslateService);
   });
 
   it('should create register component', () => {
@@ -121,10 +124,11 @@ describe('RegisterModalComponent', () => {
   }));
 
   it('should set default error message when register error', () => {
-    const mockError= { error: { message: { mockKey: 'mockValue' } } };
+    const mockError = { error: { message: { mockKey: 'mock Error' } } };
+    spyOn(translateService, 'instant').and.returnValue('Error en el registro, puede ser que ya estés registrado');
     component.notifyErrorRegister(mockError);
-    expect(component.registerError).toEqual('Error en el registro, puede ser que ya estés registrado');
-});
+    expect(component.registerError).toBe('Error en el registro, puede ser que ya estés registrado');
+  });
 
   it('should open login modal', () => {
     component.openLoginModal();
@@ -137,7 +141,7 @@ describe('RegisterModalComponent', () => {
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   });
 
-  it('should get itineraries', fakeAsync(() => {
+  it('should get itineraries B', fakeAsync(() => {
     let respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3'];
     tick()
     component.getItineraries();

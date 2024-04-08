@@ -14,7 +14,7 @@ export class ChallengeHeaderComponent {
 	constructor(
 		private modalService: NgbModal,
 		private solutionService: SolutionService
-	) {}
+	) { }
 
 	@Input() title = "";
 	@Input() creation_date!: Date;
@@ -35,7 +35,7 @@ export class ChallengeHeaderComponent {
 
 		this.solutionService.solutionSent$.subscribe((value) => {
 			this.solutionSent = value;
-		  });
+		});
 	}
 
 	openSendSolutionModal() {

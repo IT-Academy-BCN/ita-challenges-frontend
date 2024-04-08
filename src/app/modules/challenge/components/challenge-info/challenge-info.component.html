@@ -75,18 +75,14 @@
     }}</a>
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
-        <div class="tab-content info-card">
+        <div class="tab-content info-card w-100">
             <section class="title">
                 <h3 class="title_text">{{'modules.challenge.info.resources' | translate }}</h3>
                 <a class="title_link" href="#">{{'modules.challenge.info.resourcesLink' | translate }} ></a>
             </section>
-            <section class="info-card">
-                <app-resource-card
-                    *ngFor="let resource of resources"
-                    [author]="resource.author"
-                    [date]="resource.generation_date"
-                    [id]="resource.id_resource"
-                    [description]="resource.resource_description"
+            <section class="info-card w-100">
+                <app-resource-card   
+                    [inputResources] ="resources"
                 >
                 </app-resource-card>
             </section>
@@ -119,5 +115,3 @@
 </ul>
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
 <!--Nav panes-->
-
-<button class="btn btn-primary send-solution d-block d-md-none" *ngIf="activeId==1">Enviar solución</button>

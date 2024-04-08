@@ -6,28 +6,39 @@
 </div>
 <div class="d-flex justify-content-center">
     <form [formGroup]="loginForm" class="d-flex flex-column just-content-center gap-3 col-12 col-md-5">
-        <div class="modal-body d-flex flex-column gap-3 pt-0">
-            <h2 class="modal-title">Login</h2>
+        <div class="modal-body d-flex flex-column mt-4 gap-3 pt-0">
+            <h2 class="modal-title mb-2 mb-md-3 text-center">Login</h2>
             <div id="sing-up-form" class="d-flex gap-3 flex-column justify-content-start">
                 <input formControlName="dni" class="form-control" type="text" name="dni" placeholder="DNI o NIE"
                 [ngClass]="!isValidInput('dni') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
                 @if(isValidInput('dni')){
                 <p class="text-danger form-text ps-3"> {{getInputError('dni')}}</p>
                 }
-                <input formControlName="password" class="form-control" type="password" name="password"
-                    placeholder="Contraseña" [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                <div class="password-container d-flex no-wrap align-items-stretch"
+                [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'">
+                    <input formControlName="password" class="p-0" [type]="showPassword ? 'text' : 'password'" name="password"
+                        [placeholder]="'modules.modals.register.password' | translate" 
+                        [ngClass]="!isValidInput('password') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                    <span (click)="togglePasswordMode()">
+                        @if (!showPassword) {
+                            <img src="../../../../assets/img/icon/eye-slash.svg" alt="Hide password">
+                        }@else {
+                            <img src="../../../../assets/img/icon/eye.svg" alt="Show password">
+                        }
+                    </span>
+                </div>                
                     @if(isValidInput('password')){
                     <p class="text-danger form-text ps-3"> {{getInputError('password')}}</p>
                     }
-                <a class="text-end">Recordar/cambiar contraseña</a>
+                <a id="change-password" class="text-end">{{ 'modules.modals.login.forgotPassword' | translate }}</a>
             </div>
             @if(loginError != ""){
-                <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError}}</p>
+                <p class="w-100 text-center text-danger mt-3 mb-0 fs-6"> {{loginError | translate}}</p>
                 }
         </div>
         <div class="modal-footer d-flex flex-column gap-3 mb-3">
             <button (click)="login()" type="submit" class="btn btn-primary w-100">Login</button>
-            <h3><a (click)="openRegisterModal()">¿No tienes cuenta?, crear una</a></h3>
+            <h3><a (click)="openRegisterModal()">{{ 'modules.modals.login.registerRedirect' | translate }}</a></h3>
         </div>
     </form>
 </div>

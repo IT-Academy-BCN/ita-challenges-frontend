@@ -9,6 +9,7 @@ import { User } from "src/app/models/user.model";
 import { LoginModalComponent } from './login-modal.component';
 import { error } from 'node:console';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core';
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent;
