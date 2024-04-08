@@ -79,12 +79,39 @@
                 }
             }
         },"modals": {
-            "login":{
+            "register": {
+                "title": "Registro",
+                "specialization": "Especialización",
+                "password": "Contraseña",
+                "repeat": "Repetir contraseña",
+                "legalTerms": "Acepto términos legales",
+                "loginRedirect": "¿Tienes cuenta?, acceder",
+                "errorMsg": "Error en el registro, puede ser que ya estés registrado"
+            },
+            "login": {
+                "forgotPassword": "Recordar/cambiar contraseña",
+                "registerRedirect": "¿No tienes cuenta?, crear una.",
                 "invalidInput": "Usuario o contraseña incorrecto",
                 "notActive": "Usuario desactivado. Espere al email de confirmación",
                 "generalError": "Error en el login"
+            },
+            "postRegister": {
+                "title": "Registro con éxito",
+                "body": "Un mentor debe validar su registro. Espere la confirmación por correo electrónico antes de iniciar la sesión.",
+                "btn":"De acuerdo"
             }
+        }
+    },
+    "services": {
+        "validators": {
+            "required": "Campo obligatorio",
+            "email": "Email Erróneo",
+            "minLength": "carácteres mínimo",
+            "isValidDni": "DNI inválido",
+            "notSamePassword": "Las contraseñas no coinciden",
+            "notChecked": "Casilla obligatoria",
+            "invalidPassword": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
+            "pattern": "Formato incorrecto"
         }
     }
 }
-      

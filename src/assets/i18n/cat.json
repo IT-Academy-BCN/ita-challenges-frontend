@@ -82,12 +82,39 @@
                 }
             }
         },"modals": {
-            "login":{
+            "register": {
+                "title": "Registre",
+                "specialization": "Especialització",
+                "password": "Contrasenya",
+                "repeat": "Repetir contrasenya",
+                "legalTerms": "Accepto termes legals",
+                "loginRedirect": "Ja tens un compte?, accedeix",
+                "errorMsg": "Error en el registre, potser ja estàs registrat"
+            },
+            "login": {
+                "forgotPassword": "Recordar/Canviar contrasenya",
+                "registerRedirect": "No tens un compte? Crea'n una",
                 "invalidInput": "Usuari o contrasenya incorrectes",
                 "notActive": "Usuari desactivat. Esperi al correu electrònic de confirmació",
                 "generalError": "Error en iniciar sessió"
+            },
+            "postRegister": {
+                "title": "Registre Exitós",
+                "body": "Un mentor ha de validar el seu registre. Esperi la confirmació per correu electrònic abans d'iniciar sessió,",
+                "btn":"D'acord"
             }
         }
+    },
+    "services": {
+        "validators": {
+            "required": "Camp Obligatori",
+            "email": "Email erroni",
+            "minLength": "caràcters mínim",
+            "isValidDni": "DNI invàlid",
+            "notSamePassword": "Les contrasenyes no coincideixen",
+            "notChecked": "Casella obligatòria",
+            "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
+            "pattern": "Format incorrecte"
+        }
     }
-}
-      
+}   
