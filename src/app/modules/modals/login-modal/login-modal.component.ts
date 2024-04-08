@@ -21,6 +21,8 @@ export class LoginModalComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
+  showPassword: boolean = false;
+
   constructor(private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -79,5 +81,9 @@ export class LoginModalComponent {
 
   getInputError(field: string): string {
     return this.validatorsService.getInputError(field, this.loginForm);
+  }
+
+  togglePasswordMode(): void {
+    this.showPassword = !this.showPassword;
   }
 }

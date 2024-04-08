@@ -67,6 +67,11 @@
 }
 
 @media (max-width: 767px) {
+    .modal-dialog-centered {
+        display: block;
+        min-height: auto;
+    }
+    
     .modal-content {
         margin-top: 2.5rem;
 
