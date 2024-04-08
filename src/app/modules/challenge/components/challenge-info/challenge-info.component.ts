@@ -10,6 +10,7 @@ import { NgbModal, NgbNav } from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from "src/app/services/auth.service";
 import { SolutionService } from "src/app/services/solution.service";
 import { RestrictedModalComponent } from "src/app/modules/modals/restricted-modal/restricted-modal.component";
+import { SendSolutionModalComponent } from "src/app/modules/modals/send-solution-modal/send-solution-modal.component";
 
 @Component({
 	selector: "app-challenge-info",
@@ -46,7 +47,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged: boolean = false;
+	isLogged: boolean = true;
 	// activeId = 1;
 	solutionSent: boolean = false;
 
@@ -72,6 +73,9 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
 		// this.checkIfUserIsLoggedIn();
+		this.solutionService.solutionSent$.subscribe((value) => {
+			this.solutionSent = value;
+		});
 	}
 
 	ngAfterContentChecked(): void {
@@ -103,4 +107,23 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 			this.activeIdChange.emit(this.activeId);
 		}
 	}
+
+	openSendSolutionModal() {
+		this.modalService.open(SendSolutionModalComponent, {
+			centered: true,
+			size: "lg",
+		})
+	}
+
+	clickSendButton() {
+		if (!this.isLogged) {
+			this.modalService.open(RestrictedModalComponent, {
+				centered: true,
+				size: "lg",
+			});
+		} else {
+			this.solutionService.sendSolution(''); // Puedes pasar la solución como argumento si es necesario
+		}
+	}
+
 }
