@@ -6,11 +6,11 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { Validators, FormBuilder } from "@angular/forms";
 import { AuthService } from './../../../services/auth.service';
-import { ItinerariesService } from './../../../services/itineraries.service';
 import { Itinerary } from 'src/app/models/itinerary.interface';
 import { ValidatorsService } from 'src/app/services/validators.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PostRegisterModalComponent } from '../post-register-modal/post-register-modal.component';
+import { ChallengeService } from 'src/app/services/challenge.service';
 
 @Component({
 	selector: "app-register-modal",
@@ -35,13 +35,15 @@ export class RegisterModalComponent implements OnInit {
 		]
 	});
 
+	showPassword: boolean = false;
+
 	constructor(
 		private modalService: NgbModal,
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
-		private itinerariesService: ItinerariesService,
 		private validatorsService: ValidatorsService,
-		private translate: TranslateService){
+		private translate: TranslateService,
+		private challengeService: ChallengeService){
 	}
 
 	ngOnInit(): void {
@@ -101,8 +103,12 @@ export class RegisterModalComponent implements OnInit {
 		});
 	}
 
-	async getItineraries() {
-		await this.itinerariesService.getItineraries()
-			.then((itineraries) => this.itineraries = itineraries);
+	async getItineraries(){
+		await this.challengeService.getItineraries()
+		.then((itineraries) => this.itineraries = itineraries);
+	}
+
+	togglePasswordMode(): void {
+		this.showPassword = !this.showPassword;
 	}
 }

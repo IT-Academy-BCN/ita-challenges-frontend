@@ -18,3 +18,38 @@ select.form-select {
 
     }
 }
+
+.password-container {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-radius: 0.7rem;
+    margin-bottom: 10px;
+
+    &.is-invalid {
+        background-image: none;
+    }
+
+    &:focus-within {
+        border-color: $primary;
+        box-shadow: 0 0 0 0.25rem rgba(185, 24, 121, 0.25);
+    }
+
+    input {
+        border: none;
+        border-radius: 0;
+
+        &:focus {
+            box-shadow: none !important;
+        }
+    }
+
+    span {
+        padding-left: 0.5rem;
+        
+        img {
+            cursor: pointer;
+            height: 100%;
+            width: auto;
+        }
+    }
+}

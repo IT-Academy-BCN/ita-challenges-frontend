@@ -7,7 +7,7 @@ import { addYears } from "date-fns";
 import { CookieService } from "ngx-cookie-service";
 import { mock } from "node:test";
 import { of, throwError } from "rxjs";
-import {fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {fakeAsync, flushMicrotasks, TestBed, tick} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { exec } from "child_process";
 import exp from "constants";
@@ -317,11 +317,13 @@ describe("AuthService", () => {
 
 		//spyOn function to mock the behavior of the loginRequest function. 
 		spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
+		spyOn(authService, 'modifyUserWithAdmin');
 
 		authService.register(mockUser).then((returnValue) => {
 			expect(returnValue).toBeTruthy();
 			expect(returnValue).toEqual(mockResponse);
 			expect(resolve).toEqual(null);
+			expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id);
 			done();
 		});
 		done();
@@ -438,5 +440,59 @@ describe("AuthService", () => {
 		expect(console.error).toHaveBeenCalled;
 		done();
 	});
+
+	it("should modifyUserWithAdmin correctly", fakeAsync(() => {
+		let userAdminMock = {
+			idUser: '',
+			dni: '12345678Z',
+			password:'passwordMock'
+		}
+
+		let mockResAfterLogin = {
+			id: 'adminIdMock',
+			authToken: 'testAuthToken',
+			refreshToken: 'refreshToken'
+		}
+
+		cookieServiceMock.set('authToken', mockResAfterLogin.authToken);
+		
+		let mockRegisterUserId = 'wig98drksz4se2wpgbnouu4w';
+
+		let mockLoggedUserData = {
+			dni: '12345678Z',
+			email: 'mock@mock.com',
+			role: 'ADMIN'
+		}
+
+		let mockResponse = {
+			message: 'User has been modified',
+		}
+		spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin));
+		spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData));
+		
+		authService.modifyUserWithAdmin(mockRegisterUserId).then(() => {
+			const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER);
+			expect(reqAdmin.request.method).toEqual('GET');
+			reqAdmin.flush(mockResAfterLogin);
+
+
+			expect(mockLoggedUserData.role).toBe('ADMIN');
+			expect(authService.login).toHaveBeenCalledWith(userAdminMock);
+			expect(authService.getLoggedUserData).toHaveBeenCalled();
+
+
+			const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`);
+			expect(req.request.method).toEqual('PATCH');
+			expect(req.request.headers.get('Content-Type')).toEqual('application/json');
+			req.flush(mockResponse);
+
+			expect(authService.logout).toHaveBeenCalled();
+		}).catch((error) => {
+			fail('Error modifying user: ' + error);
+		});
+
+		tick();
+
+	}));
 
 });
