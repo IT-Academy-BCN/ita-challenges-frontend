@@ -41,13 +41,13 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 	@Input() popularity!: number;
 	@Input() languages: Language[] = [];
 	@Input() activeId: number = 1;
-	// @Output() activeId: number = 1;
+
 	@Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>();
 
 	solutionsDummy = [{ solutionName: "dummy1" }, { solutionName: "dummy2" }];
 
 	showStatement = true;
-	isLogged: boolean = true;
+	isLogged: boolean = false;
 	// activeId = 1;
 	solutionSent: boolean = false;
 

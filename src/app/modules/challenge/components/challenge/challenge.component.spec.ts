@@ -191,4 +191,11 @@ describe('ChallengeComponent', () => {
     expect(challengeInfoComponent.languages).toEqual(component.languages);
 
   });
+
+  it('should onActiveIdchange correctly', () => {
+    const newActiveId=2;
+    component.onActiveIdChange(newActiveId);
+
+    expect(component.activeId).toBe(newActiveId);
+  });
 });

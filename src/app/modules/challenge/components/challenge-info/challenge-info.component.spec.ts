@@ -12,6 +12,7 @@ import { ResourceCardComponent } from '../../../../shared/components/resource-ca
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component';
+import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component';
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent;
@@ -89,6 +90,33 @@ describe('ChallengeInfoComponent', () => {
       localStorage.removeItem('refreshToken');
       component.ngAfterContentChecked();
       expect(component.isLogged).toBeFalsy();
+    });
+
+    it('should open send solution modal', () => {
+      spyOn(modalService, 'open').and.stub();
+      component.openSendSolutionModal();
+  
+      expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg'});
+    });
+  
+    it('should open restricted modal if user is not logged in', () => {
+      spyOn(modalService, 'open').and.stub();
+      component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
+      component.clickSendButton();
+  
+    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
+    });
+
+    it('should onActiveIdchange correctly', () => {
+
+      const newActiveId=2;
+      const activeId=1;
+
+      component.onActiveIdChange(newActiveId);
+
+      expect(component.activeIdChange).toBeTruthy();
+      expect(component.activeIdChange.emit(activeId));
+      expect(component.activeId).toBe(newActiveId);
     });
   });
 

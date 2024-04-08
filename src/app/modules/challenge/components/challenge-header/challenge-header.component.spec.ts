@@ -7,8 +7,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component';
-import { HttpClient } from '@angular/common/http';
-
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -45,10 +43,12 @@ describe('ChallengeHeaderComponent', () => {
     component.title = "Test Title",
     component.creation_date = new Date;
     component.level = "Easy",
+    component.activeId = 1;
     
     expect(component.title).toEqual("Test Title");
     expect(component.creation_date).toBeDefined();
     expect(component.level).toEqual("Easy");
+    expect(component.activeId).toEqual(1);
   });
 
   it('should open send solution modal', () => {
