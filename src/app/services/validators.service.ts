@@ -16,7 +16,10 @@ export class ValidatorsService {
 
   // checks if flied is valid and touched
   isValidInput (input: string, form: FormGroup): boolean | null {
-    return form.controls[input].errors && form.controls[input].touched
+    if (form.controls[input].errors !== null && form.controls[input].touched) {
+      return true
+    }
+    return false
   }
 
   // returns a message error

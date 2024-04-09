@@ -6,8 +6,8 @@ import { TranslateModule } from '@ngx-translate/core'
 describe('ValidatorsService', () => {
   let service: ValidatorsService
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()]
     }).compileComponents()
     service = TestBed.inject(ValidatorsService)

@@ -11,7 +11,7 @@ export class TokenService {
     this.cookieService.set('authToken', token)
   }
 
-  public get authToken () {
+  public get authToken (): string {
     return this.cookieService.get('authToken')
   }
 
@@ -19,7 +19,7 @@ export class TokenService {
     this.cookieService.set('authToken', token)
   }
 
-  public get refreshToken () {
+  public get refreshToken (): string {
     return this.cookieService.get('refreshToken')
   }
 
