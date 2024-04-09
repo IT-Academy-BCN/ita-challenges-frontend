@@ -12,84 +12,84 @@ import { type SolutionService } from 'src/app/services/solution.service'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 
 @Component({
-  selector: 'app-challenge-info',
-  templateUrl: './challenge-info.component.html',
-  styleUrls: ['./challenge-info.component.scss'],
-  providers: [ChallengeService]
+	selector: 'app-challenge-info',
+	templateUrl: './challenge-info.component.html',
+	styleUrls: ['./challenge-info.component.scss'],
+	providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
-  isUserSolution: boolean = true
+	isUserSolution: boolean = true
 
-  constructor (
-    private readonly challengeService: ChallengeService,
-    private readonly authService: AuthService,
-    private readonly solutionService: SolutionService,
-    private readonly modalService: NgbModal
-  ) {}
+	constructor(
+		private readonly challengeService: ChallengeService,
+		private readonly authService: AuthService,
+		private readonly solutionService: SolutionService,
+		private readonly modalService: NgbModal
+	) { }
 
-  @ViewChild('nav') nav!: NgbNav
+	@ViewChild('nav') nav!: NgbNav
 
-  @Input() related: any = []
-  @Input() resources: any = []
-  @Input() details!: ChallengeDetails
-  @Input() solutions: any = []
-  @Input() description!: string
-  @Input() examples: Example[] = []
-  @Input() notes!: string
-  @Input() popularity!: number
-  @Input() languages: Language[] = []
+	@Input() related: any = []
+	@Input() resources: any = []
+	@Input() details!: ChallengeDetails
+	@Input() solutions: any = []
+	@Input() description!: string
+	@Input() examples: Example[] = []
+	@Input() notes!: string
+	@Input() popularity!: number
+	@Input() languages: Language[] = []
 
-  solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
+	solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  showStatement = true
-  isLogged: boolean = false
-  activeId = 1
-  solutionSent: boolean = false
+	showStatement = true
+	isLogged: boolean = false
+	activeId = 1
+	solutionSent: boolean = false
 
-  idChallenge!: string | any
-  params$!: Subscription
-  jsonData: Challenge[] = []
-  challenge!: Challenge
-  dataChallenge!: DataChallenge
-  challenges: Challenge[] = []
-  challengeSubs$!: Subscription
+	idChallenge!: string | any
+	params$!: Subscription
+	jsonData: Challenge[] = []
+	challenge!: Challenge
+	dataChallenge!: DataChallenge
+	challenges: Challenge[] = []
+	challengeSubs$!: Subscription
 
-  related_title = ''
-  related_creation_date!: Date
-  related_level = ''
-  related_popularity!: number
-  related_languages: Language[] = []
-  related_id = this.related
+	related_title = ''
+	related_creation_date!: Date
+	related_level = ''
+	related_popularity!: number
+	related_languages: Language[] = []
+	related_id = this.related
 
-  ngOnInit () {
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.isUserSolution = !value
-    })
-    // this.authService.isLoggedIn();
-    this.loadRelatedChallenge(this.related_id)
-    // this.checkIfUserIsLoggedIn();
-  }
+	ngOnInit() {
+		this.solutionService.solutionSent$.subscribe((value) => {
+			this.isUserSolution = !value
+		})
+		// this.authService.isLoggedIn();
+		this.loadRelatedChallenge(this.related_id)
+		// this.checkIfUserIsLoggedIn();
+	}
 
-  ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken')// TODO
-    const refreshToken = localStorage.getItem('refreshToken')// TODO
+	ngAfterContentChecked(): void {
+		const token = localStorage.getItem('authToken')// TODO
+		const refreshToken = localStorage.getItem('refreshToken')// TODO
 
-    if (token && refreshToken) {
-      this.isLogged = true
-    }
-  }
+		if (token && refreshToken) {
+			this.isLogged = true
+		}
+	}
 
-  loadRelatedChallenge (id: string) {
-    this.challengeSubs$ = this.challengeService
-      .getChallengeById(id)
-      .subscribe((challenge) => {
-        this.challenge = new Challenge(challenge)
-        this.related_title = this.challenge?.challenge_title
-        this.related_creation_date = this.challenge?.creation_date
-        this.related_level = this.challenge?.level
-        this.related_popularity = this.challenge.popularity
-        this.related_languages = this.challenge.languages
-        this.related_id = this.related
-      })
-  }
+	loadRelatedChallenge(id: string) {
+		this.challengeSubs$ = this.challengeService
+			.getChallengeById(id)
+			.subscribe((challenge) => {
+				this.challenge = new Challenge(challenge)
+				this.related_title = this.challenge?.challenge_title
+				this.related_creation_date = this.challenge?.creation_date
+				this.related_level = this.challenge?.level
+				this.related_popularity = this.challenge.popularity
+				this.related_languages = this.challenge.languages
+				this.related_id = this.related
+			})
+	}
 }

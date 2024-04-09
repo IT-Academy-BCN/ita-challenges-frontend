@@ -1,20 +1,20 @@
-import { type ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing'
-import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms'
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'
-import { of } from 'rxjs'
-import { RegisterModalComponent } from './register-modal.component'
-import { AuthService } from '../../../services/auth.service'
-import { type User } from '../../../models/user.model'
-import { ItinerariesService } from './../../../services/itineraries.service'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { RegisterModalComponent } from './register-modal.component';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../models/user.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ChallengeService } from 'src/app/services/challenge.service';
 
 describe('RegisterModalComponent', () => {
-  let component: RegisterModalComponent
-  let fixture: ComponentFixture<RegisterModalComponent>
-  let modalServiceMock: any
-  let authServiceMock: any
-  let itinerariesServiceMock: any
-  let translateService: TranslateService
+  let component: RegisterModalComponent;
+  let fixture: ComponentFixture<RegisterModalComponent>;
+  let modalServiceMock: any;
+  let authServiceMock: any;
+  let challengeServiceMock: any;
+  let translateService: TranslateService;
 
   beforeEach(async () => {
     modalServiceMock = {
@@ -26,8 +26,8 @@ describe('RegisterModalComponent', () => {
       register: jest.fn().mockResolvedValue(of([]))
     }
 
-    itinerariesServiceMock = {
-      getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3'])
+    challengeServiceMock = {
+      getItineraries: jest.fn().mockResolvedValue(['itinerary1', 'itinerary2', 'itinerary3']),
     }
 
     await TestBed.configureTestingModule({
@@ -37,7 +37,8 @@ describe('RegisterModalComponent', () => {
         FormBuilder,
         { provide: NgbModal, useValue: modalServiceMock },
         { provide: AuthService, useValue: authServiceMock },
-        { provide: ItinerariesService, useValue: itinerariesServiceMock }
+        { provide: ChallengeService, useValue: challengeServiceMock },
+
       ]
     }).compileComponents()
 
@@ -139,8 +140,8 @@ describe('RegisterModalComponent', () => {
     expect(modalServiceMock.dismissAll).toHaveBeenCalled()
   })
 
-  it('should get itineraries', fakeAsync(() => {
-    const respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3']
+  it('should get itineraries B', fakeAsync(() => {
+    let respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3'];
     tick()
     component.getItineraries()
     expect(component.itineraries).toEqual(respMock)
