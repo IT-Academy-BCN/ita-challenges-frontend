@@ -1,6 +1,4 @@
-import { async, type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
-import { By } from '@angular/platform-browser'
-import { DebugElement } from '@angular/core'
+import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 
 import { BreadcrumbComponent } from './breadcrumb.component'
 
@@ -8,8 +6,8 @@ describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent
   let fixture: ComponentFixture<BreadcrumbComponent>
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
       declarations: [BreadcrumbComponent]
     })
       .compileComponents()

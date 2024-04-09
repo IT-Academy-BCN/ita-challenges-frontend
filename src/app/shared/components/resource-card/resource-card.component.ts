@@ -1,11 +1,7 @@
-import { resolve } from 'path'
 import { type ResourceResponse } from '../../../models/resource.interface'
-import { Resource } from 'src/app/models/resource.model'
 import { Component, Input, type OnInit } from '@angular/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { ResourcesService } from 'src/app/services/resources.service'
-import { error } from 'console'
-import { resolve4 } from 'dns/promises'
 
 @Component({
   selector: 'app-resource-card',

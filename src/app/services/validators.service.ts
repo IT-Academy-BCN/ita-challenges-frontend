@@ -12,7 +12,7 @@ export class ValidatorsService {
   }
 
   // email
-  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
 
   // checks if flied is valid and touched
   isValidInput (input: string, form: FormGroup): boolean | null {
@@ -21,7 +21,7 @@ export class ValidatorsService {
 
   // returns a message error
   getInputError (input: string, form: FormGroup): string {
-    const errors = form.controls[input].errors || {}
+    const errors = form.controls[input].errors ?? {}
     let errorMessage: string = ''
 
     for (const error of Object.keys(errors)) {

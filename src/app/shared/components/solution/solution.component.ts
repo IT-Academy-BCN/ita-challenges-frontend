@@ -18,7 +18,7 @@ type Language = 'javascript' | 'java' | 'python' | 'php'
 })
 export class SolutionComponent {
   @ViewChild('editorSolution') editorSolution!: ElementRef
-  editor!: boolean
+  editor: EditorView = new EditorView()
 
   @Input() set number (value: number | undefined) {
     setTimeout(() => {
@@ -38,7 +38,7 @@ export class SolutionComponent {
   /* code added by valerio */
   private textRemoved = false
 
-  handleClick (event: MouseEvent): void{
+  handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
       // Check if the text has not been removed yet
       const div = event.target as HTMLDivElement
@@ -56,25 +56,25 @@ export class SolutionComponent {
 
   ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
-      if (this.editor && this.isUserSolution) {
-        const currentSolution = this.editor.state.doc.toString()
-        if (currentSolution !== this.lastSentSolution) {
-          this.solutionService.sendSolution(currentSolution)
-          this.lastSentSolution = currentSolution
-        }
+      // if (this.editor && this.isUserSolution) {
+      const currentSolution = this.editor.state.doc.toString()
+      if (currentSolution !== this.lastSentSolution) {
+        this.solutionService.sendSolution(currentSolution)
+        this.lastSentSolution = currentSolution
       }
+      // }
     })
     this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
       this.solutions = data.solutions
     })
   }
 
-  ngAfterViewInit () {
+  ngAfterViewInit (): void {
     this.createEditor()
   }
 
   // nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
-  createEditor () {
+  createEditor (): void {
     let languageExtension
 
     switch (this.languageExt) {

@@ -1,4 +1,4 @@
-import { type ComponentFixture, TestBed, async } from '@angular/core/testing'
+import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { SolutionComponent } from './solution.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
@@ -9,13 +9,13 @@ describe('SolutionComponent with TranslateService', () => {
   let fixture: ComponentFixture<SolutionComponent>
   let translateService: TranslateService
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       declarations: [SolutionComponent],
       providers: [SolutionService, TranslateService]
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SolutionComponent)

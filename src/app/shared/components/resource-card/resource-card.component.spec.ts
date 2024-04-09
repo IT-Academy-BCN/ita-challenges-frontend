@@ -1,10 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ResourceCardComponent } from './resource-card.component'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { RouterTestingModule } from '@angular/router/testing'
 import { ResourcesService } from 'src/app/services/resources.service'
-import { FormBuilder } from '@angular/forms'
-import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 
 describe('ResourceComponent', () => {
@@ -36,7 +33,7 @@ describe('ResourceComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should ngOnInit load resources correctly', (done) => {
+  it('should ngOnInit load resources correctly', async () => {
     const responseMock = [{
       id: 'e7b6b5a0-5b0a-4b0e-8b0a-9b0a0b0a0b0a',
       title: 'Tutorial completo de Angular desde cero',
@@ -76,23 +73,20 @@ describe('ResourceComponent', () => {
 
     fixture.detectChanges()
 
-    fixture.whenStable().then(() => {
+    await fixture.whenStable().then(() => {
       expect(component.resources).toEqual(responseMock)
-    })
-
-    done()
+    }).catch()
   })
 
-  it('should ngOnInit handle error from service', (done) => {
+  it('should ngOnInit handle error from service', async () => {
     const errorMessage = 'Error fetching resources'
 
     resourcesServiceMock.getResources.mockReturnValue(throwError(() => new Error(errorMessage)))
 
     fixture.detectChanges()
 
-    fixture.whenStable().then(() => {
+    await fixture.whenStable().then(() => {
       expect(component.resources).toEqual([])
-      done()
-    })
+    }).catch()
   })
 })

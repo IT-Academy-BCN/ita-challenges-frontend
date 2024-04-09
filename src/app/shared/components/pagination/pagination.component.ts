@@ -12,21 +12,17 @@ export class PaginationComponent {
 
   @Output() paginaEmitter = new EventEmitter<number>()
 
-  constructor () { }
-
-  ngOnInit () {}
-
-  next () {
+  next (): void {
     this.page++
     this.changePage()
   }
 
-  prev () {
+  prev (): void {
     this.page--
     this.changePage()
   }
 
-  changePage () {
+  changePage (): void {
     this.paginaEmitter.emit(this.page)
   }
 }
