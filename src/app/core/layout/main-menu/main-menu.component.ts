@@ -16,7 +16,7 @@ export class MainMenuComponent {
     translate.use('es')
   }
 
-  openLoginModal () {
+  openLoginModal (): void {
     this.modalService.open(LoginModalComponent, { centered: true, size: 'lg' })
   }
 

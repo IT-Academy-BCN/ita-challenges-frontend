@@ -23,19 +23,19 @@ export class Challenge {
     this.popularity = element.popularity
     this.details = element.details
 
-    element.languages.forEach((language: any) => {
+    element.languages.forEach((language: Language) => {
       this.languages.push(language)
     })
 
-    element.solutions.forEach((solution: any) => {
+    element.solutions.forEach((solution: Solution) => {
       this.solutions.push(solution)
     })
 
-    element.resources.forEach((resource: any) => {
+    element.resources.forEach((resource: Resource) => {
       this.resources.push(resource)
     })
 
-    element.related.forEach((challengeRelated: any) => {
+    element.related.forEach((challengeRelated: string) => {
       this.related.push(challengeRelated)
     })
   }

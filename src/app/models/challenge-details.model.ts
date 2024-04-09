@@ -5,11 +5,11 @@ export class ChallengeDetails {
   examples: Example[] = []
   notes: string
 
-  constructor (element: any) {
+  constructor (element: { description: string, notes: string, examples: any[] }) {
     this.description = element.description
     this.notes = element.notes
 
-    element.examples.forEach((example: any) => {
+    element.examples.forEach((example: Example) => {
       this.examples.push(example)
     })
   }

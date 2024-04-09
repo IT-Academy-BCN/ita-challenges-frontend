@@ -7,15 +7,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component'
-import { HttpClient } from '@angular/common/http'
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent
   let fixture: ComponentFixture<ChallengeHeaderComponent>
   let modalService: NgbModal
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         ChallengeHeaderComponent
       ],
@@ -41,9 +40,9 @@ describe('ChallengeHeaderComponent', () => {
   })
 
   it('should initialize input correctly', () => {
-    component.title = 'Test Title',
+    component.title = 'Test Title'
     component.creation_date = new Date()
-    component.level = 'Easy',
+    component.level = 'Easy'
 
     expect(component.title).toEqual('Test Title')
     expect(component.creation_date).toBeDefined()
