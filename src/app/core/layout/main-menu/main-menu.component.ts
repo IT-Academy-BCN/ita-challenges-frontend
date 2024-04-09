@@ -12,9 +12,9 @@ export class MainMenuComponent {
   
   constructor(private modalService: NgbModal,
               private translate: TranslateService){
-                translate.addLangs(['en', 'es', 'cat']);
-                translate.setDefaultLang('es');
-                translate.use('es'); 
+                translate.addLangs(['en', 'es', 'ca']);
+                translate.setDefaultLang('ca');
+                translate.use('ca'); 
               } 
   
   openLoginModal(){
