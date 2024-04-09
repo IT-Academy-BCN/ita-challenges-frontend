@@ -1,4 +1,4 @@
-/// <reference types="@angular/localize" />
+import '@angular/localize'
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 

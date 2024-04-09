@@ -1,6 +1,8 @@
+import { version } from '../../package.json'
+
 export const environment = {
   production: false,
-  appVersion: require('../../package.json').version,
+  appVersion: version,
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
   BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',

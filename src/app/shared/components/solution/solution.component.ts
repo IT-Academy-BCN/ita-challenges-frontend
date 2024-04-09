@@ -1,14 +1,13 @@
-import { Component, type ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import { Component, type ElementRef, Input, ViewChild } from '@angular/core'
 import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import { java } from '@codemirror/lang-java'
 import { php } from '@codemirror/lang-php'
-import { basicSetup, minimalSetup } from 'codemirror'
+import { minimalSetup } from 'codemirror'
 import { type SolutionService } from '../../../services/solution.service'
 import { type TranslateService } from '@ngx-translate/core'
-import { environment } from 'src/environments/environment'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
 
@@ -19,7 +18,7 @@ type Language = 'javascript' | 'java' | 'python' | 'php'
 })
 export class SolutionComponent {
   @ViewChild('editorSolution') editorSolution!: ElementRef
-  editor: any
+  editor!: boolean
 
   @Input() set number (value: number | undefined) {
     setTimeout(() => {
@@ -27,7 +26,7 @@ export class SolutionComponent {
     }, 0)
   }
 
-  get number () {
+  get number (): number | undefined {
     return this._number
   }
 
@@ -39,7 +38,7 @@ export class SolutionComponent {
   /* code added by valerio */
   private textRemoved = false
 
-  handleClick (event: MouseEvent) {
+  handleClick (event: MouseEvent): void{
     if (!this.textRemoved) {
       // Check if the text has not been removed yet
       const div = event.target as HTMLDivElement
