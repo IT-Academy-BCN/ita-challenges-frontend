@@ -1,16 +1,16 @@
 import { environment } from './../../../../environments/environment'
 import { type User } from './../../../models/user.model'
 
-import { Component, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { LoginModalComponent } from "../login-modal/login-modal.component";
-import { Validators, FormBuilder } from "@angular/forms";
-import { AuthService } from './../../../services/auth.service';
-import { Itinerary } from 'src/app/models/itinerary.interface';
-import { ValidatorsService } from 'src/app/services/validators.service';
-import { TranslateService } from '@ngx-translate/core';
-import { PostRegisterModalComponent } from '../post-register-modal/post-register-modal.component';
-import { ChallengeService } from 'src/app/services/challenge.service';
+import { Component, type OnInit } from '@angular/core'
+import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { LoginModalComponent } from '../login-modal/login-modal.component'
+import { Validators, type FormBuilder } from '@angular/forms'
+import { type AuthService } from './../../../services/auth.service'
+import { type Itinerary } from 'src/app/models/itinerary.interface'
+import { type ValidatorsService } from 'src/app/services/validators.service'
+import { type TranslateService } from '@ngx-translate/core'
+import { PostRegisterModalComponent } from '../post-register-modal/post-register-modal.component'
+import { type ChallengeService } from 'src/app/services/challenge.service'
 
 @Component({
   selector: 'app-register-modal',
@@ -21,30 +21,30 @@ export class RegisterModalComponent implements OnInit {
   registerError: string = ''
   itineraries: Itinerary[] = []
 
-	registerForm = this.formBuilder.group({
-		dni: ["", Validators.required, this.validatorsService.isValidDni],
-		email: ["", [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
-		name: ["", Validators.required],
-		itineraryId: ["", Validators.required],
-		password: ["", [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword ],
-		confirmPassword: ["", [Validators.required, Validators.minLength(8)] ],
-		legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked],
-	},{
-		validators: [
-			this.validatorsService.isSamePassword('password', 'confirmPassword'),
-		]
-	});
+  registerForm = this.formBuilder.group({
+    dni: ['', Validators.required, this.validatorsService.isValidDni],
+    email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+    name: ['', Validators.required],
+    itineraryId: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword],
+    confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
+    legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked]
+  }, {
+    validators: [
+      this.validatorsService.isSamePassword('password', 'confirmPassword')
+    ]
+  })
 
-	showPassword: boolean = false;
+  showPassword: boolean = false
 
-	constructor(
-		private modalService: NgbModal,
-		private formBuilder: FormBuilder,
-		private authService: AuthService,
-		private validatorsService: ValidatorsService,
-		private translate: TranslateService,
-		private challengeService: ChallengeService){
-	}
+  constructor (
+    private readonly modalService: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly validatorsService: ValidatorsService,
+    private readonly translate: TranslateService,
+    private readonly challengeService: ChallengeService) {
+  }
 
   ngOnInit (): void {
     this.getItineraries()
@@ -103,12 +103,12 @@ export class RegisterModalComponent implements OnInit {
     })
   }
 
-	async getItineraries(){
-		await this.challengeService.getItineraries()
-		.then((itineraries) => this.itineraries = itineraries);
-	}
+  async getItineraries () {
+    await this.challengeService.getItineraries()
+      .then((itineraries) => this.itineraries = itineraries)
+  }
 
-	togglePasswordMode(): void {
-		this.showPassword = !this.showPassword;
-	}
+  togglePasswordMode (): void {
+    this.showPassword = !this.showPassword
+  }
 }

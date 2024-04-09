@@ -1,26 +1,25 @@
-import { add } from "date-fns";
-import { AbstractType, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import { add } from 'date-fns'
+import { AbstractType, Injectable } from '@angular/core'
+import { type HttpClient } from '@angular/common/http'
+import { environment } from '../../environments/environment'
 import {
-	BehaviorSubject,
-	Observable,
-	catchError,
-	firstValueFrom,
-	map,
-	of,
-	tap,
-	throwError,
-} from "rxjs";
-import { User } from "../models/user.model";
-import { ResolveEnd, Router } from "@angular/router";
-import { CookieService } from "ngx-cookie-service";
-import { fakeAsync } from '@angular/core/testing';
-import { BlobOptions } from "buffer";
-import { TokenService } from "./token.service";
-import { error } from "console";
-import { resolve } from "path";
-
+  BehaviorSubject,
+  type Observable,
+  catchError,
+  firstValueFrom,
+  map,
+  of,
+  tap,
+  throwError
+} from 'rxjs'
+import { User } from '../models/user.model'
+import { ResolveEnd, type Router } from '@angular/router'
+import { type CookieService } from 'ngx-cookie-service'
+import { fakeAsync } from '@angular/core/testing'
+import { BlobOptions } from 'buffer'
+import { type TokenService } from './token.service'
+import { error } from 'console'
+import { resolve } from 'path'
 
 interface loginResponse {
   id: string
@@ -94,57 +93,57 @@ export class AuthService {
       })
   }
 
-	public register(user: User): Promise<any> {
-		return new Promise((resolve, reject) => {
-			this.registerRequest(user).subscribe({
-				next: (resp: registerResponse) => {
-					resolve(null);
-					this.modifyUserWithAdmin(resp.id);
-				},
-				error: (err) => { reject(err.message) }
-			});
-		});
-	}
+  public async register (user: User): Promise<any> {
+    return await new Promise((resolve, reject) => {
+      this.registerRequest(user).subscribe({
+        next: (resp: registerResponse) => {
+          resolve(null)
+          this.modifyUserWithAdmin(resp.id)
+        },
+        error: (err) => { reject(err.message) }
+      })
+    })
+  }
 
-	public async modifyUserWithAdmin(registerUserId: string) {
-		const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER));
+  public async modifyUserWithAdmin (registerUserId: string) {
+    const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER))
 
-		if(userAdmin){
-			await this.login(userAdmin);
-		} else{
-			console.error('Admin acount not found');
-		}
-				
-		try {
-			let userLoggedData = await this.getLoggedUserData();
-			if (userLoggedData.role === 'ADMIN') {
-				await firstValueFrom(
-					this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
-						{
-							'authToken': this.cookieService.get('authToken'),
-							'status': 'ACTIVE',
-						},
-						{
-							headers: {
-								'Content-Type': 'application/json',
-							}
-						})
-				);
-			} else {
-				throw new Error("The logged-in user is not an admin.");
-			}
-			this.logout;
-		} catch (error) {
-			console.error("Error modifying user with admin:", error);
-			throw error;
-		}
-	}
+    if (userAdmin) {
+      await this.login(userAdmin)
+    } else {
+      console.error('Admin acount not found')
+    }
 
-	public getUserIdFromCookie() {
-		let stringifiedUSer = this.cookieService.get('user');
-		let user = JSON.parse(stringifiedUSer);
-		return user.idUser;
-	}
+    try {
+      const userLoggedData = await this.getLoggedUserData()
+      if (userLoggedData.role === 'ADMIN') {
+        await firstValueFrom(
+          this.http.patch((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(`/${registerUserId}`)),
+            {
+              authToken: this.cookieService.get('authToken'),
+              status: 'ACTIVE'
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+        )
+      } else {
+        throw new Error('The logged-in user is not an admin.')
+      }
+      this.logout
+    } catch (error) {
+      console.error('Error modifying user with admin:', error)
+      throw error
+    }
+  }
+
+  public getUserIdFromCookie () {
+    const stringifiedUSer = this.cookieService.get('user')
+    const user = JSON.parse(stringifiedUSer)
+    return user.idUser
+  }
 
   /**
 	 * Log in with a user. Set user as current user.
@@ -162,21 +161,21 @@ export class AuthService {
       })
   }
 
-	public async login(user: User): Promise<any> {
-		try {
-			let resp = await firstValueFrom(this.loginRequest(user));
-			if (!resp) {
-				throw new Error("Empty response");
-			}
-			this.currentUser = new User(resp.id);
-			this.cookieService.set('authToken', resp.authToken);
-			this.cookieService.set('refreshToken', resp.refreshToken);
-			this.cookieService.set('user', JSON.stringify(this.currentUser));
-			return resp;
-		} catch (err) {
-			throw err;
-		}
-	}
+  public async login (user: User): Promise<any> {
+    try {
+      const resp = await firstValueFrom(this.loginRequest(user))
+      if (!resp) {
+        throw new Error('Empty response')
+      }
+      this.currentUser = new User(resp.id)
+      this.cookieService.set('authToken', resp.authToken)
+      this.cookieService.set('refreshToken', resp.refreshToken)
+      this.cookieService.set('user', JSON.stringify(this.currentUser))
+      return resp
+    } catch (err) {
+      throw err
+    }
+  }
 
   public logout () {
     this.cookieService.delete('authToken')
@@ -190,29 +189,29 @@ export class AuthService {
 		 * and store it in the cookie
 	*/
 
-	public getLoggedUserData(): Promise<UserResponse> {
-		return new Promise<UserResponse>((resolve, reject) => {
-			this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
-				{
-					'authToken': this.cookieService.get('authToken'),
-				},
-			).subscribe({
-				next: (res) => {
-					let user: User = this.currentUser;
+  public async getLoggedUserData (): Promise<UserResponse> {
+    return await new Promise<UserResponse>((resolve, reject) => {
+      this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
+        {
+          authToken: this.cookieService.get('authToken')
+        }
+      ).subscribe({
+        next: (res) => {
+          const user: User = this.currentUser
 
-					let userData: User = {
-						'idUser': user.idUser,
-						'dni': res.dni,
-						'email': res.email,
-					};
+          const userData: User = {
+            idUser: user.idUser,
+            dni: res.dni,
+            email: res.email
+          }
 
-					this.currentUser = userData;
-					resolve(res);
-				},
-				error: err => { reject(err.message) }
-			})
-		});
-	}
+          this.currentUser = userData
+          resolve(res)
+        },
+        error: err => { reject(err.message) }
+      })
+    })
+  }
 
   /* Check if the user is  Logged in */
   public async isUserLoggedIn () { // TODO: neec tokenService first

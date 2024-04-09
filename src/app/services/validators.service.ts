@@ -45,8 +45,8 @@ export class ValidatorsService {
           errorMessage = this.translate.instant('services.validators.notChecked')
           break
         case 'invalidPassword':
-          errorMessage = this.translate.instant('services.validators.invalidPassword');
-          break;
+          errorMessage = this.translate.instant('services.validators.invalidPassword')
+          break
         case 'pattern':
           errorMessage = this.translate.instant('services.validators.pattern')
           break

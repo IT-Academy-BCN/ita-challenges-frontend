@@ -1,20 +1,20 @@
-import { error } from 'console';
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { AuthService } from "./auth.service";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { addYears } from "date-fns";
-import { CookieService } from "ngx-cookie-service";
-import { mock } from "node:test";
-import { of, throwError } from "rxjs";
-import {fakeAsync, flushMicrotasks, TestBed, tick} from "@angular/core/testing";
-import { environment } from "src/environments/environment";
-import { exec } from "child_process";
-import exp from "constants";
-import {tap} from "rxjs/operators";
-import {User} from "../models/user.model";
-import {TokenService} from "./token.service";
-import { resolve } from "path";
+import { error } from 'console'
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { AuthService } from './auth.service'
+import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
+import { addYears } from 'date-fns'
+import { CookieService } from 'ngx-cookie-service'
+import { mock } from 'node:test'
+import { of, throwError } from 'rxjs'
+import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing'
+import { environment } from 'src/environments/environment'
+import { exec } from 'child_process'
+import exp from 'constants'
+import { tap } from 'rxjs/operators'
+import { User } from '../models/user.model'
+import { type TokenService } from './token.service'
+import { resolve } from 'path'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -310,35 +310,35 @@ describe('AuthService', () => {
       id: 'mockIdResponse'
     }
 
-		//spyOn function to mock the behavior of the loginRequest function. 
-		spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
-		spyOn(authService, 'modifyUserWithAdmin');
+    // spyOn function to mock the behavior of the loginRequest function.
+    spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)) // Import 'of' from 'rxjs' if not already imported
+    spyOn(authService, 'modifyUserWithAdmin')
 
-		authService.register(mockUser).then((returnValue) => {
-			expect(returnValue).toBeTruthy();
-			expect(returnValue).toEqual(mockResponse);
-			expect(resolve).toEqual(null);
-			expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id);
-			done();
-		});
-		done();
-	});
+    authService.register(mockUser).then((returnValue) => {
+      expect(returnValue).toBeTruthy()
+      expect(returnValue).toEqual(mockResponse)
+      expect(resolve).toEqual(null)
+      expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id)
+      done()
+    })
+    done()
+  })
 
-	it ("should show UNsuccessly register modal", (done) => {
-		const mockUser = {
-			idUser:'mockIdResponse',
-			dni: 'mockUserDni',
-			email: 'mockUserEmail',
-			name: 'mockUserName',
-			itineraryId: 'mockUserIteneraryId',
-			password:'mockUserPassword',
-			confirmPassword: 'mockUserConfirmPassword',
-		};
+  it('should show UNsuccessly register modal', (done) => {
+    const mockUser = {
+      idUser: 'mockIdResponse',
+      dni: 'mockUserDni',
+      email: 'mockUserEmail',
+      name: 'mockUserName',
+      itineraryId: 'mockUserIteneraryId',
+      password: 'mockUserPassword',
+      confirmPassword: 'mockUserConfirmPassword'
+    }
 
-		let mockErrorMessage = 'Invalid data';
-		let mockErrorResponse = { // response we expect from the loginRequest function.
-			message: mockErrorMessage
-		};
+    const mockErrorMessage = 'Invalid data'
+    const mockErrorResponse = { // response we expect from the loginRequest function.
+      message: mockErrorMessage
+    }
 
     spyOn(authService, 'registerRequest').and.returnValue(
       of({}).pipe(
@@ -418,73 +418,69 @@ describe('AuthService', () => {
   it('should handle error in getLoggedUserData', (done) => {
     spyOn(console, 'error') // spy console.error
 
-		// Simulamos un evento de progreso para indicar un error
-		const errorEvent = new ProgressEvent('error', {
-			lengthComputable: false,
-			loaded: 0,
-			total: 0,
-		});
+    // Simulamos un evento de progreso para indicar un error
+    const errorEvent = new ProgressEvent('error', {
+      lengthComputable: false,
+      loaded: 0,
+      total: 0
+    })
 
-		authService.getLoggedUserData();
-		const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+    authService.getLoggedUserData()
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER))
 
-		req.error(errorEvent);
-		expect(console.error).toHaveBeenCalled;
-		done();
-	});
+    req.error(errorEvent)
+    expect(console.error).toHaveBeenCalled
+    done()
+  })
 
-	it("should modifyUserWithAdmin correctly", fakeAsync(() => {
-		let userAdminMock = {
-			idUser: '',
-			dni: '12345678Z',
-			password:'passwordMock'
-		}
+  it('should modifyUserWithAdmin correctly', fakeAsync(() => {
+    const userAdminMock = {
+      idUser: '',
+      dni: '12345678Z',
+      password: 'passwordMock'
+    }
 
-		let mockResAfterLogin = {
-			id: 'adminIdMock',
-			authToken: 'testAuthToken',
-			refreshToken: 'refreshToken'
-		}
+    const mockResAfterLogin = {
+      id: 'adminIdMock',
+      authToken: 'testAuthToken',
+      refreshToken: 'refreshToken'
+    }
 
-		cookieServiceMock.set('authToken', mockResAfterLogin.authToken);
-		
-		let mockRegisterUserId = 'wig98drksz4se2wpgbnouu4w';
+    cookieServiceMock.set('authToken', mockResAfterLogin.authToken)
 
-		let mockLoggedUserData = {
-			dni: '12345678Z',
-			email: 'mock@mock.com',
-			role: 'ADMIN'
-		}
+    const mockRegisterUserId = 'wig98drksz4se2wpgbnouu4w'
 
-		let mockResponse = {
-			message: 'User has been modified',
-		}
-		spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin));
-		spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData));
-		
-		authService.modifyUserWithAdmin(mockRegisterUserId).then(() => {
-			const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER);
-			expect(reqAdmin.request.method).toEqual('GET');
-			reqAdmin.flush(mockResAfterLogin);
+    const mockLoggedUserData = {
+      dni: '12345678Z',
+      email: 'mock@mock.com',
+      role: 'ADMIN'
+    }
 
+    const mockResponse = {
+      message: 'User has been modified'
+    }
+    spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin))
+    spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData))
 
-			expect(mockLoggedUserData.role).toBe('ADMIN');
-			expect(authService.login).toHaveBeenCalledWith(userAdminMock);
-			expect(authService.getLoggedUserData).toHaveBeenCalled();
+    authService.modifyUserWithAdmin(mockRegisterUserId).then(() => {
+      const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER)
+      expect(reqAdmin.request.method).toEqual('GET')
+      reqAdmin.flush(mockResAfterLogin)
 
+      expect(mockLoggedUserData.role).toBe('ADMIN')
+      expect(authService.login).toHaveBeenCalledWith(userAdminMock)
+      expect(authService.getLoggedUserData).toHaveBeenCalled()
 
-			const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`);
-			expect(req.request.method).toEqual('PATCH');
-			expect(req.request.headers.get('Content-Type')).toEqual('application/json');
-			req.flush(mockResponse);
+      const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`)
+      expect(req.request.method).toEqual('PATCH')
+      expect(req.request.headers.get('Content-Type')).toEqual('application/json')
+      req.flush(mockResponse)
 
-			expect(authService.logout).toHaveBeenCalled();
-		}).catch((error) => {
-			fail('Error modifying user: ' + error);
-		});
+      expect(authService.logout).toHaveBeenCalled()
+    }).catch((error) => {
+      fail('Error modifying user: ' + error)
+    })
 
-		tick();
-
-	}));
-
-});
+    tick()
+  }))
+})

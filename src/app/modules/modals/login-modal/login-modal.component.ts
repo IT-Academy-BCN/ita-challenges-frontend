@@ -17,10 +17,10 @@ export class LoginModalComponent {
 
   loginForm = this.formBuilder.group({
     dni: ['', Validators.required, this.validatorsService.isValidDni],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-  });
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  })
 
-  showPassword: boolean = false;
+  showPassword: boolean = false
 
   constructor (private readonly modalService: NgbModal,
     private readonly formBuilder: FormBuilder,
@@ -81,7 +81,7 @@ export class LoginModalComponent {
     return this.validatorsService.getInputError(field, this.loginForm)
   }
 
-  togglePasswordMode(): void {
-    this.showPassword = !this.showPassword;
+  togglePasswordMode (): void {
+    this.showPassword = !this.showPassword
   }
 }
