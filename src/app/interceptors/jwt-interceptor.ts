@@ -1,15 +1,11 @@
-import { Router } from '@angular/router'
-import { Injectable, Injector } from '@angular/core'
-import { environment } from 'src/environments/environment'
-import { type HttpRequest, type HttpHandler, type HttpEvent, type HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { type Observable, throwError } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
-import { AuthService } from '../services/auth.service'
+import { Injectable } from '@angular/core'
+import { type HttpRequest, type HttpHandler, type HttpEvent, type HttpInterceptor } from '@angular/common/http'
+import { type Observable } from 'rxjs'
 import { type TokenService } from '../services/token.service'
 
-const AUTHORIZATION = environment.AUTHORIZATION
-const BEARER = environment.BEARER
-const TOKEN = environment.BACKEND_TOKEN
+// const AUTHORIZATION = environment.AUTHORIZATION
+// const BEARER = environment.BEARER
+// const TOKEN = environment.BACKEND_TOKEN
 
 @Injectable({
   providedIn: 'root'

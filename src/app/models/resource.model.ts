@@ -1,4 +1,3 @@
-import { ElementRef } from '@angular/core'
 export class Resource {
   idResource: string
   resourceDescription: string

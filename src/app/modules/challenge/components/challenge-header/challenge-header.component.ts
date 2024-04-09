@@ -3,7 +3,6 @@ import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
 import { type SolutionService } from '../../../../services/solution.service'
-import { LoginModalComponent } from 'src/app/modules/modals/login-modal/login-modal.component'
 
 @Component({
   selector: 'app-challenge-header',
@@ -27,7 +26,7 @@ export class ChallengeHeaderComponent {
   isLogged: boolean = true // & tiene que estar en true para que este logueado
   solutionSent: boolean = false
 
-  ngOnInit () {
+  ngOnInit (): void {
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
@@ -37,14 +36,14 @@ export class ChallengeHeaderComponent {
     })
   }
 
-  openSendSolutionModal () {
+  openSendSolutionModal (): void {
     this.modalService.open(SendSolutionModalComponent, {
       centered: true,
       size: 'lg'
     })
   }
 
-  clickSendButton () {
+  clickSendButton (): void {
     if (!this.isLogged) {
       this.modalService.open(RestrictedModalComponent, {
         centered: true,

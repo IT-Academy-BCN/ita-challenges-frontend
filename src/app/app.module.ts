@@ -14,7 +14,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
 
-export function HttpLoaderFactory (http: HttpClient) {
+export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
 }
 
