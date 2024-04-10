@@ -11,8 +11,8 @@ import { type Itinerary } from '../models/itinerary.interface'
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('ChallengeService', () => {
   let service: ChallengeService
-  let httpMock: HttpTestingController
-  let scheduler: TestScheduler
+  // let httpMock: HttpTestingController
+  // let scheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
   let httpClientSpy: any

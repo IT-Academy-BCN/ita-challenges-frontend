@@ -39,7 +39,8 @@ export class AuthService {
     private readonly tokenService: TokenService) {
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user')
-    const initialUser = userCookie ? JSON.parse(userCookie) : null
+    // const initialUser = userCookie ? JSON.parse(userCookie) : null
+    const initialUser = userCookie !== null ? JSON.parse(userCookie) : null
 
     this.userSubject = new BehaviorSubject(initialUser)
     this.user$ = this.userSubject.asObservable()
@@ -84,24 +85,30 @@ export class AuthService {
   }
 
   public async register (user: User): Promise<any> {
-    return await new Promise((resolve, reject) => {
-      this.registerRequest(user).subscribe({
-        next: (resp: registerResponse) => {
-          resolve(null)
-          this.modifyUserWithAdmin(resp.id)
-        },
-        error: (err) => { reject(err.message) }
-      })
-    })
+    const resp: registerResponse = await firstValueFrom(this.registerRequest(user))
+    await this.modifyUserWithAdmin(resp.id)
+    return null
   }
 
-  public async modifyUserWithAdmin (registerUserId: string) {
+  // public async register (user: User): Promise<any> {
+  //   return await new Promise((resolve, reject) => {
+  //     this.registerRequest(user).subscribe({
+  //       next: async (resp: registerResponse) => {
+  //         resolve(null)
+  //         await this.modifyUserWithAdmin(resp.id)
+  //       },
+  //       error: (err) => { reject(err.message) }
+  //     })
+  //   })
+  // }
+
+  public async modifyUserWithAdmin (registerUserId: string): Promise<void> {
     const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER))
 
-    if (userAdmin) {
+    if (userAdmin !== null) {
       await this.login(userAdmin)
     } else {
-      console.error('Admin acount not found')
+      console.error('Admin account not found')
     }
 
     try {
@@ -122,7 +129,7 @@ export class AuthService {
       } else {
         throw new Error('The logged-in user is not an admin.')
       }
-      this.logout
+      await this.logout()
     } catch (error) {
       console.error('Error modifying user with admin:', error)
       throw error
@@ -153,7 +160,7 @@ export class AuthService {
 
   public async login (user: User): Promise<any> {
     const resp = await firstValueFrom(this.loginRequest(user))
-    if (!resp) {
+    if (resp === null || resp === undefined) {
       throw new Error('Empty response')
     }
     this.currentUser = new User(resp.id)
@@ -163,18 +170,17 @@ export class AuthService {
     return resp
   }
 
-  public logout (): void {
+  public async logout (): Promise<void> {
     this.cookieService.delete('authToken')
     this.cookieService.delete('refreshToken')
     this.cookieService.delete('user')
-    this.currentUser
-    this.router.navigate(['/login'])
+    await this.router.navigate(['/login'])
   }
+
   /**
   * get User Data
   * and store it in the cookie
   */
-
   public async getLoggedUserData (): Promise<UserResponse> {
     return await new Promise<UserResponse>((resolve, reject) => {
       this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
@@ -200,15 +206,15 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in */
-  public async isUserLoggedIn (): void { // TODO: neec tokenService first
+  public async isUserLoggedIn (): Promise<void> { // TODO: neec tokenService first
     // let isUserLoggedIn: boolean = false;
     // let authToken = this.cookieService.get('authToken');
     // let authTokenValid = await this.checkToken(authToken);
     // if (authTokenValid) {
-    // 	isUserLoggedIn = true;
+    // isUserLoggedIn = true;
     // } else {
-    // 	let refreshToken = this.cookieService.get('authToken');
-    // 	isUserLoggedIn = await this.checkToken(refreshToken);
+    // let refreshToken = this.cookieService.get('authToken');
+    // isUserLoggedIn = await this.checkToken(refreshToken);
     // }
     // return isUserLoggedIn;
   }

@@ -19,7 +19,7 @@ export class BreadcrumbService {
     })
   }
 
-  createBreadcrumbs () {
+  createBreadcrumbs (): void {
     const root = this.router.routerState.snapshot.root
     const breadcrumbs: Breadcrumb[] = []
     this.addBreadcrumb(root, [], breadcrumbs)
@@ -28,11 +28,11 @@ export class BreadcrumbService {
     console.log(breadcrumbs)
   }
 
-  private addBreadcrumb (route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breadcrumb[]) {
-    if (route) {
+  private addBreadcrumb (route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breadcrumb[]): void {
+    if (route !== null) {
       const routeUrl = parentUrl.concat(route.url.map(url => url.path))
 
-      if (route.data['breadcrumb']) {
+      if (route.data['breadcrumb'] !== 'undefined') {
         const breadcrumb = {
           label: this.getLabel(route.data),
           url: '/' + routeUrl.join('/')
@@ -41,7 +41,7 @@ export class BreadcrumbService {
         console.log(breadcrumbs)
       }
 
-      if (route.firstChild) {
+      if (route.firstChild !== null) {
         this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs)
       } else {
         // Check if route has query param tab (challenge-info selected tab)
@@ -53,7 +53,7 @@ export class BreadcrumbService {
     }
   }
 
-  private getLabel (data: Data) {
+  private getLabel (data: Data): Data {
     return typeof data['breadcrumb'] === 'function' ? data['breadcrumb'](data) : data['breadcrumb']
   }
 }

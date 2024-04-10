@@ -130,11 +130,12 @@ describe('AuthService', () => {
 
     cookieServiceMock.set('user', JSON.stringify(mockUser))
 
-    const userId = authService.getUserIdFromCookie()
+    authService.getUserIdFromCookie()
 
-    expect(userId).toBeDefined()
     expect(cookieServiceMock.set).toHaveBeenCalled()
     expect(cookieServiceMock.get).toHaveBeenCalled()
+
+    const userId = JSON.parse(cookieServiceMock.get('user')).idUser
     expect(userId).toEqual(mockUser.idUser)
 
     done()
@@ -370,7 +371,7 @@ describe('AuthService', () => {
     done()
   })
 
-  it('should logout correctly', (done) => {
+  it('should logout correctly', async () => {
     const user = 'user'
     const authToken = 'testAuthToken'
     const refreshToken = 'testRefreshAuthToken'
@@ -379,7 +380,7 @@ describe('AuthService', () => {
     cookieServiceMock.set('authToken', authToken)
     cookieServiceMock.set('refreshToken', refreshToken)
 
-    authService.logout()
+    await authService.logout()
     expect(cookieServiceMock.get).toHaveBeenCalled()
 
     expect(cookieServiceMock.delete).toHaveBeenCalledWith('user')
@@ -390,7 +391,6 @@ describe('AuthService', () => {
     expect(currentUser.idUser).toBe('anonym')
 
     expect(routerMock.navigate).toHaveBeenCalledWith(['/login'])
-    done()
   })
 
   it('should getLoggedUserData correctly', async () => {

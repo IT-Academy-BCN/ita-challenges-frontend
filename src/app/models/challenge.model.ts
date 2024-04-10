@@ -1,7 +1,5 @@
 import { type ChallengeDetails } from './challenge-details.model'
 import { type Language } from './language.model'
-import { type Solution } from './solution.model'
-import { type Resource } from './resource.model'
 import { type AdditionalPropChallenge } from './challenge-add-prop.model'
 
 export class Challenge {

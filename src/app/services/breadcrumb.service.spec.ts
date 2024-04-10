@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { Router, NavigationEnd, type ActivatedRouteSnapshot, type RouterStateSnapshot } from '@angular/router'
 import { BreadcrumbService } from './breadcrumb.service'
-import { of, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 
 describe('BreadcrumbService', () => {
   let service: BreadcrumbService
