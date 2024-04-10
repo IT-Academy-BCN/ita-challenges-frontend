@@ -1,25 +1,14 @@
-import { add } from 'date-fns'
-import { AbstractType, Injectable } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { type HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import {
   BehaviorSubject,
   type Observable,
-  catchError,
-  firstValueFrom,
-  map,
-  of,
-  tap,
-  throwError
+  firstValueFrom
 } from 'rxjs'
 import { User } from '../models/user.model'
-import { ResolveEnd, type Router } from '@angular/router'
+import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
-import { fakeAsync } from '@angular/core/testing'
-import { BlobOptions } from 'buffer'
-import { type TokenService } from './token.service'
-import { error } from 'console'
-import { resolve } from 'path'
 
 interface loginResponse {
   id: string

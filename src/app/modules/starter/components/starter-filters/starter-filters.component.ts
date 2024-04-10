@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
-import { FormGroup, FormControl, type FormBuilder } from '@angular/forms'
+import { type FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
@@ -37,15 +37,23 @@ export class StarterFiltersComponent {
 
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
       const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
-      Object.values(formValue.languages!).forEach((val, i) => {
-        if (val) { filters.languages.push(i + 1) }
-      })
-      Object.entries(formValue.levels!).forEach(([key, val]) => {
-        if (val) { filters.levels.push(key) }
-      })
-      Object.values(formValue.progress!).forEach((val, i) => {
-        if (val) { filters.progress.push(i + 1) }
-      })
+      if (formValue.languages !== null && formValue.languages !== undefined) {
+        Object.values(formValue.languages).forEach((val, i) => {
+          if (val) { filters.languages.push(i + 1) }
+        })
+      }
+
+      if (formValue.levels !== null && formValue.levels !== undefined) {
+        Object.entries(formValue.levels).forEach(([key, val]) => {
+          if (val) { filters.levels.push(key) }
+        })
+      }
+
+      if (formValue.progress !== null && formValue.progress !== undefined) {
+        Object.values(formValue.progress).forEach((val, i) => {
+          if (val) { filters.progress.push(i + 1) }
+        })
+      }
       this.filtersSelected.emit(filters)
     })
   }

@@ -1,20 +1,15 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
+// import { type ComponentFixture } from '@angular/core/testing'
 
-import { type StarterComponent } from './starter.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { RouterTestingModule } from '@angular/router/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { type StarterFiltersComponent } from '../starter-filters/starter-filters.component'
-import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
-import { By } from '@angular/platform-browser'
-import { I18nModule } from '../../../../../assets/i18n/i18n.module'
+// import { type StarterComponent } from './starter.component'
+// import { type StarterFiltersComponent } from '../starter-filters/starter-filters.component'
+// import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 
 describe('StarterComponent', () => {
-  let component: StarterComponent
-  let fixture: ComponentFixture<StarterComponent>
-  let childComponent: StarterFiltersComponent
-  const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
-  let selectedFilters: FilterChallenge
+  // let component: StarterComponent
+  // let fixture: ComponentFixture<StarterComponent>
+  // let childComponent: StarterFiltersComponent
+  // const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
+  // let selectedFilters: FilterChallenge
 
   beforeEach(async () => {
     // TODO configure before Each properly

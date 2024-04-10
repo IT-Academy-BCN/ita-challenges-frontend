@@ -12,17 +12,17 @@ import { type Router } from '@angular/router'
 export class RestrictedModalComponent {
   constructor (private readonly modalService: NgbModal, private readonly router: Router) {}
 
-  closeModal () {
+  closeModal (): void {
     this.modalService.dismissAll()
     // this.router.navigateByUrl('/');)
   }
 
-  openLoginModal () {
+  openLoginModal (): void {
     this.closeModal()
     this.modalService.open(LoginModalComponent, { centered: true, size: 'lg' })
   }
 
-  openRegisterModal () {
+  openRegisterModal (): void {
     this.closeModal()
     this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
