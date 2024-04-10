@@ -12,12 +12,12 @@ export class SendSolutionModalComponent {
   // solutionSent = false;
   constructor (private readonly modalService: NgbModal, private readonly solutionService: SolutionService) {}
 
-  acceptSolution () {
+  acceptSolution (): void {
     this.solutionService.updateSolutionSentState(true)
     this.closeModal()
   }
 
-  closeModal () {
+  closeModal (): void {
     this.modalService.dismissAll()
   }
 }

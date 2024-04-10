@@ -7,8 +7,6 @@ import { type DataChallenge } from '../../../../models/data-challenge.model'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
-import { AuthService } from '../../../../services/auth.service'
-import { User } from '../../../../models/user.model'
 
 @Component({
   selector: 'app-starter',
@@ -46,12 +44,12 @@ export class StarterComponent {
     this.getChallengesByPage(this.page)
   }
 
-  ngOnDestroy () {
-    if (this.params$ != undefined) this.params$.unsubscribe()
-    if (this.challengesSubs$ != undefined) this.challengesSubs$.unsubscribe()
+  ngOnDestroy (): void {
+    if (this.params$ !== undefined) this.params$.unsubscribe()
+    if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage (page: number) {
+  getChallengesByPage (page: number): void {
     this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
       // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TODO DEVELOPMENT ONLY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       // console.log('User Starter Component: ' + this.authService.currentUser.idUser);
@@ -66,22 +64,22 @@ export class StarterComponent {
     })
   }
 
-  openModal () {
+  openModal (): void {
     this.modalContent.open()
   }
 
-  goToPage (page: number) {
+  goToPage (page: number): void {
     this.page = page
     this.getChallengesByPage(page)
   }
 
-  getChallengeFilters (filters: FilterChallenge) {
+  getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint
   }
 
-  changeSort (newSort: string) {
-    if (newSort != this.sortBy) {
+  changeSort (newSort: string): void {
+    if (newSort !== this.sortBy) {
       this.sortBy = newSort
       // TODO: llamar al endpoint
     }
