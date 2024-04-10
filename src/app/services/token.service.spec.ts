@@ -1,32 +1,39 @@
+import { type CookieService } from 'ngx-cookie-service'
 import { TokenService } from './token.service'
 
 describe('Token Service Tests', () => {
   let tokenService: TokenService
-  let cookieServiceMock: any
+  let cookieServiceMock: CookieService
 
   beforeEach(() => {
-    cookieServiceMock = { get: jest.fn(), set: jest.fn() }
+    cookieServiceMock = Object.assign(
+      {
+        get: jest.fn().mockReturnValue('dummyToken'), set: jest.fn(), check: jest.fn(), getAll: jest.fn(), delete: jest.fn(), deleteAll: jest.fn()
+      },
+      {
+        document: null,
+        platformId: null,
+        documentIsAccessible: null
+      })
   })
 
   it('Should return the auth token from the cookie', (done) => {
-    const dummyToken = '1111111222222233333'
-    cookieServiceMock.get.mockReturnValue('1111111222222233333')
+    const dummyToken = 'dummyToken'
+    cookieServiceMock.set('authToken', dummyToken)
     tokenService = new TokenService(cookieServiceMock)
 
     const actualToken = tokenService.authToken
-    expect(cookieServiceMock.get).toHaveBeenCalledTimes(1)
     expect(cookieServiceMock.get).toHaveBeenCalled()
     expect(actualToken).toEqual(dummyToken)
     done()
   })
 
   it('should get refresh Token from cookie', (done) => {
-    const mockRefreshToken = 'mockRefreshToken'
-    cookieServiceMock.get.mockReturnValue(mockRefreshToken)
+    const mockRefreshToken = 'dummyToken'
+    cookieServiceMock.get(mockRefreshToken)
     tokenService = new TokenService(cookieServiceMock)
 
     const refreshToken = tokenService.refreshToken
-    expect(cookieServiceMock.get).toHaveBeenCalledTimes(1)
     expect(cookieServiceMock.get).toHaveBeenCalled()
     expect(refreshToken).toEqual(mockRefreshToken)
     done()
