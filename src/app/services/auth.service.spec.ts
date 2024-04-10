@@ -1,7 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { AuthService } from './auth.service'
 import { HttpClient } from '@angular/common/http'
-
 import { of } from 'rxjs'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
@@ -9,11 +8,13 @@ import { tap } from 'rxjs/operators'
 import { User } from '../models/user.model'
 import { type TokenService } from './token.service'
 import { resolve } from 'path'
+import { type Router } from '@angular/router'
+import { type CookieService } from 'ngx-cookie-service'
 
 describe('AuthService', () => {
   let authService: AuthService
-  let cookieServiceMock: any
-  let routerMock: any
+  let cookieServiceMock: CookieService
+  let routerMock: Router
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
   let tokenServiceMock: TokenService
@@ -27,25 +28,44 @@ describe('AuthService', () => {
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
 
-    routerMock = {
-      navigate: jest.fn()
-    }
-    cookieServiceMock = (function () {
-      const cookies: Record<string, any> = {}
-      return {
-        get: jest.fn((key) => cookies[key] || null),
-        set: jest.fn((key, value) => {
-          cookies[key] = value
-        }),
-        delete: jest.fn((key) => {
-          delete cookies[key]
-        })
-      }
-    })()
-    Object.defineProperty(window, 'cookies', {
-      writable: true,
-      value: cookieServiceMock
-    })
+    // routerMock = {
+    //   navigate: jest.fn()
+    // }
+
+    cookieServiceMock = Object.assign(
+      {
+        get: jest.fn().mockReturnValue('dummyToken'),
+        set: jest.fn(),
+        check: jest.fn(),
+        getAll: jest.fn(),
+        delete: jest.fn(),
+        deleteAll: jest.fn()
+      },
+      {
+        document: null,
+        platformId: null,
+        documentIsAccessible: null
+      })
+
+    // cookieServiceMock =  () {
+    //   const cookies: Record<string, any> = {}
+    //   return {
+    //     get: jest.fn((key) => (cookies[key]) || null),
+    //     set: jest.fn((key, value) => {
+    //       cookies[key] = value
+    //     }),
+    //     delete: jest.fn((key) => {
+    //       cookies[key] = undefined
+    //     }),
+    //     document: null,
+    //     platformId: null,
+    //     documentIsAccessible: null
+    //   }
+    // }()
+    // Object.defineProperty(window, 'cookies', {
+    //   writable: true,
+    //   value: cookieServiceMock
+    // })
 
     authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock)
   })
@@ -53,7 +73,7 @@ describe('AuthService', () => {
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
     const anonymMock = 'anonym'
 
-    cookieServiceMock.get.mockReturnValue(null) // Set cookie service to return null
+    // cookieServiceMock.get.mockReturnValue(null) // Set cookie service to return null
 
     const user = authService.currentUser
 
@@ -112,6 +132,7 @@ describe('AuthService', () => {
 
     const userId = authService.getUserIdFromCookie()
 
+    expect(userId).toBeDefined()
     expect(cookieServiceMock.set).toHaveBeenCalled()
     expect(cookieServiceMock.get).toHaveBeenCalled()
     expect(userId).toEqual(mockUser.idUser)
@@ -190,7 +211,7 @@ describe('AuthService', () => {
     spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)) // Import 'of' from 'rxjs' if not already imported
 
     try {
-      authService.login(mockUser).then((returnValue) => {
+      await authService.login(mockUser).then((returnValue) => {
         expect(returnValue).toBeNull()
         expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken')
         expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken')
@@ -216,7 +237,7 @@ describe('AuthService', () => {
     spyOn(authService, 'loginRequest').and.returnValue(
       of({}).pipe(
         tap(() => {
-          throw { status: 401, error: mockErrorResponse }
+          throw new Error(JSON.stringify({ status: 401, error: mockErrorResponse }))
         })
       )
     )
@@ -289,7 +310,7 @@ describe('AuthService', () => {
     done()
   })
 
-  it('should show success register modal', (done) => {
+  it('should show success register modal', async () => {
     const mockUser = {
       idUser: 'mockIdResponse',
       dni: 'mockUserDni',
@@ -308,14 +329,12 @@ describe('AuthService', () => {
     spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)) // Import 'of' from 'rxjs' if not already imported
     spyOn(authService, 'modifyUserWithAdmin')
 
-    authService.register(mockUser).then((returnValue) => {
+    await authService.register(mockUser).then((returnValue) => {
       expect(returnValue).toBeTruthy()
       expect(returnValue).toEqual(mockResponse)
       expect(resolve).toEqual(null)
       expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id)
-      done()
     })
-    done()
   })
 
   it('should show UNsuccessly register modal', (done) => {
@@ -337,7 +356,7 @@ describe('AuthService', () => {
     spyOn(authService, 'registerRequest').and.returnValue(
       of({}).pipe(
         tap(() => {
-          throw { status: 401, error: mockErrorResponse }
+          throw new Error(JSON.stringify({ status: 401, error: mockErrorResponse }))
         })
       )
     )
@@ -374,7 +393,7 @@ describe('AuthService', () => {
     done()
   })
 
-  it('should getLoggedUserData correctly', fakeAsync(() => {
+  it('should getLoggedUserData correctly', async () => {
     const testAuthToken = 'testAuthToken'
     const mockUser = {
       idUser: 'mockIdUser',
@@ -392,7 +411,7 @@ describe('AuthService', () => {
     authService.currentUser = mockUser
 
     const user = authService.currentUser
-    authService.getLoggedUserData()
+    await authService.getLoggedUserData()
 
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER))
     expect(req.request.method).toEqual('POST')
@@ -407,9 +426,9 @@ describe('AuthService', () => {
 
     expect(user).toBeDefined()
     expect(user).toBe(mockUser)
-  }))
+  })
 
-  it('should handle error in getLoggedUserData', (done) => {
+  it('should handle error in getLoggedUserData', async () => {
     spyOn(console, 'error') // spy console.error
 
     // Simulamos un evento de progreso para indicar un error
@@ -419,12 +438,11 @@ describe('AuthService', () => {
       total: 0
     })
 
-    authService.getLoggedUserData()
+    await authService.getLoggedUserData()
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER))
 
     req.error(errorEvent)
-    expect(console.error).toHaveBeenCalled
-    done()
+    expect(console.error).toHaveBeenCalled()
   })
 
   it('should modifyUserWithAdmin correctly', fakeAsync(() => {

@@ -9,6 +9,7 @@ import {
 import { User } from '../models/user.model'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
+import { type TokenService } from './token.service'
 
 interface loginResponse {
   id: string
@@ -47,8 +48,8 @@ export class AuthService {
   }
 
   /**
-	 * Creates a new anonymous user if there is no user in the cookies.
-	 */
+  * Creates a new anonymous user if there is no user in the cookies.
+  */
   public get currentUser (): User {
     if (this.userSubject.value === null) {
       this.userSubject.next(new User(this.anonym))
@@ -63,8 +64,8 @@ export class AuthService {
   }
 
   /**
-	 * Register a user and log in with the new user. Set new user as current user.
-	 */
+  * Register a user and log in with the new user. Set new user as current user.
+  */
   public registerRequest (user: User): Observable<any> {
     return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
       {
@@ -128,15 +129,15 @@ export class AuthService {
     }
   }
 
-  public getUserIdFromCookie () {
+  public getUserIdFromCookie (): void {
     const stringifiedUSer = this.cookieService.get('user')
     const user = JSON.parse(stringifiedUSer)
     return user.idUser
   }
 
   /**
-	 * Log in with a user. Set user as current user.
-	 */
+  * Log in with a user. Set user as current user.
+  */
   public loginRequest (user: User): Observable<loginResponse> {
     return this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
       {
@@ -151,22 +152,18 @@ export class AuthService {
   }
 
   public async login (user: User): Promise<any> {
-    try {
-      const resp = await firstValueFrom(this.loginRequest(user))
-      if (!resp) {
-        throw new Error('Empty response')
-      }
-      this.currentUser = new User(resp.id)
-      this.cookieService.set('authToken', resp.authToken)
-      this.cookieService.set('refreshToken', resp.refreshToken)
-      this.cookieService.set('user', JSON.stringify(this.currentUser))
-      return resp
-    } catch (err) {
-      throw err
+    const resp = await firstValueFrom(this.loginRequest(user))
+    if (!resp) {
+      throw new Error('Empty response')
     }
+    this.currentUser = new User(resp.id)
+    this.cookieService.set('authToken', resp.authToken)
+    this.cookieService.set('refreshToken', resp.refreshToken)
+    this.cookieService.set('user', JSON.stringify(this.currentUser))
+    return resp
   }
 
-  public logout () {
+  public logout (): void {
     this.cookieService.delete('authToken')
     this.cookieService.delete('refreshToken')
     this.cookieService.delete('user')
@@ -174,9 +171,9 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
   /**
-		 * get User Data
-		 * and store it in the cookie
-	*/
+  * get User Data
+  * and store it in the cookie
+  */
 
   public async getLoggedUserData (): Promise<UserResponse> {
     return await new Promise<UserResponse>((resolve, reject) => {
@@ -203,7 +200,7 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in */
-  public async isUserLoggedIn () { // TODO: neec tokenService first
+  public async isUserLoggedIn (): void { // TODO: neec tokenService first
     // let isUserLoggedIn: boolean = false;
     // let authToken = this.cookieService.get('authToken');
     // let authTokenValid = await this.checkToken(authToken);
