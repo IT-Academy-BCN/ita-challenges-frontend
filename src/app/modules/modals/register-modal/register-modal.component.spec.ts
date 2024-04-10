@@ -89,7 +89,7 @@ describe('RegisterModalComponent', () => {
   it('should handle register error', fakeAsync(() => {
     spyOn(component, 'notifyErrorRegister')
 
-    spyOn(authServiceMock, 'register').and.returnValue(Promise.reject(''))
+    spyOn(authServiceMock, 'register').and.returnValue(Promise.reject(new Error('Registration failed')))
 
     component.registerForm.setValue({
       dni: '12345678Z',
@@ -140,10 +140,10 @@ describe('RegisterModalComponent', () => {
     expect(modalServiceMock.dismissAll).toHaveBeenCalled()
   })
 
-  it('should get itineraries B', fakeAsync(() => {
+  it('should get itineraries B', async () => {
     const respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3']
     tick()
-    component.getItineraries()
+    await component.getItineraries()
     expect(component.itineraries).toEqual(respMock)
-  }))
+  })
 })

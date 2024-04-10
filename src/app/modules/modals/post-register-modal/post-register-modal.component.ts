@@ -10,7 +10,7 @@ export class PostRegisterModalComponent {
   constructor (private readonly modalService: NgbModal) {
   }
 
-  closeModal () {
+  closeModal (): void {
     this.modalService.dismissAll()
   }
 }

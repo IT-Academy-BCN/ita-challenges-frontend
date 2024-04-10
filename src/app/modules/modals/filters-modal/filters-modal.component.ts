@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, ViewChild, type TemplateRef, EventEmitter } from '@angular/core'
+import { Component, ViewChild, type TemplateRef } from '@angular/core'
 import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
@@ -11,7 +11,7 @@ export class FiltersModalComponent {
 
   constructor (private readonly modalService: NgbModal) {}
 
-  open () {
+  open (): void {
     this.modalService.open(this.modalContent, { size: 'lg' })
   }
 }
