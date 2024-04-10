@@ -24,7 +24,7 @@ import { PostRegisterModalComponent } from './post-register-modal/post-register-
     ReactiveFormsModule,
     TranslateModule
   ],
-  exports: [
+  exports: [
     RegisterModalComponent,
     LoginModalComponent,
     SendSolutionModalComponent,

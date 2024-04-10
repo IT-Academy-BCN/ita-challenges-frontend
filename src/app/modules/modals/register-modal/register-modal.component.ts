@@ -1,4 +1,3 @@
-import { environment } from './../../../../environments/environment'
 import { type User } from './../../../models/user.model'
 
 import { Component, type OnInit } from '@angular/core'
@@ -46,8 +45,8 @@ export class RegisterModalComponent implements OnInit {
     private readonly challengeService: ChallengeService) {
   }
 
-  ngOnInit (): void {
-    this.getItineraries()
+  async ngOnInit (): Promise<void> {
+    await this.getItineraries()
     this.registerForm.markAsUntouched()
   }
 
@@ -59,7 +58,7 @@ export class RegisterModalComponent implements OnInit {
     return this.validatorsService.getInputError(field, this.registerForm)
   }
 
-  register () {
+  register (): void {
     this.registerError = ''
     this.registerForm.markAllAsTouched()
     if (this.registerForm.valid) {
@@ -72,13 +71,13 @@ export class RegisterModalComponent implements OnInit {
         password: `${this.registerForm.get('password')?.value}`,
         confirmPassword: `${this.registerForm.get('confirmPassword')?.value}`
       }
-      const registerResp = this.authService.register(user)
+      this.authService.register(user)
         .then((res) => { this.openSuccessfulRegisterModal() })
         .catch((err) => { this.notifyErrorRegister(err) })
     }
   }
 
-  openSuccessfulRegisterModal () {
+  openSuccessfulRegisterModal (): void {
     this.closeModal()
     this.modalService.open(PostRegisterModalComponent, {
       backdrop: 'static',
@@ -87,15 +86,20 @@ export class RegisterModalComponent implements OnInit {
     })
   }
 
-  notifyErrorRegister (err: any) {
-    this.registerError = this.translate.instant('modules.modals.register.errorMsg')
+  notifyErrorRegister (err: any): void {
+    // this.registerError = this.translate.instant('modules.modals.register.errorMsg')
+    if (err instanceof Error) {
+      this.registerError = err.message
+    } else {
+      this.registerError = this.translate.instant('modules.modals.register.errorMsg')
+    }
   }
 
-  closeModal () {
+  closeModal (): void {
     this.modalService.dismissAll()
   }
 
-  openLoginModal () {
+  openLoginModal (): void {
     this.closeModal()
     this.modalService.open(LoginModalComponent, {
       centered: true,
@@ -103,9 +107,8 @@ export class RegisterModalComponent implements OnInit {
     })
   }
 
-  async getItineraries () {
-    await this.challengeService.getItineraries()
-      .then((itineraries) => this.itineraries = itineraries)
+  async getItineraries (): Promise<void> {
+    this.itineraries = await this.challengeService.getItineraries()
   }
 
   togglePasswordMode (): void {

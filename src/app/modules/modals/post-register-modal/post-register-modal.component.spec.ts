@@ -1,6 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { PostRegisterModalComponent } from './post-register-modal.component'
-import { Component } from '@angular/core'
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateModule } from '@ngx-translate/core'
 

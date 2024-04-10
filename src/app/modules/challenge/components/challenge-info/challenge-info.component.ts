@@ -6,10 +6,9 @@ import { ChallengeService } from '../../../../services/challenge.service'
 import { type Subscription } from 'rxjs'
 import { type DataChallenge } from '../../../../models/data-challenge.model'
 import { Challenge } from '../../../../models/challenge.model'
-import { type NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
+import { type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { type AuthService } from 'src/app/services/auth.service'
 import { type SolutionService } from 'src/app/services/solution.service'
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 
 @Component({
   selector: 'app-challenge-info',
@@ -23,8 +22,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   constructor (
     private readonly challengeService: ChallengeService,
     private readonly authService: AuthService,
-    private readonly solutionService: SolutionService,
-    private readonly modalService: NgbModal
+    private readonly solutionService: SolutionService
   ) { }
 
   @ViewChild('nav') nav!: NgbNav
@@ -59,9 +57,9 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   related_level = ''
   related_popularity!: number
   related_languages: Language[] = []
-  related_id = this.related
+  related_id: string = this.related
 
-  ngOnInit () {
+  ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
@@ -74,12 +72,12 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     const token = localStorage.getItem('authToken')// TODO
     const refreshToken = localStorage.getItem('refreshToken')// TODO
 
-    if (token && refreshToken) {
+    if (token !== null && refreshToken !== null && token !== '' && refreshToken !== '') {
       this.isLogged = true
     }
   }
 
-  loadRelatedChallenge (id: string) {
+  loadRelatedChallenge (id: string): void {
     this.challengeSubs$ = this.challengeService
       .getChallengeById(id)
       .subscribe((challenge) => {

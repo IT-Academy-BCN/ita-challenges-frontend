@@ -3,21 +3,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { ChallengeInfoComponent } from './challenge-info.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
-import { ChallengeService } from '../../../../services/challenge.service'
-import { of } from 'rxjs'
-import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
 import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component'
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component'
 import { AuthService } from 'src/app/services/auth.service'
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
-  let challengeService: ChallengeService
-  let modalService: NgbModal
+  // let challengeService: ChallengeService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,9 +31,8 @@ describe('ChallengeInfoComponent', () => {
         NgbNavModule
       ],
       providers: [
-        ChallengeService,
-        AuthService,
-        NgbModal
+        // ChallengeService,
+        AuthService
       ]
     }).compileComponents()
   })
@@ -45,8 +40,7 @@ describe('ChallengeInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
-    challengeService = TestBed.inject(ChallengeService)
-    modalService = TestBed.inject(NgbModal)
+    // challengeService = TestBed.inject(ChallengeService)
     fixture.detectChanges()
   })
 

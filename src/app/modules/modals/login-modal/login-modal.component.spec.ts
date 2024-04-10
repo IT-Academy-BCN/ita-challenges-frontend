@@ -1,13 +1,11 @@
 import { AuthService } from './../../../services/auth.service'
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { User } from 'src/app/models/user.model'
+import { of } from 'rxjs'
 
 import { LoginModalComponent } from './login-modal.component'
-import { error } from 'node:console'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('LoginModalComponent', () => {
@@ -51,10 +49,9 @@ describe('LoginModalComponent', () => {
     done()
   })
 
-  it('should not call authService.login if form is invalid', (done) => {
-    component.login()
+  it('should not call authService.login if form is invalid', async () => {
+    await component.login()
     expect(authServiceMock.login).not.toHaveBeenCalled()
-    done()
   })
 
   it('should call authService.login and success response if form is valid', async () => {
@@ -64,7 +61,7 @@ describe('LoginModalComponent', () => {
       dni: component.loginForm.get('dni')?.value,
       password: component.loginForm.get('password')?.value
     }))
-    component.login()
+    await component.login()
 
     await new Promise(resolve => setTimeout(resolve, 100))
 

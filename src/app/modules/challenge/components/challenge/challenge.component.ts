@@ -15,7 +15,7 @@ import { type Language } from 'src/app/models/language.model'
   styleUrls: ['./challenge.component.scss']
 })
 export class ChallengeComponent {
-  idChallenge: string | any
+  idChallenge: string = ''
   params$!: Subscription
   challenge!: Challenge
   challengeSubs$!: Subscription
@@ -39,20 +39,20 @@ export class ChallengeComponent {
     private readonly challengeService: ChallengeService
   ) {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
-      this.idChallenge = params.get('idChallenge')
+      this.idChallenge = params.get('idChallenge') ?? ''
     })
   }
 
-  ngOnInit () {
+  ngOnInit (): void {
     this.loadMasterData(this.idChallenge)
   }
 
-  ngOnDestroy () {
-    if (this.params$ != undefined) this.params$.unsubscribe()
-    if (this.challengeSubs$ != undefined) this.challengeSubs$.unsubscribe()
+  ngOnDestroy (): void {
+    if (this.params$ !== undefined) this.params$.unsubscribe()
+    if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
-  loadMasterData (id: string) {
+  loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { RegisterModalComponent } from '../register-modal/register-modal.component'
 import { type FormBuilder, Validators } from '@angular/forms'
@@ -46,17 +46,17 @@ export class LoginModalComponent {
     }
   };
 
-  public isValidField (field: string) {
+  public isValidField (field: string): void {
     return this.validatorsService.isValidInput(field, this.loginForm)
   };
 
-  public openSuccessfulLoginModal (res: any) {
+  public openSuccessfulLoginModal (res: any): void {
     this.closeModal()
     // TODO create routing to the page after success login
     alert('Success login')
   }
 
-  public notifyErrorLogin (err: any) {
+  public notifyErrorLogin (err: any): void {
     if ((typeof err.error.message) === 'string') {
       this.loginError = err.error.message
     } else {
@@ -64,11 +64,11 @@ export class LoginModalComponent {
     }
   }
 
-  closeModal () {
+  closeModal (): void {
     this.modalService.dismissAll()
   }
 
-  openRegisterModal () {
+  openRegisterModal (): void {
     this.closeModal()
     this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
