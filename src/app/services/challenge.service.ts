@@ -3,6 +3,7 @@ import { type Observable } from 'rxjs'
 import { type HttpClient } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
+import { type Challenge } from '../models/challenge.model'
 // import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment'
 export class ChallengeService {
   constructor (private readonly http: HttpClient) { }
 
-  getChallengeById (id: string): Observable<Object> {
+  getChallengeById (id: string): Observable<Challenge> {
     // -----TO CHANGE----
 
     /*        return this.http.get(`${environment.BACKEND_BASE_URL}${environment.BACKEND_ALL_CHALLENGES}`,
@@ -22,7 +23,7 @@ export class ChallengeService {
                         }
                     }); */
 
-    return this.http.get('../assets/dummy/challenge.json',
+    return this.http.get<Challenge>('../assets/dummy/challenge.json',
       {
         headers: {
           'Content-Type': 'application/dummy'
@@ -35,7 +36,7 @@ export class ChallengeService {
       this.http.get<Itinerary[]>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
         .subscribe({
           next: (res) => { resolve(res) },
-          error: (err) => { reject([]) }
+          error: (err) => { reject(err) }
         })
     )
   }

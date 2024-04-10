@@ -1,22 +1,18 @@
-import { StarterService } from './starter.service'
+import { type StarterService } from './starter.service'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
-import { type HttpTestingController } from '@angular/common/http/testing'
-import { delay, of } from 'rxjs'
+
+import { delay } from 'rxjs'
 import data from './../../assets/dummy/data-challenge.json' // see data-typings.d.ts
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
   let service: StarterService
-  let httpMock: HttpTestingController
-  let scheduler: TestScheduler
-  let httpClientSpy: any
+  // let httpMock: HttpTestingController
+  // let scheduler: TestScheduler
   let testScheduler: TestScheduler
 
   beforeEach(() => {
     // inject spy
-    httpClientSpy = jasmine.createSpy('httpClient')
-    httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data))
-    service = new StarterService(httpClientSpy)
     testScheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
     })

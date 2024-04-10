@@ -16,12 +16,12 @@ export class SolutionService {
 
   constructor (private readonly http: HttpClient) { }
 
-  updateSolutionSentState (value: boolean) {
+  updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
     this.solutionSent = value
   }
 
-  sendSolution (solution: string) {
+  sendSolution (solution: string): void {
     this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
   }
 

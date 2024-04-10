@@ -2,18 +2,17 @@ import { type ChallengeDetails } from './challenge-details.model'
 import { type Language } from './language.model'
 import { type Solution } from './solution.model'
 import { type Resource } from './resource.model'
+import { type AdditionalPropChallenge } from './challenge-add-prop.model'
 
 export class Challenge {
   id_challenge: string
-  challenge_title: string
+  challenge_title: AdditionalPropChallenge[] = []
   level: string
   creation_date: Date
+  detail: ChallengeDetails
   popularity: number
-  details: ChallengeDetails
   languages: Language[] = []
-  solutions: Solution[] = []
-  resources: Resource[] = []
-  related: string[] = []
+  solutions: string[] = []
 
   constructor (element: any) {
     this.id_challenge = element.id_challenge
@@ -21,22 +20,18 @@ export class Challenge {
     this.level = element.level
     this.creation_date = element.creation_date
     this.popularity = element.popularity
-    this.details = element.details
+    this.detail = element.details
+
+    element.challenge_title.forEach((title: AdditionalPropChallenge) => {
+      this.challenge_title.push(title)
+    })
 
     element.languages.forEach((language: Language) => {
       this.languages.push(language)
     })
 
-    element.solutions.forEach((solution: Solution) => {
+    element.solutions.forEach((solution: string) => {
       this.solutions.push(solution)
-    })
-
-    element.resources.forEach((resource: Resource) => {
-      this.resources.push(resource)
-    })
-
-    element.related.forEach((challengeRelated: string) => {
-      this.related.push(challengeRelated)
     })
   }
 }
