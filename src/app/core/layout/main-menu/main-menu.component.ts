@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { LoginModalComponent } from './../../../modules/modals/login-modal/login-modal.component'
-import { type TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: '   app-main-menu',
@@ -9,11 +9,12 @@ import { type TranslateService } from '@ngx-translate/core'
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent {
-  constructor (private readonly modalService: NgbModal,
-    private readonly translate: TranslateService) {
-    translate.addLangs(['en', 'es', 'cat'])
-    translate.setDefaultLang('es')
-    translate.use('es')
+  private readonly modalService = inject(NgbModal)
+  private readonly translate = inject(TranslateService)
+  constructor () {
+    this.translate.addLangs(['en', 'es', 'cat'])
+    this.translate.setDefaultLang('es')
+    this.translate.use('es')
   }
 
   openLoginModal (): void {

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { type HttpRequest, type HttpHandler, type HttpEvent, type HttpInterceptor } from '@angular/common/http'
 import { type Observable } from 'rxjs'
-import { type TokenService } from '../services/token.service'
+import { TokenService } from '../services/token.service'
 
 // const AUTHORIZATION = environment.AUTHORIZATION
 // const BEARER = environment.BEARER
@@ -11,7 +11,7 @@ import { type TokenService } from '../services/token.service'
   providedIn: 'root'
 })
 export class JwtInterceptor implements HttpInterceptor {
-  constructor (private readonly tokenService: TokenService) { }
+  private readonly tokenService = inject(TokenService)
 
   intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // const token = this.authService.getToken();
