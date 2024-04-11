@@ -9,6 +9,7 @@ describe('RestrictedModalComponent', () => {
   let component: RestrictedModalComponent
   let fixture: ComponentFixture<RestrictedModalComponent>
   let modalService: NgbModal
+  let router: Router
 
   beforeEach(() => {
     // Crear versiones simuladas de NgbModal y Router
