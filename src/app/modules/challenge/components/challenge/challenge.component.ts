@@ -62,9 +62,9 @@ export class ChallengeComponent {
       this.related = this.challenge.related
       this.resources = this.challenge.resources
       this.solutions = this.challenge.solutions
-      this.description = this.challenge.details.description
-      this.examples = this.challenge.details.examples
-      this.notes = this.challenge.details.notes
+      this.description = this.challenge.detail.description
+      this.examples = this.challenge.detail.examples
+      this.notes = this.challenge.detail.note
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
     })
