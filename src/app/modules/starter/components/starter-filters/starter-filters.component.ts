@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
-import { type FormBuilder } from '@angular/forms'
+import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
@@ -14,8 +14,9 @@ export class StarterFiltersComponent {
   filtersForm
 
   private readonly destroyRef = inject(DestroyRef)
+  private readonly fb = inject(FormBuilder)
 
-  constructor (private readonly fb: FormBuilder) {
+  constructor () {
     this.filtersForm = this.fb.nonNullable.group({
       languages: this.fb.nonNullable.group({
         javascript: false,

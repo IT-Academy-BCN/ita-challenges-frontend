@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, type Subscription, filter } from 'rxjs'
 import { type Breadcrumb } from '../models/breadcrumb'
-import { type Router, NavigationEnd, type ActivatedRouteSnapshot, type Data } from '@angular/router'
+import { Router, NavigationEnd, type ActivatedRouteSnapshot, type Data } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreadcrumbService {
+  private readonly router = inject(Router)
+
   _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([])
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable()
   subs: Subscription = this.breadcrumbs$.subscribe(res => { console.log(res) })
 
-  constructor (private readonly router: Router) {
+  constructor () {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
     ).subscribe(event => {

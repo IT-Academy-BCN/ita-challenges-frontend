@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core'
-import { type HttpClient } from '@angular/common/http'
+import { Injectable, inject } from '@angular/core'
 import { environment } from '../../environments/environment'
 import {
   BehaviorSubject,
@@ -7,9 +6,11 @@ import {
   firstValueFrom
 } from 'rxjs'
 import { User } from '../models/user.model'
-import { type Router } from '@angular/router'
-import { type CookieService } from 'ngx-cookie-service'
-import { type TokenService } from './token.service'
+import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service'
+import { TokenService } from './token.service'
+
 
 interface loginResponse {
   id: string
@@ -29,14 +30,16 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
+  private readonly http = inject(HttpClient)
+  private readonly router = inject(Router)
+  private readonly cookieService = inject(CookieService)
+  private readonly tokenService = inject(TokenService)
+
   private readonly anonym: string = 'anonym'
   private readonly userSubject: BehaviorSubject<User>
   public user$: Observable<User>
 
-  constructor (private readonly http: HttpClient,
-    private readonly router: Router,
-    private readonly cookieService: CookieService,
-    private readonly tokenService: TokenService) {
+  constructor () {
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user')
     // const initialUser = userCookie ? JSON.parse(userCookie) : null
