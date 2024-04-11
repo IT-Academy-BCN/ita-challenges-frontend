@@ -1,15 +1,15 @@
 import { type User } from './../../../models/user.model'
 
-import { Component, type OnInit } from '@angular/core'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, inject, type OnInit } from '@angular/core'
 import { LoginModalComponent } from '../login-modal/login-modal.component'
-import { Validators, type FormBuilder } from '@angular/forms'
-import { type AuthService } from './../../../services/auth.service'
+import { FormBuilder, Validators } from '@angular/forms'
 import { type Itinerary } from 'src/app/models/itinerary.interface'
-import { type ValidatorsService } from 'src/app/services/validators.service'
-import { type TranslateService } from '@ngx-translate/core'
 import { PostRegisterModalComponent } from '../post-register-modal/post-register-modal.component'
-import { type ChallengeService } from 'src/app/services/challenge.service'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { TranslateService } from '@ngx-translate/core'
+import { AuthService } from 'src/app/services/auth.service'
+import { ChallengeService } from 'src/app/services/challenge.service'
+import { ValidatorsService } from 'src/app/services/validators.service'
 
 @Component({
   selector: 'app-register-modal',
@@ -17,6 +17,14 @@ import { type ChallengeService } from 'src/app/services/challenge.service'
   styleUrls: ['./register-modal.component.scss']
 })
 export class RegisterModalComponent implements OnInit {
+
+  private readonly modalService = inject (NgbModal)
+  private readonly formBuilder = inject (FormBuilder)
+  private readonly authService = inject (AuthService)
+  private readonly validatorsService = inject (ValidatorsService)
+  private readonly translate = inject (TranslateService)
+  private readonly challengeService = inject (ChallengeService)
+
   registerError: string = ''
   itineraries: Itinerary[] = []
 
@@ -36,13 +44,7 @@ export class RegisterModalComponent implements OnInit {
 
   showPassword: boolean = false
 
-  constructor (
-    private readonly modalService: NgbModal,
-    private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly validatorsService: ValidatorsService,
-    private readonly translate: TranslateService,
-    private readonly challengeService: ChallengeService) {
+  constructor () {
   }
 
   async ngOnInit (): Promise<void> {
