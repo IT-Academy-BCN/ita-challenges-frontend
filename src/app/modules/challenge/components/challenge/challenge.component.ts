@@ -1,8 +1,8 @@
-import { Component } from '@angular/core'
-import { type ActivatedRoute, type ParamMap } from '@angular/router'
+import { Component, inject } from '@angular/core'
+import { ActivatedRoute, type ParamMap } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
-import { type ChallengeService } from '../../../../services/challenge.service'
+import { ChallengeService } from '../../../../services/challenge.service'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Solution } from 'src/app/models/solution.model'
 import { type Resource } from 'src/app/models/resource.model'
@@ -34,10 +34,10 @@ export class ChallengeComponent {
   popularity!: number
   languages: Language[] = []
 
-  constructor (
-    private readonly route: ActivatedRoute,
-    private readonly challengeService: ChallengeService
-  ) {
+  private readonly route = inject(ActivatedRoute)
+  private readonly challengeService = inject(ChallengeService)
+
+  constructor () {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
     })

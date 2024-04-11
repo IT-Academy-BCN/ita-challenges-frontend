@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, Input, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
-import { type SolutionService } from '../../../../services/solution.service'
+import { SolutionService } from '../../../../services/solution.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -10,10 +10,8 @@ import { type SolutionService } from '../../../../services/solution.service'
   styleUrls: ['./challenge-header.component.scss']
 })
 export class ChallengeHeaderComponent {
-  constructor (
-    private readonly modalService: NgbModal,
-    private readonly solutionService: SolutionService
-  ) { }
+  private readonly modalService = inject(NgbModal)
+  private readonly solutionService = inject(SolutionService)
 
   @Input() title = ''
   @Input() creation_date!: Date

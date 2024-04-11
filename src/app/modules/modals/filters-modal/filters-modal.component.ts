@@ -1,5 +1,5 @@
-import { Component, ViewChild, type TemplateRef } from '@angular/core'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, ViewChild, inject, type TemplateRef } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-filters-modal',
@@ -8,8 +8,7 @@ import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
 })
 export class FiltersModalComponent {
   @ViewChild('modal') private readonly modalContent!: TemplateRef<FiltersModalComponent>
-
-  constructor (private readonly modalService: NgbModal) {}
+  private readonly modalService = inject(NgbModal)
 
   open (): void {
     this.modalService.open(this.modalContent, { size: 'lg' })

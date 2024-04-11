@@ -1,4 +1,4 @@
-import { type AfterContentChecked, Component, Input, ViewChild } from '@angular/core'
+import { type AfterContentChecked, Component, Input, ViewChild, inject } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -7,8 +7,8 @@ import { type Subscription } from 'rxjs'
 import { type DataChallenge } from '../../../../models/data-challenge.model'
 import { Challenge } from '../../../../models/challenge.model'
 import { type NgbNav } from '@ng-bootstrap/ng-bootstrap'
-import { type AuthService } from 'src/app/services/auth.service'
-import { type SolutionService } from 'src/app/services/solution.service'
+import { AuthService } from 'src/app/services/auth.service'
+import { SolutionService } from 'src/app/services/solution.service'
 
 @Component({
   selector: 'app-challenge-info',
@@ -18,12 +18,9 @@ import { type SolutionService } from 'src/app/services/solution.service'
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
   isUserSolution: boolean = true
-
-  constructor (
-    private readonly challengeService: ChallengeService,
-    private readonly authService: AuthService,
-    private readonly solutionService: SolutionService
-  ) { }
+  private readonly challengeService = inject(ChallengeService)
+  private readonly authService = inject(AuthService)
+  private readonly solutionService = inject(SolutionService)
 
   @ViewChild('nav') nav!: NgbNav
 
