@@ -8,6 +8,7 @@ import { type Solution } from 'src/app/models/solution.model'
 import { type Resource } from 'src/app/models/resource.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
+import { AdditionalPropChallenge } from 'src/app/models/challenge-add-prop.model'
 
 @Component({
   selector: 'app-challenge',
@@ -21,16 +22,16 @@ export class ChallengeComponent {
   challengeSubs$!: Subscription
   dataChallenge!: Challenge
 
-  title = ''
+  title: AdditionalPropChallenge [] = []
   creation_date!: Date
   level = ''
   details!: ChallengeDetails
   related: string[] = []
   resources: Resource[] = []
-  solutions: Solution[] = []
-  description = ''
+  solutions: string[] = []
+  description: AdditionalPropChallenge [] = []
   examples: Example[] = []
-  notes = ''
+  notes: AdditionalPropChallenge [] = []
   popularity!: number
   languages: Language[] = []
 
@@ -58,9 +59,9 @@ export class ChallengeComponent {
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
       this.level = this.challenge.level
-      this.details = this.challenge.details
-      this.related = this.challenge.related
-      this.resources = this.challenge.resources
+      this.details = this.challenge.detail
+      // this.related = this.challenge.related
+      // this.resources = this.challenge.resources
       this.solutions = this.challenge.solutions
       this.description = this.challenge.detail.description
       this.examples = this.challenge.detail.examples

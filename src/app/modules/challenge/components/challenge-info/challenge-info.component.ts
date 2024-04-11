@@ -80,7 +80,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       .getChallengeById(id)
       .subscribe((challenge) => {
         this.challenge = new Challenge(challenge)
-        this.related_title = this.challenge
+        this.related_title = this.challenge.challenge_title
         this.related_creation_date = this.challenge?.creation_date
         this.related_level = this.challenge?.level
         this.related_popularity = this.challenge.popularity
