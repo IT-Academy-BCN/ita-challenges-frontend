@@ -1,8 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { LoginModalComponent } from '../login-modal/login-modal.component'
 import { RegisterModalComponent } from '../register-modal/register-modal.component'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { type Router } from '@angular/router'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-restricted-modal',
@@ -10,7 +10,8 @@ import { type Router } from '@angular/router'
   styleUrls: ['./restricted-modal.component.scss']
 })
 export class RestrictedModalComponent {
-  constructor (private readonly modalService: NgbModal, private readonly router: Router) {}
+  private readonly modalService = inject(NgbModal)
+  private readonly router = inject(Router)
 
   closeModal (): void {
     this.modalService.dismissAll()
