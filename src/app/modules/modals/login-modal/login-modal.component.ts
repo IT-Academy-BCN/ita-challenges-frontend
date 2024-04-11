@@ -28,8 +28,6 @@ export class LoginModalComponent {
 
   showPassword: boolean = false
 
-  constructor () { }
-
   public async login (): Promise<void> {
     this.loginForm.markAllAsTouched()
     if (this.loginForm.valid) {

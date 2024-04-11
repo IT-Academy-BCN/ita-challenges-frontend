@@ -43,9 +43,6 @@ export class RegisterModalComponent implements OnInit {
 
   showPassword: boolean = false
 
-  constructor () {
-  }
-
   async ngOnInit (): Promise<void> {
     await this.getItineraries()
     this.registerForm.markAsUntouched()
