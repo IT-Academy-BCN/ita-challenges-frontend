@@ -7,7 +7,6 @@ import { type Observable, of } from 'rxjs'
   providedIn: 'root'
 })
 export class ValidatorsService {
-
   private readonly translate = inject(TranslateService)
 
   constructor () {

@@ -13,7 +13,6 @@ import { ValidatorsService } from 'src/app/services/validators.service'
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
-  
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)

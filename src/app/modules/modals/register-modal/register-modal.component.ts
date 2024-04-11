@@ -17,13 +17,12 @@ import { ValidatorsService } from 'src/app/services/validators.service'
   styleUrls: ['./register-modal.component.scss']
 })
 export class RegisterModalComponent implements OnInit {
-
-  private readonly modalService = inject (NgbModal)
-  private readonly formBuilder = inject (FormBuilder)
-  private readonly authService = inject (AuthService)
-  private readonly validatorsService = inject (ValidatorsService)
-  private readonly translate = inject (TranslateService)
-  private readonly challengeService = inject (ChallengeService)
+  private readonly modalService = inject(NgbModal)
+  private readonly formBuilder = inject(FormBuilder)
+  private readonly authService = inject(AuthService)
+  private readonly validatorsService = inject(ValidatorsService)
+  private readonly translate = inject(TranslateService)
+  private readonly challengeService = inject(ChallengeService)
 
   registerError: string = ''
   itineraries: Itinerary[] = []
