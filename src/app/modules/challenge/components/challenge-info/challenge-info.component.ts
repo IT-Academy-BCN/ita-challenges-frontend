@@ -9,6 +9,7 @@ import { Challenge } from '../../../../models/challenge.model'
 import { type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
+import { AdditionalPropChallenge } from 'src/app/models/challenge-add-prop.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -49,7 +50,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   challenges: Challenge[] = []
   challengeSubs$!: Subscription
 
-  related_title = ''
+  related_title: AdditionalPropChallenge[] = []
   related_creation_date!: Date
   related_level = ''
   related_popularity!: number
@@ -79,7 +80,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       .getChallengeById(id)
       .subscribe((challenge) => {
         this.challenge = new Challenge(challenge)
-        this.related_title = this.challenge?.challenge_title
+        this.related_title = this.challenge
         this.related_creation_date = this.challenge?.creation_date
         this.related_level = this.challenge?.level
         this.related_popularity = this.challenge.popularity
