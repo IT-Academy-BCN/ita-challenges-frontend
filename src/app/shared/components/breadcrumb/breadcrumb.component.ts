@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { type Observable } from 'rxjs'
 import { type Breadcrumb } from 'src/app/models/breadcrumb'
-import { type BreadcrumbService } from '../../../services/breadcrumb.service'
+import { BreadcrumbService } from '../../../services/breadcrumb.service'
 
 @Component({
   selector: 'app-breadcrumb',
@@ -9,10 +9,11 @@ import { type BreadcrumbService } from '../../../services/breadcrumb.service'
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent {
+  private readonly breadcrumbService = inject(BreadcrumbService)
   breadcrumbs$: Observable<Breadcrumb[]>
 
-  constructor (private readonly breadcrumbService: BreadcrumbService) {
-    breadcrumbService.createBreadcrumbs()
-    this.breadcrumbs$ = breadcrumbService.breadcrumbs$
+  constructor () {
+    this.breadcrumbService.createBreadcrumbs()
+    this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$
   }
 }

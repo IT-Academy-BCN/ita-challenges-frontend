@@ -5,7 +5,7 @@ import { StarterService } from '../../../services/starter.service'
   selector: 'app-challenge-card',
   templateUrl: './challenge-card.component.html',
   styleUrls: ['./challenge-card.component.scss'],
-  providers: [StarterService]
+  providers: []
 })
 export class ChallengeCardComponent {
   constructor (private readonly starterService: StarterService) {}

@@ -1,11 +1,13 @@
-import { type HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, type Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
+
+  private readonly http = inject(HttpClient)
   // subject = new BehaviorSubject(1);
   // obs$ = this.subject.asObservable();
 
@@ -13,9 +15,7 @@ export class SolutionService {
   solutionSent$ = this.solutionSentSubject.asObservable()
 
   solutionSent: boolean = false
-
-  constructor (private readonly http: HttpClient) { }
-
+  
   updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
     this.solutionSent = value

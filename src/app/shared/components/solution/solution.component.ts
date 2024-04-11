@@ -1,4 +1,4 @@
-import { Component, type ElementRef, Input, ViewChild } from '@angular/core'
+import { Component, type ElementRef, Input, ViewChild, inject } from '@angular/core'
 import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { javascript } from '@codemirror/lang-javascript'
@@ -6,8 +6,8 @@ import { python } from '@codemirror/lang-python'
 import { java } from '@codemirror/lang-java'
 import { php } from '@codemirror/lang-php'
 import { minimalSetup } from 'codemirror'
-import { type SolutionService } from '../../../services/solution.service'
-import { type TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
+import { SolutionService } from 'src/app/services/solution.service'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
 
@@ -49,8 +49,8 @@ export class SolutionComponent {
 
   solutions: any[] = []
 
-  constructor (private readonly solutionService: SolutionService,
-    private readonly translateService: TranslateService) { }
+  private readonly solutionService = inject(SolutionService)
+  private readonly translateService = inject(TranslateService)
 
   private lastSentSolution: string = ''
 
