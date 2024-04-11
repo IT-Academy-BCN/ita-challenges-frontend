@@ -7,12 +7,7 @@ import { type Observable, of } from 'rxjs'
   providedIn: 'root'
 })
 export class ValidatorsService {
-
   private readonly translate = inject(TranslateService)
-
-  constructor () {
-
-  }
 
   // email
   public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
