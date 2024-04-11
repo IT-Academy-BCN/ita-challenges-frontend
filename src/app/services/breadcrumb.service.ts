@@ -38,10 +38,10 @@ export class BreadcrumbService {
         const breadcrumb: Breadcrumb = {
           label: String(this.getLabel(route.data)), // Ensure label is of type string
           url: '/' + routeUrl.join('/')
-        };
-        breadcrumbs.push(breadcrumb);
+        }
+        breadcrumbs.push(breadcrumb)
       }
-      
+
       if (route.firstChild !== null) {
         this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs)
       } else {

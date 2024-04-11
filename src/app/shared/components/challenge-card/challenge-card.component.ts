@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, inject } from '@angular/core'
 import { StarterService } from '../../../services/starter.service'
-import { AdditionalPropChallenge } from './../../../models/challenge-add-prop.model';
 
 @Component({
   selector: 'app-challenge-card',
@@ -9,9 +8,9 @@ import { AdditionalPropChallenge } from './../../../models/challenge-add-prop.mo
   providers: []
 })
 export class ChallengeCardComponent {
-  constructor (private readonly starterService: StarterService) {}
+  private readonly starterService = inject(StarterService)
 
-  @Input() title: AdditionalPropChallenge[] = []
+  @Input() title: string = ''
   @Input() languages: any = []
   @Input() creation_date!: Date
   @Input() level = ''

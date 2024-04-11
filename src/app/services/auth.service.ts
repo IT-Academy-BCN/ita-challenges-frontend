@@ -11,7 +11,6 @@ import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
 import { TokenService } from './token.service'
 
-
 interface loginResponse {
   id: string
   authToken: string

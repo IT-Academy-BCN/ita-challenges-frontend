@@ -9,7 +9,6 @@ import { Challenge } from '../../../../models/challenge.model'
 import { type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
-import { AdditionalPropChallenge } from 'src/app/models/challenge-add-prop.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -50,7 +49,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   challenges: Challenge[] = []
   challengeSubs$!: Subscription
 
-  related_title: AdditionalPropChallenge[] = []
+  related_title: string = ''
   related_creation_date!: Date
   related_level = ''
   related_popularity!: number

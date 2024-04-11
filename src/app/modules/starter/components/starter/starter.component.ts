@@ -14,11 +14,10 @@ import { StarterService } from 'src/app/services/starter.service'
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
-
   private readonly activatedRoute = inject(ActivatedRoute)
-    private readonly router = inject(Router)
-    private readonly starterService = inject(StarterService)
-    // private authService: AuthService
+  private readonly router = inject(Router)
+  private readonly starterService = inject(StarterService)
+  // private authService: AuthService
 
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
 

@@ -1,14 +1,9 @@
-import { type AdditionalPropChallenge } from './challenge-add-prop.model'
-
 export class Example {
-  idExample: string
-  exampleText: AdditionalPropChallenge[] = []
+  id_example: string
+  example_text: string
 
   constructor (element: any) {
-    this.idExample = element.id_example
-
-    element.exampleText.forEach((example: AdditionalPropChallenge) => {
-      this.exampleText.push(example)
-    })
+    this.id_example = element.id_example
+    this.example_text = element.example_text
   }
 }

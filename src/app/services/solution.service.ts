@@ -6,7 +6,6 @@ import { BehaviorSubject, type Observable } from 'rxjs'
   providedIn: 'root'
 })
 export class SolutionService {
-
   private readonly http = inject(HttpClient)
   // subject = new BehaviorSubject(1);
   // obs$ = this.subject.asObservable();
@@ -15,7 +14,7 @@ export class SolutionService {
   solutionSent$ = this.solutionSentSubject.asObservable()
 
   solutionSent: boolean = false
-  
+
   updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
     this.solutionSent = value

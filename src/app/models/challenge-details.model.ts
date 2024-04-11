@@ -1,20 +1,16 @@
 import { type Example } from './challenge-example.model'
-import { type AdditionalPropChallenge } from './challenge-add-prop.model'
 
 export class ChallengeDetails {
-  description: AdditionalPropChallenge[] = []
+  description: string
   examples: Example[] = []
-  note: AdditionalPropChallenge[] = []
+  notes: string
 
-  constructor (element: { description: AdditionalPropChallenge[], note: AdditionalPropChallenge[], examples: any[] }) {
-    element.description.forEach((description: AdditionalPropChallenge) => {
-      this.description.push(description)
-    })
+  constructor (element: any) {
+    this.description = element.description
+    this.notes = element.notes
+
     element.examples.forEach((example: Example) => {
       this.examples.push(example)
-    })
-    element.note.forEach((note: AdditionalPropChallenge) => {
-      this.note.push(note)
     })
   }
 }
