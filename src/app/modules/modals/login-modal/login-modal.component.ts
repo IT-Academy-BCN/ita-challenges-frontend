@@ -61,12 +61,18 @@ export class LoginModalComponent {
   }
 
   public notifyErrorLogin(err: any) {
-    if (err.status === environment.HTTP_CODE_UNAUTHORIZED || err.status === environment.HTTP_CODE_BAD_REQUEST) {
-      this.loginError = this.translate.instant('modules.modals.login.invalidInput');
-    } else if (err.status === environment.HTTP_CODE_FORBIDDEN) {
-      this.loginError = this.translate.instant('modules.modals.login.notActive');
-    } else {
-      this.loginError = this.translate.instant('modules.modals.login.generalError');
+    switch (err.status){
+      case environment.HTTP_CODE_UNAUTHORIZED:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
+        break;
+      case environment.HTTP_CODE_BAD_REQUEST:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
+        break;
+      case environment.HTTP_CODE_FORBIDDEN:
+        this.loginError = this.translate.instant('modules.modals.login.notActive');
+        break;
+      default:
+        this.loginForm = this.translate.instant('modules.modals.login.generalError');
     }
   }
 
