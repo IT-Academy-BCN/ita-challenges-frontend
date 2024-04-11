@@ -1,11 +1,11 @@
-import { Component } from '@angular/core'
-import { type NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { RegisterModalComponent } from '../register-modal/register-modal.component'
-import { type FormBuilder, Validators } from '@angular/forms'
-import { type AuthService } from './../../../services/auth.service'
-import { type Router } from '@angular/router'
+import { FormBuilder, Validators } from '@angular/forms'
+import { AuthService } from './../../../services/auth.service'
+import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
-import { type ValidatorsService } from 'src/app/services/validators.service'
+import { ValidatorsService } from 'src/app/services/validators.service'
 
 @Component({
   selector: 'app-login-modal',
@@ -13,6 +13,13 @@ import { type ValidatorsService } from 'src/app/services/validators.service'
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
+  
+  private readonly modalService = inject(NgbModal)
+  private readonly formBuilder = inject(FormBuilder)
+  private readonly authService = inject(AuthService)
+  private readonly validatorsService = inject(ValidatorsService)
+  private readonly router = inject(Router)
+
   loginError: string = ''
 
   loginForm = this.formBuilder.group({
@@ -22,11 +29,7 @@ export class LoginModalComponent {
 
   showPassword: boolean = false
 
-  constructor (private readonly modalService: NgbModal,
-    private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly validatorsService: ValidatorsService,
-    private readonly router: Router) { }
+  constructor () { }
 
   public async login (): Promise<void> {
     this.loginForm.markAllAsTouched()
@@ -46,7 +49,7 @@ export class LoginModalComponent {
     }
   };
 
-  public isValidField (field: string): void {
+  public isValidField (field: string): boolean {
     return this.validatorsService.isValidInput(field, this.loginForm)
   };
 

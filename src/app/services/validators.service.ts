@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { type AbstractControl, type FormGroup, type ValidationErrors } from '@angular/forms'
-import { type TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { type Observable, of } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidatorsService {
-  constructor (private readonly translate: TranslateService) {
+
+  private readonly translate = inject(TranslateService)
+
+  constructor () {
 
   }
 
@@ -15,7 +18,7 @@ export class ValidatorsService {
   public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
 
   // checks if flied is valid and touched
-  isValidInput (input: string, form: FormGroup): boolean | null {
+  isValidInput (input: string, form: FormGroup): boolean {
     if (form.controls[input].errors !== null && form.controls[input].touched) {
       return true
     }
