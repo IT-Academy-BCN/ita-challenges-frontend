@@ -1,7 +1,7 @@
 import { ChallengeService } from './challenge.service'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { delay, of } from 'rxjs'
+import { delay } from 'rxjs'
 import data from '../../assets/dummy/challenge.json'
 import { HttpClient } from '@angular/common/http'
 import { TestBed } from '@angular/core/testing'
@@ -15,7 +15,6 @@ describe('ChallengeService', () => {
   // let scheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
-  let httpClientSpy: any
   let testScheduler: TestScheduler
 
   beforeEach(() => {
@@ -27,10 +26,7 @@ describe('ChallengeService', () => {
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
 
-    // inject spy
-    httpClientSpy = jasmine.createSpy('httpClient')
-    httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data))
-    service = new ChallengeService(httpClientSpy)
+    service = new ChallengeService(httpClient)
     testScheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
     })

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { Router, NavigationEnd, type ActivatedRouteSnapshot, type RouterStateSnapshot } from '@angular/router'
+import { Router, NavigationEnd, type ActivatedRouteSnapshot } from '@angular/router'
 import { BreadcrumbService } from './breadcrumb.service'
 import { Subject } from 'rxjs'
 
@@ -13,9 +13,9 @@ describe('BreadcrumbService', () => {
     routerMock = {
       events: eventsSubject.asObservable(),
       routerState: {
-        snapshot: {
-          root: {} as ActivatedRouteSnapshot
-        } as RouterStateSnapshot
+        // snapshot: {
+        //   root: {} as ActivatedRouteSnapshot
+        // } as RouterStateSnapshot
       }
     }
 
