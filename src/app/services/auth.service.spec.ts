@@ -21,13 +21,14 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      providers: [AuthService]
     })
 
     // Inject the http service and test controller for each test
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
-
+    authService = TestBed.inject(AuthService)
     // routerMock = {
     //   navigate: jest.fn()
     // }
@@ -66,8 +67,6 @@ describe('AuthService', () => {
     //   writable: true,
     //   value: cookieServiceMock
     // })
-
-    authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock)
   })
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
