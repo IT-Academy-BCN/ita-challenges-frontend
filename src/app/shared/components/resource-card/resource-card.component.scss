@@ -6,6 +6,7 @@
     min-height: 110px;
     cursor: pointer;
     background-color: $white;
+    width: 50%;
     max-width: 45%;
     margin-inline-start: 15px;
     gap:12px;
@@ -71,7 +72,7 @@
     }
 }
 
-@media (max-width: 768px){
+@media (max-width: 992px){
     .resource-list-element{
         margin-inline-start: 0px;
         width:100%;
