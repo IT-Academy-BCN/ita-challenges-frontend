@@ -140,10 +140,12 @@ describe('RegisterModalComponent', () => {
     expect(modalServiceMock.dismissAll).toHaveBeenCalled()
   })
 
-  it('should get itineraries B', async () => {
+  it('should get itineraries B', fakeAsync(() => {
     const respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3']
     tick()
-    await component.getItineraries()
-    expect(component.itineraries).toEqual(respMock)
-  })
+    component.getItineraries().then(() => {
+      expect(component.itineraries).toEqual(respMock)
+    })
+  }))
 })
+
