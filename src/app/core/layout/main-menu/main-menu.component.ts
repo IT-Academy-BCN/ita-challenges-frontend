@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent {
-
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
   constructor () {
