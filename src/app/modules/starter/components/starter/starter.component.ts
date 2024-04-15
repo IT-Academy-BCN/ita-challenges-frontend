@@ -7,7 +7,6 @@ import { type DataChallenge } from '../../../../models/data-challenge.model'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
-import { StarterService } from 'src/app/services/starter.service'
 
 @Component({
   selector: 'app-starter',
