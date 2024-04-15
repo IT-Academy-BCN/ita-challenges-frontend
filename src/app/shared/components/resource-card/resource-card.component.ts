@@ -16,10 +16,8 @@ export class ResourceCardComponent implements OnInit {
   @Input() inputResources: any = ''
   public resources: ResourceResponse[] = []
 
-  constructor (private readonly resoursesService: ResourcesService) { }
-
   ngOnInit (): void {
-    this.resoursesService.getResources().subscribe({
+    this.resourcesService.getResources().subscribe({
       next: (resource: any) => {
         this.resources = resource
       },
