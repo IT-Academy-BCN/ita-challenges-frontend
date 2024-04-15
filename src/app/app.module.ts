@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthService } from './services/auth.service';
+import { CustomLoader } from './modules/custom-loader/custom-loader';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -24,7 +25,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-   
+    CustomLoader,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useClass: CustomLoader,
+        // useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     })

@@ -1,9 +1,15 @@
 ## CHANGELOG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
 ### [ita-challenges-frontend-2.4.0-RELEASE] - 2024-04-09
 * New changes on challenge-header button and styles.
+
+### [ita-challenges-frontend-2.2.0-RELEASE] - 2024-04-08
+* Challenge lists translates
+
+### [ita-challenges-frontend-2.0.72-RELEASE] - 2024-04-03
+* Added responsiveness to login and register modals.
 
 ### [ita-challenges-frontend-2.0.71-RELEASE] - 2024-04-02
 * Delete iteneraries service and implement the method on chalenges.service
@@ -11,8 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [ita-challenges-frontend-2.0.68-RELEASE] - 2024-03-20
 * Add responsiveness to challange filters modal
 
-### [ita-challenges-frontend-2.0.72-RELEASE] - 2024-04-03
-* Added responsiveness to login and register modals.
+### [ita-challenges-frontend-2.0.70-RELEASE] - 2024-03-21
+* Challenge list translates 
+
+### [ita-challenges-frontend-2.0.69-RELEASE] - 2024-03-07
+* Adapt mobile-nav to Figma" 
 
 ### [ita-challenges-frontend-2.0.60-RELEASE] - 2024-03-07
 * Change rename environment and delete dummy variables name" 
