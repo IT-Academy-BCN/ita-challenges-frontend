@@ -11,7 +11,6 @@ import { type Challenge } from '../models/challenge.model'
 })
 
 export class ChallengeService {
-  // private readonly http = inject(HttpClient)
   constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
   getChallengeById (id: string): Observable<Challenge> {
     // -----TO CHANGE----
