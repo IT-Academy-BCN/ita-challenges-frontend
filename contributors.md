@@ -11,4 +11,3 @@
 - Elisenda López - https://github.com/Elisenda-LV
 - Joaquin Capel - https://github.com/JoaquinCapel
 - Pau Sàbat - https://github.com/pausm99
-- Francesc Ferrer - https://github.com/fran-cesc
