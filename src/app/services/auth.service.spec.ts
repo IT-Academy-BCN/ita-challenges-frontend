@@ -1,12 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { AuthService } from './auth.service'
-import { HttpClient } from '@angular/common/http'
 import { of } from 'rxjs'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { tap } from 'rxjs/operators'
 import { User } from '../models/user.model'
-import { type TokenService } from './token.service'
 import { resolve } from 'path'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
@@ -15,9 +13,7 @@ describe('AuthService', () => {
   let authService: AuthService
   let cookieServiceMock: CookieService
   let routerMock: Router
-  let httpClient: HttpClient
   let httpClientMock: HttpTestingController
-  let tokenServiceMock: TokenService
 
   beforeEach(() => {
     TestBed.configureTestingModule({ // set up the testing module with required dependencies.
@@ -26,12 +22,8 @@ describe('AuthService', () => {
     })
 
     // Inject the http service and test controller for each test
-    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
     authService = TestBed.inject(AuthService)
-    // routerMock = {
-    //   navigate: jest.fn()
-    // }
 
     cookieServiceMock = Object.assign(
       {
@@ -47,33 +39,10 @@ describe('AuthService', () => {
         platformId: null,
         documentIsAccessible: null
       })
-
-    // cookieServiceMock =  () {
-    //   const cookies: Record<string, any> = {}
-    //   return {
-    //     get: jest.fn((key) => (cookies[key]) || null),
-    //     set: jest.fn((key, value) => {
-    //       cookies[key] = value
-    //     }),
-    //     delete: jest.fn((key) => {
-    //       cookies[key] = undefined
-    //     }),
-    //     document: null,
-    //     platformId: null,
-    //     documentIsAccessible: null
-    //   }
-    // }()
-    // Object.defineProperty(window, 'cookies', {
-    //   writable: true,
-    //   value: cookieServiceMock
-    // })
   })
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
     const anonymMock = 'anonym'
-
-    // cookieServiceMock.get.mockReturnValue(null) // Set cookie service to return null
-
     const user = authService.currentUser
 
     expect(user).toBeDefined()
