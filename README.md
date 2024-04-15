@@ -4,6 +4,14 @@
 
 ### Table of contents
 
+1. [Description](#description)
+2. [Usage](#usage)
+3. [Installation](#installation)
+4. [Newcomers](#newcomers)
+5. [Guidelines and Code Conventions](#guidelines-and-code-conventions)
+6. [FAQ's](#faqs)
+7. [Contributors](#contributors)
+
 <hr>
 
 ### Description
@@ -12,12 +20,16 @@
 
 ### Installation
 
+####  Versions used
+
+#### Project links
+
+#### Procedure
+
+
 ### Newcomers
 
-(extract from GUIDELINES.md)
-
 #### Git configuration
-
 
 #### Daily working flow
 
@@ -29,31 +41,33 @@ Guidelines 2.4
 
 #### Pull Requests
 
-
-#### Code conventions
+### Guidelines and Code Conventions
 
 See [GUIDELINES.md](GUIDELINES.md)
 
 ### FAQ's
 
 * **May I use AI on this project? How can I use it the best way?**
- - You must do it.
+    - You must do it.
 
 * **Is there any diagram of architecture, a technical description or similar?**
- - Yes, you can find it in the [wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki)
+    - Yes, you can find it in the [wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki)
 
 * **To contribute to this project, do I need make a fork?**
- - No, you don't need to fork the project. We work with a single repository, adding branches for each feature and requesting pull requests to merge them.
+    - No, you don't need to fork the project. We work with a single repository, adding branches for each feature and requesting pull requests to merge them.
 
 * **Do I need start up the project fully on my pc to start coding?**
- - Yes.
+    - Yes, you need to have the project running on your local machine to start coding.
 
 ### Contributors
 
 This project exists thanks to all the people who contribute.
 
-<a href="https://github.com/IT-Academy-BCN/ita-challenges-backend/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-backend" /></a>
+<a href="https://github.com/IT-Academy-BCN/ita-challenges-frontend/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-frontend" /></a>
+
+<hr>
+
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_EN.md)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_ES.md)
