@@ -7,10 +7,6 @@ import { type DataChallenge } from '../../../../models/data-challenge.model'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
-import { AuthService } from '../../../../services/auth.service'
-import { User } from '../../../../models/user.model'
-import { TranslateService } from '@ngx-translate/core'
-
 import { StarterService } from 'src/app/services/starter.service'
 
 @Component({
