@@ -11,7 +11,7 @@ export class BreadcrumbService {
 
   _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([])
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable()
-  subs: Subscription = this.breadcrumbs$.subscribe(res => { console.log(res) })
+  subs: Subscription = this.breadcrumbs$.subscribe(res => {})
 
   constructor () {
     this.router.events.pipe(
@@ -25,9 +25,7 @@ export class BreadcrumbService {
     const root = this.router.routerState.snapshot.root
     const breadcrumbs: Breadcrumb[] = []
     this.addBreadcrumb(root, [], breadcrumbs)
-
     this._breadcrumbs$.next(breadcrumbs)
-    console.log(breadcrumbs)
   }
 
   private addBreadcrumb (route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: Breadcrumb[]): void {
@@ -48,7 +46,6 @@ export class BreadcrumbService {
         // Check if route has query param tab (challenge-info selected tab)
         if (route.queryParamMap.has('tab')) {
           breadcrumbs[breadcrumbs.length - 1].label += ' > ' + route.queryParamMap.get('tab')
-          console.log(route.queryParamMap.get('tab'))
         }
       }
     }
