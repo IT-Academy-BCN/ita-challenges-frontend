@@ -4,14 +4,14 @@ import { ResourcesService } from 'src/app/services/resources.service'
 import { HttpClientModule } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 
-describe('ResourceComponent', () => {
+describe('ResourceCardComponent', () => {
   let component: ResourceCardComponent
   let fixture: ComponentFixture<ResourceCardComponent>
   let resourcesServiceMock: any
 
   beforeEach(async () => {
     resourcesServiceMock = {
-      getResources: jest.fn().mockResolvedValue([])
+      getResources: jest.fn().mockReturnValue(of([]))
     }
 
     await TestBed.configureTestingModule({
@@ -29,7 +29,6 @@ describe('ResourceComponent', () => {
   })
 
   it('should create', () => {
-    console.log(component)
     expect(component).toBeTruthy()
   })
 
@@ -70,6 +69,8 @@ describe('ResourceComponent', () => {
     }]
 
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
+
+    component.ngOnInit()
 
     fixture.detectChanges()
 
