@@ -57,7 +57,6 @@ export class LoginModalComponent {
   public openSuccessfulLoginModal(res: any) {
     this.closeModal();
     //TODO create routing to the page after success login
-    alert('Success login');
   }
 
   public notifyErrorLogin(err: any) {
