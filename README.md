@@ -34,6 +34,9 @@ zone.js                         0.14.2
 * **Running end-to-end tests**. Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 * **Further help**. To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
+This project exists thanks to all the people who contribute.
+<a href="https://github.com/IT-Academy-BCN/ita-challenges-frontend/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-frontend" /></a>
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_EN.md) 
  [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_ES.md) 
