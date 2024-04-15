@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators'
 import { User } from '../models/user.model'
 import { type TokenService } from './token.service'
 import { resolve } from 'path'
-import { type Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
 
 describe('AuthService', () => {
@@ -29,9 +29,7 @@ describe('AuthService', () => {
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
     authService = TestBed.inject(AuthService)
-    // routerMock = {
-    //   navigate: jest.fn()
-    // }
+    routerMock = TestBed.inject(Router)
 
     cookieServiceMock = Object.assign(
       {

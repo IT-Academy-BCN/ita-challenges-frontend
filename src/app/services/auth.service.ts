@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { Inject, Injectable, inject } from '@angular/core'
 import { environment } from '../../environments/environment'
 import {
   BehaviorSubject,
@@ -29,16 +29,22 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
-  private readonly http = inject(HttpClient)
-  private readonly router = inject(Router)
-  private readonly cookieService = inject(CookieService)
-  private readonly tokenService = inject(TokenService)
+  // private readonly http = inject(HttpClient)
+  // private readonly router = inject(Router)
+  // private readonly cookieService = inject(CookieService)
+  
 
   private readonly anonym: string = 'anonym'
   private readonly userSubject: BehaviorSubject<User>
-  public user$: Observable<User>
+  public user$: Observable<User>;
 
-  constructor() {
+  @Inject(HttpClient) private http: HttpClient
+  @Inject(Router) private router: Router
+  @Inject(CookieService) private cookieService: CookieService
+  constructor( http: HttpClient, router: Router, cookieService: CookieService ) {
+    this.http = http;
+    this.router = router;
+    this.cookieService = cookieService;
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user')
     // const initialUser = userCookie ? JSON.parse(userCookie) : null
