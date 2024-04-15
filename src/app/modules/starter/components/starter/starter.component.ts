@@ -1,3 +1,16 @@
+import { FilterChallenge } from './../../../../models/filter-challenge.model';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { StarterService } from "../../../../services/starter.service";
+import { DataChallenge } from "../../../../models/data-challenge.model";
+import { Challenge } from "../../../../models/challenge.model";
+import { environment } from '../../../../../environments/environment';
+import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import { AuthService } from "../../../../services/auth.service";
+import { User } from "../../../../models/user.model";
+import { TranslateService } from '@ngx-translate/core';
+
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
 import { Component, ViewChild, inject } from '@angular/core'
 import { type Subscription } from 'rxjs'
@@ -55,13 +68,13 @@ export class StarterComponent {
       // console.log('User Starter Component: ' + this.authService.currentUser.idUser);
 
       /*      if(this.authService.currentUser.idUser === 'anonym') {
-        const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
-        this.authService.login(loggedUser);
-        console.log(this.authService.currentUser.idUser);
-      } */
+              const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
+              this.authService.login(loggedUser);
+              console.log(this.authService.currentUser.idUser);
+            }*/
 
-      this.listChallenges = resp
-    })
+      this.listChallenges = resp;
+    });
   }
 
   openModal (): void {
