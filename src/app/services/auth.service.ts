@@ -29,16 +29,14 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
-  private readonly http = inject(HttpClient)
-  private readonly router = inject(Router)
-  private readonly cookieService = inject(CookieService)
-  private readonly tokenService = inject(TokenService)
 
   private readonly anonym: string = 'anonym'
   private readonly userSubject: BehaviorSubject<User>
   public user$: Observable<User>
 
-  constructor () {
+  constructor (private readonly http: HttpClient,
+    private readonly router: Router,
+    private readonly cookieService: CookieService) {
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user')
     // const initialUser = userCookie ? JSON.parse(userCookie) : null

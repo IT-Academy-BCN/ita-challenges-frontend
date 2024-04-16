@@ -142,7 +142,7 @@ describe('RegisterModalComponent', () => {
 
   it('should get itineraries B', async () => {
     const respMock: string[] = ['itinerary1', 'itinerary2', 'itinerary3']
-    tick()
+    // tick()
     await component.getItineraries()
     expect(component.itineraries).toEqual(respMock)
   })
