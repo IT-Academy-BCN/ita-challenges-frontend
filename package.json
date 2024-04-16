@@ -6,7 +6,7 @@
     "start": "ng serve --proxy-config proxy.conf.dev.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest --onlyFailures",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "eslint \"src/**/*.ts\"",
@@ -58,6 +58,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.7",
     "@angular-eslint/eslint-plugin": "^17.3.0",
+    "@angular-eslint/eslint-plugin-template": "^17.3.0",
+    "@angular-eslint/template-parser": "^17.3.0",
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.0.7",
     "@angular/localize": "^17.0.7",
