@@ -8,7 +8,8 @@ import { type ResourceResponse } from '../models/resource.interface'
   providedIn: 'root'
 })
 export class ResourcesService {
-  constructor (private readonly http: HttpClient) { }
+  private readonly http = inject(HttpClient)
+
   getResources (): Observable<ResourceResponse> {
     // todo: need change the env api request.
     return this.http.get<ResourceResponse>(`${environment.BACKEND_SSO_RESOURCES}`,

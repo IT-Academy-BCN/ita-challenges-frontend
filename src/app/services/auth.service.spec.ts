@@ -6,9 +6,8 @@ import { environment } from 'src/environments/environment'
 import { tap } from 'rxjs/operators'
 import { User } from '../models/user.model'
 import { resolve } from 'path'
-import { Router } from '@angular/router'
-import { CookieService } from 'ngx-cookie-service'
-import { HttpClient } from '@angular/common/http'
+import { type Router } from '@angular/router'
+import { type CookieService } from 'ngx-cookie-service'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -18,13 +17,13 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
-      // providers: [AuthService]
+      imports: [HttpClientTestingModule],
+      providers: [AuthService]
     })
 
     // Inject the http service and test controller for each test
     httpClientMock = TestBed.inject(HttpTestingController)
-    authService = new AuthService(TestBed.inject(HttpClient), TestBed.inject(Router), TestBed.inject(CookieService))
+    authService = TestBed.inject(AuthService)
 
     cookieServiceMock = Object.assign(
       {

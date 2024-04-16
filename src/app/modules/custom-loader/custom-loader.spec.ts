@@ -2,7 +2,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CustomLoader } from './custom-loader'
 import { TestBed } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
-import { HttpClient } from '@angular/common/http'
 
 describe('CustomLoader', () => {
   let httpClientMock: HttpTestingController
@@ -10,12 +9,11 @@ describe('CustomLoader', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
-      // providers: [CustomLoader]
+      imports: [HttpClientTestingModule],
+      providers: [CustomLoader]
     })
     httpClientMock = TestBed.inject(HttpTestingController)
-    // customLoader = TestBed.inject(CustomLoader)
-    customLoader = new CustomLoader(TestBed.inject(HttpClient))
+    customLoader = TestBed.inject(CustomLoader)
   })
 
   it('should create custom-loader correctly', (done) => {
