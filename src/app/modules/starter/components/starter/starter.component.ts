@@ -1,12 +1,16 @@
-import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, ViewChild, inject } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { type Subscription } from 'rxjs'
-import { StarterService } from '../../../../services/starter.service'
-import { type DataChallenge } from '../../../../models/data-challenge.model'
-import { Challenge } from '../../../../models/challenge.model'
-import { environment } from '../../../../../environments/environment'
-import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
+import { FilterChallenge } from './../../../../models/filter-challenge.model';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { StarterService } from "../../../../services/starter.service";
+import { DataChallenge } from "../../../../models/data-challenge.model";
+import { Challenge } from "../../../../models/challenge.model";
+import { environment } from '../../../../../environments/environment';
+import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
+import { AuthService } from "../../../../services/auth.service";
+import { User } from "../../../../models/user.model";
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-starter',
@@ -14,11 +18,6 @@ import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal
   styleUrls: ['./starter.component.scss']
 })
 export class StarterComponent {
-  private readonly activatedRoute = inject(ActivatedRoute)
-  private readonly router = inject(Router)
-  private readonly starterService = inject(StarterService)
-  // private authService: AuthService
-
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
 
   dataChallenge!: DataChallenge
@@ -35,7 +34,10 @@ export class StarterComponent {
   listChallenges: any
   pageSize = environment.pageSize
 
-  constructor () {
+  constructor (private activatedRoute: ActivatedRoute,
+               private router: Router,
+               private starterService: StarterService,
+               public translate: TranslateService) {
     this.params$ = this.activatedRoute.params.subscribe(params => {
     })
   }
