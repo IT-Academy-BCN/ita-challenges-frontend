@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { RegisterModalComponent } from '../register-modal/register-modal.component'
-import { FormBuilder, Validators } from '@angular/forms'
-import { AuthService } from './../../../services/auth.service'
-import { Router } from '@angular/router'
-import { type User } from 'src/app/models/user.model'
-import { ValidatorsService } from 'src/app/services/validators.service'
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterModalComponent } from '../register-modal/register-modal.component';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from './../../../services/auth.service';
+import { Router } from '@angular/router';
+import { User } from "src/app/models/user.model";
+import { ValidatorsService } from 'src/app/services/validators.service';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-modal',
@@ -26,7 +28,14 @@ export class LoginModalComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
 
-  showPassword: boolean = false
+  showPassword: boolean = false;
+
+  constructor(private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private validatorsService: ValidatorsService,
+    private router: Router,
+    private translate: TranslateService) { }
 
   public async login (): Promise<void> {
     this.loginForm.markAllAsTouched()
@@ -56,11 +65,19 @@ export class LoginModalComponent {
     alert('Success login')
   }
 
-  public notifyErrorLogin (err: any): void {
-    if ((typeof err.error.message) === 'string') {
-      this.loginError = err.error.message
-    } else {
-      this.loginError = 'Error en el login'
+  public notifyErrorLogin(err: any) {
+    switch (err.status){
+      case environment.HTTP_CODE_UNAUTHORIZED:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
+        break;
+      case environment.HTTP_CODE_BAD_REQUEST:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
+        break;
+      case environment.HTTP_CODE_FORBIDDEN:
+        this.loginError = this.translate.instant('modules.modals.login.notActive');
+        break;
+      default:
+        this.loginForm = this.translate.instant('modules.modals.login.generalError');
     }
   }
 

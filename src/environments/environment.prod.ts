@@ -19,5 +19,9 @@ export const environment = {
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',
   BACKEND_TOKEN: '',
-  pageSize: 8
-}
+  pageSize: 8,
+  HTTP_CODE_SUCCESS: 200,
+  HTTP_CODE_BAD_REQUEST: 400,
+  HTTP_CODE_UNAUTHORIZED: 401,
+  HTTP_CODE_FORBIDDEN: 403,
+};

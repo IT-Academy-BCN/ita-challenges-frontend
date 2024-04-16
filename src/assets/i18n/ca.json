@@ -55,7 +55,10 @@
                 "solutionCode": "// Escriu el teu codi aquí",
                 "solutionsChallenge": "Resposta d'exemple, no es pot modificar",
                 "solutionsTitleLocked":"Les solucions estan bloquejades.",
+
                 "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
+
+
             }
         },
         "starter": {
@@ -78,8 +81,7 @@
                     "date": "Data"
                 }
             }
-        },
-        "modals": {
+        },"modals": {
             "register": {
                 "title": "Registre",
                 "specialization": "Especialització",
@@ -91,7 +93,10 @@
             },
             "login": {
                 "forgotPassword": "Recordar/Canviar contrasenya",
-                "registerRedirect": "No tens un compte? Crea'n una"
+                "registerRedirect": "No tens un compte? Crea'n una",
+                "invalidInput": "Usuari o contrasenya incorrectes",
+                "notActive": "Usuari desactivat. Esperi al correu electrònic de confirmació",
+                "generalError": "Error en iniciar sessió"
             },
             "postRegister": {
                 "title": "Registre Exitós",

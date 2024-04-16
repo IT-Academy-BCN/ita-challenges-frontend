@@ -1,40 +1,78 @@
-# ITA Challenges Frontend
+## ITA-challenges-frontend
 
-### Guidelines
+<hr>
 
-Please, read the [Guidelines (EN)](GUIDELINES_EN.md), [Guidelines (CAT)](GUIDELINES_CA) or [Guidelines (ES)](GUIDELINES_ES.md) before contributing.
+### Table of contents
+
+1. [Description](#description)
+2. [Usage](#usage)
+3. [Installation](#installation)
+4. [Newcomers](#newcomers)
+5. [Guidelines and Code Conventions](#guidelines-and-code-conventions)
+6. [FAQ's](#faqs)
+7. [Contributors](#contributors)
+
+<hr>
+
+### Description
+
+### Usage
+
+### Installation
+
+####  Versions used
+
+#### Project links
+
+#### Procedure
+
+
+### Newcomers
+
+#### Git configuration
+
+#### Daily working flow
+
+#### Kanban Boards
+
+[Kanban board from project](https://github.com/orgs/IT-Academy-BCN/projects/16)
+
+Guidelines 2.4
+
+#### Pull Requests
+
+### Guidelines and Code Conventions
+
+See [GUIDELINES.md](GUIDELINES.md)
+
+### FAQ's
+
+* **May I use AI on this project? How can I use it the best way?**
+    - You must do it.
+
+* **Is there any diagram of architecture, a technical description or similar?**
+    - Yes, you can find it in the [wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki)
+
+* **To contribute to this project, do I need make a fork?**
+    - No, you don't need to fork the project. We work with a single repository, adding branches for each feature and requesting pull requests to merge them.
+
+* **Do I need start up the project fully on my pc to start coding?**
+    - Yes, you need to have the project running on your local machine to start coding.
 
 ### Contributors
 
-See [contributors.md](contributors.md) for more details.
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/IT-Academy-BCN/ita-challenges-frontend/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-frontend" /></a>
+
+<hr>
 
 
-* **ItaChallengesFrontend**. This project was generated with next versions:
-```
-Angular CLI: 17.0.7
-Node: 20.10.0
-Package Manager: npm 10.2.3
-
-Package                         Version
----------------------------------------------------------
-@angular-devkit/architect       0.1700.7
-@angular-devkit/build-angular   17.0.7
-@angular-devkit/core            17.0.7
-@angular-devkit/schematics      17.0.7
-@angular/cdk                    17.0.4
-@schematics/angular             17.0.7
-rxjs                            7.8.1
-zone.js                         0.14.2
-```
-
-* **Development server**. Run `ng serve` or `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-* **Code scaffolding**. Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-* **Build**. Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-* **Running unit tests**. Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-* **Running end-to-end tests**. Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-* **Further help**. To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_EN.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_ES.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_CA.md)
 
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_EN.md) 
- [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_ES.md) 
-  [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_CA.md) 
+
+
