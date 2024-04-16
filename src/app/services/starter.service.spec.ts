@@ -1,8 +1,11 @@
-import { type StarterService } from './starter.service'
+import { StarterService } from './starter.service'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 
 import { delay } from 'rxjs'
-import data from './../../assets/dummy/data-challenge.json' // see data-typings.d.ts
+import data from './../../assets/dummy/data-challenge.json'
+import { TestBed } from '@angular/core/testing'
+import { HttpClient } from '@angular/common/http'
+import { HttpClientTestingModule } from '@angular/common/http/testing' // see data-typings.d.ts
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -12,6 +15,10 @@ describe('StarterService', () => {
   let testScheduler: TestScheduler
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    })
+    service = new StarterService(TestBed.inject(HttpClient))
     // inject spy
     testScheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)

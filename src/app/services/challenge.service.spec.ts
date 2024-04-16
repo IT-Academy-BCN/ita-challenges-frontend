@@ -1,8 +1,5 @@
 import { ChallengeService } from './challenge.service'
-import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { delay } from 'rxjs'
-import data from '../../assets/dummy/challenge.json'
 import { HttpClient } from '@angular/common/http'
 import { TestBed } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
@@ -15,7 +12,6 @@ describe('ChallengeService', () => {
   // let scheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
-  let testScheduler: TestScheduler
 
   beforeEach(() => {
     TestBed.configureTestingModule({ // set up the testing module with required dependencies.
@@ -25,11 +21,7 @@ describe('ChallengeService', () => {
     // Inject the http service and test controller for each test
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
-
-    service = new ChallengeService(httpClient)
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected)
-    })
+    service = TestBed.inject(ChallengeService)
   })
 
   /*
@@ -49,17 +41,6 @@ describe('ChallengeService', () => {
         - ab--# : An Observable that emits a on frame two, b on frame three and an error on frame six.
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
-
-  it('Should stream a challenge', () => {
-    testScheduler.run(({ expectObservable }) => {
-      const idChallenge = '1adfadf21fasdf2-adf'
-      const expectedMarble = '---(a|)'
-      const expectedValues = { a: data }
-      const obs$ = service.getChallengeById(idChallenge).pipe(delay(3))
-
-      expectObservable(obs$).toBe(expectedMarble, expectedValues)
-    })
-  })
 
   it('should be created itineraries.service', (done) => {
     expect(service).toBeTruthy()

@@ -6,6 +6,8 @@ import { AuthService } from './../../../services/auth.service'
 import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
 import { ValidatorsService } from 'src/app/services/validators.service'
+import { environment } from 'src/environments/environment'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-login-modal',
@@ -18,6 +20,7 @@ export class LoginModalComponent {
   private readonly authService = inject(AuthService)
   private readonly validatorsService = inject(ValidatorsService)
   private readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   loginError: string = ''
 
@@ -57,10 +60,18 @@ export class LoginModalComponent {
   }
 
   public notifyErrorLogin (err: any): void {
-    if ((typeof err.error.message) === 'string') {
-      this.loginError = err.error.message
-    } else {
-      this.loginError = 'Error en el login'
+    switch (err.status) {
+      case environment.HTTP_CODE_UNAUTHORIZED:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput')
+        break
+      case environment.HTTP_CODE_BAD_REQUEST:
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput')
+        break
+      case environment.HTTP_CODE_FORBIDDEN:
+        this.loginError = this.translate.instant('modules.modals.login.notActive')
+        break
+      default:
+        this.loginForm = this.translate.instant('modules.modals.login.generalError')
     }
   }
 

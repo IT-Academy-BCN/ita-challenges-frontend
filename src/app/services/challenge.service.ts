@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { type Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
@@ -11,8 +11,7 @@ import { type Challenge } from '../models/challenge.model'
 })
 
 export class ChallengeService {
-  private readonly http = inject(HttpClient)
-
+  constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
   getChallengeById (id: string): Observable<Challenge> {
     // -----TO CHANGE----
 

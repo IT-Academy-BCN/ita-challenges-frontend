@@ -13,9 +13,7 @@ describe('BreadcrumbService', () => {
     routerMock = {
       events: eventsSubject.asObservable(),
       routerState: {
-        // snapshot: {
-        //   root: {} as ActivatedRouteSnapshot
-        // } as RouterStateSnapshot
+        snapshot: {}
       }
     }
 

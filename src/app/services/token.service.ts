@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  private readonly cookieService = inject(CookieService)
+  constructor (@Inject(CookieService) private readonly cookieService: CookieService) { }
 
   public set authToken (token: string) {
     this.cookieService.set('authToken', token)

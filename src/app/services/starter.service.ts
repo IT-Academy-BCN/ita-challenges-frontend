@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { type Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { type HttpClient, HttpHeaders } from '@angular/common/http'
 import { type Challenge } from '../models/challenge.model'
 
 @Injectable({
@@ -9,8 +9,7 @@ import { type Challenge } from '../models/challenge.model'
 })
 
 export class StarterService {
-  private readonly http = inject(HttpClient)
-
+  constructor (private readonly http: HttpClient) { }
   getAllChallenges (page: number, pageSize: number): Observable<Challenge> {
     // const params = {
     //   page: page.toString(),

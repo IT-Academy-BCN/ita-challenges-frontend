@@ -29,31 +29,23 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
-  // private readonly http = inject(HttpClient)
-  // private readonly router = inject(Router)
-  // private readonly cookieService = inject(CookieService)
-  
 
   private readonly anonym: string = 'anonym'
   private readonly userSubject: BehaviorSubject<User>
-  public user$: Observable<User>;
+  public user$: Observable<User>
 
-  @Inject(HttpClient) private http: HttpClient
-  @Inject(Router) private router: Router
-  @Inject(CookieService) private cookieService: CookieService
-  constructor( http: HttpClient, router: Router, cookieService: CookieService ) {
-    this.http = http;
-    this.router = router;
-    this.cookieService = cookieService;
+  constructor (private readonly http: HttpClient,
+    private readonly router: Router,
+    private readonly cookieService: CookieService) {
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user')
     // const initialUser = userCookie ? JSON.parse(userCookie) : null
-    let initialUser = null;
+    let initialUser = null
     if (userCookie !== null) {
       try {
-        initialUser = JSON.parse(userCookie);
+        initialUser = JSON.parse(userCookie)
       } catch (error) {
-        console.error('Error parsing user cookie:', error);
+        console.error('Error parsing user cookie:', error)
       }
     }
     // let initialUser = userCookie !== null ? JSON.parse(userCookie) : null
@@ -67,7 +59,7 @@ export class AuthService {
   /**
   * Creates a new anonymous user if there is no user in the cookies.
   */
-  public get currentUser(): User {
+  public get currentUser (): User {
     if (this.userSubject.value === null) {
       this.userSubject.next(new User(this.anonym))
       this.cookieService.set('user', this.anonym)
@@ -75,7 +67,7 @@ export class AuthService {
     return this.userSubject.value
   }
 
-  public set currentUser(user: User) {
+  public set currentUser (user: User) {
     this.userSubject.next(user)
     this.cookieService.set('user', JSON.stringify(user))
   }
@@ -83,7 +75,7 @@ export class AuthService {
   /**
   * Register a user and log in with the new user. Set new user as current user.
   */
-  public registerRequest(user: User): Observable<any> {
+  public registerRequest (user: User): Observable<any> {
     return this.http.post((environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL)),
       {
         dni: user.dni,
@@ -100,7 +92,7 @@ export class AuthService {
       })
   }
 
-  public async register(user: User): Promise<any> {
+  public async register (user: User): Promise<any> {
     const resp: registerResponse = await firstValueFrom(this.registerRequest(user))
     await this.modifyUserWithAdmin(resp.id)
     return null
@@ -118,7 +110,7 @@ export class AuthService {
   //   })
   // }
 
-  public async modifyUserWithAdmin(registerUserId: string): Promise<void> {
+  public async modifyUserWithAdmin (registerUserId: string): Promise<void> {
     const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER))
 
     if (userAdmin !== null) {
@@ -152,17 +144,16 @@ export class AuthService {
     }
   }
 
-  public getUserIdFromCookie(): void {
+  public getUserIdFromCookie (): void {
     const stringifiedUSer = this.cookieService.get('user')
     const user = JSON.parse(stringifiedUSer)
     return user.idUser
-
   }
 
   /**
   * Log in with a user. Set user as current user.
   */
-  public loginRequest(user: User): Observable<loginResponse> {
+  public loginRequest (user: User): Observable<loginResponse> {
     return this.http.post<loginResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
       {
         dni: user.dni,
@@ -175,7 +166,7 @@ export class AuthService {
       })
   }
 
-  public async login(user: User): Promise<any> {
+  public async login (user: User): Promise<any> {
     const resp = await firstValueFrom(this.loginRequest(user))
     if (resp === null || resp === undefined) {
       throw new Error('Empty response')
@@ -187,7 +178,7 @@ export class AuthService {
     return resp
   }
 
-  public async logout(): Promise<void> {
+  public async logout (): Promise<void> {
     this.cookieService.delete('authToken')
     this.cookieService.delete('refreshToken')
     this.cookieService.delete('user')
@@ -198,7 +189,7 @@ export class AuthService {
   * get User Data
   * and store it in the cookie
   */
-  public async getLoggedUserData(): Promise<UserResponse> {
+  public async getLoggedUserData (): Promise<UserResponse> {
     return await new Promise<UserResponse>((resolve, reject) => {
       this.http.post<UserResponse>(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER),
         {
@@ -223,7 +214,7 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in */
-  public async isUserLoggedIn(): Promise<void> { // TODO: neec tokenService first
+  public async isUserLoggedIn (): Promise<void> { // TODO: neec tokenService first
     // let isUserLoggedIn: boolean = false;
     // let authToken = this.cookieService.get('authToken');
     // let authTokenValid = await this.checkToken(authToken);
@@ -237,18 +228,18 @@ export class AuthService {
   }
 
   /* return if token valid */
-  async checkToken(token: string): Promise<boolean> {
+  async checkToken (token: string): Promise<boolean> {
     return true
   }
 
   // Check if the token is expired
-  public isTokenExpired(token: string): boolean {
+  public isTokenExpired (token: string): boolean {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp
     return Math.floor(new Date().getTime() / 1000) >= expiry
   }
 
   /* See if token is valid */
-  public isTokenValid(token: string): boolean { // todo: Promise<boolean>
+  public isTokenValid (token: string): boolean { // todo: Promise<boolean>
     return true
   }
 }

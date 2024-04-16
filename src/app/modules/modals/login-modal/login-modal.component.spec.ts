@@ -6,7 +6,7 @@ import { Router } from '@angular/router'
 import { of } from 'rxjs'
 
 import { LoginModalComponent } from './login-modal.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent
@@ -14,6 +14,7 @@ describe('LoginModalComponent', () => {
   let authServiceMock: any
   let routerMock: any
   let modalServiceMock: any
+  let translateService: TranslateService
 
   beforeEach(async () => {
     authServiceMock = {
@@ -42,6 +43,8 @@ describe('LoginModalComponent', () => {
     fixture = TestBed.createComponent(LoginModalComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+
+    translateService = TestBed.inject(TranslateService)
   })
 
   it('should create login component correctly', (done) => {
@@ -71,15 +74,15 @@ describe('LoginModalComponent', () => {
   })
 
   it('should handle login error', async () => {
+    const errorMessage: string = 'Usuario desactivado. Espere al email de confirmación'
+    const errorResponse = { status: 403 }
     component.loginForm.setValue({ dni: '12345678Z', password: 'password' })
-    const errorResponse = { error: { message: 'Error en el login' } }
-
+    spyOn(translateService, 'instant').and.returnValue(errorMessage)
     spyOn(authServiceMock, 'login').and.returnValue(Promise.reject(errorResponse))
-
     await component.login()
-
     await new Promise(resolve => setTimeout(resolve, 100))
-    expect(component.loginError).toEqual(errorResponse.error.message)
+
+    expect(component.loginError).toEqual(errorMessage)
   })
 
   it('should open register modal', (done) => {
@@ -89,9 +92,9 @@ describe('LoginModalComponent', () => {
     done()
   })
 
-  it('should close login modal', (donde) => {
+  it('should close login modal', (done) => {
     component.openRegisterModal()
     expect(modalServiceMock.dismissAll).toHaveBeenCalled()
-    donde()
+    done()
   })
 })
