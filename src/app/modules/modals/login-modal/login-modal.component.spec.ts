@@ -5,18 +5,16 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { Router } from '@angular/router'
 import { of } from 'rxjs'
 
-import { LoginModalComponent } from './login-modal.component';
-import { error } from 'node:console';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Component } from '@angular/core';
+import { LoginModalComponent } from './login-modal.component'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 describe('LoginModalComponent', () => {
-  let component: LoginModalComponent;
-  let fixture: ComponentFixture<LoginModalComponent>;
-  let authServiceMock: any;
-  let routerMock: any;
-  let modalServiceMock: any;
-  let translateService: TranslateService;
+  let component: LoginModalComponent
+  let fixture: ComponentFixture<LoginModalComponent>
+  let authServiceMock: any
+  let routerMock: any
+  let modalServiceMock: any
+  let translateService: TranslateService
 
   beforeEach(async () => {
     authServiceMock = {
@@ -42,12 +40,12 @@ describe('LoginModalComponent', () => {
       ]
     }).compileComponents()
 
-    fixture = TestBed.createComponent(LoginModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture = TestBed.createComponent(LoginModalComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
 
-    translateService = TestBed.inject(TranslateService);
-  });
+    translateService = TestBed.inject(TranslateService)
+  })
 
   it('should create login component correctly', (done) => {
     expect(component).toBeTruthy()
@@ -76,16 +74,16 @@ describe('LoginModalComponent', () => {
   })
 
   it('should handle login error', async () => {
-    let errorMessage: string = 'Usuario desactivado. Espere al email de confirmación';
-    let errorResponse = { status: 403 };
-    component.loginForm.setValue({ dni: '12345678Z', password: 'password' });
-    spyOn(translateService, 'instant').and.returnValue(errorMessage);
-    spyOn(authServiceMock, 'login').and.returnValue(Promise.reject(errorResponse));
-    await component.login();
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const errorMessage: string = 'Usuario desactivado. Espere al email de confirmación'
+    const errorResponse = { status: 403 }
+    component.loginForm.setValue({ dni: '12345678Z', password: 'password' })
+    spyOn(translateService, 'instant').and.returnValue(errorMessage)
+    spyOn(authServiceMock, 'login').and.returnValue(Promise.reject(errorResponse))
+    await component.login()
+    await new Promise(resolve => setTimeout(resolve, 100))
 
-    expect(component.loginError).toEqual(errorMessage);
-  });
+    expect(component.loginError).toEqual(errorMessage)
+  })
 
   it('should open register modal', (done) => {
     component.openRegisterModal()
@@ -95,8 +93,8 @@ describe('LoginModalComponent', () => {
   })
 
   it('should close login modal', (done) => {
-    component.openRegisterModal();
-    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
-    done();
-  });
-});
+    component.openRegisterModal()
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled()
+    done()
+  })
+})

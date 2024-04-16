@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegisterModalComponent } from '../register-modal/register-modal.component';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from './../../../services/auth.service';
-import { Router } from '@angular/router';
-import { User } from "src/app/models/user.model";
-import { ValidatorsService } from 'src/app/services/validators.service';
-import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { RegisterModalComponent } from '../register-modal/register-modal.component'
+import { FormBuilder, Validators } from '@angular/forms'
+import { AuthService } from './../../../services/auth.service'
+import { Router } from '@angular/router'
+import { type User } from 'src/app/models/user.model'
+import { ValidatorsService } from 'src/app/services/validators.service'
+import { environment } from 'src/environments/environment'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-login-modal',
@@ -20,6 +20,7 @@ export class LoginModalComponent {
   private readonly authService = inject(AuthService)
   private readonly validatorsService = inject(ValidatorsService)
   private readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   loginError: string = ''
 
@@ -28,14 +29,7 @@ export class LoginModalComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
 
-  showPassword: boolean = false;
-
-  constructor(private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private validatorsService: ValidatorsService,
-    private router: Router,
-    private translate: TranslateService) { }
+  showPassword: boolean = false
 
   public async login (): Promise<void> {
     this.loginForm.markAllAsTouched()
@@ -65,19 +59,19 @@ export class LoginModalComponent {
     alert('Success login')
   }
 
-  public notifyErrorLogin(err: any) {
-    switch (err.status){
+  public notifyErrorLogin (err: any): void {
+    switch (err.status) {
       case environment.HTTP_CODE_UNAUTHORIZED:
-        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
-        break;
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput')
+        break
       case environment.HTTP_CODE_BAD_REQUEST:
-        this.loginError = this.translate.instant('modules.modals.login.invalidInput');
-        break;
+        this.loginError = this.translate.instant('modules.modals.login.invalidInput')
+        break
       case environment.HTTP_CODE_FORBIDDEN:
-        this.loginError = this.translate.instant('modules.modals.login.notActive');
-        break;
+        this.loginError = this.translate.instant('modules.modals.login.notActive')
+        break
       default:
-        this.loginForm = this.translate.instant('modules.modals.login.generalError');
+        this.loginForm = this.translate.instant('modules.modals.login.generalError')
     }
   }
 
