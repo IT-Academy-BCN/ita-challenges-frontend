@@ -1,13 +1,11 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, ViewChild } from '@angular/core'
-import { type ActivatedRoute, type Router } from '@angular/router'
+import { Component, Inject, ViewChild } from '@angular/core'
 import { type Subscription } from 'rxjs'
-import { type StarterService } from '../../../../services/starter.service'
-import { type DataChallenge } from '../../../../models/data-challenge.model'
+import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
-import { type TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-starter',
@@ -17,7 +15,6 @@ import { type TranslateService } from '@ngx-translate/core'
 export class StarterComponent {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
 
-  dataChallenge!: DataChallenge
   challenges: Challenge[] = []
   params$!: Subscription
   challengesSubs$!: Subscription
@@ -31,12 +28,13 @@ export class StarterComponent {
   listChallenges: any
   pageSize = environment.pageSize
 
-  constructor (private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router,
-    private readonly starterService: StarterService,
-    public translate: TranslateService) {
-    this.params$ = this.activatedRoute.params.subscribe(params => {
-    })
+  constructor (
+    @Inject(StarterService) private readonly starterService: StarterService,
+    @Inject(TranslateService) readonly translate: TranslateService
+  ) {
+    /*    this.params$ = this.activatedRoute.params.subscribe(params => {
+
+    }) */
   }
 
   ngOnInit (): void {

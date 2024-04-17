@@ -1,5 +1,5 @@
-import { type HttpClient } from '@angular/common/http'
-import { Component } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Component, Inject } from '@angular/core'
 import { type TranslateLoader } from '@ngx-translate/core'
 import { type Observable, map } from 'rxjs'
 import { type Challenges } from 'src/app/models/challenges.interface'
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment'
   styleUrl: './custom-loader.scss'
 })
 export class CustomLoader implements TranslateLoader {
-  constructor (private readonly http: HttpClient) { }
+  constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
 
   getTranslation (lang: string): Observable<any> {
     return this.http.get<Challenges>(environment.BACKEND_ITA_CHALLENGE_BASE_URL.concat(environment.BACKEND_ALL_CHALLENGES_URL)).pipe(
