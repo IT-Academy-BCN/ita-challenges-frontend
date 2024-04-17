@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http'
+import { type HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
-import { TranslateLoader } from '@ngx-translate/core'
-import { Observable, map } from 'rxjs'
-import { Challenges } from 'src/app/models/challenges.interface'
+import { type TranslateLoader } from '@ngx-translate/core'
+import { type Observable, map } from 'rxjs'
+import { type Challenges } from 'src/app/models/challenges.interface'
 import { environment } from 'src/environments/environment'
 
 @Component({
