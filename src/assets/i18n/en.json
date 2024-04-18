@@ -56,6 +56,9 @@
                 "solutionsChallenge": "Example answer, cannot be modified",
                 "solutionsTitleLocked":"The solutions are locked.",
                 "solutionsLocked": "Solutions will remain locked until you submit the challenge"
+
+
+               
             }
         },
         "starter": {
@@ -78,7 +81,8 @@
                     "date": "Date"
                 }
             }
-        },"modals": {
+        },
+        "modals": {
             "register":{
                 "title": "Register",
                 "specialization": "Specialization",
@@ -90,7 +94,10 @@
             },
             "login":{
                 "forgotPassword": "Remember/Change password",
-                "registerRedirect": "¿Don't have an account?, create one"
+                "registerRedirect": "¿Don't have an account?, create one",
+                "invalidInput": "incorrect user or password",
+                "notActive": "Inactivated User. Await the confirmation email",
+                "generalError": "Login Error"
             },
             "postRegister": {
                 "title": "Registration Successful",
@@ -111,4 +118,4 @@
             "pattern": "Invalid format"
         }
     }
-}
+}    

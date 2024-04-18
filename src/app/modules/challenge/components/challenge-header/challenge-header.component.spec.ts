@@ -7,63 +7,65 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component';
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component';
+import { HttpClient } from '@angular/common/http';
+import exp from 'constants';
+
 
 describe('ChallengeHeaderComponent', () => {
-  let component: ChallengeHeaderComponent;
-  let fixture: ComponentFixture<ChallengeHeaderComponent>;
-  let modalService: NgbModal;
+  let component: ChallengeHeaderComponent
+  let fixture: ComponentFixture<ChallengeHeaderComponent>
+  let modalService: NgbModal
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
-          ChallengeHeaderComponent
-        ],
-      imports: [ 
-          I18nModule,
-          RouterTestingModule,
-          HttpClientTestingModule
-        ],
+        ChallengeHeaderComponent
+      ],
+      imports: [
+        I18nModule,
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       providers: [
-          NgbModal,
-          SolutionService
+        NgbModal,
+        SolutionService
       ]
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(ChallengeHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    modalService =TestBed.inject(NgbModal);
-  });
+    fixture = TestBed.createComponent(ChallengeHeaderComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+    modalService = TestBed.inject(NgbModal)
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should initialize input correctly', () => {
-    component.title = "Test Title",
-    component.creation_date = new Date;
-    component.level = "Easy",
+    component.title = 'Test Title'
+    component.creation_date = new Date()
+    component.level = 'Easy'
     component.activeId = 1;
-    
-    expect(component.title).toEqual("Test Title");
-    expect(component.creation_date).toBeDefined();
-    expect(component.level).toEqual("Easy");
-    expect(component.activeId).toEqual(1);
-  });
+
+    expect(component.title).toEqual('Test Title')
+    expect(component.creation_date).toBeDefined()
+    expect(component.level).toEqual('Easy')
+    expect(component.activeId).toEqual(1)
+  })
 
   it('should open send solution modal', () => {
-    spyOn(modalService, 'open').and.stub();
-    component.openSendSolutionModal();
+    spyOn(modalService, 'open').and.stub()
+    component.openSendSolutionModal()
 
-    expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg'});
-  });
+    expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
+  })
 
   it('should open restricted modal if user is not logged in', () => {
-    spyOn(modalService, 'open').and.stub();
-    component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
-    component.clickSendButton();
+    spyOn(modalService, 'open').and.stub()
+    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+    component.clickSendButton()
 
-  expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
-  });
-
-});
+    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
+  })
+})

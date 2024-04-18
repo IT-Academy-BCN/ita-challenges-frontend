@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [ita-challenges-frontend-2.4.0-RELEASE] - 2024-04-09
 * New changes on challenge-header button and styles.
 
+### [ita-challenges-frontend-2.3.1-RELEASE] - 2024-04-17
+* Included ESLint into development
+ 
 ### [ita-challenges-frontend-2.2.0-RELEASE] - 2024-04-08
 * Challenge lists translates
 
@@ -15,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Delete iteneraries service and implement the method on chalenges.service
 
 ### [ita-challenges-frontend-2.0.68-RELEASE] - 2024-03-20
-* Add responsiveness to challange filters modal
+* Add responsiveness to challenge filters modal
 
 ### [ita-challenges-frontend-2.0.70-RELEASE] - 2024-03-21
 * Challenge list translates 
@@ -28,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [ita-challenges-frontend-2.0.53-RELEASE] - 2024-03-07
 * Translate login, register and validator service
+
+### [ita-challenges-frontend-2.0.58-RELEASE] - 2024-03-12
+* Login error msg
 
 ### [ita-challenges-frontend-2.0.52-RELEASE] - 2024-02-29
 * Fixing register and login basic functionalities 

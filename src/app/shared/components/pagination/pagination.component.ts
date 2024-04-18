@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-pagination',
@@ -6,27 +6,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
-  @Input() page!: number;
-  @Input() numChallenges!: number;
-  @Input() totalPages!: number;
+  @Input() page!: number
+  @Input() numChallenges!: number
+  @Input() totalPages!: number
 
-  @Output() paginaEmitter: EventEmitter<number> =  new EventEmitter();
+  @Output() paginaEmitter = new EventEmitter<number>()
 
-  constructor() { }
-
-  ngOnInit() {}
-
- next(){
-    this.page++;
-    this.changePage();
+  next (): void {
+    this.page++
+    this.changePage()
   }
 
-prev(){
-    this.page--;
-    this.changePage();
+  prev (): void {
+    this.page--
+    this.changePage()
   }
 
- changePage(){
-    this.paginaEmitter.emit(this.page);
+  changePage (): void {
+    this.paginaEmitter.emit(this.page)
   }
 }
