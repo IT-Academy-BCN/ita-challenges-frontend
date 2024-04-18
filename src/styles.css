@@ -1,0 +1,292 @@
+/* You can add global styles to this file, and also import other style files */
+.btn {
+  padding: 0.6rem 3rem 0.6rem 3rem;
+  border-radius: 0.7rem;
+}
+
+.btn.btn-sm {
+  padding: 0.4rem 2.8rem 0.4rem 2.8rem;
+  border-radius: 0.6rem;
+}
+
+.btn.btn-lg {
+  padding: 0.7rem 3.2rem 0.7rem 3.2rem;
+  border-radius: 0.8rem;
+}
+
+.btn.btn-primary {
+  background-color: #B91879;
+  border-color: #B91879;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:active {
+  background-color: #FFFFFF;
+  border-color: #B91879;
+  color: #B91879;
+}
+
+.btn.btnprimary:hover {
+  background-color: #811155;
+  border-color: #811155;
+}
+
+.btn.btn-secondary {
+  background-color: #f9bb47;
+  border-color: #f9bb47;
+}
+
+.btn.btn-secondary[active] {
+  background-color: #FBCF7E;
+  border-color: #FBCF7E;
+}
+
+.btn.btn-secondary:hover {
+  background-color: #AE8332;
+  border-color: #AE8332;
+}
+
+.btn.btn-outline-primary, .btn.btn-outline-secondary {
+  border: 2px solid #7E7E7E;
+  color: #282828;
+}
+
+.btn.btn-outline-primary[active] {
+  background-color: #E399CB;
+  border-color: #B91879;
+  color: #282828;
+}
+
+.btn.btn-outline-primary:hover {
+  background-color: #F1CCE5;
+  border-color: #811155;
+  color: #282828;
+}
+
+.btn.btn-outline-secondary[active] {
+  background-color: #fbd48c;
+  border-color: #f9bb47;
+  color: #282828;
+}
+
+.btn.btn-outline-secondary:hover {
+  background-color: #F6D69A;
+  border-color: #AE8332;
+  color: #282828;
+}
+
+.btn.btn-secondary, .btn.btn-success, .btn-warning, .btn.btn-error {
+  color: #FFFFFF;
+}
+
+.btn.btn-primary[disabled], .btn.btn-secondary[disabled],
+.btn.btn-outline-primary[disabled], .btn.btn-outline-secondary[disabled] {
+  border-color: #E0E0E0;
+  color: #E0E0E0;
+}
+
+.btn.btn-round-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.form-select option:hover {
+  color: red !important;
+}
+
+input.form-control,
+select.form-select {
+  padding: 1rem 1.25rem;
+  border-radius: 0.7rem;
+}
+input.form-control:focus,
+select.form-select:focus {
+  border-color: #B91879;
+  box-shadow: 0 0 0 0.25rem rgba(185, 24, 121, 0.25);
+}
+input.form-control::-moz-placeholder, select.form-select::-moz-placeholder {
+  color: #000000;
+}
+input.form-control::placeholder,
+select.form-select::placeholder {
+  color: #000000;
+}
+
+.password-container {
+  position: relative;
+  padding: 1rem 1.25rem;
+  border-radius: 0.7rem;
+  margin-bottom: 10px;
+}
+.password-container.is-invalid {
+  background-image: none;
+}
+.password-container:focus-within {
+  border-color: #B91879;
+  box-shadow: 0 0 0 0.25rem rgba(185, 24, 121, 0.25);
+}
+.password-container input {
+  border: none;
+  border-radius: 0;
+}
+.password-container input:focus {
+  box-shadow: none !important;
+}
+.password-container span {
+  padding-left: 0.5rem;
+}
+.password-container span img {
+  cursor: pointer;
+  height: 100%;
+  width: auto;
+}
+
+.modal-backdrop {
+  background-color: #000000;
+  opacity: 0.2;
+}
+
+.modal-content {
+  border-radius: 20px;
+  border: none;
+  background-color: #FFFFFF;
+}
+.modal-content .modal-header {
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.modal-content .modal-header .close {
+  cursor: pointer;
+  position: relative;
+  height: 37px;
+  padding: 5px;
+  width: 37px;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.modal-content .modal-header .close span {
+  display: block;
+  border-radius: 3px;
+  height: 3px;
+  opacity: 0;
+  background-color: #000000;
+}
+.modal-content .modal-header .close span:first-child {
+  opacity: 1;
+  transform: rotate(45deg) translate(9px, 7px);
+}
+.modal-content .modal-header .close span:last-child {
+  opacity: 1;
+  transform: rotate(-45deg) translate(10px, -8px);
+}
+.modal-content .modal-header .close:hover span {
+  background-color: #B91879;
+}
+.modal-content .modal-footer {
+  padding: 0 16px 16px;
+  border: none;
+}
+.modal-content .modal-footer > * {
+  margin: 0;
+}
+.modal-content .modal-footer a {
+  text-decoration: underline;
+  font-size: 16px;
+}
+.modal-content h2 {
+  font-size: 26px;
+  margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  .modal-dialog-centered {
+    display: block;
+    min-height: auto;
+  }
+  .modal-content {
+    margin-top: 2.5rem;
+  }
+  .modal-content h4 {
+    margin-top: 1.8rem;
+    font-size: 1.625rem;
+  }
+  .modal-content p {
+    font-size: 1rem;
+  }
+}
+a {
+  cursor: pointer;
+  color: #000000;
+}
+a:hover {
+  color: #000000;
+  text-decoration: none;
+}
+
+.animated {
+  transition: all 0.15s ease-out;
+}
+
+body {
+  font-size: 12px;
+  line-height: 16.8px;
+}
+
+p {
+  margin-top: 16.8px;
+  margin-bottom: 16.8px;
+}
+
+h1 {
+  font-size: 26px;
+  line-height: 31.2px;
+  margin-top: 31.2px;
+  margin-bottom: 31.2px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 22px;
+  line-height: 26.4px;
+  margin-top: 26.4px;
+  margin-bottom: 26.4px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 19.2px;
+  margin-top: 19.2px;
+  margin-bottom: 19.2px;
+  font-weight: bold;
+}
+
+html,
+body {
+  min-height: 100vh;
+  background-color: #EBEBEB;
+  margin: 0;
+  padding: 12px 10px 50px;
+  font-family: "Poppins", sans-serif;
+}
+html app-root,
+html app-main,
+body app-root,
+body app-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  html, body {
+    padding: 0;
+  }
+}/*# sourceMappingURL=styles.css.map */
