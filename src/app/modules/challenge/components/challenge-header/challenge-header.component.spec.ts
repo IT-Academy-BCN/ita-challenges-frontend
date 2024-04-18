@@ -40,16 +40,16 @@ describe('ChallengeHeaderComponent', () => {
   })
 
   it('should initialize input correctly', () => {
-    component.title = "Test Title",
-    component.creation_date = new Date;
-    component.level = "Easy",
-    component.activeId = 1;
-    
-    expect(component.title).toEqual("Test Title");
-    expect(component.creation_date).toBeDefined();
-    expect(component.level).toEqual("Easy");
-    expect(component.activeId).toEqual(1);
-  });
+    component.title = 'Test Title'
+    component.creation_date = new Date()
+    component.level = 'Easy'
+    component.activeId = 1
+
+    expect(component.title).toEqual('Test Title')
+    expect(component.creation_date).toBeDefined()
+    expect(component.level).toEqual('Easy')
+    expect(component.activeId).toEqual(1)
+  })
 
   it('should open send solution modal', () => {
     spyOn(modalService, 'open').and.stub()
