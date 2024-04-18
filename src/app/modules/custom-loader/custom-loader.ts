@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { TranslateLoader } from '@ngx-translate/core';
-import { Observable, map } from 'rxjs';
-import { Challenges } from 'src/app/models/challenges.interface';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http'
+import { Component, Inject } from '@angular/core'
+import { type TranslateLoader } from '@ngx-translate/core'
+import { type Observable, map } from 'rxjs'
+import { type Challenges } from 'src/app/models/challenges.interface'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-custom-loader',
@@ -11,17 +11,15 @@ import { environment } from 'src/environments/environment';
   styleUrl: './custom-loader.scss'
 })
 export class CustomLoader implements TranslateLoader {
+  constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
 
-  constructor(private http: HttpClient) { }
-
-  getTranslation(lang: string): Observable<any> {
-
+  getTranslation (lang: string): Observable<any> {
     return this.http.get<Challenges>(environment.BACKEND_ITA_CHALLENGE_BASE_URL.concat(environment.BACKEND_ALL_CHALLENGES_URL)).pipe(
       map((res: Challenges) => {
-        let langVersion: any[] = [];
-        
+        const langVersion: any[] = []
+
         res.forEach((challenge) => {
-          let examples = "";
+          let examples = ''
 
           challenge.detail.examples.forEach((example) => {
             examples += `"${example.idExample}": "${example.exampleText[lang]}",`
@@ -30,20 +28,19 @@ export class CustomLoader implements TranslateLoader {
           examples = JSON.parse(`{${examples.slice(0, (examples.length - 1))}}`)
 
           langVersion.push({
-            "challenge_title": challenge.challenge_title[lang],
-            "description": challenge.detail.description[lang],
+            challenge_title: challenge.challenge_title[lang],
+            description: challenge.detail.description[lang],
             examples,
-            "note": challenge.detail.note !== null ? challenge.detail.note[lang] : null
+            note: challenge.detail.note !== null ? challenge.detail.note[lang] : null
 
-          });
+          })
         })
 
-        let challenges = { "challenges": langVersion };
+        const challenges = { challenges: langVersion }
 
-        let newJSONContent = { ...challenges, ...require(`../../../assets/i18n/${lang}.json`) }
+        const newJSONContent = { ...challenges, ...require(`../../../assets/i18n/${lang}.json`) }
 
-        return newJSONContent;
+        return newJSONContent
       }))
   }
-
 }

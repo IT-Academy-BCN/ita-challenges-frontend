@@ -1,35 +1,41 @@
-import { AfterContentChecked, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
-import { ChallengeDetails } from "src/app/models/challenge-details.model";
-import { Example } from "src/app/models/challenge-example.model";
-import { Language } from "src/app/models/language.model";
-import { ChallengeService } from "../../../../services/challenge.service";
-import { Subscription } from "rxjs";
-import { DataChallenge } from "../../../../models/data-challenge.model";
-import { Challenge } from "../../../../models/challenge.model";
-import { NgbModal, NgbNav } from "@ng-bootstrap/ng-bootstrap";
-import { AuthService } from "src/app/services/auth.service";
-import { SolutionService } from "src/app/services/solution.service";
-import { RestrictedModalComponent } from "src/app/modules/modals/restricted-modal/restricted-modal.component";
+import { type AfterContentChecked, Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core'
+import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
+import { type Example } from 'src/app/models/challenge-example.model'
+import { type Language } from 'src/app/models/language.model'
+import { ChallengeService } from '../../../../services/challenge.service'
+import { type Subscription } from 'rxjs'
+import { type DataChallenge } from '../../../../models/data-challenge.model'
+import { Challenge } from '../../../../models/challenge.model'
+import { type NgbNav } from '@ng-bootstrap/ng-bootstrap'
+import { AuthService } from 'src/app/services/auth.service'
+import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from "src/app/modules/modals/send-solution-modal/send-solution-modal.component";
 
 @Component({
-	selector: "app-challenge-info",
-	templateUrl: "./challenge-info.component.html",
-	styleUrls: ["./challenge-info.component.scss"],
-	providers: [ChallengeService],
+  selector: 'app-challenge-info',
+  templateUrl: './challenge-info.component.html',
+  styleUrls: ['./challenge-info.component.scss'],
+  providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
 	isUserSolution: boolean = true;
+	private readonly challengeService = inject(ChallengeService)
+	private readonly authService = inject(AuthService)
+	private readonly solutionService = inject(SolutionService)
 
-	constructor(
-		private challengeService: ChallengeService,
-		private authService: AuthService,
-		private solutionService: SolutionService,
-		private modalService: NgbModal,
-	) { }
-
+	
 
 	@ViewChild("nav") nav!: NgbNav;
+
+	@Input() related: any = [];
+	@Input() resources: any = [];
+	@Input() details!: ChallengeDetails;
+	@Input() solutions: any = [];
+	@Input() description!: string;
+	@Input() examples: Example[] = [];
+	@Input() notes!: string;
+	@Input() popularity!: number;
+	@Input() languages: Language[] = [];
 
 	@Input() related: any = [];
 	@Input() resources: any = [];
@@ -48,7 +54,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
 	showStatement = true;
 	isLogged: boolean = false;
-	// activeId = 1;
+	activeId = 1;
 	solutionSent: boolean = false;
 
 	idChallenge!: string | any;
@@ -73,21 +79,18 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 		// this.authService.isLoggedIn();
 		this.loadRelatedChallenge(this.related_id);
 		// this.checkIfUserIsLoggedIn();
-		this.solutionService.solutionSent$.subscribe((value) => {
-			this.solutionSent = value;
-		});
 	}
 
-	ngAfterContentChecked(): void {
-		const token = localStorage.getItem("authToken");//TODO
-		const refreshToken = localStorage.getItem("refreshToken");//TODO
+  ngAfterContentChecked (): void {
+    const token = localStorage.getItem('authToken')// TODO
+    const refreshToken = localStorage.getItem('refreshToken')// TODO
 
-		if (token && refreshToken) {
-			this.isLogged = true;
-		}
-	}
+    if (token !== null && refreshToken !== null && token !== '' && refreshToken !== '') {
+      this.isLogged = true
+    }
+  }
 
-	loadRelatedChallenge(id: string) {
+	loadRelatedChallenge(id: string): void {
 		this.challengeSubs$ = this.challengeService
 			.getChallengeById(id)
 			.subscribe((challenge) => {
@@ -101,14 +104,14 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 			});
 	}
 
-	onActiveIdChange(newActiveId: number) {
+	onActiveIdChange(newActiveId: number): void {
 		if (this.activeIdChange) {
 			this.activeId = newActiveId;
 			this.activeIdChange.emit(this.activeId);
 		}
 	}
 
-	openSendSolutionModal() {
+	openSendSolutionModal(): void {
 		this.modalService.open(SendSolutionModalComponent, {
 			centered: true,
 			size: "lg",

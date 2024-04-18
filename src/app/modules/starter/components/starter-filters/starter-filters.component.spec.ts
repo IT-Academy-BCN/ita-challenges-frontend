@@ -1,14 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { By } from '@angular/platform-browser';
-import { I18nModule } from '../../../../../assets/i18n/i18n.module';
+import { type ComponentFixture, TestBed } from '@angular/core/testing'
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
+import { By } from '@angular/platform-browser'
+import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 
-import { StarterFiltersComponent } from './starter-filters.component';
-import { TranslatePipe } from '@ngx-translate/core';
+import { StarterFiltersComponent } from './starter-filters.component'
 
 describe('StarterFiltersComponent', () => {
-  let component: StarterFiltersComponent;
-  let fixture: ComponentFixture<StarterFiltersComponent>;
+  let component: StarterFiltersComponent
+  let fixture: ComponentFixture<StarterFiltersComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,41 +15,41 @@ describe('StarterFiltersComponent', () => {
       imports: [ReactiveFormsModule, I18nModule],
       providers: [FormBuilder]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StarterFiltersComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(StarterFiltersComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should emit filtersSelected event when form value changes', () => {
-    spyOn(component.filtersSelected, 'emit');
+    spyOn(component.filtersSelected, 'emit')
 
-    const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkJs')).nativeElement;
-    languageInput.click();
-    fixture.detectChanges();
+    const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkJs')).nativeElement
+    languageInput.click()
+    fixture.detectChanges()
 
-    const levelInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkEasy')).nativeElement;
-    levelInput.click();
-    fixture.detectChanges();
+    const levelInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkEasy')).nativeElement
+    levelInput.click()
+    fixture.detectChanges()
 
-    const progressInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkNoStarted')).nativeElement;
-    progressInput.click();
-    fixture.detectChanges();
+    const progressInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkNoStarted')).nativeElement
+    progressInput.click()
+    fixture.detectChanges()
 
-    expect(component.filtersSelected.emit).toHaveBeenCalled();
+    expect(component.filtersSelected.emit).toHaveBeenCalled()
 
     const expectedFilter = {
       languages: [1],
       levels: ['easy'],
       progress: [1]
-    };
-    expect(component.filtersSelected.emit).toHaveBeenCalledWith(expectedFilter);
-  });
-});
+    }
+    expect(component.filtersSelected.emit).toHaveBeenCalledWith(expectedFilter)
+  })
+})

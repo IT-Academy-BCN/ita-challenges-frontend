@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SolutionService } from 'src/app/services/solution.service';
+import { Component, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { SolutionService } from 'src/app/services/solution.service'
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -10,14 +10,15 @@ import { SolutionService } from 'src/app/services/solution.service';
 
 export class SendSolutionModalComponent {
   // solutionSent = false;
-  constructor(private modalService: NgbModal, private solutionService: SolutionService) {}
+  private readonly modalService = inject(NgbModal)
+  private readonly solutionService = inject(SolutionService)
 
-  acceptSolution() {
-    this.solutionService.updateSolutionSentState(true);
-    this.closeModal();
+  acceptSolution (): void {
+    this.solutionService.updateSolutionSentState(true)
+    this.closeModal()
   }
 
-  closeModal() {
-    this.modalService.dismissAll();
+  closeModal (): void {
+    this.modalService.dismissAll()
   }
 }
