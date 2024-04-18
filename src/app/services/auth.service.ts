@@ -6,9 +6,9 @@ import {
   firstValueFrom
 } from 'rxjs'
 import { User } from '../models/user.model'
-import { type HttpClient } from '@angular/common/http'
-import { type Router } from '@angular/router'
-import { type CookieService } from 'ngx-cookie-service'
+import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service'
 
 interface loginResponse {
   id: string
@@ -28,7 +28,7 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
-  private readonly anonym: string = 'anonym'
+  private readonly anonym: User = {idUser: 'anonym'}
   private readonly userSubject: BehaviorSubject<User>
   public user$: Observable<User>
 
@@ -39,7 +39,7 @@ export class AuthService {
     const userCookie = this.cookieService.get('user')
     // const initialUser = userCookie ? JSON.parse(userCookie) : null
     let initialUser = null
-    if (userCookie !== null) {
+    if (userCookie) {
       try {
         initialUser = JSON.parse(userCookie)
       } catch (error) {
@@ -59,8 +59,8 @@ export class AuthService {
   */
   public get currentUser (): User {
     if (this.userSubject.value === null) {
-      this.userSubject.next(new User(this.anonym))
-      this.cookieService.set('user', this.anonym)
+      this.userSubject.next(new User(this.anonym.idUser))
+      this.cookieService.set('user', JSON.stringify(this.anonym))
     }
     return this.userSubject.value
   }
