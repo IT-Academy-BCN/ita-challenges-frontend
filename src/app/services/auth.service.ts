@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { environment } from '../../environments/environment'
 import {
   BehaviorSubject,
@@ -9,6 +9,7 @@ import { User } from '../models/user.model'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
+import { TokenService } from './token.service'
 
 interface loginResponse {
   id: string
@@ -28,7 +29,8 @@ interface UserResponse {
 
 @Injectable()
 export class AuthService {
-  private readonly anonym: User = {idUser: 'anonym'}
+
+  private readonly anonym: string = 'anonym'
   private readonly userSubject: BehaviorSubject<User>
   public user$: Observable<User>
 

@@ -1,23 +1,21 @@
 import { TestBed } from '@angular/core/testing'
 import { ResourcesService } from './resources.service'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { HttpClient } from '@angular/common/http'
+// import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 
 describe('ResourcesService', () => {
   let resourcesService: ResourcesService
-  let httpClient: HttpClient
   let httpClientMock: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      providers: [ResourcesService]
     })
 
-    httpClient = TestBed.inject(HttpClient)
     httpClientMock = TestBed.inject(HttpTestingController)
-
-    resourcesService = new ResourcesService(httpClient)
+    resourcesService = TestBed.inject(ResourcesService)
   })
 
   afterEach(() => {
