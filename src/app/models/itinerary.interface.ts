@@ -1,6 +1,5 @@
 export interface Itinerary {
-  id: string,
-  name: string,
-  slug: string,
+  id: string
+  name: string
+  slug: string
 }
-

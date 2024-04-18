@@ -1,21 +1,16 @@
-import { Example } from "./challenge-example.model";
+import { type Example } from './challenge-example.model'
 
-export class ChallengeDetails{
-    description: string;
-    examples: Example[] = [];
-    notes: string;
+export class ChallengeDetails {
+  description: string
+  examples: Example[] = []
+  notes: string
 
-    constructor(element: any) {
-        this.description = element.description;
-        this.notes = element.notes;
+  constructor (element: any) {
+    this.description = element.description
+    this.notes = element.notes
 
-
-    element.examples.forEach( (example: any) => {
-        this.examples.push(example);
-    });
-
-
-
-}
-
+    element.examples.forEach((example: Example) => {
+      this.examples.push(example)
+    })
+  }
 }
