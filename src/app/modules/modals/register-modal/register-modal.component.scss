@@ -4,6 +4,10 @@ input, select{
     margin-bottom: 10px;
 }
 
+select:invalid {
+    color: $gray-5;
+}
+
 .form-check-input{
     border-color: $black-1;
     padding: .6rem;
