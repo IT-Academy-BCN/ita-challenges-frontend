@@ -175,24 +175,23 @@ describe('ChallengeComponent', () => {
 
     fixture.detectChanges()
 
-    const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance;
-    
-    expect(challengeInfoComponent.details).toBeDefined();
-    expect(challengeInfoComponent.details.description).toBe(component.details.description);
-    expect(challengeInfoComponent.details.examples).toEqual(component.details.examples);
-    expect(challengeInfoComponent.details.notes).toBe(component.details.notes);
-    expect(challengeInfoComponent.related).toEqual(component.related);
-    expect(challengeInfoComponent.resources).toEqual(component.resources);
-    expect(challengeInfoComponent.solutions).toEqual(component.solutions);
-    expect(challengeInfoComponent.popularity).toBe(component.popularity);
-    expect(challengeInfoComponent.languages).toEqual(component.languages);
+    const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance
 
-  });
+    expect(challengeInfoComponent.details).toBeDefined()
+    expect(challengeInfoComponent.details.description).toBe(component.details.description)
+    expect(challengeInfoComponent.details.examples).toEqual(component.details.examples)
+    expect(challengeInfoComponent.details.notes).toBe(component.details.notes)
+    expect(challengeInfoComponent.related).toEqual(component.related)
+    expect(challengeInfoComponent.resources).toEqual(component.resources)
+    expect(challengeInfoComponent.solutions).toEqual(component.solutions)
+    expect(challengeInfoComponent.popularity).toBe(component.popularity)
+    expect(challengeInfoComponent.languages).toEqual(component.languages)
+  })
 
   it('should onActiveIdchange correctly', () => {
-    const newActiveId=2;
-    component.onActiveIdChange(newActiveId);
+    const newActiveId = 2
+    component.onActiveIdChange(newActiveId)
 
-    expect(component.activeId).toBe(newActiveId);
-  });
-});
+    expect(component.activeId).toBe(newActiveId)
+  })
+})

@@ -53,12 +53,11 @@ export class ChallengeComponent {
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
-
-  onActiveIdChange(newActiveId: number) {
-    this.activeId = newActiveId;
+  onActiveIdChange (newActiveId: number): void {
+    this.activeId = newActiveId
   }
-  
-  loadMasterData(id: string): void {
+
+  loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title

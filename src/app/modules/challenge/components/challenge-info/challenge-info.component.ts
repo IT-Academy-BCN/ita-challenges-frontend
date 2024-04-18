@@ -9,7 +9,7 @@ import { Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
-import { SendSolutionModalComponent } from "src/app/modules/modals/send-solution-modal/send-solution-modal.component";
+import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 
 @Component({
@@ -36,9 +36,9 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @Input() notes!: string
   @Input() popularity!: number
   @Input() languages: Language[] = []
-  @Input() activeId:number = 1
+  @Input() activeId: number = 1
 
-	@Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
@@ -70,8 +70,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     this.loadRelatedChallenge(this.related_id)
     // this.checkIfUserIsLoggedIn();
     this.solutionService.solutionSent$.subscribe((value) => {
-			this.solutionSent = value;
-		});
+      this.solutionSent = value
+    })
   }
 
   ngAfterContentChecked (): void {
@@ -96,28 +96,29 @@ export class ChallengeInfoComponent implements AfterContentChecked {
         this.related_id = this.related
       })
   }
-  onActiveIdChange(newActiveId: number) {
-		if (this.activeIdChange) {
-			this.activeId = newActiveId;
-			this.activeIdChange.emit(this.activeId);
-		}
-	}
 
-	openSendSolutionModal() {
-		this.modalService.open(SendSolutionModalComponent, {
-			centered: true,
-			size: "lg",
-		})
-	}
+  onActiveIdChange (newActiveId: number): void {
+    if (this.activeIdChange !== null) {
+      this.activeId = newActiveId
+      this.activeIdChange.emit(this.activeId)
+    }
+  }
 
-	clickSendButton() {
-		if (!this.isLogged) {
-			this.modalService.open(RestrictedModalComponent, {
-				centered: true,
-				size: "lg",
-			});
-		} else {
-			this.solutionService.sendSolution(''); // Puedes pasar la solución como argumento si es necesario
-		}
-	}
+  openSendSolutionModal (): void {
+    this.modalService.open(SendSolutionModalComponent, {
+      centered: true,
+      size: 'lg'
+    })
+  }
+
+  clickSendButton (): void {
+    if (!this.isLogged) {
+      this.modalService.open(RestrictedModalComponent, {
+        centered: true,
+        size: 'lg'
+      })
+    } else {
+      this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
+    }
+  }
 }

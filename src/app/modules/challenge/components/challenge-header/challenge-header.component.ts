@@ -3,7 +3,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
 import { SolutionService } from '../../../../services/solution.service'
-import { LoginModalComponent } from "src/app/modules/modals/login-modal/login-modal.component";
 
 @Component({
   selector: 'app-challenge-header',
@@ -17,8 +16,7 @@ export class ChallengeHeaderComponent {
   @Input() title = ''
   @Input() creation_date!: Date
   @Input() level = ''
-	@Input() activeId!:number
-
+  @Input() activeId!: number
 
   challenge_title: string | undefined = 'hola'
   challenge_date: Date | undefined

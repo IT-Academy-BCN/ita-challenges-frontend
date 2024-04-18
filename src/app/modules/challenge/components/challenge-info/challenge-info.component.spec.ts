@@ -9,14 +9,13 @@ import { SolutionComponent } from '../../../../shared/components/solution/soluti
 import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component'
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component'
 import { AuthService } from 'src/app/services/auth.service'
-import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component';
+import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
-import { ChallengeService } from 'src/app/services/challenge.service'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
-  let challengeService: ChallengeService
+  // let challengeService: ChallengeService
   let modalService: NgbModal
 
   beforeEach(async () => {
@@ -44,8 +43,8 @@ describe('ChallengeInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
-    challengeService = TestBed.inject(ChallengeService);
-    modalService = TestBed.inject(NgbModal);
+    // challengeService = TestBed.inject(ChallengeService)
+    modalService = TestBed.inject(NgbModal)
     fixture.detectChanges()
   })
 
@@ -91,30 +90,29 @@ describe('ChallengeInfoComponent', () => {
     })
 
     it('should open send solution modal', () => {
-      spyOn(modalService, 'open').and.stub();
-      component.openSendSolutionModal();
-  
-      expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg'});
-    });
-  
+      spyOn(modalService, 'open').and.stub()
+      component.openSendSolutionModal()
+
+      expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
+    })
+
     it('should open restricted modal if user is not logged in', () => {
-      spyOn(modalService, 'open').and.stub();
-      component.isLogged = false; // Cambiado a false para simular que el usuario no está autenticado
-      component.clickSendButton();
-  
-    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg'});
-    });
+      spyOn(modalService, 'open').and.stub()
+      component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+      component.clickSendButton()
+
+      expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
+    })
 
     it('should onActiveIdchange correctly', () => {
+      const newActiveId = 2
+      const activeId = 1
 
-      const newActiveId=2;
-      const activeId=1;
+      component.onActiveIdChange(newActiveId)
 
-      component.onActiveIdChange(newActiveId);
-
-      expect(component.activeIdChange).toBeTruthy();
-      expect(component.activeIdChange.emit(activeId));
-      expect(component.activeId).toBe(newActiveId);
-    });
+      expect(component.activeIdChange).toBeTruthy()
+      component.activeIdChange.emit(activeId)
+      expect(component.activeId).toBe(newActiveId)
+    })
   })
 })

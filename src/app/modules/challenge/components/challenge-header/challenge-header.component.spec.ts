@@ -1,15 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { I18nModule } from '../../../../../assets/i18n/i18n.module';
-import { ChallengeHeaderComponent } from './challenge-header.component';
-import { SolutionService } from '../../../../services/solution.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component';
-import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component';
-import { HttpClient } from '@angular/common/http';
-import exp from 'constants';
-
+import { type ComponentFixture, TestBed } from '@angular/core/testing'
+import { I18nModule } from '../../../../../assets/i18n/i18n.module'
+import { ChallengeHeaderComponent } from './challenge-header.component'
+import { SolutionService } from '../../../../services/solution.service'
+import { RouterTestingModule } from '@angular/router/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component'
+import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component'
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent
@@ -46,7 +43,7 @@ describe('ChallengeHeaderComponent', () => {
     component.title = 'Test Title'
     component.creation_date = new Date()
     component.level = 'Easy'
-    component.activeId = 1;
+    component.activeId = 1
 
     expect(component.title).toEqual('Test Title')
     expect(component.creation_date).toBeDefined()
