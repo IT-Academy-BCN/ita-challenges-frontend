@@ -17,7 +17,6 @@ describe('ChallengeInfoComponent', () => {
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
   // let challengeService: ChallengeService
-  let modalService: NgbModal
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
