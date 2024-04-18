@@ -1,4 +1,4 @@
-import { Pipe, type PipeTransform } from '@angular/core'
+import { inject, Pipe, type PipeTransform } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 
 @Pipe({
@@ -8,8 +8,9 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class DynamicTranslatePipe implements PipeTransform {
   private language!: string
+  private readonly translateService = inject(TranslateService)
 
-  constructor (private readonly translateService: TranslateService) {
+  constructor () {
     this.language = this.translateService.currentLang
 
     this.translateService.onLangChange.subscribe((langChangeEvent: any) => {
@@ -18,7 +19,7 @@ export class DynamicTranslatePipe implements PipeTransform {
   }
 
   transform (value: any): string {
-    if (typeof value !== 'object' || !value[this.language]) {
+    if (typeof value !== 'object' || !(this.language in value)) {
       return ''
     }
 
