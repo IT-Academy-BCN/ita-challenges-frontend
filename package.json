@@ -1,6 +1,6 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "2.2.0-RELEASE",
+  "version": "2.3.1-RELEASE",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
@@ -58,6 +58,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.7",
     "@angular-eslint/eslint-plugin": "^17.3.0",
+    "@angular-eslint/eslint-plugin-template": "^17.3.0",
+    "@angular-eslint/template-parser": "^17.3.0",
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.0.7",
     "@angular/localize": "^17.0.7",
