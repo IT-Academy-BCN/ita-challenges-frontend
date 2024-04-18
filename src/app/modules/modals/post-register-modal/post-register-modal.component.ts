@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, inject } from '@angular/core'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-post-register-modal',
@@ -7,11 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './post-register-modal.component.scss'
 })
 export class PostRegisterModalComponent {
+  private readonly modalService = inject(NgbModal)
 
-  constructor(private modalService: NgbModal){
-  }
-
-  closeModal() {
-    this.modalService.dismissAll();
+  closeModal (): void {
+    this.modalService.dismissAll()
   }
 }

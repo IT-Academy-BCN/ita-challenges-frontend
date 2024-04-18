@@ -1,5 +1,7 @@
 {
     "components": {
+        "footer": { },
+        "header": { },
         "mainMenu": {
             "section0": {
                 "title": "Inicio"
@@ -28,7 +30,7 @@
         "challenge": {
             "header": {
                 "title": "Retos",
-                "section": "Detalle",
+                "section":"Detalle",
                 "button": "Enviar solución",
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
@@ -52,7 +54,7 @@
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
-                "solutionsTitleLocked": "Las soluciones están bloqueadas",
+                "solutionsTitleLocked":"Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
@@ -76,8 +78,7 @@
                     "date": "Fecha"
                 }
             }
-        },
-        "modals": {
+        },"modals": {
             "register": {
                 "title": "Registro",
                 "specialization": "Especialización",
@@ -89,7 +90,10 @@
             },
             "login": {
                 "forgotPassword": "Recordar/cambiar contraseña",
-                "registerRedirect": "¿No tienes cuenta?, crear una."
+                "registerRedirect": "¿No tienes cuenta?, crear una.",
+                "invalidInput": "Usuario o contraseña incorrecto",
+                "notActive": "Usuario desactivado. Espere al email de confirmación",
+                "generalError": "Error en el login"
             },
             "postRegister": {
                 "title": "Registro con éxito",

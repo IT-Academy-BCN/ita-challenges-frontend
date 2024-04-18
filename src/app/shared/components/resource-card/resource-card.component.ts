@@ -1,36 +1,29 @@
-import { resolve } from 'path';
-import { ResourceResponse } from '../../../models/resource.interface';
-import { Resource } from 'src/app/models/resource.model';
-import { Component, Input, OnInit } from '@angular/core';
-import { ChallengeService } from '../../../services/challenge.service';
-import { ResourcesService } from 'src/app/services/resources.service';
-import { error } from 'console';
-import { resolve4 } from 'dns/promises';
+import { type ResourceResponse } from '../../../models/resource.interface'
+import { Component, Input, inject, type OnInit } from '@angular/core'
+import { ChallengeService } from '../../../services/challenge.service'
+import { ResourcesService } from 'src/app/services/resources.service'
 
 @Component({
   selector: 'app-resource-card',
   templateUrl: './resource-card.component.html',
   styleUrls: ['./resource-card.component.scss'],
-  providers: [ChallengeService, ResourcesService]
+  providers: []
 })
 export class ResourceCardComponent implements OnInit {
-  
-  @Input() inputResources: any = "";
-  public resources: ResourceResponse[] = [];
+  private readonly challengeService = inject(ChallengeService)
+  private readonly resourcesService = inject(ResourcesService)
 
-  constructor(private resoursesService: ResourcesService) { }
+  @Input() inputResources: any = ''
+  public resources: ResourceResponse[] = []
 
-  ngOnInit(): void {
-    this.resoursesService.getResources().subscribe({
+  ngOnInit (): void {
+    this.resourcesService.getResources().subscribe({
       next: (resource: any) => {
-        this.resources = resource;
+        this.resources = resource
       },
       error: (error: any) => {
-        console.error(error);
+        console.error(error)
       }
-    });
+    })
   }
-
-
 }
-

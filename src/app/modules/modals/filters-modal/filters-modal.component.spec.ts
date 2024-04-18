@@ -1,28 +1,25 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { type ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FiltersModalComponent } from './filters-modal.component';
+import { FiltersModalComponent } from './filters-modal.component'
 
 describe('FiltersModalComponent', () => {
-  let component: FiltersModalComponent;
-  let fixture: ComponentFixture<FiltersModalComponent>;
+  let component: FiltersModalComponent
+  let fixture: ComponentFixture<FiltersModalComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FiltersModalComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [FiltersModalComponent]
     })
-    .compileComponents();
-  }));
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FiltersModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(FiltersModalComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
