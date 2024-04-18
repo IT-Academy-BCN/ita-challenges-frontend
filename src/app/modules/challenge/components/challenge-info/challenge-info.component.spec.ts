@@ -15,6 +15,7 @@ import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-moda
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
+  let modalService: NgbModal
   // let challengeService: ChallengeService
   let modalService: NgbModal
 
@@ -24,7 +25,8 @@ describe('ChallengeInfoComponent', () => {
         ChallengeInfoComponent,
         ResourceCardComponent,
         ChallengeCardComponent,
-        SolutionComponent
+        SolutionComponent,
+        RestrictedModalComponent
       ],
       imports: [
         RouterTestingModule,
@@ -43,6 +45,7 @@ describe('ChallengeInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
+    modalService = TestBed.inject(NgbModal)
     // challengeService = TestBed.inject(ChallengeService)
     modalService = TestBed.inject(NgbModal)
     fixture.detectChanges()
