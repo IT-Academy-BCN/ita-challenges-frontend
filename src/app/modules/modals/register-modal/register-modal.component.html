@@ -30,7 +30,7 @@
         </div>
         <div class="col-sm-12 col-lg-6">
             <select formControlName="itineraryId" class="form-select" 
-                [ngClass]="!isValidInput('name') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1">
+                [ngClass]="!isValidInput('name') ? 'form-control' : 'form-control is-invalid'" [tabIndex]="-1" required>
                 <option value="" class="text-muted"> {{'modules.modals.register.specialization' | translate}}</option>
                 @for( itinerary of itineraries; track itinerary.id ){
                 <option [value]="itinerary.id">{{itinerary.name}}</option>

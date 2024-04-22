@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [ita-challenges-frontend-2.6.2-RELEASE] - 2024-04-22
 * Alert removed when user logs in
 
+### [ita-challenges-frontend-2.6.0-RELEASE] - 2024-04-18
+* Added dynamic translation pipe
+
+### [ita-challenges-frontend-2.5.0-RELEASE] - 2024-04-18
+*  Register/Login placeholders adaptation
+
+### [ita-challenges-frontend-2.3.1-RELEASE] - 2024-04-17
+* Included ESLint into development
+ 
 ### [ita-challenges-frontend-2.2.0-RELEASE] - 2024-04-08
 * Challenge lists translates
 

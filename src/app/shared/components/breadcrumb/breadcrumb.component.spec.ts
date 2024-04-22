@@ -1,28 +1,25 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 
-import { BreadcrumbComponent } from './breadcrumb.component';
+import { BreadcrumbComponent } from './breadcrumb.component'
 
 describe('BreadcrumbComponent', () => {
-  let component: BreadcrumbComponent;
-  let fixture: ComponentFixture<BreadcrumbComponent>;
+  let component: BreadcrumbComponent
+  let fixture: ComponentFixture<BreadcrumbComponent>
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BreadcrumbComponent ]
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [BreadcrumbComponent]
     })
-    .compileComponents();
-  }));
+      .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BreadcrumbComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(BreadcrumbComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
