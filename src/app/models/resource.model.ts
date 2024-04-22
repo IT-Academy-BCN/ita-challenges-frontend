@@ -1,15 +1,13 @@
-import { ElementRef } from '@angular/core';
 export class Resource {
+  idResource: string
+  resourceDescription: string
+  author: string
+  generationDate: Date
 
-    idResource: string;
-    resourceDescription: string;
-    author: string;
-    generationDate: Date;
-
-    constructor(element: any) {
-        this.idResource = element.id_resource;
-        this.resourceDescription = element.resource_description;
-        this.author = element.author;
-        this.generationDate = element.generation_date;
-    }
+  constructor (element: any) {
+    this.idResource = element.id_resource
+    this.resourceDescription = element.resource_description
+    this.author = element.author
+    this.generationDate = element.generation_date
+  }
 }

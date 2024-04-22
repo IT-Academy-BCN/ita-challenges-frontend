@@ -1,16 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { EditorState } from '@codemirror/state';
-import { EditorView } from '@codemirror/view';
-import { javascript } from '@codemirror/lang-javascript';
-import { python } from '@codemirror/lang-python';
-import { java } from '@codemirror/lang-java';
-import { php } from '@codemirror/lang-php';
-import { basicSetup, minimalSetup } from 'codemirror';
-import { SolutionService } from '../../../services/solution.service';
-import {TranslateService} from "@ngx-translate/core";
-import { environment } from 'src/environments/environment';
+import { Component, type ElementRef, Input, ViewChild, inject } from '@angular/core'
+import { EditorState } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import { javascript } from '@codemirror/lang-javascript'
+import { python } from '@codemirror/lang-python'
+import { java } from '@codemirror/lang-java'
+import { php } from '@codemirror/lang-php'
+import { minimalSetup } from 'codemirror'
+import { TranslateService } from '@ngx-translate/core'
+import { SolutionService } from 'src/app/services/solution.service'
 
-type Language = 'javascript' | 'java' | 'python' | 'php';
+type Language = 'javascript' | 'java' | 'python' | 'php'
 
 @Component({
   selector: 'app-solution',
@@ -18,102 +17,102 @@ type Language = 'javascript' | 'java' | 'python' | 'php';
   styleUrls: ['./solution.component.scss']
 })
 export class SolutionComponent {
-  @ViewChild('editorSolution') editorSolution!: ElementRef;
-  editor: any;
+  @ViewChild('editorSolution') editorSolution!: ElementRef
+  editor: EditorView = new EditorView()
 
-  @Input() set number(value: number | undefined) {
-  setTimeout(() => {
-    this._number = value;
-  }, 0);
-}
-get number() {
-  return this._number;
-}
-  private _number?: number;
-  @Input() languageExt: Language = 'javascript';
+  @Input() set number (value: number | undefined) {
+    setTimeout(() => {
+      this._number = value
+    }, 0)
+  }
 
-  @Input() isUserSolution = false;
+  get number (): number | undefined {
+    return this._number
+  }
 
-/* code added by valerio */
-  private textRemoved = false;
+  private _number?: number
+  @Input() languageExt: Language = 'javascript'
 
-  handleClick(event: MouseEvent) {
+  @Input() isUserSolution = false
+
+  /* code added by valerio */
+  private textRemoved = false
+
+  handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
       // Check if the text has not been removed yet
-      const div = event.target as HTMLDivElement;
-      div.textContent = ''; // Remove the text
-      this.textRemoved = true; // Set the flag to indicate that the text has been removed
+      const div = event.target as HTMLDivElement
+      div.textContent = '' // Remove the text
+      this.textRemoved = true // Set the flag to indicate that the text has been removed
     }
   }
 
-  solutions: any[] = [];
+  solutions: any[] = []
 
-  constructor(private solutionService: SolutionService,
-              private translateService: TranslateService) { }
+  private readonly solutionService = inject(SolutionService)
+  private readonly translateService = inject(TranslateService)
 
-  private lastSentSolution: string = '';
+  private lastSentSolution: string = ''
 
-
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
-      if (this.editor && this.isUserSolution) {
-        const currentSolution = this.editor.state.doc.toString();
-        if (currentSolution !== this.lastSentSolution) {
-          this.solutionService.sendSolution(currentSolution);
-          this.lastSentSolution = currentSolution;
-        }
+      // if (this.editor && this.isUserSolution) {
+      const currentSolution = this.editor.state.doc.toString()
+      if (currentSolution !== this.lastSentSolution) {
+        this.solutionService.sendSolution(currentSolution)
+        this.lastSentSolution = currentSolution
       }
-    });
+      // }
+    })
     this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
       this.solutions = data.solutions
     })
   }
 
-  ngAfterViewInit() {
-    this.createEditor();
+  ngAfterViewInit (): void {
+    this.createEditor()
   }
 
-  //nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
-  createEditor() {
-    let languageExtension;
+  // nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
+  createEditor (): void {
+    let languageExtension
 
     switch (this.languageExt) {
       case 'javascript':
-        languageExtension = javascript({typescript:true});
-        break;
+        languageExtension = javascript({ typescript: true })
+        break
       case 'python':
-        languageExtension = python();
-        break;
+        languageExtension = python()
+        break
       case 'java':
-        languageExtension = java();
-        break;
+        languageExtension = java()
+        break
       case 'php':
-        languageExtension = php();
-        break;
+        languageExtension = php()
+        break
       default:
-        return;
+        return
     }
 
-    let state: EditorState;
-    if (this.isUserSolution){
+    let state: EditorState
+    if (this.isUserSolution) {
       state = EditorState.create({
-        //doc: comment,
+        // doc: comment,
         extensions: [
           minimalSetup,
           languageExtension
         ]
-      });
-    }else{
+      })
+    } else {
       state = EditorState.create({
       // doc: 'Respuesta de ejemplo, no se puede modificar',
-      extensions: [
-        minimalSetup,
-        languageExtension,
-        EditorView.editable.of(false)
-      ]
-    });
+        extensions: [
+          minimalSetup,
+          languageExtension,
+          EditorView.editable.of(false)
+        ]
+      })
+    }
+    this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement })
   }
-    this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement });
-  }
-
 }

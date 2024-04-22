@@ -7,6 +7,10 @@
     border-radius: 20px;
     border: none;
     background-color: $white;
+
+    input::placeholder {
+        color: $gray-5;
+    }
     
     .modal-header{
         border: none;
