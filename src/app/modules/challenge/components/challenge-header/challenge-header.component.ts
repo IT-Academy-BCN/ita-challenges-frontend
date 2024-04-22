@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
 import { SolutionService } from '../../../../services/solution.service'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -12,6 +13,7 @@ import { SolutionService } from '../../../../services/solution.service'
 export class ChallengeHeaderComponent {
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService)
+  private readonly authService = inject(AuthService)
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -21,13 +23,14 @@ export class ChallengeHeaderComponent {
   challenge_date: Date | undefined
   challenge_level: string | undefined
 
-  isLogged: boolean = true // & tiene que estar en true para que este logueado
+  isLogged: boolean = false
   solutionSent: boolean = false
 
-  ngOnInit (): void {
+  async ngOnInit (): Promise<void> {
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
+    this.isLogged = await this.authService.isUserLoggedIn()
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value

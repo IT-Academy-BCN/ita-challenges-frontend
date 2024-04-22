@@ -1,4 +1,4 @@
-import { type AfterContentChecked, Component, Input, ViewChild, inject } from '@angular/core'
+import { type AfterContentChecked, Component, Input, ViewChild, inject, OnInit } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -16,7 +16,7 @@ import { SolutionService } from 'src/app/services/solution.service'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked {
+export class ChallengeInfoComponent implements OnInit {
   isUserSolution: boolean = true
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
@@ -56,23 +56,24 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   related_languages: Language[] = []
   related_id: string = this.related
 
-  ngOnInit (): void {
+  async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
-    // this.authService.isLoggedIn();
+    this.isLogged = await this.authService.isUserLoggedIn();
+   
     this.loadRelatedChallenge(this.related_id)
-    // this.checkIfUserIsLoggedIn();
+    
   }
 
-  ngAfterContentChecked (): void {
+/*   ngAfterContentChecked (): void {
     const token = localStorage.getItem('authToken')// TODO
     const refreshToken = localStorage.getItem('refreshToken')// TODO
 
     if (token !== null && refreshToken !== null && token !== '' && refreshToken !== '') {
       this.isLogged = true
     }
-  }
+  } */
 
   loadRelatedChallenge (id: string): void {
     this.challengeSubs$ = this.challengeService
