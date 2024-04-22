@@ -44,7 +44,7 @@
             </div>
         </div>
         <!-------if not logged show this------>
-        <div class="w-25 mt-4 button d-none d-md-inline-block" *ngIf="isLogged===false">
+        <div class="w-25 mt-4 button d-none d-md-inline-block" *ngIf="!isLogged">
             <button class="btn btn-primary" 
                     (click)="clickSendButton() " 
                     title="{{'modules.challenge.header.toolTip' | translate }}">
@@ -54,14 +54,13 @@
         
         
         <!------ if logged show this------>
-        <!-- <ng-template #isLoggedUser > -->
-        <div class="col-3 button" *ngIf="!solutionSent; else solutionSentSection" >
+        <div class="col-3 button" *ngIf="isLogged && !solutionSent; else solutionSentSection" >
             <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate }}</button>
             <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
                 {{'modules.challenge.header.buttonAccept' | translate }}
             </button>
         </div>
-    <!-- </ng-template> -->
+       
         <!-----if solution sent show this---->
         <ng-template #solutionSentSection>
         <div class="solutionSent col-3" *ngIf="solutionSent===true">
