@@ -66,15 +66,6 @@ export class ChallengeInfoComponent implements OnInit {
     
   }
 
-/*   ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken')// TODO
-    const refreshToken = localStorage.getItem('refreshToken')// TODO
-
-    if (token !== null && refreshToken !== null && token !== '' && refreshToken !== '') {
-      this.isLogged = true
-    }
-  } */
-
   loadRelatedChallenge (id: string): void {
     this.challengeSubs$ = this.challengeService
       .getChallengeById(id)
