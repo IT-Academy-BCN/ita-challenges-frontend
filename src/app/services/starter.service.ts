@@ -11,18 +11,12 @@ export class StarterService {
 
   constructor(private http: HttpClient) { }
 
-  getAllChallenges(page: number, pageSize: number): Observable<Object> {
-
-    const params = {
-      page: page.toString(),
-      pageSize: pageSize.toString()
-    };
-
+  getAllChallenges(pageOffset: number, pageLimit: number): Observable<Object> {
     const headers = new HttpHeaders({
       'Content-Type' : 'application/json'
     })
 
-    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
+    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`,
         {
           //params,
           headers

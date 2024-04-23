@@ -1,6 +1,6 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
 import { Component, Inject, ViewChild } from '@angular/core'
-import { type Subscription } from 'rxjs'
+import { finalize, type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
@@ -22,9 +22,9 @@ export class StarterComponent {
   sortBy: string = 'popularity'
   challenge = Challenge
 
-  page: number = 1
+  challengeOffset: number = 1
   totalPages!: number
-  numChallenges!: number
+  pageNumber!: number
   listChallenges: any
   pageSize = environment.pageSize
 
@@ -38,7 +38,7 @@ export class StarterComponent {
   }
 
   ngOnInit (): void {
-    this.getChallengesByPage(this.page)
+    this.getChallengesByPage(this.challengeOffset)
   }
 
   ngOnDestroy (): void {
@@ -47,17 +47,25 @@ export class StarterComponent {
   }
 
   getChallengesByPage (page: number): void {
-    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
-      // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TODO DEVELOPMENT ONLY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      // console.log('User Starter Component: ' + this.authService.currentUser.idUser);
-
-      /*      if(this.authService.currentUser.idUser === 'anonym') {
-              const loggedUser: User = new User('', '32983483B', 'rU2GiuiTf3oj2RvQjMQX8EyozA7k2ehTp8YIUGSWOL3TdZcn7jaq7vG8z5ovfo6NMr77');
-              this.authService.login(loggedUser);
-              console.log(this.authService.currentUser.idUser);
-            } */
-
+    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize)
+    .pipe(
+      finalize( () => {})
+    )
+    .subscribe(resp => {
+    
+console.log(resp)
       this.listChallenges = resp
+      this.totalPages = Math.ceil(22/this.pageSize);
+      this.challengeOffset = 1
+      this.pageNumber = Math.floor((this.challengeOffset - 1) / this.pageSize) + 1; 
+      console.log(this.pageNumber, 'PAGE NUMM FUNC') 
+
+      // this.totalPages = Math.ceil(resp.ceil/this.pageSize);
+      // this.challengeOffset = resp.offset
+      // this.pageNumber = Math.floor((this.challengeOffset - 1) / this.pageSize) + 1; 
+      ;  
+      
+      
     })
   }
 
@@ -66,7 +74,8 @@ export class StarterComponent {
   }
 
   goToPage (page: number): void {
-    this.page = page
+    this.challengeOffset = page
+    console.log(page, this.challengeOffset, 'goToPage')
     this.getChallengesByPage(page)
   }
 

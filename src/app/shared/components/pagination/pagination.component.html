@@ -1,5 +1,21 @@
-<div *ngIf="numChallenges" class="pagination">
-    <div class="pagination__prev col-3"><a *ngIf="page > 1" (click)="prev()"> < </a></div>
-    <p>Página {{page}} de {{totalPages}}</p>
-    <div class="pagination__next col-3"><a *ngIf="page < totalPages" (click)="next()"> > </a></div>  
-</div>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous"  (click)="prev()">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for( e of [].constructor(totalPages); track e; let i = $index){
+            @if((pageNumber) <= totalPages){
+            <li class="page-item" ><a [ngClass]="(pageNumber+i == pageNumber ? 'page-link bg-black' : 'page-link')"(click)="setPageOffset(pageNumber+i)">{{pageNumber + (i)}}</a></li>    
+            }    
+        }
+        <li class="page-item">
+            <a class="page-link" aria-label="Next" (click)="next()">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

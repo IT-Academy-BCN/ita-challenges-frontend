@@ -21,8 +21,8 @@
             [title]="translate.instant('challenges.' + i + '.challenge_title')"
             [creation_date]="challenge.creation_date" [level]="challenge.level" [popularity]="challenge.popularity"
             [languages]="challenge.languages" [id]="challenge.id_challenge"></app-challenge-card>
-        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages"
-            [numChallenges]="numChallenges"></app-pagination>
+        <app-pagination (pageEmitter)="goToPage($event)" [challengeOffset]="challengeOffset" [totalPages]="totalPages"
+            [pageNumber]="pageNumber"></app-pagination>
 
     </div>
 </div>
