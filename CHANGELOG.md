@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [ita-challenges-frontend-2.8.0-RELEASE] - 2024-04-22
 * Fix auth.service in challenge-info and challenge-header
 
+### [ita-challenges-frontend-2.7.2-RELEASE] - 2024-04-23
+* Link resources-card
+
+### [ita-challenges-frontend-2.7.1-RELEASE] - 2024-04-22
+* Left menu adaptation
+
+### [ita-challenges-frontend-2.7.0-RELEASE] - 2024-04-09
+* New changes on challenge-header button and styles.
+
 ### [ita-challenges-frontend-2.6.0-RELEASE] - 2024-04-18
 * Added dynamic translation pipe
 

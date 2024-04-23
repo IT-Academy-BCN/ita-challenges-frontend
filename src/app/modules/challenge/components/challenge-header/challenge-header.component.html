@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="w-75">
+        <div class="col-12 col-md-9">
             <p>Retos > <span id="color">Detalle</span></p>
             <div class="d-flex align-items-start">
                 <div class="difficulty">
@@ -29,44 +29,51 @@
                     <img src="../../../../assets/img/icon/user.svg" alt="User">
                     IT-Academy
                 </span>
-                <span class="stat">  
-                    <img src="../../../../assets/img/icon/bullseye.svg" alt="Bullseye">           
+                <span class="stat">
+                    <img src="../../../../assets/img/icon/bullseye.svg" alt="Bullseye">
                     87%
                 </span>
                 <span class="stat">
-                    <img src="../../../../assets/img/icon/bookmark.svg" alt="Bookmark">     
+                    <img src="../../../../assets/img/icon/bookmark.svg" alt="Bookmark">
                     82
                 </span>
-                <span class="stat">     
+                <span class="stat">
                     <img src="../../../../assets/img/icon/clock.svg" alt="Date">
                     {{creation_date}}
                 </span>
             </div>
         </div>
+
+        <!-- only show if the user is on details section or solutions -->
+        @if (activeId == 1 || activeId == 2) {
         <!-------if not logged show this------>
-        <div class="w-25 mt-4 button d-none d-md-inline-block" *ngIf="!isLogged">
-            <button class="btn btn-primary" 
-                    (click)="clickSendButton() " 
-                    title="{{'modules.challenge.header.toolTip' | translate }}">
+        @if (!isLogged) {
+        <div class="w-25 mt-4 d-none d-md-inline-block">
+            <button class="btn btn-primary" (click)="clickSendButton() "
+                title="{{'modules.challenge.header.toolTip' | translate }}">
                 {{'modules.challenge.header.button' | translate }}
             </button>
         </div>
-        
-        
+        } @else {
         <!------ if logged show this------>
-        <div class="col-3 button" *ngIf="isLogged && !solutionSent; else solutionSentSection" >
-            <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate }}</button>
+        @if (!solutionSent) {
+        <div class="col-3 button d-none d-md-flex">
+            <button class="btn btn-sm btn-outline-primary">{{'modules.challenge.header.buttonCancel' | translate
+                }}</button>
             <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
                 {{'modules.challenge.header.buttonAccept' | translate }}
             </button>
         </div>
-       
+        } @else {
         <!-----if solution sent show this---->
-        <ng-template #solutionSentSection>
-        <div class="solutionSent col-3" *ngIf="solutionSent===true">
-            <p>{{'modules.challenge.header.solutionSend' | translate }}</p> 
+        <div class="solutionSent col-3 d-none d-md-flex">
+            <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
             <img src="../../../../../assets/img/icon/tick-pink.svg" alt="tick icon">
         </div>
-    </ng-template>
+        }
+        }
+        }
+
+
     </div>
 </div>

@@ -1,3 +1,9 @@
 .challenge-component{
     margin-right: 4rem;
 }
+
+@media (max-width: 768px) {
+    .challenge-component {
+        margin-right: 0; /* Quita el margen derecho */
+    }
+}
