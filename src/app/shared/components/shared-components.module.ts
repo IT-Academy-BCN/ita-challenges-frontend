@@ -8,9 +8,17 @@ import { ResourceCardComponent } from './resource-card/resource-card.component'
 import { SolutionComponent } from './solution/solution.component'
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
 
 @NgModule({
   declarations: [
+    PaginationComponent,
+    ChallengeCardComponent,
+    ResourceCardComponent,
+    SolutionComponent,
+    BreadcrumbComponent
+  ],
+  exports: [
     PaginationComponent,
     ChallengeCardComponent,
     ResourceCardComponent,
@@ -21,14 +29,8 @@ import { TranslateModule } from '@ngx-translate/core'
     CommonModule,
     RouterModule,
     TranslateModule,
-    NgbTooltipModule
-  ],
-  exports: [
-    PaginationComponent,
-    ChallengeCardComponent,
-    ResourceCardComponent,
-    SolutionComponent,
-    BreadcrumbComponent
+    NgbTooltipModule,
+    DynamicTranslatePipe
   ]
 })
 export class SharedComponentsModule { }
