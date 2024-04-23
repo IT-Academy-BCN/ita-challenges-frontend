@@ -67,7 +67,7 @@ describe('ResourcesService', () => {
       done()
     })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_SSO_RESOURCES)
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_WIKI_BASE_URL.concat(environment.BACKEND_SSO_RESOURCES))
     expect(req.request.method).toEqual('GET')
 
     req.flush(responseMock)
@@ -85,7 +85,7 @@ describe('ResourcesService', () => {
       }
     })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_SSO_RESOURCES)
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_WIKI_BASE_URL.concat(environment.BACKEND_SSO_RESOURCES))
     expect(req.request.method).toEqual('GET')
 
     req.flush(errorMessage, { status, statusText: 'Internal Server Error' })

@@ -33,6 +33,7 @@ export class ChallengeComponent {
   notes: string = ''
   popularity!: number
   languages: Language[] = []
+  activeId: number = 1
 
   private readonly route = inject(ActivatedRoute)
   private readonly challengeService = inject(ChallengeService)
@@ -50,6 +51,10 @@ export class ChallengeComponent {
   ngOnDestroy (): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
+  }
+
+  onActiveIdChange (newActiveId: number): void {
+    this.activeId = newActiveId
   }
 
   loadMasterData (id: string): void {
