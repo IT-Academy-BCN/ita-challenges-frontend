@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
 
+### [ita-challenges-frontend-2.7.2-RELEASE] - 2024-04-23
+* Link resources-card
+
+### [ita-challenges-frontend-2.7.1-RELEASE] - 2024-04-22
+* Left menu adaptation
+
+### [ita-challenges-frontend-2.7.0-RELEASE] - 2024-04-09
+* New changes on challenge-header button and styles.
+
 ### [ita-challenges-frontend-2.6.0-RELEASE] - 2024-04-18
 * Added dynamic translation pipe
 
@@ -14,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  
 ### [ita-challenges-frontend-2.2.0-RELEASE] - 2024-04-08
 * Challenge lists translates
+
+### [ita-challenges-frontend-2.0.72-RELEASE] - 2024-04-03
+* Added responsiveness to login and register modals.
 
 ### [ita-challenges-frontend-2.0.71-RELEASE] - 2024-04-02
 * Delete iteneraries service and implement the method on chalenges.service
