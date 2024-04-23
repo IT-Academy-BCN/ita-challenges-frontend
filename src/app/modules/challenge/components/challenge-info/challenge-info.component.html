@@ -78,7 +78,7 @@
         <div class="tab-content info-card w-100">
             <section class="title">
                 <h3 class="title_text">{{'modules.challenge.info.resources' | translate }}</h3>
-                <a class="title_link" href="#">{{'modules.challenge.info.resourcesLink' | translate }} ></a>
+                <a class="title_link" href="https://dev.itawiki.eurecatacademy.org/">{{'modules.challenge.info.resourcesLink' | translate }} ></a>
             </section>
             <section class="info-card w-100">
                 <app-resource-card   
@@ -99,7 +99,7 @@
             <h3>{{'modules.challenge.info.related' | translate }}</h3>
             <section class="info-card">
                 <app-challenge-card
-                *ngFor="let relate of related"
+                *ngFor="let relate of related"  
                 [title]="related_title"
                 [creation_date]="related_creation_date"
                 [level]="related_level"

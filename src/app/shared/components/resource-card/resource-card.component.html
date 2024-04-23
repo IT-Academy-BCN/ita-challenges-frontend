@@ -1,6 +1,6 @@
 <div class="d-flex flex-wrap">
     @for (resource of resources; track resource.id) {
-    <div class="resource-list-element d-flex justify-content-start animated mb-4">
+    <a href={{resource.url}} class="resource-list-element d-flex justify-content-start animated mb-4">
         <div class="d-flex flex-column justify-content-start">
             <div class="up-arrow"></div>
             <h3 class="points">{{resource.voteCount.total}}</h3>
@@ -18,6 +18,6 @@
                 </span>
             </div>
         </div>
-    </div>
+    </a>
     }
 </div>
