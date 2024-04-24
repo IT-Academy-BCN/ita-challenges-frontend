@@ -8,9 +8,8 @@
             </a>
         </li>
         @for( e of [].constructor(totalPages); track e; let i = $index){
-            @if((pageNumber) <= totalPages){
             <li class="page-item" ><a [ngClass]="(pageNumber+i == pageNumber ? 'page-link bg-black' : 'page-link')"(click)="setPageOffset(pageNumber+i)">{{pageNumber + (i)}}</a></li>    
-            }    
+        
         }
         <li class="page-item">
             <a class="page-link" aria-label="Next" (click)="next()">

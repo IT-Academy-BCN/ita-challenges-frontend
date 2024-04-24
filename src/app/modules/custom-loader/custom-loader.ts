@@ -32,7 +32,6 @@ export class CustomLoader implements TranslateLoader {
             description: challenge.detail.description[lang],
             examples,
             note: challenge.detail.note !== null ? challenge.detail.note[lang] : null
-
           })
         })
 

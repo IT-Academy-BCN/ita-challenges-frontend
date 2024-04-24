@@ -47,13 +47,14 @@ export class StarterComponent {
   }
 
   getChallengesByPage (page: number): void {
-    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize)
+    let getChallengeOffset = ( 8 * (page-  1) );
+    this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
     .pipe(
       finalize( () => {})
     )
     .subscribe(resp => {
     
-console.log(resp)
+  console.log(resp)
       this.listChallenges = resp
       this.totalPages = Math.ceil(22/this.pageSize);
       this.challengeOffset = 1
