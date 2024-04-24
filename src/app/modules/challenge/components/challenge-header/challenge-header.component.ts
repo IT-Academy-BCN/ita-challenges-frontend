@@ -16,11 +16,12 @@ export class ChallengeHeaderComponent {
   @Input() title = ''
   @Input() creation_date!: Date
   @Input() level = ''
+  @Input() activeId!: number
 
-  challenge_title: string | undefined = 'hola'
+  challenge_title: string | undefined = ''
   challenge_date: Date | undefined
   challenge_level: string | undefined
-
+  // activeId: number = 1
   isLogged: boolean = true // & tiene que estar en true para que este logueado
   solutionSent: boolean = false
 

@@ -53,9 +53,9 @@ export class LoginModalComponent {
     return this.validatorsService.isValidInput(field, this.loginForm)
   };
 
-  public openSuccessfulLoginModal(res: any) {
-    this.closeModal();
-    //TODO create routing to the page after success login
+  public openSuccessfulLoginModal (res: any): void {
+    this.closeModal()
+    // TODO create routing to the page after success login
   }
 
   public notifyErrorLogin (err: any): void {

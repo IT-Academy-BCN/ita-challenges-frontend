@@ -1,21 +1,22 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
 	<div id="main-options">
 	
-		<a [routerLink]="['#']" [routerLinkActive]="['active']">Inicio</a>
+		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">Inicio</a>
 
 		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
 			"components.mainMenu.section1.title" | translate
 		}}</a>
-		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
 			"components.mainMenu.section2.title" | translate
 		}}</a>
-		<a [routerLink]="['#']" [routerLinkActive]="['active']">Hackathons</a>
-		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">Hackathons</a>
+		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
 			"components.mainMenu.section4.title" | translate
 		}}</a>
-		<a [routerLink]="['#']" [routerLinkActive]="['active']">{{
+		<a href="https://dev.itawiki.eurecatacademy.org/">{{
 			"components.mainMenu.section5.title" | translate
 		}}</a>
+
 
 		<!-- settings funciona -->
 		<div
@@ -23,7 +24,7 @@
 		>
 			<a
 				class="mb-2"
-				[routerLink]="['#']"
+				[routerLink]="['challenges']"
 				[routerLinkActive]="['active']"
 			>
 				<img
