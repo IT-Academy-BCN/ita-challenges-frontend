@@ -16,7 +16,7 @@ export class PaginationComponent {
   @Output() pageEmitter = new EventEmitter<number>()
 
   next(): void {
-    if (this.pageNumber !== this.totalPages) {
+    if (this.pageNumber < this.totalPages) {
       console.log('next', this.pageNumber, this.totalPages)
       this.pageNumber++
       this.changePage()

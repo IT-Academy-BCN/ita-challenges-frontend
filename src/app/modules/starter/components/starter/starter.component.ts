@@ -56,7 +56,8 @@ export class StarterComponent {
     
   console.log(resp)
       this.listChallenges = resp
-      this.totalPages = Math.ceil(22/this.pageSize);
+      this.totalPages = 5
+      // this.totalPages = Math.ceil(22/this.pageSize);
       this.challengeOffset = 1
       this.pageNumber = Math.floor((this.challengeOffset - 1) / this.pageSize) + 1; 
       console.log(this.pageNumber, 'PAGE NUMM FUNC') 
