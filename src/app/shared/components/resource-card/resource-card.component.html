@@ -14,7 +14,7 @@
             <div class="user-details d-flex mt-auto align-items-center">
                 <img class="user-img" [src]="['../../../../assets/img/users/user-1.png']" alt="Nombre Usuario" />
                 <span class="description">
-                    {{resource.user.name}}, {{resource.createdAt}}
+                    {{resource.user.name}}, {{formatDate(resource.createdAt)}}
                 </span>
             </div>
         </div>
