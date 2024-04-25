@@ -26,7 +26,7 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
     RouterModule,
     SharedComponentsModule,
     TranslateModule,
-    ModalsModule, 
+    ModalsModule,
     DynamicTranslatePipe
   ],
   providers: [
