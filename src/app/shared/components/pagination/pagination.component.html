@@ -5,27 +5,30 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
+        @if(pageNumber === totalPages ){
+        <li class="page-item"><a [ngClass]="(pageNumber == 1 ? 'page-link current-page' : 'page-link')"
+                (click)="setPageOffset(pageNumber-2)">{{pageNumber-2}}</a></li>
+        }
         @if((pageNumber-1) !== 0 ){
         <li class="page-item"><a [ngClass]="(pageNumber == 1 ? 'page-link current-page' : 'page-link')"
-            (click)="setPageOffset(pageNumber-1)">{{pageNumber-1}}</a></li>
+                (click)="setPageOffset(pageNumber-1)">{{pageNumber-1}}</a></li>
         }
         <li class="page-item"><a [ngClass]="(pageNumber == pageNumber ? 'page-link current-page' : 'page-link')"
-            (click)="setPageOffset(pageNumber)">{{pageNumber}}</a></li>
-        @if(pageNumber+1 < totalPages ){
-            <li class="page-item"><a class='page-link'
+                (click)="setPageOffset(pageNumber)">{{pageNumber}}</a></li>
+        @if(pageNumber+1 < totalPages ){ <li class="page-item"><a class='page-link'
                 (click)="setPageOffset(pageNumber+1)">{{pageNumber+1}}</a></li>
             }
-        @if(totalPages > pageNumber+2){
-        <li class="page-item"><a class='page-link'>...</a></li>
-        }
-        @if(totalPages!= pageNumber){
-        <li class="page-item"><a [ngClass]="(pageNumber == totalPages ? 'page-link current-page' : 'page-link')"
-                (click)="setPageOffset(totalPages)">{{totalPages}}</a></li>
-        }
-        <li class="page-item">
-            <a class="page-link next" aria-label="Next" (click)="next()">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
+            @if(totalPages > pageNumber+2){
+            <li class="page-item"><a class='page-link'>...</a></li>
+            }
+            @if(totalPages!= pageNumber){
+            <li class="page-item"><a [ngClass]="(pageNumber == totalPages ? 'page-link current-page' : 'page-link')"
+                    (click)="setPageOffset(totalPages)">{{totalPages}}</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link next" aria-label="Next" (click)="next()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
     </ul>
 </nav>

@@ -52,10 +52,13 @@ export class StarterComponent {
       finalize( () => {})
     )
     .subscribe(resp => {
-    
       this.listChallenges = resp
       this.totalPages = Math.ceil(22/this.pageSize); 
-   })
+      //TODO: change the list challenges and total pages when the changes come from the back end:
+        // this.listChallenges = resp.results
+        // this.totalPages = Math.ceil(resp.count/this.pageSize); 
+
+  })
   }
 
   openModal (): void {
