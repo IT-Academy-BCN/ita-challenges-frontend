@@ -22,9 +22,8 @@ export class StarterComponent {
   sortBy: string = 'popularity'
   challenge = Challenge
 
-  challengeOffset: number = 1
   totalPages!: number
-  pageNumber!: number
+  pageNumber: number = 1
   listChallenges: any
   pageSize = environment.pageSize
 
@@ -38,7 +37,7 @@ export class StarterComponent {
   }
 
   ngOnInit (): void {
-    this.getChallengesByPage(this.challengeOffset)
+    this.getChallengesByPage(1)
   }
 
   ngOnDestroy (): void {
@@ -54,21 +53,9 @@ export class StarterComponent {
     )
     .subscribe(resp => {
     
-  console.log(resp)
       this.listChallenges = resp
-      this.totalPages = 5
-      // this.totalPages = Math.ceil(22/this.pageSize);
-      this.challengeOffset = 1
-      this.pageNumber = Math.floor((this.challengeOffset - 1) / this.pageSize) + 1; 
-      console.log(this.pageNumber, 'PAGE NUMM FUNC') 
-
-      // this.totalPages = Math.ceil(resp.ceil/this.pageSize);
-      // this.challengeOffset = resp.offset
-      // this.pageNumber = Math.floor((this.challengeOffset - 1) / this.pageSize) + 1; 
-      ;  
-      
-      
-    })
+      this.totalPages = Math.ceil(22/this.pageSize); 
+   })
   }
 
   openModal (): void {
@@ -76,8 +63,6 @@ export class StarterComponent {
   }
 
   goToPage (page: number): void {
-    this.challengeOffset = page
-    console.log(page, this.challengeOffset, 'goToPage')
     this.getChallengesByPage(page)
   }
 

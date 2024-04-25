@@ -18,3 +18,21 @@
     }
 }
 
+.page-link{
+    color: $gray-5 !important;
+}
+
+.prev{
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.next{
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+}
+
+.current-page{
+    background-color: $primary;
+    color: $white !important;
+}

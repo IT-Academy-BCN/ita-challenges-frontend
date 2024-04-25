@@ -15,10 +15,8 @@ export class StarterService {
     const headers = new HttpHeaders({
       'Content-Type' : 'application/json'
     })
-    console.log('API CALL',pageOffset,pageLimit)
     return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`,
         {
-          //params,
           headers
         });
   }

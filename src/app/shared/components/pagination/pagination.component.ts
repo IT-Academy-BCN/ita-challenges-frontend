@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { totalmem } from 'os'
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-pagination',
@@ -9,7 +7,6 @@ import { environment } from 'src/environments/environment';
 })
 export class PaginationComponent {
 
-  @Input() challengeOffset!: number
   @Input() pageNumber!: number
   @Input() totalPages!: number
 
@@ -36,7 +33,6 @@ export class PaginationComponent {
   }
 
   setPageOffset(page: number): void {
-    console.log(page, 'PAGE')
     this.pageNumber = page
     this.pageEmitter.emit(page)
   }

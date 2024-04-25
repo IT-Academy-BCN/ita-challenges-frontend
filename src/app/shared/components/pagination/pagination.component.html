@@ -1,20 +1,15 @@
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation" class="mt-5">
     <ul class="pagination">
         <li class="page-item">
-            <a class="page-link" aria-label="Previous" (click)="prev()">
+            <a class="page-link prev" aria-label="Previous" (click)="prev()">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <!-- @for( e of [].constructor(totalPages); track e; let i = $index){
-            <li class="page-item" ><a [ngClass]="(pageNumber+i == pageNumber ? 'page-link bg-black' : 'page-link')"(click)="setPageOffset(pageNumber+i)">{{pageNumber + (i)}}</a></li>    
-        
-        } -->
-        <!-- @for( e of [].constructor(totalPages); track e; let i = $index){ -->
         @if((pageNumber-1) !== 0 ){
-        <li class="page-item"><a [ngClass]="(pageNumber == 1 ? 'page-link bg-black' : 'page-link')"
+        <li class="page-item"><a [ngClass]="(pageNumber == 1 ? 'page-link current-page' : 'page-link')"
             (click)="setPageOffset(pageNumber-1)">{{pageNumber-1}}</a></li>
         }
-        <li class="page-item"><a [ngClass]="(pageNumber == pageNumber ? 'page-link bg-black' : 'page-link')"
+        <li class="page-item"><a [ngClass]="(pageNumber == pageNumber ? 'page-link current-page' : 'page-link')"
             (click)="setPageOffset(pageNumber)">{{pageNumber}}</a></li>
         @if(pageNumber+1 < totalPages ){
             <li class="page-item"><a class='page-link'
@@ -24,12 +19,11 @@
         <li class="page-item"><a class='page-link'>...</a></li>
         }
         @if(totalPages!= pageNumber){
-        <li class="page-item"><a [ngClass]="(pageNumber == totalPages ? 'page-link bg-black' : 'page-link')"
+        <li class="page-item"><a [ngClass]="(pageNumber == totalPages ? 'page-link current-page' : 'page-link')"
                 (click)="setPageOffset(totalPages)">{{totalPages}}</a></li>
         }
-        <!-- } -->
         <li class="page-item">
-            <a class="page-link" aria-label="Next" (click)="next()">
+            <a class="page-link next" aria-label="Next" (click)="next()">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
