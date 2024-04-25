@@ -287,12 +287,12 @@
 					"response": []
 				},
 				{
-					"name": "Resources/Topic",
+					"name": "Resources",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{dns}}/api/v1/resources/topics/clp83birh0003p50izrbr6rgqslug=react",
+							"raw": "https://{{dns}}/api/v1/resources",
 							"protocol": "https",
 							"host": [
 								"{{dns}}"
@@ -300,21 +300,19 @@
 							"path": [
 								"api",
 								"v1",
-								"resources",
-								"topics",
-								"clp83birh0003p50izrbr6rgqslug=react"
+								"resources"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Resources/Topic/Slug (Category)",
+					"name": "Resources/Params",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{dns}}/api/v1/resources/topic/slug/react",
+							"raw": "https://{{dns}}/api/v1/resources?categorySlug=react",
 							"protocol": "https",
 							"host": [
 								"{{dns}}"
@@ -322,10 +320,13 @@
 							"path": [
 								"api",
 								"v1",
-								"resources",
-								"topic",
-								"slug",
-								"react"
+								"resources"
+							],
+							"query": [
+								{
+									"key": "categorySlug",
+									"value": "react"
+								}
 							]
 						}
 					},
