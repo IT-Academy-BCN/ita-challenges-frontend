@@ -1,39 +1,22 @@
 #!/bin/sh
-#  Start parameters:
-#  1.-fileConfig
-#  Example: ./build_Docker.sh ./nginx_conf/.env.dev
+#  Process to deploy manually the docker image:
+#       export ENV=dev
+#       export REGISTRY_NAME=itacademybcn/itachallenges
+#       export MICROSERVICE_VERSION=x.x.x
+#       ./build_Docker.sh
+#
+#  At the server, execute:
+#      ./deploy_frontend_dev.sh itachallenge-nginx [MICROSERVICE_VERSION]
+
+
 
 # Init variables
-fileConfig=$1;
+echo " ENV="${ENV}
+echo " REGISTRY_NAME="${REGISTRY_NAME}
+echo " MICROSERVICE_VERSION="${MICROSERVICE_VERSION}
+
 now="$(date +'%d-%m-%Y %H:%M:%S:%3N')"
 base_dir=`pwd`
-
-# Load environment variables
-if [ -f "$fileConfig" ]
-then
-  echo ""
-  echo " Loading config from $fileConfig"
-  echo ""
-
-  while IFS='=' read -r key value
-  do
-    key=$(echo $key | tr '.' '_')
-    eval ${key}='${value}'
-  done < "$fileConfig"
-
-  echo " Date: "${now}
-  echo " ======================================================"
-  echo ""
-  echo "                 Initializing variables "
-  echo ""
-  echo " ======================================================"
-  echo " REGISTRY_NAME="${REGISTRY_NAME}
-
-  else
-    echo "$fileConfig not found."
-  fi
-
-#./gradlew :itachallenge-challenge:clean && ./gradlew :itachallenge-challenge:build
 
 ng build --configuration production
 
