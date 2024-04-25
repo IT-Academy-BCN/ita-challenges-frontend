@@ -1,79 +1,89 @@
 @import "src/styles/colors";
 @import "src/styles/fonts";
 
-.nav{
-    border-bottom:  5px solid $gray-4;
+.nav {
+    border-bottom: 5px solid $gray-4;
     margin-top: 2rem;
     padding: 0;
     border-radius: 2px;
 }
-.nav-item{
+
+.nav-item {
     margin: -.2rem;
 }
-.nav-link{
+
+.nav-link {
     color: $gray-3;
     border-top: #ffff;
     border-left: #ffff;
     border-right: #ffff;
     border-bottom: 5px solid transparent;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     border-bottom: 5px solid $gray-2;
 
 }
-.nav-link.active{
+
+.nav-link.active {
     border: none;
     border-bottom: 5px solid $primary;
     color: $black-3;
     font-weight: bold;
 }
 
-.tab-content{
+.tab-content {
     margin-top: 3rem;
     width: 100%;
 }
-.title{
+
+.title {
     margin: 0;
     padding: 0;
     position: relative;
     display: flex;
 }
-.title_link{
+
+.title_link {
     color: $primary;
     text-decoration: none;
     font-weight: bold;
     margin-left: 1.5rem;
     padding-top: .23rem;
 }
-.title_text{
+
+.title_text {
     margin-top: 0;
 }
-.info-card{
+
+.info-card {
     width: 80%;
 }
+
 .details-body {
     flex-direction: row;
     gap: 1.5rem;
 
-    .details-text{
+    .details-text {
         order: 1;
     }
-    app-solution{
+
+    app-solution {
         order: 2;
         flex-basis: 100%;
     }
 }
 
-.lock{
+.lock {
     display: flex;
     align-items: center;
 }
 
-.lock img{   
-    margin:0 .2rem .3rem 0;
+.lock img {
+    margin: 0 .2rem .3rem 0;
 }
 
-button.btn.btn-primary.send-solution{
+button.btn.btn-primary.send-solution {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -120,25 +130,32 @@ input[type="checkbox"]:focus-visible {
     .details-body {
         flex-direction: column;
 
-        .details-text{
+        .details-text {
             order: 2;
         }
-        app-solution{
+
+        app-solution {
             order: 1;
         }
     }
-    :host{
+
+    :host {
         overflow-x: auto;
     }
+
     //Afegir en cas que el dissenyador vulgui el botó Related també en responsive
-    ul.nav-tabs{
-    //     display: flex;
-    //     flex-wrap: nowrap;
-    //     overflow-x: scroll;
-    //     -webkit-overflow-scrolling: touch;
-    border: none;
+    ul.nav-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        // flex-wrap: nowrap;
+        // overflow-x: scroll;
+        // -webkit-overflow-scrolling: touch;
+        justify-content: space-around;
+        align-items: center;
+        border: none;
     }
-    .nav-link{
+
+    .nav-link {
         background-color: white;
         color: $gray-3;
         border: 1px solid $gray-3;
@@ -147,14 +164,15 @@ input[type="checkbox"]:focus-visible {
         margin: 0 10px 0 0;
         transition: 0.2s;
 
-        &.active{
+        &.active {
             background-color: $primary;
             color: white;
             border: 1px solid $primary;
             font-weight: bold;
             transition: 0.2s;
         }
-        &:hover{
+
+        &:hover {
             background-color: $primary;
             color: white;
             border: 1px solid $primary;
@@ -163,6 +181,8 @@ input[type="checkbox"]:focus-visible {
         }
     }
 }
+
+//if we dont want the realted
 @media screen and (max-width: 560px) {
     li.related{
         display: none;

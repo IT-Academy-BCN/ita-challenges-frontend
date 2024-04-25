@@ -6,7 +6,8 @@
     min-height: 110px;
     cursor: pointer;
     background-color: $white;
-    max-width: 400px;
+    width: 50%;
+    max-width: 45%;
     margin-inline-start: 15px;
     gap:12px;
     &:hover{
@@ -69,5 +70,12 @@
         height: auto;
         margin-right: 10px;
     }
+}
 
+@media (max-width: 992px){
+    .resource-list-element{
+        margin-inline-start: 0px;
+        width:100%;
+        max-width: 100%;
+    }
 }

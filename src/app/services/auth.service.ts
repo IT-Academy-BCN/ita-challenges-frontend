@@ -19,7 +19,7 @@ import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
 import { TokenService } from "./token.service";
 import { error } from "console";
-import { resolve } from "path";
+import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 
 interface loginResponse {
@@ -48,7 +48,8 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private cookieService: CookieService,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private helper: CookieEncryptionHelper) {
 
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user');
