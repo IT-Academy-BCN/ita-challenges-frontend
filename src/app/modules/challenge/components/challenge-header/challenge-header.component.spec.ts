@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component'
+import { AuthService } from 'src/app/services/auth.service'
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent
@@ -25,7 +26,8 @@ describe('ChallengeHeaderComponent', () => {
       ],
       providers: [
         NgbModal,
-        SolutionService
+        SolutionService,
+        AuthService
       ]
     }).compileComponents()
 
@@ -59,10 +61,11 @@ describe('ChallengeHeaderComponent', () => {
   })
 
   it('should open restricted modal if user is not logged in', () => {
-    spyOn(modalService, 'open').and.stub()
-    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
-    component.clickSendButton()
-
+    if (modalService !== null && modalService !== undefined) { // Asegúrate de que modalService existe antes de espiarlo
+      spyOn(modalService, 'open').and.stub()
+      component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+      component.clickSendButton()
+    }
     expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 })
