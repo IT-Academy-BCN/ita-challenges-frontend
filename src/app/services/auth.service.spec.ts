@@ -15,14 +15,16 @@ import {tap} from "rxjs/operators";
 import {User} from "../models/user.model";
 import {TokenService} from "./token.service";
 import { resolve } from "path";
+import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 describe("AuthService", () => {
-  let authService: AuthService;
-  let cookieServiceMock: any;
-  let routerMock: any;
-  let httpClient: HttpClient;
-  let httpClientMock: HttpTestingController;
-  let tokenServiceMock: TokenService;
+	let authService: AuthService;
+	let cookieServiceMock: any;
+	let routerMock: any;
+	let httpClient: HttpClient;
+	let httpClientMock: HttpTestingController;
+	let tokenServiceMock: TokenService;
+	let helperMock: CookieEncryptionHelper;
 
   beforeEach(() => {
 
@@ -54,8 +56,8 @@ describe("AuthService", () => {
       value: cookieServiceMock,
     });
 
-    authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock);
-  });
+		authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock, helperMock);
+	});
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
     const anonymMock = 'anonym';
