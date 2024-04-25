@@ -231,10 +231,10 @@ export class AuthService {
     return isUserLoggedIn;
   }
 
-  /* return if token valid */
+  /* return if token valid */ //TODO: está hardcodeado...
   async checkToken(token: string): Promise<boolean> {
-
-    return true;
+    let isValid: boolean = true;
+    return isValid;
   }
 
   // Check if the token is expired

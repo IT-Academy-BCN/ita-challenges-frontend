@@ -1,4 +1,4 @@
-import { type AfterContentChecked, Component, Input, ViewChild, inject, OnInit } from '@angular/core'
+import { Component, Input, ViewChild, inject, Output, EventEmitter, type OnInit } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -66,10 +66,9 @@ export class ChallengeInfoComponent implements OnInit {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
-    this.isLogged = await this.authService.isUserLoggedIn();
-   
+    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+    this.isLogged = await this.authService.isUserLoggedIn()
     this.loadRelatedChallenge(this.related_id)
-    
   }
 
   loadRelatedChallenge (id: string): void {

@@ -46,7 +46,6 @@ describe('ChallengeInfoComponent', () => {
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
     // challengeService = TestBed.inject(ChallengeService)
-    modalService = TestBed.inject(NgbModal)
     fixture.detectChanges()
   })
 
@@ -55,10 +54,10 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided related_id', () => {
-      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenge')
+    it('should call loadRelatedChallenge with the provided related_id', async () => {
+      const loadRelatedChallengeSpy = jest.spyOn(component, 'loadRelatedChallenge')
       component.related_id = '123'
-      component.ngOnInit()
+      await component.ngOnInit()
 
       expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
@@ -79,7 +78,6 @@ describe('ChallengeInfoComponent', () => {
     })
 
     it('should set isLogged to true when tokens are present', () => {
-      component.ngAfterContentChecked()
       expect(component.isLogged).toBeTruthy()
     })
 
@@ -87,7 +85,6 @@ describe('ChallengeInfoComponent', () => {
       // Limpiar tokens para esta prueba
       localStorage.removeItem('authToken')
       localStorage.removeItem('refreshToken')
-      component.ngAfterContentChecked()
       expect(component.isLogged).toBeFalsy()
     })
 
