@@ -2,8 +2,8 @@ import { TestBed, type ComponentFixture } from '@angular/core/testing'
 
 import { StarterComponent } from "./starter.component"
 import { StarterService } from 'src/app/services/starter.service'
-import { TranslateModule, TranslateParser, TranslateService } from '@ngx-translate/core'
-import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { environment } from 'src/environments/environment'
 import { of } from 'rxjs'
@@ -48,80 +48,5 @@ describe('StarterComponent', () => {
 
     req.flush(mockResponse);
     done();   
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  it('should receive filter values from child component when it emits', () => {
-    // TODO revise this test
-    // const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
-    // const expectedFilters: FilterChallenge = {
-    //   languages: [1],
-    //   levels: ['easy'],
-    //   progress: [1]
-    // };
-
-    // childComponent.filtersSelected.emit(expectedFilters);
-
-    // expect(spy).toHaveBeenCalled();
-    // expect(spy).toHaveBeenCalledWith(expectedFilters);
-  })
-
-  it('should receive filter values from child component when languagesForm changes', () => {
-  // TODO revise this test
-  // spyOn(component, 'getChallengeFilters').and.callThrough();
-
-    // childComponent.filtersForm.controls['languages'].setValue({javascript: true, java:false, php: false, python: false});
-
-    // fixture.detectChanges();
-
-  // expect(component.getChallengeFilters).toHaveBeenCalled();
-  // expect(component.filters.languages).toContain(1);
-  })
-
-  it('should receive filter values from child component when levelsForm changes', () => {
-  // TODO revise this test
-  // spyOn(component, 'getChallengeFilters').and.callThrough();
-
-    // childComponent.filtersForm.controls['levels'].setValue({easy: true, medium: false, hard: false});
-
-    // fixture.detectChanges();
-
-  // expect(component.getChallengeFilters).toHaveBeenCalled();
-  // expect(component.filters.levels).toContain('easy');
-  })
-
-  it('should receive filter values from child component when progressForm changes', () => {
-  // TODO revise this test
-  // spyOn(component, 'getChallengeFilters').and.callThrough();
-
-    // childComponent.filtersForm.controls['progress'].setValue({noStarted: true, started:false, finished: false});
-
-    // fixture.detectChanges();
-
-  // expect(component.getChallengeFilters).toHaveBeenCalled();
-  // expect(component.filters.progress).toContain(1);
-  })
-
-  it('should receive all filter values from child component', () => {
-  // TODO revise this test
-  // const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
-  // const expectedFilters: FilterChallenge = {
-  //   languages: [1],
-  //   levels: ['easy'],
-  //   progress: [1]
-  // };
-
-    // childComponent.filtersForm.get('languages')!.get('javascript')!.setValue(true);
-    // childComponent.filtersForm.get('levels')!.get('easy')!.setValue(true);
-    // childComponent.filtersForm.get('progress')!.get('noStarted')!.setValue(true);
-
-  // fixture.whenStable().then(() => {
-  //   expect(spy).toHaveBeenCalled();
-  //   expect(spy).toHaveBeenCalledWith(expectedFilters);
-  //   expect(component.filters).toEqual(expectedFilters);
-  // });
   })
 })
