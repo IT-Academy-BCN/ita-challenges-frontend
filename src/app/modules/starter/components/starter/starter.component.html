@@ -21,7 +21,7 @@
             [title]="challenge.challenge_title  | dynamicTranslate"
             [creation_date]="challenge.creation_date" [level]="challenge.level" [popularity]="challenge.popularity"
             [languages]="challenge.languages" [id]="challenge.id_challenge"></app-challenge-card>
-        <app-pagination (pageEmitter)="goToPage($event)" [totalPages]="totalPages"
+        <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages"
             [pageNumber]="pageNumber"></app-pagination>
 
     </div>

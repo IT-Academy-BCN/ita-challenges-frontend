@@ -60,11 +60,7 @@ export class StarterComponent {
   openModal (): void {
     this.modalContent.open()
   }
-
-  goToPage (page: number): void {
-    this.getChallengesByPage(page)
-  }
-
+  
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint

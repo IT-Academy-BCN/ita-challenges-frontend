@@ -41,13 +41,17 @@ describe('StarterComponent', () => {
     component.getChallengesByPage(1)
     const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`);
     expect(req.request.method).toEqual("GET");
-    
+
     expect(starterServiceSpy).toBeCalledWith(0,8)
     expect(component.listChallenges).toBe(mockResponse)
     expect(component.totalPages).toEqual(3)
 
     req.flush(mockResponse);
     done();   
+  })
+
+  it('should create', () => {
+    expect(component).toBeTruthy()
   })
 
   it('should receive filter values from child component when it emits', () => {
