@@ -1,7 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PaginationComponent } from './pagination.component'
-import exp from 'constants'
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent
@@ -24,9 +23,9 @@ describe('PaginationComponent', () => {
     const changePageSpy = jest.spyOn(component, 'changePage')
     component.pageNumber = 1
     component.totalPages = 3
-    let currentPage = component.pageNumber
+    const currentPage = component.pageNumber
     component.next()
-    expect(component.pageNumber).toEqual(currentPage+1)
+    expect(component.pageNumber).toEqual(currentPage + 1)
     expect(changePageSpy).toHaveBeenCalled()
   })
 
@@ -34,9 +33,9 @@ describe('PaginationComponent', () => {
     const changePageSpy = jest.spyOn(component, 'changePage')
     component.pageNumber = 2
     component.totalPages = 3
-    let currentPage = component.pageNumber
+    const currentPage = component.pageNumber
     component.prev()
-    expect(component.pageNumber).toEqual(currentPage-1)
+    expect(component.pageNumber).toEqual(currentPage - 1)
     expect(changePageSpy).toHaveBeenCalled()
   })
 

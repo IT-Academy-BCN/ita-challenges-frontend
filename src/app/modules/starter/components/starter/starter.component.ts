@@ -1,6 +1,6 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
 import { Component, Inject, ViewChild } from '@angular/core'
-import { finalize, type Subscription } from 'rxjs'
+import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
@@ -60,7 +60,7 @@ export class StarterComponent {
   openModal (): void {
     this.modalContent.open()
   }
-  
+
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint
