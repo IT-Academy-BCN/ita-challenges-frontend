@@ -1,6 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PaginationComponent } from './pagination.component'
+import exp from 'constants'
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent
@@ -44,5 +45,13 @@ describe('PaginationComponent', () => {
     component.pageNumber = 2
     component.changePage()
     expect(pageEmitterSpy).toHaveBeenCalled()
+  })
+
+  it('should set and emit a certain page number', () => {
+    const pageEmitterSpy = jest.spyOn(component.pageEmitter, 'emit')
+    component.pageNumber = 1
+    component.setPageOffset(3)
+    expect(pageEmitterSpy).toHaveBeenCalledWith(3)
+    expect(component.pageNumber).toBe(3)
   })
 })
