@@ -232,21 +232,6 @@ export class AuthService {
     // return isUserLoggedIn;
   }
 
-  /* return if token valid */
-/*   async checkToken(token: string): Promise<boolean> {
-
-    return true;
-  }
-
-  // Check if the token is expired
-  public isTokenExpired(token: string): boolean {
-    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
-    return Math.floor(new Date().getTime() / 1000) >= expiry;
-  }
-  /* See if token is valid */
- /*  public isTokenValid(token: string): boolean { //todo: Promise<boolean>
-    return true;
-  } */
 } 
 
 
