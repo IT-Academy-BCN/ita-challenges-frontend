@@ -233,7 +233,7 @@ export class AuthService {
   }
 
   /* return if token valid */
-  async checkToken(token: string): Promise<boolean> {
+/*   async checkToken(token: string): Promise<boolean> {
 
     return true;
   }
@@ -244,9 +244,9 @@ export class AuthService {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
   /* See if token is valid */
-  public isTokenValid(token: string): boolean { //todo: Promise<boolean>
+ /*  public isTokenValid(token: string): boolean { //todo: Promise<boolean>
     return true;
-  }
-}
+  } */
+} 
 
 
