@@ -6,11 +6,14 @@ import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
+import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
-  styleUrls: ['./starter.component.scss']
+  styleUrls: ['./starter.component.scss'],
+  providers: []
 })
 export class StarterComponent {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
@@ -48,7 +51,7 @@ export class StarterComponent {
   getChallengesByPage (page: number): void {
     const getChallengeOffset = (8 * (page - 1))
     this.pageNumber = page
-    if(this.sortBy !== '') {
+    if (this.sortBy !== '') {
       this.challengesSubs$ = this.starterService.orderBySortAscending(getChallengeOffset, this.pageSize, this.sortBy)
         .subscribe(resp => {
           this.listChallenges = resp
@@ -59,13 +62,13 @@ export class StarterComponent {
         })
     } else {
       this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
-      .subscribe(resp => {
-        this.listChallenges = resp
-        this.totalPages = Math.ceil(22 / this.pageSize)
+        .subscribe(resp => {
+          this.listChallenges = resp
+          this.totalPages = Math.ceil(22 / this.pageSize)
         // TODO: change the list challenges and total pages when the changes come from the back end:
         // this.listChallenges = resp.results
         // this.totalPages = Math.ceil(resp.count/this.pageSize);
-      })
+        })
     }
   }
 
@@ -79,7 +82,7 @@ export class StarterComponent {
   }
 
   changeSort (newSort: string): void {
-    if (newSort == 'popularity' || newSort == 'creation_date') {
+    if (newSort === 'popularity' || newSort === 'creation_date') {
       this.sortBy = newSort
       this.getChallengesByPage(this.pageNumber)
     }

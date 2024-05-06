@@ -17,7 +17,7 @@ describe('StarterComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [StarterComponent]
+      declarations: [StarterComponent],
     })
     fixture = TestBed.createComponent(StarterComponent)
     component = fixture.componentInstance

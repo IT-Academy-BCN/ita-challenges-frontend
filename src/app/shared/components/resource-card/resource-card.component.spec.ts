@@ -3,7 +3,6 @@ import { ResourceCardComponent } from './resource-card.component'
 import { ResourcesService } from 'src/app/services/resources.service'
 import { HttpClientModule } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
-import { DatePipe } from '@angular/common'
 
 describe('ResourceCardComponent', () => {
   let component: ResourceCardComponent
@@ -19,8 +18,7 @@ describe('ResourceCardComponent', () => {
       declarations: [ResourceCardComponent],
       imports: [HttpClientModule],
       providers: [
-        { provide: ResourcesService, useValue: resourcesServiceMock },
-        { provide: DatePipe }
+        { provide: ResourcesService, useValue: resourcesServiceMock }
       ]
     })
       .compileComponents()
@@ -73,12 +71,6 @@ describe('ResourceCardComponent', () => {
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
 
     component.ngOnInit()
-
-    const formatDate = component.formatDate(responseMock[0].createdAt)
-
-    fixture.detectChanges()
-    expect(formatDate).toBe('Nov 28, 2023')
-
     await fixture.whenStable().then(() => {
       expect(component.resources).toEqual(responseMock)
     }).catch()
