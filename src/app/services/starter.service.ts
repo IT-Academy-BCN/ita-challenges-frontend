@@ -27,7 +27,7 @@ export class StarterService {
   }
 
   orderBySortAscending(pageOffset:number, pageLimit: number, sortBy: string): Observable<Object> {
-    
+    console.log('ascending', sortBy)
     const params = new HttpParams()
     .set('offset', pageOffset.toString())
     .set('limit', pageLimit.toString())
@@ -43,13 +43,13 @@ export class StarterService {
       });
   }
 
-  orderBySortAsDescending(pageOffset:number, pageLimit: number): Observable<Object> {
-    let sortBy: string = 'creation_date';
+  orderBySortAsDescending(pageOffset:number, pageLimit: number, sortBy: string): Observable<Object> {
+    console.log('descending:', sortBy)
     const params = new HttpParams()
     .set('offset', pageOffset.toString())
     .set('limit', pageLimit.toString())
-    .set('sort', `{${sortBy}:desc}`);
-
+    .set('sort', sortBy + ':desc')
+    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })

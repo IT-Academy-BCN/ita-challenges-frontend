@@ -30,7 +30,10 @@ export class StarterComponent {
   listChallenges: any
   pageSize = environment.pageSize
 
-  constructor (
+  selectedSortBy: string = ''
+  isAscending: boolean = false;
+
+  constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
@@ -39,20 +42,41 @@ export class StarterComponent {
     }) */
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getChallengesByPage(this.pageNumber)
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage (page: number): void {
+  getChallengesByPage(page: number): void {
     const getChallengeOffset = (8 * (page - 1))
     this.pageNumber = page
     if (this.sortBy !== '') {
-      this.challengesSubs$ = this.starterService.orderBySortAscending(getChallengeOffset, this.pageSize, this.sortBy)
+      if (this.isAscending) {
+        this.challengesSubs$ = this.starterService.orderBySortAscending(getChallengeOffset, this.pageSize, this.sortBy)
+          .subscribe(resp => {
+            this.listChallenges = resp
+            this.totalPages = Math.ceil(22 / this.pageSize)
+            // TODO: change the list challenges and total pages when the changes come from the back end:
+            // this.listChallenges = resp.results
+            // this.totalPages = Math.ceil(resp.count/this.pageSize);
+          })
+      } else {
+        this.challengesSubs$ = this.starterService.orderBySortAsDescending(getChallengeOffset, this.pageSize, this.sortBy)
+          .subscribe(resp => {
+            this.listChallenges = resp
+            this.totalPages = Math.ceil(22 / this.pageSize)
+            // TODO: change the list challenges and total pages when the changes come from the back end:
+            // this.listChallenges = resp.results
+            // this.totalPages = Math.ceil(resp.count/this.pageSize);
+          })
+      }
+
+    } else {
+      this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
         .subscribe(resp => {
           this.listChallenges = resp
           this.totalPages = Math.ceil(22 / this.pageSize)
@@ -60,31 +84,30 @@ export class StarterComponent {
           // this.listChallenges = resp.results
           // this.totalPages = Math.ceil(resp.count/this.pageSize);
         })
-    } else {
-      this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
-        .subscribe(resp => {
-          this.listChallenges = resp
-          this.totalPages = Math.ceil(22 / this.pageSize)
-        // TODO: change the list challenges and total pages when the changes come from the back end:
-        // this.listChallenges = resp.results
-        // this.totalPages = Math.ceil(resp.count/this.pageSize);
-        })
     }
   }
 
-  openModal (): void {
+  openModal(): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters (filters: FilterChallenge): void {
+  getChallengeFilters(filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint
   }
 
-  changeSort (newSort: string): void {
+  changeSort(newSort: string): void {
+    this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
-      this.sortBy = newSort
-      this.getChallengesByPage(this.pageNumber)
+      if (this.selectedSortBy === newSort ) {
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = !this.isAscending
+      } else {
+        this.isAscending = false;
+        this.selectedSortBy = newSort
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = true;
+      }
     }
   }
 }
