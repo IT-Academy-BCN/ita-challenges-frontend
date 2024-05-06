@@ -19,7 +19,7 @@ export class StarterComponent {
   params$!: Subscription
   challengesSubs$!: Subscription
   filters!: FilterChallenge
-  sortBy: string = 'popularity'
+  sortBy: string = ''
   challenge = Challenge
 
   totalPages!: number
@@ -37,7 +37,7 @@ export class StarterComponent {
   }
 
   ngOnInit (): void {
-    this.getChallengesByPage(1)
+    this.getChallengesByPage(this.pageNumber)
   }
 
   ngOnDestroy (): void {
@@ -45,9 +45,21 @@ export class StarterComponent {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage (page: number): void {
+  getChallengesByPage (page: number, sortBy?: string): void {
     const getChallengeOffset = (8 * (page - 1))
-    this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
+    this.pageNumber = page
+    if(sortBy !== undefined) {
+      this.sortBy = sortBy
+      this.challengesSubs$ = this.starterService.orderBySortAscending(getChallengeOffset, this.pageSize, this.sortBy)
+        .subscribe(resp => {
+          this.listChallenges = resp
+          this.totalPages = Math.ceil(22 / this.pageSize)
+          // TODO: change the list challenges and total pages when the changes come from the back end:
+          // this.listChallenges = resp.results
+          // this.totalPages = Math.ceil(resp.count/this.pageSize);
+        })
+    } else {
+      this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
       .subscribe(resp => {
         this.listChallenges = resp
         this.totalPages = Math.ceil(22 / this.pageSize)
@@ -55,6 +67,7 @@ export class StarterComponent {
         // this.listChallenges = resp.results
         // this.totalPages = Math.ceil(resp.count/this.pageSize);
       })
+    }
   }
 
   openModal (): void {
@@ -67,9 +80,9 @@ export class StarterComponent {
   }
 
   changeSort (newSort: string): void {
-    if (newSort !== this.sortBy) {
+    if (newSort == 'popularity' || newSort == 'creation_date') {
       this.sortBy = newSort
-      // TODO: llamar al endpoint
+      this.getChallengesByPage(this.pageNumber, this.sortBy)
     }
   }
 }

@@ -13,16 +13,18 @@
             <li class="animated" [ngClass]="{'selected' : sortBy == 'popularity'}" (click)="changeSort('popularity')">
                 {{'modules.starter.main.section2.popularity' | translate}}
             </li>
-            <li class="animated" [ngClass]="{'selected' : sortBy == 'date'}" (click)="changeSort('date')">
+            <li class="animated" [ngClass]="{'selected' : sortBy == 'creation_date'}" (click)="changeSort('creation_date')">
                 {{'modules.starter.main.section2.date' | translate}}
             </li>
         </ul>
         <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
             [title]="challenge.challenge_title  | dynamicTranslate"
             [creation_date]="challenge.creation_date" [level]="challenge.level" [popularity]="challenge.popularity"
-            [languages]="challenge.languages" [id]="challenge.id_challenge"></app-challenge-card>
+            [languages]="challenge.languages" [id]="challenge.id_challenge">
+        </app-challenge-card>
         <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages"
-            [pageNumber]="pageNumber"></app-pagination>
+            [pageNumber]="pageNumber">
+        </app-pagination>
 
     </div>
 </div>
