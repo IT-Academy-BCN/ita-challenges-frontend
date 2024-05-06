@@ -31,12 +31,12 @@ export class StarterService {
     const params = new HttpParams()
     .set('offset', pageOffset.toString())
     .set('limit', pageLimit.toString())
-    .set('sort', `{${sortBy}:asc}`);
-
+    .set('sort', sortBy + ':asc')
+    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get('../../assets/dummy/dummy.json',
+    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
       {
         headers,
         params
