@@ -219,19 +219,35 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in*/
-  public async isUserLoggedIn() { //TODO: neec tokenService first
-    // let isUserLoggedIn: boolean = false;
-    // let authToken = this.cookieService.get('authToken');
-    // let authTokenValid = await this.checkToken(authToken);
-    // if (authTokenValid) {
-    // 	isUserLoggedIn = true;
-    // } else {
-    // 	let refreshToken = this.cookieService.get('authToken');
-    // 	isUserLoggedIn = await this.checkToken(refreshToken);
-    // }
-    // return isUserLoggedIn;
+  public async isUserLoggedIn() { 
+    let isUserLoggedIn: boolean = false;
+    let authToken = this.cookieService.get('authToken');
+    let authTokenValid = await this.checkToken(authToken);
+      if (authTokenValid) {
+       	isUserLoggedIn = true;
+      } else {
+        let refreshToken = this.cookieService.get('refreshToken');
+        isUserLoggedIn = await this.checkToken(refreshToken);
+      }
+    return isUserLoggedIn;
   }
 
 } 
+  /* return if token valid */ //TODO: está hardcodeado...
+  async checkToken(token: string): Promise<boolean> {
+    let isValid: boolean = true;
+    return isValid;
+  }
+
+  // Check if the token is expired
+  public isTokenExpired(token: string): boolean {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
+  }
+  /* See if token is valid */
+  public isTokenValid(token: string): boolean { //todo: Promise<boolean>
+    return true;
+  }
+}
 
 
