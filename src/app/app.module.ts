@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
-import { CustomLoader } from './modules/custom-loader/custom-loader'
+import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
 export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
@@ -21,8 +21,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CustomLoader
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -39,14 +38,14 @@ export function HttpLoaderFactory (http: HttpClient): any {
       defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
-        useClass: CustomLoader,
-        // useFactory: HttpLoaderFactory,
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     })
   ],
   providers: [
-    AuthService
+    AuthService,
+    CookieEncryptionHelper
   ],
   bootstrap: [AppComponent]
 })

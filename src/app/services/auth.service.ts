@@ -19,7 +19,7 @@ import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
 import { TokenService } from "./token.service";
 import { error } from "console";
-import { resolve } from "path";
+import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 
 interface loginResponse {
@@ -48,7 +48,8 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private cookieService: CookieService,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private helper: CookieEncryptionHelper) {
 
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user');
@@ -218,23 +219,23 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in*/
-  public async isUserLoggedIn() { //TODO: neec tokenService first
-    // let isUserLoggedIn: boolean = false;
-    // let authToken = this.cookieService.get('authToken');
-    // let authTokenValid = await this.checkToken(authToken);
-    // if (authTokenValid) {
-    // 	isUserLoggedIn = true;
-    // } else {
-    // 	let refreshToken = this.cookieService.get('authToken');
-    // 	isUserLoggedIn = await this.checkToken(refreshToken);
-    // }
-    // return isUserLoggedIn;
+  public async isUserLoggedIn() { 
+    let isUserLoggedIn: boolean = false;
+    let authToken = this.cookieService.get('authToken');
+    let authTokenValid = await this.checkToken(authToken);
+      if (authTokenValid) {
+       	isUserLoggedIn = true;
+      } else {
+        let refreshToken = this.cookieService.get('refreshToken');
+        isUserLoggedIn = await this.checkToken(refreshToken);
+      }
+    return isUserLoggedIn;
   }
 
-  /* return if token valid */
+  /* return if token valid */ //TODO: está hardcodeado...
   async checkToken(token: string): Promise<boolean> {
-
-    return true;
+    let isValid: boolean = true;
+    return isValid;
   }
 
   // Check if the token is expired

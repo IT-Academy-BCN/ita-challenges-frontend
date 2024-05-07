@@ -1,6 +1,6 @@
 <div class="d-flex flex-wrap p-2 p-md-0 justify-content-center justify-content-lg-start">
     @for (resource of resources; track resource.id) {
-    <div class="resource-list-element d-flex justify-content-start animated mb-4">
+        <a href={{resource.url}} class="resource-list-element d-flex justify-content-start animated mb-4">
         <div class="d-flex flex-column justify-content-start">
             <div class="up-arrow"></div>
             <h3 class="points">{{resource.voteCount.total}}</h3>
@@ -12,12 +12,12 @@
                 {{ resource.description }}
             </p>
             <div class="user-details d-flex mt-auto align-items-center">
-                <img class="user-img" [src]="['../../../../assets/img/users/user-1.png']" alt="Nombre Usuario" />
+                <img class="user-img" [src]="['/assets/img/users/user-1.png']" alt="Nombre Usuario" />
                 <span class="description">
                     {{resource.user.name}}, {{resource.createdAt}}
                 </span>
             </div>
         </div>
-    </div>
+    </a>
     }
 </div>

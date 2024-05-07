@@ -15,14 +15,16 @@ import {tap} from "rxjs/operators";
 import {User} from "../models/user.model";
 import {TokenService} from "./token.service";
 import { resolve } from "path";
+import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 describe("AuthService", () => {
-  let authService: AuthService;
-  let cookieServiceMock: any;
-  let routerMock: any;
-  let httpClient: HttpClient;
-  let httpClientMock: HttpTestingController;
-  let tokenServiceMock: TokenService;
+	let authService: AuthService;
+	let cookieServiceMock: any;
+	let routerMock: any;
+	let httpClient: HttpClient;
+	let httpClientMock: HttpTestingController;
+	let tokenServiceMock: TokenService;
+	let helperMock: CookieEncryptionHelper;
 
   beforeEach(() => {
 
@@ -54,8 +56,8 @@ describe("AuthService", () => {
       value: cookieServiceMock,
     });
 
-    authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock);
-  });
+		authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock, helperMock);
+	});
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
     const anonymMock = 'anonym';
@@ -494,5 +496,32 @@ describe("AuthService", () => {
     tick();
 
   }));
+
+  it('should return true if authToken is valid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('validAuthToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(true);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(true);
+  });
+
+  it('should return true if authToken is invalid but refreshToken is valid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('invalidAuthToken').mockReturnValueOnce('validRefreshToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(true);
+  });
+
+  it('should return false if both authToken and refreshToken are invalid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('invalidAuthToken').mockReturnValueOnce('invalidRefreshToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(false);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(false);
+  });
 
 });
