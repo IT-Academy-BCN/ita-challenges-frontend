@@ -1,7 +1,6 @@
 import { type ChallengeDetails } from './challenge-details.model'
 import { type Language } from './language.model'
 import { type Solution } from './solution.model'
-import { type Resource } from './resource.model'
 
 export class Challenge {
   id_challenge: string
@@ -12,8 +11,6 @@ export class Challenge {
   details: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
-  resources: Resource[] = []
-  related: string[] = []
 
   constructor (element: any) {
     this.id_challenge = element.id_challenge
@@ -29,14 +26,6 @@ export class Challenge {
 
     element.solutions.forEach((solution: Solution) => {
       this.solutions.push(solution)
-    })
-
-    element.resources.forEach((resource: Resource) => {
-      this.resources.push(resource)
-    })
-
-    element.related.forEach((challengeRelated: string) => {
-      this.related.push(challengeRelated)
     })
   }
 }

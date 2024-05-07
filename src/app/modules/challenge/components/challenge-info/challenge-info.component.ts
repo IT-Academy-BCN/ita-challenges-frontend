@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+import { RelatedService } from '../../../../services/related.service';
 
 @Component({
   selector: 'app-challenge-info',
@@ -24,6 +25,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
+  private readonly RelatedService = inject(RelatedService)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -37,6 +39,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @Input() popularity!: number
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
+  @Input() idChallenge: string = ''
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
@@ -47,7 +50,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   // activeId = 1
   solutionSent: boolean = false
 
-  idChallenge!: string | any
+  // idChallenge!: string | any
   params$!: Subscription
   jsonData: Challenge[] = []
   challenge!: Challenge
@@ -67,11 +70,15 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       this.isUserSolution = !value
     })
     // this.authService.isLoggedIn();
-    this.loadRelatedChallenge(this.related_id)
+    this.loadRelatedChallenge(this.idChallenge)
     // this.checkIfUserIsLoggedIn();
     this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value
     })
+    console.log("challenge-info, idChallenge: ", this.idChallenge)
+    console.log("challenge-info, related: ", this.related)
+    console.log("challenge-info, related_id: ", this.related_id)
+    console.log("challenge-info, activeId: ", this.activeId)
   }
 
   ngAfterContentChecked (): void {
@@ -84,16 +91,17 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   }
 
   loadRelatedChallenge (id: string): void {
-    this.challengeSubs$ = this.challengeService
-      .getChallengeById(id)
+    this.challengeSubs$ = this.RelatedService
+      .getRelatedChallenges(id)
       .subscribe((challenge) => {
+        console.log("challenge-info, loadRelatedChallenge, id : ", challenge.id_challenge)
         this.challenge = new Challenge(challenge)
         this.related_title = this.challenge?.challenge_title
         this.related_creation_date = this.challenge?.creation_date
         this.related_level = this.challenge?.level
         this.related_popularity = this.challenge.popularity
         this.related_languages = this.challenge.languages
-        this.related_id = this.related
+        this.related_id = this.challenge.id_challenge
       })
   }
 

@@ -4,14 +4,15 @@ import { HttpClient } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
-// import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ChallengeService {
+  
   constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
+
   getChallengeById (id: string): Observable<Challenge> {
     // -----TO CHANGE----
 
@@ -21,11 +22,11 @@ export class ChallengeService {
                             'Content-Type': 'application/dummy'
                         }
                     }); */
-
-    return this.http.get<Challenge>('../assets/dummy/challenge.json',
+    console.log("challenge.service.ts, getChallengeById, id: ", id)
+    return this.http.get<Challenge>(`/itachallenge/api/v1/challenge/challenge/${id}`,
       {
         headers: {
-          'Content-Type': 'application/dummy'
+          'Content-Type': 'application/json'
         }
       })
   }
@@ -38,5 +39,5 @@ export class ChallengeService {
           error: (err) => { reject(err) }
         })
     )
-  }
+  } 
 }
