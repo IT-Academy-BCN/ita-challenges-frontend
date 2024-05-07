@@ -1,32 +1,34 @@
-import {StarterService} from "./starter.service";
-import {TestScheduler} from "rxjs/internal/testing/TestScheduler";
-import {HttpTestingController} from "@angular/common/http/testing";
-import {delay, of} from "rxjs";
+import { StarterService } from "./starter.service";
+import { TestScheduler } from "rxjs/internal/testing/TestScheduler";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { delay, of } from "rxjs";
 import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { TestBed } from "@angular/core/testing";
 
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
 
   let service: StarterService;
-  let httpMock: HttpTestingController;
-  let scheduler: TestScheduler;
-  let httpClientSpy: any;
+  // let httpClientSpy: any;
   let testScheduler: TestScheduler;
+  let httpClient: HttpClient;
+  let httpClientMock: HttpTestingController;
 
 
   beforeEach(() => {
-
-    //inject spy
-    httpClientSpy = jasmine.createSpy('httpClient');
-    httpClientSpy.get = jasmine.createSpy('get').and.returnValue(of(data));
-    service = new StarterService(httpClientSpy);
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected);
-
+    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
+      imports: [HttpClientTestingModule]
     });
-  });
+    httpClient = TestBed.inject(HttpClient); //TestBed.inject is used to inject into the test suite
+    httpClientMock = TestBed.inject(HttpTestingController);
+    service = new StarterService(httpClient);
+    testScheduler = new TestScheduler((actual, expected) => {
+    });
 
+  });
 
   /*
   Some explanations:
@@ -46,12 +48,22 @@ describe('StarterService', () => {
       - a^(bc)--|: A hot Observable that emits a before the subscription.
    */
 
+
+  it('Should stream all challenges', () => {
+    let mockResponse: Object = { challenge: 'challenge' }
+    service.getAllChallenges(0, 8).subscribe();
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`);
+    expect(req.request.method).toEqual("GET");
+    req.flush(mockResponse);
+  });
+
+
   it('Should stream all challenges', () => {
 
-    testScheduler.run(({expectObservable}) => {
+    testScheduler.run(({ expectObservable }) => {
 
       const expectedMarble = '---(a|)';
-      const expectedValues = {a: data};
+      const expectedValues = { a: data };
       const obs$ = service.getAllChallenges(1, 10).pipe(delay(3));
 
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
