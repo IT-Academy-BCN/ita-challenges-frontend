@@ -1,0 +1,21 @@
+.modal-footer button {
+  font-weight: 700;
+}
+
+#change-password {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+  .modal-body {
+    gap: 3.2rem !important;
+  }
+  .modal-footer {
+    gap: 2.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .modal-footer button {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}/*# sourceMappingURL=login-modal.component.css.map */

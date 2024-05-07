@@ -30,7 +30,7 @@ export class StarterComponent {
   listChallenges: any
   pageSize = environment.pageSize
 
-  selectedSortBy: string = ''
+  selectedSort: string = ''
   isAscending: boolean = false;
 
   constructor(
@@ -99,12 +99,12 @@ export class StarterComponent {
   changeSort(newSort: string): void {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
-      if (this.selectedSortBy === newSort ) {
+      if (this.selectedSort === newSort ) {
         this.getChallengesByPage(this.pageNumber)
         this.isAscending = !this.isAscending
       } else {
         this.isAscending = false;
-        this.selectedSortBy = newSort
+        this.selectedSort = newSort
         this.getChallengesByPage(this.pageNumber)
         this.isAscending = true;
       }

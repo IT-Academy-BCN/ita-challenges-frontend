@@ -45,4 +45,34 @@ describe('StarterComponent', () => {
     req.flush(mockResponse)
     done()
   })
+
+  it('should set isAscending to false and selectedSort equal to newSort', () => {
+    const newSort = 'creation_date';
+    const selectedSort = 'creation_date'
+    const pageNumber = 1;
+
+    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
+    component.changeSort(newSort);
+    spyOn(component, 'getChallengesByPage');
+
+    expect(component.isAscending).toBeTruthy();
+    expect(selectedSort).toEqual(newSort);
+    expect(getChallengesByPageSpy).toHaveBeenCalledWith(pageNumber);
+    expect(component.isAscending).toBeTruthy();
+  });
+
+  it('should set isAscending to true after setting it to false', () => {
+    const newSort = 'creation_date';
+    component.changeSort(newSort);
+
+    expect(component.isAscending).toBeTruthy();
+  });
+
+  it('should not call getChallengesByPage if newSort is not "popularity" or "creation_date"', () => {
+    const newSort = '';
+    component.changeSort(newSort);
+    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
+
+    expect(getChallengesByPageSpy).not.toHaveBeenCalled();
+  });
 })
