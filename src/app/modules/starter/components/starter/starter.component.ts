@@ -63,14 +63,12 @@ export class StarterComponent {
                 this.listChallenges = resp
               })
             this.totalPages = Math.ceil(respArray.length / this.pageSize)
-            console.log('totalPages', this.totalPages)
           } else {
             this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
               .subscribe(resp => {
                 this.listChallenges = resp
               })
             this.totalPages = Math.ceil(respArray.length / this.pageSize)
-            console.log('totalPages', this.totalPages)
           }
         })
     } else {
