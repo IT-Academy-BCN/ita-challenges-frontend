@@ -6,8 +6,6 @@ import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
-import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
-import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-starter',
@@ -31,9 +29,9 @@ export class StarterComponent {
   pageSize = environment.pageSize
 
   selectedSort: string = ''
-  isAscending: boolean = false;
+  isAscending: boolean = false
 
-  constructor(
+  constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
@@ -42,16 +40,16 @@ export class StarterComponent {
     }) */
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.getChallengesByPage(this.pageNumber)
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage(page: number): void {
+  getChallengesByPage (page: number): void {
     const getChallengeOffset = (8 * (page - 1))
     this.pageNumber = page
     if (this.sortBy !== '') {
@@ -74,7 +72,6 @@ export class StarterComponent {
             // this.totalPages = Math.ceil(resp.count/this.pageSize);
           })
       }
-
     } else {
       this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
         .subscribe(resp => {
@@ -87,26 +84,26 @@ export class StarterComponent {
     }
   }
 
-  openModal(): void {
+  openModal (): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters(filters: FilterChallenge): void {
+  getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint
   }
 
-  changeSort(newSort: string): void {
+  changeSort (newSort: string): void {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
-      if (this.selectedSort === newSort ) {
+      if (this.selectedSort === newSort) {
         this.getChallengesByPage(this.pageNumber)
         this.isAscending = !this.isAscending
       } else {
-        this.isAscending = false;
+        this.isAscending = false
         this.selectedSort = newSort
         this.getChallengesByPage(this.pageNumber)
-        this.isAscending = true;
+        this.isAscending = true
       }
     }
   }
