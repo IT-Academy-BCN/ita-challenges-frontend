@@ -18,11 +18,11 @@
             </li>
         </ul>
         <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
-            [title]="translate.instant('challenges.' + i + '.challenge_title')"
+            [title]="challenge.challenge_title  | dynamicTranslate"
             [creation_date]="challenge.creation_date" [level]="challenge.level" [popularity]="challenge.popularity"
             [languages]="challenge.languages" [id]="challenge.id_challenge"></app-challenge-card>
-        <app-pagination (paginaEmitter)="goToPage($event)" [page]="page" [totalPages]="totalPages"
-            [numChallenges]="numChallenges"></app-pagination>
+        <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages"
+            [pageNumber]="pageNumber"></app-pagination>
 
     </div>
 </div>

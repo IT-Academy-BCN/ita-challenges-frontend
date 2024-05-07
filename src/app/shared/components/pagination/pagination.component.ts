@@ -6,23 +6,31 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
-  @Input() page!: number
-  @Input() numChallenges!: number
+  @Input() pageNumber!: number
   @Input() totalPages!: number
 
-  @Output() paginaEmitter = new EventEmitter<number>()
+  @Output() pageEmitter = new EventEmitter<number>()
 
   next (): void {
-    this.page++
-    this.changePage()
+    if (this.pageNumber < this.totalPages) {
+      this.pageNumber++
+      this.changePage()
+    }
   }
 
   prev (): void {
-    this.page--
-    this.changePage()
+    if (this.pageNumber !== 1) {
+      this.pageNumber--
+      this.changePage()
+    }
   }
 
   changePage (): void {
-    this.paginaEmitter.emit(this.page)
+    this.pageEmitter.emit(this.pageNumber)
+  }
+
+  setPageOffset (page: number): void {
+    this.pageNumber = page
+    this.pageEmitter.emit(page)
   }
 }

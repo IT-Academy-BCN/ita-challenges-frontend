@@ -12,3 +12,4 @@
 - Joaquin Capel - https://github.com/JoaquinCapel
 - Pau Sàbat - https://github.com/pausm99
 - Francesc Ferrer - https://github.com/fran-cesc
+- Yulibeth Rivero - https://github.com/Yul1b3th
