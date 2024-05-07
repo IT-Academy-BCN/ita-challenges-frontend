@@ -3,9 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
 
+### [ita-challenges-frontend-2.10.2-RELEASE] - 2024-05-07
+* Relative paths to image optimized. Internationalization of language literals. 
+
+### [ita-challenges-frontend-2.10.0-RELEASE] - 2024-05-05
+* Refactoring auth.service & token.service
 
 ### [ita-challenges-frontend-2.9.0-RELEASE] - 2024-04-29
 * Fix slow load and add pagination
+
+### [ita-challenges-frontend-2.8.3-RELEASE] - 2024-04-25
+* Fixing auth.service in challenge-header and challenge info.
 
 ### [ita-challenges-frontend-2.8.1-RELEASE] - 2024-04-23
 * Link resources-card

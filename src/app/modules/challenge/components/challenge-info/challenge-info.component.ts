@@ -1,4 +1,4 @@
-import { type AfterContentChecked, Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core'
+import { Component, Input, ViewChild, inject, Output, EventEmitter, type OnInit } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -18,7 +18,7 @@ import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-moda
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked {
+export class ChallengeInfoComponent implements OnInit {
   isUserSolution: boolean = true
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
@@ -62,25 +62,13 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   related_languages: Language[] = []
   related_id: string = this.related
 
-  ngOnInit (): void {
+  async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
-    // this.authService.isLoggedIn();
+    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+    this.isLogged = await this.authService.isUserLoggedIn()
     this.loadRelatedChallenge(this.related_id)
-    // this.checkIfUserIsLoggedIn();
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.solutionSent = value
-    })
-  }
-
-  ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken')// TODO
-    const refreshToken = localStorage.getItem('refreshToken')// TODO
-
-    if (token !== null && refreshToken !== null && token !== '' && refreshToken !== '') {
-      this.isLogged = true
-    }
   }
 
   loadRelatedChallenge (id: string): void {
