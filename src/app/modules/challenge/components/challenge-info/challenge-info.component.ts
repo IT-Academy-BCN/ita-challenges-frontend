@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import { Component, Input, ViewChild, inject, Output, EventEmitter, type OnInit } from '@angular/core'
-=======
 import {
   type AfterContentChecked,
   Component,
@@ -8,9 +5,9 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
+  OnInit
 } from '@angular/core'
->>>>>>> feature#215f
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -64,22 +61,6 @@ export class ChallengeInfoComponent implements OnInit {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
 
-<<<<<<< HEAD
-  related_title = ''
-  related_creation_date!: Date
-  related_level = ''
-  related_popularity!: number
-  related_languages: Language[] = []
-  related_id: string = this.related
-
-  async ngOnInit (): Promise<void> {
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.isUserSolution = !value
-    })
-    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-    this.isLogged = await this.authService.isUserLoggedIn()
-    this.loadRelatedChallenge(this.related_id)
-=======
   ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
@@ -106,7 +87,6 @@ export class ChallengeInfoComponent implements OnInit {
     ) {
       this.isLogged = true
     }
->>>>>>> feature#215f
   }
 
   loadRelatedChallenges (id: string): void {
