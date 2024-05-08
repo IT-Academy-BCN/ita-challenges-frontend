@@ -31,7 +31,7 @@ export class StarterComponent {
   selectedSort: string = ''
   isAscending: boolean = false
 
-  constructor(
+  constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
@@ -40,56 +40,52 @@ export class StarterComponent {
     }) */
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.getChallengesByPage(this.pageNumber)
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
   getChallengesByPage(page: number): void {
-    const getChallengeOffset = (8 * (page - 1))
-    this.pageNumber = page
-
-    if (this.sortBy !== '') {
-      this.challengesSubs$ = this.starterService.getAllChallenges()
-        .subscribe(resp => {
-          const respArray: any[] = Array.isArray(resp) ? resp : [resp]
-          if (this.isAscending) {
-            this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-              .subscribe(resp => {
-                this.listChallenges = resp
-              })
-            this.totalPages = Math.ceil(respArray.length / this.pageSize)
-          } else {
-            this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-              .subscribe(resp => {
-                this.listChallenges = resp
-              })
-            this.totalPages = Math.ceil(respArray.length / this.pageSize)
-          }
-        })
-    } else {
-      this.challengesSubs$ = this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
-        .subscribe(resp => {
-          this.listChallenges = resp
-          this.totalPages = Math.ceil(22 / this.pageSize)
-        })
-    }
+    const getChallengeOffset = 8 * (page - 1);
+    this.pageNumber = page;
+  
+    const challengesObservable = this.sortBy !== '' ?
+      this.starterService.getAllChallenges() :
+      this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize);
+  
+    this.challengesSubs$ = challengesObservable.subscribe(resp => {
+      if (this.sortBy !== '') {
+        const respArray: any[] = Array.isArray(resp) ? resp : [resp];
+        const sortedChallenges$ = this.isAscending ?
+          this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize) :
+          this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize);
+  
+        sortedChallenges$.subscribe(sortedResp => {
+          this.listChallenges = sortedResp;
+          this.totalPages = Math.ceil(respArray.length / this.pageSize);
+        });
+      } else {
+        this.listChallenges = resp;
+        this.totalPages = Math.ceil(22 / this.pageSize); // Cambiar 22 por el valor de challenge.count
+      }
+    });
   }
+  
 
-  openModal(): void {
+  openModal (): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters(filters: FilterChallenge): void {
+  getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     // TODO: llamar al endpoint
   }
 
-  changeSort(newSort: string): void {
+  changeSort (newSort: string): void {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {

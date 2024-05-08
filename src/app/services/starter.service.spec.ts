@@ -51,8 +51,8 @@ describe('StarterService', () => {
 
   it('Should stream all challenges', () => {
     let mockResponse: Object = { challenge: 'challenge' }
-    service.getAllChallenges(0, 8).subscribe();
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`);
+    service.getAllChallenges().subscribe();
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`);
     expect(req.request.method).toEqual("GET");
     req.flush(mockResponse);
   });
@@ -64,7 +64,7 @@ describe('StarterService', () => {
 
       const expectedMarble = '---(a|)';
       const expectedValues = { a: data };
-      const obs$ = service.getAllChallenges(1, 10).pipe(delay(3));
+      const obs$ = service.getAllChallenges().pipe(delay(3));
 
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
     });

@@ -30,22 +30,55 @@ describe('StarterComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should get challenges by page', (done) => {
+  it('should call getAllChallenges when sortBy is not empty', (done) => {
     const mockResponse = { challenge: 'challenge' }
-    const starterServiceSpy = jest.spyOn(starterService, 'getAllChallenges').mockReturnValue(of(mockResponse))
+    component.sortBy = 'creation_date';
+    spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse));
 
-    component.getChallengesByPage(1)
+    component.getChallengesByPage(1);
+    expect(starterService.getAllChallenges).toHaveBeenCalled();
+    done()
+  })
+
+  it('should call getAllChallengesOffset when sortBy empty', (done) => {
+    
+    const mockResponse = { challenge: 'challenge' }
+    const starterServiceSpy = jest.spyOn(starterService, 'getAllChallengesOffset').mockReturnValue(of(mockResponse))
+    component.sortBy = '';
+
+    component.getChallengesByPage(1);
+    
     const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`)
     expect(req.request.method).toEqual('GET')
 
     expect(starterServiceSpy).toBeCalledWith(0, 8)
     expect(component.listChallenges).toBe(mockResponse)
     expect(component.totalPages).toEqual(3)
+    expect(starterService.getAllChallengesOffset).toHaveBeenCalled();
 
     req.flush(mockResponse)
+    httpClientMock.verify()
     done()
-  })
+  });
 
+  it('should set listChallenges correctly when sortBy is empty', () => {
+    const mockResponse = { challenge: 'challenge' }
+    spyOn(starterService, 'getAllChallengesOffset').and.returnValue(of(mockResponse));
+    component.sortBy = '';
+    component.getChallengesByPage(1);
+    expect(component.listChallenges).toBe(mockResponse);
+  });
+
+  it('should set listChallenges correctly when sortBy is not empty', () => {
+    const mockResponse = [{ 'challenge': 'challenge' }]
+    spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse));
+    spyOn(starterService, 'orderBySortAscending').and.returnValue(of(mockResponse));
+    component.sortBy = 'creation_date';
+    component.getChallengesByPage(1);
+    expect(component.listChallenges).toStrictEqual(mockResponse);
+  });
+
+  //changeSort
   it('should set isAscending to false and selectedSort equal to newSort', () => {
     const newSort = 'creation_date'
     const selectedSort = 'creation_date'
