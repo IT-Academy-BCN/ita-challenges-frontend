@@ -48,14 +48,12 @@ export class StarterComponent {
   getChallengesByPage (page: number): void {
     const getChallengeOffset = (8 * (page - 1))
     this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
-      .subscribe(resp => {
+      .subscribe( resp => {
         this.listChallenges = resp
         this.totalPages = Math.ceil(22 / this.pageSize)
         // TODO: change the list challenges and total pages when the changes come from the back end:
         // this.listChallenges = resp.results
         // this.totalPages = Math.ceil(resp.count/this.pageSize);
-        console.log("starter, listChallenges: ", this.listChallenges)
-
       })
   }
 
