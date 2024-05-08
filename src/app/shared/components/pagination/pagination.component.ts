@@ -19,7 +19,7 @@ export class PaginationComponent {
   }
 
   prev (): void {
-    if (this.pageNumber !== 1) {
+    if (this.pageNumber !== 1 && this.pageNumber > 0) {
       this.pageNumber--
       this.changePage()
     }

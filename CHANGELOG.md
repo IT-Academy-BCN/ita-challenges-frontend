@@ -1,7 +1,10 @@
 ## CHANGELOG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). 
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+ 
+### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293) 
+* Add order method for creation_date. Implement the formatDatePipe"
 
 ### [ita-challenges-frontend-2.10.3-RELEASE] - 2024-05-07
 * Changing URL ita-wiki
