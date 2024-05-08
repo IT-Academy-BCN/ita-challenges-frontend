@@ -53,6 +53,7 @@ describe('ChallengeInfoComponent', () => {
     expect(component).toBeTruthy()
   })
 
+<<<<<<< HEAD
   describe('ngOnInit', () => {
     it('should call loadRelatedChallenge with the provided related_id', async () => {
       const loadRelatedChallengeSpy = jest.spyOn(component, 'loadRelatedChallenge')
@@ -63,6 +64,18 @@ describe('ChallengeInfoComponent', () => {
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
     })
   })
+=======
+  // describe('ngOnInit', () => {
+  //   it('should call loadRelatedChallenge with the provided related_id', () => {
+  //     const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
+  //     component.related_id = '123'
+  //     component.ngOnInit()
+
+  //     expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
+  //     expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
+  //   })
+  // })
+>>>>>>> feature#215f
 
   it('should open send solution modal', () => {
     spyOn(modalService, 'open').and.stub()

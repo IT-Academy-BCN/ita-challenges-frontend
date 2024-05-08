@@ -9,8 +9,6 @@
 
     <app-challenge-info
         [details] = "details"
-        [related] = "related"
-        [resources] = "resources"
         [solutions] = "solutions"
         [description] = "description"
         [examples] = "examples"
@@ -18,6 +16,7 @@
         [popularity] = "popularity"
         [languages] = "languages"
         [activeId]= "activeId" 
-        (activeIdChange)="onActiveIdChange($event)">
+        (activeIdChange)="onActiveIdChange($event)"
+        [idChallenge] = "idChallenge"
 >   </app-challenge-info>
 </div>
