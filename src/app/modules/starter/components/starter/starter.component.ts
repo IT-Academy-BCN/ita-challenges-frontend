@@ -49,32 +49,31 @@ export class StarterComponent {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage(page: number): void {
-    const getChallengeOffset = 8 * (page - 1);
-    this.pageNumber = page;
-  
-    const challengesObservable = this.sortBy !== '' ?
-      this.starterService.getAllChallenges() :
-      this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize);
-  
+  getChallengesByPage (page: number): void {
+    const getChallengeOffset = 8 * (page - 1)
+    this.pageNumber = page
+
+    const challengesObservable = this.sortBy !== ''
+      ? this.starterService.getAllChallenges()
+      : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+
     this.challengesSubs$ = challengesObservable.subscribe(resp => {
       if (this.sortBy !== '') {
-        const respArray: any[] = Array.isArray(resp) ? resp : [resp];
-        const sortedChallenges$ = this.isAscending ?
-          this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize) :
-          this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize);
-  
+        const respArray: any[] = Array.isArray(resp) ? resp : [resp]
+        const sortedChallenges$ = this.isAscending
+          ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+          : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+
         sortedChallenges$.subscribe(sortedResp => {
-          this.listChallenges = sortedResp;
-          this.totalPages = Math.ceil(respArray.length / this.pageSize);
-        });
+          this.listChallenges = sortedResp
+          this.totalPages = Math.ceil(respArray.length / this.pageSize)
+        })
       } else {
-        this.listChallenges = resp;
-        this.totalPages = Math.ceil(22 / this.pageSize); // Cambiar 22 por el valor de challenge.count
+        this.listChallenges = resp
+        this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
       }
-    });
+    })
   }
-  
 
   openModal (): void {
     this.modalContent.open()
