@@ -6,7 +6,6 @@ import {
   Output,
   ViewChild,
   inject,
-  OnInit
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -28,7 +27,7 @@ import { RelatedService } from '../../../../services/related.service'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements OnInit {
+export class ChallengeInfoComponent implements AfterContentChecked {
   isUserSolution: boolean = true
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
