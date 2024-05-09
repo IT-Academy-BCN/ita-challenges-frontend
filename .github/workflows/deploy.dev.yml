@@ -1,9 +1,10 @@
 name: Upload Image to Docker Hub & Deploy to Dev
 
 on:
-  #push:
-    #branches:
+  push:
+    branches:
       #- develop
+      - feature#ssl_cert
   pull_request:
     types:
       - closed
