@@ -80,7 +80,6 @@ export class StarterComponent {
   }
 
   getChallengeFilters(filters: FilterChallenge): void {
-    console.log(filters)
     const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
@@ -95,7 +94,6 @@ export class StarterComponent {
 
       if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
         const respArray: any[] = Array.isArray(resp) ? resp : [resp]
-        console.log(respArray);
         this.starterService.getAllChallengesFiltered(this.filters, respArray, getChallengeOffset, this.pageSize)
           .subscribe(filteredResp => {
             this.listChallenges = filteredResp

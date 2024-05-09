@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/co
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { ChallengeService } from 'src/app/services/challenge.service'
+import { Language } from 'src/app/models/language.model'
 
 @Component({
   selector: 'app-starter-filters',
@@ -13,10 +15,14 @@ export class StarterFiltersComponent {
 
   filtersForm
 
+  public languages: { [key: string]: string } = {};
+
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
+  private readonly challengeService = inject(ChallengeService)
 
-  constructor () {
+  constructor() {
+
     this.filtersForm = this.fb.nonNullable.group({
       languages: this.fb.nonNullable.group({
         javascript: false,
@@ -36,14 +42,26 @@ export class StarterFiltersComponent {
       })
     })
 
+    this.challengeService.getAllLanguages().subscribe((res: any) => {
+      if (res.results) {
+        res.results.forEach((result: any) => {
+          this.languages[result.language_name.toLowerCase()] = result.id_language;
+        });
+      }
+    });
+
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
       const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
       if (formValue.languages !== null && formValue.languages !== undefined) {
-        Object.values(formValue.languages).forEach((val, i) => {
-          if (val) { filters.languages.push((i + 1).toString()) }
-        })
+        Object.entries(formValue.languages).forEach(([key, val]) => {
+          if (val) {
+            const idLanguage = this.languages[key];
+            if (idLanguage) {
+              filters.languages.push(idLanguage);
+            }
+          }
+        });
       }
-
       if (formValue.levels !== null && formValue.levels !== undefined) {
         Object.entries(formValue.levels).forEach(([key, val]) => {
           if (val) { filters.levels.push(key) }
@@ -59,3 +77,4 @@ export class StarterFiltersComponent {
     })
   }
 }
+
