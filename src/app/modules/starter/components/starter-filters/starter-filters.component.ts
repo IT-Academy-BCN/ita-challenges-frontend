@@ -40,7 +40,7 @@ export class StarterFiltersComponent {
       const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
       if (formValue.languages !== null && formValue.languages !== undefined) {
         Object.values(formValue.languages).forEach((val, i) => {
-          if (val) { filters.languages.push(i + 1) }
+          if (val) { filters.languages.push((i + 1).toString()) }
         })
       }
 

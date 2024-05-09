@@ -31,7 +31,7 @@ export class StarterComponent {
   selectedSort: string = ''
   isAscending: boolean = false
 
-  constructor (
+  constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
@@ -40,16 +40,16 @@ export class StarterComponent {
     }) */
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getChallengesByPage(this.pageNumber)
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage (page: number): void {
+  getChallengesByPage(page: number): void {
     const getChallengeOffset = 8 * (page - 1)
     this.pageNumber = page
 
@@ -75,16 +75,40 @@ export class StarterComponent {
     })
   }
 
-  openModal (): void {
+  openModal(): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters (filters: FilterChallenge): void {
+  getChallengeFilters(filters: FilterChallenge): void {
+    console.log(filters)
+    const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
-    // TODO: llamar al endpoint
+    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
+      this.listChallenges = resp
+    })
+
+    const challengesObservable = this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0
+      ? this.starterService.getAllChallenges()
+      : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+
+    this.challengesSubs$ = challengesObservable.subscribe(resp => {
+
+      if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+        const respArray: any[] = Array.isArray(resp) ? resp : [resp]
+        console.log(respArray);
+        this.starterService.getAllChallengesFiltered(this.filters, respArray, getChallengeOffset, this.pageSize)
+          .subscribe(filteredResp => {
+            this.listChallenges = filteredResp
+            this.totalPages = Math.ceil(respArray.length / this.pageSize)
+          })
+      } else {
+        this.listChallenges = resp
+        this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+      }
+    })
   }
 
-  changeSort (newSort: string): void {
+  changeSort(newSort: string): void {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
