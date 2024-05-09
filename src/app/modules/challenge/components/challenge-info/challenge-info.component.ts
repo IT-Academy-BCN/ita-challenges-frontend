@@ -5,7 +5,7 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'

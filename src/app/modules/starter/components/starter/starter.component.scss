@@ -2,39 +2,49 @@
 @import "/src/styles/buttons";
 @import "/src/styles/fonts";
 
-h2{
+h2 {
     margin-bottom: 3rem;
 }
-img[alt="filter-icon"]{
+
+img[alt="filter-icon"] {
     cursor: pointer;
 }
-ul{
+
+ul {
     list-style: none;
-    li{
+
+    li {
         display: flex;
         font-weight: 700;
         color: $gray-3;
         gap: 2px;
         cursor: pointer;
-        &::after{
+
+        &::after {
             content: "";
             display: block;
             width: 17px;
             height: 17px;
-            background-image: url('../../../../../assets/img/icon/sort-selected.svg');
+            background-image: url('/assets/img/icon/sort-selected.svg');
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0;
-            
         }
-        &.selected{
+
+        &.selected {
             color: $black-1;
             font-weight: 700;
-            &::after{
+
+            &::after {
                 opacity: 1;
             }
+
+            &.up::after {
+                transform: rotate(180deg);
+            }
         }
-        &:not(.selected):hover{
+
+        &:not(.selected):hover {
             color: $primary
         }
     }
@@ -47,5 +57,5 @@ ul{
         margin-bottom: 1rem;
         margin-top: 0.5rem;
     }
-   
+
 }

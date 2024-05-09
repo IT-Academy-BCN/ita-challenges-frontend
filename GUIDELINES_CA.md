@@ -280,6 +280,5 @@ Quan finalitzis el desenvolupament de la feature corresponent (assegura't que la
 - Actualitza també el número de versió de la propietat MICROSERVICE_VERSION en l'arxiu .env.CI.dev. Tingues en compte que has de deixar una línia en blanc al final de l'arxiu.
 - Assegura't que ambdues versions coincideixen.
 - Introdueix les anotacions necessàries en l'arxiu CHANGELOG.md. No oblidis posar el número de issue del que forma part la nova versió.
-- Realitza un commit amb el missatge "X.X.X-RELEASE (on X.X.X és la nova versió).
 - Realitza el push de la branch a què pertany la feature.
 - Realitza la PR corresponent.

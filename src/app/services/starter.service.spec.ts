@@ -49,12 +49,63 @@ describe('StarterService', () => {
    */
 
 
-  it('Should stream all challenges', () => {
+  it('Should stream all challenges', (done) => {
     let mockResponse: Object = { challenge: 'challenge' }
-    service.getAllChallenges(0, 8).subscribe();
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`);
+    service.getAllChallenges().subscribe();
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`);
     expect(req.request.method).toEqual("GET");
     req.flush(mockResponse);
+    done()
+  });
+
+  it('should make GET request with correct parameters', () => {
+    const mockResponse = { challenge: 'challenge' };
+    const pageOffset = 0;
+    const pageLimit = 8;
+
+    service.getAllChallengesOffset(pageOffset, pageLimit).subscribe(response => {
+      expect(response).toEqual(mockResponse);
+    });
+
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockResponse);
+  });
+
+  it('should sort challenges by creation date in asscending order', () => {
+    const mockChallenges = [
+      { id: 1, creation_date: '2022-05-10' },
+      { id: 2, creation_date: '2022-05-08' },
+      { id: 3, creation_date: '2022-05-09' }
+    ];
+    const offset = 0;
+    const limit = 3;
+
+    const sortedChallengesObservable = service.orderBySortAscending('creation_date', mockChallenges, offset, limit);
+
+    sortedChallengesObservable.subscribe((sortedChallenges: any) => {
+      expect(sortedChallenges[0].creation_date).toBe('2022-05-08');
+      expect(sortedChallenges[1].creation_date).toBe('2022-05-09');
+      expect(sortedChallenges[2].creation_date).toBe('2022-05-10');
+    });
+  });
+
+  it('should sort challenges by creation date in descending order', () => {
+    const mockChallenges = [
+      { id: 1, creation_date: '2022-05-10' },
+      { id: 2, creation_date: '2022-05-08' },
+      { id: 3, creation_date: '2022-05-09' }
+    ];
+    const offset = 0;
+    const limit = 3;
+
+    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', mockChallenges, offset, limit);
+
+    sortedChallengesObservable.subscribe((sortedChallenges: any) => {
+      expect(sortedChallenges[2].creation_date).toBe('2022-05-10');
+      expect(sortedChallenges[1].creation_date).toBe('2022-05-09');
+      expect(sortedChallenges[0].creation_date).toBe('2022-05-08');
+    });
   });
 
 
@@ -64,11 +115,10 @@ describe('StarterService', () => {
 
       const expectedMarble = '---(a|)';
       const expectedValues = { a: data };
-      const obs$ = service.getAllChallenges(1, 10).pipe(delay(3));
+      const obs$ = service.getAllChallenges().pipe(delay(3));
 
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
     });
-
   });
 
 });

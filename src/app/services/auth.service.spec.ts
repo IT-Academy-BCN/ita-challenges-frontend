@@ -497,4 +497,31 @@ describe("AuthService", () => {
 
   }));
 
+  it('should return true if authToken is valid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('validAuthToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(true);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(true);
+  });
+
+  it('should return true if authToken is invalid but refreshToken is valid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('invalidAuthToken').mockReturnValueOnce('validRefreshToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(true);
+  });
+
+  it('should return false if both authToken and refreshToken are invalid', async () => {
+    cookieServiceMock.get.mockReturnValueOnce('invalidAuthToken').mockReturnValueOnce('invalidRefreshToken');
+    authService.checkToken = jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(false);
+
+    const result = await authService.isUserLoggedIn();
+
+    expect(result).toBe(false);
+  });
+
 });

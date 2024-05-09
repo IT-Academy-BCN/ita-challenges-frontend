@@ -46,7 +46,6 @@ describe('ChallengeInfoComponent', () => {
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
     // challengeService = TestBed.inject(ChallengeService)
-    modalService = TestBed.inject(NgbModal)
     fixture.detectChanges()
   })
 
@@ -54,6 +53,18 @@ describe('ChallengeInfoComponent', () => {
     expect(component).toBeTruthy()
   })
 
+<<<<<<< HEAD
+  describe('ngOnInit', () => {
+    it('should call loadRelatedChallenge with the provided related_id', async () => {
+      const loadRelatedChallengeSpy = jest.spyOn(component, 'loadRelatedChallenge')
+      component.related_id = '123'
+      await component.ngOnInit()
+
+      expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
+      expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
+    })
+  })
+=======
   // describe('ngOnInit', () => {
   //   it('should call loadRelatedChallenge with the provided related_id', () => {
   //     const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
@@ -64,57 +75,31 @@ describe('ChallengeInfoComponent', () => {
   //     expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
   //   })
   // })
+>>>>>>> feature#215f
 
-  describe('ngAfterContentChecked', () => {
-    beforeEach(() => {
-      // Configurar valores fijos en localStorage
-      localStorage.setItem('authToken', 'mock-token')
-      localStorage.setItem('refreshToken', 'mock-token')
-    })
+  it('should open send solution modal', () => {
+    spyOn(modalService, 'open').and.stub()
+    component.openSendSolutionModal()
 
-    afterEach(() => {
-      // Limpiar localStorage después de las pruebas
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-    })
+    expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
+  })
 
-    it('should set isLogged to true when tokens are present', () => {
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBeTruthy()
-    })
+  it('should open restricted modal if user is not logged in', () => {
+    spyOn(modalService, 'open').and.stub()
+    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+    component.clickSendButton()
 
-    it('should set isLogged to false when tokens are not present', () => {
-      // Limpiar tokens para esta prueba
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBeFalsy()
-    })
+    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
+  })
 
-    it('should open send solution modal', () => {
-      spyOn(modalService, 'open').and.stub()
-      component.openSendSolutionModal()
+  it('should onActiveIdchange correctly', () => {
+    const newActiveId = 2
+    const activeId = 1
 
-      expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
-    })
+    component.onActiveIdChange(newActiveId)
 
-    it('should open restricted modal if user is not logged in', () => {
-      spyOn(modalService, 'open').and.stub()
-      component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
-      component.clickSendButton()
-
-      expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
-    })
-
-    it('should onActiveIdchange correctly', () => {
-      const newActiveId = 2
-      const activeId = 1
-
-      component.onActiveIdChange(newActiveId)
-
-      expect(component.activeIdChange).toBeTruthy()
-      component.activeIdChange.emit(activeId)
-      expect(component.activeId).toBe(newActiveId)
-    })
+    expect(component.activeIdChange).toBeTruthy()
+    component.activeIdChange.emit(activeId)
+    expect(component.activeId).toBe(newActiveId)
   })
 })
