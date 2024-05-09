@@ -301,6 +301,5 @@ All features developed are deployed on the develop server for testing when are a
 - Follow semantic versioning (https://semver.org/), and update version number in package.json.
 - Update version number (property MICROSERVICE_VERSION) at file .env.CI.dev as well. Make sure both versions are the same. There should be a white line at the end of the file.
 - Make necesary annotations at file CHANGELOG.md 
-- Make commit with message "X.X.X-RELEASE" (X.X.X is the new version) onto your feature branch.
 - Push your changes to the remote repository.
 - Create a pull request from your feature branch to the develop branch.
