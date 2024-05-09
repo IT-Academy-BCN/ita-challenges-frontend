@@ -27,6 +27,5 @@ export class Challenge {
     element.solutions.forEach((solution: Solution) => {
       this.solutions.push(solution)
     })
-
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { type Observable } from 'rxjs'
 import { type Challenges } from '../models/challenges.interface'
 import { HttpClient } from '@angular/common/http'
@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment'
   providedIn: 'root'
 })
 export class RelatedService {
-  constructor (private readonly http: HttpClient) {}
+  constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
 
   getRelatedChallenges (challengeId: string): Observable<Challenges> {
     return this.http.get<Challenges>(
@@ -21,6 +21,3 @@ export class RelatedService {
     )
   }
 }
-
-
-
