@@ -28,16 +28,5 @@ export class Challenge {
       this.solutions.push(solution)
     })
 
-    // if (element.languages) {
-    //   element.languages.forEach((language: Language) => {
-    //     this.languages.push(language)
-    //   })
-    // }
-
-    // if (element.solutions) {
-    //   element.solutions.forEach((solution: Solution) => {
-    //     this.solutions.push(solution)
-    //   })
-    // }
   }
 }
