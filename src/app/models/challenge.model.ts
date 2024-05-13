@@ -8,7 +8,7 @@ export class Challenge {
   level: string
   creation_date: Date
   popularity: number
-  details: ChallengeDetails
+  detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
 
@@ -18,7 +18,7 @@ export class Challenge {
     this.level = element.level
     this.creation_date = element.creation_date
     this.popularity = element.popularity
-    this.details = element.details
+    this.detail = element.detail
 
     element.languages.forEach((language: Language) => {
       this.languages.push(language)

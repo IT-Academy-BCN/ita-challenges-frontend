@@ -24,7 +24,7 @@ export class ChallengeComponent {
   title: string = ''
   creation_date!: Date
   level = ''
-  details!: ChallengeDetails
+  detail!: ChallengeDetails
   related: string[] = []
   resources: Resource[] = []
   solutions: Solution[] = []
@@ -65,20 +65,20 @@ export class ChallengeComponent {
 
   loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
+      console.log('challenge.ts, loadMasterData(1), challenge: ', this.challenge)
+      console.log('challenge.ts, loadMasterData(2), idChallenge: ', this.idChallenge)
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
       this.level = this.challenge.level
-      this.details = this.challenge.details
+      this.detail = this.challenge.detail
       this.solutions = this.challenge.solutions
-      this.description = this.challenge.details.description
-      this.examples = this.challenge.details.examples
-      this.notes = this.challenge.details.notes
+      this.description = this.challenge.detail.description
+      this.examples = this.challenge.detail.examples
+      this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
-      console.log('challenge.ts, loadMasterData(), challenge: ', this.challenge)
-      console.log('challenge.ts, loadMasterData(), idChallenge: ', this.idChallenge)
-      console.log('challenge.ts, loadMasterData(), related: ', this.related)
+      console.log('challenge.ts, loadMasterData(3), details: ', this.detail)
     })
   }
 }

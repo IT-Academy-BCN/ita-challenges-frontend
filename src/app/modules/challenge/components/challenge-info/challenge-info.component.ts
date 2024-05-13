@@ -37,7 +37,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   @ViewChild('nav') nav!: NgbNav
 
-  @Input() details!: ChallengeDetails
+  @Input() detail!: ChallengeDetails
   @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
