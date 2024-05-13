@@ -11,6 +11,7 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
@@ -32,7 +33,8 @@ describe('ChallengeInfoComponent', () => {
         HttpClientTestingModule,
         I18nModule,
         FormsModule,
-        NgbNavModule
+        NgbNavModule,
+        DynamicTranslatePipe,
       ],
       providers: [
         // ChallengeService,
