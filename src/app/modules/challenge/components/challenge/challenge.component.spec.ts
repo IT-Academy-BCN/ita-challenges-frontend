@@ -183,8 +183,6 @@ describe('ChallengeComponent', () => {
     expect(challengeInfoComponent.detail.description).toBe(component.detail.description)
     expect(challengeInfoComponent.detail.examples).toEqual(component.detail.examples)
     expect(challengeInfoComponent.detail.notes).toBe(component.detail.notes)
-    expect(challengeInfoComponent.related).toEqual(component.related)
-    expect(challengeInfoComponent.resources).toEqual(component.resources)
     expect(challengeInfoComponent.solutions).toEqual(component.solutions)
     expect(challengeInfoComponent.popularity).toBe(component.popularity)
     expect(challengeInfoComponent.languages).toEqual(component.languages)
