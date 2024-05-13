@@ -41,7 +41,7 @@ describe('ChallengeComponent', () => {
         I18nModule,
         NgbNavModule,
         FormsModule,
-        DynamicTranslatePipe,
+        DynamicTranslatePipe
       ],
       providers: [
         {

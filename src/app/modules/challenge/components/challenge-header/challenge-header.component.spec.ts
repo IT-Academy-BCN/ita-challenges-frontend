@@ -24,7 +24,7 @@ describe('ChallengeHeaderComponent', () => {
         I18nModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        DynamicTranslatePipe,
+        DynamicTranslatePipe
       ],
       providers: [
         NgbModal,
