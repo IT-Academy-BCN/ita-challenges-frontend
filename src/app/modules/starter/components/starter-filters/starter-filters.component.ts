@@ -56,6 +56,8 @@ export class StarterFiltersComponent {
         Object.entries(formValue.languages).forEach(([key, val]) => {
           if (val) {
             const idLanguage = this.languages[key];
+            console.log(idLanguage)
+
             if (idLanguage) {
               filters.languages.push(idLanguage);
             }
@@ -64,7 +66,7 @@ export class StarterFiltersComponent {
       }
       if (formValue.levels !== null && formValue.levels !== undefined) {
         Object.entries(formValue.levels).forEach(([key, val]) => {
-          if (val) { filters.levels.push(key) }
+          if (val) { filters.levels.push(key.toLocaleUpperCase()) }
         })
       }
 

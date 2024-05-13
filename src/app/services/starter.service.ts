@@ -73,13 +73,16 @@ export class StarterService {
     });
   }
 
-  getAllChallengesFiltered(filters: FilterChallenge, resp: any[], pageOffset: number, pageLimit: number): Observable<Object> {
+  getAllChallengesFiltered(filters: FilterChallenge, respArray: any[], pageOffset: number, pageLimit: number): Observable<Object> {
     return new Observable<Object>((observer) => {
-      const filteredChallenges: Challenge[] = resp.filter(challenge => {
+      console.log('resptArray', respArray)
+      console.log('filters', filters)
+      const filteredChallenges: Challenge[] = respArray.filter(challenge => {
+        
         // languages filter
         if (filters.languages.length > 0) {
           const challengeLanguages = challenge.languages.map((language: {id_language: string}) => language.id_language);
-          if (!filters.languages.every(language => challengeLanguages.includes(language))) {
+          if (!filters.languages.some(language => challengeLanguages.includes(language))) {
             return false; // any lenguage
           }
         }

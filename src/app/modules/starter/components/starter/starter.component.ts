@@ -1,6 +1,6 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
 import { Component, Inject, ViewChild } from '@angular/core'
-import { type Subscription } from 'rxjs'
+import { filter, type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
@@ -85,14 +85,15 @@ export class StarterComponent {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
       this.listChallenges = resp
     })
+    console.log('lenght', this.filters.languages.length)
 
-    const challengesObservable = this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0
+    const challengesObservable = this.filters.languages.length > 0 && this.filters.languages.length < 3 || this.filters.levels.length > 0 && this.filters.levels.length < this.filters.levels.length - 1 || this.filters.progress.length > 0 && this.filters.progress.length < this.filters.progress.length - 1
       ? this.starterService.getAllChallenges()
       : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
 
     this.challengesSubs$ = challengesObservable.subscribe(resp => {
 
-      if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+      if (this.filters.languages.length > 0 && this.filters.languages.length < 4 || this.filters.levels.length > 0 && this.filters.levels.length < 3 || this.filters.progress.length > 0 && this.filters.progress.length < 3) {
         const respArray: any[] = Array.isArray(resp) ? resp : [resp]
         this.starterService.getAllChallengesFiltered(this.filters, respArray, getChallengeOffset, this.pageSize)
           .subscribe(filteredResp => {
@@ -100,6 +101,7 @@ export class StarterComponent {
             this.totalPages = Math.ceil(respArray.length / this.pageSize)
           })
       } else {
+        console.log('llegoo')
         this.listChallenges = resp
         this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
       }
