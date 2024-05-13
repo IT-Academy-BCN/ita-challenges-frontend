@@ -45,13 +45,11 @@ export class ChallengeComponent {
     })
   }
 
-
   ngOnInit (): void {
     console.log('1 challenge.ts, ngOnInit, idChallenge: ', this.idChallenge)
     this.loadMasterData(this.idChallenge)
     console.log('2 challenge.ts, ngOnInit, idChallenge: ', this.idChallenge)
     console.log('3 title: ', this.title)
-
   }
 
   ngOnDestroy (): void {

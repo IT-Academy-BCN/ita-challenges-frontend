@@ -27,11 +27,11 @@
             <h3 class="mt-0">
               {{ "modules.challenge.info.description" | translate }}
             </h3>
-            <p>{{ description }}</p>
+            <p>{{ description | dynamicTranslate }}</p>
             <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
-            <p *ngFor="let example of examples">{{ example.example_text }}</p>
+            <p *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</p>
             <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
-            <p>{{ notes }}</p>
+            <p>{{ notes | dynamicTranslate }}</p>
           </div>
           <!-- only if user logeed in -->
           <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
