@@ -1,3 +1,4 @@
+
 import { Inject, Injectable } from '@angular/core'
 import { type Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
@@ -14,7 +15,7 @@ export class ChallengeService {
   getChallengeById (id: string): Observable<Challenge> {
     console.log('challenge.service.ts, getChallengeById, id: ', id)
     return this.http.get<Challenge>(
-      `/itachallenge/api/v1/challenge/challenge/${id}`,
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
       {
         headers: {
           'Content-Type': 'application/json'
