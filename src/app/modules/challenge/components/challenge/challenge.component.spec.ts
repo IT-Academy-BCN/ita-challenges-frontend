@@ -14,6 +14,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
 import { AuthService } from 'src/app/services/auth.service'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
@@ -39,7 +40,8 @@ describe('ChallengeComponent', () => {
         SharedComponentsModule,
         I18nModule,
         NgbNavModule,
-        FormsModule
+        FormsModule,
+        DynamicTranslatePipe,
       ],
       providers: [
         {
