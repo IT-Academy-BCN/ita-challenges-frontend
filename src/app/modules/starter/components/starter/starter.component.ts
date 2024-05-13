@@ -10,7 +10,8 @@ import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
-  styleUrls: ['./starter.component.scss']
+  styleUrls: ['./starter.component.scss'],
+  providers: []
 })
 export class StarterComponent {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
@@ -19,13 +20,16 @@ export class StarterComponent {
   params$!: Subscription
   challengesSubs$!: Subscription
   filters!: FilterChallenge
-  sortBy: string = 'popularity'
+  sortBy: string = ''
   challenge = Challenge
 
   totalPages!: number
   pageNumber: number = 1
   listChallenges: any
   pageSize = environment.pageSize
+
+  selectedSort: string = ''
+  isAscending: boolean = false
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -37,7 +41,7 @@ export class StarterComponent {
   }
 
   ngOnInit (): void {
-    this.getChallengesByPage(1)
+    this.getChallengesByPage(this.pageNumber)
   }
 
   ngOnDestroy (): void {
@@ -46,15 +50,29 @@ export class StarterComponent {
   }
 
   getChallengesByPage (page: number): void {
-    const getChallengeOffset = (8 * (page - 1))
-    this.challengesSubs$ = this.starterService.getAllChallenges(getChallengeOffset, this.pageSize)
-      .subscribe(resp => {
+    const getChallengeOffset = 8 * (page - 1)
+    this.pageNumber = page
+
+    const challengesObservable = this.sortBy !== ''
+      ? this.starterService.getAllChallenges()
+      : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+
+    this.challengesSubs$ = challengesObservable.subscribe(resp => {
+      if (this.sortBy !== '') {
+        const respArray: any[] = Array.isArray(resp) ? resp : [resp]
+        const sortedChallenges$ = this.isAscending
+          ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+          : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+
+        sortedChallenges$.subscribe(sortedResp => {
+          this.listChallenges = sortedResp
+          this.totalPages = Math.ceil(respArray.length / this.pageSize)
+        })
+      } else {
         this.listChallenges = resp
-        this.totalPages = Math.ceil(22 / this.pageSize)
-        // TODO: change the list challenges and total pages when the changes come from the back end:
-        // this.listChallenges = resp.results
-        // this.totalPages = Math.ceil(resp.count/this.pageSize);
-      })
+        this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+      }
+    })
   }
 
   openModal (): void {
@@ -67,9 +85,17 @@ export class StarterComponent {
   }
 
   changeSort (newSort: string): void {
-    if (newSort !== this.sortBy) {
-      this.sortBy = newSort
-      // TODO: llamar al endpoint
+    this.sortBy = newSort
+    if (newSort === 'popularity' || newSort === 'creation_date') {
+      if (this.selectedSort === newSort) {
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = !this.isAscending
+      } else {
+        this.isAscending = false
+        this.selectedSort = newSort
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = true
+      }
     }
   }
 }

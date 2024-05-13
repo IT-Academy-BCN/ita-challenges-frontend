@@ -42,8 +42,8 @@ describe('ResourceCardComponent', () => {
       resourceType: 'BLOG',
       userId: 'string',
       categoryId: 'clocr0bi20000h8vwipfbazso',
-      createdAt: 'Mar 25, 2023',
-      updatedAt: 'Mar 25, 2023',
+      createdAt: '2023-11-28T15:24:13.961Z',
+      updatedAt: '2023-11-28T15:24:13.961Z',
       user: {
         name: 'Ana Pérez'
       },
@@ -71,9 +71,6 @@ describe('ResourceCardComponent', () => {
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
 
     component.ngOnInit()
-
-    fixture.detectChanges()
-
     await fixture.whenStable().then(() => {
       expect(component.resources).toEqual(responseMock)
     }).catch()

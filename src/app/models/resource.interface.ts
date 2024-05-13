@@ -7,7 +7,7 @@ export interface ResourceResponse {
   resourceType: string
   userId: string
   categoryId: string
-  createdAt: string
+  createdAt: Date
   updatedAt: string
   user: User
   topics: TopicElement[]
