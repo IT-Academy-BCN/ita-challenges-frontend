@@ -71,7 +71,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value
     })
-    console.log('challenge-info, idChallenge: ', this.idChallenge)
   }
 
   ngAfterContentChecked (): void {

@@ -41,15 +41,11 @@ export class ChallengeComponent {
   constructor () {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
-      console.log('challenge.ts, constructor, idChallenge: ', this.idChallenge)
     })
   }
 
   ngOnInit (): void {
-    console.log('1 challenge.ts, ngOnInit, idChallenge: ', this.idChallenge)
     this.loadMasterData(this.idChallenge)
-    console.log('2 challenge.ts, ngOnInit, idChallenge: ', this.idChallenge)
-    console.log('3 title: ', this.title)
   }
 
   ngOnDestroy (): void {
@@ -63,8 +59,6 @@ export class ChallengeComponent {
 
   loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      console.log('challenge.ts, loadMasterData(1), challenge: ', this.challenge)
-      console.log('challenge.ts, loadMasterData(2), idChallenge: ', this.idChallenge)
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
@@ -76,7 +70,6 @@ export class ChallengeComponent {
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
-      console.log('challenge.ts, loadMasterData(3), details: ', this.detail)
     })
   }
 }
