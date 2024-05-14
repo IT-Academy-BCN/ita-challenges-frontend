@@ -19,7 +19,8 @@ import { fakeAsync } from '@angular/core/testing';
 import { BlobOptions } from "buffer";
 import { TokenService } from "./token.service";
 import { error } from "console";
-import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
+
+// import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 
 interface loginResponse {
@@ -48,8 +49,8 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private cookieService: CookieService,
-              private tokenService: TokenService,
-              private helper: CookieEncryptionHelper) {
+              private tokenService: TokenService){
+              // private helper: CookieEncryptionHelper) {
 
     // Verificar si la cookie 'user' está definida
     const userCookie = this.cookieService.get('user');
@@ -222,31 +223,16 @@ export class AuthService {
   public async isUserLoggedIn() { 
     let isUserLoggedIn: boolean = false;
     let authToken = this.cookieService.get('authToken');
-    let authTokenValid = await this.checkToken(authToken);
+    let authTokenValid = await this.tokenService.checkToken(authToken);
       if (authTokenValid) {
        	isUserLoggedIn = true;
       } else {
         let refreshToken = this.cookieService.get('refreshToken');
-        isUserLoggedIn = await this.checkToken(refreshToken);
+        isUserLoggedIn = await this.tokenService.checkToken(refreshToken);
       }
     return isUserLoggedIn;
   }
 
-  /* return if token valid */ //TODO: está hardcodeado...
-  async checkToken(token: string): Promise<boolean> {
-    let isValid: boolean = true;
-    return isValid;
-  }
-
-  // Check if the token is expired
-  public isTokenExpired(token: string): boolean {
-    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
-    return Math.floor(new Date().getTime() / 1000) >= expiry;
-  }
-  /* See if token is valid */
-  public isTokenValid(token: string): boolean { //todo: Promise<boolean>
-    return true;
-  }
 }
 
 

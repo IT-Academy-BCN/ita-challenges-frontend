@@ -2,36 +2,23 @@ import { Injectable, inject } from '@angular/core'
 import { type HttpRequest, type HttpHandler, type HttpEvent, type HttpInterceptor } from '@angular/common/http'
 import { type Observable } from 'rxjs'
 import { TokenService } from '../services/token.service'
-
-// const AUTHORIZATION = environment.AUTHORIZATION
-// const BEARER = environment.BEARER
-// const TOKEN = environment.BACKEND_TOKEN
+import { environment } from 'src/environments/environment'
+import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtInterceptor implements HttpInterceptor {
   private readonly tokenService = inject(TokenService)
+  private readonly cookieService = inject(CookieService)
 
   intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const token = this.authService.getToken();
-
-    /*    let authService = this.injector.get(AuthService);
-
-    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL);
-
-      const token = authService.getToken();
-
-      if (isApiUrl && token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        },
-        withCredentials: true // cookies allowed
-      });
-    } */
+    const token = this.tokenService.authToken
+    const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL)
+    if (isApiUrl && token !== '') {
+      console.log('')
+    }
 
     return next.handle(request)
   }
 }
-// export const interceptorProvider = [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}];
