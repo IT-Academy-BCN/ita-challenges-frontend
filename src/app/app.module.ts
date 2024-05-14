@@ -13,7 +13,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
-import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
+
+// TODO - pending execution over secure environment
+// import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
 export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
@@ -44,8 +46,8 @@ export function HttpLoaderFactory (http: HttpClient): any {
     })
   ],
   providers: [
-    AuthService,
-    CookieEncryptionHelper
+    AuthService
+    // CookieEncryptionHelper
   ],
   bootstrap: [AppComponent]
 })
