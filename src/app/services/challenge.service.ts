@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
-import { Language } from '../models/language.model'
+import { type Language } from '../models/language.model'
 // import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -43,14 +43,13 @@ export class ChallengeService {
     )
   }
 
-  getAllLanguages(): Observable<Language> {
+  getAllLanguages (): Observable<Language> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
     return this.http.get<Language>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`,
       {
         headers
-      });
+      })
   }
-
 }
