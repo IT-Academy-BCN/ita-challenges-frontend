@@ -15,7 +15,8 @@ import {tap} from "rxjs/operators";
 import {User} from "../models/user.model";
 import {TokenService} from "./token.service";
 import { resolve } from "path";
-import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
+
+// import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -24,7 +25,7 @@ describe("AuthService", () => {
 	let httpClient: HttpClient;
 	let httpClientMock: HttpTestingController;
 	let tokenServiceMock: TokenService;
-	let helperMock: CookieEncryptionHelper;
+	// let helperMock: CookieEncryptionHelper;
 
   beforeEach(() => {
 
@@ -56,7 +57,8 @@ describe("AuthService", () => {
       value: cookieServiceMock,
     });
 
-		authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock, helperMock);
+		// authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock, helperMock);
+        authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock);
 	});
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
