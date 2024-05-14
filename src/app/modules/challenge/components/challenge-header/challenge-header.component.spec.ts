@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component'
 import { AuthService } from 'src/app/services/auth.service'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent
@@ -22,7 +23,8 @@ describe('ChallengeHeaderComponent', () => {
       imports: [
         I18nModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        DynamicTranslatePipe
       ],
       providers: [
         NgbModal,

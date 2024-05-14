@@ -11,6 +11,7 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
@@ -32,7 +33,8 @@ describe('ChallengeInfoComponent', () => {
         HttpClientTestingModule,
         I18nModule,
         FormsModule,
-        NgbNavModule
+        NgbNavModule,
+        DynamicTranslatePipe
       ],
       providers: [
         // ChallengeService,
@@ -54,10 +56,10 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided related_id', async () => {
-      const loadRelatedChallengeSpy = jest.spyOn(component, 'loadRelatedChallenge')
-      component.related_id = '123'
-      await component.ngOnInit()
+    it('should call loadRelatedChallenge with the provided idChallenge', () => {
+      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
+      component.idChallenge = '123'
+      component.ngOnInit()
 
       expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')

@@ -1,16 +1,25 @@
-import { Component, Input, ViewChild, inject, Output, EventEmitter, type OnInit } from '@angular/core'
+import {
+  type AfterContentChecked,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  inject
+} from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { type Subscription } from 'rxjs'
-import { type DataChallenge } from '../../../../models/data-challenge.model'
-import { Challenge } from '../../../../models/challenge.model'
+import { DataChallenge } from '../../../../models/data-challenge.model'
+import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+import { RelatedService } from '../../../../services/related.service'
 
 @Component({
   selector: 'app-challenge-info',
@@ -18,18 +27,17 @@ import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-moda
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements OnInit {
+export class ChallengeInfoComponent implements AfterContentChecked {
   isUserSolution: boolean = true
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
+  private readonly relatedService = inject(RelatedService)
 
   @ViewChild('nav') nav!: NgbNav
 
-  @Input() related: any = []
-  @Input() resources: any = []
-  @Input() details!: ChallengeDetails
+  @Input() detail!: ChallengeDetails
   @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
@@ -37,6 +45,7 @@ export class ChallengeInfoComponent implements OnInit {
   @Input() popularity!: number
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
+  @Input() idChallenge: string = ''
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
@@ -44,44 +53,46 @@ export class ChallengeInfoComponent implements OnInit {
 
   showStatement = true
   isLogged: boolean = false
-  // activeId = 1
   solutionSent: boolean = false
-
-  idChallenge!: string | any
+  resources: string = '' // TODO resources
   params$!: Subscription
-  jsonData: Challenge[] = []
-  challenge!: Challenge
-  dataChallenge!: DataChallenge
-  challenges: Challenge[] = []
+  relatedChallengesData!: DataChallenge
+  relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
 
-  related_title = ''
-  related_creation_date!: Date
-  related_level = ''
-  related_popularity!: number
-  related_languages: Language[] = []
-  related_id: string = this.related
-
-  async ngOnInit (): Promise<void> {
+  ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
-    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-    this.isLogged = await this.authService.isUserLoggedIn()
-    this.loadRelatedChallenge(this.related_id)
+    // this.authService.isLoggedIn();
+    // this.checkIfUserIsLoggedIn();
+
+    this.loadRelatedChallenges(this.idChallenge)
+    this.solutionService.solutionSent$.subscribe((value) => {
+      this.solutionSent = value
+    })
   }
 
-  loadRelatedChallenge (id: string): void {
-    this.challengeSubs$ = this.challengeService
-      .getChallengeById(id)
-      .subscribe((challenge) => {
-        this.challenge = new Challenge(challenge)
-        this.related_title = this.challenge?.challenge_title
-        this.related_creation_date = this.challenge?.creation_date
-        this.related_level = this.challenge?.level
-        this.related_popularity = this.challenge.popularity
-        this.related_languages = this.challenge.languages
-        this.related_id = this.related
+  ngAfterContentChecked (): void {
+    const token = localStorage.getItem('authToken') // TODO
+    const refreshToken = localStorage.getItem('refreshToken') // TODO
+
+    if (
+      token !== null &&
+      refreshToken !== null &&
+      token !== '' &&
+      refreshToken !== ''
+    ) {
+      this.isLogged = true
+    }
+  }
+
+  loadRelatedChallenges (id: string): void {
+    this.challengeSubs$ = this.relatedService
+      .getRelatedChallenges(id)
+      .subscribe((data) => {
+        this.relatedChallengesData = new DataChallenge(data)
+        this.relatedListOfChallenges = this.relatedChallengesData.challenges
       })
   }
 
