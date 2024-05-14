@@ -20,7 +20,6 @@ export class ChallengeComponent {
   challenge!: Challenge
   challengeSubs$!: Subscription
   dataChallenge!: Challenge
-
   title: string = ''
   creation_date!: Date
   level = ''
@@ -38,14 +37,12 @@ export class ChallengeComponent {
   private readonly route = inject(ActivatedRoute)
   private readonly challengeService = inject(ChallengeService)
 
-  constructor () {
+  ngOnInit (): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
+      this.loadMasterData(this.idChallenge)
+      this.activeId = 1
     })
-  }
-
-  ngOnInit (): void {
-    this.loadMasterData(this.idChallenge)
   }
 
   ngOnDestroy (): void {
