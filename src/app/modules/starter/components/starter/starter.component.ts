@@ -90,8 +90,6 @@ export class StarterComponent {
   getChallengeFilters (filters: FilterChallenge): void {
     const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
-    console.log('1', filters)
-    console.log(this.filters)
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       const challengesObservable = (this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)
         ? this.starterService.getAllChallenges()

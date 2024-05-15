@@ -107,4 +107,24 @@ describe('StarterComponent', () => {
 
     expect(getChallengesByPageSpy).not.toHaveBeenCalled()
   })
+
+  it('should call getChallengesByPage function when all filter arrays are empty', () => {
+    const pageNumber = 1
+    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
+
+    component.getChallengeFilters({ languages: [], levels: [], progress: [] })
+
+    expect(getChallengesByPageSpy).toHaveBeenCalledWith(pageNumber)
+  })
+
+  it('should handle filters when languages array is not empty', () => {
+    const mockFilteredResp = ['filteredChallenge1', 'filteredChallenge2'] // Mock de la respuesta filtrada
+    const getChallengeFiltersSpy = jest.spyOn(component, 'getChallengeFilters')
+
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockFilteredResp))
+
+    component.getChallengeFilters({ languages: ['JavaScript'], levels: ['Easy'], progress: [] })
+
+    expect(getChallengeFiltersSpy).toHaveBeenCalled()
+  })
 })
