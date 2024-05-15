@@ -14,7 +14,7 @@
 
 <hr>
 
-### 1.Description
+### 1. Description
 
 The ITA-challenges-frontend project is built using Angular framework and reactive programming. It is an initiative designed specifically for students enrolled in the IT Academy program at Barcelona Activa. 
 
@@ -28,7 +28,7 @@ for our students.
 
 This project exists thanks to all the people who contribute.
 
-### 2.Installation
+### 2. Installation
 
 #### Required software
 
@@ -68,7 +68,7 @@ npm start
 
 7. If you want to test the application in postman, you can import the environments and collections from the folder [`postman`](./postman) in the root of the project.
 
-### 3.Newcomers
+### 3. Newcomers
 
 #### Git configuration
 
@@ -88,11 +88,11 @@ You can see how work with cards in the [guidelines](./GUIDELINES.md#24-work-with
 
 You can see the points to consider when doing a PR in the [guidelines](./GUIDELINES.md#25-Points-to-consider-when-doing-a-PR)
 
-### 4.Guidelines and Code Conventions
+### 4. Guidelines and Code Conventions
 
 See [GUIDELINES.md](GUIDELINES.md)
 
-### 5.FAQ's
+### 5. FAQ's
 
 * **Can I use any kind of AI as a help on this project? What is the best way to use AI?**
     - You are totally allowed to use AI in this project. 
@@ -130,11 +130,11 @@ See [GUIDELINES.md](GUIDELINES.md)
   
 
 
-### 6.Contributors
+### 6. Contributors
 
 This project exists thanks to all the people who contribute.
 
-Project manager: Jonatan Vicente (Discord: Jonatan Vicente#1211)
+Project manager: Jonatan Vicente 
 
 <a href="https://github.com/IT-Academy-BCN/ita-challenges-frontend/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-frontend" /></a>
@@ -148,7 +148,7 @@ Project manager: Jonatan Vicente (Discord: Jonatan Vicente#1211)
 
 
 
-## 7.License
+## 7. License
 
 - License information: [link](https://github.com/IT-Academy-BCN/ita-challenges-backend/blob/main/LICENSE)
 
