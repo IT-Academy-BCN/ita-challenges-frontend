@@ -77,11 +77,9 @@ export class StarterService {
     return of(respArray).pipe(
       map(challenges => {
         return challenges.filter(challenge => {
-          // Verificar si algún lenguaje seleccionado coincide con los del desafío
           const languageMatch = filters.languages.length === 0 ||
             challenge.languages.every(lang => filters.languages.includes(lang.id_language));
-
-          // Verificar si algún nivel de dificultad seleccionado coincide con el del desafío
+            
           const levelMatch = filters.levels.length === 0 ||
             filters.levels.includes(challenge.level.toUpperCase());
 

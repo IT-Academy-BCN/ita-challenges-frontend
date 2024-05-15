@@ -31,7 +31,7 @@ export class StarterComponent {
   selectedSort: string = ''
   isAscending: boolean = false
 
-  constructor (
+  constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
@@ -40,16 +40,16 @@ export class StarterComponent {
     }) */
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getChallengesByPage(this.pageNumber)
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
   }
 
-  getChallengesByPage (page: number): void {
+  getChallengesByPage(page: number): void {
     const getChallengeOffset = 8 * (page - 1)
     this.pageNumber = page
 
@@ -71,11 +71,11 @@ export class StarterComponent {
     }
   }
 
-  openModal (): void {
+  openModal(): void {
     this.modalContent.open()
   }
 
-  private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
+  private getAndSortChallenges(getChallengeOffset: number, resp: any): void {
     const respArray: any[] = Array.isArray(resp) ? resp : [resp]
     const sortedChallenges$ = this.isAscending
       ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
@@ -87,14 +87,11 @@ export class StarterComponent {
     })
   }
 
-  getChallengeFilters (filters: FilterChallenge): void {
+  getChallengeFilters(filters: FilterChallenge): void {
     const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
-    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe(resp => {
-      this.listChallenges = resp
-    })
 
-    const challengesObservable = this.filters.languages.length > 0 && this.filters.languages.length < 3 || this.filters.levels.length > 0 && this.filters.levels.length < this.filters.levels.length - 1 || this.filters.progress.length > 0 && this.filters.progress.length < this.filters.progress.length - 1
+    const challengesObservable = this.filters.languages.length > 0 && this.filters.languages.length < 4 || this.filters.levels.length > 0 && this.filters.levels.length < 3 || this.filters.progress.length > 0 && this.filters.progress.length < 3
       ? this.starterService.getAllChallenges()
       : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
 
@@ -104,10 +101,11 @@ export class StarterComponent {
         this.starterService.getAllChallengesFiltered(this.filters, respArray)
           .subscribe(filteredResp => {
             if (this.sortBy !== '') {
-              this.starterService.orderBySortAscending(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
-                this.listChallenges = sortedResp
-                this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-              })
+              let orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending;
+              orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
+                this.listChallenges = sortedResp;
+                this.totalPages = Math.ceil(filteredResp.length / this.pageSize);
+              });
             } else {
               this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
               this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
@@ -120,8 +118,11 @@ export class StarterComponent {
     })
   }
 
-  changeSort (newSort: string): void {
+  changeSort(newSort: string): void {
     this.sortBy = newSort
+    if (this.filters !== undefined) {
+
+    }
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
         this.getChallengesByPage(this.pageNumber)
