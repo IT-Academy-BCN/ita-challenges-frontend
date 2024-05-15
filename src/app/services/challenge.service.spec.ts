@@ -1,7 +1,7 @@
 import { ChallengeService } from './challenge.service'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { HttpClient } from '@angular/common/http'
-import { TestBed } from '@angular/core/testing'
+import { TestBed, inject } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
 
@@ -88,4 +88,24 @@ describe('ChallengeService', () => {
 
     httpClientMock.verify()
   })
+  it('should call getAllLanguages() and return data', inject([ChallengeService, HttpTestingController],
+    (service: ChallengeService, httpMock: HttpTestingController) => {
+      const mockResponse = {
+        results: [
+          { language_name: 'JavaScript', id_language: 1 },
+          { language_name: 'Python', id_language: 2 }
+        ]
+      };
+
+      service.getAllLanguages().subscribe((data) => {
+        expect(data).toEqual(mockResponse);
+      });
+
+      const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`);
+      expect(req.request.method).toEqual('GET');
+
+      req.flush(mockResponse);
+      httpMock.verify();
+    }));
+    
 })
