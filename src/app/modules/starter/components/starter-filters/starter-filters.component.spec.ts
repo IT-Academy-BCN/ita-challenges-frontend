@@ -4,11 +4,9 @@ import { By } from '@angular/platform-browser'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 
 import { StarterFiltersComponent } from './starter-filters.component'
-import { ChallengeService } from 'src/app/services/challenge.service'
 
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent
-  let challengeService: ChallengeService
   let fixture: ComponentFixture<StarterFiltersComponent>
 
   beforeEach(async () => {
@@ -22,7 +20,6 @@ describe('StarterFiltersComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StarterFiltersComponent)
-    challengeService = TestBed.inject(ChallengeService)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

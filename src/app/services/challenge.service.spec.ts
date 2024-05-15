@@ -95,17 +95,16 @@ describe('ChallengeService', () => {
           { language_name: 'JavaScript', id_language: 1 },
           { language_name: 'Python', id_language: 2 }
         ]
-      };
+      }
 
       service.getAllLanguages().subscribe((data) => {
-        expect(data).toEqual(mockResponse);
-      });
+        expect(data).toEqual(mockResponse)
+      })
 
-      const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`);
-      expect(req.request.method).toEqual('GET');
+      const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
+      expect(req.request.method).toEqual('GET')
 
-      req.flush(mockResponse);
-      httpMock.verify();
-    }));
-    
+      req.flush(mockResponse)
+      httpMock.verify()
+    }))
 })
