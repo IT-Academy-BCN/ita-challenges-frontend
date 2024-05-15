@@ -59,16 +59,6 @@ Each microservice exposes REST APIs to interact with it. To use any microservice
 - **NodeJs v18.16.0**
 
 
-See [GUIDELINES.md](GUIDELINES.md#61-required-programs) to learn how to install and configure these tools.
-
-The following programs are optional but recommended:
-
-See [GUIDELINES.md](GUIDELINES.md#71-recommended-programs) to learn how to install and configure these tools.
-
-These are the libraries and frameworks used in the project, just in case you want to know more about them:
-
-See [GUIDELINES.md](GUIDELINES.md#5-libraries-used)
-
 #### Project links
 
 - [GitHub](https://github.com/IT-Academy-BCN/ita-challenges-frontend). Source code.
