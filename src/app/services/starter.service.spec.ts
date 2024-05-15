@@ -5,7 +5,9 @@ import { delay, of } from "rxjs";
 import data from "./../../assets/dummy/data-challenge.json"; //see data-typings.d.ts
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { TestBed } from "@angular/core/testing";
+import { TestBed, inject } from "@angular/core/testing";
+import { ChallengeService } from "./challenge.service";
+import { Challenge } from "../models/challenge.model";
 
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
@@ -118,6 +120,19 @@ describe('StarterService', () => {
       const obs$ = service.getAllChallenges().pipe(delay(3));
 
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
+    });
+  });
+
+  it('should filter challenges correctly', () => {
+    const mockFilters = {
+      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
+      levels: ['EASY'],
+      progress: []
+    };
+    const mockChallenges: Challenge[] = [];
+    service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
+      expect(filteredChallenges.length).toBe(1);
+      expect(filteredChallenges[0].id).toBe(1); 
     });
   });
 
