@@ -4,6 +4,7 @@ import { SendSolutionModalComponent } from './../../../modals/send-solution-moda
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
 import { SolutionService } from '../../../../services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-challenge-header',
@@ -14,6 +15,7 @@ export class ChallengeHeaderComponent {
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService)
+  private readonly router = inject(Router)
 
   @Input() title = ''
   @Input() creation_date!: Date
