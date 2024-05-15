@@ -18,33 +18,17 @@
 
 ### Description
 
-The ITA-challenges-backend project is built using Java with the Spring Boot framework and reactive programming. It is an
-initiative designed specifically for students enrolled in the IT Academy program at Barcelona Activa. 
+The ITA-challenges-frontend project is built using Angular framework and reactive programming. It is an initiative designed specifically for students enrolled in the IT Academy program at Barcelona Activa. 
 
-The primary goal is to provide students with hands-on experience in a real-world development environment, 
+The primary goal is to provide junior developers with hands-on experience in a real-world development environment, 
 real scenarios they may encounter in their future careers. 
 
-Simultaneously, students collaborate to create a valuable learning tool for the [ITA challenges application](http://dev.ita-challenges.eurecatacademy.org/ita-challenge/challenges)
+Simultaneously, developers collaborate to create a valuable learning tool for the ITA challenges application
 dedicated to code and programming coding-challenges. This project involves tackling new features, addressing legacy code, resolving bugs, 
 and fostering teamwork. The emphasis is not only on technical proficiency but also on providing a holistic learning experience 
 for our students.
 
 This project exists thanks to all the people who contribute.
-
-**For newcomers**, we strongly emphasize the importance of thoroughly reading the entire README. 
-This document contains crucial information about installation, configuration, and daily processes necessary for 
-effectively working on this project.
-
-### Usage
-
-This project provides REST API services for the ITA challenges application and consists of five microservices:
-   * **Challenge.** The challenge microservice is designed to manage and distribute information related to challenges within the project. For instance, it provides details such as title, level, creation date, solution, and other relevant information. This microservice communicates with various modules of the project through a set of endpoints.
-   * **Score.** The score microservice is built to provide information related to the score analysis for a specific challenge solution provided in a determined language.
-   * **User.** The user microservice is crafted to efficiently manage and deliver information stemming from user, challenge, and score interactions. For example, it facilitates access to user challenge solutions, bookmarks, and challenge statistics.
-   * **Auth**. The auth microservice plays a pivotal role in ensuring the security and integrity of user interactions within the system. It is primarily responsible for validating user authentication tokens, thereby safeguarding access to sensitive resources and functionalities. By validating authentication tokens, this microservice verifies the identity of users and ensures that only authorized individuals can access the system's features and data.
-   * **Document**. The document microservice serves as a unified gateway consolidating all documents from various endpoints within the system. Acting as a single entry point, it will be seamlessly redirected by the project's overarching API Gateway. Named itachallenge-document, this microservice is entrusted with aggregating all Swagger documentation from other microservices, ensuring comprehensive access and management of system documentation.
-
-Each microservice exposes REST APIs to interact with it. To use any microservice, you can refer to the [procedure](#procedure) section or start it from the App class in your IDE.
 
 ### Installation
 
