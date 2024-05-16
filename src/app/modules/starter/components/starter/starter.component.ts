@@ -19,7 +19,7 @@ export class StarterComponent {
   challenges: Challenge[] = []
   params$!: Subscription
   challengesSubs$!: Subscription
-  filters!: FilterChallenge
+  filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
 
@@ -53,35 +53,72 @@ export class StarterComponent {
     const getChallengeOffset = 8 * (page - 1)
     this.pageNumber = page
 
-    const challengesObservable = this.sortBy !== ''
-      ? this.starterService.getAllChallenges()
-      : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+      this.getChallengeFilters(this.filters)
+    } else {
+      const challengesObservable = this.sortBy !== ''
+        ? this.starterService.getAllChallenges()
+        : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
 
-    this.challengesSubs$ = challengesObservable.subscribe(resp => {
-      if (this.sortBy !== '') {
-        const respArray: any[] = Array.isArray(resp) ? resp : [resp]
-        const sortedChallenges$ = this.isAscending
-          ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-          : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-
-        sortedChallenges$.subscribe(sortedResp => {
-          this.listChallenges = sortedResp
-          this.totalPages = Math.ceil(respArray.length / this.pageSize)
-        })
-      } else {
-        this.listChallenges = resp
-        this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
-      }
-    })
+      this.challengesSubs$ = challengesObservable.subscribe(resp => {
+        if (this.sortBy !== '') {
+          this.getAndSortChallenges(getChallengeOffset, resp)
+        } else {
+          this.listChallenges = resp
+          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+        }
+      })
+    }
   }
 
   openModal (): void {
     this.modalContent.open()
   }
 
+  private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
+    const respArray: any[] = Array.isArray(resp) ? resp : [resp]
+    const sortedChallenges$ = this.isAscending
+      ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+      : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
+
+    sortedChallenges$.subscribe(sortedResp => {
+      this.listChallenges = sortedResp
+      this.totalPages = Math.ceil(respArray.length / this.pageSize)
+    })
+  }
+
   getChallengeFilters (filters: FilterChallenge): void {
+    const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
-    // TODO: llamar al endpoint
+    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+      const challengesObservable = (this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)
+        ? this.starterService.getAllChallenges()
+        : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+
+      this.challengesSubs$ = challengesObservable.subscribe(resp => {
+        if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
+          const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
+          this.starterService.getAllChallengesFiltered(this.filters, respArray)
+            .subscribe(filteredResp => {
+              if (this.sortBy !== '') {
+                const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
+                orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
+                  this.listChallenges = sortedResp
+                  this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                })
+              } else {
+                this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
+                this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+              }
+            })
+        } else {
+          this.listChallenges = resp
+          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+        }
+      })
+    } else {
+      this.getChallengesByPage(this.pageNumber)
+    }
   }
 
   changeSort (newSort: string): void {

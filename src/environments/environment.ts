@@ -8,6 +8,7 @@ export const environment = {
   // BACKEND_ITA_WIKI_BASE_URL: 'https://dev.api.itadirectory.eurecatacademy.org/api/v1',
   BACKEND_ITA_WIKI_BASE_URL: 'https://dev.itawiki.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
+  BACKEND_ALL_LANGUAGE_URL: '/challenge/language',
   BACKEND_SSO_ITINERARIES: '/itineraries',
   BACKEND_SSO_LOGIN_URL: '/auth/login',
   BACKEND_SSO_POST_USER: '/users/me',

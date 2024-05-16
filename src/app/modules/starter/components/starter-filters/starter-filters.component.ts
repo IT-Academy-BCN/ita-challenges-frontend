@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/co
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { ChallengeService } from 'src/app/services/challenge.service'
+import { type Language } from 'src/app/models/language.model'
 
 @Component({
   selector: 'app-starter-filters',
@@ -13,8 +15,11 @@ export class StarterFiltersComponent {
 
   filtersForm
 
+  public languages: Record<string, string> = {}
+
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
+  private readonly challengeService = inject(ChallengeService)
 
   constructor () {
     this.filtersForm = this.fb.nonNullable.group({
@@ -36,17 +41,29 @@ export class StarterFiltersComponent {
       })
     })
 
+    this.challengeService.getAllLanguages().subscribe((res: any) => {
+      if (res.results !== undefined) {
+        res.results.forEach((result: Language) => {
+          this.languages[result.language_name.toLowerCase()] = result.id_language
+        })
+      }
+    })
+
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
       const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
       if (formValue.languages !== null && formValue.languages !== undefined) {
-        Object.values(formValue.languages).forEach((val, i) => {
-          if (val) { filters.languages.push(i + 1) }
+        Object.entries(formValue.languages).forEach(([key, val]) => {
+          if (val) {
+            const idLanguage = this.languages[key]
+            if (idLanguage !== '') {
+              filters.languages.push(idLanguage)
+            }
+          }
         })
       }
-
       if (formValue.levels !== null && formValue.levels !== undefined) {
         Object.entries(formValue.levels).forEach(([key, val]) => {
-          if (val) { filters.levels.push(key) }
+          if (val) { filters.levels.push(key.toLocaleUpperCase()) }
         })
       }
 

@@ -46,9 +46,9 @@ describe('StarterFiltersComponent', () => {
     expect(component.filtersSelected.emit).toHaveBeenCalled()
 
     const expectedFilter = {
-      languages: [1],
-      levels: ['easy'],
-      progress: [1]
+      languages: [],
+      levels: ['EASY'],
+      progress: []
     }
     expect(component.filtersSelected.emit).toHaveBeenCalledWith(expectedFilter)
   })

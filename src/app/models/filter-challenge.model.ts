@@ -1,5 +1,5 @@
 export class FilterChallenge {
-  languages: number[]
+  languages: string[]
   levels: string[]
   progress: number[]
 

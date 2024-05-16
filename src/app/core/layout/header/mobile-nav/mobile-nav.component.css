@@ -31,7 +31,7 @@ nav {
   box-shadow: none;
 }
 .navbar-toggler .navbar-toggler-icon {
-  background-image: url("../../../../../assets/img/icon/hamburguer-white.svg");
+  background-image: url("/assets/img/icon/hamburguer-white.svg");
   color: white;
   height: 1em;
 }
