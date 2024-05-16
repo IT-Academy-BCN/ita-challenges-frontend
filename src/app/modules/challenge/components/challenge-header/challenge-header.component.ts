@@ -33,7 +33,7 @@ export class ChallengeHeaderComponent {
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
-    this.isLogged = await this.authService.isUserLoggedIn()
+    this.isLogged = this.authService.isUserLoggedIn()
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value

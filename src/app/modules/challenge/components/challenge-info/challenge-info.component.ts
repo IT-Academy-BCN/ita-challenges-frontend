@@ -65,7 +65,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       this.isUserSolution = !value
     })
 
-    this.isLogged = await this.authService.isUserLoggedIn()
+    this.isLogged = this.authService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((value) => {
