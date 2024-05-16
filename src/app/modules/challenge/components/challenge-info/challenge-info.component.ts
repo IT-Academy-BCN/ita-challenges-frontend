@@ -60,12 +60,12 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
 
-  ngOnInit (): void {
+  async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
     })
-    // this.authService.isLoggedIn();
-    // this.checkIfUserIsLoggedIn();
+
+    this.isLogged = this.authService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((value) => {

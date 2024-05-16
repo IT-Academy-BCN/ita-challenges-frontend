@@ -528,4 +528,32 @@ describe("AuthService", () => {
     expect(result).toBe(false);
   });*/
 
+  it('should return true if authToken is present', () => {
+    cookieServiceMock.get.mockImplementation((key: string) => {
+      if (key === 'authToken') {
+        return 'some token';
+      }
+      return null;
+    });
+
+    expect(authService.isUserLoggedIn()).toBe(true);
+  });
+
+  it('should return true if refreshToken is present and authToken is not', () => {
+    cookieServiceMock.get.mockImplementation((key: string) => {
+      if (key === 'refreshToken') {
+        return 'some token';
+      }
+      return null;
+    });
+
+    expect(authService.isUserLoggedIn()).toBe(true);
+  });
+
+  it('should return false if neither authToken nor refreshToken are present', () => {
+    cookieServiceMock.get.mockImplementation(() => null);
+
+    expect(authService.isUserLoggedIn()).toBe(false);
+  });
+
 });

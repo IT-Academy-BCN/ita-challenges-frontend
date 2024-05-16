@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { ValidatorsService } from 'src/app/services/validators.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-register-modal',
@@ -23,6 +24,7 @@ export class RegisterModalComponent implements OnInit {
   private readonly validatorsService = inject(ValidatorsService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
+  private readonly router = inject(Router)
 
   registerError: string = ''
   itineraries: Itinerary[] = []

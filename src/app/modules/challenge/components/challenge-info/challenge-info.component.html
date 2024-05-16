@@ -1,5 +1,5 @@
 <!---Nav tabs-->
-<!-- <app-restricted-modal *ngIf="!isLogged" (click)="openRestrictedModal()">  </app-restricted-modal> -->
+<!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
   <!--DETAILS TAB-->
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
@@ -59,7 +59,7 @@
       </div>
       } @else {
       <!------ if logged show this------>
-      @if (!solutionSent) {
+      @if (isLogged && !solutionSent) {
       <div class="w-100 button d-md-none">
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}
@@ -126,7 +126,7 @@
       </div>
       } @else {
       <!------ if logged show this------>
-      @if (!solutionSent) {
+      @if (isLogged && !solutionSent) {
       <div class="w-100 button d-md-none">
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}

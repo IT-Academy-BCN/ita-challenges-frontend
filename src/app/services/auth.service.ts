@@ -20,9 +20,6 @@ import { BlobOptions } from "buffer";
 import { TokenService } from "./token.service";
 import { error } from "console";
 
-// import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
-
-
 interface loginResponse {
   id: string;
   authToken: string;
@@ -105,6 +102,7 @@ export class AuthService {
         next: (resp: registerResponse) => {
           resolve(null);
           this.modifyUserWithAdmin(resp.id);
+      
         },
         error: (err) => { reject(err.message) }
       });
@@ -220,17 +218,23 @@ export class AuthService {
   }
 
   /* Check if the user is  Logged in*/
-  public async isUserLoggedIn() { 
+// TODO: Desarrollar una vez validados los tokens. Por ahora, se usa solo cookie.service.
+  public isUserLoggedIn() { 
     let isUserLoggedIn: boolean = false;
     let authToken = this.cookieService.get('authToken');
-    let authTokenValid = await this.tokenService.checkToken(authToken);
-      if (authTokenValid) {
-       	isUserLoggedIn = true;
-      } else {
-        let refreshToken = this.cookieService.get('refreshToken');
-        isUserLoggedIn = await this.tokenService.checkToken(refreshToken);
-      }
+    if (authToken) {
+        isUserLoggedIn = true;
+    } else {
+      let refreshToken = this.cookieService.get('refreshToken');
+        if (refreshToken) {
+            isUserLoggedIn = true;
+        } else {
+            isUserLoggedIn = false;
+        }
+    }
+    console.log('is logged:' + isUserLoggedIn)
     return isUserLoggedIn;
+   
   }
 
 }
