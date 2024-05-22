@@ -5,20 +5,16 @@
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
     <a href="#details" ngbNavLink>{{
       "modules.challenge.info.detailsTitle" | translate
-    }}</a>
+      }}</a>
     <ng-template ngbNavContent>
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3">
           <span *ngIf="isLogged" class="right-span d-inline-flex">
-            <input
-              type="checkbox"
-              name="checkbox"
-              [(ngModel)]="showStatement"
-            />
+            <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
             <label class="ms-1">{{
               "modules.challenge.info.showStatement" | translate
-            }}</label>
+              }}</label>
           </span>
         </div>
         <!-- description of statement on the left of the box where you put your code for the solution  -->
@@ -29,7 +25,9 @@
             </h3>
             <p>{{ description | dynamicTranslate }}</p>
             <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
-            <p *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</p>
+            <ul>
+              <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
+            </ul>
             <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
             <p>{{ notes | dynamicTranslate }}</p>
           </div>
@@ -37,11 +35,7 @@
           <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
 
           <ng-container *ngIf="isLogged">
-            <app-solution
-              style="background-color: white"
-              [isUserSolution]="true"
-              [languageExt]="'java'"
-            ></app-solution>
+            <app-solution style="background-color: white" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
           </ng-container>
           <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
         </div>
@@ -49,11 +43,8 @@
       <!-------if not logged show this------>
       @if (!isLogged) {
       <div class="w-100 mt-4 d-md-none">
-        <button
-          class="w-100 btn btn-primary"
-          (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}"
-        >
+        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
+          title="{{ 'modules.challenge.header.toolTip' | translate }}">
           {{ "modules.challenge.header.button" | translate }}
         </button>
       </div>
@@ -64,10 +55,7 @@
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}
         </button>
-        <button
-          class="w-100 btn btn-sm btn-primary mt-2 mt-md-0"
-          (click)="openSendSolutionModal()"
-        >
+        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
           {{ "modules.challenge.header.buttonAccept" | translate }}
         </button>
       </div>
@@ -83,7 +71,7 @@
   <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
     <a href="#solutions" ngbNavLink>{{
       "modules.challenge.info.solutionsTitle" | translate
-    }}</a>
+      }}</a>
     <ng-template ngbNavContent>
       <!--SOLUTIONS TAB-->
       <!--users can only see other solutions if they sent theirs-->
@@ -102,12 +90,8 @@
         <!--if users sent thei solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="!isUserSolution && isLogged">
           <ng-container *ngFor="let solution of solutionsDummy; let i = index">
-            <app-solution
-              [number]="i + 1"
-              [isUserSolution]="false"
-              class="mb-4"
-              [languageExt]="'javascript'"
-            ></app-solution>
+            <app-solution [number]="i + 1" [isUserSolution]="false" class="mb-4"
+              [languageExt]="'javascript'"></app-solution>
             <!-- esta en solution.component.html -->
           </ng-container>
         </div>
@@ -116,11 +100,8 @@
       <!-------if not logged show this------>
       @if (!isLogged) {
       <div class="w-100 mt-4 d-md-none">
-        <button
-          class="w-100 btn btn-primary"
-          (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}"
-        >
+        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
+          title="{{ 'modules.challenge.header.toolTip' | translate }}">
           {{ "modules.challenge.header.button" | translate }}
         </button>
       </div>
@@ -131,10 +112,7 @@
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}
         </button>
-        <button
-          class="w-100 btn btn-sm btn-primary mt-2 mt-md-0"
-          (click)="openSendSolutionModal()"
-        >
+        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
           {{ "modules.challenge.header.buttonAccept" | translate }}
         </button>
       </div>
@@ -150,7 +128,7 @@
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
     <a href="#resources" ngbNavLink>{{
       "modules.challenge.info.resourcesTitle" | translate
-    }}</a>
+      }}</a>
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
       <div class="tab-content info-card w-100">
@@ -158,9 +136,8 @@
           <h3 class="title_text">
             {{ "modules.challenge.info.resources" | translate }}
           </h3>
-          <a class="title_link" href="https://dev.itawiki.eurecatacademy.org/"
-            >{{ "modules.challenge.info.resourcesLink" | translate }} ></a
-          >
+          <a class="title_link" href="https://dev.itawiki.eurecatacademy.org/">{{ "modules.challenge.info.resourcesLink"
+            | translate }} ></a>
         </section>
         <section class="info-card w-100">
           <app-resource-card [inputResources]="resources"> </app-resource-card>
@@ -171,19 +148,16 @@
   <li [ngbNavItem]="4" class="related" (click)="onActiveIdChange(4)">
     <a href="#related" ngbNavLink>{{
       "modules.challenge.info.relatedTitle" | translate
-    }}</a>
+      }}</a>
     <ng-template ngbNavContent>
       <!--RELATED TAB-->
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
         <section class="info-card">
-          <app-challenge-card
-            *ngFor="let relatedChallenge of relatedListOfChallenges"
+          <app-challenge-card *ngFor="let relatedChallenge of relatedListOfChallenges"
             [title]="relatedChallenge.challenge_title | dynamicTranslate"
-            [creation_date]="relatedChallenge.creation_date"
-            [level]="relatedChallenge.level"
-            [popularity]="relatedChallenge.popularity"
-            [languages]="relatedChallenge.languages"
+            [creation_date]="relatedChallenge.creation_date" [level]="relatedChallenge.level"
+            [popularity]="relatedChallenge.popularity" [languages]="relatedChallenge.languages"
             [id]="relatedChallenge.id_challenge">
           </app-challenge-card>
         </section>
