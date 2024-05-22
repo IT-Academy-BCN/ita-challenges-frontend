@@ -12,9 +12,9 @@ export class MainMenuComponent {
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
   constructor () {
-    this.translate.addLangs(['en', 'es', 'cat'])
-    this.translate.setDefaultLang('es')
-    this.translate.use('es')
+    this.translate.addLangs(['en', 'es', 'ca'])
+    this.translate.setDefaultLang('ca')
+    this.translate.use('ca')
   }
 
   openLoginModal (): void {
