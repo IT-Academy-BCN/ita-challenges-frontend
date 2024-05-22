@@ -37,7 +37,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
     ProfileModule,
     I18nModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'es',
+      defaultLanguage: 'ca',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
