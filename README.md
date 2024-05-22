@@ -43,7 +43,7 @@ This project exists thanks to all the people who contribute.
 - [Wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki) Project technical documentation.
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design). Project design.
 
-#### Procedures
+#### Procedure
 
 1. Install the required software listed in the "Required programs" and "Project links" sections.
 
