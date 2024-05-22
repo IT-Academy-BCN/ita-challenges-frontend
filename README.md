@@ -35,7 +35,6 @@ This project exists thanks to all the people who contribute.
 - **node.js v20.10.0**. You can see the installation instructions in the [node.js website](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs).
 - **Angular CLI v17.0.7**. See [Angular Docs](https://angular.io/guide/setup-local) for installation instructions.
 
-
 #### Project links
 
 - [GitHub](https://github.com/IT-Academy-BCN/ita-challenges-frontend). Source code.
@@ -44,26 +43,34 @@ This project exists thanks to all the people who contribute.
 - [Wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki) Project technical documentation.
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design). Project design.
 
-#### Procedure
+#### Procedures
 
 1. Install the required software listed in the "Required programs" and "Project links" sections.
 
 2. Clone the repository:
+
 ```
 git clone https://github.com/IT-Academy-BCN/ita-challenges-frontend.git
 ```
+
 3. Navigate into the project directory:
+
 ```
 cd ita-challenges-frontend
 ```
+
 4. Install dependencies:
+
 ```
 npm install
 ```
+
 5. Execute:
+
 ```
 npm start
 ```
+
 6. You can test the application in the browser at: http://localhost:4200/itachallenge/api/v1/challenge/test
 
 7. If you want to test the application in postman, you can import the environments and collections from the folder [`postman`](./postman) in the root of the project.
@@ -94,15 +101,18 @@ See [GUIDELINES.md](GUIDELINES.md)
 
 ### 5. FAQ's
 
-* **Can I use any kind of AI as a help on this project? What is the best way to use AI?**
+- **Can I use any kind of AI as a help on this project? What is the best way to use AI?**
+
   - You are totally allowed to use AI in this project.
 
   - The best way to use AI is first to understand the problem you want to solve, then to choose the best algorithm to solve it, and finally to implement it in the application. Please, remember to double-check the AI's results and to test it in different scenarios.
 
-* **Is there any diagram of architecture, a technical description or similar?**
+- **Is there any diagram of architecture, a technical description or similar?**
+
   - Yes, you can find it in the [Wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki)
 
-* **To contribute to this project, do I need make a fork?**
+- **To contribute to this project, do I need make a fork?**
+
   - No, you don't need to fork of the project, you need to **clone** it.
 
   - Our workflow is based on a single repository model, where we create separate branches for each feature.
@@ -110,29 +120,31 @@ See [GUIDELINES.md](GUIDELINES.md)
 
   - You can find how to do a clone in point 4 of the [Procedure](#procedure) section.
 
-* **Do I need start up the project fully on my pc to start coding?**
+- **Do I need start up the project fully on my pc to start coding?**
+
   - No, you don't need to start up the project fully on your pc to start coding.
     You can start coding in your IDE and run the **App** class in the microservice you are working on.
 
-* **What should I do if I discover a bug?**
+- **What should I do if I discover a bug?**
+
   - If you discover a new bug, please create a new issue in the GitHub repository ita-challenges-backend repository
     describing the bug instead of trying to resolve it in another issue, and comment it to the product owner.
 
-* **What are the coding standards for this project?**
+- **What are the coding standards for this project?**
+
   - The coding standards for this project are defined in the [GUIDELINES.md](GUIDELINES.md) file in the root of the repository.
     Please read and follow them before contributing.
 
-* **How can I get help if I have difficulty contributing or understanding the project?**
+- **How can I get help if I have difficulty contributing or understanding the project?**
+
   - Feel free to ask in the daily meetings or to your team if you find something hard to understand or if you encounter any other technical issues.
 
-* **What programs do I need and how to proceed to set up the project?**
+- **What programs do I need and how to proceed to set up the project?**
   - Just go to the paragraphs: [Installation](#installation) and [Procedure](#procedure) and follow the steps.
-
 
 ### 6. License
 
 - [MIT License](LICENSE)
-
 
 ### 7. Contributors
 
@@ -145,16 +157,8 @@ Project Manager: Jonatan Vicente (Discord: Jonatan Vicente#1211)
 <a href="https://github.com/IT-Academy-BCN/ita-challenges-frontend/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=IT-Academy-BCN/ita-challenges-frontend" /></a>
 
-
 <hr>
-
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_EN.md)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_ES.md)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT_CA.md)
-
-
-
-
-
-
