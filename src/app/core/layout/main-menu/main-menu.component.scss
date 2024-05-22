@@ -24,7 +24,8 @@
         &.active {
             padding-right: 0;
             padding-left: 15px;
-
+            font-weight: bold;
+            
             &::before {
                 background: $primary;
             }
