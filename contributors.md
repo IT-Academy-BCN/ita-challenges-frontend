@@ -13,4 +13,5 @@
 - Pau Sàbat - https://github.com/pausm99
 - Francesc Ferrer - https://github.com/fran-cesc
 - Yulibeth Rivero - https://github.com/Yul1b3th
+- Allan Vázquez - https://github.com/codenaud
 - Eva Díaz - https://github.com/evarkitecta
