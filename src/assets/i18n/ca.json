@@ -19,7 +19,7 @@
                 "title": "Guies útils"
             },
             "section6": {
-                "title": "Arranjaments"
+                "title": "Configuració"
             },
             "section7": {
                 "title": "El meu espai"
@@ -63,12 +63,12 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Llenguatje",
+                "lenguaje": "Llenguatge",
                 "dificulty": "Dificultat",
                 "easy": "Fàcil",
                 "medium": "Mitja",
                 "hard": "Difícil",
-                "progress": "Progrès",
+                "progress": "Progrés",
                 "noStarted": "No començats",
                 "started": "Falta completar",
                 "finished": "Completats"
