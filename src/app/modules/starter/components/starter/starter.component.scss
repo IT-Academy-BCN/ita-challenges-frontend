@@ -2,6 +2,11 @@
 @import "/src/styles/buttons";
 @import "/src/styles/fonts";
 
+.starter{
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
 h2 {
   font-size: 26px;
   line-height: 34px;
@@ -17,7 +22,9 @@ ul {
 
     li {
         display: flex;
-        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 500;
         color: $gray-3;
         gap: 2px;
         cursor: pointer;
@@ -34,7 +41,7 @@ ul {
         }
 
         &.selected {
-            color: $black-1;
+            color: $black-3;
             font-weight: 700;
 
             &::after {

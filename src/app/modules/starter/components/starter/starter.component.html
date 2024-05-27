@@ -23,11 +23,14 @@
         {{'modules.starter.main.section2.date' | translate}}
       </li>
     </ul>
-    <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
-      [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date | formatDate"
-      [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
-      [id]="challenge.id_challenge">
-    </app-challenge-card>
+    <div class="d-flex flex-column gap-3">
+      <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
+        [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date | formatDate"
+        [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
+        [id]="challenge.id_challenge">
+      </app-challenge-card>
+    </div>
+
     <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages" [pageNumber]="pageNumber">
     </app-pagination>
   </div>
