@@ -3,7 +3,9 @@
 @import "/src/styles/fonts";
 
 h2 {
-    margin-bottom: 3rem;
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 700;
 }
 
 img[alt="filter-icon"] {
@@ -50,7 +52,11 @@ ul {
     }
 }
 
-
+app-starter-filters{
+  font-size: 14px;
+  line-height: 34px;
+  font-weight: 500;
+}
 
 @media screen and (max-width: 768px) {
     h2 {

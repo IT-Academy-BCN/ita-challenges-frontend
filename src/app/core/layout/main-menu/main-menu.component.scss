@@ -21,10 +21,16 @@
         -o-transition: all .15s ease-out;
         transition: all .15s ease-out;
 
+                      font-size: 14px;
+      line-height: 16px;
+      font-weight: 600;
+      color: $gray-3;
+
         &.active {
             padding-right: 0;
             padding-left: 15px;
-            font-weight: bold;
+            font-weight: 700;
+            color: $black-3;
             
             &::before {
                 background: $primary;
