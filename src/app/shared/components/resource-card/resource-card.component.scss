@@ -72,6 +72,10 @@
     }
 }
 
+a{
+  text-decoration: none;
+}
+
 @media (max-width: 992px){
     .resource-list-element{
         margin-inline-start: 0px;
