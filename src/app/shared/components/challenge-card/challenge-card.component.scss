@@ -14,11 +14,11 @@
     .info{
         
         .title{
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 16px;
             margin-left: .5rem;
-            max-width: 70%;
-            font-size: large;
+            font-size: 16px;
+            color: $black-1;
         }
         .difficulty{
             img{
@@ -54,6 +54,13 @@
     &:hover{
         background-color: $gray-4;
     }
+}
+
+.stat{
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: #808080;
 }
 
 @media screen and (max-width: 437px) {
