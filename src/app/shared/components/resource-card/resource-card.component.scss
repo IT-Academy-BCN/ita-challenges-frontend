@@ -8,7 +8,6 @@
     background-color: $white;
     width: 50%;
     max-width: 45%;
-    margin-inline-start: 15px;
     gap:12px;
     &:hover{
         background-color: $gray-4;
@@ -74,6 +73,21 @@
 
 a{
   text-decoration: none;
+}
+
+.resource-details h3{
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  color: $black-3;
+}
+
+.resource-details p, .resource-details span{
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: #808080;
+
 }
 
 @media (max-width: 992px){
