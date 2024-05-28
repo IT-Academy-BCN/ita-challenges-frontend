@@ -20,16 +20,27 @@
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
           <div *ngIf="showStatement" class="details-text">
-            <h3 class="mt-0">
-              {{ "modules.challenge.info.description" | translate }}
-            </h3>
-            <p>{{ description | dynamicTranslate }}</p>
-            <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
-            <ul>
-              <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
-            </ul>
-            <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
-            <p>{{ notes | dynamicTranslate }}</p>
+            <!-- Description -->
+            <div class="pb-1">
+              <h3 class="mt-0">
+                {{ "modules.challenge.info.description" | translate }}
+              </h3>
+              <p>{{ description | dynamicTranslate }}</p>
+            </div>
+
+            <!-- Examples -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
+              <ul>
+                <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
+              </ul>
+            </div>
+
+            <!-- Notes -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
+              <p>{{ notes | dynamicTranslate }}</p>
+            </div>
           </div>
           <!-- only if user logeed in -->
           <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
