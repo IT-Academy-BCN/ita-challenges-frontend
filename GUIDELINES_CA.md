@@ -13,7 +13,8 @@
     2.4.1 [Assignar-te una targeta de tasques](#241-assignar-te-una-targeta-de-tasques)
     2.4.2 [Treballar en una tasca](#242-treballar-en-una-tasca)
     2.4.3 [Pull request](#243-pull-request)
-   2.5 [Metodologia Scrum](#25-metodologia-scrum)
+   2.5 [Treball amb git](#25-treball-amb-git)\
+   2.6 [Metodologia Scrum](#26-metodologia-scrum)
 
 3. [**REGLES DE CODI**](#3-regles-de-codi)
    
@@ -174,7 +175,22 @@ Les targetes de tasques estan organitzades segons el seu estat de desenvolupamen
 
 ----------------------------------------------------------------
 
-## 2.5 Metodologia SCRUM
+## 2.5 Treball amb git
+
+El workflow de git que seguim en projecte és similar a Gitflow.
+Per a poder treballar en el projecte, hauria de conèixer almenys els següents comandos git:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+Pot trobar un bon tutorial en https://www.atlassian.com/git, i molts altres recursos en https://docs.github.com/en/get-started/using-github/github-flow
+
+---
+
+## 2.6 Metodologia SCRUM
 https://scrumguides.org/
 -Reunions diàries per plantejar dificultats i bloquejants que tinguis
 -Reunions quinzenals més profundes (dijous)
