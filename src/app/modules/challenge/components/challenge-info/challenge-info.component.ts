@@ -5,11 +5,7 @@ import {
   Input,
   Output,
   ViewChild,
-  inject,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy
+  inject
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -32,7 +28,6 @@ import { RelatedService } from '../../../../services/related.service'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
-  
   isUserSolution: boolean = true
   showStatement = true
   isLogged: boolean = false
@@ -65,7 +60,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   async ngOnInit (): Promise<void> {
-
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
@@ -75,7 +69,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   }
 
   ngAfterContentChecked (): void {
-
     const token = localStorage.getItem('authToken') // TODO
     const refreshToken = localStorage.getItem('refreshToken') // TODO
 
@@ -89,9 +82,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     }
 
     this.solutionService.activeId$.subscribe((value) => {
-    this.activeId = value
+      this.activeId = value
     })
-
   }
 
   loadRelatedChallenges (id: string): void {
