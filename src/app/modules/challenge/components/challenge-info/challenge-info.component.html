@@ -164,7 +164,7 @@
       <!--RELATED TAB-->
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
-        <section class="info-card">
+        <section class="info-card d-flex flex-column gap-3">
           <app-challenge-card *ngFor="let relatedChallenge of relatedListOfChallenges"
             [title]="relatedChallenge.challenge_title | dynamicTranslate"
             [creation_date]="relatedChallenge.creation_date" [level]="relatedChallenge.level"
