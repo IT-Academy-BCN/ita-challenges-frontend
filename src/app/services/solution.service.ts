@@ -10,6 +10,9 @@ export class SolutionService {
   // subject = new BehaviorSubject(1);
   // obs$ = this.subject.asObservable();
 
+  activeIdSubject = new BehaviorSubject<number>(1)
+  activeId$ = this.activeIdSubject.asObservable()
+
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
   solutionSent$ = this.solutionSentSubject.asObservable()
 
@@ -27,4 +30,8 @@ export class SolutionService {
   public getSolutions (filePath: string): Observable<any> {
     return this.http.get(filePath)
   }
+
+  // public sendActiveIdAfterSolutionIsSent (activeId: number): void {
+  //   this.activeIdSubject.next(activeId)
+  // }
 }

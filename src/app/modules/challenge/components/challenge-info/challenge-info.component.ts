@@ -5,7 +5,11 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -28,7 +32,18 @@ import { RelatedService } from '../../../../services/related.service'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
+  
   isUserSolution: boolean = true
+  showStatement = true
+  isLogged: boolean = false
+  solutionSent: boolean = false
+  resources: string = ''
+  params$!: Subscription
+  relatedChallengesData!: DataChallenge
+  relatedListOfChallenges: Challenge[] = []
+  challengeSubs$!: Subscription
+  solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
+
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -49,31 +64,18 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
-  solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
-
-  showStatement = true
-  isLogged: boolean = false
-  solutionSent: boolean = false
-  resources: string = '' // TODO resources
-  params$!: Subscription
-  relatedChallengesData!: DataChallenge
-  relatedListOfChallenges: Challenge[] = []
-  challengeSubs$!: Subscription
-
   async ngOnInit (): Promise<void> {
+
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
-    })
-
-    this.isLogged = this.authService.isUserLoggedIn()
-
-    this.loadRelatedChallenges(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value
     })
+    this.isLogged = this.authService.isUserLoggedIn()
+    this.loadRelatedChallenges(this.idChallenge)
   }
 
   ngAfterContentChecked (): void {
+
     const token = localStorage.getItem('authToken') // TODO
     const refreshToken = localStorage.getItem('refreshToken') // TODO
 
@@ -85,6 +87,11 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     ) {
       this.isLogged = true
     }
+
+    this.solutionService.activeId$.subscribe((value) => {
+    this.activeId = value
+    })
+
   }
 
   loadRelatedChallenges (id: string): void {
