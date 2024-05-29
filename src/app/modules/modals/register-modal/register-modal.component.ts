@@ -12,6 +12,8 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { ValidatorsService } from 'src/app/services/validators.service'
 import { Router } from '@angular/router'
 
+import { isValidDni, isValidPassword, checkBoxChecked, isSamePassword, isValidInput, getInputError } from '../../../helpers/form-validators.helper'
+
 @Component({
   selector: 'app-register-modal',
   templateUrl: './register-modal.component.html',
@@ -30,16 +32,16 @@ export class RegisterModalComponent implements OnInit {
   itineraries: Itinerary[] = []
 
   registerForm = this.formBuilder.group({
-    dni: ['', Validators.required, this.validatorsService.isValidDni],
+    dni: ['', Validators.required, isValidDni],
     email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
     name: ['', Validators.required],
     itineraryId: ['', Validators.required],
-    password: ['', [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword],
+    password: ['', [Validators.required, Validators.minLength(8)], isValidPassword],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-    legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked]
+    legalTermsAccepted: [false, Validators.required, checkBoxChecked]
   }, {
     validators: [
-      this.validatorsService.isSamePassword('password', 'confirmPassword')
+      isSamePassword('password', 'confirmPassword')
     ]
   })
 
@@ -51,11 +53,11 @@ export class RegisterModalComponent implements OnInit {
   }
 
   isValidInput (input: string): boolean | null {
-    return this.validatorsService.isValidInput(input, this.registerForm)
+    return isValidInput(input, this.registerForm)
   }
 
   getInputError (field: string): string {
-    return this.validatorsService.getInputError(field, this.registerForm)
+    return getInputError(field, this.registerForm, this.translate)
   }
 
   register (): void {
