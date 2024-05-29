@@ -5,6 +5,7 @@
 .starter {
   max-width: 1020px;
   margin: 0 auto;
+  height: 100%;
 }
 
 h2 {
@@ -65,20 +66,33 @@ app-starter-filters p {
   font-weight: 700;
 }
 
-#filters-container {
-  position: sticky;
-  top: 0;
-  height: 100vh; /* Asegura que el contenedor tome toda la altura de la pantalla */
-  overflow-y: auto; /* Permite el scroll interno si es necesario */
-}
-
-#challenges-container {
-  overflow-y: auto; /* Permite el scroll interno si es necesario */
-}
-
 @media screen and (max-width: 768px) {
   h2 {
     margin-bottom: 1rem;
     margin-top: 0.5rem;
   }
+}
+
+#filters-container {
+  position: sticky;
+  top: 40px;
+  height: 100%; /* Asegura que el contenedor tome toda la altura de la pantalla */
+  overflow-y: auto; /* Permite el scroll interno si es necesario */
+}
+
+#challenges-container {
+  height: 100%; /* Ajusta la altura del contenedor para que no se superponga con otros elementos */
+  overflow: hidden; /* Evita el scroll en este contenedor */
+  display: flex;
+  flex-direction: column;
+}
+
+#challenges {
+  flex: 1; /* Permite que el contenedor ocupe el espacio disponible */
+  overflow-y: auto; /* Permite el scroll interno */
+}
+
+app-pagination {
+  flex-shrink: 0; /* Asegura que la paginación no se colapse */
+  padding: 10px 0; /* Espaciado para la paginación */
 }
