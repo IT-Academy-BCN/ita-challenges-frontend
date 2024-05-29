@@ -64,9 +64,10 @@ export class SolutionComponent {
       }
       // }
     })
-    this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
-      this.solutions = data.solutions
-    })
+
+    // this.solutionService.getAllSolutions('../assets/dummy/challenge.json').subscribe(data => {
+    //   this.solutions = data.solutions
+    // })
   }
 
   ngAfterViewInit (): void {

@@ -1,14 +1,14 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, type Observable } from 'rxjs'
+import { Solution } from '../models/solution.model'
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
-  // subject = new BehaviorSubject(1);
-  // obs$ = this.subject.asObservable();
 
   activeIdSubject = new BehaviorSubject<number>(1)
   activeId$ = this.activeIdSubject.asObservable()
@@ -31,7 +31,12 @@ export class SolutionService {
     return this.http.get(filePath)
   }
 
-  // public sendActiveIdAfterSolutionIsSent (activeId: number): void {
-  //   this.activeIdSubject.next(activeId)
-  // }
-}
+  getAllSolutions(idChallenge: string, idLanguage: string): Observable<Object> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
+      {
+        headers
+      });
+  }}

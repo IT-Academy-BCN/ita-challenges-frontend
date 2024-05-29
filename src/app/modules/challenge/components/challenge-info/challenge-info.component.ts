@@ -37,7 +37,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   relatedChallengesData!: DataChallenge
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
-  solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
+  // solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
@@ -103,10 +103,12 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   }
 
   openSendSolutionModal (): void {
-    this.modalService.open(SendSolutionModalComponent, {
+    const modalRef = this.modalService.open(SendSolutionModalComponent, {
       centered: true,
       size: 'lg'
     })
+    modalRef.componentInstance.idChallenge = this.idChallenge
+    modalRef.componentInstance.idLanguage = this.languages[0].id_language
   }
 
   clickSendButton (): void {

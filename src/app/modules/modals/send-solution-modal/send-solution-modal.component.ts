@@ -8,18 +8,25 @@ import { SolutionService } from 'src/app/services/solution.service'
   styleUrls: ['./send-solution-modal.component.scss']
 })
 
-export class SendSolutionModalComponent {
+export class SendSolutionModalComponent{
+  
+idChallenge: string = ''
+idLanguage: string = ''
+  
   // solutionSent = false;
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService)
 
-  acceptSolution (): void {
+  public acceptSolution (): void {
     this.solutionService.updateSolutionSentState(true)
     this.closeModal()
     this.solutionService.activeIdSubject.next(2)
+    console.log('send-solution modal. idChallenge:', this.idChallenge)
+    console.log('send-solution modal. idLanguage:', this.idLanguage)
+    
   }
 
-  closeModal (): void {
+  public closeModal (): void {
     this.modalService.dismissAll()
   }
 }
