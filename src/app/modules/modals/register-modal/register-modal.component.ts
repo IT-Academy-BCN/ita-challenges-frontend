@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { Router } from '@angular/router'
 
-import { isValidDni, isValidPassword, checkBoxChecked, isSamePassword, isValidInput, getInputError } from '../../../helpers/form-validators.helper'
+import { isValidDni, isValidPassword, checkBoxChecked, isSamePassword, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
 
 @Component({
   selector: 'app-register-modal',

@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms'
-import { isValidDni, isValidPassword, checkBoxChecked } from './form-validators.helper'
+import { isValidDni, isValidPassword, checkBoxChecked } from './form-validator.helper'
 
 describe('Form Validators Helper', () => {
   describe('isValidDni', () => {

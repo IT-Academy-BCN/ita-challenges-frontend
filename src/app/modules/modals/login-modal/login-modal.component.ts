@@ -7,7 +7,7 @@ import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
-import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validators.helper'
+import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
 
 @Component({
   selector: 'app-login-modal',
