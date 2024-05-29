@@ -20,6 +20,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
+import { Solution } from 'src/app/models/solution.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -37,9 +38,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   relatedChallengesData!: DataChallenge
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
-  // solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
+  challengeSolutions: Solution[] = []
 
-  private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -48,7 +48,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
-  @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -60,12 +59,16 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   async ngOnInit (): Promise<void> {
+    console.log('challenge-info.component, idChallenge:', this.idChallenge)
+    console.log('challenge-info.component, languages:', this.languages)
+
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
     })
     this.isLogged = this.authService.isUserLoggedIn()
     this.loadRelatedChallenges(this.idChallenge)
+    this.loadSolutions(this.idChallenge, this.languages[0].id_language)
   }
 
   ngAfterContentChecked (): void {
@@ -107,8 +110,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       centered: true,
       size: 'lg'
     })
-    modalRef.componentInstance.idChallenge = this.idChallenge
-    modalRef.componentInstance.idLanguage = this.languages[0].id_language
   }
 
   clickSendButton (): void {
@@ -120,5 +121,12 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     } else {
       this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
     }
+  }
+
+  loadSolutions(idChallenge: string, idLanguage: string): void {
+    this.solutionService.getAllSolutions(idChallenge, idLanguage).subscribe((data) => {
+      this.challengeSolutions = data.solutions
+      console.log('challengeSolutions:', this.challengeSolutions)
+    })
   }
 }

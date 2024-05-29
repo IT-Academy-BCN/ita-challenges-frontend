@@ -10,8 +10,6 @@ import { SolutionService } from 'src/app/services/solution.service'
 
 export class SendSolutionModalComponent{
   
-idChallenge: string = ''
-idLanguage: string = ''
   
   // solutionSent = false;
   private readonly modalService = inject(NgbModal)
@@ -21,8 +19,6 @@ idLanguage: string = ''
     this.solutionService.updateSolutionSentState(true)
     this.closeModal()
     this.solutionService.activeIdSubject.next(2)
-    console.log('send-solution modal. idChallenge:', this.idChallenge)
-    console.log('send-solution modal. idLanguage:', this.idLanguage)
     
   }
 

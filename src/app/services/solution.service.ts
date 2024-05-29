@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, type Observable } from 'rxjs'
-import { Solution } from '../models/solution.model'
 import { environment } from 'src/environments/environment'
+import { DataSolution } from '../models/data-solution.model'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class SolutionService {
   solutionSent$ = this.solutionSentSubject.asObservable()
 
   solutionSent: boolean = false
-
+  
   updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
     this.solutionSent = value
@@ -27,15 +27,11 @@ export class SolutionService {
     this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
   }
 
-  public getSolutions (filePath: string): Observable<any> {
-    return this.http.get(filePath)
-  }
-
-  getAllSolutions(idChallenge: string, idLanguage: string): Observable<Object> {
+  getAllSolutions(idChallenge: string, idLanguage: string): Observable<DataSolution> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
+    return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
       {
         headers
       });
