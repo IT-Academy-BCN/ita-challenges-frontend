@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from './../../../services/auth.service'
 import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
-import { ValidatorsService } from 'src/app/services/validators.service'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
 import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validators.helper'
@@ -19,7 +18,6 @@ export class LoginModalComponent {
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)
-  private readonly validatorsService = inject(ValidatorsService)
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 

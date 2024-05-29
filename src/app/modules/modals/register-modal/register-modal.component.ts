@@ -9,7 +9,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
-import { ValidatorsService } from 'src/app/services/validators.service'
 import { Router } from '@angular/router'
 
 import { isValidDni, isValidPassword, checkBoxChecked, isSamePassword, isValidInput, getInputError } from '../../../helpers/form-validators.helper'
@@ -23,17 +22,17 @@ export class RegisterModalComponent implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)
-  private readonly validatorsService = inject(ValidatorsService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
   private readonly router = inject(Router)
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
 
   registerError: string = ''
   itineraries: Itinerary[] = []
 
   registerForm = this.formBuilder.group({
     dni: ['', Validators.required, isValidDni],
-    email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     name: ['', Validators.required],
     itineraryId: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(8)], isValidPassword],
