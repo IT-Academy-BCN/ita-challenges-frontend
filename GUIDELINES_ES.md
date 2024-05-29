@@ -13,7 +13,8 @@
     2.4.1 [Asignarte una tarjeta de tareas](#241-asignarte-una-tarjeta-de-tareas)\
     2.4.2 [Trabajar en una tarea](#242-trabajar-en-una-tarea)\
     2.4.3 [Pull request](#243-pull-request)\
-   2.5 [Metodología Scrum](#25-metodología-scrum)
+   2.5 [Trabajo con git](#25-trabajo-con-git)\
+   2.6 [Metodología Scrum](#26-metodología-scrum)
 
 3. [**REGLAS DE CÓDIGO**](#3-reglas-de-código)
    
@@ -179,9 +180,24 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 4. Si el revisor de código aprueba tu pull request, se puede fusionar a la rama "develop".
 5. Mueve la tarjeta a la columna "Done".
 
+
+
+## 2.5 Trabajo con git
+
+El workflow de git que seguimos en proyecto es similar a Gitflow.
+Para poder trabajar en el proyecto, debería conocer al menos los siguientes comandos git:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+Puede encontrar un buen tutorial en https://www.atlassian.com/git, y hay muchos otros recursos en https://docs.github.com/en/get-started/using-github/github-flow
+
 ----------------------------------------------------------------
 
-#### 2.5 Metodología SCRUM
+#### 2.6 Metodología SCRUM
 
 [Guía Scrum](https://scrumguides.org/)
 

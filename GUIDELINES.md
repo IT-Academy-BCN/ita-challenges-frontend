@@ -10,10 +10,11 @@
    2.2 [Git configurations](#22-git-configurations)\
    2.3 [Daily Procedure](#23-daily-procedure)\
    2.4 [Work with cards Procedure](#24-work-with-cards-procedure)\
-    2.4.1 [Assigning yourself a task-card](#241-assigning-yourself-a-task-card)
-    2.4.2 [Working on a task](#242-working-on-a-class)
-    2.4.3 [Pull request](#243-pull-requests)
-   2.5 [Scrum metodology](#25-scrum-metodology)
+    2.4.1 [Assigning yourself a task-card](#241-assigning-yourself-a-task-card)\
+    2.4.2 [Working on a task](#242-working-on-a-class)\
+    2.4.3 [Pull request](#243-pull-requests)\
+   2.5 [Working with git](#25-working-with-git)\
+   2.6 [Scrum metodology](#26-scrum-metodology)
 
 3. [**CODING GUIDELINES**](#3-definitions-of-method,-class,-etc...)
    
@@ -193,9 +194,20 @@ There isn't a set way to do commits. You can follow the style of "conventional c
 
 7. Go to the [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with the four columns. You will see that the task card you just completed has a reference to the corresponding PR. Move the card to the "Testing" column.
 
-----------------------------------------------------------------
 
-## 2.5 Scrum metodology
+## 2.5 Working with git 
+The workflow we follow is similar to the Gitflow Workflow. 
+To work at the project, you should know at least following git commands:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+A good tutorial is located at https://www.atlassian.com/git, and many other resources are available on https://docs.github.com/en/get-started/using-github/github-flow
+
+## 2.6 Scrum metodology
 https://scrumguides.org/
 -Daily online meetings to discuss difficulties
 -Biweekly in-person meeting (Thursday)
