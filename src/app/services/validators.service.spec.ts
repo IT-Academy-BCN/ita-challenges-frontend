@@ -16,4 +16,8 @@ describe('ValidatorsService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
+
+  it('should have correct email pattern', () => {
+    expect(service.emailPattern).toEqual('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')
+  })
 })
