@@ -28,7 +28,7 @@
 
 7. [**DESARROLLO**](#7-desarrollo)
 
-8. [**PRUEBAS**](#8-pruebas)
+8. [**TESTING**](#8-testing)
 
 9. [**DEPLOY**](#9-deploy) 
 
@@ -275,7 +275,7 @@ Intenta no sobrecargar el proyecto con librerías innecesarias.
         npm install
     (o 'npm i') para instalar todas las dependencias del proyecto especificadas en el archivo package.json.
 
-----------------------------------------------------------------
+--
 
 ### 7. DESARROLLO
 Para propósitos de desarrollo, utiliza el comando
@@ -283,18 +283,24 @@ Para propósitos de desarrollo, utiliza el comando
         ng serve
 para iniciar el servidor de desarrollo. Esto compilará el proyecto y lo servirá localmente, permitiéndote ver e interactuar con él en tu navegador.
 
-----------------------------------------------------------------
+--
 
-### 8. PRUEBAS
-Para ejecutar las pruebas, utiliza el comando
+### 8. TESTING 
+
+Para ejecutar testing, utiliza el comando
 
     npm test
-Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados de las pruebas.
+
+Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados.
 Si prefieres ejecutar las pruebas en modo de vigilancia, que reejecuta automáticamente las pruebas cuando un archivo cambia, utiliza el comando
 
     npm run test:watch.
 
-----------------------------------------------------------------
+
+Si necesitas alguna referencia sobre testing en Angular, puedes consultar https://angular.io/guide/testing. \
+También està disponible una guía sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
 
 ### 9. DEPLOY
 

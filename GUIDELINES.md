@@ -26,9 +26,9 @@
 
 6. [**INSTALLATION**](#6-installation)
 
-7. [**DEVELOPMENT**](#6-installation)
+7. [**DEVELOPMENT**](#7-development)
 
-8. [**TESTING**](#6-installation)
+8. [**TESTING**](#8-testing)
 
 9. [**DEPLOY**](#9-deploy)
 
@@ -297,10 +297,14 @@ to start the development server. This will compile the project and serve it loca
 To run the tests, use the command
 
     npm test
+
 This will execute the test suite and provide feedback on the test results.
 If you prefer to run the tests in watch mode, which automatically re-runs the tests whenever a file changes, use the command
 
     npm run test:watch.
+
+If you need any reference about testing in Angular, you can check https://angular.io/guide/testing. \
+Also is available a guide about testing at https://martinfowler.com/articles/practical-test-pyramid.html
 
 ----------------------------------------------------------------
 
