@@ -5,7 +5,9 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
+  SimpleChanges,
+  OnChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -21,6 +23,7 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { Solution } from 'src/app/models/solution.model'
+import { DataSolution } from 'src/app/models/data-solution.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -28,7 +31,7 @@ import { Solution } from 'src/app/models/solution.model'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked {
+export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   isUserSolution: boolean = true
   showStatement = true
   isLogged: boolean = false
@@ -58,9 +61,14 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['languages'] && changes['languages'].currentValue.length > 0) {
+      this.loadSolutions(this.idChallenge, this.languages[0].id_language)
+
+    }
+  }
+
   async ngOnInit (): Promise<void> {
-    console.log('challenge-info.component, idChallenge:', this.idChallenge)
-    console.log('challenge-info.component, languages:', this.languages)
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
@@ -68,7 +76,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     })
     this.isLogged = this.authService.isUserLoggedIn()
     this.loadRelatedChallenges(this.idChallenge)
-    this.loadSolutions(this.idChallenge, this.languages[0].id_language)
   }
 
   ngAfterContentChecked (): void {
@@ -125,8 +132,8 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   loadSolutions(idChallenge: string, idLanguage: string): void {
     this.solutionService.getAllSolutions(idChallenge, idLanguage).subscribe((data) => {
-      this.challengeSolutions = data.solutions
-      console.log('challengeSolutions:', this.challengeSolutions)
+      this.challengeSolutions = data.results
+      console.log('0 challenge-info.component, solutions:', this.challengeSolutions)
     })
   }
 }

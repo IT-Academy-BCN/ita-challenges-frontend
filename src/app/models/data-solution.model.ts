@@ -4,14 +4,14 @@ export class DataSolution {
   count: number
   offset: number
   limit: number
-  solutions: Solution[] = []
+  results: Solution[] = []
 
   constructor (element: any) {
     this.count = element.count
     this.offset = element.offset
     this.limit = element.limit
     element.results.forEach((solution: Solution) => {
-      this.solutions.push(solution)
+      this.results.push(solution)
     })
   }
 }

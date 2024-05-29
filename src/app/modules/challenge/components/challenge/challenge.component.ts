@@ -66,8 +66,7 @@ export class ChallengeComponent {
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
-      console.log('challenge.component, languages:', this.languages)
-      console.log('challenge.component, challenge:', this.challenge)
+      console.log('0 challenge.component, languages:', this.languages)
     })
   }
 }
