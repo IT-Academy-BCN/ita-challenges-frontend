@@ -23,7 +23,6 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { Solution } from 'src/app/models/solution.model'
-import { DataSolution } from 'src/app/models/data-solution.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -64,7 +63,6 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['languages'] && changes['languages'].currentValue.length > 0) {
       this.loadSolutions(this.idChallenge, this.languages[0].id_language)
-
     }
   }
 
@@ -133,7 +131,6 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   loadSolutions(idChallenge: string, idLanguage: string): void {
     this.solutionService.getAllSolutions(idChallenge, idLanguage).subscribe((data) => {
       this.challengeSolutions = data.results
-      console.log('0 challenge-info.component, solutions:', this.challengeSolutions)
     })
   }
 }

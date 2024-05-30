@@ -1,7 +1,9 @@
 <!---Nav tabs-->
 <!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
+  
   <!--DETAILS TAB-->
+
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
     <a href="#details" ngbNavLink>{{
       "modules.challenge.info.detailsTitle" | translate
@@ -68,12 +70,15 @@
       } }
     </ng-template>
   </li>
+
+  <!--SOLUTIONS TAB-->
+
   <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
     <a href="#solutions" ngbNavLink>{{
       "modules.challenge.info.solutionsTitle" | translate
       }}</a>
     <ng-template ngbNavContent>
-      <!--SOLUTIONS TAB-->
+      
       <!--users can only see other solutions if they sent theirs-->
       <div class="tab-content">
         <div class="restricted" *ngIf="isUserSolution">
@@ -90,8 +95,13 @@
         <!--if users sent thei solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="!isUserSolution && isLogged">
           <ng-container *ngFor="let solution of challengeSolutions; let i = index">
-            <app-solution [number]="i + 1" [isUserSolution]="false" class="mb-4"
-              [languageExt]="'javascript'"></app-solution>
+            <app-solution 
+              [number]="i + 1" 
+              [isUserSolution]="false" 
+              class="mb-4"
+              [languageExt]="'javascript'"
+              [solutionText]="solution.solutionText">
+            </app-solution>
           </ng-container>
         </div>
       </div>

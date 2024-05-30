@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { Injectable, Input, inject } from '@angular/core'
 import { BehaviorSubject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { DataSolution } from '../models/data-solution.model'
