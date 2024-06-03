@@ -1,13 +1,40 @@
 <app-mobile-nav></app-mobile-nav>
+<div class="nav-web">
+  <!-- languageSelect -->
+  <div>
+    <label for="languageSelect">
+      <select class="languageSelect" id="languageSelect" (change)="changeLanguage($event)">
+        <option value="ca">CAT</option>
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </label>
+  </div>
 
+  <div>
+    <label for="languageSelect">
+      <select class="" id="" (change)="changeLanguage($event)">
+        <option value="ca">CAT</option>
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </label>
+  </div>
 
+  <!-- Settings -->
+  <div>
+    <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+      <img src="assets/img/icon/setting.svg" alt="Settings" />
+      <!-- {{ "components.mainMenu.section6.title" | translate }} -->
+    </a>
+  </div>
 
-
-
-
-
-
-
-
-
-
+  <!-- User -->
+  <div>
+    <button class="user" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"
+      (click)="openLoginModal()">
+      <img src="assets/img/icon/user.svg" alt="User" />
+      <!-- {{ "components.mainMenu.section7.title" | translate }} -->
+    </button>
+  </div>
+</div>
