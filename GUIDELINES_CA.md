@@ -28,7 +28,7 @@
 
 7. [**DESENVOLUPAMENT**](#7-desenvolupament)
 
-8. [**PROVES**](#8-proves)
+8. [**TESTING**](#8-testing)
 
 ----------------------------------------------------------------
 
@@ -276,16 +276,21 @@ per iniciar el servidor de desenvolupament. Això compilarà el projecte i el se
 
 ----------------------------------------------------------------
 
-# 8. PROVES
+# 8. TESTING
+
 Per executar les proves, utilitza el comandament
 
     npm test
+
 Això executarà el conjunt de proves i proporcionarà retroalimentació sobre els resultats de les proves.
 Si prefereixes executar les proves en mode de vigilància, que reexecuta automàticament les proves quan un arxiu canvia, utilitza el comandament
 
     npm run test:watch.
 
-----------------------------------------------------------------
+Si necessites alguna referència sobre testing en Angular, pots consultar https://angular.io/guide/testing. \
+També està disponible una guia sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
 
 ### 9. DEPLOY
 
