@@ -28,7 +28,7 @@
 
 7. [**DESENVOLUPAMENT**](#7-desenvolupament)
 
-8. [**PROVES**](#8-proves)
+8. [**TESTING**](#8-testing)
 
 ----------------------------------------------------------------
 
@@ -144,7 +144,9 @@ El procediment a seguir cada dia seria aquest:
 
 ## 2.4 Procediment de treball amb targetes
 
-Les targetes de tasques estan organitzades segons el seu estat de desenvolupament. Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
+Les targetes de tasques estan organitzades segons el seu estat de desenvolupament.
+Estan classificades per nivells (1, 2, 3), sent 1 el nivell més baix de complexitat.
+Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
 
 ### 2.4.1 Assignar-te una targeta de tasques
 
@@ -276,16 +278,21 @@ per iniciar el servidor de desenvolupament. Això compilarà el projecte i el se
 
 ----------------------------------------------------------------
 
-# 8. PROVES
+# 8. TESTING
+
 Per executar les proves, utilitza el comandament
 
     npm test
+
 Això executarà el conjunt de proves i proporcionarà retroalimentació sobre els resultats de les proves.
 Si prefereixes executar les proves en mode de vigilància, que reexecuta automàticament les proves quan un arxiu canvia, utilitza el comandament
 
     npm run test:watch.
 
-----------------------------------------------------------------
+Si necessites alguna referència sobre testing en Angular, pots consultar https://angular.io/guide/testing. \
+També està disponible una guia sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
 
 ### 9. DEPLOY
 
