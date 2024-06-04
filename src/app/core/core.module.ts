@@ -8,7 +8,7 @@ import { MainMenuComponent } from './layout/main-menu/main-menu.component'
 import { ModalsModule } from '../modules/modals/modals.module'
 import { I18nModule } from 'src/assets/i18n/i18n.module'
 import { TranslateModule } from '@ngx-translate/core'
-import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component';
+import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component'
 import { DesktopNavComponent } from './layout/header/desktop-nav/desktop-nav.component'
 
 @NgModule({
