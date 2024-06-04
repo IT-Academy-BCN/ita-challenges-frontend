@@ -6,8 +6,8 @@ import {
   Output,
   ViewChild,
   inject,
-  SimpleChanges,
-  OnChanges
+  type SimpleChanges,
+  type OnChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -22,7 +22,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { Solution } from 'src/app/models/solution.model'
+import { type Solution } from 'src/app/models/solution.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -60,14 +60,13 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['languages'] && changes['languages'].currentValue.length > 0) {
+  ngOnChanges (changes: SimpleChanges): void {
+    if (changes['languages']?.currentValue?.length > 0) {
       this.loadSolutions(this.idChallenge, this.languages[0].id_language)
     }
   }
 
   async ngOnInit (): Promise<void> {
-
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
@@ -111,7 +110,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   openSendSolutionModal (): void {
-    const modalRef = this.modalService.open(SendSolutionModalComponent, {
+    this.modalService.open(SendSolutionModalComponent, {
       centered: true,
       size: 'lg'
     })
@@ -128,7 +127,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
     }
   }
 
-  loadSolutions(idChallenge: string, idLanguage: string): void {
+  loadSolutions (idChallenge: string, idLanguage: string): void {
     this.solutionService.getAllSolutions(idChallenge, idLanguage).subscribe((data) => {
       this.challengeSolutions = data.results
     })
