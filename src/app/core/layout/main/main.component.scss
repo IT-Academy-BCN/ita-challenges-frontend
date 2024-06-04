@@ -1,13 +1,12 @@
 @import '/src/styles/colors';
 .container-fluid {
   min-height: 100%;
-  gap: 35px;
+  gap: 30px;
   background-color: $gray-4;
   display: flex;
   flex-direction: row;
   -webkit-box-align: center;
   background-color: rgb(235, 235, 235);
-  padding: 0rem 1.5rem 2rem 1.25rem;
   nav {
     // height: 100%;
     //   display: flex;
@@ -36,7 +35,7 @@
     background-color: $white;
     border-radius: 15px;
     width: 100%;
-    min-height: calc(100vh - 80px) !important;
+    height: calc(100% - 80px) !important;
     padding: 20px 50px 20px 50px;
   }
   app-main-menu {
