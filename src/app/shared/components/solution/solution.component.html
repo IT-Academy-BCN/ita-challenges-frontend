@@ -1,5 +1,6 @@
 <div class="solution-header">
-	{{ "modules.challenge.info.solution" | translate }} {{ number }}
+	{{ "modules.challenge.info.solution" | translate }} {{ number }} 	
+
 </div>
 <div class="solution-body">
 	<div
@@ -8,15 +9,13 @@
 		class="editable-div"
 		(click)="handleClick($event)"
 	>
-	{{ solutionText }}
-		<!-- <ng-container *ngIf="isUserSolution">
+		<ng-container *ngIf="isUserSolution">
 			{{ "modules.challenge.info.solutionCode" | translate }}
-		</ng-container> -->
+		</ng-container>
 	</div>
-	<!-- <div *ngIf="!isUserSolution" class="non-editable-text"> -->
+	<div *ngIf="!isUserSolution" class="non-editable-text">
 		<!-- solutions from other users go here  -->
-		<!-- {{ "modules.challenge.info.solutionsChallenge" | translate }} -->
-		<!-- <pre *ngFor="let solution of challengeSolutions">{{ solution.solutionText}}</pre> -->
+		<pre>{{ solutionText }}</pre>
 
-	<!-- </div> -->
+	</div>
 </div>

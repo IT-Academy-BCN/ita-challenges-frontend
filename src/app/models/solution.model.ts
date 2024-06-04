@@ -1,9 +1,9 @@
 export class Solution {
-  idSolution: string
-  solutionText: string
+  id_solution: string
+  solution_text: string
 
   constructor (element: any) {
-    this.idSolution = element.id_solution
-    this.solutionText = element.solution_text
+    this.id_solution = element.id_solution
+    this.solution_text = element.solution_text
   }
 }

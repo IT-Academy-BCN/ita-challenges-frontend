@@ -4,6 +4,7 @@ import {
   Input,
   ViewChild,
   inject,
+  OnInit,
 } from "@angular/core";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -23,26 +24,27 @@ type Language = "javascript" | "java" | "python" | "php";
   templateUrl: "./solution.component.html",
   styleUrls: ["./solution.component.scss"],
 })
-export class SolutionComponent {
+export class SolutionComponent implements OnInit{
+
   @ViewChild("editorSolution") editorSolution!: ElementRef;
   editor: EditorView = new EditorView();
+  
+  @Input() challengeSolutions: Solution[] = []
+  @Input() solutionText: string = ''
+  @Input() languageExt: Language = "javascript";
+  @Input() isUserSolution = false;
 
   @Input() set number(value: number | undefined) {
     setTimeout(() => {
       this._number = value;
     }, 0);
   }
-  @Input() challengeSolutions: Solution[] = []
-  @Input() solutionText: string = ''
 
   get number(): number | undefined {
     return this._number;
   }
 
   private _number?: number;
-  @Input() languageExt: Language = "javascript";
-
-  @Input() isUserSolution = false;
 
   /* code added by valerio */
   private textRemoved = false;
@@ -56,7 +58,6 @@ export class SolutionComponent {
     }
   }
 
-  // solutions: any[] = [];
 
   private readonly solutionService = inject(SolutionService);
   private readonly translateService = inject(TranslateService);
@@ -73,6 +74,10 @@ export class SolutionComponent {
       }
       // }
     });
+
+    // this.solutionService.getAllSolutions(this.idChallenge, this.languageExt).subscribe((data) => {
+    //   this.challengeSolutions = data.results;
+    // });
 
   }
 

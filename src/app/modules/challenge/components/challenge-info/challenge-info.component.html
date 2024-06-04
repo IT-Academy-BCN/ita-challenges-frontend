@@ -94,14 +94,16 @@
         </div>
         <!--if users sent thei solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="!isUserSolution && isLogged">
-          <ng-container *ngFor="let solution of challengeSolutions; let i = index">
+          <ng-container >
             <app-solution 
+              *ngFor="let solution of challengeSolutions; let i = index"
               [number]="i + 1" 
               [isUserSolution]="false" 
               class="mb-4"
               [languageExt]="'javascript'"
-              [solutionText]="solution.solutionText">
+              [solutionText]="solution.solution_text">
             </app-solution>
+
           </ng-container>
         </div>
       </div>
