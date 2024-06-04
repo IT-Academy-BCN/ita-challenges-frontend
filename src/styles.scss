@@ -8,25 +8,22 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
   background-color: $gray-4;
   margin: 0;
-  padding: 12px 10px 40px;
+  padding: 12px 10px 50px;
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
   app-root,
   app-main {
     display: flex;
     flex-direction: column;
     height: 100%;
   }
-  app-main {
-    max-width: 1440px;
-    margin: 0 auto;
-    width: 100%;
-  }
 }
 
+a {
+  text-decoration: none;
+}
 @media screen and (max-width: 768px) {
   html,
   body {
