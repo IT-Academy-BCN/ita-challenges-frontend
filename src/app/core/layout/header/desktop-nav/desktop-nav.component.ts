@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrl: './desktop-nav.component.scss'
 })
 export class DesktopNavComponent {
+  selectWidth = '69px'
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
   constructor () {
@@ -25,5 +26,6 @@ export class DesktopNavComponent {
     const selectElement = event.target as HTMLSelectElement
     const language = selectElement.value
     this.translate.use(language)
+    this.selectWidth = language === 'ca' ? '69px' : '57px'
   }
 }

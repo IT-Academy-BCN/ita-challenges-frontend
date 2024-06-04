@@ -2,7 +2,7 @@
   <!-- languageSelect -->
   <div>
     <label for="languageSelect">
-      <select class="languageSelect" id="languageSelect" (change)="changeLanguage($event)">
+      <select class="languageSelect" id="languageSelect" (change)="changeLanguage($event)" [style.width]="selectWidth">
         <option value="ca">CAT</option>
         <option value="es">ES</option>
         <option value="en">EN</option>
