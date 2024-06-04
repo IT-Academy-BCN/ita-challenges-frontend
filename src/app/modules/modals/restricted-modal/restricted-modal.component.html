@@ -11,8 +11,8 @@
 	>
 		<div class="modal-body d-flex flex-column gap-3 pt-0">
 			<img src="assets/img/icon/lock-color.svg" alt="Lock" />
-			<h2 class="modal-title">Acceso restringido</h2>
-			<p>Regístrate para subir, etregar y ver soluciones a los retos</p>
+			<h2 class="modal-title">{{ 'modules.modals.restricted.title' | translate }} </h2>
+			<p>{{ 'modules.modals.restricted.description' | translate }}</p>
 		</div>
 		<div class="modal-footer d-flex flex-column gap-3 mb-3">
 			<button
@@ -20,14 +20,14 @@
 				class="btn btn-primary w-100"
 				(click)="openRegisterModal()"
 			>
-				Registrarme
+			{{ 'modules.modals.restricted.register' | translate }}
 			</button>
 			<button
 				type="submit"
 				class="btn btn-outline-primary w-100"
 				(click)="openLoginModal()"
 			>
-				Entrar
+			{{ 'modules.modals.restricted.loginRedirect' | translate }}
 			</button>
 		</div>
 	</div>
