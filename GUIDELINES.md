@@ -149,7 +149,9 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 ### 2.4.1 Assigning yourself a task-card
 - The project has been planned in several stages called ["Epic"](https://github.com/orgs/IT-Academy-BCN/projects/13).
 
-- Each Epic is further divided into "tasks", which are generally created by the mentor. To organize the task distribution, this [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with four columns is used:
+- Each Epic is further divided into "tasks", which are generally created by the technical lead. 
+- Tasks are classified by their complexity by levels (1, 2, 3) from less to more complex.
+- To organize the task distribution, this [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with four columns is used:
     - ToDo: includes tasks that have not yet been started. All tasks (cards) start here.
     - Doing: tasks that are in progress.
     - Testing: tasks that have been completed and need to be reviewed by the mentor.

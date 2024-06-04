@@ -151,7 +151,9 @@ El procedimiento a seguir cada día sería este:
 
 #### 2.4 Procedimiento de trabajo con tarjetas
 
-Las tarjetas de tareas están organizadas según su estado de desarrollo. Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
+Las tarjetas de tareas están organizadas según su estado de desarrollo. Están clasificadas por niveles (1, 2, 3), siendo 1 el nivel más bajo de complejidad.
+
+Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 
 ##### 2.4.1 Asignarte una tarjeta de tareas
 

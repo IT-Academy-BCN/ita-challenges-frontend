@@ -103,6 +103,12 @@
                 "title": "Registration Successful",
                 "body": "A mentor must validate your registration. Please wait for email confirmation before logging in.",
                 "btn":"Okay"
+            },
+            "restricted": {
+                "title": "Restricted access",
+                "description":"Sign up to upload, deliver and see solutions to challenges",
+                "register":"Sign Up",
+                "loginRedirect":"Login"
             }
         }
     },

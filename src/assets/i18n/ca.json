@@ -102,6 +102,12 @@
                 "title": "Registre Exitós",
                 "body": "Un mentor ha de validar el seu registre. Esperi la confirmació per correu electrònic abans d'iniciar sessió,",
                 "btn":"D'acord"
+            },
+            "restricted": {
+                "title": "Accés restringit",
+                "description":"Registra't per pujar, lliurar i veure solucions dels reptes",
+                "register":"Registrar-me",
+                "loginRedirect":"Entrar"
             }
         }
     },
