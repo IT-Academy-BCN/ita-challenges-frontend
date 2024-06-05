@@ -9,20 +9,31 @@ import { Challenge } from "../models/challenge.model";
 @Injectable({
   providedIn: 'root'
 })
-
 export class StarterService {
 
   constructor(private http: HttpClient) { }
 
+  // getAllChallenges(): Observable<Object> {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   })
+  //   return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
+  //     {
+  //       headers
+  //     });
+  // }
+
+
   getAllChallenges(): Observable<Object> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
-    })
-    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
-      {
-        headers
-      });
+    });
+    return this.http.get(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, { headers })
+      .pipe(
+        tap(data => console.log(data))
+      );
   }
+
 
   getAllChallengesOffset(pageOffset: number, pageLimit: number): Observable<Object> {
     const params = new HttpParams()
