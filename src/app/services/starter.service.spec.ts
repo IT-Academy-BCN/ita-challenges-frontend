@@ -1,15 +1,13 @@
 import { StarterService } from './starter.service'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { delay, of } from 'rxjs'
-import data from './../../assets/dummy/data-challenge.json' // see data-typings.d.ts
+import { delay } from 'rxjs'
+import data from './../../assets/dummy/data-challenge.json'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { TestBed, inject } from '@angular/core/testing'
-import { ChallengeService } from './challenge.service'
+import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
 
-/* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
   let service: StarterService
   // let httpClientSpy: any;
@@ -19,35 +17,17 @@ describe('StarterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule]
     })
-    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
+    httpClient = TestBed.inject(HttpClient)
     httpClientMock = TestBed.inject(HttpTestingController)
     service = new StarterService(httpClient)
-    testScheduler = new TestScheduler((actual, expected) => {})
+    testScheduler = new TestScheduler((actual, expected) => {
+    })
   })
 
-  /*
-  Some explanations:
-  RxJs introduced the following syntax when writing marble tests in our code
-      - ' ' the whitespace is a unique character that will not be interpreted; it can be used to align your marble string.
-      - '-' represents a frame of virtual time passing
-      - '|' This sign illustrates the completion of an observable.
-      - '#' Signifies an error
-      - [a-z] an alphanumeric character represents a value which is emitted by the Observable.
-      - '()' used to group events in the same frame. This can be used to group values, errors, and completion.
-      - '^' this sign illustrates the subscription point and will only be used when we are dealing with hot observables.
-
-  That’s the basic syntax. Let’s look at some examples to make ourself more familiar with the syntax.
-      - --: equivalent to NEVER. An observable that never emits
-      - a--b--c| : an Observable that emits a on the first frame, b on the fourth and c on the seventh. After emitting c the observable completes.
-      - ab--# : An Observable that emits a on frame two, b on frame three and an error on frame six.
-      - a^(bc)--|: A hot Observable that emits a before the subscription.
-   */
-
   it('Should stream all challenges', (done) => {
-    const mockResponse: Object = { challenge: 'challenge' }
+    const mockResponse: Record<string, unknown> = { challenge: 'challenge' }
     service.getAllChallenges().subscribe()
     const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
     expect(req.request.method).toEqual('GET')
@@ -60,7 +40,7 @@ describe('StarterService', () => {
     const pageOffset = 0
     const pageLimit = 8
 
-    service.getAllChallengesOffset(pageOffset, pageLimit).subscribe((response) => {
+    service.getAllChallengesOffset(pageOffset, pageLimit).subscribe(response => {
       expect(response).toEqual(mockResponse)
     })
 
@@ -70,11 +50,81 @@ describe('StarterService', () => {
   })
 
   it('should sort challenges by creation date in asscending order', () => {
-    const mockChallenges = [
-      { id: 1, creation_date: '2022-05-10' },
-      { id: 2, creation_date: '2022-05-08' },
-      { id: 3, creation_date: '2022-05-09' },
+    const mockChallenges: Challenge[] = [
+      {
+        id_challenge: '1',
+        challenge_title: 'Challenge 1',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '1',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      },
+      {
+        id_challenge: '2',
+        challenge_title: 'Challenge 2',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '2',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      },
+      {
+        id_challenge: '3',
+        challenge_title: 'Challenge 1',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '1',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      }
     ]
+
     const offset = 0
     const limit = 3
 
@@ -88,10 +138,79 @@ describe('StarterService', () => {
   })
 
   it('should sort challenges by creation date in descending order', () => {
-    const mockChallenges = [
-      { id: 1, creation_date: '2022-05-10' },
-      { id: 2, creation_date: '2022-05-08' },
-      { id: 3, creation_date: '2022-05-09' },
+    const mockChallenges: Challenge[] = [
+      {
+        id_challenge: '1',
+        challenge_title: 'Challenge 1',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '1',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      },
+      {
+        id_challenge: '2',
+        challenge_title: 'Challenge 2',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '2',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      },
+      {
+        id_challenge: '3',
+        challenge_title: 'Challenge 1',
+        level: 'EASY',
+        popularity: 1,
+        creation_date: new Date('2022-05-10'),
+        detail: {
+          description: 'lorem',
+          examples: [],
+          notes: 'lorem'
+        },
+        languages: [
+          {
+            id_language: '1',
+            language_name: 'lorem'
+          }
+        ],
+        solutions: [
+          {
+            idSolution: '1',
+            solutionText: 'Aquí va el texto de la solución 1'
+          }
+        ]
+      }
     ]
     const offset = 0
     const limit = 3
@@ -117,12 +236,12 @@ describe('StarterService', () => {
 
   it('should filter challenges correctly', () => {
     const mockFilters = {
-      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
+      languages: [],
       levels: ['EASY'],
-      progress: [],
+      progress: []
     }
     const mockChallenges: Challenge[] = []
-    service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe((filteredChallenges) => {
+    service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
       expect(filteredChallenges[0].id).toBe(1)
     })

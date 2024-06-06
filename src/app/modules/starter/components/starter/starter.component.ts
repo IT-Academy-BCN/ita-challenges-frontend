@@ -84,7 +84,7 @@ export class StarterComponent implements OnInit {
   }
 
   private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
-    const respArray: any[] = Array.isArray(resp) ? resp : [resp]
+    const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
     const sortedChallenges$ = this.isAscending
       ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
       : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
@@ -107,13 +107,17 @@ export class StarterComponent implements OnInit {
         if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
           const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
           this.starterService.getAllChallengesFiltered(this.filters, respArray)
-            .subscribe(filteredResp => {
+            .subscribe((filteredResp: Challenge[]) => {
               if (this.sortBy !== '') {
                 const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
-                orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
-                  this.listChallenges = sortedResp
-                  this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-                })
+                if (filteredResp.every(item => item instanceof Challenge)) {
+                  orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
+                    this.listChallenges = sortedResp
+                    this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                  })
+                } else {
+                  console.error('filteredResp no es un array de Challenge')
+                }
               } else {
                 this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
                 this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
