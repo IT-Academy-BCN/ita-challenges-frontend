@@ -42,14 +42,6 @@ export class StarterComponent implements OnInit {
 
   ngOnInit (): void {
     this.getChallengesByPage(this.pageNumber)
-    this.starterService.getAllChallenges().subscribe(
-      data => {
-        console.log(data)
-      },
-      error => {
-        console.error(error)
-      }
-    )
   }
 
   ngOnDestroy (): void {
