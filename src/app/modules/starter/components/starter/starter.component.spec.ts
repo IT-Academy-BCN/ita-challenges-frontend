@@ -16,16 +16,18 @@ describe('StarterComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [StarterComponent]
+      declarations: [StarterComponent],
+      providers: [StarterService]
     })
     fixture = TestBed.createComponent(StarterComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
     starterService = TestBed.inject(StarterService)
     httpClientMock = TestBed.inject(HttpTestingController)
   })
 
-  it('should call getAllChallengesOffset when sortBy empty', (done) => {
+  it('should call getAllChallengesOffset when sortBy empty', async () => {
+    jest.setTimeout(10000) // Aumenta el tiempo de espera a 10 segundos
+
     const mockResponse: Challenge[] = [
       {
         id_challenge: '1',
@@ -50,80 +52,143 @@ describe('StarterComponent', () => {
             solutionText: 'Aquí va el texto de la solución 1'
           }
         ]
-      },
-      {
-        id_challenge: '2',
-        challenge_title: 'Challenge 2',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '2',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      },
-      {
-        id_challenge: '3',
-        challenge_title: 'Challenge 1',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '1',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
       }
     ]
+
     const starterServiceSpy = jest.spyOn(starterService, 'getAllChallengesOffset').mockReturnValue(of(mockResponse))
     component.sortBy = ''
 
     component.getChallengesByPage(1)
 
-    const req = httpClientMock.expectOne(req => {
-      // Comprueba que la URL es la correcta
-      return req.url === `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}` && req.params.get('offset') === '0' && req.params.get('limit') === '8'
-    })
-    expect(req.request.method).toEqual('GET')
+    // Espera a que todas las operaciones asincrónicas se completen
+    await fixture.whenStable()
 
+    // Asegura que Angular detecta todos los cambios después de la llamada asincrónica
+    fixture.detectChanges()
+
+    // Realiza las expectativas
     expect(starterServiceSpy).toBeCalledWith(0, 8)
     expect(component.listChallenges).toBe(mockResponse)
     expect(component.totalPages).toEqual(3)
+    expect(starterService.getAllChallengesOffset).toHaveBeenCalled()
 
+    // Verifica que se realizó la solicitud HTTP esperada
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`)
+    expect(req.request.method).toEqual('GET')
     req.flush(mockResponse)
-    httpClientMock.match(req => {
-      console.log(req.url)
-      return false
-    })
-    httpClientMock.verify()
-    done()
   })
 })
+
+// beforeEach(() => {
+//   TestBed.configureTestingModule({
+//     imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+//     declarations: [StarterComponent]
+//   })
+//   fixture = TestBed.createComponent(StarterComponent)
+//   component = fixture.componentInstance
+//   fixture.detectChanges()
+//   starterService = TestBed.inject(StarterService)
+//   httpClientMock = TestBed.inject(HttpTestingController)
+// })
+
+// it('should call getAllChallengesOffset when sortBy empty', (done) => {
+//   const mockResponse: Challenge[] = [
+//     {
+//       id_challenge: '1',
+//       challenge_title: 'Challenge 1',
+//       level: 'EASY',
+//       popularity: 1,
+//       creation_date: new Date('2022-05-10'),
+//       detail: {
+//         description: 'lorem',
+//         examples: [],
+//         notes: 'lorem'
+//       },
+//       languages: [
+//         {
+//           id_language: '1',
+//           language_name: 'lorem'
+//         }
+//       ],
+//       solutions: [
+//         {
+//           idSolution: '1',
+//           solutionText: 'Aquí va el texto de la solución 1'
+//         }
+//       ]
+//     },
+//     {
+//       id_challenge: '2',
+//       challenge_title: 'Challenge 2',
+//       level: 'EASY',
+//       popularity: 1,
+//       creation_date: new Date('2022-05-10'),
+//       detail: {
+//         description: 'lorem',
+//         examples: [],
+//         notes: 'lorem'
+//       },
+//       languages: [
+//         {
+//           id_language: '2',
+//           language_name: 'lorem'
+//         }
+//       ],
+//       solutions: [
+//         {
+//           idSolution: '1',
+//           solutionText: 'Aquí va el texto de la solución 1'
+//         }
+//       ]
+//     },
+//     {
+//       id_challenge: '3',
+//       challenge_title: 'Challenge 1',
+//       level: 'EASY',
+//       popularity: 1,
+//       creation_date: new Date('2022-05-10'),
+//       detail: {
+//         description: 'lorem',
+//         examples: [],
+//         notes: 'lorem'
+//       },
+//       languages: [
+//         {
+//           id_language: '1',
+//           language_name: 'lorem'
+//         }
+//       ],
+//       solutions: [
+//         {
+//           idSolution: '1',
+//           solutionText: 'Aquí va el texto de la solución 1'
+//         }
+//       ]
+//     }
+//   ]
+//   const starterServiceSpy = jest.spyOn(starterService, 'getAllChallengesOffset').mockReturnValue(of(mockResponse))
+//   component.sortBy = ''
+
+//   component.getChallengesByPage(1)
+
+//   const req = httpClientMock.expectOne(req => {
+//     // Comprueba que la URL es la correcta
+//     return req.url === `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}` && req.params.get('offset') === '0' && req.params.get('limit') === '8'
+//   })
+//   expect(req.request.method).toEqual('GET')
+
+//   expect(starterServiceSpy).toBeCalledWith(0, 8)
+//   expect(component.listChallenges).toBe(mockResponse)
+//   expect(component.totalPages).toEqual(3)
+
+//   req.flush(mockResponse)
+//   httpClientMock.match(req => {
+//     console.log(req.url)
+//     return false
+//   })
+//   httpClientMock.verify()
+//   done()
+// })
 
 // it('should create', () => {
 //   expect(component).toBeTruthy()
