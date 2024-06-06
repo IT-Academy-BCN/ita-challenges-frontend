@@ -1,5 +1,5 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, ViewChild } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrls: ['./starter.component.scss'],
   providers: []
 })
-export class StarterComponent {
+export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
 
   challenges: Challenge[] = []
@@ -42,6 +42,14 @@ export class StarterComponent {
 
   ngOnInit (): void {
     this.getChallengesByPage(this.pageNumber)
+    this.starterService.getAllChallenges().subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
 
   ngOnDestroy (): void {
