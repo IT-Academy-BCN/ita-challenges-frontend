@@ -136,8 +136,8 @@ describe('AuthService', () => {
   it('should make successful login request', (done) => {
     const testUser = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword'
+      dni: 'mockUserDni',
+      password: 'mockUserPassword'
     }
 
     const mockResponse = {
@@ -164,8 +164,8 @@ describe('AuthService', () => {
   it('should make UNsuccessful login request', (done) => {
     const testUser = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword'
+      dni: 'mockUserDni',
+      password: 'mockUserPassword'
     }
 
     const mockResponse = {
@@ -190,8 +190,8 @@ describe('AuthService', () => {
   it('should set user cookies and resolve when login succeeds', async () => {
     const mockUser: User = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword'
+      dni: 'mockUserDni',
+      password: 'mockUserPassword'
     }
 
     const mockResponse = { // response we expect from the loginRequest function.
@@ -218,8 +218,8 @@ describe('AuthService', () => {
   it('should reject with error message when login fails', async () => {
     const mockUser: User = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword'
+      dni: 'mockUserDni',
+      password: 'mockUserPassword'
     }
 
     const mockErrorMessage = 'Invalid Credentials'
