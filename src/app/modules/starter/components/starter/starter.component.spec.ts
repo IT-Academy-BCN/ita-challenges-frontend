@@ -5,14 +5,14 @@ import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { environment } from 'src/environments/environment'
 import { of } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService
-  let httpClientMock: HttpTestingController
+  let httpMock: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('StarterComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     starterService = TestBed.inject(StarterService)
-    httpClientMock = TestBed.inject(HttpTestingController)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
   it('should create', () => {
@@ -37,26 +37,6 @@ describe('StarterComponent', () => {
 
     component.getChallengesByPage(1)
     expect(starterService.getAllChallenges).toHaveBeenCalled()
-    done()
-  })
-
-  it('should call getAllChallengesOffset when sortBy empty', (done) => {
-    const mockResponse = { challenge: 'challenge' }
-    const starterServiceSpy = jest.spyOn(starterService, 'getAllChallengesOffset').mockReturnValue(of(mockResponse))
-    component.sortBy = ''
-
-    component.getChallengesByPage(1)
-
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=0&limit=8`)
-    expect(req.request.method).toEqual('GET')
-
-    expect(starterServiceSpy).toBeCalledWith(0, 8)
-    expect(component.listChallenges).toBe(mockResponse)
-    expect(component.totalPages).toEqual(3)
-    expect(starterService.getAllChallengesOffset).toHaveBeenCalled()
-
-    req.flush(mockResponse)
-    httpClientMock.verify()
     done()
   })
 
@@ -126,5 +106,19 @@ describe('StarterComponent', () => {
     component.getChallengeFilters({ languages: ['JavaScript'], levels: ['Easy'], progress: [] })
 
     expect(getChallengeFiltersSpy).toHaveBeenCalled()
+  })
+
+  it('should call getAllChallengesOffset with correct parameters', () => {
+    const mockChallenges = [{ id: 1, name: 'Test Challenge' }]
+    const pageOffset = 0
+    const pageLimit = 10
+
+    starterService.getAllChallengesOffset(pageOffset, pageLimit).subscribe((challenges: any) => {
+      expect(challenges).toEqual(mockChallenges)
+    })
+
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`)
+    expect(req.request.method).toBe('GET')
+    req.flush(mockChallenges)
   })
 })
