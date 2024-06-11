@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClientModule, HttpClient } from '@angular/common/http'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -25,13 +25,12 @@ export function HttpLoaderFactory (http: HttpClient): any {
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
+  bootstrap: [AppComponent],
+  imports: [BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
     NgbModule,
-    HttpClientModule,
     StarterModule,
     ChallengeModule,
     ProfileModule,
@@ -43,12 +42,11 @@ export function HttpLoaderFactory (http: HttpClient): any {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-  ],
+    })],
   providers: [
-    AuthService
-    // CookieEncryptionHelper
-  ],
-  bootstrap: [AppComponent]
+    AuthService, // CookieEncryptionHelper
+
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule { }

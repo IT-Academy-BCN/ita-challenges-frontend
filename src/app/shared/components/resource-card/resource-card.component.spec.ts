@@ -1,7 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ResourceCardComponent } from './resource-card.component'
 import { ResourcesService } from 'src/app/services/resources.service'
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 
 describe('ResourceCardComponent', () => {
@@ -16,9 +16,10 @@ describe('ResourceCardComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ResourceCardComponent],
-      imports: [HttpClientModule],
+      imports: [],
       providers: [
-        { provide: ResourcesService, useValue: resourcesServiceMock }
+        { provide: ResourcesService, useValue: resourcesServiceMock },
+        provideHttpClient(withInterceptorsFromDi())
       ]
     })
       .compileComponents()

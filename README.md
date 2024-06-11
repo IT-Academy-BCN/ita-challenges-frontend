@@ -33,7 +33,7 @@ This project exists thanks to all the people who contribute.
 #### Required software
 
 - **node.js v20.10.0**. You can see the installation instructions in the [node.js website](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs).
-- **Angular CLI v17.0.7**. See [Angular Docs](https://angular.io/guide/setup-local) for installation instructions.
+- **Angular CLI v18.0.3**. See [Angular Docs](https://angular.io/guide/setup-local) for installation instructions.
 
 #### Project links
 

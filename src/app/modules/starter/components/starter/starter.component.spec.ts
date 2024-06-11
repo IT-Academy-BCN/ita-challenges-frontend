@@ -4,9 +4,10 @@ import { StarterComponent } from './starter.component'
 import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { of } from 'rxjs'
 import { environment } from 'src/environments/environment'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('StarterComponent', () => {
   let component: StarterComponent
@@ -16,8 +17,9 @@ describe('StarterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [StarterComponent]
+      declarations: [StarterComponent],
+      imports: [TranslateModule.forRoot()],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     fixture = TestBed.createComponent(StarterComponent)
     component = fixture.componentInstance

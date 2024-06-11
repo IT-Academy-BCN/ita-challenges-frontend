@@ -3,12 +3,13 @@ import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 import { ChallengeHeaderComponent } from './challenge-header.component'
 import { SolutionService } from '../../../../services/solution.service'
 import { RouterTestingModule } from '@angular/router/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from '../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from '../../../modals/restricted-modal/restricted-modal.component'
 import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent
@@ -20,16 +21,15 @@ describe('ChallengeHeaderComponent', () => {
       declarations: [
         ChallengeHeaderComponent
       ],
-      imports: [
-        I18nModule,
+      imports: [I18nModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        DynamicTranslatePipe
-      ],
+        DynamicTranslatePipe],
       providers: [
         NgbModal,
         SolutionService,
-        AuthService
+        AuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
 

@@ -1,6 +1,6 @@
 import { ChallengeService } from './challenge.service'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { HttpClient } from '@angular/common/http'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { TestBed, inject } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
@@ -14,8 +14,9 @@ describe('ChallengeService', () => {
   let httpClientMock: HttpTestingController
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
 
     // Inject the http service and test controller for each test

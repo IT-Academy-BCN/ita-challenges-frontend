@@ -1,5 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeInfoComponent } from './challenge-info.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
@@ -28,17 +29,16 @@ describe('ChallengeInfoComponent', () => {
         SolutionComponent,
         RestrictedModalComponent
       ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+      imports: [RouterTestingModule,
         I18nModule,
         FormsModule,
         NgbNavModule,
-        DynamicTranslatePipe
-      ],
+        DynamicTranslatePipe],
       providers: [
         // ChallengeService,
-        AuthService
+        AuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })

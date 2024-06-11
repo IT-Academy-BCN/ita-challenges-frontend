@@ -9,9 +9,9 @@
 // import exp from 'constants'
 // import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { AuthService } from './auth.service'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
@@ -30,8 +30,9 @@ describe('AuthService', () => {
   let tokenServiceMock: TokenService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
 
     // Inject the http service and test controller for each test

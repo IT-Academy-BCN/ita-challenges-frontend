@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing'
 import { CookieEncryptionHelper } from './cookie-encryption.helper'
 import { CookieService } from 'ngx-cookie-service'
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 /**
  * Pruebas para CookieEncryptionService.
@@ -22,11 +23,13 @@ describe('CookieEncryptionService', () => {
     }
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       declarations: [RegisterModalComponent],
+      imports: [],
       providers: [
         { provide: CookieService, useValue: mockCookieService },
-        CookieEncryptionHelper
+        CookieEncryptionHelper,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     })
       .compileComponents()

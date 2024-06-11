@@ -1,9 +1,9 @@
 import { StarterService } from './starter.service'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { delay } from 'rxjs'
 import data from './../../assets/dummy/data-challenge.json' // see data-typings.d.ts
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
@@ -17,8 +17,9 @@ describe('StarterService', () => {
   let httpClientMock: HttpTestingController
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
     httpClientMock = TestBed.inject(HttpTestingController)
