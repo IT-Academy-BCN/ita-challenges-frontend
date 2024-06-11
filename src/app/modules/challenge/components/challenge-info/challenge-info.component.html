@@ -20,16 +20,27 @@
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
           <div *ngIf="showStatement" class="details-text">
-            <h3 class="mt-0">
-              {{ "modules.challenge.info.description" | translate }}
-            </h3>
-            <p>{{ description | dynamicTranslate }}</p>
-            <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
-            <ul>
-              <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
-            </ul>
-            <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
-            <p>{{ notes | dynamicTranslate }}</p>
+            <!-- Description -->
+            <div class="pb-1">
+              <h3 class="mt-0">
+                {{ "modules.challenge.info.description" | translate }}
+              </h3>
+              <p>{{ description | dynamicTranslate }}</p>
+            </div>
+
+            <!-- Examples -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
+              <ul>
+                <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
+              </ul>
+            </div>
+
+            <!-- Notes -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
+              <p>{{ notes | dynamicTranslate }}</p>
+            </div>
           </div>
           <!-- only if user logeed in -->
           <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
@@ -132,7 +143,7 @@
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
       <div class="tab-content info-card w-100">
-        <section class="title">
+        <section class="title d-flex align-items-baseline">
           <h3 class="title_text">
             {{ "modules.challenge.info.resources" | translate }}
           </h3>
@@ -153,7 +164,7 @@
       <!--RELATED TAB-->
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
-        <section class="info-card">
+        <section class="info-card d-flex flex-column gap-3">
           <app-challenge-card *ngFor="let relatedChallenge of relatedListOfChallenges"
             [title]="relatedChallenge.challenge_title | dynamicTranslate"
             [creation_date]="relatedChallenge.creation_date" [level]="relatedChallenge.level"

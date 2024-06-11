@@ -1,11 +1,11 @@
 <div class="d-flex starter">
-  <div class="d-none d-md-block col-3">
+  <div id="filters-container" class="d-none d-md-block col-2">
     <h2>{{ "modules.starter.main.section1" | translate }}</h2>
     <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
   </div>
-  <div class="col-12 col-md-9">
+  <div id="challenges-container" class="col-12 col-md-9">
     <div class="d-flex justify-content-between pb-2">
-      <h2>{{ "modules.starter.main.section2.title" | translate }}</h2>
+      <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
       <button class="d-md-none btn btn-outline-primary" (click)="openModal()">
         <strong>Filtrar</strong>
       </button>
@@ -23,11 +23,13 @@
         {{'modules.starter.main.section2.date' | translate}}
       </li>
     </ul>
-    <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
-      [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date | formatDate"
-      [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
-      [id]="challenge.id_challenge">
-    </app-challenge-card>
+    <div class="d-flex flex-column gap-3" id="challenges">
+      <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
+        [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date | formatDate"
+        [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
+        [id]="challenge.id_challenge">
+      </app-challenge-card>
+    </div>
     <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages" [pageNumber]="pageNumber">
     </app-pagination>
   </div>
