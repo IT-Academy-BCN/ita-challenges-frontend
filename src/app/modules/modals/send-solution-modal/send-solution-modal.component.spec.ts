@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { SendSolutionModalComponent } from './send-solution-modal.component'
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('SendSolutionModalComponent', () => {
   let component: SendSolutionModalComponent
@@ -9,7 +9,8 @@ describe('SendSolutionModalComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SendSolutionModalComponent],
-      imports: [HttpClientModule]
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi())]
     })
     fixture = TestBed.createComponent(SendSolutionModalComponent)
     component = fixture.componentInstance

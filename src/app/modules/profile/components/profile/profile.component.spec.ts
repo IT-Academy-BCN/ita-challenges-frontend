@@ -1,10 +1,11 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 
 import { ProfileComponent } from './profile.component'
 import { ProfileHeaderComponent } from '../profile-header/profile-header.component'
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent
@@ -16,11 +17,9 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         ProfileHeaderComponent
       ],
-      imports: [
-        SharedComponentsModule,
-        HttpClientTestingModule,
-        RouterTestingModule
-      ]
+      imports: [SharedComponentsModule,
+        RouterTestingModule],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     fixture = TestBed.createComponent(ProfileComponent)
     component = fixture.componentInstance

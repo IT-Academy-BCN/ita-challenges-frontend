@@ -1,17 +1,18 @@
 import { TestBed } from '@angular/core/testing'
 import { ResourcesService } from './resources.service'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 // import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ResourcesService', () => {
   let resourcesService: ResourcesService
   let httpClientMock: HttpTestingController
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule],
-      providers: [ResourcesService]
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [ResourcesService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
 
     httpClientMock = TestBed.inject(HttpTestingController)

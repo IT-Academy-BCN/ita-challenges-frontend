@@ -14,7 +14,10 @@
 }
 .stats{
     display: flex;
-    color: $gray-3;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: #808080;
     .stat{
         display: flex;
         flex-direction: row;
@@ -37,6 +40,9 @@
     padding: 0;
 }
 h3{
+  font-size: 26px;
+  font-weight: 700;
+  color: $black-1;
     margin: 0;
 }
 .solutionSent{
@@ -53,5 +59,12 @@ h3{
 }
 #color{
     color: $primary;
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.breadcrumbs{
+  font-size: 16px;
+  line-height: 22.4px;
+  font-weight: 500;
+  color: #828282;
 }

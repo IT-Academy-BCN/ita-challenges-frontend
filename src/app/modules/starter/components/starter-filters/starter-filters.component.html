@@ -1,51 +1,51 @@
 <form [formGroup]="filtersForm">
-    <div class="form" formGroupName="languages">
-        <p class="font-weight-bold">{{'modules.starter.filters.lenguaje' | translate}}</p>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkJs" formControlName="javascript">
-            <label class="form-check-label" for="checkJs">Javascript</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkJava" formControlName="java">
-            <label class="form-check-label" for="checkJava">Java</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkPhp" formControlName="php">
-            <label class="form-check-label" for="checkPhp">PHP</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkPython" formControlName="python">
-            <label class="form-check-label" for="checkPython">Python</label>
-        </div>
+  <div class="form" formGroupName="languages">
+    <p class="font-weight-bold mb-2">{{'modules.starter.filters.lenguaje' | translate}}</p>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkJs" formControlName="javascript">
+      <label class="form-check-label" for="checkJs">Javascript</label>
     </div>
-    <div class="form" formGroupName="levels">
-        <p>{{'modules.starter.filters.dificulty' | translate}}</p>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkEasy" formControlName="easy">
-            <label class="form-check-label" for="checkEasy">{{'modules.starter.filters.easy' | translate}}</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkMedium" formControlName="medium">
-            <label class="form-check-label" for="checkMedium">{{'modules.starter.filters.medium' | translate}}</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkHard" formControlName="hard">
-            <label class="form-check-label" for="checkHard">{{'modules.starter.filters.hard' | translate}}</label>
-        </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkJava" formControlName="java">
+      <label class="form-check-label" for="checkJava">Java</label>
     </div>
-    <div class="form" formGroupName="progress">
-        <p>{{'modules.starter.filters.progress' | translate}}</p>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
-            <label class="form-check-label" for="checkNoStarted">{{'modules.starter.filters.noStarted' | translate}}</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkStarted" formControlName="started">
-            <label class="form-check-label" for="checkStarted">{{'modules.starter.filters.started' | translate}}</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkFinished" formControlName="finished">
-            <label class="form-check-label" for="checkFinished">{{'modules.starter.filters.finished' | translate}}</label>
-        </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkPhp" formControlName="php">
+      <label class="form-check-label" for="checkPhp">PHP</label>
     </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkPython" formControlName="python">
+      <label class="form-check-label" for="checkPython">Python</label>
+    </div>
+  </div>
+  <div class="form" formGroupName="levels">
+    <p class="mb-2">{{'modules.starter.filters.dificulty' | translate}}</p>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkEasy" formControlName="easy">
+      <label class="form-check-label" for="checkEasy">{{'modules.starter.filters.easy' | translate}}</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkMedium" formControlName="medium">
+      <label class="form-check-label" for="checkMedium">{{'modules.starter.filters.medium' | translate}}</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkHard" formControlName="hard">
+      <label class="form-check-label" for="checkHard">{{'modules.starter.filters.hard' | translate}}</label>
+    </div>
+  </div>
+  <div class="form" formGroupName="progress">
+    <p class="mb-2">{{'modules.starter.filters.progress' | translate}}</p>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
+      <label class="form-check-label" for="checkNoStarted">{{'modules.starter.filters.noStarted' | translate}}</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkStarted" formControlName="started">
+      <label class="form-check-label" for="checkStarted">{{'modules.starter.filters.started' | translate}}</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkFinished" formControlName="finished">
+      <label class="form-check-label" for="checkFinished">{{'modules.starter.filters.finished' | translate}}</label>
+    </div>
+  </div>
 </form>

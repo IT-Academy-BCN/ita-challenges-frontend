@@ -1,47 +1,67 @@
-@import "/src/styles/colors";
-.container-fluid{
-    min-height: 100%;
-    gap: 35px;
-    background-color: $gray-4;
-    nav{
-        padding-top: 10px;
-        #menu{
-            display: flex;
-            flex-direction: column;
-            max-width: fit-content;
-            position:sticky;
-            top: 40px;
-            gap: 70px;
+@import '/src/styles/colors';
+.container-fluid {
+  min-height: 100%;
+  gap: 30px;
+  background-color: $gray-4;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  background-color: rgb(235, 235, 235);
+  nav {
+    // height: 100%;
+    //   display: flex;
+    //   -webkit-box-pack: justify;
+    //   justify-content: space-between;
+    //   align-items: flex-start;
+    //   margin-top: 1.75rem;
+    #menu {
+      display: flex;
+      flex-direction: column;
+      max-width: fit-content;
+      position: sticky;
+      top: 14px;
+      gap: 70px;
 
-            #logo{
-                max-width: 100%;
-                background-image: url('/assets/img/logo.png');
-                background-repeat: no-repeat;
-                background-size: cover;
-                padding-bottom: 24%;
-            }
-        }
+      #logo {
+        max-width: 100%;
+        background-image: url('/assets/img/logo.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-bottom: 24%;
+      }
     }
-    main{
-        background-color: $white;
-        border-radius: 15px;
-        width: 100%;
-        min-height: calc(100vh - 80px)!important;
-        padding: 20px 50px 20px 50px;
-    }
-    app-main-menu{
-        height: 100%;
-    }
-    
+  }
+  main {
+    background-color: $white;
+    border-radius: 15px;
+    width: 100%;
+    height: calc(100% - 80px) !important;
+    padding: 20px 50px 20px 50px;
+  }
+  app-main-menu {
+    height: 100%;
+  }
+}
+
+.logo {
+  max-width: 116px;
+  height: auto;
 }
 
 @media screen and (max-width: 768px) {
-    .container-fluid{
-        padding: 30px 0px;
-        background-color: white;
+  .container-fluid {
+    padding: 30px 0px;
+    background-color: white;
 
-        main{
-            padding: 20px;
-        }
+    main {
+      padding: 20px;
     }
+  }
+}
+
+#main-container {
+  height: 100%;
+}
+#main-wrapper {
+  height: 100%;
 }

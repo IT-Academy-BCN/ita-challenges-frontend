@@ -1,507 +1,505 @@
-import { error } from 'console';
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { AuthService } from "./auth.service";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { addYears } from "date-fns";
-import { CookieService } from "ngx-cookie-service";
-import { mock } from "node:test";
-import { of, throwError } from "rxjs";
-import {fakeAsync, flushMicrotasks, TestBed, tick} from "@angular/core/testing";
-import { environment } from "src/environments/environment";
-import { exec } from "child_process";
-import exp from "constants";
-import {tap} from "rxjs/operators";
-import {User} from "../models/user.model";
-import {TokenService} from "./token.service";
-import { resolve } from "path";
-
+// import { error } from 'console'
+// import { Router } from '@angular/router'
+// import { addYears } from 'date-fns'
+// import { CookieService } from 'ngx-cookie-service'
+// import { mock } from 'node:test'
+// import { throwError } from 'rxjs'
+// import { flushMicrotasks } from '@angular/core/testing'
+// import { exec } from 'child_process'
+// import exp from 'constants'
 // import { CookieEncryptionHelper } from "../helpers/cookie-encryption.helper";
 
-describe("AuthService", () => {
-	let authService: AuthService;
-	let cookieServiceMock: any;
-	let routerMock: any;
-	let httpClient: HttpClient;
-	let httpClientMock: HttpTestingController;
-	let tokenServiceMock: TokenService;
-	// let helperMock: CookieEncryptionHelper;
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { AuthService } from './auth.service'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { of, throwError } from 'rxjs'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
+import { environment } from 'src/environments/environment'
+import { tap } from 'rxjs/operators'
+import { User } from '../models/user.model'
+import { type TokenService } from './token.service'
+import { type Router } from '@angular/router'
+import { type CookieService } from 'ngx-cookie-service'
+
+describe('AuthService', () => {
+  let authService: AuthService
+  let cookieServiceMock: { get: jest.Mock, set: jest.Mock, delete: jest.Mock }
+  let routerMock: { navigate: jest.Mock }
+  let httpClient: HttpClient
+  let httpClientMock: HttpTestingController
+  let tokenServiceMock: TokenService
 
   beforeEach(() => {
-
-    TestBed.configureTestingModule({ // set up the testing module with required dependencies.
-      imports: [HttpClientTestingModule]
-    });
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    })
 
     // Inject the http service and test controller for each test
-    httpClient = TestBed.inject(HttpClient); //TestBed.inject is used to inject into the test suite
-    httpClientMock = TestBed.inject(HttpTestingController);
+    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
+    httpClientMock = TestBed.inject(HttpTestingController)
 
     routerMock = {
-      navigate: jest.fn(),
-    };
+      navigate: jest.fn()
+    }
     cookieServiceMock = (function () {
-      let cookies: { [key: string]: any } = {};
+      const cookies: Record<string, string | null> = {}
       return {
-        get: jest.fn((key) => cookies[key] || null),
-        set: jest.fn((key, value) => {
-          cookies[key] = value;
+        get: jest.fn((key: string) => (cookies[key] ?? null)),
+        set: jest.fn((key: string, value: string) => {
+          cookies[key] = value
         }),
-        delete: jest.fn((key) => {
-          delete cookies[key];
-        }),
-      };
-    })();
-    Object.defineProperty(window, "cookies", {
-      writable: true,
-      value: cookieServiceMock,
-    });
+        delete: jest.fn((key: string) => {
+          if (Object.prototype.hasOwnProperty.call(cookies, key)) {
+            cookies[key] = null
+          }
+        })
+      }
+    })()
 
-		// authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock, helperMock);
-        authService = new AuthService(httpClient, routerMock, cookieServiceMock, tokenServiceMock);
-	});
+    Object.defineProperty(window, 'cookies', {
+      writable: true,
+      value: cookieServiceMock
+    })
+
+    authService = new AuthService(httpClient, routerMock as unknown as Router, cookieServiceMock as unknown as CookieService, tokenServiceMock)
+  })
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
-    const anonymMock = 'anonym';
+    const anonymMock = 'anonym'
 
-    cookieServiceMock.get.mockReturnValue(null); // Set cookie service to return null
+    cookieServiceMock.get.mockReturnValue(null) // Set cookie service to return null
 
-    const user = authService.currentUser;
+    const user = authService.currentUser
 
-    expect(user).toBeDefined();
-    expect(user.idUser).toBe(anonymMock);
+    expect(user).toBeDefined()
+    expect(user.idUser).toBe(anonymMock)
 
-    expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+    expect(cookieServiceMock.get).toHaveBeenCalledWith('user')
 
-    done();
-  });
+    done()
+  })
 
   it('should return the current user when user IS FOUND in cookies', (done) => {
     const mockUser = {
       idUser: 'mockIdUser',
       dni: 'mockDni',
       email: 'mockEmail'
-    };
+    }
 
-    authService.currentUser = mockUser;
+    authService.currentUser = mockUser
 
-    const user = authService.currentUser;
+    const user = authService.currentUser
 
-    expect(user).toBeDefined();
-    expect(user).toBe(mockUser);
-    expect(cookieServiceMock.get).toHaveBeenCalledWith('user');
+    expect(user).toBeDefined()
+    expect(user).toBe(mockUser)
+    expect(cookieServiceMock.get).toHaveBeenCalledWith('user')
 
-    done();
-  });
+    done()
+  })
 
   it('should set current user in cookie and in behavior subject', (done) => {
-    let testUser = {
-      idUser: 'mockIdUser',
-      dni: 'mockDni',
-      email: 'mockEmail',
-    };
-
-    authService.currentUser = testUser;
-
-    expect(cookieServiceMock.set).toHaveBeenCalled();
-
-    authService.user$.subscribe(user => {
-      expect(user).toBe(testUser);
-    })
-
-    done();
-  });
-
-
-  it("should return userId from cookie", (done) => {
-    let mockUser = {
+    const testUser = {
       idUser: 'mockIdUser',
       dni: 'mockDni',
       email: 'mockEmail'
-    };
+    }
 
-    cookieServiceMock.set('user', JSON.stringify(mockUser));
+    authService.currentUser = testUser
 
-    const userId = authService.getUserIdFromCookie();
+    expect(cookieServiceMock.set).toHaveBeenCalled()
 
-    expect(cookieServiceMock.set).toHaveBeenCalled();
-    expect(cookieServiceMock.get).toHaveBeenCalled();
+    authService.user$.subscribe(user => {
+      expect(user).toBe(testUser)
+    })
+
+    done()
+  })
+
+  it('should return userId from cookie', (done) => {
+    const mockUser = {
+      idUser: 'mockIdUser',
+      dni: 'mockDni',
+      email: 'mockEmail'
+    }
+
+    cookieServiceMock.set('user', JSON.stringify(mockUser))
+
+    const userId = authService.getUserIdFromCookie()
+
+    expect(cookieServiceMock.set).toHaveBeenCalled()
+    expect(cookieServiceMock.get).toHaveBeenCalled()
     expect(userId).toEqual(mockUser.idUser)
 
-    done();
-  });
+    done()
+  })
 
-  it("should make successful login request", (done) => {
-    let testUser = {
+  it('should make successful login request', (done) => {
+    const testPassword = 'mockUserPassword'
+    const testUser = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword',
-    };
+      dni: 'mockUserDni',
+      password: testPassword
+    }
 
-    let mockResponse = {
-      "authToken": "testAuthToken",
-      "refreshToken": "testRefreshToken",
-      "id": "testId"
-    };
+    const mockResponse = {
+      authToken: 'testAuthToken',
+      refreshToken: 'testRefreshToken',
+      id: 'testId'
+    }
 
     authService.loginRequest(testUser)
-        .subscribe({
-          next: (res) => {
-            expect(res).toBeTruthy();
-            expect(res).toEqual(mockResponse);
-          }
-        });
+      .subscribe({
+        next: (res) => {
+          expect(res).toBeTruthy()
+          expect(res).toEqual(mockResponse)
+        }
+      })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
-    expect(req.request.method).toEqual("POST");
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
+    expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse);
-    done();
-  });
+    req.flush(mockResponse)
+    done()
+  })
 
-  it("should make UNsuccessful login request", (done) => {
-    let testUser = {
+  it('should make UNsuccessful login request', (done) => {
+    const testPassword = 'mockUserPassword'
+    const testUser = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword',
-    };
+      dni: 'mockUserDni',
+      password: testPassword
+    }
 
-    let mockResponse = {
-      "message": "Invalid Credentials"
-    };
+    const mockResponse = {
+      message: 'Invalid Credentials'
+    }
 
     authService.loginRequest(testUser)
-        .subscribe({
-          error: (err) => {
-            expect(err).toBeTruthy();
-            expect(err).toEqual(mockResponse);
-          }
-        });
+      .subscribe({
+        error: (err) => {
+          expect(err).toBeTruthy()
+          expect(err).toEqual(mockResponse)
+        }
+      })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
-    expect(req.request.method).toEqual("POST");
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
+    expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse);
-    done();
-  });
+    req.flush(mockResponse)
+    done()
+  })
 
   it('should set user cookies and resolve when login succeeds', async () => {
+    const testPassword = 'mockUserPassword'
     const mockUser: User = {
       idUser: '',
-      dni: 'testDni',
-      password: 'testPassword',
-    };
-
-    let mockResponse = { // response we expect from the loginRequest function.
-      "authToken": "testAuthToken",
-      "refreshToken": "testRefreshToken",
-      "id": "testId"
-    };
-
-    //spyOn function to mock the behavior of the loginRequest function.
-    spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
-
-    try{
-      authService.login(mockUser).then((returnValue) => {
-        expect(returnValue).toBeNull();
-        expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken');
-        expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken');
-        expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')));
-      })
-    } catch (error) {
-      fail('Login failed');
+      dni: 'mockUserDni',
+      password: testPassword
     }
 
+    const mockResponse = { // response we expect from the loginRequest function.
+      authToken: 'testAuthToken',
+      refreshToken: 'testRefreshToken',
+      id: 'testId'
+    }
 
-  });
-
-  it('should reject with error message when login fails', async () => {
-    const mockUser: User = {
-      idUser: '',
-      dni: 'testDni',
-      password: 'testPassword',
-    };
-
-    let mockErrorMessage = 'Invalid Credentials';
-    let mockErrorResponse = { // response we expect from the loginRequest function.
-      message: mockErrorMessage
-    };
-
-    spyOn(authService, 'loginRequest').and.returnValue(
-        of({}).pipe(
-            tap(() => {
-              throw { status: 401, error: mockErrorResponse };
-            })
-        )
-    );
+    // spyOn function to mock the behavior of the loginRequest function.
+    spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)) // Import 'of' from 'rxjs' if not already imported
 
     try {
-      await authService.login(mockUser);
-      fail('Login should have failed');
-
-    } catch (error:any) {
-      expect(error.error.message).toEqual(mockErrorMessage);
+      void authService.login(mockUser).then((returnValue) => {
+        expect(returnValue).toBeNull()
+        expect(cookieServiceMock.get('authToken')).toEqual('testAuthToken')
+        expect(cookieServiceMock.get('refreshToken')).toEqual('testRefreshToken')
+        expect(cookieServiceMock.get('user')).toEqual(JSON.stringify(new User('testId')))
+      })
+    } catch (error) {
+      fail('Login failed')
     }
-  });
+  })
 
-  it("should register request successfully", (done) => {
+  it('should reject with error message when login fails', async () => {
+    const testPassword = 'mockUserPassword'
+    const mockUser: User = {
+      idUser: '',
+      dni: 'mockUserDni',
+      password: testPassword
+    }
+
+    const mockErrorMessage = 'Invalid Credentials'
+    const mockErrorResponse = { // response we expect from the loginRequest function.
+      message: mockErrorMessage
+    }
+
+    spyOn(authService, 'loginRequest').and.returnValue(
+      of({}).pipe(
+        tap(() => {
+          const error = new Error('Unauthorized')
+          error.name = 'HttpError'
+          // Agrega propiedades personalizadas al objeto de error
+          Object.assign(error, { status: 401, error: mockErrorResponse })
+          throw error
+        })
+      )
+    )
+
+    try {
+      await authService.login(mockUser)
+      fail('Login should have failed')
+    } catch (error: any) {
+      expect(error.error.message).toEqual(mockErrorMessage)
+    }
+  })
+
+  it('should register request successfully', (done) => {
     const mockUser = {
-      idUser:'',
+      idUser: '',
       dni: 'mockUserDni',
       email: 'mockUserEmail',
       name: 'mockUserName',
       itineraryId: 'mockUserIteneraryId',
-      password:'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword',
-    };
+      password: 'mockUserPassword',
+      confirmPassword: 'mockUserConfirmPassword'
+    }
 
     const mockResponse = {
       id: 'mockIdResponse'
     }
 
     authService.registerRequest(mockUser)
-        .subscribe({
-          next: (res) => {
-            expect(res).toBeTruthy();
-            expect(res).toEqual(mockResponse);
-          }
-        });
+      .subscribe({
+        next: (res) => {
+          expect(res).toBeTruthy()
+          expect(res).toEqual(mockResponse)
+        }
+      })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL));
-    expect(req.request.method).toEqual("POST");
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL))
+    expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse);
-    done();
-  });
+    req.flush(mockResponse)
+    done()
+  })
 
-  it("should register request UNsuccessful", (done) => {
+  it('should register request UNsuccessful', (done) => {
     const mockUser = {
-      idUser:'mockIdResponse',
+      idUser: 'mockIdResponse',
       dni: 'mockUserDni',
       email: 'mockUserEmail',
       name: 'mockUserName',
       itineraryId: 'mockUserIteneraryId',
-      password:'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword',
-    };
+      password: 'mockUserPassword',
+      confirmPassword: 'mockUserConfirmPassword'
+    }
 
     const mockResponse = {
       id: 'mockIdResponse'
     }
 
     authService.loginRequest(mockUser)
-        .subscribe({
-          error: (err) => {
-            expect(err).toBeTruthy();
-            expect(err).toEqual(mockResponse);
-          }
-        });
+      .subscribe({
+        error: (err) => {
+          expect(err).toBeTruthy()
+          expect(err).toEqual(mockResponse)
+        }
+      })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL));
-    expect(req.request.method).toEqual("POST");
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
+    expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse);
-    done();
-  });
+    req.flush(mockResponse)
+    done()
+  })
 
-  it ("should show success register modal", (done) => {
+  it('should show success register modal', (done) => {
     const mockUser = {
-      idUser:'mockIdResponse',
+      idUser: 'mockIdResponse',
       dni: 'mockUserDni',
       email: 'mockUserEmail',
       name: 'mockUserName',
       itineraryId: 'mockUserIteneraryId',
-      password:'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword',
-    };
+      password: 'mockUserPassword',
+      confirmPassword: 'mockUserConfirmPassword'
+    }
 
     const mockResponse = {
       id: 'mockIdResponse'
     }
 
-    //spyOn function to mock the behavior of the loginRequest function.
-    spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse)); // Import 'of' from 'rxjs' if not already imported
-    spyOn(authService, 'modifyUserWithAdmin');
+    spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse))
+    spyOn(authService, 'modifyUserWithAdmin').and.returnValue(Promise.resolve())
 
     authService.register(mockUser).then((returnValue) => {
-      expect(returnValue).toBeTruthy();
-      expect(returnValue).toEqual(mockResponse);
-      expect(resolve).toEqual(null);
-      expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id);
-      done();
-    });
-    done();
-  });
+      expect(returnValue).toBeTruthy()
+      expect(returnValue).toEqual(mockResponse)
+      expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id)
+      done()
+    }).catch((error) => {
+      done.fail('Promise should not be rejected: ' + error)
+    })
+  })
 
-  it ("should show UNsuccessly register modal", (done) => {
+  it('should show UNsuccessly register modal', (done) => {
     const mockUser = {
-      idUser:'mockIdResponse',
+      idUser: 'mockIdResponse',
       dni: 'mockUserDni',
       email: 'mockUserEmail',
       name: 'mockUserName',
       itineraryId: 'mockUserIteneraryId',
-      password:'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword',
-    };
+      password: 'mockUserPassword',
+      confirmPassword: 'mockUserConfirmPassword'
+    }
 
-    let mockErrorMessage = 'Invalid data';
-    let mockErrorResponse = { // response we expect from the loginRequest function.
+    const mockErrorMessage = 'Invalid data'
+    const mockErrorResponse = { // response we expect from the registerRequest function.
       message: mockErrorMessage
-    };
+    }
 
     spyOn(authService, 'registerRequest').and.returnValue(
-        of({}).pipe(
-            tap(() => {
-              throw { status: 401, error: mockErrorResponse };
-            })
-        )
-    );
+      throwError({ status: 401, error: mockErrorResponse })
+    )
 
     authService.register(mockUser).then(() => {
-      done.fail('Register should have failed');
+      done.fail('Register should have failed')
     }).catch((error) => {
-      expect(error).toEqual(mockErrorMessage);
-      done();
-    });
-    done();
-  });
+      expect(error).toEqual(mockErrorResponse.message)
+      done()
+    })
+  })
 
-  it("should logout correctly", (done) => {
+  it('should logout correctly', (done) => {
+    const user = 'user'
+    const authToken = 'testAuthToken'
+    const refreshToken = 'testRefreshAuthToken'
 
-    let user = 'user';
-    let authToken = 'testAuthToken';
-    let refreshToken = 'testRefreshAuthToken';
-
-    cookieServiceMock.set('user', user);
-    cookieServiceMock.set('authToken', authToken);
+    cookieServiceMock.set('user', user)
+    cookieServiceMock.set('authToken', authToken)
     cookieServiceMock.set('refreshToken', refreshToken)
 
-    authService.logout();
-    expect(cookieServiceMock.get).toHaveBeenCalled();
+    authService.logout()
+    expect(cookieServiceMock.get).toHaveBeenCalled()
 
-    expect(cookieServiceMock.delete).toHaveBeenCalledWith("user");
-    expect(cookieServiceMock.delete).toHaveBeenCalledWith("authToken");
-    expect(cookieServiceMock.delete).toHaveBeenCalledWith("refreshToken");
+    expect(cookieServiceMock.delete).toHaveBeenCalledWith('user')
+    expect(cookieServiceMock.delete).toHaveBeenCalledWith('authToken')
+    expect(cookieServiceMock.delete).toHaveBeenCalledWith('refreshToken')
 
-    let currentUser = authService.currentUser;
-    expect(currentUser.idUser).toBe('anonym');
+    const currentUser = authService.currentUser
+    expect(currentUser.idUser).toBe('anonym')
 
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
-    done();
-  });
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/login'])
+    done()
+  })
 
-  it("should getLoggedUserData correctly", fakeAsync(() => {
-
-    let testAuthToken = 'testAuthToken';
+  it('should getLoggedUserData correctly', fakeAsync(() => {
+    const testAuthToken = 'testAuthToken'
     const mockUser = {
       idUser: 'mockIdUser',
       dni: 'mockDni',
       email: 'mockEmail'
-    };
-
-    const mockResponse = {
-      dni: "string",
-      email: "user@example.cat",
-      role: "ADMIN"
     }
 
-    cookieServiceMock.set('authToken', testAuthToken);
-    authService.currentUser = mockUser;
+    const mockResponse = {
+      dni: 'string',
+      email: 'user@example.cat',
+      role: 'ADMIN'
+    }
 
-    const user = authService.currentUser;
-    authService.getLoggedUserData();
+    cookieServiceMock.set('authToken', testAuthToken)
+    authService.currentUser = mockUser
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
-    expect(req.request.method).toEqual('POST');
+    const user = authService.currentUser
+    void authService.getLoggedUserData()
 
-    req.flush(mockResponse);
-    tick();
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER))
+    expect(req.request.method).toEqual('POST')
+
+    req.flush(mockResponse)
+    tick()
     expect(authService.currentUser).toEqual({
       idUser: mockUser.idUser,
       dni: mockResponse.dni, // Updated with server response
-      email: mockResponse.email, // Updated with server response
-    });
+      email: mockResponse.email // Updated with server response
+    })
 
-    expect(user).toBeDefined();
-    expect(user).toBe(mockUser);
-  }));
+    expect(user).toBeDefined()
+    expect(user).toBe(mockUser)
+  }))
 
-  it("should handle error in getLoggedUserData", (done) => {
-
-    spyOn(console, 'error'); //spy console.error
+  it('should handle error in getLoggedUserData', (done) => {
+    spyOn(console, 'error') // spy console.error
 
     // Simulamos un evento de progreso para indicar un error
     const errorEvent = new ProgressEvent('error', {
       lengthComputable: false,
       loaded: 0,
-      total: 0,
-    });
+      total: 0
+    })
 
-    authService.getLoggedUserData();
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER));
+    authService.getLoggedUserData().catch((error) => {
+      expect(console.error).toHaveBeenCalledWith('Error in getLoggedUserData:', jasmine.anything())
+      expect(error).toBeDefined()
+      done()
+    })
 
-    req.error(errorEvent);
-    expect(console.error).toHaveBeenCalled;
-    done();
-  });
+    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_POST_USER))
+    req.error(errorEvent)
+  })
 
-  it("should modifyUserWithAdmin correctly", fakeAsync(() => {
-    let userAdminMock = {
+  it('should modifyUserWithAdmin correctly', fakeAsync(() => {
+    const userAdminMock = {
       idUser: '',
       dni: '12345678Z',
-      password:'passwordMock'
+      password: 'passwordMock'
     }
 
-    let mockResAfterLogin = {
+    const mockResAfterLogin = {
       id: 'adminIdMock',
       authToken: 'testAuthToken',
       refreshToken: 'refreshToken'
     }
 
-    cookieServiceMock.set('authToken', mockResAfterLogin.authToken);
+    cookieServiceMock.set('authToken', mockResAfterLogin.authToken)
 
-    let mockRegisterUserId = 'wig98drksz4se2wpgbnouu4w';
+    const mockRegisterUserId = 'wig98drksz4se2wpgbnouu4w'
 
-    let mockLoggedUserData = {
+    const mockLoggedUserData = {
       dni: '12345678Z',
       email: 'mock@mock.com',
       role: 'ADMIN'
     }
 
-    let mockResponse = {
-      message: 'User has been modified',
+    const mockResponse = {
+      message: 'User has been modified'
     }
-    spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin));
-    spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData));
+    spyOn(authService, 'login').and.returnValue(Promise.resolve(mockResAfterLogin))
+    spyOn(authService, 'getLoggedUserData').and.returnValue(Promise.resolve(mockLoggedUserData))
 
     authService.modifyUserWithAdmin(mockRegisterUserId).then(() => {
-      const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER);
-      expect(reqAdmin.request.method).toEqual('GET');
-      reqAdmin.flush(mockResAfterLogin);
+      const reqAdmin = httpClientMock.expectOne(environment.ADMIN_USER)
+      expect(reqAdmin.request.method).toEqual('GET')
+      reqAdmin.flush(mockResAfterLogin)
 
+      expect(mockLoggedUserData.role).toBe('ADMIN')
+      expect(authService.login).toHaveBeenCalledWith(userAdminMock)
+      expect(authService.getLoggedUserData).toHaveBeenCalled()
 
-      expect(mockLoggedUserData.role).toBe('ADMIN');
-      expect(authService.login).toHaveBeenCalledWith(userAdminMock);
-      expect(authService.getLoggedUserData).toHaveBeenCalled();
+      const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`)
+      expect(req.request.method).toEqual('PATCH')
+      expect(req.request.headers.get('Content-Type')).toEqual('application/json')
+      req.flush(mockResponse)
 
-
-      const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_SSO_BASE_URL}${environment.BACKEND_SSO_PATCH_USER}/${mockRegisterUserId}`);
-      expect(req.request.method).toEqual('PATCH');
-      expect(req.request.headers.get('Content-Type')).toEqual('application/json');
-      req.flush(mockResponse);
-
-      expect(authService.logout).toHaveBeenCalled();
+      expect(authService.logout).toHaveBeenCalled()
     }).catch((error) => {
-      fail('Error modifying user: ' + error);
-    });
+      fail('Error modifying user: ' + error)
+    })
 
-    tick();
-
-  }));
+    tick()
+  }))
 
   // TODO - Pending refactor: Insert this tests (with its config) into token.service.spec.ts
 
-/*  it('should return true if authToken is valid', async () => {
+  /*  it('should return true if authToken is valid', async () => {
     cookieServiceMock.get.mockReturnValueOnce('validAuthToken');
     authService.checkToken = jest.fn().mockResolvedValueOnce(true);
 
@@ -526,34 +524,33 @@ describe("AuthService", () => {
     const result = await authService.isUserLoggedIn();
 
     expect(result).toBe(false);
-  });*/
+  }); */
 
   it('should return true if authToken is present', () => {
     cookieServiceMock.get.mockImplementation((key: string) => {
       if (key === 'authToken') {
-        return 'some token';
+        return 'some token'
       }
-      return null;
-    });
+      return null
+    })
 
-    expect(authService.isUserLoggedIn()).toBe(true);
-  });
+    expect(authService.isUserLoggedIn()).toBe(true)
+  })
 
   it('should return true if refreshToken is present and authToken is not', () => {
     cookieServiceMock.get.mockImplementation((key: string) => {
       if (key === 'refreshToken') {
-        return 'some token';
+        return 'some token'
       }
-      return null;
-    });
+      return null
+    })
 
-    expect(authService.isUserLoggedIn()).toBe(true);
-  });
+    expect(authService.isUserLoggedIn()).toBe(true)
+  })
 
   it('should return false if neither authToken nor refreshToken are present', () => {
-    cookieServiceMock.get.mockImplementation(() => null);
+    cookieServiceMock.get.mockImplementation(() => null)
 
-    expect(authService.isUserLoggedIn()).toBe(false);
-  });
-
-});
+    expect(authService.isUserLoggedIn()).toBe(false)
+  })
+})

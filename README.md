@@ -1,4 +1,4 @@
-## ITA-Challenges-Frontend
+<!-- ## ITA-Challenges-Frontend -->
 
 <hr>
 
@@ -33,7 +33,7 @@ This project exists thanks to all the people who contribute.
 #### Required software
 
 - **node.js v20.10.0**. You can see the installation instructions in the [node.js website](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs).
-- **Angular CLI v17.0.7**. See [Angular Docs](https://angular.io/guide/setup-local) for installation instructions.
+- **Angular CLI v18.0.3**. See [Angular Docs](https://angular.io/guide/setup-local) for installation instructions.
 
 #### Project links
 
@@ -43,7 +43,7 @@ This project exists thanks to all the people who contribute.
 - [Wiki](https://github.com/IT-Academy-BCN/ita-challenges-frontend/wiki) Project technical documentation.
 - [Figma](https://www.figma.com/file/ScWpDKxEB3wEGbztXMSJO3/Projectes-IT-Academy?type=design&node-id=559-2230&mode=design). Project design.
 
-#### Procedures
+#### Procedure
 
 1. Install the required software listed in the "Required programs" and "Project links" sections.
 

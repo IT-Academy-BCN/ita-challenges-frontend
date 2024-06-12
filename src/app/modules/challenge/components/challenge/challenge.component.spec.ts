@@ -2,7 +2,7 @@ import { SharedComponentsModule } from '../../../../shared/components/shared-com
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeComponent } from './challenge.component'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
 import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
@@ -27,22 +28,18 @@ describe('ChallengeComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-
       declarations: [
         ChallengeComponent,
         ChallengeHeaderComponent,
         ChallengeInfoComponent,
         SolutionComponent
       ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+      imports: [RouterTestingModule,
         SharedComponentsModule,
         I18nModule,
         NgbNavModule,
         FormsModule,
-        DynamicTranslatePipe
-      ],
+        DynamicTranslatePipe],
       providers: [
         {
           provide: ActivatedRoute,
@@ -60,7 +57,9 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
-        AuthService
+        AuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })

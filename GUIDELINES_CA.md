@@ -144,7 +144,9 @@ El procediment a seguir cada dia seria aquest:
 
 ## 2.4 Procediment de treball amb targetes
 
-Les targetes de tasques estan organitzades segons el seu estat de desenvolupament. Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
+Les targetes de tasques estan organitzades segons el seu estat de desenvolupament.
+Estan classificades per nivells (1, 2, 3), sent 1 el nivell més baix de complexitat.
+Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
 
 ### 2.4.1 Assignar-te una targeta de tasques
 

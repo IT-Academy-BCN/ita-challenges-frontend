@@ -99,6 +99,12 @@
                 "title": "Registro con éxito",
                 "body": "Un mentor debe validar su registro. Espere la confirmación por correo electrónico antes de iniciar la sesión.",
                 "btn":"De acuerdo"
+            },
+            "restricted": {
+                "title": "Acceso restringido",
+                "description":"Regístrate para subir, entregar y ver soluciones a los retos",
+                "register":"Registrarme",
+                "loginRedirect":"Entrar"
             }
         }
     },
