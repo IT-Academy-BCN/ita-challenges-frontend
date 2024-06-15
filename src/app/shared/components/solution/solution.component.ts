@@ -29,7 +29,7 @@ export class SolutionComponent implements OnInit {
   editor: EditorView = new EditorView()
 
   @Input() challengeSolutions: Solution[] = []
-  @Input() solutionText: string = ''
+  @Input() solution_text: string = ''
   @Input() languageExt: Language = 'javascript'
   @Input() isUserSolution = false
 

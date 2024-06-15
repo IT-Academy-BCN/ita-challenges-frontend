@@ -90,8 +90,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       },
@@ -114,8 +114,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       },
@@ -138,8 +138,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       }
@@ -178,8 +178,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       },
@@ -202,8 +202,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       },
@@ -226,8 +226,8 @@ describe('StarterService', () => {
         ],
         solutions: [
           {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
+            id_solution: '1',
+            solution_text: 'Aquí va el texto de la solución 1'
           }
         ]
       }

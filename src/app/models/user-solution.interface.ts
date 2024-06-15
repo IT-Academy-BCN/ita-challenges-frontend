@@ -14,5 +14,5 @@ export interface Result {
 
 export interface UserSolution {
   uuid: string
-  solutionText: string
+  solution_text: string
 }
