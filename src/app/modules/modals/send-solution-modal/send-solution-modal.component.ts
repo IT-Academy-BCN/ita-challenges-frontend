@@ -9,7 +9,6 @@ import { SolutionService } from 'src/app/services/solution.service'
 })
 
 export class SendSolutionModalComponent {
-  // solutionSent = false;
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService)
 

@@ -31,16 +31,18 @@ import { type Solution } from 'src/app/models/solution.model'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
-  isUserSolution: boolean = true
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
+  isUserSolution: boolean = true
   resources: string = ''
   params$!: Subscription
   relatedChallengesData!: DataChallenge
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: Solution[] = []
+  idLanguage: string = ''
+  userId: string = ''
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -61,13 +63,22 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   ngOnChanges (changes: SimpleChanges): void {
+    this.userId = this.authService.getUserIdFromCookie()
     if (changes['languages']?.currentValue?.length > 0) {
-      this.loadSolutions(this.idChallenge, this.languages[0].id_language)
+      this.idLanguage = this.languages[0].id_language
+      this.loadSolutions(this.idChallenge, this.idLanguage)
+      this.solutionService.isUserSolutionSent(this.userId, this.idChallenge, this.idLanguage).subscribe((data) => {
+        if (data.results.length > 0) {
+          this.solutionSent = !this.solutionSent
+          this.isUserSolution = !this.isUserSolution
+        }
+      })
     }
   }
 
   async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
+      console.log('challenge-info, OnInit, solutionSent$, value:', value)
       this.isUserSolution = !value
       this.solutionSent = value
     })

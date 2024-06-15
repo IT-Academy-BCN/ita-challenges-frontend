@@ -150,7 +150,7 @@ export class AuthService {
     }
   }
 
-  public getUserIdFromCookie (): string | undefined {
+  public getUserIdFromCookie (): string {
     const stringifiedUser = this.cookieService.get('user')
     const user = JSON.parse(stringifiedUser)
     return user.idUser
