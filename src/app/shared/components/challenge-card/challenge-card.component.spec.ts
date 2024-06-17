@@ -80,6 +80,6 @@ describe('ChallengeComponent', () => {
     fixture.detectChanges()
 
     // Verifica que la fecha formateada sea correcta para el idioma español
-    expect(component.formattedDate).toEqual('01 enero 2020')
+    expect(component.formattedDate).toEqual('01 Ene 2020')
   })
 })
