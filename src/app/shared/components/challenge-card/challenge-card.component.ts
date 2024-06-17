@@ -1,8 +1,8 @@
 import { Component, Input, type OnDestroy, type OnInit, inject } from '@angular/core'
 import { StarterService } from '../../../services/starter.service'
+import { DateFormatterService } from 'src/app/services/date-formatter.service'
 import { TranslateService } from '@ngx-translate/core'
 import { type Subscription } from 'rxjs'
-import { DateFormatterService } from '../../../services/date-formatter.service'
 
 @Component({
   selector: 'app-challenge-card',
@@ -23,7 +23,6 @@ export class ChallengeCardComponent implements OnInit, OnDestroy {
   @Input() level = ''
   @Input() popularity!: number
   @Input() id = ''
-
   ngOnInit (): void {
     this.updateFormattedDate()
     this.translateSubscription = this.translate.onLangChange.subscribe(() => {

@@ -4,6 +4,8 @@ import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { DateFormatterService } from 'src/app/services/date-formatter.service'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeCardComponent
@@ -12,8 +14,17 @@ describe('ChallengeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent],
-      imports: [RouterTestingModule],
-      providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        StarterService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        TranslateService,
+        DateFormatterService
+      ]
     })
       .compileComponents()
   })
@@ -21,6 +32,7 @@ describe('ChallengeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
+    component.creation_date = new Date()
     fixture.detectChanges()
   })
 

@@ -17,9 +17,21 @@ export class DateFormatterService {
     registerLocaleData(localeEn, 'en')
   }
 
+  // format (date: Date, pattern: string = 'dd MMMM yyyy'): string {
+  //   const localeId = this.getLocaleId(this.translate.currentLang)
+  //   // Selecciona un patrón de formato basado en el idioma actual
+  //   const formatPattern = this.getFormatPattern(this.translate.currentLang, pattern)
+  //   return formatDate(date, formatPattern, localeId)
+  // }
+
   format (date: Date, pattern: string = 'dd MMMM yyyy'): string {
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+    // Maneja el caso en que date no es una instancia válida de Date
+    // Podrías lanzar un error o devolver una cadena vacía/valor por defecto
+      throw new Error('Invalid date')
+    }
+
     const localeId = this.getLocaleId(this.translate.currentLang)
-    // Selecciona un patrón de formato basado en el idioma actual
     const formatPattern = this.getFormatPattern(this.translate.currentLang, pattern)
     return formatDate(date, formatPattern, localeId)
   }
