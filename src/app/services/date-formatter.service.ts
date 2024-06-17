@@ -18,8 +18,12 @@ export class DateFormatterService {
   }
 
   format (date: Date, pattern: string = 'dd MMMM yyyy'): string {
+  // Comprueba explícitamente si date es null o undefined
+    if (date === null || date === undefined) {
+      console.error('DateFormatterService.format: date is undefined or invalid')
+      return '' // Retorna un string vacío si la fecha no es válida
+    }
     const localeId = this.getLocaleId(this.translate.currentLang)
-    // Selecciona un patrón de formato basado en el idioma actual
     const formatPattern = this.getFormatPattern(this.translate.currentLang, pattern)
     return formatDate(date, formatPattern, localeId)
   }
