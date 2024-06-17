@@ -34,7 +34,7 @@ export class ChallengeCardComponent implements OnInit, OnDestroy {
     this.translateSubscription.unsubscribe()
   }
 
-  private updateFormattedDate (): void {
+  updateFormattedDate (): void {
     this.formattedDate = this.dateFormatter.format(this.creation_date)
   }
 }
