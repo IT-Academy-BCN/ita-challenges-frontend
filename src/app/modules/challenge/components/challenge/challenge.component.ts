@@ -66,6 +66,7 @@ export class ChallengeComponent {
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
+      this.solutions = this.challenge.solutions
     })
   }
 }

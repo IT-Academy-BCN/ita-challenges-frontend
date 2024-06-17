@@ -26,7 +26,9 @@ describe('ChallengeComponent', () => {
 
   beforeEach(async () => {
     mockChallengeService = {
-      getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({}))
+      getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({
+        solutions: []
+      }))
     }
 
     await TestBed.configureTestingModule({
@@ -188,7 +190,8 @@ describe('ChallengeComponent', () => {
     expect(challengeInfoComponent.detail.description).toBe(component.detail.description)
     expect(challengeInfoComponent.detail.examples).toEqual(component.detail.examples)
     expect(challengeInfoComponent.detail.notes).toBe(component.detail.notes)
-    expect(challengeInfoComponent.solutions).toEqual(component.solutions)
+    // expect(challengeInfoComponent.solutions).toEqual(component.solutions)
+    // Elimino esta línea porque no pasamos solutions de challenge a info-challenge
     expect(challengeInfoComponent.popularity).toBe(component.popularity)
     expect(challengeInfoComponent.languages).toEqual(component.languages)
   })
