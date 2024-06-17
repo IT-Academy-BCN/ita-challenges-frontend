@@ -4,16 +4,28 @@ import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { DateFormatterService } from 'src/app/services/date-formatter.service'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeCardComponent
   let fixture: ComponentFixture<ChallengeCardComponent>
+  let translateService: TranslateService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent],
-      imports: [RouterTestingModule],
-      providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        StarterService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        TranslateService,
+        DateFormatterService
+      ]
     })
       .compileComponents()
   })
@@ -21,6 +33,8 @@ describe('ChallengeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
+    component.creation_date = new Date()
+    translateService = TestBed.inject(TranslateService)
     fixture.detectChanges()
   })
 
@@ -56,5 +70,16 @@ describe('ChallengeComponent', () => {
     console.log('Component is giving a string value on the router link:', hasId)
 
     expect(routerLinkAttribute).toBe('ita-challenge/challenges/123')
+  })
+
+  it('should format date correctly in Spanish', () => {
+    // Simula el idioma español
+    jest.spyOn(translateService, 'currentLang', 'get').mockReturnValue('es')
+    component.creation_date = new Date(2020, 0, 1) // 1 de enero de 2020
+    component.updateFormattedDate()
+    fixture.detectChanges()
+
+    // Verifica que la fecha formateada sea correcta para el idioma español
+    expect(component.formattedDate).toEqual('01 enero 2020')
   })
 })
