@@ -40,6 +40,6 @@ describe('DateFormatterService', () => {
   it('should use default pattern if language is not supported', () => {
     translateService.currentLang = 'fr' // French is not supported, so it should fall back to default
     const date = new Date('2023-04-01')
-    expect(service.format(date)).toEqual('01 abril 2023') // Assuming default is Spanish for demonstration
+    expect(service.format(date)).toEqual('01 d’abril 2023') // Assuming default is Catalan
   })
 })

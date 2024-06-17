@@ -29,7 +29,7 @@ export class DateFormatterService {
       case 'es': return 'es-ES'
       case 'ca': return 'ca-ES'
       case 'en': return 'en-US'
-      default: return 'en-US'
+      default: return 'ca-ES'
     }
   }
 
