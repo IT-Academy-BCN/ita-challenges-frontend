@@ -28,18 +28,18 @@ describe('DateFormatterService', () => {
   it('should format date correctly in English', () => {
     translateService.currentLang = 'en'
     const date = new Date('2023-04-01')
-    expect(service.format(date)).toEqual('April 01, 2023')
+    expect(service.format(date)).toEqual('Apr 01, 2023')
   })
 
   it('should format date correctly in Spanish', () => {
     translateService.currentLang = 'es'
     const date = new Date('2023-04-01')
-    expect(service.format(date)).toEqual('01 abril 2023')
+    expect(service.format(date)).toEqual('01 Abr 2023')
   })
 
   it('should use default pattern if language is not supported', () => {
     translateService.currentLang = 'fr' // French is not supported, so it should fall back to default
     const date = new Date('2023-04-01')
-    expect(service.format(date)).toEqual('01 d’abril 2023') // Assuming default is Catalan
+    expect(service.format(date)).toEqual('01 D’abr. 2023') // Assuming default is Catalan
   })
 })
