@@ -42,7 +42,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   challengeSubs$!: Subscription
   challengeSolutions: Solution[] = []
   idLanguage: string = ''
-  userId: string = ''
+  userId: string |undefined = ''
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -64,6 +64,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
 
   ngOnChanges (changes: SimpleChanges): void {
     this.userId = this.authService.getUserIdFromCookie()
+    
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
       this.loadSolutions(this.idChallenge, this.idLanguage)

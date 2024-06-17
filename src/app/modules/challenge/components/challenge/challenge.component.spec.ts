@@ -16,11 +16,13 @@ import { SolutionComponent } from '../../../../shared/components/solution/soluti
 import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { CookieService } from 'ngx-cookie-service'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
   let fixture: ComponentFixture<ChallengeComponent>
   let mockChallengeService: any
+  let cookieService: CookieService
 
   beforeEach(async () => {
     mockChallengeService = {
@@ -58,10 +60,14 @@ describe('ChallengeComponent', () => {
           useValue: mockChallengeService
         },
         AuthService,
+        CookieService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     }).compileComponents()
+    cookieService = TestBed.inject(CookieService);
+    const mockUser = { idUser: 'testId' };
+    cookieService.set('user', JSON.stringify(mockUser));
   })
 
   beforeEach(() => {
