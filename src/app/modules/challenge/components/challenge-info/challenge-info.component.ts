@@ -22,7 +22,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { type Solution } from 'src/app/models/solution.model'
+import { SolutionResults } from 'src/app/models/solution.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -40,9 +40,9 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   relatedChallengesData!: DataChallenge
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
-  challengeSolutions: Solution[] = []
+  challengeSolutions: SolutionResults[] = []
   idLanguage: string = ''
-  userId: string |undefined = ''
+  userId: string | undefined = ''
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -64,7 +64,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
 
   ngOnChanges (changes: SimpleChanges): void {
     this.userId = this.authService.getUserIdFromCookie()
-    
+
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
       this.loadSolutions(this.idChallenge, this.idLanguage)

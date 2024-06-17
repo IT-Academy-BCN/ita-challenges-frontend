@@ -67,9 +67,9 @@ describe('ChallengeComponent', () => {
         provideHttpClientTesting()
       ]
     }).compileComponents()
-    cookieService = TestBed.inject(CookieService);
-    const mockUser = { idUser: 'testId' };
-    cookieService.set('user', JSON.stringify(mockUser));
+    cookieService = TestBed.inject(CookieService)
+    const mockUser = { idUser: 'testId' }
+    cookieService.set('user', JSON.stringify(mockUser))
   })
 
   beforeEach(() => {
