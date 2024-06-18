@@ -15,7 +15,7 @@ import { php } from '@codemirror/lang-php'
 import { minimalSetup } from 'codemirror'
 import { TranslateService } from '@ngx-translate/core'
 import { SolutionService } from 'src/app/services/solution.service'
-import { type Solution } from 'src/app/models/solution.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
 
@@ -28,7 +28,7 @@ export class SolutionComponent implements OnInit {
   @ViewChild('editorSolution') editorSolution!: ElementRef
   editor: EditorView = new EditorView()
 
-  @Input() challengeSolutions: Solution[] = []
+  @Input() challengeSolutions: SolutionResults[] = []
   @Input() solution_text: string = ''
   @Input() languageExt: Language = 'javascript'
   @Input() isUserSolution = false

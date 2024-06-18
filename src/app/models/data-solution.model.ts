@@ -1,4 +1,4 @@
-import { SolutionResults } from './solution.model'
+import { SolutionResults } from './solution-results.model'
 
 export class DataSolution {
   count: number

@@ -22,7 +22,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { SolutionResults } from 'src/app/models/solution.model'
+import { SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
   selector: 'app-challenge-info',

@@ -1,4 +1,4 @@
-export interface userSolution {
+export interface UserSolution {
   offset: number
   limit: number
   count: number
@@ -9,10 +9,10 @@ export interface Result {
   id_challenge: string
   language: string
   id_user: string
-  solutions: UserSolution[]
+  solutions: SolutionsUser[]
 }
 
-export interface UserSolution {
+export interface SolutionsUser {
   uuid: string
   solutionText: string
 }

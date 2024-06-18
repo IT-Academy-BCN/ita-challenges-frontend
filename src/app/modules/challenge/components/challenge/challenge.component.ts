@@ -4,7 +4,7 @@ import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
-import { type Solution } from 'src/app/models/solution.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { type Resource } from 'src/app/models/resource.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
@@ -26,7 +26,7 @@ export class ChallengeComponent {
   detail!: ChallengeDetails
   related: string[] = []
   resources: Resource[] = []
-  solutions: Solution[] = []
+  solutions: SolutionResults[] = []
   description: string = ''
   examples: Example[] = []
   notes: string = ''
@@ -66,7 +66,6 @@ export class ChallengeComponent {
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
-      this.solutions = this.challenge.solutions
     })
   }
 }
