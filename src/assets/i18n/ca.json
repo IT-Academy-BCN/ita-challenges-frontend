@@ -108,6 +108,12 @@
                 "description":"Registra't per pujar, lliurar i veure solucions dels reptes",
                 "register":"Registrar-me",
                 "loginRedirect":"Entrar"
+            }, 
+            "solution": {
+                "title": "Estàs segur?",
+                "description":"Un cop enviat el codi no es pot editar" ,
+                "btn-accept": "Acceptar",
+                "btn-cancel": "Cancel.lar"
             }
         }
     },
