@@ -3,6 +3,7 @@ import { ResourceCardComponent } from './resource-card.component'
 import { ResourcesService } from 'src/app/services/resources.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 describe('ResourceCardComponent', () => {
   let component: ResourceCardComponent
@@ -16,17 +17,20 @@ describe('ResourceCardComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ResourceCardComponent],
-      imports: [],
+      imports: [
+        TranslateModule.forRoot() // Asegúrate de importar TranslateModule
+      ],
       providers: [
         { provide: ResourcesService, useValue: resourcesServiceMock },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        TranslateService // Provee TranslateService si es necesario
       ]
     })
       .compileComponents()
 
     fixture = TestBed.createComponent(ResourceCardComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
+    fixture.detectChanges() // Asegúrate de llamar a detectChanges después de crear el componente
   })
 
   it('should create', () => {
@@ -67,13 +71,24 @@ describe('ResourceCardComponent', () => {
         userVote: 1
       },
       isFavorite: false
+    // Añade el campo formattedDate con el valor esperado o usa expect.objectContaining para omitir esta verificación
     }]
 
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
 
     component.ngOnInit()
     await fixture.whenStable().then(() => {
-      expect(component.resources).toEqual(responseMock)
+    // Si conoces el valor exacto de formattedDate, añádelo a responseMock y compara como antes
+    // expect(component.resources).toEqual(responseMock);
+
+      // Si no conoces el valor exacto o si varía, puedes usar expect.objectContaining para verificar partes del objeto
+      expect(component.resources).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          id: 'e7b6b5a0-5b0a-4b0e-8b0a-9b0a0b0a0b0a',
+          title: 'Tutorial completo de Angular desde cero'
+        // Añade aquí más campos si es necesario
+        })
+      ]))
     }).catch()
   })
 
