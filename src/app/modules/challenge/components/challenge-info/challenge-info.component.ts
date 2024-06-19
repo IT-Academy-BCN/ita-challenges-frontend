@@ -140,7 +140,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
-    this.solutionService.getAllSolutions(idChallenge, idLanguage).subscribe((data) => {
+    this.solutionService.getAllChallengeSolutions(idChallenge, idLanguage).subscribe((data) => {
       this.challengeSolutions = data.results
     })
   }

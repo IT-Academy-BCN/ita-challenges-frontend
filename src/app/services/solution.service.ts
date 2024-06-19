@@ -28,7 +28,7 @@ export class SolutionService {
     this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
   }
 
-  getAllSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
+  getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
     return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
       {
         headers: {

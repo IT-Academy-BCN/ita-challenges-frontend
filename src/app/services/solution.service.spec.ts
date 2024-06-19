@@ -1,71 +1,80 @@
-import { TestBed, inject } from '@angular/core/testing'
-import { SolutionService } from './solution.service'
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { DataSolution } from '../models/data-solution.model'
-import { environment } from 'src/environments/environment'
 
-describe('Service: SendSolution', () => {
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { SolutionService } from './solution.service';
+import { environment } from 'src/environments/environment';
 
-  let solutionService: SolutionService
-  let httpClient: HttpClient
-  let httpClientMock: HttpTestingController
+describe('SolutionService', () => {
+  let service: SolutionService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
-      providers: [SolutionService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-    })
+      imports: [HttpClientTestingModule],
+      providers: [SolutionService]
+    });
 
-    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
-    httpClientMock = TestBed.inject(HttpTestingController)
-    solutionService = TestBed.inject(SolutionService)
-  })
+    service = TestBed.inject(SolutionService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
 
-  it('should ...', inject([SolutionService], (service: SolutionService) => {
-    expect(service).toBeTruthy()
-  }))
 
-  it('should get all solutions succesfully', (done) => {
-    const mockData: DataSolution[] = [
-      {
 
-        "offset": 0,
-        "limit": 2,
-        "count": 2,
-        "results": [
-            {
-                "id_solution": "1682b3e9-056a-45b7-a0e9-eaf1e11775ad",
-                "solution_text": "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec",
-                "uuid_language": "409c9fe8-74de-4db3-81a1-a55280cf92ef",
-                "uuid_challenge": null // A dia de hoy, el endpoint devuelve null para este valor, habrá que cambiarlo aqui y en data-solution.model cuando se arregle
-            },
-            {
-                "id_solution": "a7a789a9-2006-4b59-94bb-3afe0d1c161d",
-                "solution_text": "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec",
-                "uuid_language": "409c9fe8-74de-4db3-81a1-a55280cf92ef",
-                "uuid_challenge": null
-            }
-        ]      }
-    ]
-    const idChallenge = 'dcacb291-b4aa-4029-8e9b-284c8ca80296'
-    const idLanguage = '409c9fe8-74de-4db3-81a1-a55280cf92ef'
-
-    httpClient.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
+  it('should fetch all challenge solutions', () => {
+    const mockDataSolution = {   
+      count: 1,
+      offset: 1,
+      limit: 1,
+      results: [
+        {
+        id_solution: '123',
+        solution_text: 'solution text 1',
+        uuid_language: '123a',
+        uuid_challenge: '123b'
+        },         
+        {
+        id_solution: '456',
+        solution_text: 'solution text 2',
+        uuid_language: '456c',
+        uuid_challenge: '456d'
         }
-      }
-    ).subscribe((res) => {
-      expect(res).toEqual(mockData)
-      done()
-    })
+      ]  };
 
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`)
-    expect(req.request.method).toEqual('GET')
-    req.flush(mockData)
-  })
+    service.getAllChallengeSolutions('testChallengeId', 'testLanguageId').subscribe(data => {
+      expect(data).toEqual(mockDataSolution);
+    });
 
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/testChallengeId/language/testLanguageId`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockDataSolution);
+  });
 
-})
+  it('should fetch if user solution is sent', () => {
+    const mockUserSolution = {   
+      count: 1,
+      offset: 1,
+      limit: 1,
+      results: [
+        {
+            id_challenge: "7fc6a737-dc36-4e1b-87f3-120d81c548aa",
+            language: "1e047ea2-b787-49e7-acea-d79e92be3909",
+            id_user: "c3a92f9d-5d10-4f76-8c0b-6d884c549b1c",
+            solutions: [
+                {
+                    uuid: "dcacb291-b4aa-4029-8e9b-284c8ca80296",
+                    solutionText: "Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec"
+                }
+            ]
+        }
+      ]  
+    };
+
+    service.isUserSolutionSent('c3a92f9d-5d10-4f76-8c0b-6d884c549b1c', '7fc6a737-dc36-4e1b-87f3-120d81c548aa', '1e047ea2-b787-49e7-acea-d79e92be3909').subscribe(data => {
+      expect(data).toEqual(mockUserSolution);
+    });
+
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/c3a92f9d-5d10-4f76-8c0b-6d884c549b1c/challenge/7fc6a737-dc36-4e1b-87f3-120d81c548aa/language/1e047ea2-b787-49e7-acea-d79e92be3909`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUserSolution);
+  });
+});
