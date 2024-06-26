@@ -22,7 +22,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { SolutionResults } from 'src/app/models/solution-results.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -48,6 +48,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
+  private activeIdSubscription: Subscription | undefined
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -89,7 +90,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
 
   ngAfterContentChecked (): void {
     const token = localStorage.getItem('authToken') // TODO
-    const refreshToken = localStorage.getItem('refreshToken') // TODO
+    const refreshToken = localStorage.getItem('refreshToken') // TODO00000000
 
     if (
       token !== null &&
@@ -100,9 +101,15 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
       this.isLogged = true
     }
 
-    this.solutionService.activeId$.subscribe((value) => {
-      this.activeId = value
-    })
+    // this.solutionService.activeId$.subscribe((value) => {
+    //   this.activeId = value
+    // })
+    if (this.activeIdSubscription === undefined) {
+      this.activeIdSubscription = this.solutionService.activeId$.subscribe((value) => {
+        this.activeId = value
+        console.log('ActiveId updated from service:', this.activeId)
+      })
+    }
   }
 
   loadRelatedChallenges (id: string): void {
