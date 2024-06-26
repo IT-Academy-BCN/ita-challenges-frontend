@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core'
-import { ActivatedRoute, type ParamMap } from '@angular/router'
+import { Component, type OnDestroy, type OnInit, inject } from '@angular/core'
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
@@ -14,7 +14,7 @@ import { type Language } from 'src/app/models/language.model'
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss']
 })
-export class ChallengeComponent {
+export class ChallengeComponent implements OnInit, OnDestroy {
   idChallenge: string = ''
   params$!: Subscription
   challenge!: Challenge
@@ -35,17 +35,23 @@ export class ChallengeComponent {
   activeId: number = 1
 
   private readonly route = inject(ActivatedRoute)
+  private readonly router = inject(Router)
   private readonly challengeService = inject(ChallengeService)
 
   ngOnInit (): void {
+    console.log('ngOnInit ChallengeComponent')
+
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
       this.loadMasterData(this.idChallenge)
       this.activeId = 1
+      console.log(this.activeId)
     })
   }
 
   ngOnDestroy (): void {
+    console.log('ngOnDestroy ChallengeComponent')
+
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }

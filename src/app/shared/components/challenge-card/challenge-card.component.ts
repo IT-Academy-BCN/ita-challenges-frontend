@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core'
+import { Component, Input, type OnInit, inject } from '@angular/core'
 import { StarterService } from '../../../services/starter.service'
 
 @Component({
@@ -7,7 +7,15 @@ import { StarterService } from '../../../services/starter.service'
   styleUrls: ['./challenge-card.component.scss'],
   providers: []
 })
-export class ChallengeCardComponent {
+export class ChallengeCardComponent implements OnInit {
+  constructor () {
+    console.log('constructor')
+  }
+
+  ngOnInit (): void {
+    console.log('ngOnInit')
+  }
+
   private readonly starterService = inject(StarterService)
 
   @Input() title: string = ''

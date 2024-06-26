@@ -1,9 +1,5 @@
-<!---Nav tabs-->
-<!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
-  
   <!--DETAILS TAB-->
-
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
     <a href="#details" ngbNavLink>{{
       "modules.challenge.info.detailsTitle" | translate
@@ -53,32 +49,6 @@
           <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
         </div>
       </div>
-      <!-------if not logged show this------>
-      @if (!isLogged) {
-      <div class="w-100 mt-4 d-md-none">
-        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}">
-          {{ "modules.challenge.header.button" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!------ if logged show this------>
-      @if (isLogged && !solutionSent) {
-      <div class="w-100 button d-md-none">
-        <button class="w-100 btn btn-sm btn-outline-primary">
-          {{ "modules.challenge.header.buttonCancel" | translate }}
-        </button>
-        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
-          {{ "modules.challenge.header.buttonAccept" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!-----if solution sent show this---->
-      <div class="solutionSent w-100 d-flex d-md-none justify-content-center">
-        <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-        <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-      </div>
-      } }
     </ng-template>
   </li>
 
@@ -89,7 +59,7 @@
       "modules.challenge.info.solutionsTitle" | translate
       }}</a>
     <ng-template ngbNavContent>
-      
+
       <!--users can only see other solutions if they sent theirs-->
       <div class="tab-content">
         <div class="restricted" *ngIf="isUserSolution">
@@ -105,13 +75,9 @@
         </div>
         <!--if users sent their solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="!isUserSolution && isLogged">
-          <ng-container >
-            <app-solution 
-              *ngFor="let solution of challengeSolutions; let i = index"
-              [number]="i + 1" 
-              [isUserSolution]="false" 
-              class="mb-4"
-              [languageExt]="'javascript'"
+          <ng-container>
+            <app-solution *ngFor="let solution of challengeSolutions; let i = index" [number]="i + 1"
+              [isUserSolution]="false" class="mb-4" [languageExt]="'javascript'"
               [solution_text]="solution.solution_text">
             </app-solution>
 
@@ -119,32 +85,6 @@
         </div>
       </div>
 
-      <!-------if not logged show this------>
-      @if (!isLogged) {
-      <div class="w-100 mt-4 d-md-none">
-        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}">
-          {{ "modules.challenge.header.button" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!------ if logged show this------>
-      @if (isLogged && !solutionSent) {
-      <div class="w-100 button d-md-none">
-        <button class="w-100 btn btn-sm btn-outline-primary">
-          {{ "modules.challenge.header.buttonCancel" | translate }}
-        </button>
-        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
-          {{ "modules.challenge.header.buttonAccept" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!-----if solution sent show this---->
-      <div class="solutionSent w-100 d-flex d-md-none justify-content-center">
-        <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-        <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-      </div>
-      } }
     </ng-template>
   </li>
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
@@ -188,4 +128,3 @@
   </li>
 </ul>
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
-<!--Nav panes-->

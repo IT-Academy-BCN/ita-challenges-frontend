@@ -7,7 +7,8 @@ import {
   ViewChild,
   inject,
   type SimpleChanges,
-  type OnChanges
+  type OnChanges,
+  type OnInit
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -22,7 +23,8 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { SolutionResults } from 'src/app/models/solution-results.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-challenge-info',
@@ -30,7 +32,7 @@ import { SolutionResults } from 'src/app/models/solution-results.model'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
+export class ChallengeInfoComponent implements OnInit, AfterContentChecked, OnChanges {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -43,11 +45,15 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   challengeSolutions: SolutionResults[] = []
   idLanguage: string = ''
   userId: string | undefined = ''
+  loadSolutionsCard: boolean = false
+  private activeIdSubscription: Subscription | undefined
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
+  private readonly router = inject(Router)
+  // private readonly changeDetectorRef = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -63,9 +69,11 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   ngOnChanges (changes: SimpleChanges): void {
+    console.log('ngOnChanges')
+
     this.userId = this.authService.getUserIdFromCookie()
 
-    if (changes['languages']?.currentValue?.length > 0) {
+    if (changes['languages']?.currentValue?.length > 0 && this.idLanguage !== '') {
       this.idLanguage = this.languages[0].id_language
       this.loadSolutions(this.idChallenge, this.idLanguage)
       this.solutionService.isUserSolutionSent(this.userId, this.idChallenge, this.idLanguage).subscribe((data) => {
@@ -78,8 +86,9 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   async ngOnInit (): Promise<void> {
+    console.log('ngOnInit')
+
     this.solutionService.solutionSent$.subscribe((value) => {
-      console.log('challenge-info, OnInit, solutionSent$, value:', value)
       this.isUserSolution = !value
       this.solutionSent = value
     })
@@ -88,8 +97,10 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken') // TODO
-    const refreshToken = localStorage.getItem('refreshToken') // TODO
+    console.log('ngAfterContentChecked')
+
+    const token = localStorage.getItem('authToken')
+    const refreshToken = localStorage.getItem('refreshToken')
 
     if (
       token !== null &&
@@ -100,12 +111,18 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
       this.isLogged = true
     }
 
-    this.solutionService.activeId$.subscribe((value) => {
-      this.activeId = value
-    })
+    if (this.activeIdSubscription === undefined) {
+      this.activeIdSubscription = this.solutionService.activeId$.subscribe((value) => {
+        this.activeId = value
+        console.log('ActiveId updated from service:', this.activeId)
+        // this.changeDetectorRef.detectChanges()
+      })
+    }
   }
 
   loadRelatedChallenges (id: string): void {
+    console.log('loadRelatedChallenges')
+
     this.challengeSubs$ = this.relatedService
       .getRelatedChallenges(id)
       .subscribe((data) => {
@@ -115,13 +132,17 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   onActiveIdChange (newActiveId: number): void {
+    console.log('Nuevo valor de activeId:', newActiveId) // Imprime el valor de entrada
     if (this.activeIdChange !== null) {
       this.activeId = newActiveId
+      console.log('Valor actualizado de this.activeId:', this.activeId) // Imprime el valor después de actualizarlo
       this.activeIdChange.emit(this.activeId)
     }
   }
 
   openSendSolutionModal (): void {
+    console.log('openSendSolutionModal')
+
     this.modalService.open(SendSolutionModalComponent, {
       centered: true,
       size: 'lg'
@@ -129,6 +150,8 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   clickSendButton (): void {
+    console.log('clickSendButton')
+
     if (!this.isLogged) {
       this.modalService.open(RestrictedModalComponent, {
         centered: true,
@@ -140,8 +163,28 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
+    console.log('loadSolutions')
+
     this.solutionService.getAllChallengeSolutions(idChallenge, idLanguage).subscribe((data) => {
       this.challengeSolutions = data.results
+
+      // Verificar si activeId ya está configurado correctamente
+      if (this.activeId !== 1) {
+        // Establecer activeId en 1 para activar la pestaña de detalles
+        this.activeId = 1
+        console.log('ActiveId set to:', this.activeId)
+
+        // Emitir el cambio de activeId
+        this.activeIdChange.emit(this.activeId)
+        console.log('ActiveId emitted:', this.activeId)
+
+        // Forzar la detección de cambios
+        // this.changeDetectorRef.detectChanges()
+        console.log('Changes detected')
+
+        // Asegurarse de que la pestaña de detalles se active
+        this.onActiveIdChange(this.activeId)
+      }
     })
   }
 }
