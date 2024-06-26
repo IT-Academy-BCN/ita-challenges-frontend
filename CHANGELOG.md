@@ -5,6 +5,11 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### [ita-challenges-frontend-3.0.3-RELEASE]
+- Redireccionado a pestaña soluciones.
+- Visualización de soluciones aceptadas.
+- Se detecta si el usuario ya ha enviado solución.
+
+### [ita-challenges-frontend-3.0.3-RELEASE]
 
 - Ugraded to Angular 18
 - Fixed package destination folder, in Angular 18 the destination folder is dist/ita-challenges-frontend/browser 
