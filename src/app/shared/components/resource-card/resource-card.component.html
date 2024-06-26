@@ -1,23 +1,25 @@
-<div class="d-flex flex-wrap p-2 p-md-0 justify-content-center justify-content-lg-start gap-3">
-  @for (resource of resources; track resource.id) {
-  <a href={{resource.url}} class="resource-list-element d-flex justify-content-start animated align-items-start">
-    <div class="d-flex flex-column justify-content-center">
-      <div class="up-arrow"></div>
-      <h3 class="points text-center">{{resource.voteCount.total}}</h3>
-      <div class="down-arrow"></div>
-    </div>
-    <div class="resource-details d-flex flex-column">
-      <h3 class="title">{{resource.title}}</h3>
-      <p class="description">
-        {{ resource.description }}
-      </p>
-      <div class="user-details d-flex mt-auto align-items-center pt-3">
-        <img class="user-img" [src]="['/assets/img/users/user-1.png']" alt="Nombre Usuario" />
-        <span class="description">
-          {{resource.user.name}}, {{resource.createdAt | formatDate}}
-        </span>
+<div class="scroll-container">
+  <div class="d-flex flex-wrap p-2 p-md-0 justify-content-center justify-content-lg-start gap-3">
+    @for (resource of resources; track resource.id) {
+    <a href={{resource.url}} class="resource-list-element d-flex justify-content-start animated align-items-start">
+      <div class="d-flex flex-column justify-content-center">
+        <div class="up-arrow"></div>
+        <h3 class="points text-center">{{resource.voteCount.total}}</h3>
+        <div class="down-arrow"></div>
       </div>
-    </div>
-  </a>
-  }
+      <div class="resource-details d-flex flex-column">
+        <h3 class="title">{{resource.title}}</h3>
+        <p class="description">
+          {{ resource.description }}
+        </p>
+        <div class="user-details d-flex mt-auto align-items-center pt-3">
+          <img class="user-img" [src]="['/assets/img/users/user-1.png']" alt="Nombre Usuario" />
+          <span class="description">
+            {{resource.user.name}}, {{resource.createdAt | formatDate}}
+          </span>
+        </div>
+      </div>
+    </a>
+    }
+  </div>
 </div>
