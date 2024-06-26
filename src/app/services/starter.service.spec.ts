@@ -244,7 +244,7 @@ describe('StarterService', () => {
     })
   })
 
-    /*
+  /*
   Some explanations:
   RxJs introduced the following syntax when writing marble tests in our code
       - ' ' the whitespace is a unique character that will not be interpreted; it can be used to align your marble string.

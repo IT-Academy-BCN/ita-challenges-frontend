@@ -59,7 +59,7 @@ describe('ChallengeInfoComponent', () => {
     it('should call loadRelatedChallenge with the provided idChallenge', () => {
       const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
-      void component.ngOnInit()
+      component.ngOnInit()
 
       expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')

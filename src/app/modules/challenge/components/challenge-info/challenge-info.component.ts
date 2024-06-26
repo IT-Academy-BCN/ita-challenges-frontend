@@ -6,8 +6,9 @@ import {
   Output,
   ViewChild,
   inject,
-  type SimpleChanges,
-  type OnChanges
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -30,7 +31,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
+export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -48,7 +49,6 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
-  private activeIdSubscription: Subscription | undefined
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -78,9 +78,8 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
     }
   }
 
-  async ngOnInit (): Promise<void> {
+  ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
-      console.log('challenge-info, OnInit, solutionSent$, value:', value)
       this.isUserSolution = !value
       this.solutionSent = value
     })
@@ -99,16 +98,6 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges {
       refreshToken !== ''
     ) {
       this.isLogged = true
-    }
-
-    // this.solutionService.activeId$.subscribe((value) => {
-    //   this.activeId = value
-    // })
-    if (this.activeIdSubscription === undefined) {
-      this.activeIdSubscription = this.solutionService.activeId$.subscribe((value) => {
-        this.activeId = value
-        console.log('ActiveId updated from service:', this.activeId)
-      })
     }
   }
 

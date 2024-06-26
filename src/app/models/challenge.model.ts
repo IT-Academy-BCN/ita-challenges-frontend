@@ -1,7 +1,6 @@
 import { type ChallengeDetails } from './challenge-details.model'
 import { type Language } from './language.model'
-import { type SolutionResults } from './solution-results.model'
-import { Solution } from './solution.interface'
+import { type Solution } from './solution.interface'
 
 export class Challenge {
   id_challenge: string

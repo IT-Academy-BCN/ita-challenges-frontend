@@ -4,7 +4,6 @@ export class SolutionResults {
   uuid_language: string
   uuid_challenge: string | null
 
-
   constructor (element: any) {
     this.id_solution = element.id_solution
     this.solution_text = element.solution_text
