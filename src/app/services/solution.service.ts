@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, type Observable } from 'rxjs'
+import { BehaviorSubject, Subject, type Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
-  // subject = new BehaviorSubject(1);
-  // obs$ = this.subject.asObservable();
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
   solutionSent$ = this.solutionSentSubject.asObservable()
+
+  private readonly submitSolutionSubject = new Subject<boolean>()
+  public sendSolutionText$ = this.submitSolutionSubject.asObservable()
 
   solutionSent: boolean = false
 
@@ -26,5 +27,9 @@ export class SolutionService {
 
   public getSolutions (filePath: string): Observable<any> {
     return this.http.get(filePath)
+  }
+
+  public sendSolutionText (solution: boolean): void {
+    this.submitSolutionSubject.next(solution)
   }
 }

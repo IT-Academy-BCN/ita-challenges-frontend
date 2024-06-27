@@ -10,6 +10,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
     TranslateModule,
     NgbTooltipModule,
     DynamicTranslatePipe,
-    FormatDatePipe
+    FormatDatePipe,
+    ReactiveFormsModule
   ],
   exports: [
     PaginationComponent,

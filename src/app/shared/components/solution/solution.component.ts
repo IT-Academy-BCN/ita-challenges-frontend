@@ -8,6 +8,7 @@ import { php } from '@codemirror/lang-php'
 import { minimalSetup } from 'codemirror'
 import { TranslateService } from '@ngx-translate/core'
 import { SolutionService } from 'src/app/services/solution.service'
+import { FormControl, FormGroup } from '@angular/forms'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
 
@@ -38,6 +39,10 @@ export class SolutionComponent {
   /* code added by valerio */
   private textRemoved = false
 
+  public solutionTextForm: FormGroup = new FormGroup({
+    solution_text_field: new FormControl('')
+  })
+
   handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
       // Check if the text has not been removed yet
@@ -66,6 +71,9 @@ export class SolutionComponent {
     })
     this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
       this.solutions = data.solutions
+    })
+    this.solutionService.sendSolutionText$.subscribe(() => {
+      this.onSubmitSolution()
     })
   }
 
@@ -114,5 +122,9 @@ export class SolutionComponent {
       })
     }
     this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement })
+  }
+
+  onSubmitSolution (): void {
+    console.log('Solution submitted:', this.solutionTextForm.controls['solution_text_field'].value)
   }
 }
