@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
+import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AuthService } from 'src/app/services/auth.service'
     ModalsModule,
     TranslateModule,
     FormsModule,
-    NgbNavModule
+    NgbNavModule,
+    DynamicTranslatePipe
   ]
 })
 export class ChallengeModule {}

@@ -1,7 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ResourceCardComponent } from './resource-card.component'
 import { ResourcesService } from 'src/app/services/resources.service'
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 
 describe('ResourceCardComponent', () => {
@@ -16,9 +16,10 @@ describe('ResourceCardComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ResourceCardComponent],
-      imports: [HttpClientModule],
+      imports: [],
       providers: [
-        { provide: ResourcesService, useValue: resourcesServiceMock }
+        { provide: ResourcesService, useValue: resourcesServiceMock },
+        provideHttpClient(withInterceptorsFromDi())
       ]
     })
       .compileComponents()
@@ -42,8 +43,8 @@ describe('ResourceCardComponent', () => {
       resourceType: 'BLOG',
       userId: 'string',
       categoryId: 'clocr0bi20000h8vwipfbazso',
-      createdAt: 'Mar 25, 2023',
-      updatedAt: 'Mar 25, 2023',
+      createdAt: '2023-11-28T15:24:13.961Z',
+      updatedAt: '2023-11-28T15:24:13.961Z',
       user: {
         name: 'Ana Pérez'
       },
@@ -71,9 +72,6 @@ describe('ResourceCardComponent', () => {
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
 
     component.ngOnInit()
-
-    fixture.detectChanges()
-
     await fixture.whenStable().then(() => {
       expect(component.resources).toEqual(responseMock)
     }).catch()

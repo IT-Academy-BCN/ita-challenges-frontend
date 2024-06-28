@@ -1,8 +1,9 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { SolutionComponent } from './solution.component'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { SolutionService } from '../../../services/solution.service'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('SolutionComponent with TranslateService', () => {
   let component: SolutionComponent
@@ -11,9 +12,9 @@ describe('SolutionComponent with TranslateService', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       declarations: [SolutionComponent],
-      providers: [SolutionService, TranslateService]
+      imports: [TranslateModule.forRoot()],
+      providers: [SolutionService, TranslateService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     }).compileComponents()
   })
 

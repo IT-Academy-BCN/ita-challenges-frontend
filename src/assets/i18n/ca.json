@@ -19,7 +19,7 @@
                 "title": "Guies útils"
             },
             "section6": {
-                "title": "Arranjaments"
+                "title": "Configuració"
             },
             "section7": {
                 "title": "El meu espai"
@@ -47,7 +47,7 @@
                 "notes": "Notes",
                 "blocked": "Les solucions estan bloquejades",
                 "blokedMsg": "Les solucions romandran bloquejades fins que lliuris el repte",
-                "resources": "Recursos tobats a ITA-Wiki",
+                "resources": "Recursos trobats a ITA-Wiki",
                 "resourcesLink": "Anar a ITA-Wiki",
                 "related": "Reptes similars",
                 "showStatement": "Mostrar enunciat",
@@ -63,12 +63,12 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Llenguatje",
+                "lenguaje": "Llenguatge",
                 "dificulty": "Dificultat",
                 "easy": "Fàcil",
                 "medium": "Mitja",
                 "hard": "Difícil",
-                "progress": "Progrès",
+                "progress": "Progrés",
                 "noStarted": "No començats",
                 "started": "Falta completar",
                 "finished": "Completats"
@@ -102,6 +102,12 @@
                 "title": "Registre Exitós",
                 "body": "Un mentor ha de validar el seu registre. Esperi la confirmació per correu electrònic abans d'iniciar sessió,",
                 "btn":"D'acord"
+            },
+            "restricted": {
+                "title": "Accés restringit",
+                "description":"Registra't per pujar, lliurar i veure solucions dels reptes",
+                "register":"Registrar-me",
+                "loginRedirect":"Entrar"
             }
         }
     },

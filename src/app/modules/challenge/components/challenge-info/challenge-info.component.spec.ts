@@ -1,5 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeInfoComponent } from './challenge-info.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
@@ -11,6 +11,8 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
@@ -27,16 +29,16 @@ describe('ChallengeInfoComponent', () => {
         SolutionComponent,
         RestrictedModalComponent
       ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+      imports: [RouterTestingModule,
         I18nModule,
         FormsModule,
-        NgbNavModule
-      ],
+        NgbNavModule,
+        DynamicTranslatePipe],
       providers: [
         // ChallengeService,
-        AuthService
+        AuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -46,7 +48,6 @@ describe('ChallengeInfoComponent', () => {
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
     // challengeService = TestBed.inject(ChallengeService)
-    modalService = TestBed.inject(NgbModal)
     fixture.detectChanges()
   })
 
@@ -55,66 +56,39 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided related_id', () => {
-      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenge')
-      component.related_id = '123'
-      component.ngOnInit()
+    it('should call loadRelatedChallenge with the provided idChallenge', () => {
+      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
+      component.idChallenge = '123'
+      void component.ngOnInit()
 
       expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
     })
   })
 
-  describe('ngAfterContentChecked', () => {
-    beforeEach(() => {
-      // Configurar valores fijos en localStorage
-      localStorage.setItem('authToken', 'mock-token')
-      localStorage.setItem('refreshToken', 'mock-token')
-    })
+  it('should open send solution modal', () => {
+    spyOn(modalService, 'open').and.stub()
+    component.openSendSolutionModal()
 
-    afterEach(() => {
-      // Limpiar localStorage después de las pruebas
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-    })
+    expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
+  })
 
-    it('should set isLogged to true when tokens are present', () => {
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBeTruthy()
-    })
+  it('should open restricted modal if user is not logged in', () => {
+    spyOn(modalService, 'open').and.stub()
+    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+    component.clickSendButton()
 
-    it('should set isLogged to false when tokens are not present', () => {
-      // Limpiar tokens para esta prueba
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBeFalsy()
-    })
+    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
+  })
 
-    it('should open send solution modal', () => {
-      spyOn(modalService, 'open').and.stub()
-      component.openSendSolutionModal()
+  it('should onActiveIdchange correctly', () => {
+    const newActiveId = 2
+    const activeId = 1
 
-      expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
-    })
+    component.onActiveIdChange(newActiveId)
 
-    it('should open restricted modal if user is not logged in', () => {
-      spyOn(modalService, 'open').and.stub()
-      component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
-      component.clickSendButton()
-
-      expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
-    })
-
-    it('should onActiveIdchange correctly', () => {
-      const newActiveId = 2
-      const activeId = 1
-
-      component.onActiveIdChange(newActiveId)
-
-      expect(component.activeIdChange).toBeTruthy()
-      component.activeIdChange.emit(activeId)
-      expect(component.activeId).toBe(newActiveId)
-    })
+    expect(component.activeIdChange).toBeTruthy()
+    component.activeIdChange.emit(activeId)
+    expect(component.activeId).toBe(newActiveId)
   })
 })

@@ -9,6 +9,10 @@ import { type ResourceResponse } from '../models/resource.interface'
 })
 export class ResourcesService {
   // private readonly http = inject(HttpClient)
+
+  // TODO: Hardcoded URL.
+  private readonly HARDCODED_URL: string = '/categorySlug=react'
+
   constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
   getResources (): Observable<ResourceResponse> {
     // todo: need change the env api request.

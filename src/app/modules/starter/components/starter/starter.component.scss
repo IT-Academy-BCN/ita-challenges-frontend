@@ -1,51 +1,101 @@
-@import "/src/styles/colors";
-@import "/src/styles/buttons";
-@import "/src/styles/fonts";
-
-h2{
-    margin-bottom: 3rem;
+@import '/src/styles/colors';
+@import '/src/styles/buttons';
+@import '/src/styles/fonts';
+.starter {
+  height: 100%;
 }
-img[alt="filter-icon"]{
+h2 {
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 700;
+}
+
+img[alt='filter-icon'] {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+
+  li {
+    display: flex;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+    color: $gray-3;
+    gap: 2px;
     cursor: pointer;
-}
-ul{
-    list-style: none;
-    li{
-        display: flex;
-        font-weight: 700;
-        color: $gray-3;
-        gap: 2px;
-        cursor: pointer;
-        &::after{
-            content: "";
-            display: block;
-            width: 17px;
-            height: 17px;
-            background-image: url('../../../../../assets/img/icon/sort-selected.svg');
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            
-        }
-        &.selected{
-            color: $black-1;
-            font-weight: 700;
-            &::after{
-                opacity: 1;
-            }
-        }
-        &:not(.selected):hover{
-            color: $primary
-        }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 17px;
+      height: 17px;
+      background-image: url('/assets/img/icon/sort-selected.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
     }
+
+    &.selected {
+      color: $black-3;
+      font-weight: 700;
+
+      &::after {
+        opacity: 1;
+      }
+
+      &.up::after {
+        transform: rotate(180deg);
+      }
+    }
+
+    &:not(.selected):hover {
+      color: $primary;
+    }
+  }
 }
 
-
+app-starter-filters p {
+  font-size: 16px;
+  line-height: 34px;
+  font-weight: 700;
+}
 
 @media screen and (max-width: 768px) {
-    h2 {
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
-    }
-   
+  h2 {
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+#filters-container {
+  position: sticky;
+  top: 40px;
+  height: 100%; /* Asegura que el contenedor tome toda la altura de la pantalla */
+  overflow-y: auto; /* Permite el scroll interno si es necesario */
+}
+
+#challenges-container {
+  height: 100%; /* Ajusta la altura del contenedor para que no se superponga con otros elementos */
+  overflow: hidden; /* Evita el scroll en este contenedor */
+  display: flex;
+  flex-direction: column;
+}
+
+#challenges {
+  flex: 1; /* Permite que el contenedor ocupe el espacio disponible */
+  overflow-y: auto; /* Permite el scroll interno */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+#challenges::-webkit-scrollbar { /* WebKit (Chrome, Safari) */
+  width: 0;
+  height: 0;
+}
+
+app-pagination {
+  flex-shrink: 0; /* Asegura que la paginación no se colapse */
+  padding: 10px 0; /* Espaciado para la paginación */
 }

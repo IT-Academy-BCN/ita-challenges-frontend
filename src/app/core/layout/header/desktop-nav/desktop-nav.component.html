@@ -1,0 +1,27 @@
+<div class="desktop-nav">
+  <!-- languageSelect -->
+  <div>
+    <label for="languageSelect">
+      <select class="languageSelect" id="languageSelect" (change)="changeLanguage($event)" [style.width]="selectWidth">
+        <option value="ca">CAT</option>
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Settings -->
+  <div>
+    <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+      <img src="assets/img/icon/setting.svg" alt="Settings" />
+    </a>
+  </div>
+
+  <!-- User -->
+  <div>
+    <button class="user" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"
+      (click)="openLoginModal()">
+      <img src="assets/img/icon/user.svg" alt="User" />
+    </button>
+  </div>
+</div>

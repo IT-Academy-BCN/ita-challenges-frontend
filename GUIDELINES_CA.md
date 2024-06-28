@@ -13,7 +13,8 @@
     2.4.1 [Assignar-te una targeta de tasques](#241-assignar-te-una-targeta-de-tasques)
     2.4.2 [Treballar en una tasca](#242-treballar-en-una-tasca)
     2.4.3 [Pull request](#243-pull-request)
-   2.5 [Metodologia Scrum](#25-metodologia-scrum)
+   2.5 [Treball amb git](#25-treball-amb-git)\
+   2.6 [Metodologia Scrum](#26-metodologia-scrum)
 
 3. [**REGLES DE CODI**](#3-regles-de-codi)
    
@@ -27,7 +28,7 @@
 
 7. [**DESENVOLUPAMENT**](#7-desenvolupament)
 
-8. [**PROVES**](#8-proves)
+8. [**TESTING**](#8-testing)
 
 ----------------------------------------------------------------
 
@@ -143,7 +144,9 @@ El procediment a seguir cada dia seria aquest:
 
 ## 2.4 Procediment de treball amb targetes
 
-Les targetes de tasques estan organitzades segons el seu estat de desenvolupament. Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
+Les targetes de tasques estan organitzades segons el seu estat de desenvolupament.
+Estan classificades per nivells (1, 2, 3), sent 1 el nivell més baix de complexitat.
+Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
 
 ### 2.4.1 Assignar-te una targeta de tasques
 
@@ -174,7 +177,22 @@ Les targetes de tasques estan organitzades segons el seu estat de desenvolupamen
 
 ----------------------------------------------------------------
 
-## 2.5 Metodologia SCRUM
+## 2.5 Treball amb git
+
+El workflow de git que seguim en projecte és similar a Gitflow.
+Per a poder treballar en el projecte, hauria de conèixer almenys els següents comandos git:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+Pot trobar un bon tutorial en https://www.atlassian.com/git, i molts altres recursos en https://docs.github.com/en/get-started/using-github/github-flow
+
+---
+
+## 2.6 Metodologia SCRUM
 https://scrumguides.org/
 -Reunions diàries per plantejar dificultats i bloquejants que tinguis
 -Reunions quinzenals més profundes (dijous)
@@ -260,16 +278,21 @@ per iniciar el servidor de desenvolupament. Això compilarà el projecte i el se
 
 ----------------------------------------------------------------
 
-# 8. PROVES
+# 8. TESTING
+
 Per executar les proves, utilitza el comandament
 
     npm test
+
 Això executarà el conjunt de proves i proporcionarà retroalimentació sobre els resultats de les proves.
 Si prefereixes executar les proves en mode de vigilància, que reexecuta automàticament les proves quan un arxiu canvia, utilitza el comandament
 
     npm run test:watch.
 
-----------------------------------------------------------------
+Si necessites alguna referència sobre testing en Angular, pots consultar https://angular.io/guide/testing. \
+També està disponible una guia sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
 
 ### 9. DEPLOY
 
@@ -280,6 +303,5 @@ Quan finalitzis el desenvolupament de la feature corresponent (assegura't que la
 - Actualitza també el número de versió de la propietat MICROSERVICE_VERSION en l'arxiu .env.CI.dev. Tingues en compte que has de deixar una línia en blanc al final de l'arxiu.
 - Assegura't que ambdues versions coincideixen.
 - Introdueix les anotacions necessàries en l'arxiu CHANGELOG.md. No oblidis posar el número de issue del que forma part la nova versió.
-- Realitza un commit amb el missatge "X.X.X-RELEASE (on X.X.X és la nova versió).
 - Realitza el push de la branch a què pertany la feature.
 - Realitza la PR corresponent.
