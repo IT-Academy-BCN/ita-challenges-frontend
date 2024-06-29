@@ -20,6 +20,7 @@ import { User } from '../models/user.model'
 import { type TokenService } from './token.service'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
+import { type UserService } from './user.service'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -28,6 +29,7 @@ describe('AuthService', () => {
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
   let tokenServiceMock: TokenService
+  let userServiceMock: UserService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -62,7 +64,11 @@ describe('AuthService', () => {
       value: cookieServiceMock
     })
 
-    authService = new AuthService(httpClient, routerMock as unknown as Router, cookieServiceMock as unknown as CookieService, tokenServiceMock)
+    userServiceMock = {
+      userLoggedIn: false
+    } as unknown as UserService
+
+    authService = new AuthService(httpClient, routerMock as unknown as Router, cookieServiceMock as unknown as CookieService, tokenServiceMock, userServiceMock)
   })
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {
