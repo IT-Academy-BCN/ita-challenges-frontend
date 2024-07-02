@@ -2,36 +2,49 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
-// Importaciones adicionales necesarias para el mock
-import { TranslateService } from '@ngx-translate/core'
+import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
+import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core'
+
+import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
+import { LOCALE_ID } from '@angular/core'
+import { By } from '@angular/platform-browser'
+import { formatDate } from '@angular/common'
 
 // Crear un mock para TranslateService
 class TranslateServiceMock {
-  // Implementa los métodos y propiedades necesarios para el mock
+  currentLang = 'ca'
   instant (key: any): string {
     return key
   }
 }
 
-describe('ChallengeComponent', () => {
+describe('ChallengeCardComponent', () => {
   let component: ChallengeCardComponent
   let fixture: ComponentFixture<ChallengeCardComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
+      ],
       providers: [
         StarterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        // Proveer el mock de TranslateService
-        { provide: TranslateService, useClass: TranslateServiceMock }
+        { provide: TranslateService, useClass: TranslateServiceMock },
+        { provide: LOCALE_ID, useValue: 'ca' } // Proveer LOCALE_ID para el idioma
       ]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -64,7 +77,7 @@ describe('ChallengeComponent', () => {
     component.id = '123'
     fixture.detectChanges()
 
-    const anchorElement: HTMLAnchorElement = fixture.nativeElement.querySelector('.challenge-list-element')
+    const anchorElement: HTMLElement = fixture.nativeElement.querySelector('.challenge-list-element')
     const hasId = anchorElement.innerText !== ''
     anchorElement.setAttribute('routerLink', 'ita-challenge/challenges/123')
     const routerLinkAttribute: string = anchorElement.getAttribute('routerLink')?.toLowerCase() ?? ''
@@ -72,5 +85,16 @@ describe('ChallengeComponent', () => {
     console.log('Component is giving a string value on the router link:', hasId)
 
     expect(routerLinkAttribute).toBe('ita-challenge/challenges/123')
+  })
+
+  it('should display the formatted date correctly', () => {
+    const testDate = new Date('2023-07-01')
+    component.creation_date = testDate
+    fixture.detectChanges()
+
+    const dateElement: HTMLElement = fixture.debugElement.query(By.css('.stat:last-child div:last-child')).nativeElement
+    const formattedDate = formatDate(testDate, 'mediumDate', 'ca') // Formatear la fecha para comparar
+
+    expect(dateElement.textContent).toContain(formattedDate)
   })
 })
