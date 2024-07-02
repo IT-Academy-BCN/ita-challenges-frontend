@@ -98,11 +98,8 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
 
 ##### 2.2.2 Autocrlf
 
-1. Abre Git Bash.
-2. Ejecuta el siguiente comando para configurar Git para que convierta los saltos de línea a CRLF cuando se hace un checkout de un archivo:
+**Antes de comenzar a trabajar en el proyecto**, por favor revisa https://docs.github.com/es/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
 
-       git config --global core.autocrlf true
-3. Todos los archivos nuevos que se creen tendrán un salto de línea LF. Sin embargo, cuando los archivos se comprueban en tu máquina, Git convertirá estos saltos de línea a CRLF. Cuando se hace un commit de archivos a tu repositorio, Git volverá a convertir los saltos de línea a LF.
 
 ##### 2.2.3 Safe CRLF
 

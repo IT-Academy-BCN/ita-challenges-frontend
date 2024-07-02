@@ -13,9 +13,9 @@
       </p>
       <div class="user-details d-flex mt-auto align-items-center pt-3">
         <img class="user-img" [src]="['/assets/img/users/user-1.png']" alt="Nombre Usuario" />
-        <span class="description">
-          {{resource.user.name}}, {{resource.createdAt | formatDate}}
-        </span>
+    <span class="description">
+      {{resource.user.name}}, {{formatResourceDate(resource.createdAt)}}
+    </span>
       </div>
     </div>
   </a>
