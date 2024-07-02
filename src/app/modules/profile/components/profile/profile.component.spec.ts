@@ -7,7 +7,6 @@ import { ProfileHeaderComponent } from '../profile-header/profile-header.compone
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { TranslateModule } from '@ngx-translate/core'
-import { DateFormatterService } from 'src/app/services/date-formatter.service'
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent
@@ -27,14 +26,7 @@ describe('ProfileComponent', () => {
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        // Mockea DateFormatterService y su método format para evitar el error de fecha inválida
-        {
-          provide: DateFormatterService,
-          useValue: {
-            format: () => 'Mocked Date' // Retorna un valor mockeado para la fecha
-          }
-        }
+        provideHttpClientTesting()
       ]
     })
     fixture = TestBed.createComponent(ProfileComponent)
