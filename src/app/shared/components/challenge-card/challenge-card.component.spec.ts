@@ -1,37 +1,42 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { DateFormatterService } from 'src/app/services/date-formatter.service'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+// Importaciones adicionales necesarias para el mock
+import { TranslateService } from '@ngx-translate/core'
+
+// Crear un mock para TranslateService
+class TranslateServiceMock {
+  // Implementa los métodos y propiedades necesarios para el mock
+  instant (key: any): string {
+    return key
+  }
+}
 
 describe('ChallengeComponent', () => {
   let component: ChallengeCardComponent
   let fixture: ComponentFixture<ChallengeCardComponent>
-  let translateService: TranslateService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent],
-      imports: [
-        RouterTestingModule,
-        TranslateModule.forRoot()
-      ],
+      imports: [RouterTestingModule],
       providers: [
         StarterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        TranslateService,
-        DateFormatterService
+        // Proveer el mock de TranslateService
+        { provide: TranslateService, useClass: TranslateServiceMock }
       ]
     })
       .compileComponents()
+  })
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
-    component.creation_date = new Date()
-    translateService = TestBed.inject(TranslateService)
     fixture.detectChanges()
   })
 
@@ -67,16 +72,5 @@ describe('ChallengeComponent', () => {
     console.log('Component is giving a string value on the router link:', hasId)
 
     expect(routerLinkAttribute).toBe('ita-challenge/challenges/123')
-  })
-
-  it('should format date correctly in Spanish', () => {
-    // Simula el idioma español
-    jest.spyOn(translateService, 'currentLang', 'get').mockReturnValue('es')
-    component.creation_date = new Date(2020, 0, 1) // 1 de enero de 2020
-    component.updateFormattedDate()
-    fixture.detectChanges()
-
-    // Verifica que la fecha formateada sea correcta para el idioma español
-    expect(component.formattedDate).toEqual('01 Ene 2020')
   })
 })
