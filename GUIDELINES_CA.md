@@ -94,11 +94,11 @@ Una bona pràctica és incloure fitxers que continguin dades sensibles (com ara 
 Recorda, el fitxer ".gitignore" global s'aplicarà a tots els teus projectes de Git. Si tens fitxers que cal ignorar que són específics d'un sol projecte, considera utilitzar un fitxer ".gitignore" local dins del directori d'aquest projecte.
 
 ### 2.2.2 Autocrlf
-1. Obre Git Bash.
-2. Executa la següent ordre per configurar Git perquè converteixi els salts de línia a CRLF quan es fa un checkout d'un fitxer:
 
-         git config --global core.autocrlf true
-3. Tots els fitxers nous que es creïn tindran un salt de línia LF. No obstant això, quan els fitxers es comprovin a la teva màquina, Git convertirà aquests salts de línia a CRLF. Quan es fa un commit de fitxers al teu repositori, Git convertirà de nou els salts de línia a LF.
+**Abans de començar a treballar en el projecte**, si us plau revisa https://docs.github.com/es/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+
+Tingui en compte que la codificació predeterminada en el projecte és UTF-8. Asseguri's que el seu editor de text estigui configurat per a utilitzar aquesta codificació.
+
 
 ### 2.2.3 Safe CRLF
 1. Obre Git Bash.
