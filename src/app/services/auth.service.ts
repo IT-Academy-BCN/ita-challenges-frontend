@@ -14,6 +14,7 @@ import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
 import { TokenService } from './token.service'
 import { Inject, Injectable } from '@angular/core'
+import { UserService } from './user.service'
 
 interface loginResponse {
   id: string
@@ -43,7 +44,8 @@ export class AuthService {
     @Inject(HttpClient) private readonly http: HttpClient,
     @Inject(Router) private readonly router: Router,
     @Inject(CookieService) private readonly cookieService: CookieService,
-    @Inject(TokenService) private readonly tokenService: TokenService
+    @Inject(TokenService) private readonly tokenService: TokenService,
+    @Inject(UserService) private readonly userService: UserService
   ) {
     // private helper: CookieEncryptionHelper) {
 
@@ -183,6 +185,8 @@ export class AuthService {
     this.cookieService.set('authToken', resp.authToken)
     this.cookieService.set('refreshToken', resp.refreshToken)
     this.cookieService.set('user', JSON.stringify(this.currentUser))
+    this.userService.userLoggedIn = true
+    console.log(`userLoggedIn: ${this.userService.userLoggedIn}`)
     return resp
   }
 
@@ -190,6 +194,8 @@ export class AuthService {
     this.cookieService.delete('authToken')
     this.cookieService.delete('refreshToken')
     this.cookieService.delete('user')
+    this.userService.userLoggedIn = false
+    console.log(`userLoggedIn: ${this.userService.userLoggedIn}`)
     this.currentUser = new User(this.anonym) // Asignar un nuevo usuario anónimo
     void this.router.navigate(['/login']) // Usar void para marcar la promesa como explícitamente ignorada
   }
