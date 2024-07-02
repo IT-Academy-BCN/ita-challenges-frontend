@@ -9,7 +9,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
-import { ValidatorsService } from 'src/app/services/validators.service'
+import { Router } from '@angular/router'
+
+import { isValidDni, isValidPassword, checkBoxChecked, isSamePassword, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
 
 @Component({
   selector: 'app-register-modal',
@@ -20,24 +22,25 @@ export class RegisterModalComponent implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)
-  private readonly validatorsService = inject(ValidatorsService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
+  private readonly router = inject(Router)
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
 
   registerError: string = ''
   itineraries: Itinerary[] = []
 
   registerForm = this.formBuilder.group({
-    dni: ['', Validators.required, this.validatorsService.isValidDni],
-    email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+    dni: ['', Validators.required, isValidDni],
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     name: ['', Validators.required],
     itineraryId: ['', Validators.required],
-    password: ['', [Validators.required, Validators.minLength(8)], this.validatorsService.isValidPassword],
+    password: ['', [Validators.required, Validators.minLength(8)], isValidPassword],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-    legalTermsAccepted: [false, Validators.required, this.validatorsService.checkBoxChecked]
+    legalTermsAccepted: [false, Validators.required, checkBoxChecked]
   }, {
     validators: [
-      this.validatorsService.isSamePassword('password', 'confirmPassword')
+      isSamePassword('password', 'confirmPassword')
     ]
   })
 
@@ -49,11 +52,11 @@ export class RegisterModalComponent implements OnInit {
   }
 
   isValidInput (input: string): boolean | null {
-    return this.validatorsService.isValidInput(input, this.registerForm)
+    return isValidInput(input, this.registerForm)
   }
 
   getInputError (field: string): string {
-    return this.validatorsService.getInputError(field, this.registerForm)
+    return getInputError(field, this.registerForm, this.translate)
   }
 
   register (): void {

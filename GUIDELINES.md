@@ -10,10 +10,11 @@
    2.2 [Git configurations](#22-git-configurations)\
    2.3 [Daily Procedure](#23-daily-procedure)\
    2.4 [Work with cards Procedure](#24-work-with-cards-procedure)\
-    2.4.1 [Assigning yourself a task-card](#241-assigning-yourself-a-task-card)
-    2.4.2 [Working on a task](#242-working-on-a-class)
-    2.4.3 [Pull request](#243-pull-requests)
-   2.5 [Scrum metodology](#25-scrum-metodology)
+    2.4.1 [Assigning yourself a task-card](#241-assigning-yourself-a-task-card)\
+    2.4.2 [Working on a task](#242-working-on-a-class)\
+    2.4.3 [Pull request](#243-pull-requests)\
+   2.5 [Working with git](#25-working-with-git)\
+   2.6 [Scrum metodology](#26-scrum-metodology)
 
 3. [**CODING GUIDELINES**](#3-definitions-of-method,-class,-etc...)
    
@@ -25,9 +26,9 @@
 
 6. [**INSTALLATION**](#6-installation)
 
-7. [**DEVELOPMENT**](#6-installation)
+7. [**DEVELOPMENT**](#7-development)
 
-8. [**TESTING**](#6-installation)
+8. [**TESTING**](#8-testing)
 
 9. [**DEPLOY**](#9-deploy)
 
@@ -148,7 +149,9 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 ### 2.4.1 Assigning yourself a task-card
 - The project has been planned in several stages called ["Epic"](https://github.com/orgs/IT-Academy-BCN/projects/13).
 
-- Each Epic is further divided into "tasks", which are generally created by the mentor. To organize the task distribution, this [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with four columns is used:
+- Each Epic is further divided into "tasks", which are generally created by the technical lead. 
+- Tasks are classified by their complexity by levels (1, 2, 3) from less to more complex.
+- To organize the task distribution, this [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with four columns is used:
     - ToDo: includes tasks that have not yet been started. All tasks (cards) start here.
     - Doing: tasks that are in progress.
     - Testing: tasks that have been completed and need to be reviewed by the mentor.
@@ -193,9 +196,20 @@ There isn't a set way to do commits. You can follow the style of "conventional c
 
 7. Go to the [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with the four columns. You will see that the task card you just completed has a reference to the corresponding PR. Move the card to the "Testing" column.
 
-----------------------------------------------------------------
 
-## 2.5 Scrum metodology
+## 2.5 Working with git 
+The workflow we follow is similar to the Gitflow Workflow. 
+To work at the project, you should know at least following git commands:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+A good tutorial is located at https://www.atlassian.com/git, and many other resources are available on https://docs.github.com/en/get-started/using-github/github-flow
+
+## 2.6 Scrum metodology
 https://scrumguides.org/
 -Daily online meetings to discuss difficulties
 -Biweekly in-person meeting (Thursday)
@@ -285,10 +299,14 @@ to start the development server. This will compile the project and serve it loca
 To run the tests, use the command
 
     npm test
+
 This will execute the test suite and provide feedback on the test results.
 If you prefer to run the tests in watch mode, which automatically re-runs the tests whenever a file changes, use the command
 
     npm run test:watch.
+
+If you need any reference about testing in Angular, you can check https://angular.io/guide/testing. \
+Also is available a guide about testing at https://martinfowler.com/articles/practical-test-pyramid.html
 
 ----------------------------------------------------------------
 
@@ -301,6 +319,5 @@ All features developed are deployed on the develop server for testing when are a
 - Follow semantic versioning (https://semver.org/), and update version number in package.json.
 - Update version number (property MICROSERVICE_VERSION) at file .env.CI.dev as well. Make sure both versions are the same. There should be a white line at the end of the file.
 - Make necesary annotations at file CHANGELOG.md 
-- Make commit with message "X.X.X-RELEASE" (X.X.X is the new version) onto your feature branch.
 - Push your changes to the remote repository.
 - Create a pull request from your feature branch to the develop branch.

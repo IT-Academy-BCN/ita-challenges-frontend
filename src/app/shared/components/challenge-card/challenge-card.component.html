@@ -1,47 +1,59 @@
-<div class="challenge-list-element d-flex flex-column justify-content-between mx-0 my-2 px-2 px-md-4 py-2 py-md-3" [routerLink]="[id]">
+<div class="challenge-list-element d-flex flex-column justify-content-center px-2 px-md-4 py-2 py-md-3"
+  [routerLink]="['/ita-challenge/challenges/', id]">
+  <div>
     <div class="info d-flex align-items-start justify-content-between">
-        <div class="d-flex align-items-start w-100">
-            <div class="difficulty" *ngIf="level == 'EASY'">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
-            </div>
-            <div class="difficulty" *ngIf="level == 'MEDIUM'">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-off.svg" alt="Difficulty">
-            </div>
-            <div class="difficulty" *ngIf="level == 'HARD'">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-                <img src="../../../../assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            </div>
-            <div class="title">
-                {{title}}
-            </div>
+      <div class="d-flex align-items-start w-100">
+        <div class="difficulty" *ngIf="level == 'EASY'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
         </div>
-        <ul class="code-languages d-none d-md-flex"  *ngFor="let language of languages">
-            <li class="code-icon js">
-                <img src="../../../../assets/img/icon/language_icon_{{language.language_name}}.svg"  alt="Language Icon">
-            </li>
-        </ul>
+        <div class="difficulty" *ngIf="level == 'MEDIUM'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
+        </div>
+        <div class="difficulty" *ngIf="level == 'HARD'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+        </div>
+        <div class="title">
+          {{title}}
+        </div>
+      </div>
+      <ul class="code-languages d-none d-md-flex" *ngFor="let language of languages">
+        <li class="code-icon js">
+          <img src="assets/img/icon/language_icon_{{language.language_name}}.svg" alt="Language Icon">
+        </li>
+      </ul>
     </div>
-    <div class="stats gap-1 gap-md-3 d-flex justify-content-evenly">
-        <span class="stat">
-            <img src="../../../../assets/img/icon/user.svg" alt="User">
-            IT-Academy
-        </span>
-        <span class="stat" ngbTooltip="Empezado y finalizado">  
-            <img src="../../../../assets/img/icon/bullseye.svg" alt="Bullseye">           
-            87%
-        </span>
-        <span class="stat" ngbTooltip="Veces guardado">
-            <img src="../../../../assets/img/icon/bookmark.svg" alt="Bookmark">     
-            82
-        </span>
-        <span class="stat" ngbTooltip="Fecha creación">     
-            <img src="../../../../assets/img/icon/clock.svg" alt="Date">
-            {{creation_date}}
-        </span>
+    <div class="d-flex gap-3">
+      <div class="stat d-flex align-items-center">
+        <div><img src="assets/img/icon/user.svg" alt="User"></div>
+        <div>IT-Academy</div>
+
+
+      </div>
+      <div class="stat d-flex align-items-center" ngbTooltip="Empezado y finalizado">
+        <div><img src="assets/img/icon/bullseye.svg" alt="Bullseye"></div>
+        <div>87%</div>
+
+
+      </div>
+      <div class="stat d-flex align-items-center" ngbTooltip="Veces guardado">
+        <div><img src="assets/img/icon/bookmark.svg" alt="Bookmark"></div>
+        <div>82</div>
+
+
+      </div>
+      <div class="stat d-flex align-items-center" ngbTooltip="Fecha creación">
+        <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
+        <div>{{creation_date}}</div>
+
+
+      </div>
     </div>
+  </div>
+
 </div>

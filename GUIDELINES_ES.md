@@ -13,7 +13,8 @@
     2.4.1 [Asignarte una tarjeta de tareas](#241-asignarte-una-tarjeta-de-tareas)\
     2.4.2 [Trabajar en una tarea](#242-trabajar-en-una-tarea)\
     2.4.3 [Pull request](#243-pull-request)\
-   2.5 [Metodología Scrum](#25-metodología-scrum)
+   2.5 [Trabajo con git](#25-trabajo-con-git)\
+   2.6 [Metodología Scrum](#26-metodología-scrum)
 
 3. [**REGLAS DE CÓDIGO**](#3-reglas-de-código)
    
@@ -27,7 +28,7 @@
 
 7. [**DESARROLLO**](#7-desarrollo)
 
-8. [**PRUEBAS**](#8-pruebas)
+8. [**TESTING**](#8-testing)
 
 9. [**DEPLOY**](#9-deploy) 
 
@@ -150,7 +151,9 @@ El procedimiento a seguir cada día sería este:
 
 #### 2.4 Procedimiento de trabajo con tarjetas
 
-Las tarjetas de tareas están organizadas según su estado de desarrollo. Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
+Las tarjetas de tareas están organizadas según su estado de desarrollo. Están clasificadas por niveles (1, 2, 3), siendo 1 el nivel más bajo de complejidad.
+
+Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 
 ##### 2.4.1 Asignarte una tarjeta de tareas
 
@@ -179,9 +182,24 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 4. Si el revisor de código aprueba tu pull request, se puede fusionar a la rama "develop".
 5. Mueve la tarjeta a la columna "Done".
 
+
+
+## 2.5 Trabajo con git
+
+El workflow de git que seguimos en proyecto es similar a Gitflow.
+Para poder trabajar en el proyecto, debería conocer al menos los siguientes comandos git:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+Puede encontrar un buen tutorial en https://www.atlassian.com/git, y hay muchos otros recursos en https://docs.github.com/en/get-started/using-github/github-flow
+
 ----------------------------------------------------------------
 
-#### 2.5 Metodología SCRUM
+#### 2.6 Metodología SCRUM
 
 [Guía Scrum](https://scrumguides.org/)
 
@@ -259,7 +277,7 @@ Intenta no sobrecargar el proyecto con librerías innecesarias.
         npm install
     (o 'npm i') para instalar todas las dependencias del proyecto especificadas en el archivo package.json.
 
-----------------------------------------------------------------
+--
 
 ### 7. DESARROLLO
 Para propósitos de desarrollo, utiliza el comando
@@ -267,18 +285,24 @@ Para propósitos de desarrollo, utiliza el comando
         ng serve
 para iniciar el servidor de desarrollo. Esto compilará el proyecto y lo servirá localmente, permitiéndote ver e interactuar con él en tu navegador.
 
-----------------------------------------------------------------
+--
 
-### 8. PRUEBAS
-Para ejecutar las pruebas, utiliza el comando
+### 8. TESTING 
+
+Para ejecutar testing, utiliza el comando
 
     npm test
-Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados de las pruebas.
+
+Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados.
 Si prefieres ejecutar las pruebas en modo de vigilancia, que reejecuta automáticamente las pruebas cuando un archivo cambia, utiliza el comando
 
     npm run test:watch.
 
-----------------------------------------------------------------
+
+Si necesitas alguna referencia sobre testing en Angular, puedes consultar https://angular.io/guide/testing. \
+También està disponible una guía sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
 
 ### 9. DEPLOY
 
@@ -289,7 +313,6 @@ Cuando termines de desarrollar la feature correspondiente (asegúrate de que la 
 - Actualiza también el número de versión de la propiedad MICROSERVICE_VERSION en el archivo .env.CI.dev. Ten en cuenta que debes dejar una línea en blanco al final del archivo.
   - Asegúrate de que ambas versiones coinciden.
 - Introduce las anotaciones necesarias en el archivo CHANGELOG.md. No olvides poner el número de issue al que pertenece la nueva versión.
-- Realiza un commit con el mensaje "X.X.X-RELEASE" (donde X.X.X es la nueva versión).
 - Realiza el push de la branch a la que pertenece la feature.
 - Realiza la PR correspondiente.
 

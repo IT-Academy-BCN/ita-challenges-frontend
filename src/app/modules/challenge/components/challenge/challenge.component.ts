@@ -20,11 +20,10 @@ export class ChallengeComponent {
   challenge!: Challenge
   challengeSubs$!: Subscription
   dataChallenge!: Challenge
-
   title: string = ''
   creation_date!: Date
   level = ''
-  details!: ChallengeDetails
+  detail!: ChallengeDetails
   related: string[] = []
   resources: Resource[] = []
   solutions: Solution[] = []
@@ -38,14 +37,12 @@ export class ChallengeComponent {
   private readonly route = inject(ActivatedRoute)
   private readonly challengeService = inject(ChallengeService)
 
-  constructor () {
+  ngOnInit (): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
+      this.loadMasterData(this.idChallenge)
+      this.activeId = 1
     })
-  }
-
-  ngOnInit (): void {
-    this.loadMasterData(this.idChallenge)
   }
 
   ngOnDestroy (): void {
@@ -63,13 +60,11 @@ export class ChallengeComponent {
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
       this.level = this.challenge.level
-      this.details = this.challenge.details
-      this.related = this.challenge.related
-      this.resources = this.challenge.resources
+      this.detail = this.challenge.detail
       this.solutions = this.challenge.solutions
-      this.description = this.challenge.details.description
-      this.examples = this.challenge.details.examples
-      this.notes = this.challenge.details.notes
+      this.description = this.challenge.detail.description
+      this.examples = this.challenge.detail.examples
+      this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
     })

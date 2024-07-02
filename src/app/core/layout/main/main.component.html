@@ -1,13 +1,21 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <div id="main-wrapper" class="d-flex container-fluid">
-    <nav class="d-none d-md-block">
-        <div id="menu">
-        <div id="logo"></div>
-        <app-main-menu></app-main-menu>
+  <nav class="d-none d-md-block">
+    <div id="menu">
+      <!-- <div id="logo"></div> -->
+      <div>
+        <a href="/">
+          <img class="logo" src="assets/img/it-academy.svg" alt="IT Academy" width="125">
+        </a>
+      </div>
+      <app-main-menu></app-main-menu>
     </div>
-    </nav>
-    <main>
-        <router-outlet></router-outlet>
+  </nav>
+  <div class="w-100">
+    <app-header></app-header>
+    <main id="main-container">
+      <router-outlet></router-outlet>
     </main>
+  </div>
 </div>
 <app-footer></app-footer>

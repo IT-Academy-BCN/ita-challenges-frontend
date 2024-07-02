@@ -2,7 +2,7 @@ import { SharedComponentsModule } from '../../../../shared/components/shared-com
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeComponent } from './challenge.component'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
@@ -14,6 +14,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
 import { AuthService } from 'src/app/services/auth.service'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
@@ -26,21 +28,18 @@ describe('ChallengeComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-
       declarations: [
         ChallengeComponent,
         ChallengeHeaderComponent,
         ChallengeInfoComponent,
         SolutionComponent
       ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+      imports: [RouterTestingModule,
         SharedComponentsModule,
         I18nModule,
         NgbNavModule,
-        FormsModule
-      ],
+        FormsModule,
+        DynamicTranslatePipe],
       providers: [
         {
           provide: ActivatedRoute,
@@ -58,7 +57,9 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
-        AuthService
+        AuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -86,7 +87,7 @@ describe('ChallengeComponent', () => {
       challenge_title: 'Test Challenge',
       creation_date: new Date(),
       level: 'Easy',
-      details: {
+      detail: {
         description: 'Test Challenge Description',
         examples: [],
         notes: 'Test Challenge Notes'
@@ -109,7 +110,7 @@ describe('ChallengeComponent', () => {
       challenge_title: 'Test Challenge',
       creation_date: new Date(),
       level: 'Easy',
-      details: {
+      detail: {
         description: 'Test Challenge Description',
         examples: [],
         notes: 'Test Challenge Notes'
@@ -127,9 +128,9 @@ describe('ChallengeComponent', () => {
     expect(component.title).toBe('Test Challenge')
     expect(component.creation_date).toBeDefined()
     expect(component.level).toBe('Easy')
-    expect(component.details.description).toBe('Test Challenge Description')
-    expect(component.details.examples).toEqual([])
-    expect(component.details.notes).toBe('Test Challenge Notes')
+    expect(component.detail.description).toBe('Test Challenge Description')
+    expect(component.detail.examples).toEqual([])
+    expect(component.detail.notes).toBe('Test Challenge Notes')
     expect(component.related).toEqual([])
     expect(component.resources).toEqual([])
     expect(component.solutions).toEqual([])
@@ -158,7 +159,7 @@ describe('ChallengeComponent', () => {
 
   it('should pass the input property value to the child  info component', () => {
     const challenge = {
-      details: {
+      detail: {
         description: 'Test Challenge Description',
         examples: [],
         notes: 'Test Challenge Notes'
@@ -177,12 +178,10 @@ describe('ChallengeComponent', () => {
 
     const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance
 
-    expect(challengeInfoComponent.details).toBeDefined()
-    expect(challengeInfoComponent.details.description).toBe(component.details.description)
-    expect(challengeInfoComponent.details.examples).toEqual(component.details.examples)
-    expect(challengeInfoComponent.details.notes).toBe(component.details.notes)
-    expect(challengeInfoComponent.related).toEqual(component.related)
-    expect(challengeInfoComponent.resources).toEqual(component.resources)
+    expect(challengeInfoComponent.detail).toBeDefined()
+    expect(challengeInfoComponent.detail.description).toBe(component.detail.description)
+    expect(challengeInfoComponent.detail.examples).toEqual(component.detail.examples)
+    expect(challengeInfoComponent.detail.notes).toBe(component.detail.notes)
     expect(challengeInfoComponent.solutions).toEqual(component.solutions)
     expect(challengeInfoComponent.popularity).toBe(component.popularity)
     expect(challengeInfoComponent.languages).toEqual(component.languages)

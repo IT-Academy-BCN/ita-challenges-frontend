@@ -1,53 +1,40 @@
 <nav class="main-menu d-flex flex-column justify-content-between">
-	<div id="main-options">
-	
-		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">Inicio</a>
+  <div id="main-options">
 
-		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
-			"components.mainMenu.section1.title" | translate
-		}}</a>
-		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
-			"components.mainMenu.section2.title" | translate
-		}}</a>
-		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">Hackathons</a>
-		<a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
-			"components.mainMenu.section4.title" | translate
-		}}</a>
-		<a href="https://dev.itawiki.eurecatacademy.org/">{{
-			"components.mainMenu.section5.title" | translate
-		}}</a>
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">Inicio</a>
+
+    <a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
+      "components.mainMenu.section1.title" | translate
+      }}</a>
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">{{
+      "components.mainMenu.section2.title" | translate
+      }}</a>
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">Hackathons</a>
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">{{
+      "components.mainMenu.section4.title" | translate
+      }}</a>
+    <a href="https://dev.itawiki.eurecatacademy.org/">{{
+      "components.mainMenu.section5.title" | translate
+      }}</a>
 
 
-		<!-- settings funciona -->
-		<div
-			class="userOptions  d-none d-md-flex flex-column justify-content-center"
-		>
-			<a
-				class="mb-2"
-				[routerLink]="['challenges']"
-				[routerLinkActive]="['active']"
-			>
-				<img
-					src="../../../../assets/img/icon/setting.svg"
-					alt="Settings"
-				/>
-				{{ "components.mainMenu.section6.title" | translate }}
-			</a>
-			<a
-				[routerLinkActive]="['active']"
-				[routerLinkActiveOptions]="{ exact: true }"
-				(click)="openLoginModal()"
-			>
-				<img src="../../../../assets/img/icon/user.svg" alt="User" />
-				{{ "components.mainMenu.section7.title" | translate }}
-			</a>
-		</div>
-	</div>
-	<div id="user-options">
-		<section id="languages">
-			<button (click)="changeLanguage('es')">ES</button>
-			<button id="middleBtn" (click)="changeLanguage('ca')">CAT</button>
-			<button (click)="changeLanguage('en')">EN</button>
-		</section>
-	</div>
+    <!-- settings funciona -->
+    <!-- <div class="userOptions  d-none d-md-flex flex-column justify-content-center">
+      <a class="mb-2" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+        <img src="assets/img/icon/setting.svg" alt="Settings" />
+        {{ "components.mainMenu.section6.title" | translate }}
+      </a>
+      <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" (click)="openLoginModal()">
+        <img src="assets/img/icon/user.svg" alt="User" />
+        {{ "components.mainMenu.section7.title" | translate }}
+      </a>
+    </div> -->
+  </div>
+  <!-- <div id="user-options">
+    <section id="languages">
+      <button (click)="changeLanguage('es')">ES</button>
+      <button id="middleBtn" (click)="changeLanguage('ca')">CAT</button>
+      <button (click)="changeLanguage('en')">EN</button>
+    </section>
+  </div> -->
 </nav>

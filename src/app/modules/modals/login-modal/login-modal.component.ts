@@ -5,9 +5,9 @@ import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from './../../../services/auth.service'
 import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
-import { ValidatorsService } from 'src/app/services/validators.service'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
+import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
 
 @Component({
   selector: 'app-login-modal',
@@ -18,14 +18,13 @@ export class LoginModalComponent {
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)
-  private readonly validatorsService = inject(ValidatorsService)
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 
   loginError: string = ''
 
   loginForm = this.formBuilder.group({
-    dni: ['', Validators.required, this.validatorsService.isValidDni],
+    dni: ['', Validators.required, isValidDni],
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
 
@@ -50,13 +49,12 @@ export class LoginModalComponent {
   };
 
   public isValidField (field: string): boolean {
-    return this.validatorsService.isValidInput(field, this.loginForm)
+    return isValidInput(field, this.loginForm)
   };
 
   public openSuccessfulLoginModal (res: any): void {
     this.closeModal()
     // TODO create routing to the page after success login
-    alert('Success login')
   }
 
   public notifyErrorLogin (err: any): void {
@@ -85,11 +83,11 @@ export class LoginModalComponent {
   }
 
   isValidInput (input: string): boolean | null {
-    return this.validatorsService.isValidInput(input, this.loginForm)
+    return isValidInput(input, this.loginForm)
   }
 
   getInputError (field: string): string {
-    return this.validatorsService.getInputError(field, this.loginForm)
+    return getInputError(field, this.loginForm, this.translate)
   }
 
   togglePasswordMode (): void {

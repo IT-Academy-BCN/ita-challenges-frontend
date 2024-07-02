@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClientModule, HttpClient } from '@angular/common/http'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -13,7 +13,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
-import { CustomLoader } from './modules/custom-loader/custom-loader'
+
+// TODO - pending execution over secure environment
+// import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
 export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
@@ -21,33 +23,30 @@ export function HttpLoaderFactory (http: HttpClient): any {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CustomLoader
+    AppComponent
   ],
-  imports: [
-    BrowserModule,
+  bootstrap: [AppComponent],
+  imports: [BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
     NgbModule,
-    HttpClientModule,
     StarterModule,
     ChallengeModule,
     ProfileModule,
     I18nModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'es',
+      defaultLanguage: 'ca',
       loader: {
         provide: TranslateLoader,
-        useClass: CustomLoader,
-        // useFactory: HttpLoaderFactory,
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-  ],
+    })],
   providers: [
-    AuthService
-  ],
-  bootstrap: [AppComponent]
+    AuthService, // CookieEncryptionHelper
+
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule { }

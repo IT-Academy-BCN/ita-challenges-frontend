@@ -2,7 +2,6 @@ import { type ResourceResponse } from '../../../models/resource.interface'
 import { Component, Input, inject, type OnInit } from '@angular/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { ResourcesService } from 'src/app/services/resources.service'
-
 @Component({
   selector: 'app-resource-card',
   templateUrl: './resource-card.component.html',

@@ -1,0 +1,18 @@
+img {
+  height: 118px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.form {
+  justify-content: center;
+}
+
+.modal-title {
+  text-align: center;
+}/*# sourceMappingURL=post-register-modal.component.css.map */

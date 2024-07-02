@@ -1,5 +1,5 @@
-
 #### CONTRIBUTORS
+
 - Alberto Almenara - https://github.com/Almenara
 - Rocío Marchetti - https://github.com/rociomarchetti
 - Roger Miret - https://github.com/roger-mir-min
@@ -12,3 +12,6 @@
 - Joaquin Capel - https://github.com/JoaquinCapel
 - Pau Sàbat - https://github.com/pausm99
 - Francesc Ferrer - https://github.com/fran-cesc
+- Yulibeth Rivero - https://github.com/Yul1b3th
+- Allan Vázquez - https://github.com/codenaud
+- Eva Díaz - https://github.com/evarkitecta
