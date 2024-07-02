@@ -4,6 +4,8 @@ export const environment = {
   production: true,
   appVersion: version,
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
+  BACKEND_ITA_CHALLENGE_SOLUTION: '/challenge/solution',
+  BACKEND_ITA_CHALLENGE_USER_SOLUTION: '/user/solution',
   BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
   BACKEND_ITA_WIKI_BASE_URL: 'https://dev.api.itadirectory.eurecatacademy.org/api/v1',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
