@@ -97,24 +97,10 @@ A good practice is to include files containing sensitive data (like configuratio
 Remember, the global ".gitignore" file will apply to all your Git projects. If you have files to be ignored that are specific to a single project, consider using a local ".gitignore" file within that project's directory.
 
 ### 2.2.2 Autocrlf
-1. Open Git Bash.
-2. Run the following command to configure the autocrlf setting globally:
 
-        git config --global core.autocrlf true
-The autocrlf setting handles line-ending differences between different operating systems. Enabling it ensures consistent line endings across different platforms when working with Git.
+**Before all**, please check https://docs.github.com/es/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
 
-3. Provide context: Modifying a large number of files in a PR can introduce issues related to inconsistent line endings. This configuration helps maintain consistent line endings and prevents potential problems when collaborating across different platforms.
-
-4. Examples and considerations: Here are a few scenarios where the autocrlf setting can be helpful:
-
-- Collaboration: When multiple developers are working on a project, each using a different operating system, enabling autocrlf ensures that line endings are automatically adjusted to be consistent.
-
-- Deployment: If your project requires specific line endings for deployment purposes (e.g., Unix-style line endings on a Linux server), enabling autocrlf ensures the line endings are automatically converted during checkout and commit.
-
-- Caveats: Enabling autocrlf may have some trade-offs. It's important to be aware that automatic line-ending conversions can sometimes introduce unintended changes to files. It's recommended to carefully review changes when working with line-ending conversions.
-
-5. Alternative solutions: While enabling autocrlf is a common approach, there are alternative methods to handle line-ending differences. These include using the .gitattributes file or manually adjusting line endings. Consider the specific needs of your project and choose the approach that best suits your requirements.
-
+Keep in mind that default encoding in project is UTF-8. Ensure that your text editor is set to uses that encoding.
 
 ### 2.2.3 File Mode
 
