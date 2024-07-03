@@ -105,6 +105,12 @@
                 "description":"Regístrate para subir, entregar y ver soluciones a los retos",
                 "register":"Registrarme",
                 "loginRedirect":"Entrar"
+            },
+            "solution": {
+                "title": "¿Estás segur@?",
+                "description":"Una vez enviado el código no se puede editar" ,
+                "btn-accept": "Aceptar",
+                "btn-cancel": "Cancelar"
             }
         }
     },
