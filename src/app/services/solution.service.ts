@@ -11,7 +11,7 @@ export class SolutionService {
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
   solutionSent$ = this.solutionSentSubject.asObservable()
 
-  private readonly submitSolutionSubject = new Subject<boolean>()
+  submitSolutionSubject = new Subject<boolean>()
   public sendSolutionText$ = this.submitSolutionSubject.asObservable()
 
   solutionSent: boolean = false
