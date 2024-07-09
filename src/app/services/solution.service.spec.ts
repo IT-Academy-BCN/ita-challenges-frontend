@@ -1,19 +1,17 @@
 import { TestBed } from '@angular/core/testing'
 import { SolutionService } from './solution.service'
-// import { environment } from 'src/environments/environment'
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SolutionService', () => {
   let service: SolutionService
-  // let httpMock: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [HttpClientTestingModule],
       providers: [SolutionService]
     })
 
     service = TestBed.inject(SolutionService)
-    // httpMock = TestBed.inject(HttpTestingController)
   })
 
   it('should be created', () => {
