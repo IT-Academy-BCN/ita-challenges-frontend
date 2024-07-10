@@ -15,8 +15,8 @@
         
         .title{
             font-weight: 700;
-            margin-bottom: 16px;
-            margin-left: .5rem;
+            margin-bottom: 16px;    
+            line-height: 18px;
             font-size: 16px;
             color: $black-1;
         }
@@ -44,10 +44,21 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 0 7px 0 0;
+            // padding: 0 25px 0 0;
             border-radius: 20px;
             &[ngbTooltip]:hover{
                 background-color: $gray-4;
+            }
+
+            > div {
+                &:not(:first-child) {
+                  padding-left: 2px;
+                }
+            }
+
+            // Quitar si todas las imágenes tienen el mismo tamaño y margen transparente
+            .txt{
+                margin-left: 3px;
             }
         }
     }
@@ -68,17 +79,17 @@
 
         min-height: 80px;
 
-    .code-languages {
-        display: none;
-    }
-
-    .stats{
-        font-size: 10px;
-
-        .stat{
-            padding: 0px;
+        .code-languages {
+            display: none;
         }
-    }
 
-}
+        .stats{
+            gap: 0.25rem;
+        
+            .stat{
+                padding: 0px;
+            }
+        }
+
+    }
 }
