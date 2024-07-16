@@ -16,7 +16,6 @@ export const environment = {
   BACKEND_SSO_PATCH_USER: '/users',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
   BACKEND_SSO_RESOURCES: '/resources',
-  BACKEND_SSO_SOLUTION: '../assets/dummy/challenge.json',
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
