@@ -1,6 +1,9 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "3.0.3-RELEASE",
+  "version": "3.0.4-RELEASE",
+  "sideEffects": [
+    "node_modules/@angular/localize"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
@@ -74,6 +77,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.5.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.4"
   }
 }
