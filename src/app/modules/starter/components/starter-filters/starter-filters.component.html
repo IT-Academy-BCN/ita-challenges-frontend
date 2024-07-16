@@ -33,7 +33,7 @@
       <label class="form-check-label" for="checkHard">{{'modules.starter.filters.hard' | translate}}</label>
     </div>
   </div>
-  <div class="form" formGroupName="progress">
+  <div class="form" formGroupName="progress" *ngIf="isUserLoggedIn">
     <p class="mb-2">{{'modules.starter.filters.progress' | translate}}</p>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
