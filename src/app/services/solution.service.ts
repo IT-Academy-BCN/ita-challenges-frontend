@@ -17,7 +17,7 @@ export class SolutionService {
   solutionSent: boolean = false
 
   updateSolutionSentState (value: boolean): void {
-    this.solutionSentSubject.next(value)
+    // this.solutionSentSubject.next(value)
     this.solutionSent = value
   }
 

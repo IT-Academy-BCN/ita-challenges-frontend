@@ -5,10 +5,9 @@ import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import { java } from '@codemirror/lang-java'
 import { php } from '@codemirror/lang-php'
-import { minimalSetup } from 'codemirror'
+import { basicSetup } from 'codemirror'
 import { TranslateService } from '@ngx-translate/core'
 import { SolutionService } from 'src/app/services/solution.service'
-import { FormControl, FormGroup } from '@angular/forms'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
 
@@ -39,9 +38,7 @@ export class SolutionComponent {
   /* code added by valerio */
   private textRemoved = false
 
-  public solutionTextForm: FormGroup = new FormGroup({
-    solution_text_field: new FormControl('')
-  })
+  public currentSolution: string = ''
 
   handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
@@ -62,10 +59,10 @@ export class SolutionComponent {
   ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
       // if (this.editor && this.isUserSolution) {
-      const currentSolution = this.editor.state.doc.toString()
-      if (currentSolution !== this.lastSentSolution) {
-        this.solutionService.sendSolution(currentSolution)
-        this.lastSentSolution = currentSolution
+      this.currentSolution = this.editor.state.doc.toString()
+      if (this.currentSolution !== this.lastSentSolution) {
+        this.solutionService.sendSolution(this.currentSolution)
+        this.lastSentSolution = this.currentSolution
       }
       // }
     })
@@ -105,9 +102,9 @@ export class SolutionComponent {
     let state: EditorState
     if (this.isUserSolution) {
       state = EditorState.create({
-        // doc: comment,
+        // doc: 'comment',
         extensions: [
-          minimalSetup,
+          basicSetup,
           languageExtension
         ]
       })
@@ -115,7 +112,7 @@ export class SolutionComponent {
       state = EditorState.create({
       // doc: 'Respuesta de ejemplo, no se puede modificar',
         extensions: [
-          minimalSetup,
+          basicSetup,
           languageExtension,
           EditorView.editable.of(false)
         ]
@@ -125,6 +122,7 @@ export class SolutionComponent {
   }
 
   onSubmitSolution (): void {
-    console.log('Solution submitted:', this.solutionTextForm.controls['solution_text_field'].value)
+    console.log('Solution submitted:', this.editor.state.doc.toString())
+    console.log('currentSolution: ', this.currentSolution)
   }
 }

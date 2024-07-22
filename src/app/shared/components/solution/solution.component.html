@@ -1,22 +1,22 @@
 <div class="solution-header">
 	{{ "modules.challenge.info.solution" | translate }} {{ number }}
 </div>
-<form [formGroup]="solutionTextForm" (ngSubmit)="onSubmitSolution()" class="solution-body">
-<textarea
+<div class="solution-body">
+			<ng-container *ngIf="isUserSolution">
+			{{ "modules.challenge.info.solutionCode" | translate }}
+		</ng-container>
+
+	<div
 		#editorSolution
 		contentEditable="true"
 		class="editable-div, form-control"
 		(click)="handleClick($event)"
-		formControlName="solution_text_field"
 	>
-		<ng-container *ngIf="isUserSolution">
-			{{ "modules.challenge.info.solutionCode" | translate }}
-		</ng-container>
-	</textarea>
+	</div>
 	<div *ngIf="!isUserSolution" class="non-editable-text">
 		<!-- solutions from other users go here  -->
 		<!-- {{ "modules.challenge.info.solutionsChallenge" | translate }} -->
 		<pre *ngFor="let solution of solutions">{{ solution.solution_text }}</pre>
 
 	</div>
-</form>
+</div>
