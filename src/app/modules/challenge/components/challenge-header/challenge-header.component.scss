@@ -2,70 +2,82 @@
 @import "src/styles/buttons";
 @import "src/styles/fonts";
 
+<<<<<<< HEAD
 .title{
     margin-bottom: 16px;
     max-width: 100%;
     h3{
         line-height: 2rem;
     }
+=======
+.title {
+  margin-bottom: 16px;
+  max-width: 100%;
+>>>>>>> develop
 }
-.difficulty{
-    img{
-        margin-top: 4px;
-        margin-right: 2px;     
-    }
+
+.difficulty img {
+  margin-top: 4px;
+  margin-right: 2px;
 }
-.stats{
+
+.stats {
+  display: flex;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: #808080;
+
+  .stat {
     display: flex;
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 600;
-    color: #808080;
-    .stat{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-right: 20px;
-    }
-}
-.button{
-    padding: .5rem 0 0 1.5rem;
-    display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    margin-right: 20px;
+  }
 }
-.btn.btn-sm{
-    margin: .3rem;
-    width: 100%;
-    height: 50%;
-    text-align: center;
-    padding: 0;
+
+.button {
+  padding: .5rem 0 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-h3{
+
+.btn.btn-sm {
+  margin: .3rem;
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  padding: 0;
+}
+
+h3 {
   font-size: 26px;
   font-weight: 700;
   color: $black-1;
-    margin: 0;
-}
-.solutionSent{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    color: $primary;
-    font-weight: bold;
-
-    img{
-        width: 1.5em;
-        margin: .3rem;
-    }
-}
-#color{
-    color: $primary;
-    font-weight: 600;
+  margin: 0;
 }
 
-.breadcrumbs{
+.solutionSent {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: $primary;
+  font-weight: bold;
+
+  img {
+    width: 1.5em;
+    margin: .3rem;
+  }
+}
+
+#color {
+  color: $primary;
+  font-weight: 600;
+}
+
+.breadcrumbs {
   font-size: 16px;
   line-height: 22.4px;
   font-weight: 500;

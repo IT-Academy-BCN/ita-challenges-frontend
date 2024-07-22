@@ -1,4 +1,4 @@
-import '@angular/localize'
+import '@angular/localize/init'
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 
