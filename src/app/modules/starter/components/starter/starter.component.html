@@ -1,16 +1,23 @@
 <div class="d-flex starter">
+  <!-- FILTERS -->
   <div id="filters-container" class="d-none d-md-block col-2">
     <h2>{{ "modules.starter.main.section1" | translate }}</h2>
     <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
   </div>
+
+  <!-- CHALLENGES -->
   <div id="challenges-container" class="col-12 col-md-9">
     <div class="d-flex justify-content-between pb-2">
+      <!-- TITLE -->
       <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
+
+      <!-- MOBILE FILTER BTN -->
       <button class="d-md-none btn btn-outline-primary" (click)="openModal()">
         <strong>Filtrar</strong>
       </button>
     </div>
 
+    <!-- SORT BY -->
     <ul id="sortBy" class="d-md-flex justify-content-end gap-2 d-none">
       <li class="animated"
         [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
@@ -23,6 +30,8 @@
         {{'modules.starter.main.section2.date' | translate}}
       </li>
     </ul>
+
+    <!-- CHALLENGES CARD -->
     <div class="d-flex flex-column gap-3" id="challenges">
       <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
@@ -30,8 +39,12 @@
         [id]="challenge.id_challenge">
       </app-challenge-card>
     </div>
+
+    <!-- PAGINATION -->
     <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages" [pageNumber]="pageNumber">
     </app-pagination>
   </div>
 </div>
+
+<!-- FILTERS MODAL -->
 <app-filters-modal #modal></app-filters-modal>
