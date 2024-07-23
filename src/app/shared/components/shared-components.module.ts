@@ -8,7 +8,6 @@ import { ResourceCardComponent } from './resource-card/resource-card.component'
 import { SolutionComponent } from './solution/solution.component'
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 
 @NgModule({
@@ -24,8 +23,7 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
     RouterModule,
     TranslateModule,
     NgbTooltipModule,
-    DynamicTranslatePipe,
-    FormatDatePipe
+    DynamicTranslatePipe
   ],
   exports: [
     PaginationComponent,

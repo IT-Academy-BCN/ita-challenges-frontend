@@ -8,6 +8,11 @@ and this project adheres to
 
 - i18n of send-solution-modal
 
+
+### [ita-challenges-frontend-3.0.4-RELEASE]
+
+- Optimized size and build process.
+
 ### [ita-challenges-frontend-3.0.3-RELEASE]
 
 - Ugraded to Angular 18

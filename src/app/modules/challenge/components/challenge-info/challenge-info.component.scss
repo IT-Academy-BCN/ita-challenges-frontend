@@ -15,24 +15,19 @@
 .nav-link {
     font-size: 16px;
     font-weight: 500;
-    color: #828282;
     color: $gray-3;
-    border-top: #ffff;
-    border-left: #ffff;
-    border-right: #ffff;
-    border-bottom: 5px solid transparent;
-}
+    border: 0 solid transparent;
+    border-bottom-width: 5px;
 
-.nav-link:hover {
-    border-bottom: 5px solid $gray-2;
+    &:hover {
+        border-bottom-color: $gray-2;
+    }
 
-}
-
-.nav-link.active {
-    border: none;
-    border-bottom: 5px solid $primary;
-    color: $black-1;
-    font-weight: 600;
+    &.active {
+        border-bottom-color: $primary;
+        color: $black-1;
+        font-weight: 600;
+    }
 }
 
 .tab-content {
@@ -43,7 +38,6 @@
 .title {
     margin: 0;
     padding: 0;
-    position: relative;
     display: flex;
 }
 
@@ -53,10 +47,6 @@
     font-weight: bold;
     margin-left: 1.5rem;
     padding-top: .23rem;
-}
-
-.title_text {
-    margin-top: 0;
 }
 
 .info-card {
@@ -80,10 +70,10 @@
 .lock {
     display: flex;
     align-items: center;
-}
 
-.lock img {
-    margin: 0 .2rem .3rem 0;
+    img {
+        margin: 0 .2rem .3rem 0;
+    }
 }
 
 button.btn.btn-primary.send-solution {
@@ -100,44 +90,41 @@ input[type="checkbox"] {
     background-color: #fff;
     margin: 0;
     cursor: pointer;
-
     width: 1.15em;
     height: 1.15em;
     border-radius: 50%;
     border: 2px solid $primary;
     transform: translateY(0.15em);
-
-    //to center ::before element
     display: grid;
     place-content: center;
+
+    &::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        border-radius: 50%;
+        transform: scale(0);
+        background-color: $primary;
+    }
+
+    &:checked::before {
+        transform: scale(1);
+    }
+
+    &:focus-visible {
+        outline: 0;
+    }
 }
 
-input[type="checkbox"]::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    border-radius: 50%;
-    transform: scale(0);
-    background-color: $primary;
+h3 {
+    font-size: 22px;
+    line-height: 34px;
+    font-weight: 700;
+    color: $black-3;
 }
 
-input[type="checkbox"]:checked::before {
-    transform: scale(1);
-}
-
-input[type="checkbox"]:focus-visible {
-    outline: 0;
-}
-
-h3{
-  font-size: 22px;
-  line-height: 34px;
-  font-weight: 700;
-  color: $black-3;
-}
-
-p, ul li{
-  color: $black-3;
+p, ul li {
+    color: $black-3;
 }
 
 @media screen and (max-width: 768px) {
@@ -157,13 +144,9 @@ p, ul li{
         overflow-x: auto;
     }
 
-    //Afegir en cas que el dissenyador vulgui el botó Related també en responsive
     ul.nav-tabs {
         display: flex;
         flex-wrap: wrap;
-        // flex-wrap: nowrap;
-        // overflow-x: scroll;
-        // -webkit-overflow-scrolling: touch;
         justify-content: space-around;
         align-items: center;
         border: none;
@@ -174,31 +157,21 @@ p, ul li{
         color: $gray-3;
         border: 1px solid $gray-3;
         border-radius: 50px;
-        padding: 10 20px;
+        padding: 10px 20px;
         margin: 0 10px 0 0;
         transition: 0.2s;
 
-        &.active {
+        &.active, &:hover {
             background-color: $primary;
             color: white;
             border: 1px solid $primary;
             font-weight: bold;
-            transition: 0.2s;
-        }
-
-        &:hover {
-            background-color: $primary;
-            color: white;
-            border: 1px solid $primary;
-            font-weight: bold;
-            transition: 0.2s;
         }
     }
 }
 
-//if we dont want the realted
 @media screen and (max-width: 560px) {
-    li.related{
+    li.related {
         display: none;
     }
 }
