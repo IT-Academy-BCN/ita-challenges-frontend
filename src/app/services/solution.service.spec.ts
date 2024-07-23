@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { SolutionService } from './solution.service'
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('SolutionService', () => {
   let service: SolutionService

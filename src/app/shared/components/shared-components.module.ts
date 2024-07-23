@@ -9,7 +9,6 @@ import { SolutionComponent } from './solution/solution.component'
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
-import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
