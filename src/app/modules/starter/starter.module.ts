@@ -11,7 +11,6 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
-import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
 
 @NgModule({
   declarations: [
@@ -28,8 +27,7 @@ import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
     SharedComponentsModule,
     TranslateModule,
     ModalsModule,
-    DynamicTranslatePipe,
-    FormatDatePipe
+    DynamicTranslatePipe
   ],
   providers: [
     ChallengeService

@@ -1,6 +1,6 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "3.1.10-RELEASE",
+  "version": "3.1.0-RELEASE",
   "sideEffects": [
     "node_modules/@angular/localize"
   ],
@@ -77,6 +77,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.5.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   }
 }
