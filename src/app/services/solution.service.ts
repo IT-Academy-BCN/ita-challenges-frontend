@@ -39,14 +39,19 @@ export class SolutionService {
   }
 
   isUserSolutionSent (userId: string | undefined, challengeId: string, languageId: string): Observable<UserSolution> {
-    // const solutionsUser = this.http.get<userSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`)
-    return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/c3a92f9d-5d10-4f76-8c0b-6d884c549b1c/challenge/7fc6a737-dc36-4e1b-87f3-120d81c548aa/language/1e047ea2-b787-49e7-acea-d79e92be3909`,
+    return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`,
       {
         headers: {
           'Content-Type': 'application/json'
         }
-      }
-    )
-    // Peticion con datos harcodeados porque user es anonym
+      })
   }
+  // return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/c3a92f9d-5d10-4f76-8c0b-6d884c549b1c/challenge/7fc6a737-dc36-4e1b-87f3-120d81c548aa/language/1e047ea2-b787-49e7-acea-d79e92be3909`,
+  //   {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }
+  // )
+  // Peticion con datos harcodeados porque user es anonym
 }

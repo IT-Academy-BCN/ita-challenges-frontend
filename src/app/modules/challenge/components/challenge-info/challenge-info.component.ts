@@ -69,6 +69,11 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
       this.loadSolutions(this.idChallenge, this.idLanguage)
+
+      console.log('this.userId: ', this.userId)
+      console.log('this.idChallenge: ', this.idChallenge)
+      console.log('this.idLanguage: ', this.idLanguage)
+
       this.solutionService.isUserSolutionSent(this.userId, this.idChallenge, this.idLanguage).subscribe((data) => {
         if (data.results.length > 0) {
           this.solutionSent = !this.solutionSent
