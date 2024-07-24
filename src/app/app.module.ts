@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { LOCALE_ID, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
@@ -16,6 +16,15 @@ import { AuthService } from './services/auth.service'
 
 // TODO - pending execution over secure environment
 // import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
+
+import localeEs from '@angular/common/locales/es'
+import localeCa from '@angular/common/locales/ca'
+import localeEn from '@angular/common/locales/en'
+import { registerLocaleData } from '@angular/common'
+
+registerLocaleData(localeEs, 'es')
+registerLocaleData(localeCa, 'ca')
+registerLocaleData(localeEn, 'en')
 
 export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
@@ -46,7 +55,8 @@ export function HttpLoaderFactory (http: HttpClient): any {
   providers: [
     AuthService, // CookieEncryptionHelper
 
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: LOCALE_ID, useValue: 'ca' } // Establecemos Catalán como idioma por defecto.
   ]
 })
 export class AppModule { }
