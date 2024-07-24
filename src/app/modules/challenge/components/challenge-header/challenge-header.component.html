@@ -39,7 +39,7 @@
         </span>
         <span class="stat">
           <img src="assets/img/icon/clock.svg" alt="Date">
-          {{ formattedDate }}
+          {{creation_date | date:'mediumDate':'':currentLang}}
         </span>
       </div>
     </div>

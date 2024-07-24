@@ -11,7 +11,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.0.3-RELEASE]
 
 - Ugraded to Angular 18
-- Fixed package destination folder, in Angular 18 the destination folder is dist/ita-challenges-frontend/browser 
+- Fixed package destination folder, in Angular 18 the destination folder is dist/ita-challenges-frontend/browser
 
 ### [ita-challenges-frontend-2.14.0-RELEASE] - 2024-06-04 (feature#355)
 
@@ -28,6 +28,7 @@ and this project adheres to
 ### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
 
 - Add filter methods and implement page navigation with filters and sort filters
+
 ### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
 
 - Add filter methods and implement page navigation with filters and sort filters
@@ -48,6 +49,7 @@ and this project adheres to
 ### [ita-challenges-frontend-2.12.0-RELEASE] - 2024-05-13 (feature#215)
 
 - Link Related
+
 ### [ita-challenges-frontend-2.12.0-RELEASE] - 2024-05-13 (feature#215)
 
 - Link Related
@@ -55,6 +57,7 @@ and this project adheres to
 ### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
 
 - Add order method for creation_date. Implement the formatDatePipe"
+
 ### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
 
 - Add order method for creation_date. Implement the formatDatePipe"
@@ -142,7 +145,6 @@ and this project adheres to
 ### [ita-challenges-frontend-2.3.0-RELEASE] - 2024-04-02
 
 - Add encryption cookies helper.
-
 
 - Add encryption cookies helper.
 
