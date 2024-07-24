@@ -64,7 +64,13 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   ngOnChanges (changes: SimpleChanges): void {
-    this.userId = this.authService.getUserIdFromCookie()
+    // this.userId = this.authService.getUserIdFromCookie()
+  
+    // this.authService.getUserIdFromDummy('../assets/dummy/test-user.json').subscribe((data) => {
+    //   console.log('data: ', data)
+    //   this.userId = data.idUser
+    //   console.log('this.userId: ', this.userId)
+    // })
 
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
@@ -75,6 +81,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
       console.log('this.idLanguage: ', this.idLanguage)
 
       this.solutionService.isUserSolutionSent(this.userId, this.idChallenge, this.idLanguage).subscribe((data) => {
+        console.log('data from solutionService: ', data)
         if (data.results.length > 0) {
           this.solutionSent = !this.solutionSent
           this.isUserSolution = !this.isUserSolution
@@ -84,6 +91,13 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
   }
 
   ngOnInit (): void {
+
+    this.authService.getUserIdFromDummy('../assets/dummy/test-user.json').subscribe((data) => {
+      console.log('data: ', data)
+      this.userId = data.idUser
+      console.log('this.userId: ', this.userId)
+    })
+
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
