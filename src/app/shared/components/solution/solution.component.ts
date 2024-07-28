@@ -72,10 +72,6 @@ export class SolutionComponent implements OnInit {
       }
       // }
     })
-
-    // this.solutionService.getAllSolutions(this.idChallenge, this.languageExt).subscribe((data) => {
-    //   this.challengeSolutions = data.results;
-    // });
   }
 
   ngAfterViewInit (): void {

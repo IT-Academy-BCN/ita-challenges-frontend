@@ -31,7 +31,8 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, OnInit {
+export class ChallengeInfoComponent
+implements AfterContentChecked, OnChanges, OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -43,7 +44,7 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
   idLanguage: string = ''
-  userId: string | undefined = ''
+  userId!: string
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -64,39 +65,30 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
   ngOnChanges (changes: SimpleChanges): void {
-    // this.userId = this.authService.getUserIdFromCookie()
-  
-    // this.authService.getUserIdFromDummy('../assets/dummy/test-user.json').subscribe((data) => {
-    //   console.log('data: ', data)
-    //   this.userId = data.idUser
-    //   console.log('this.userId: ', this.userId)
-    // })
-
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
       this.loadSolutions(this.idChallenge, this.idLanguage)
 
-      console.log('this.userId: ', this.userId)
-      console.log('this.idChallenge: ', this.idChallenge)
-      console.log('this.idLanguage: ', this.idLanguage)
-
-      this.solutionService.isUserSolutionSent(this.userId, this.idChallenge, this.idLanguage).subscribe((data) => {
-        console.log('data from solutionService: ', data)
-        if (data.results.length > 0) {
-          this.solutionSent = !this.solutionSent
-          this.isUserSolution = !this.isUserSolution
-        }
-      })
+      this.solutionService
+        .UserSolution(this.userId, this.idChallenge, this.idLanguage)
+        .subscribe((data) => {
+          console.log('data from solutionService: ', data)
+          if (data.results.length > 0) {
+            this.solutionSent = !this.solutionSent
+            this.isUserSolution = !this.isUserSolution
+          }
+        })
     }
   }
 
   ngOnInit (): void {
-
-    this.authService.getUserIdFromDummy('../assets/dummy/test-user.json').subscribe((data) => {
-      console.log('data: ', data)
-      this.userId = data.idUser
-      console.log('this.userId: ', this.userId)
-    })
+    // this.userId = this.authService.getUserIdFromCookie()
+    // TODO We get user from dummy data because getUserIdFromCookie() is not implemented
+    this.authService
+      .getUserIdFromDummy('../assets/dummy/test-user.json')
+      .subscribe((data) => {
+        this.userId = data.idUser
+      })
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
@@ -155,8 +147,10 @@ export class ChallengeInfoComponent implements AfterContentChecked, OnChanges, O
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
-    this.solutionService.getAllChallengeSolutions(idChallenge, idLanguage).subscribe((data) => {
-      this.challengeSolutions = data.results
-    })
+    this.solutionService
+      .getAllChallengeSolutions(idChallenge, idLanguage)
+      .subscribe((data) => {
+        this.challengeSolutions = data.results
+      })
   }
 }

@@ -38,7 +38,7 @@ export class SolutionService {
     )
   }
 
-  isUserSolutionSent (userId: string | undefined, challengeId: string, languageId: string): Observable<UserSolution> {
+  UserSolution (userId: string, challengeId: string, languageId: string): Observable<UserSolution> {
     return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`,
       {
         headers: {
