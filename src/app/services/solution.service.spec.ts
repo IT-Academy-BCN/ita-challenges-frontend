@@ -55,13 +55,13 @@ describe('SolutionService', () => {
           id_solution: '1682b3e9-056a-45b7-a0e9-eaf1e11775ad',
           solution_text: 'Sample solution text',
           uuid_language: '409c9fe8-74de-4db3-81a1-a55280cf92ef',
-          uuid_challenge: null
+          uuid_challenge: 'dcacb291-b4aa-4029-8e9b-284c8ca80296'
         },
         {
           id_solution: 'a7a789a9-2006-4b59-94bb-3afe0d1c161d',
           solution_text: 'Another solution text',
           uuid_language: '409c9fe8-74de-4db3-81a1-a55280cf92ef',
-          uuid_challenge: null
+          uuid_challenge: 'dcacb291-b4aa-4029-8e9b-284c8ca80296'
         }
       ]
     }
@@ -99,7 +99,7 @@ describe('SolutionService', () => {
       ]
     }
 
-    service.UserSolution(userId, challengeId, languageId).subscribe(data => {
+    service.getUserSolution(userId, challengeId, languageId).subscribe(data => {
       expect(data.results[0].solutions[0].uuid).toEqual('dcacb291-b4aa-4029-8e9b-284c8ca80296')
       done()
     })

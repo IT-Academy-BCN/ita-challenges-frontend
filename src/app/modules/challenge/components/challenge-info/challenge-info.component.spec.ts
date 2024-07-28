@@ -13,12 +13,14 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { SolutionService } from 'src/app/services/solution.service'
+import { of } from 'rxjs'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
-  // let challengeService: ChallengeService
+  let solutionService: SolutionService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,10 +37,10 @@ describe('ChallengeInfoComponent', () => {
         NgbNavModule,
         DynamicTranslatePipe],
       providers: [
-        // ChallengeService,
         AuthService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        SolutionService
       ]
     }).compileComponents()
   })
@@ -47,7 +49,7 @@ describe('ChallengeInfoComponent', () => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
-    // challengeService = TestBed.inject(ChallengeService)
+    solutionService = TestBed.inject(SolutionService)
     fixture.detectChanges()
   })
 
@@ -91,4 +93,34 @@ describe('ChallengeInfoComponent', () => {
     component.activeIdChange.emit(activeId)
     expect(component.activeId).toBe(newActiveId)
   })
+
+  it('should call solutionService.UserSolution on ngOnChanges', () => {
+    const mockUserId = '123';
+    const mockIdChallenge = '456';
+    const mockIdLanguage = '789';
+    const mockResponse = { results: [{ id: 1 }] };
+
+    component.userId = mockUserId;
+    component.idChallenge = mockIdChallenge;
+    component.idLanguage = mockIdLanguage;
+    component.languages = [{
+      id_language: mockIdLanguage,
+      language_name: ''
+    }];
+
+    spyOn(solutionService, 'getUserSolution').and.returnValue(of(mockResponse));
+
+    component.ngOnChanges({
+      languages: {
+        currentValue: component.languages,
+        previousValue: [],
+        firstChange: true,
+        isFirstChange: () => true
+      }
+    });
+
+    expect(solutionService.getUserSolution).toHaveBeenCalledWith(mockUserId, mockIdChallenge, mockIdLanguage);
+    expect(component.solutionSent).toBe(true);
+    expect(component.isUserSolution).toBe(false);
+  });
 })

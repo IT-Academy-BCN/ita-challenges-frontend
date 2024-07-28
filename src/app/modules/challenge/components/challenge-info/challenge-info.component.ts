@@ -70,9 +70,8 @@ implements AfterContentChecked, OnChanges, OnInit {
       this.loadSolutions(this.idChallenge, this.idLanguage)
 
       this.solutionService
-        .UserSolution(this.userId, this.idChallenge, this.idLanguage)
+        .getUserSolution(this.userId, this.idChallenge, this.idLanguage)
         .subscribe((data) => {
-          console.log('data from solutionService: ', data)
           if (data.results.length > 0) {
             this.solutionSent = !this.solutionSent
             this.isUserSolution = !this.isUserSolution
