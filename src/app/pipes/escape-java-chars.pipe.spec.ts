@@ -1,4 +1,4 @@
-import { EscapeJavaForJsonPipe } from './escape-java-chars.pipe'
+import {EscapeJavaForJsonPipe} from "./escape-java-for-json.pipe";
 
 describe('EscapeJavaPipe', () => {
   let pipe: EscapeJavaForJsonPipe

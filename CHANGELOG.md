@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.2-RELEASE]
+### [ita-challenges-frontend-3.1.0-RELEASE]
 
 - Added pipe to escape java characters to json.
 
@@ -19,11 +19,7 @@ and this project adheres to
 
 ### [ita-challenges-frontend-2.13.1-RELEASE] - 2024-05-16 (feature#328)
 
-- Verified component display with /register true (hardcoded)
-
-### [ita-challenges-frontend-2.13.1-RELEASE] - 2024-05-16 (feature#328)
-
-- Verified component display with /register true (hardcoded)
+- Verified component display with /register true 
 
 ### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
 
@@ -63,8 +59,6 @@ and this project adheres to
 - Add order method for creation_date. Implement the formatDatePipe"
 
 ### [ita-challenges-frontend-2.10.3-RELEASE] - 2024-05-07
-
-- Changing URL ita-wiki
 
 - Changing URL ita-wiki
 

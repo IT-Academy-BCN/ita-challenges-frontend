@@ -1,6 +1,6 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "3.1.2-RELEASE",
+  "version": "3.1.0-RELEASE",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
