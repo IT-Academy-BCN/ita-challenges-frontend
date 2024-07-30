@@ -8,6 +8,14 @@ and this project adheres to
 
 - Added pipe to escape java characters to json.
 
+### [ita-challenges-frontend-3.0.6-RELEASE]
+
+- i18n of send-solution-modal
+
+### [ita-challenges-frontend-3.0.4-RELEASE]
+
+- Optimized size and build process.
+
 ### [ita-challenges-frontend-3.0.3-RELEASE]
 
 - Ugraded to Angular 18
@@ -25,14 +33,6 @@ and this project adheres to
 
 - Add filter methods and implement page navigation with filters and sort filters
 
-### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
-
-- Add filter methods and implement page navigation with filters and sort filters
-
-### [ita-challenges-frontend-2.12.2-RELEASE] - 2024-05-14 (feature#337)
-
-- Link to challenges in related challenges fixed
-
 ### [ita-challenges-frontend-2.12.2-RELEASE] - 2024-05-14 (feature#337)
 
 - Link to challenges in related challenges fixed
@@ -46,14 +46,6 @@ and this project adheres to
 
 - Link Related
 
-### [ita-challenges-frontend-2.12.0-RELEASE] - 2024-05-13 (feature#215)
-
-- Link Related
-
-### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
-
-- Add order method for creation_date. Implement the formatDatePipe"
-
 ### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
 
 - Add order method for creation_date. Implement the formatDatePipe"
@@ -66,13 +58,7 @@ and this project adheres to
 
 - Relative paths to image optimized. Internationalization of language literals.
 
-### [ita-challenges-frontend-2.10.2-RELEASE] - 2024-05-07
-
-- Relative paths to image optimized. Internationalization of language literals.
-
 ### [ita-challenges-frontend-2.10.0-RELEASE] - 2024-05-05
-
-- Refactoring auth.service & token.service
 
 - Refactoring auth.service & token.service
 
@@ -80,11 +66,7 @@ and this project adheres to
 
 - Fix slow load and add pagination
 
-- Fix slow load and add pagination
-
 ### [ita-challenges-frontend-2.8.3-RELEASE] - 2024-04-25
-
-- Fixing auth.service in challenge-header and challenge info.
 
 - Fixing auth.service in challenge-header and challenge info.
 
@@ -92,11 +74,7 @@ and this project adheres to
 
 - Link resources-card
 
-- Link resources-card
-
 ### [ita-challenges-frontend-2.8.0-RELEASE] - 2024-04-23
-
-- Added encryption cookies helper.
 
 - Added encryption cookies helper.
 
@@ -104,11 +82,7 @@ and this project adheres to
 
 - Link resources-card
 
-- Link resources-card
-
 ### [ita-challenges-frontend-2.7.1-RELEASE] - 2024-04-22
-
-- Left menu adaptation
 
 - Left menu adaptation
 
@@ -116,11 +90,7 @@ and this project adheres to
 
 - New changes on challenge-header button and styles.
 
-- New changes on challenge-header button and styles.
-
 ### [ita-challenges-frontend-2.6.0-RELEASE] - 2024-04-18
-
-- Added dynamic translation pipe
 
 - Added dynamic translation pipe
 
@@ -128,11 +98,7 @@ and this project adheres to
 
 - Register/Login placeholders adaptation
 
-- Register/Login placeholders adaptation
-
 ### [ita-challenges-frontend-2.3.1-RELEASE] - 2024-04-17
-
-- Included ESLint into development
 
 - Included ESLint into development
 
@@ -140,11 +106,7 @@ and this project adheres to
 
 - Add encryption cookies helper.
 
-- Add encryption cookies helper.
-
 ### [ita-challenges-frontend-2.2.0-RELEASE] - 2024-04-08
-
-- Challenge lists translates
 
 - Challenge lists translates
 
@@ -152,11 +114,7 @@ and this project adheres to
 
 - Delete iteneraries service and implement the method on chalenges.service
 
-- Delete iteneraries service and implement the method on chalenges.service
-
 ### [ita-challenges-frontend-2.0.68-RELEASE] - 2024-03-20
-
-- Add responsiveness to challenge filters modal
 
 - Add responsiveness to challenge filters modal
 
@@ -164,11 +122,7 @@ and this project adheres to
 
 - Added responsiveness to login and register modals.
 
-- Added responsiveness to login and register modals.
-
 ### [ita-challenges-frontend-2.0.70-RELEASE] - 2024-03-21
-
-- Challenge list translates
 
 - Challenge list translates
 
@@ -176,11 +130,7 @@ and this project adheres to
 
 - Adapt mobile-nav to Figma"
 
-- Adapt mobile-nav to Figma"
-
 ### [ita-challenges-frontend-2.0.60-RELEASE] - 2024-03-07
-
-- Change rename environment and delete dummy variables name"
 
 - Change rename environment and delete dummy variables name"
 
@@ -188,11 +138,7 @@ and this project adheres to
 
 - Translate login, register and validator service
 
-- Translate login, register and validator service
-
 ### [ita-challenges-frontend-2.0.58-RELEASE] - 2024-03-12
-
-- Login error msg
 
 - Login error msg
 
@@ -200,11 +146,7 @@ and this project adheres to
 
 - Fixing register and login basic functionalities
 
-- Fixing register and login basic functionalities
-
 ### [ita-challenges-frontend-2.0.51-RELEASE] - 2024-02-29
-
-- Fixing nginx.conf to find assets folder
 
 - Fixing nginx.conf to find assets folder
 
@@ -212,9 +154,6 @@ and this project adheres to
 
 - Add 2.2.4 and 9 to GUIDELINES_CA.md
 
-- Add 2.2.4 and 9 to GUIDELINES_CA.md
-
 ### [ita-challenges-frontend-2.0.45-RELEASE] - 2024-02-28
 
-- CI enabled
 - CI enabled
