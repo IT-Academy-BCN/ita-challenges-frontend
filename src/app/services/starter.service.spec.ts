@@ -9,6 +9,7 @@ import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
 import { mockChallenges } from './../../mocks/challenge.mock'
 import { mockResponse } from './../../mocks/response.mock'
+import { mockFilters } from './../../mocks/filter.mock'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -106,12 +107,6 @@ describe('StarterService', () => {
   })
 
   it('should filter challenges correctly', () => {
-    const mockFilters = {
-      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
-      levels: ['EASY'],
-      progress: []
-    }
-
     service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
       expect(filteredChallenges[0].id_challenge).toBe(1)
