@@ -7,7 +7,7 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
-import { mockChallenges } from './../../mocks/challenge.mock'
+import { mockChallenges } from '../../mocks/challenge/challenge.mock'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {

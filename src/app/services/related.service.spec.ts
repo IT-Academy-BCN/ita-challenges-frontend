@@ -3,7 +3,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { environment } from 'src/environments/environment'
 import { RelatedService } from './related.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { responseMock } from 'src/mocks/response.mock'
+import { responseMock } from 'src/mocks/challenge/response.mock'
 
 describe('RelatedService', () => {
   let relatedService: RelatedService

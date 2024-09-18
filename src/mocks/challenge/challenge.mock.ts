@@ -1,4 +1,4 @@
-import { type Challenge } from '../app/models/challenge.model'
+import { type Challenge } from '../../app/models/challenge.model'
 
 export const mockChallenges: Challenge[] = [
   {
