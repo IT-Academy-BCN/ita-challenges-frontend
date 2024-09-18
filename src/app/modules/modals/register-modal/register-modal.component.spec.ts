@@ -4,9 +4,9 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { of } from 'rxjs'
 import { RegisterModalComponent } from './register-modal.component'
 import { AuthService } from '../../../services/auth.service'
-import { type User } from '../../../models/user.model'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { testUser } from 'src/mocks/user/user.mock'
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent
@@ -66,16 +66,6 @@ describe('RegisterModalComponent', () => {
       legalTermsAccepted: true
     })
 
-    const testUser: User = {
-      idUser: '',
-      dni: '12345678Z',
-      email: 'test@example.com',
-      name: 'testName',
-      itineraryId: 'testItinerary',
-      password: 'TestPassword1',
-      confirmPassword: 'TestPassword1'
-    }
-
     component.register()
 
     tick()
@@ -100,16 +90,6 @@ describe('RegisterModalComponent', () => {
       confirmPassword: 'TestPassword1',
       legalTermsAccepted: true
     })
-
-    const testUser: User = {
-      idUser: '',
-      dni: '12345678Z',
-      email: 'test@example.com',
-      name: 'testName',
-      itineraryId: 'testItinerary',
-      password: 'TestPassword1',
-      confirmPassword: 'TestPassword1'
-    }
 
     component.register()
 

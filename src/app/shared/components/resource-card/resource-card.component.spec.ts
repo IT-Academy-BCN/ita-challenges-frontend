@@ -4,6 +4,7 @@ import { ResourcesService } from 'src/app/services/resources.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { responseMock } from 'src/mocks/resources/response.mock'
 
 describe('ResourceCardComponent', () => {
   let component: ResourceCardComponent
@@ -38,42 +39,6 @@ describe('ResourceCardComponent', () => {
   })
 
   it('should ngOnInit load resources correctly', async () => {
-    const responseMock = [{
-      id: 'e7b6b5a0-5b0a-4b0e-8b0a-9b0a0b0a0b0a',
-      title: 'Tutorial completo de Angular desde cero',
-      slug: 'tutorial-completo-de-angular-desde-cero',
-      description: 'Tutorial completo de Angular desde cero hasta la creación de una aplicación de gestión de tareas',
-      url: 'https://tutorials.cat/learn/angular',
-      resourceType: 'BLOG',
-      userId: 'string',
-      categoryId: 'clocr0bi20000h8vwipfbazso',
-      createdAt: '2023-11-28T15:24:13.961Z',
-      updatedAt: '2023-11-28T15:24:13.961Z',
-      user: {
-        name: 'Ana Pérez'
-      },
-      topics: [
-        {
-          topic: {
-            id: 'string',
-            name: 'Angular',
-            slug: 'angular',
-            categoryId: 'string',
-            createdAt: 'string',
-            updatedAt: 'string'
-          }
-        }
-      ],
-      voteCount: {
-        upvote: 14,
-        downvote: 2,
-        total: 12,
-        userVote: 1
-      },
-      isFavorite: false
-    // Añade el campo formattedDate con el valor esperado o usa expect.objectContaining para omitir esta verificación
-    }]
-
     resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
 
     component.ngOnInit()
