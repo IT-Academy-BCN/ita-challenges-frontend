@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
 import { mockChallenges } from './../../mocks/challenge.mock'
-import { mockResponse } from './../../mocks/response.mock'
-import { mockFilters } from './../../mocks/filter.mock'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -50,6 +48,7 @@ describe('StarterService', () => {
    */
 
   it('Should stream all challenges', (done) => {
+    const mockResponse: Record<string, unknown> = { challenge: 'challenge' }
     service.getAllChallenges().subscribe()
     const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
     expect(req.request.method).toEqual('GET')
@@ -58,6 +57,7 @@ describe('StarterService', () => {
   })
 
   it('should make GET request with correct parameters', () => {
+    const mockResponse = { challenge: 'challenge' }
     const pageOffset = 0
     const pageLimit = 8
 
@@ -107,6 +107,12 @@ describe('StarterService', () => {
   })
 
   it('should filter challenges correctly', () => {
+    const mockFilters = {
+      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
+      levels: ['EASY'],
+      progress: []
+    }
+    const mockChallenges: Challenge[] = []
     service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
       expect(filteredChallenges[0].id_challenge).toBe(1)
