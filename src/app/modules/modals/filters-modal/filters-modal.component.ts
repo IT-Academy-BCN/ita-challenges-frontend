@@ -84,11 +84,6 @@ export class FiltersModalComponent {
       })
     }
 
-    console.log('Languages:', filters.languages)
-    console.log('Levels:', filters.levels)
-    console.log('Progress:', filters.progress)
-    console.log('filters:', filters)
-
     this.filtersSelected.emit(filters)
     this.modalService.dismissAll()
   }
