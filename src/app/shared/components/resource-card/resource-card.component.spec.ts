@@ -39,7 +39,7 @@ describe('ResourceCardComponent', () => {
   })
 
   it('should ngOnInit load resources correctly', async () => {
-    resourcesServiceMock.getResources.mockReturnValue(of(responseMock))
+    resourcesServiceMock.getResources.mockReturnValue(of([responseMock]))
 
     component.ngOnInit()
     await fixture.whenStable().then(() => {
