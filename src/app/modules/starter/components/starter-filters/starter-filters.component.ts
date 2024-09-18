@@ -72,6 +72,7 @@ export class StarterFiltersComponent {
           if (val) { filters.progress.push(i + 1) }
         })
       }
+      console.log(filters)
       this.filtersSelected.emit(filters)
     })
   }

@@ -1,86 +1,88 @@
 <ng-template #modal let-c="close" let-d="dismiss">
-<div class="modal-header align-items-center justify-between pb-0">
-  <h4 class="modal-title fw-bold">
-    Filtros
-  </h4>
+  <div class="modal-header align-items-center justify-between pb-0">
+    <h4 class="modal-title fw-bold">Filtros</h4>
     <div class="close" data-bs-dismiss="modal" (click)="d('cross click')" aria-label="Close">
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
     </div>
-</div>
+  </div>
 
-<div class="modal-body">
-  <div class="form">
-      <p class="fw-bold">Lenguaje</p>
-      <div class="d-flex flex-wrap">
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkJs" name="javaScript" value="javaScript">
-            <label for="checkJs" class="input-label">Javascript</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkJava" name="java" value="java">
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div formGroupName="languages" class="form">
+        <p class="fw-bold">{{'modules.starter.filters.lenguaje' | translate}}</p>
+        <div class="d-flex flex-wrap">
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="javascript">
+            <label class="input-label">Javascript</label>
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="java">
             <label class="input-label">Java</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkPhp" name="php" value="php">
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="php">
             <label class="input-label">PHP</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkPython" name="python" value="python">
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="python">
             <label class="input-label">Python</label>
           </div>
-      </div>
-  </div>
-  <div class="form">
-      <p class="fw-bold">Dificultad</p>
-        <div class="d-flex">
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkFacil" name="facil" value="facil">
-            <label class="input-label">Fácil</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkMedia" name="media" value="media">
-            <label class="input-label">Media</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkDificil" name="dificil" value="dificil">
-            <label class="input-label">Difícil</label>
         </div>
       </div>
-  </div>
-  <div class="form">
-      <p class="fw-bold">Progreso</p>
-      <div class="d-flex flex-wrap">
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
-            <label class="input-label">No empezados</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
-            <label class="input-label">Falta completar</label>
-        </div>
-        <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
-            <label class="input-label">Completados</label>
-        </div>
-      </div>
-  </div>
-</div>
 
-<div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
-  <button
-    type="button"
-    class="btn btn-lg btn-primary btn-change col-11 col-md-5"
-    (click)="c('Save click')"
-  >
-    Aplicar
-  </button>
-  <button
-    type="button"
-    class="btn btn-lg col-11 col-md-5"
-    (click)="d('Cross click')"
-  >
-    Cancelar
-  </button>
-</div>
+      <div formGroupName="levels" class="form">
+        <p class="fw-bold">{{'modules.starter.filters.dificulty' | translate}}</p>
+        <div class="d-flex">
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="easy">
+            <label class="input-label">{{'modules.starter.filters.easy' | translate}}</label>
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="medium">
+            <label class="input-label">{{'modules.starter.filters.medium' | translate}}</label>
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="hard">
+            <label class="input-label">{{'modules.starter.filters.hard' | translate}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div  formGroupName="progress" class="form">
+        <p class="fw-bold">{{'modules.starter.filters.progress' | translate}}</p>
+        <div class="d-flex flex-wrap">
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="noStarted">
+            <label class="input-label">{{'modules.starter.filters.noStarted' | translate}}</label>
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="started">
+            <label class="input-label">{{'modules.starter.filters.started' | translate}}</label>
+          </div>
+          <div class="input-wrapper">
+            <input class="pill-input" type="checkbox" formControlName="finished">
+            <label class="input-label">{{'modules.starter.filters.finished' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
+    <button
+      type="button"
+      class="btn btn-lg btn-primary btn-change col-11 col-md-5"
+      (click)="applyFilters()"
+    >
+      Aplicar
+    </button>
+    <button
+      type="button"
+      class="btn btn-lg col-11 col-md-5"
+      (click)="d('Cross click')"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>

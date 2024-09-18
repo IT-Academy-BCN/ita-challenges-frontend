@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
-
+import { ReactiveFormsModule } from '@angular/forms'
 // TODO - pending execution over secure environment
 // import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
@@ -44,6 +44,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
     ChallengeModule,
     ProfileModule,
     I18nModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot({
       defaultLanguage: 'ca',
       loader: {

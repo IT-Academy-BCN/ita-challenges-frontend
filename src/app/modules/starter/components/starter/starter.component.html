@@ -34,4 +34,4 @@
     </app-pagination>
   </div>
 </div>
-<app-filters-modal #modal></app-filters-modal>
+<app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal>
