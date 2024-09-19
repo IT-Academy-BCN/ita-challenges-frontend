@@ -13,10 +13,13 @@ import { type Language } from 'src/app/models/language.model'
 export class FiltersModalComponent {
   @Output() filtersSelected = new EventEmitter<FilterChallenge>()
   @ViewChild('modal') private readonly modalContent!: TemplateRef<FiltersModalComponent>
+
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly challengeService = inject(ChallengeService)
+
   public languages: Record<string, string> = {}
+
   formGroup = this.formBuilder.group({
     languages: this.formBuilder.nonNullable.group({
       javascript: false,
