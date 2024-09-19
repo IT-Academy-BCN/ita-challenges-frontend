@@ -46,7 +46,6 @@ export class FiltersModalComponent {
           acc[result.language_name.toLowerCase()] = result.id_language
           return acc
         }, {})
-
         // Procesar filtros después de cargar los idiomas
         this.processFilters()
       }
