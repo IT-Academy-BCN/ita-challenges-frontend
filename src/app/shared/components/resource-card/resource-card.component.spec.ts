@@ -4,7 +4,8 @@ import { ResourcesService } from 'src/app/services/resources.service'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { responseMock } from 'src/mocks/resources/response.mock'
+// import { responseMock } from 'src/mocks/resources/response.mock'
+import responseMock from 'src/mocks/resources/response-resource.mock.json'
 
 describe('ResourceCardComponent', () => {
   let component: ResourceCardComponent

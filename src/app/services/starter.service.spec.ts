@@ -7,7 +7,8 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
-import { mockChallenges } from '../../mocks/challenge/challenge.mock'
+// import { mockChallenges } from '../../mocks/challenge/challenge.mock'
+import mockChallenges from '../../mocks/challenge/challenge.mock.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -16,6 +17,7 @@ describe('StarterService', () => {
   let testScheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
+  let parsedChallenges: Challenge[]
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,6 +29,10 @@ describe('StarterService', () => {
     service = new StarterService(httpClient)
     testScheduler = new TestScheduler((actual, expected) => {
     })
+    parsedChallenges = mockChallenges.map(challenge => ({
+      ...challenge,
+      creation_date: new Date(challenge.creation_date) // Convert string to Date
+    }))
   })
 
   /*
@@ -74,7 +80,7 @@ describe('StarterService', () => {
     const offset = 0
     const limit = 3
 
-    const sortedChallengesObservable = service.orderBySortAscending('creation_date', mockChallenges, offset, limit)
+    const sortedChallengesObservable = service.orderBySortAscending('creation_date', parsedChallenges, offset, limit)
 
     sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
       expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
@@ -87,7 +93,7 @@ describe('StarterService', () => {
     const offset = 0
     const limit = 3
 
-    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', mockChallenges, offset, limit)
+    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', parsedChallenges, offset, limit)
 
     sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
       expect(sortedChallenges[2].creation_date).toBe('2022-05-10')

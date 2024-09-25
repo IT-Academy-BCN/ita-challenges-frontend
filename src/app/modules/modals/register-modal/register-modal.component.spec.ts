@@ -6,7 +6,7 @@ import { RegisterModalComponent } from './register-modal.component'
 import { AuthService } from '../../../services/auth.service'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from 'src/app/services/challenge.service'
-import { testUser } from 'src/mocks/user/user.mock'
+import testUser from 'src/mocks/user/testUser.mock.json'
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent

@@ -20,8 +20,13 @@ import { User } from '../models/user.model'
 import { type TokenService } from './token.service'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
-import { mockLoginResponse, mockRegisterResponse, mockLoginErrorResponse, mockRegisterErrorResponse, mockUnauthorizedErrorResponse } from 'src/mocks/auth/auth.mock'
-import { mockRegisterUser } from 'src/mocks/user/user.mock'
+// import { mockLoginResponse, mockRegisterResponse, mockLoginErrorResponse, mockRegisterErrorResponse, mockUnauthorizedErrorResponse } from 'src/mocks/auth/auth.mock'
+import mockLoginResponse from '../../mocks/auth/loginResponse.mock.json'
+import mockRegisterResponse from '../../mocks/auth/registerResponse.mock.json'
+import mockLoginErrorResponse from '../../mocks/auth/loginErrorResponse.json'
+import mockRegisterErrorResponse from '../../mocks/auth/registerErrorResponse.mock.json'
+import mockUnauthorizedErrorResponse from '../../mocks/auth/unauthorizedErrorResponse.mock.json'
+import mockRegisterUser from 'src/mocks/user/mockRegisterUser.mock.json'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -178,6 +183,7 @@ describe('AuthService', () => {
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
     expect(req.request.method).toEqual('POST')
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     req.flush(mockLoginErrorResponse)
     done()
   })
