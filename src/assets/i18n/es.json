@@ -125,5 +125,10 @@
             "invalidPassword": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
             "pattern": "Formato incorrecto"
         }
+    },
+    "tooltips": {
+        "startedFinished": "Empezado y finalizado",
+        "savedTimes": "Veces guardado",
+        "creationDate": "Fecha creación"
     }
 }

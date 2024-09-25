@@ -36,17 +36,17 @@
         <div>IT-Academy</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Empezado y finalizado">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.startedFinished' | translate">
         <div><img src="assets/img/icon/bullseye.svg" alt="Bullseye"></div>
         <div>87%</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Veces guardado">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.savedTimes' | translate">
         <div><img src="assets/img/icon/bookmark.svg" alt="Bookmark"></div>
         <div>82</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Fecha creación">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
         <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
         <div>{{creation_date | date:'mediumDate':'':currentLang}}</div>
       </div>
