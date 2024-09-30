@@ -95,20 +95,20 @@ describe('ChallengeInfoComponent', () => {
   })
 
   it('should call solutionService.UserSolution on ngOnChanges', () => {
-    const mockUserId = '123';
-    const mockIdChallenge = '456';
-    const mockIdLanguage = '789';
-    const mockResponse = { results: [{ id: 1 }] };
+    const mockUserId = '123'
+    const mockIdChallenge = '456'
+    const mockIdLanguage = '789'
+    const mockResponse = { results: [{ id: 1 }] }
 
-    component.userId = mockUserId;
-    component.idChallenge = mockIdChallenge;
-    component.idLanguage = mockIdLanguage;
+    component.userId = mockUserId
+    component.idChallenge = mockIdChallenge
+    component.idLanguage = mockIdLanguage
     component.languages = [{
       id_language: mockIdLanguage,
       language_name: ''
-    }];
+    }]
 
-    spyOn(solutionService, 'getUserSolution').and.returnValue(of(mockResponse));
+    spyOn(solutionService, 'getUserSolution').and.returnValue(of(mockResponse))
 
     component.ngOnChanges({
       languages: {
@@ -117,10 +117,10 @@ describe('ChallengeInfoComponent', () => {
         firstChange: true,
         isFirstChange: () => true
       }
-    });
+    })
 
-    expect(solutionService.getUserSolution).toHaveBeenCalledWith(mockUserId, mockIdChallenge, mockIdLanguage);
-    expect(component.solutionSent).toBe(true);
-    expect(component.isUserSolution).toBe(false);
-  });
+    expect(solutionService.getUserSolution).toHaveBeenCalledWith(mockUserId, mockIdChallenge, mockIdLanguage)
+    expect(component.solutionSent).toBe(true)
+    expect(component.isUserSolution).toBe(false)
+  })
 })
