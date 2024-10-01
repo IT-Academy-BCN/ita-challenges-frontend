@@ -1,37 +1,55 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { DateFormatterService } from 'src/app/services/date-formatter.service'
+import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
+import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core'
 
-describe('ChallengeComponent', () => {
+import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
+import { LOCALE_ID } from '@angular/core'
+import { By } from '@angular/platform-browser'
+import { formatDate } from '@angular/common'
+
+// Crear un mock para TranslateService
+class TranslateServiceMock {
+  currentLang = 'ca'
+  instant (key: any): string {
+    return key
+  }
+}
+
+describe('ChallengeCardComponent', () => {
   let component: ChallengeCardComponent
   let fixture: ComponentFixture<ChallengeCardComponent>
-  let translateService: TranslateService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule.forRoot()
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
         StarterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        TranslateService,
-        DateFormatterService
+        { provide: TranslateService, useClass: TranslateServiceMock },
+        { provide: LOCALE_ID, useValue: 'ca' } // Proveer LOCALE_ID para el idioma
       ]
-    })
-      .compileComponents()
+    }).compileComponents()
+  })
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
-    component.creation_date = new Date()
-    translateService = TestBed.inject(TranslateService)
     fixture.detectChanges()
   })
 
@@ -59,7 +77,7 @@ describe('ChallengeComponent', () => {
     component.id = '123'
     fixture.detectChanges()
 
-    const anchorElement: HTMLAnchorElement = fixture.nativeElement.querySelector('.challenge-list-element')
+    const anchorElement: HTMLElement = fixture.nativeElement.querySelector('.challenge-list-element')
     const hasId = anchorElement.innerText !== ''
     anchorElement.setAttribute('routerLink', 'ita-challenge/challenges/123')
     const routerLinkAttribute: string = anchorElement.getAttribute('routerLink')?.toLowerCase() ?? ''
@@ -69,14 +87,14 @@ describe('ChallengeComponent', () => {
     expect(routerLinkAttribute).toBe('ita-challenge/challenges/123')
   })
 
-  it('should format date correctly in Spanish', () => {
-    // Simula el idioma español
-    jest.spyOn(translateService, 'currentLang', 'get').mockReturnValue('es')
-    component.creation_date = new Date(2020, 0, 1) // 1 de enero de 2020
-    component.updateFormattedDate()
+  it('should display the formatted date correctly', () => {
+    const testDate = new Date('2023-07-01')
+    component.creation_date = testDate
     fixture.detectChanges()
 
-    // Verifica que la fecha formateada sea correcta para el idioma español
-    expect(component.formattedDate).toEqual('01 Ene 2020')
+    const dateElement: HTMLElement = fixture.debugElement.query(By.css('.stat:last-child div:last-child')).nativeElement
+    const formattedDate = formatDate(testDate, 'mediumDate', 'ca') // Formatear la fecha para comparar
+
+    expect(dateElement.textContent).toContain(formattedDate)
   })
 })

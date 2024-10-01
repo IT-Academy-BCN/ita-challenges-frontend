@@ -8,8 +8,8 @@ import { ResourceCardComponent } from './resource-card/resource-card.component'
 import { SolutionComponent } from './solution/solution.component'
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormatDatePipe } from 'src/app/pipes/format-date.pipe'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
     TranslateModule,
     NgbTooltipModule,
     DynamicTranslatePipe,
-    FormatDatePipe
+    EscapeJavaForJsonPipe
   ],
   exports: [
     PaginationComponent,
