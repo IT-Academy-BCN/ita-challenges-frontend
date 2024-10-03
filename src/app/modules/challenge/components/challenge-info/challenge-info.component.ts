@@ -20,6 +20,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
+import { UserService } from 'src/app/services/user.service'
 
 @Component({
   selector: 'app-challenge-info',
@@ -34,6 +35,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
+  private readonly userService = inject(UserService)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -65,7 +67,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       this.isUserSolution = !value
     })
 
-    this.isLogged = this.authService.isUserLoggedIn()
+    this.isLogged = this.userService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((value) => {
