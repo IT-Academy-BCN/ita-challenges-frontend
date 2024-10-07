@@ -2,7 +2,7 @@ import { LOCALE_ID, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { CoreModule } from './core/core.module'
@@ -35,6 +35,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
+    NgbDropdownModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
