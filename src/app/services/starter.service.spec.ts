@@ -31,7 +31,11 @@ describe('StarterService', () => {
     })
     parsedChallenges = mockChallenges.map(challenge => ({
       ...challenge,
-      creation_date: new Date(challenge.creation_date) // Convert string to Date
+      creation_date: new Date(challenge.creation_date), // Convert string to Date
+      solutions: challenge.solutions.map(solution => ({
+        id_solution: solution.idSolution,
+        solution_text: solution.solutionText
+      }))
     }))
   })
 

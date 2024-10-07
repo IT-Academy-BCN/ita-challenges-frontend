@@ -13,14 +13,11 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { SolutionService } from 'src/app/services/solution.service'
-import { of } from 'rxjs'
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
-  let solutionService: SolutionService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,8 +36,7 @@ describe('ChallengeInfoComponent', () => {
       providers: [
         AuthService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        SolutionService
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -49,7 +45,6 @@ describe('ChallengeInfoComponent', () => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
-    solutionService = TestBed.inject(SolutionService)
     fixture.detectChanges()
   })
 
