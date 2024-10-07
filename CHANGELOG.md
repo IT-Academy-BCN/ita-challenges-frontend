@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+
+### [ita-challenges-frontend-3.1.7-RELEASE] 
+
+- Added scroll by overflow
+  
+
 ### [ita-challenges-frontend-3.1.6-RELEASE]
 
 - Fixed filters at responsive mode.
@@ -39,7 +46,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.0.3-RELEASE]
 
 - Ugraded to Angular 18
-- Fixed package destination folder, in Angular 18 the destination folder is dist/ita-challenges-frontend/browser
+- Fixed package destination folder, in Angular 18 the destination folder is dist/ita-challenges-frontend/browser 
 
 ### [ita-challenges-frontend-2.14.0-RELEASE] - 2024-06-04 (feature#355)
 
@@ -47,11 +54,22 @@ and this project adheres to
 
 ### [ita-challenges-frontend-2.13.1-RELEASE] - 2024-05-16 (feature#328)
 
-- Verified component display with /register true 
+- Verified component display with /register true (hardcoded)
+
+### [ita-challenges-frontend-2.13.1-RELEASE] - 2024-05-16 (feature#328)
+
+- Verified component display with /register true (hardcoded)
 
 ### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
 
 - Add filter methods and implement page navigation with filters and sort filters
+### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
+
+- Add filter methods and implement page navigation with filters and sort filters
+
+### [ita-challenges-frontend-2.12.2-RELEASE] - 2024-05-14 (feature#337)
+
+- Link to challenges in related challenges fixed
 
 ### [ita-challenges-frontend-2.12.2-RELEASE] - 2024-05-14 (feature#337)
 
@@ -65,7 +83,13 @@ and this project adheres to
 ### [ita-challenges-frontend-2.12.0-RELEASE] - 2024-05-13 (feature#215)
 
 - Link Related
+### [ita-challenges-frontend-2.12.0-RELEASE] - 2024-05-13 (feature#215)
 
+- Link Related
+
+### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
+
+- Add order method for creation_date. Implement the formatDatePipe"
 ### [ita-challenges-frontend-2.11.0-RELEASE] - 2024-05-07 (feature#293)
 
 - Add order method for creation_date. Implement the formatDatePipe"
@@ -73,6 +97,12 @@ and this project adheres to
 ### [ita-challenges-frontend-2.10.3-RELEASE] - 2024-05-07
 
 - Changing URL ita-wiki
+
+- Changing URL ita-wiki
+
+### [ita-challenges-frontend-2.10.2-RELEASE] - 2024-05-07
+
+- Relative paths to image optimized. Internationalization of language literals.
 
 ### [ita-challenges-frontend-2.10.2-RELEASE] - 2024-05-07
 
@@ -82,7 +112,11 @@ and this project adheres to
 
 - Refactoring auth.service & token.service
 
+- Refactoring auth.service & token.service
+
 ### [ita-challenges-frontend-2.9.0-RELEASE] - 2024-04-29
+
+- Fix slow load and add pagination
 
 - Fix slow load and add pagination
 
@@ -90,7 +124,11 @@ and this project adheres to
 
 - Fixing auth.service in challenge-header and challenge info.
 
+- Fixing auth.service in challenge-header and challenge info.
+
 ### [ita-challenges-frontend-2.8.1-RELEASE] - 2024-04-23
+
+- Link resources-card
 
 - Link resources-card
 
@@ -98,7 +136,11 @@ and this project adheres to
 
 - Added encryption cookies helper.
 
+- Added encryption cookies helper.
+
 ### [ita-challenges-frontend-2.7.2-RELEASE] - 2024-04-23
+
+- Link resources-card
 
 - Link resources-card
 
@@ -106,7 +148,11 @@ and this project adheres to
 
 - Left menu adaptation
 
+- Left menu adaptation
+
 ### [ita-challenges-frontend-2.7.0-RELEASE] - 2024-04-09
+
+- New changes on challenge-header button and styles.
 
 - New changes on challenge-header button and styles.
 
@@ -114,7 +160,11 @@ and this project adheres to
 
 - Added dynamic translation pipe
 
+- Added dynamic translation pipe
+
 ### [ita-challenges-frontend-2.5.0-RELEASE] - 2024-04-18
+
+- Register/Login placeholders adaptation
 
 - Register/Login placeholders adaptation
 
@@ -122,7 +172,12 @@ and this project adheres to
 
 - Included ESLint into development
 
+- Included ESLint into development
+
 ### [ita-challenges-frontend-2.3.0-RELEASE] - 2024-04-02
+
+- Add encryption cookies helper.
+
 
 - Add encryption cookies helper.
 
@@ -130,7 +185,11 @@ and this project adheres to
 
 - Challenge lists translates
 
+- Challenge lists translates
+
 ### [ita-challenges-frontend-2.0.71-RELEASE] - 2024-04-02
+
+- Delete iteneraries service and implement the method on chalenges.service
 
 - Delete iteneraries service and implement the method on chalenges.service
 
@@ -138,7 +197,11 @@ and this project adheres to
 
 - Add responsiveness to challenge filters modal
 
+- Add responsiveness to challenge filters modal
+
 ### [ita-challenges-frontend-2.0.72-RELEASE] - 2024-04-03
+
+- Added responsiveness to login and register modals.
 
 - Added responsiveness to login and register modals.
 
@@ -146,7 +209,11 @@ and this project adheres to
 
 - Challenge list translates
 
+- Challenge list translates
+
 ### [ita-challenges-frontend-2.0.69-RELEASE] - 2024-03-07
+
+- Adapt mobile-nav to Figma"
 
 - Adapt mobile-nav to Figma"
 
@@ -154,7 +221,11 @@ and this project adheres to
 
 - Change rename environment and delete dummy variables name"
 
+- Change rename environment and delete dummy variables name"
+
 ### [ita-challenges-frontend-2.0.53-RELEASE] - 2024-03-07
+
+- Translate login, register and validator service
 
 - Translate login, register and validator service
 
@@ -162,7 +233,11 @@ and this project adheres to
 
 - Login error msg
 
+- Login error msg
+
 ### [ita-challenges-frontend-2.0.52-RELEASE] - 2024-02-29
+
+- Fixing register and login basic functionalities
 
 - Fixing register and login basic functionalities
 
@@ -170,10 +245,15 @@ and this project adheres to
 
 - Fixing nginx.conf to find assets folder
 
+- Fixing nginx.conf to find assets folder
+
 ### [ita-challenges-frontend-2.0.46-RELEASE] - 2024-02-28
+
+- Add 2.2.4 and 9 to GUIDELINES_CA.md
 
 - Add 2.2.4 and 9 to GUIDELINES_CA.md
 
 ### [ita-challenges-frontend-2.0.45-RELEASE] - 2024-02-28
 
+- CI enabled
 - CI enabled
