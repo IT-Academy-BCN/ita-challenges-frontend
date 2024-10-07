@@ -13,7 +13,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
 import { AuthService } from './services/auth.service'
-
 // TODO - pending execution over secure environment
 // import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
