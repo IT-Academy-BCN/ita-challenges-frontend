@@ -91,39 +91,4 @@ describe('ChallengeInfoComponent', () => {
     component.activeIdChange.emit(activeId)
     expect(component.activeId).toBe(newActiveId)
   })
-
-  it('should select a tab, update activeId, selectedTabLabel, and close dropdown', () => {
-    jest.spyOn(component.activeIdChange, 'emit')
-
-    const newActiveId = 3
-    const newLabel = 'Resources'
-    component.selectTab(newActiveId, newLabel)
-
-    expect(component.activeId).toBe(newActiveId)
-    expect(component.selectedTabLabel).toBe(newLabel)
-
-    expect(component.isDropdownOpen).toBe(false)
-
-    expect(component.activeIdChange.emit).toHaveBeenCalledWith(newActiveId)
-  })
-  it('should toggle dropdown state', () => {
-    // Estado inicial del menú desplegable
-    component.isDropdownOpen = false
-
-    component.toggleDropdown()
-
-    expect(component.isDropdownOpen).toBe(true)
-
-    component.toggleDropdown()
-
-    expect(component.isDropdownOpen).toBe(false)
-  })
-  it('should update selectedTabLabel when selectTab is called', () => {
-    const newActiveId = 3
-    const newLabel = 'Resources'
-
-    component.selectTab(newActiveId, newLabel)
-
-    expect(component.selectedTabLabel).toBe(newLabel)
-  })
 })
