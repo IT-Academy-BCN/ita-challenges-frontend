@@ -64,6 +64,9 @@ implements AfterContentChecked, OnChanges, OnInit {
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
+  selectedTabLabel: string = 'Details'
+  isDropdownOpen: boolean = false
+
   ngOnChanges (changes: SimpleChanges): void {
     if (changes['languages']?.currentValue?.length > 0) {
       this.idLanguage = this.languages[0].id_language
@@ -109,6 +112,7 @@ implements AfterContentChecked, OnChanges, OnInit {
     ) {
       this.isLogged = true
     }
+    this.updateSelectedTabLabel(this.activeId)
   }
 
   loadRelatedChallenges (id: string): void {
@@ -124,6 +128,36 @@ implements AfterContentChecked, OnChanges, OnInit {
     if (this.activeIdChange !== null) {
       this.activeId = newActiveId
       this.activeIdChange.emit(this.activeId)
+    }
+  }
+
+  selectTab (id: number, label: string): void {
+    this.activeId = id
+    this.selectedTabLabel = label
+    this.isDropdownOpen = false
+    this.activeIdChange.emit(this.activeId)
+  }
+
+  toggleDropdown (): void {
+    this.isDropdownOpen = !this.isDropdownOpen// Alterna el estado del menú desplegable
+  }
+
+  private updateSelectedTabLabel (id: number): void {
+    switch (id) {
+      case 1:
+        this.selectedTabLabel = 'Details'
+        break
+      case 2:
+        this.selectedTabLabel = 'Solutions'
+        break
+      case 3:
+        this.selectedTabLabel = 'Resources'
+        break
+      case 4:
+        this.selectedTabLabel = 'Related'
+        break
+      default:
+        this.selectedTabLabel = 'Details'
     }
   }
 

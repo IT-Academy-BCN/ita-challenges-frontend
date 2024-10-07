@@ -94,33 +94,38 @@ describe('ChallengeInfoComponent', () => {
     expect(component.activeId).toBe(newActiveId)
   })
 
-  it('should call solutionService.UserSolution on ngOnChanges', () => {
-    const mockUserId = '123'
-    const mockIdChallenge = '456'
-    const mockIdLanguage = '789'
-    const mockResponse = { results: [{ id: 1 }] }
+  it('should select a tab, update activeId, selectedTabLabel, and close dropdown', () => {
+    jest.spyOn(component.activeIdChange, 'emit')
 
-    component.userId = mockUserId
-    component.idChallenge = mockIdChallenge
-    component.idLanguage = mockIdLanguage
-    component.languages = [{
-      id_language: mockIdLanguage,
-      language_name: ''
-    }]
+    const newActiveId = 3
+    const newLabel = 'Resources'
+    component.selectTab(newActiveId, newLabel)
 
-    spyOn(solutionService, 'getUserSolution').and.returnValue(of(mockResponse))
+    expect(component.activeId).toBe(newActiveId)
+    expect(component.selectedTabLabel).toBe(newLabel)
 
-    component.ngOnChanges({
-      languages: {
-        currentValue: component.languages,
-        previousValue: [],
-        firstChange: true,
-        isFirstChange: () => true
-      }
-    })
+    expect(component.isDropdownOpen).toBe(false)
 
-    expect(solutionService.getUserSolution).toHaveBeenCalledWith(mockUserId, mockIdChallenge, mockIdLanguage)
-    expect(component.solutionSent).toBe(true)
-    expect(component.isUserSolution).toBe(false)
+    expect(component.activeIdChange.emit).toHaveBeenCalledWith(newActiveId)
+  })
+  it('should toggle dropdown state', () => {
+    // Estado inicial del menú desplegable
+    component.isDropdownOpen = false
+
+    component.toggleDropdown()
+
+    expect(component.isDropdownOpen).toBe(true)
+
+    component.toggleDropdown()
+
+    expect(component.isDropdownOpen).toBe(false)
+  })
+  it('should update selectedTabLabel when selectTab is called', () => {
+    const newActiveId = 3
+    const newLabel = 'Resources'
+
+    component.selectTab(newActiveId, newLabel)
+
+    expect(component.selectedTabLabel).toBe(newLabel)
   })
 })

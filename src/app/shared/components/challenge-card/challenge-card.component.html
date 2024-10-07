@@ -3,17 +3,17 @@
   <div>
     <div class="info d-flex align-items-start justify-content-between">
       <div class="d-flex align-items-start w-100">
-        <div class="difficulty" *ngIf="level == 'EASY'">
+        <div class="difficulty d-flex" *ngIf="level == 'EASY'">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
         </div>
-        <div class="difficulty" *ngIf="level == 'MEDIUM'">
+        <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
         </div>
-        <div class="difficulty" *ngIf="level == 'HARD'">
+        <div class="difficulty d-flex" *ngIf="level == 'HARD'">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
@@ -30,25 +30,25 @@
       </ul>
     </div>
 
-    <div class="d-flex gap-3">
+    <div class="stats d-flex">
       <div class="stat d-flex align-items-center">
         <div><img src="assets/img/icon/user.svg" alt="User"></div>
-        <div>IT-Academy</div>
+        <div class="txt">IT-Academy</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Empezado y finalizado">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.startedFinished' | translate">
         <div><img src="assets/img/icon/bullseye.svg" alt="Bullseye"></div>
-        <div>87%</div>
+        <div class="txt">87%</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Veces guardado">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.savedTimes' | translate">
         <div><img src="assets/img/icon/bookmark.svg" alt="Bookmark"></div>
-        <div>82</div>
+        <div class="txt">82</div>
       </div>
 
-      <div class="stat d-flex align-items-center" ngbTooltip="Fecha creación">
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
         <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
-        <div>{{creation_date | date:'mediumDate':'':currentLang}}</div>
+        <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>
       </div>
     </div>
   </div>

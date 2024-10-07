@@ -128,5 +128,10 @@
             "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
             "pattern": "Format incorrecte"
         }
+    },
+    "tooltips": {
+        "startedFinished": "Començat i finalitzat",
+        "savedTimes": "Vegades guardat",
+        "creationDate": "Data de creació"
     }
 }   

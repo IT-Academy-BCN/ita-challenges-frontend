@@ -127,51 +127,69 @@ p, ul li {
     color: $black-3;
 }
 
-@media screen and (max-width: 768px) {
-    .details-body {
-        flex-direction: column;
-
-        .details-text {
-            order: 2;
-        }
-
-        app-solution {
-            order: 1;
-        }
+/* Menú desplegable para móviles */
+.dropdown-container {
+    display: none; /* Ocultar por defecto en pantallas grandes */
+  
+    .dropdown-toggle {
+      background-color: #B91879;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      margin-top: 15px;
+  
+      &:hover {
+        background-color: darken(#B91879, 10%);
+      }
     }
-
-    :host {
-        overflow-x: auto;
+  
+    .dropdown-menu {
+      display: none; /* Se despliega solo cuando está activo */
+      position: relative;
+      background-color: white;
+      min-width: 100%;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      z-index: 1;
+  
+      .dropdown-item {
+        padding: 10px;
+        color: #333;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #B91879;
+          color: white;
+        }
+      }
     }
-
+  
+    &.open .dropdown-menu {
+      display: block;
+    }
+  }
+  
+  /* Media query solo para móviles */
+  @media screen and (max-width: 768px) {
+    .dropdown-container {
+      display: block; /* Mostrar el menú desplegable en pantallas móviles */
+    }
+  
+    /* Ocultar las pestañas en móviles */
     ul.nav-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        align-items: center;
-        border: none;
+      display: none;
     }
+  }
+  
 
-    .nav-link {
-        background-color: white;
-        color: $gray-3;
-        border: 1px solid $gray-3;
-        border-radius: 50px;
-        padding: 10px 20px;
-        margin: 0 10px 0 0;
-        transition: 0.2s;
-
-        &.active, &:hover {
-            background-color: $primary;
-            color: white;
-            border: 1px solid $primary;
-            font-weight: bold;
-        }
-    }
-}
-
-@media screen and (max-width: 560px) {
+/*@media screen and (max-width: 560px) {
     li.related {
         display: none;
     }
-}
+}*/
