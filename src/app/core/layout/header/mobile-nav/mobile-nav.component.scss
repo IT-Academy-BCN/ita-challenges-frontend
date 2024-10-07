@@ -5,9 +5,9 @@ nav{
     width: 100%;
     left:50%;
     transform: translate(-50%, 0%);
-    height: 2rem;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+    height: 42px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     background-color: black;
     color: white;
 }
@@ -38,7 +38,8 @@ $navbar-toggler-transition: none;
         .navbar-toggler-icon{
             background-image: url('/assets/img/icon/hamburguer-white.svg');
             color: white;
-            height: 1em;
+            width: 29px;
+            height: 29px;
         }
 
 }
