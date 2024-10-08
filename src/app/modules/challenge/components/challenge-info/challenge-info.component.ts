@@ -6,9 +6,7 @@ import {
   Output,
   ViewChild,
   inject,
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges
+  type OnInit
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -32,7 +30,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent
-implements AfterContentChecked,  OnInit {
+implements AfterContentChecked, OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
