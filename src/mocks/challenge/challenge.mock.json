@@ -1,0 +1,75 @@
+[
+    {
+      "id_challenge": "1",
+      "challenge_title": "Challenge 1",
+      "level": "EASY",
+      "popularity": 1,
+      "creation_date": "2022-05-10T00:00:00.000Z",
+      "detail": {
+        "description": "lorem",
+        "examples": [],
+        "notes": "lorem"
+      },
+      "languages": [
+        {
+          "id_language": "1",
+          "language_name": "lorem"
+        }
+      ],
+      "solutions": [
+        {
+          "idSolution": "1",
+          "solutionText": "Aquí va el texto de la solución 1"
+        }
+      ]
+    },
+    {
+      "id_challenge": "2",
+      "challenge_title": "Challenge 2",
+      "level": "EASY",
+      "popularity": 1,
+      "creation_date": "2022-05-10T00:00:00.000Z",
+      "detail": {
+        "description": "lorem",
+        "examples": [],
+        "notes": "lorem"
+      },
+      "languages": [
+        {
+          "id_language": "2",
+          "language_name": "lorem"
+        }
+      ],
+      "solutions": [
+        {
+          "idSolution": "1",
+          "solutionText": "Aquí va el texto de la solución 1"
+        }
+      ]
+    },
+    {
+      "id_challenge": "3",
+      "challenge_title": "Challenge 1",
+      "level": "EASY",
+      "popularity": 1,
+      "creation_date": "2022-05-10T00:00:00.000Z",
+      "detail": {
+        "description": "lorem",
+        "examples": [],
+        "notes": "lorem"
+      },
+      "languages": [
+        {
+          "id_language": "1",
+          "language_name": "lorem"
+        }
+      ],
+      "solutions": [
+        {
+          "idSolution": "1",
+          "solutionText": "Aquí va el texto de la solución 1"
+        }
+      ]
+    }
+]
+  

@@ -1,0 +1,10 @@
+{
+    "idUser": "",
+    "dni": "12345678Z",
+    "email": "test@example.com",
+    "name": "testName",
+    "itineraryId": "testItinerary",
+    "password": "TestPassword1",
+    "confirmPassword": "TestPassword1"
+}
+  

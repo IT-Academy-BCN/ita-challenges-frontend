@@ -7,7 +7,7 @@
 }
 
 h2 {
-  font-size: 26px;
+  font-size: 1.4rem;
   line-height: 34px;
   font-weight: 700;
 }
@@ -68,8 +68,16 @@ app-starter-filters p {
   h2 {
     margin: 0.5rem 0 1rem;
   }
+  .btnFiltrar{
+    width: 70px;
+    height: 30px;
+   padding: 0px;
+   font-size: 14px;
+  }
 }
-
+.challenges-filter{
+   margin-bottom: 15px;
+}
 #filters-container {
   position: sticky;
   top: 40px;
