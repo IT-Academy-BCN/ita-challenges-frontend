@@ -1,31 +1,3 @@
-
-<!-- Dropdown Menu for Mobile View -->
-
-<div class="dropdown-container" [class.open]="isDropdownOpen" (click)="toggleDropdown()">
-  <button class="dropdown-toggle">
-    {{ selectedTabLabel }}
-  </button>
-  <div class="dropdown-menu">
-    <button class="dropdown-item" (click)="selectTab(1, 'Details')">
-      {{ 'modules.challenge.info.detailsTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(2, 'Solutions')">
-      {{ 'modules.challenge.info.solutionsTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(3, 'Resources')">
-      {{ 'modules.challenge.info.resourcesTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(4, 'Related')">
-      {{ 'modules.challenge.info.relatedTitle' | translate }}
-    </button>
-  </div>
-</div>
-
-
-
-
-
-
 <!---Nav tabs-->
 <!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
@@ -217,5 +189,3 @@
 </ul>
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
 <!--Nav panes-->
-
-

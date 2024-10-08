@@ -32,7 +32,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent
-implements AfterContentChecked, OnChanges, OnInit {
+implements AfterContentChecked,  OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -64,34 +64,18 @@ implements AfterContentChecked, OnChanges, OnInit {
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
-  selectedTabLabel: string = 'Details'
-  isDropdownOpen: boolean = false
+  solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  ngOnChanges (changes: SimpleChanges): void {
-    if (changes['languages']?.currentValue?.length > 0) {
-      this.idLanguage = this.languages[0].id_language
-      this.loadSolutions(this.idChallenge, this.idLanguage)
+  // showStatement = true
+  // isLogged: boolean = false
+  // solutionSent: boolean = false
+  // resources: string = '' // TODO resources
+  // params$!: Subscription
+  // relatedChallengesData!: DataChallenge
+  // relatedListOfChallenges: Challenge[] = []
+  // challengeSubs$!: Subscription
 
-      this.solutionService
-        .getUserSolution(this.userId, this.idChallenge, this.idLanguage)
-        .subscribe((data) => {
-          if (data.results.length > 0) {
-            this.solutionSent = !this.solutionSent
-            this.isUserSolution = !this.isUserSolution
-          }
-        })
-    }
-  }
-
-  ngOnInit (): void {
-    // this.userId = this.authService.getUserIdFromCookie()
-    // TODO We get user from dummy data because getUserIdFromCookie() is not implemented
-    this.authService
-      .getUserIdFromDummy('../assets/dummy/test-user.json')
-      .subscribe((data) => {
-        this.userId = data.idUser
-      })
-
+  async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
@@ -112,7 +96,6 @@ implements AfterContentChecked, OnChanges, OnInit {
     ) {
       this.isLogged = true
     }
-    this.updateSelectedTabLabel(this.activeId)
   }
 
   loadRelatedChallenges (id: string): void {
@@ -128,36 +111,6 @@ implements AfterContentChecked, OnChanges, OnInit {
     if (this.activeIdChange !== null) {
       this.activeId = newActiveId
       this.activeIdChange.emit(this.activeId)
-    }
-  }
-
-  selectTab (id: number, label: string): void {
-    this.activeId = id
-    this.selectedTabLabel = label
-    this.isDropdownOpen = false
-    this.activeIdChange.emit(this.activeId)
-  }
-
-  toggleDropdown (): void {
-    this.isDropdownOpen = !this.isDropdownOpen// Alterna el estado del menú desplegable
-  }
-
-  private updateSelectedTabLabel (id: number): void {
-    switch (id) {
-      case 1:
-        this.selectedTabLabel = 'Details'
-        break
-      case 2:
-        this.selectedTabLabel = 'Solutions'
-        break
-      case 3:
-        this.selectedTabLabel = 'Resources'
-        break
-      case 4:
-        this.selectedTabLabel = 'Related'
-        break
-      default:
-        this.selectedTabLabel = 'Details'
     }
   }
 
