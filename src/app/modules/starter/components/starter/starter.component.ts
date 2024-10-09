@@ -1,5 +1,5 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
-
+  @ViewChild('challenges') challengesContainer!: ElementRef
   challenges: Challenge[] = []
   params$!: Subscription
   challengesSubs$!: Subscription
@@ -137,6 +137,36 @@ export class StarterComponent implements OnInit {
         this.getChallengesByPage(this.pageNumber)
         this.isAscending = true
       }
+    }
+  }
+
+  ngAfterViewInit (): void {
+    this.initScrollEvent()
+  }
+
+  onScroll (): void {
+    const scrollTop = this.challengesContainer.nativeElement.scrollTop
+    const containerHeight = this.challengesContainer.nativeElement.clientHeight
+    const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
+
+    // Verifica si el usuario ha llegado al final del div
+    if (scrollTop + containerHeight >= scrollHeight) {
+      this.pageNumber++ // Incrementar el número de página
+      this.getChallengeFilters(this.filters)
+    }
+    // Verifica si el usuario ha llegado al principio del div (desplazándose hacia arriba)
+    if (scrollTop === 0 && this.pageNumber > 1) {
+      this.pageNumber-- // Decrementar el número de página
+      this.getChallengeFilters(this.filters) // Cargar desafíos de la página anterior
+    }
+  }
+
+  // Método para inicializar el evento de scroll
+  initScrollEvent (): void {
+    if (window.innerWidth < 768) {
+      this.challengesContainer.nativeElement.addEventListener('scroll', () => {
+        this.onScroll()
+      })
     }
   }
 }
