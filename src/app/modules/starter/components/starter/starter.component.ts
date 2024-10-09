@@ -150,14 +150,14 @@ export class StarterComponent implements OnInit {
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
 
     // Verifica si el usuario ha llegado al final del div
-    if (scrollTop + containerHeight >= scrollHeight) {
+    if (scrollTop + containerHeight >= scrollHeight - 10) {
       this.pageNumber++ // Incrementar el número de página
-      this.getChallengeFilters(this.filters)
+      this.getChallengesByPage(this.pageNumber)
     }
     // Verifica si el usuario ha llegado al principio del div (desplazándose hacia arriba)
     if (scrollTop === 0 && this.pageNumber > 1) {
       this.pageNumber-- // Decrementar el número de página
-      this.getChallengeFilters(this.filters) // Cargar desafíos de la página anterior
+      this.getChallengesByPage(this.pageNumber) // Cargar desafíos de la página anterior
     }
   }
 
