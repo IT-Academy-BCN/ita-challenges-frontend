@@ -16,4 +16,7 @@
 - Allan Vázquez - https://github.com/codenaud
 - Eva Díaz - https://github.com/evarkitecta
 - Silvia Sánchez - https://github.com/SilviaEzra
+- Alessandro De Pietri Tonelli - https://github.com/adptCode
+- Sara Ortega - https://github.com/SaraAOrtega
+- Eloi Ginesti - https://github.com/xapolin1979
 

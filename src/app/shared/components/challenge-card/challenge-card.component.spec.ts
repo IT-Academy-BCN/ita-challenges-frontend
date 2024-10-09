@@ -4,18 +4,18 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
 import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
 import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 
 import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
-import { LOCALE_ID } from '@angular/core'
+import { LOCALE_ID, Pipe, type PipeTransform } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { formatDate } from '@angular/common'
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 
-// Crear un mock para TranslateService
-class TranslateServiceMock {
-  currentLang = 'ca'
-  instant (key: any): string {
-    return key
+@Pipe({ name: 'translate' })
+class MockTranslatePipe implements PipeTransform {
+  transform (value: string): string {
+    return value// Restituisce semplicemente la chiave di traduzione
   }
 }
 
@@ -25,8 +25,9 @@ describe('ChallengeCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChallengeCardComponent],
+      declarations: [ChallengeCardComponent, MockTranslatePipe],
       imports: [
+        NgbTooltipModule,
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
@@ -41,7 +42,6 @@ describe('ChallengeCardComponent', () => {
         StarterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        { provide: TranslateService, useClass: TranslateServiceMock },
         { provide: LOCALE_ID, useValue: 'ca' } // Proveer LOCALE_ID para el idioma
       ]
     }).compileComponents()
