@@ -1,14 +1,14 @@
 name: Upload Image to Docker Hub & Deploy to Dev
 
 on:
-  push:
+  #push:
+    #branches:
+    #  - develop
+  pull_request:
+    types:
+      - closed
     branches:
       - develop
-  #pull_request:
-   # types:
-    #  - closed
-    #branches:
-     # - develop
 
 jobs:
   #sonarcloud:
