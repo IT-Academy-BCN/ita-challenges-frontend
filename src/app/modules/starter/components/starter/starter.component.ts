@@ -27,10 +27,8 @@ export class StarterComponent implements OnInit {
   pageNumber: number = 1
   listChallenges: any
   pageSize = environment.pageSize
-
   selectedSort: string = ''
   isAscending: boolean = false
-
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -41,6 +39,7 @@ export class StarterComponent implements OnInit {
   }
 
   ngOnInit (): void {
+    this.listChallenges = []
     this.getChallengesByPage(this.pageNumber)
   }
 
@@ -52,7 +51,6 @@ export class StarterComponent implements OnInit {
   getChallengesByPage (page: number): void {
     const getChallengeOffset = 8 * (page - 1)
     this.pageNumber = page
-
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
@@ -64,8 +62,18 @@ export class StarterComponent implements OnInit {
         if (this.sortBy !== '') {
           this.getAndSortChallenges(getChallengeOffset, resp)
         } else {
-          this.listChallenges = resp
-          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          if (Array.isArray(resp)) {
+            // Solo concatenar en móvil
+            if (window.innerWidth < 768) { // Ajusta este valor según tu diseño
+              this.listChallenges = [...this.listChallenges, ...resp]
+            } else {
+              // En escritorio, simplemente asignar los desafíos a la lista
+              this.listChallenges = resp
+            }
+            this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          } else {
+            console.error('La respuesta no es un array', resp)
+          }
         }
       })
     }
@@ -150,14 +158,10 @@ export class StarterComponent implements OnInit {
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
 
     // Verifica si el usuario ha llegado al final del div
-    if (scrollTop + containerHeight >= scrollHeight - 10) {
+    if (scrollTop + containerHeight >= scrollHeight) {
       this.pageNumber++ // Incrementar el número de página
+      console.log(this.pageNumber)
       this.getChallengesByPage(this.pageNumber)
-    }
-    // Verifica si el usuario ha llegado al principio del div (desplazándose hacia arriba)
-    if (scrollTop === 0 && this.pageNumber > 1) {
-      this.pageNumber-- // Decrementar el número de página
-      this.getChallengesByPage(this.pageNumber) // Cargar desafíos de la página anterior
     }
   }
 
