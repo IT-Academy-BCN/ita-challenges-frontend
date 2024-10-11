@@ -29,6 +29,7 @@ export class StarterComponent implements OnInit {
   pageSize = environment.pageSize
   selectedSort: string = ''
   isAscending: boolean = false
+  hasMoreChallenges: boolean = true
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -59,21 +60,23 @@ export class StarterComponent implements OnInit {
         : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
 
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
-        if (this.sortBy !== '') {
-          this.getAndSortChallenges(getChallengeOffset, resp)
-        } else {
-          if (Array.isArray(resp)) {
-            // Solo concatenar en móvil
-            if (window.innerWidth < 768) { // Ajusta este valor según tu diseño
-              this.listChallenges = [...this.listChallenges, ...resp]
-            } else {
-              // En escritorio, simplemente asignar los desafíos a la lista
-              this.listChallenges = resp
-            }
-            this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+        if (Array.isArray(resp)) {
+          // Solo concatenar en móvil
+          if (window.innerWidth < 768) {
+            this.listChallenges = [...this.listChallenges, ...resp]
           } else {
-            console.error('La respuesta no es un array', resp)
+            this.listChallenges = resp
           }
+          // Comprobar si hay más desafíos
+          if (resp.length < this.pageSize) {
+            this.hasMoreChallenges = false // No hay más desafíos
+          } else {
+            this.hasMoreChallenges = true // Aún hay más desafíos
+          }
+
+          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+        } else {
+          console.error('La respuesta no es un array', resp)
         }
       })
     }
@@ -96,6 +99,10 @@ export class StarterComponent implements OnInit {
   }
 
   getChallengeFilters (filters: FilterChallenge): void {
+    this.pageNumber = 1
+    this.listChallenges = []
+    this.filters = filters
+    this.hasMoreChallenges = true
     const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
@@ -157,11 +164,15 @@ export class StarterComponent implements OnInit {
     const containerHeight = this.challengesContainer.nativeElement.clientHeight
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
 
-    // Verifica si el usuario ha llegado al final del div
-    if (scrollTop + containerHeight >= scrollHeight) {
-      this.pageNumber++ // Incrementar el número de página
-      console.log(this.pageNumber)
-      this.getChallengesByPage(this.pageNumber)
+    // Verifica si el usuario ha llegado al final del div y si hay más desafíos
+    if (scrollTop + containerHeight >= scrollHeight && this.hasMoreChallenges) {
+      if (this.hasMoreChallenges) {
+        this.pageNumber++ // Incrementar el número de página solo si hay más desafíos
+        console.log(this.pageNumber)
+        this.getChallengesByPage(this.pageNumber) // Llama a cargar más desafíos con los filtros
+      } else {
+        console.log('No hay más desafíos para cargar')
+      }
     }
   }
 
