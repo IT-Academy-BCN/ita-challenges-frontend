@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, type Observable } from 'rxjs'
+import { BehaviorSubject, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
@@ -10,17 +10,20 @@ import { type UserSolution } from '../models/user-solution.interface'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
-
+  
   activeIdSubject = new BehaviorSubject<number>(1)
   activeId$ = this.activeIdSubject.asObservable()
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
   solutionSent$ = this.solutionSentSubject.asObservable()
 
+  submitSolutionSubject = new Subject<boolean>()
+  public sendSolutionText$ = this.submitSolutionSubject.asObservable()
+
   solutionSent: boolean = false
 
   updateSolutionSentState (value: boolean): void {
-    this.solutionSentSubject.next(value)
+    // this.solutionSentSubject.next(value)
     this.solutionSent = value
   }
 
@@ -45,5 +48,9 @@ export class SolutionService {
           'Content-Type': 'application/json'
         }
       })
+  }
+
+  public sendSolutionText (solution: boolean): void {
+    this.submitSolutionSubject.next(solution)
   }
 }

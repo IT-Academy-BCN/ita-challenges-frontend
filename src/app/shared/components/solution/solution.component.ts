@@ -8,12 +8,12 @@ import {
 } from '@angular/core'
 import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
-import { javascript } from '@codemirror/lang-javascript'
-import { python } from '@codemirror/lang-python'
 import { java } from '@codemirror/lang-java'
-import { php } from '@codemirror/lang-php'
+import { javascript } from '@codemirror/lang-javascript'
 import { minimalSetup } from 'codemirror'
-import { TranslateService } from '@ngx-translate/core'
+import { php } from '@codemirror/lang-php'
+import { python } from '@codemirror/lang-python'
+
 import { SolutionService } from 'src/app/services/solution.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
 
@@ -26,7 +26,7 @@ type Language = 'javascript' | 'java' | 'python' | 'php'
 })
 export class SolutionComponent implements OnInit {
   @ViewChild('editorSolution') editorSolution!: ElementRef
-  editor: EditorView = new EditorView()
+
 
   @Input() challengeSolutions: SolutionResults[] = []
   @Input() solution_text: string = ''
@@ -45,8 +45,31 @@ export class SolutionComponent implements OnInit {
 
   private _number?: number
 
-  /* code added by valerio */
+  public editor: EditorView = new EditorView()
+  public currentSolution: string = ''
+  public solutions: any[] = []
+
   private textRemoved = false
+
+
+  private readonly solutionService = inject(SolutionService)
+  private lastSentSolution: string = ''
+
+  ngOnInit (): void {
+    this.solutionService.solutionSent$.subscribe((value) => {
+      // if (this.editor && this.isUserSolution) {
+      this.currentSolution = this.editor.state.doc.toString()
+      if (this.currentSolution !== this.lastSentSolution) {
+        this.solutionService.sendSolution(this.currentSolution)
+        this.lastSentSolution = this.currentSolution
+      }
+      // }
+    })
+  }
+
+  ngAfterViewInit (): void {
+    this.createEditor()
+  }
 
   handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
@@ -57,28 +80,6 @@ export class SolutionComponent implements OnInit {
     }
   }
 
-  private readonly solutionService = inject(SolutionService)
-  private readonly translateService = inject(TranslateService)
-
-  private lastSentSolution: string = ''
-
-  ngOnInit (): void {
-    this.solutionService.solutionSent$.subscribe((value) => {
-      // if (this.editor && this.isUserSolution) {
-      const currentSolution = this.editor.state.doc.toString()
-      if (currentSolution !== this.lastSentSolution) {
-        this.solutionService.sendSolution(currentSolution)
-        this.lastSentSolution = currentSolution
-      }
-      // }
-    })
-  }
-
-  ngAfterViewInit (): void {
-    this.createEditor()
-  }
-
-  // nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
   createEditor (): void {
     let languageExtension
 

@@ -5,10 +5,10 @@ on:
     branches:
       - develop
   #pull_request:
-   # types:
+    #types:
     #  - closed
     #branches:
-     # - develop
+      #- develop
 
 jobs:
   #sonarcloud:
