@@ -27,7 +27,6 @@ type Language = 'javascript' | 'java' | 'python' | 'php'
 export class SolutionComponent implements OnInit {
   @ViewChild('editorSolution') editorSolution!: ElementRef
 
-
   @Input() challengeSolutions: SolutionResults[] = []
   @Input() solution_text: string = ''
   @Input() languageExt: Language = 'javascript'
@@ -50,7 +49,6 @@ export class SolutionComponent implements OnInit {
   public solutions: any[] = []
 
   private textRemoved = false
-
 
   private readonly solutionService = inject(SolutionService)
   private lastSentSolution: string = ''

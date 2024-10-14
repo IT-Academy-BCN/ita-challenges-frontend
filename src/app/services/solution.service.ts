@@ -10,7 +10,7 @@ import { type UserSolution } from '../models/user-solution.interface'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
-  
+
   activeIdSubject = new BehaviorSubject<number>(1)
   activeId$ = this.activeIdSubject.asObservable()
 
