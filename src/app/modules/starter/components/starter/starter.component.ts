@@ -61,7 +61,6 @@ export class StarterComponent implements OnInit {
 
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if (Array.isArray(resp)) {
-          // Solo concatenar en móvil
           if (window.innerWidth < 768) {
             this.listChallenges = [...this.listChallenges, ...resp]
           } else {
@@ -165,7 +164,7 @@ export class StarterComponent implements OnInit {
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
 
     // Verifica si el usuario ha llegado al final del div y si hay más desafíos
-    if (scrollTop + containerHeight >= scrollHeight && this.hasMoreChallenges) {
+    if (scrollTop + containerHeight >= scrollHeight - 2 && this.hasMoreChallenges) {
       if (this.hasMoreChallenges) {
         this.pageNumber++ // Incrementar el número de página solo si hay más desafíos
         console.log(this.pageNumber)
