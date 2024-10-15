@@ -1,17 +1,29 @@
-import { TestBed, inject } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { SolutionService } from './solution.service'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
-describe('Service: SendSolution', () => {
+describe('SolutionService', () => {
+  let service: SolutionService
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
-      providers: [SolutionService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      imports: [HttpClientTestingModule],
+      providers: [SolutionService]
     })
+
+    service = TestBed.inject(SolutionService)
   })
 
-  it('should ...', inject([SolutionService], (service: SolutionService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy()
-  }))
+  })
+
+  it('sendSolutionText should emit the provided solution', (done) => {
+    const testSolution = true
+    service.submitSolutionSubject.subscribe(value => {
+      expect(value).toBe(testSolution)
+      done()
+    })
+    service.sendSolutionText(testSolution)
+  })
 })
