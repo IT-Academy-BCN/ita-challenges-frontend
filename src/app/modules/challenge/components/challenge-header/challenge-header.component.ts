@@ -6,6 +6,7 @@ import { SolutionService } from '../../../../services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
+import { UserService } from 'src/app/services/user.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -18,6 +19,7 @@ export class ChallengeHeaderComponent {
   private readonly authService = inject(AuthService)
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly userService = inject(UserService)
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -35,7 +37,7 @@ export class ChallengeHeaderComponent {
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
-    this.isLogged = this.authService.isUserLoggedIn()
+    this.isLogged = this.userService.isUserLoggedIn()
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.solutionSent = value

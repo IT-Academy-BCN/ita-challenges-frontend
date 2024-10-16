@@ -15,6 +15,7 @@ export class SendSolutionModalComponent {
 
   acceptSolution (): void {
     this.solutionService.updateSolutionSentState(true)
+    this.solutionService.sendSolutionText(true)
     this.closeModal()
   }
 
