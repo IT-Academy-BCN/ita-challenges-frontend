@@ -8,12 +8,10 @@
 
 html,
 body {
-  height: 100%;
   background-color: $gray-4;
   margin: 0;
-  padding: 12px 10px 40px;
+  padding: 0px 10px;
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
   app-root,
   app-main {
     display: flex;

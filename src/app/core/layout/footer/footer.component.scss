@@ -2,3 +2,9 @@
   font-size: 10px;
   margin-right: 0.8rem;
 }
+
+@media (min-width: 768px) {
+  p {
+    padding-top: 60px;
+  }
+}
