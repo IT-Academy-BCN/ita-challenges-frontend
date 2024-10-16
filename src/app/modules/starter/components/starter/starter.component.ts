@@ -103,7 +103,7 @@ export class StarterComponent implements OnInit {
     this.filters = filters
     this.hasMoreChallenges = true
     const getChallengeOffset = 8 * (this.pageNumber - 1)
-    this.filters = filters
+
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       const challengesObservable = (this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)
         ? this.starterService.getAllChallenges()
@@ -112,10 +112,12 @@ export class StarterComponent implements OnInit {
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
           const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
+
           this.starterService.getAllChallengesFiltered(this.filters, respArray)
             .subscribe((filteredResp: Challenge[]) => {
               if (this.sortBy !== '') {
                 const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
+
                 if (filteredResp.every(item => item instanceof Challenge)) {
                   orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
                     this.listChallenges = sortedResp
@@ -164,11 +166,12 @@ export class StarterComponent implements OnInit {
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
 
     // Verifica si el usuario ha llegado al final del div y si hay más desafíos
-    if (scrollTop + containerHeight >= scrollHeight && this.hasMoreChallenges) {
+
+    if (scrollTop + containerHeight >= scrollHeight - 2 && this.hasMoreChallenges) {
       if (this.hasMoreChallenges) {
-        this.pageNumber++ // Incrementar el número de página solo si hay más desafíos
+        this.pageNumber++
         console.log(this.pageNumber)
-        this.getChallengesByPage(this.pageNumber) // Llama a cargar más desafíos con los filtros
+        this.getChallengesByPage(this.pageNumber)
       } else {
         console.log('No hay más desafíos para cargar')
       }
