@@ -48,23 +48,26 @@
         </div>
       </div>
   </div>
-  <div class="form" *ngIf="isUserLoggedIn">
+  @if (isUserLoggedIn) {
+    <div class="form">
       <p class="fw-bold">Progreso</p>
       <div class="d-flex flex-wrap">
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
-            <label class="input-label">No empezados</label>
+          <input class="pill-input" type="checkbox" id="checkNoStarted" name="noStarted" value="noStarted">
+          <label class="input-label">No empezados</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
-            <label class="input-label">Falta completar</label>
+          <input class="pill-input" type="checkbox" id="checkStarted" name="started" value="started">
+          <label class="input-label">Falta completar</label>
         </div>
         <div class="input-wrapper">
-            <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
-            <label class="input-label">Completados</label>
+          <input class="pill-input" type="checkbox" id="checkFinished" name="finished" value="finished">
+          <label class="input-label">Completados</label>
         </div>
       </div>
-  </div>
+    </div>
+  }
+  
 </div>
 
 <div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
