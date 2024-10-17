@@ -108,6 +108,12 @@
                 "description":"Registra't per pujar, lliurar i veure solucions dels reptes",
                 "register":"Registrar-me",
                 "loginRedirect":"Entrar"
+            }, 
+            "solution": {
+                "title": "Estàs segur?",
+                "description":"Un cop enviat el codi no es pot editar" ,
+                "btn-accept": "Acceptar",
+                "btn-cancel": "Cancel.lar"
             }
         }
     },
@@ -122,5 +128,10 @@
             "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
             "pattern": "Format incorrecte"
         }
+    },
+    "tooltips": {
+        "startedFinished": "Començat i finalitzat",
+        "savedTimes": "Vegades guardat",
+        "creationDate": "Data de creació"
     }
 }   

@@ -1,10 +1,10 @@
 import { Component, Output, ViewChild, EventEmitter, inject, type TemplateRef } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { AuthService } from 'src/app/services/auth.service'
 import { FormBuilder } from '@angular/forms'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type Language } from 'src/app/models/language.model'
+// import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-filters-modal',
@@ -14,11 +14,8 @@ import { type Language } from 'src/app/models/language.model'
 export class FiltersModalComponent {
   @Output() filtersSelected = new EventEmitter<FilterChallenge>()
   @ViewChild('modal') private readonly modalContent!: TemplateRef<FiltersModalComponent>
+
   private readonly modalService = inject(NgbModal)
-  private readonly authService = inject(AuthService)
-
-  public isUserLoggedIn?: boolean
-
   private readonly formBuilder = inject(FormBuilder)
   private readonly challengeService = inject(ChallengeService)
 

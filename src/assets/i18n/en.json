@@ -109,6 +109,12 @@
                 "description":"Sign up to upload, deliver and see solutions to challenges",
                 "register":"Sign Up",
                 "loginRedirect":"Login"
+            },
+            "solution": {
+                "title": "Are you sure?",
+                "description":"Once the code is sent it cannot be edited" ,
+                "btn-accept": "Accept",
+                "btn-cancel": "Cancel"
             }
         }
     },
@@ -123,5 +129,10 @@
             "invalidPassword": "Minimum  1 uppercase and 1 lower case letter, 1 number, and no special characters",
             "pattern": "Invalid format"
         }
+    },
+    "tooltips": {
+        "startedFinished": "Started and finished",
+        "savedTimes": "Times saved",
+        "creationDate": "Creation date"
     }
 }    

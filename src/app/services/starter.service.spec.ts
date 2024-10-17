@@ -7,6 +7,8 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
+// import { mockChallenges } from '../../mocks/challenge/challenge.mock'
+import mockChallenges from '../../mocks/challenge/challenge.mock.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -15,6 +17,7 @@ describe('StarterService', () => {
   let testScheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
+  let parsedChallenges: Challenge[]
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -26,6 +29,10 @@ describe('StarterService', () => {
     service = new StarterService(httpClient)
     testScheduler = new TestScheduler((actual, expected) => {
     })
+    parsedChallenges = mockChallenges.map(challenge => ({
+      ...challenge,
+      creation_date: new Date(challenge.creation_date) // Convert string to Date
+    }))
   })
 
   /*
@@ -70,87 +77,12 @@ describe('StarterService', () => {
   })
 
   it('should sort challenges by creation date in asscending order', () => {
-    const mockChallenges: Challenge[] = [
-      {
-        id_challenge: '1',
-        challenge_title: 'Challenge 1',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '1',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      },
-      {
-        id_challenge: '2',
-        challenge_title: 'Challenge 2',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '2',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      },
-      {
-        id_challenge: '3',
-        challenge_title: 'Challenge 1',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '1',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      }
-    ]
-
     const offset = 0
     const limit = 3
 
-    const sortedChallengesObservable = service.orderBySortAscending('creation_date', mockChallenges, offset, limit)
+    const sortedChallengesObservable = service.orderBySortAscending('creation_date', parsedChallenges, offset, limit)
 
-    sortedChallengesObservable.subscribe((sortedChallenges: any) => {
+    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
       expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
       expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
       expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
@@ -158,86 +90,12 @@ describe('StarterService', () => {
   })
 
   it('should sort challenges by creation date in descending order', () => {
-    const mockChallenges: Challenge[] = [
-      {
-        id_challenge: '1',
-        challenge_title: 'Challenge 1',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '1',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      },
-      {
-        id_challenge: '2',
-        challenge_title: 'Challenge 2',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '2',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      },
-      {
-        id_challenge: '3',
-        challenge_title: 'Challenge 1',
-        level: 'EASY',
-        popularity: 1,
-        creation_date: new Date('2022-05-10'),
-        detail: {
-          description: 'lorem',
-          examples: [],
-          notes: 'lorem'
-        },
-        languages: [
-          {
-            id_language: '1',
-            language_name: 'lorem'
-          }
-        ],
-        solutions: [
-          {
-            idSolution: '1',
-            solutionText: 'Aquí va el texto de la solución 1'
-          }
-        ]
-      }
-    ]
     const offset = 0
     const limit = 3
 
-    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', mockChallenges, offset, limit)
+    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', parsedChallenges, offset, limit)
 
-    sortedChallengesObservable.subscribe((sortedChallenges: any) => {
+    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
       expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
       expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
       expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
@@ -263,7 +121,7 @@ describe('StarterService', () => {
     const mockChallenges: Challenge[] = []
     service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
-      expect(filteredChallenges[0].id).toBe(1)
+      expect(filteredChallenges[0].id_challenge).toBe(1)
     })
   })
 })

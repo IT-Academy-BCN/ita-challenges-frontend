@@ -76,6 +76,7 @@ export class StarterFiltersComponent {
           if (val) { filters.progress.push(i + 1) }
         })
       }
+
       this.filtersSelected.emit(filters)
     })
     this.isUserLoggedIn = this.authService.isUserLoggedIn()

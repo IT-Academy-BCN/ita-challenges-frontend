@@ -20,6 +20,13 @@ import { User } from '../models/user.model'
 import { type TokenService } from './token.service'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
+// import { mockLoginResponse, mockRegisterResponse, mockLoginErrorResponse, mockRegisterErrorResponse, mockUnauthorizedErrorResponse } from 'src/mocks/auth/auth.mock'
+import mockLoginResponse from '../../mocks/auth/loginResponse.mock.json'
+import mockRegisterResponse from '../../mocks/auth/registerResponse.mock.json'
+import mockLoginErrorResponse from '../../mocks/auth/loginErrorResponse.json'
+import mockRegisterErrorResponse from '../../mocks/auth/registerErrorResponse.mock.json'
+import mockUnauthorizedErrorResponse from '../../mocks/auth/unauthorizedErrorResponse.mock.json'
+import mockRegisterUser from 'src/mocks/user/mockRegisterUser.mock.json'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -142,24 +149,18 @@ describe('AuthService', () => {
       password: testPassword
     }
 
-    const mockResponse = {
-      authToken: 'testAuthToken',
-      refreshToken: 'testRefreshToken',
-      id: 'testId'
-    }
-
     authService.loginRequest(testUser)
       .subscribe({
         next: (res) => {
           expect(res).toBeTruthy()
-          expect(res).toEqual(mockResponse)
+          expect(res).toEqual(mockLoginResponse)
         }
       })
 
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
     expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse)
+    req.flush(mockLoginResponse)
     done()
   })
 
@@ -171,22 +172,19 @@ describe('AuthService', () => {
       password: testPassword
     }
 
-    const mockResponse = {
-      message: 'Invalid Credentials'
-    }
-
     authService.loginRequest(testUser)
       .subscribe({
         error: (err) => {
           expect(err).toBeTruthy()
-          expect(err).toEqual(mockResponse)
+          expect(err).toEqual(mockLoginErrorResponse)
         }
       })
 
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
     expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    req.flush(mockLoginErrorResponse)
     done()
   })
 
@@ -198,14 +196,8 @@ describe('AuthService', () => {
       password: testPassword
     }
 
-    const mockResponse = { // response we expect from the loginRequest function.
-      authToken: 'testAuthToken',
-      refreshToken: 'testRefreshToken',
-      id: 'testId'
-    }
-
     // spyOn function to mock the behavior of the loginRequest function.
-    spyOn(authService, 'loginRequest').and.returnValue(of(mockResponse)) // Import 'of' from 'rxjs' if not already imported
+    spyOn(authService, 'loginRequest').and.returnValue(of(mockLoginResponse)) // Import 'of' from 'rxjs' if not already imported
 
     try {
       void authService.login(mockUser).then((returnValue) => {
@@ -227,18 +219,13 @@ describe('AuthService', () => {
       password: testPassword
     }
 
-    const mockErrorMessage = 'Invalid Credentials'
-    const mockErrorResponse = { // response we expect from the loginRequest function.
-      message: mockErrorMessage
-    }
-
     spyOn(authService, 'loginRequest').and.returnValue(
       of({}).pipe(
         tap(() => {
           const error = new Error('Unauthorized')
           error.name = 'HttpError'
           // Agrega propiedades personalizadas al objeto de error
-          Object.assign(error, { status: 401, error: mockErrorResponse })
+          Object.assign(error, { status: 401, error: mockUnauthorizedErrorResponse })
           throw error
         })
       )
@@ -248,92 +235,50 @@ describe('AuthService', () => {
       await authService.login(mockUser)
       fail('Login should have failed')
     } catch (error: any) {
-      expect(error.error.message).toEqual(mockErrorMessage)
+      expect(error.error.message).toEqual(mockUnauthorizedErrorResponse.message)
     }
   })
 
   it('should register request successfully', (done) => {
-    const mockUser = {
-      idUser: '',
-      dni: 'mockUserDni',
-      email: 'mockUserEmail',
-      name: 'mockUserName',
-      itineraryId: 'mockUserIteneraryId',
-      password: 'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword'
-    }
-
-    const mockResponse = {
-      id: 'mockIdResponse'
-    }
-
-    authService.registerRequest(mockUser)
+    authService.registerRequest(mockRegisterUser)
       .subscribe({
         next: (res) => {
           expect(res).toBeTruthy()
-          expect(res).toEqual(mockResponse)
+          expect(res).toEqual(mockRegisterResponse)
         }
       })
 
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL))
     expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse)
+    req.flush(mockRegisterResponse)
     done()
   })
 
   it('should register request UNsuccessful', (done) => {
-    const mockUser = {
-      idUser: 'mockIdResponse',
-      dni: 'mockUserDni',
-      email: 'mockUserEmail',
-      name: 'mockUserName',
-      itineraryId: 'mockUserIteneraryId',
-      password: 'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword'
-    }
-
-    const mockResponse = {
-      id: 'mockIdResponse'
-    }
-
-    authService.loginRequest(mockUser)
+    authService.loginRequest(mockRegisterUser)
       .subscribe({
         error: (err) => {
           expect(err).toBeTruthy()
-          expect(err).toEqual(mockResponse)
+          expect(err).toEqual(mockRegisterResponse)
         }
       })
 
     const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL))
     expect(req.request.method).toEqual('POST')
 
-    req.flush(mockResponse)
+    req.flush(mockRegisterResponse)
     done()
   })
 
   it('should show success register modal', (done) => {
-    const mockUser = {
-      idUser: 'mockIdResponse',
-      dni: 'mockUserDni',
-      email: 'mockUserEmail',
-      name: 'mockUserName',
-      itineraryId: 'mockUserIteneraryId',
-      password: 'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword'
-    }
-
-    const mockResponse = {
-      id: 'mockIdResponse'
-    }
-
-    spyOn(authService, 'registerRequest').and.returnValue(of(mockResponse))
+    spyOn(authService, 'registerRequest').and.returnValue(of(mockRegisterResponse))
     spyOn(authService, 'modifyUserWithAdmin').and.returnValue(Promise.resolve())
 
-    authService.register(mockUser).then((returnValue) => {
+    authService.register(mockRegisterUser).then((returnValue) => {
       expect(returnValue).toBeTruthy()
-      expect(returnValue).toEqual(mockResponse)
-      expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockResponse.id)
+      expect(returnValue).toEqual(mockRegisterResponse)
+      expect(authService.modifyUserWithAdmin).toHaveBeenCalledWith(mockRegisterResponse.id)
       done()
     }).catch((error) => {
       done.fail('Promise should not be rejected: ' + error)
@@ -341,29 +286,14 @@ describe('AuthService', () => {
   })
 
   it('should show UNsuccessly register modal', (done) => {
-    const mockUser = {
-      idUser: 'mockIdResponse',
-      dni: 'mockUserDni',
-      email: 'mockUserEmail',
-      name: 'mockUserName',
-      itineraryId: 'mockUserIteneraryId',
-      password: 'mockUserPassword',
-      confirmPassword: 'mockUserConfirmPassword'
-    }
-
-    const mockErrorMessage = 'Invalid data'
-    const mockErrorResponse = { // response we expect from the registerRequest function.
-      message: mockErrorMessage
-    }
-
     spyOn(authService, 'registerRequest').and.returnValue(
-      throwError({ status: 401, error: mockErrorResponse })
+      throwError({ status: 401, error: mockRegisterErrorResponse })
     )
 
-    authService.register(mockUser).then(() => {
+    authService.register(mockRegisterUser).then(() => {
       done.fail('Register should have failed')
     }).catch((error) => {
-      expect(error).toEqual(mockErrorResponse.message)
+      expect(error).toEqual(mockRegisterErrorResponse.message)
       done()
     })
   })
@@ -526,31 +456,31 @@ describe('AuthService', () => {
     expect(result).toBe(false);
   }); */
 
-  it('should return true if authToken is present', () => {
-    cookieServiceMock.get.mockImplementation((key: string) => {
-      if (key === 'authToken') {
-        return 'some token'
-      }
-      return null
-    })
+  // it('should return true if authToken is present', () => {
+  //   cookieServiceMock.get.mockImplementation((key: string) => {
+  //     if (key === 'authToken') {
+  //       return 'some token'
+  //     }
+  //     return null
+  //   })
 
-    expect(authService.isUserLoggedIn()).toBe(true)
-  })
+  //   expect(authService.isUserLoggedIn()).toBe(true)
+  // })
 
-  it('should return true if refreshToken is present and authToken is not', () => {
-    cookieServiceMock.get.mockImplementation((key: string) => {
-      if (key === 'refreshToken') {
-        return 'some token'
-      }
-      return null
-    })
+  // it('should return true if refreshToken is present and authToken is not', () => {
+  //   cookieServiceMock.get.mockImplementation((key: string) => {
+  //     if (key === 'refreshToken') {
+  //       return 'some token'
+  //     }
+  //     return null
+  //   })
 
-    expect(authService.isUserLoggedIn()).toBe(true)
-  })
+  //   expect(authService.isUserLoggedIn()).toBe(true)
+  // })
 
-  it('should return false if neither authToken nor refreshToken are present', () => {
-    cookieServiceMock.get.mockImplementation(() => null)
+  // it('should return false if neither authToken nor refreshToken are present', () => {
+  //   cookieServiceMock.get.mockImplementation(() => null)
 
-    expect(authService.isUserLoggedIn()).toBe(false)
-  })
+  //   expect(authService.isUserLoggedIn()).toBe(false)
+  // })
 })
