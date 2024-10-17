@@ -98,10 +98,12 @@ export class StarterComponent implements OnInit {
   }
 
   getChallengeFilters (filters: FilterChallenge): void {
-    this.pageNumber = 1
-    this.listChallenges = []
-    this.filters = filters
+    if (this.filters !== filters) {
+      this.pageNumber = 1
+      this.listChallenges = []
+    }
     this.hasMoreChallenges = true
+    this.filters = filters
     const getChallengeOffset = 8 * (this.pageNumber - 1)
 
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
@@ -120,20 +122,36 @@ export class StarterComponent implements OnInit {
 
                 if (filteredResp.every(item => item instanceof Challenge)) {
                   orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
-                    this.listChallenges = sortedResp
+                    if (window.innerWidth < 768) {
+                      // Para tabletas, añadir desafíos a la lista existente
+                      this.listChallenges.push(...sortedResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize))
+                    } else {
+                      // Para ordenadores, reemplazar la lista existente
+                      this.listChallenges = sortedResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
+                    }
                     this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                    this.hasMoreChallenges = sortedResp.length >= this.pageSize
                   })
                 } else {
                   console.error('filteredResp no es un array de Challenge')
+                  this.hasMoreChallenges = false
                 }
               } else {
-                this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
+                if (window.innerWidth < 768) {
+                  // Para tabletas, añadir desafíos a la lista existente
+                  this.listChallenges.push(...filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize))
+                } else {
+                  // Para ordenadores, reemplazar la lista existente
+                  this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
+                }
                 this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                this.hasMoreChallenges = this.listChallenges.length >= this.pageSize
               }
             })
         } else {
           this.listChallenges = resp
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          this.hasMoreChallenges = this.listChallenges.length >= this.pageSize
         }
       })
     } else {
@@ -164,10 +182,10 @@ export class StarterComponent implements OnInit {
     const scrollTop = this.challengesContainer.nativeElement.scrollTop
     const containerHeight = this.challengesContainer.nativeElement.clientHeight
     const scrollHeight = this.challengesContainer.nativeElement.scrollHeight
-
+    console.log('hasMoreChallenges:', this.hasMoreChallenges)
     // Verifica si el usuario ha llegado al final del div y si hay más desafíos
 
-    if (scrollTop + containerHeight >= scrollHeight - 2 && this.hasMoreChallenges) {
+    if (scrollTop + containerHeight >= scrollHeight - 2) {
       if (this.hasMoreChallenges) {
         this.pageNumber++
         console.log(this.pageNumber)
