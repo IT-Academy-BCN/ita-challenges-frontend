@@ -149,7 +149,19 @@ export class StarterComponent implements OnInit {
               }
             })
         } else {
-          this.listChallenges = resp
+          if (Array.isArray(resp)) {
+            if (window.innerWidth < 768) {
+              this.listChallenges = [...this.listChallenges, ...resp]
+            } else {
+              this.listChallenges = resp
+            }
+            // Comprobar si hay más desafíos
+            if (resp.length < this.pageSize) {
+              this.hasMoreChallenges = false // No hay más desafíos
+            } else {
+              this.hasMoreChallenges = true // Aún hay más desafíos
+            }
+          }
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
           this.hasMoreChallenges = this.listChallenges.length >= this.pageSize
         }
