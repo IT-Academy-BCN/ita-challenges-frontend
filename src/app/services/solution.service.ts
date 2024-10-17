@@ -21,14 +21,22 @@ export class SolutionService {
   public sendSolutionText$ = this.submitSolutionSubject.asObservable()
 
   solutionSent: boolean = false
+  updatingState: boolean = false // Nuevo flag para evitar la recursividad
 
   updateSolutionSentState (value: boolean): void {
+    if (this.updatingState) return // Evita la recursividad
+    this.updatingState = true
     this.solutionSentSubject.next(value)
-    // this.solutionSent = value
+    this.solutionSent = value
+    this.updatingState = false
   }
 
   sendSolution (solution: string): void {
-    this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
+    if (!this.solutionSent) {
+      console.log('Sending solution:', solution)
+      this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
+      // Lógica para enviar la solución al backend si es necesario
+    }
   }
 
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {

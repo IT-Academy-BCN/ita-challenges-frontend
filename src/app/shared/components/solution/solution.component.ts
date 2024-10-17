@@ -55,13 +55,13 @@ export class SolutionComponent implements OnInit {
 
   ngOnInit (): void {
     this.solutionService.solutionSent$.subscribe((value) => {
-      // if (this.editor && this.isUserSolution) {
-      this.currentSolution = this.editor.state.doc.toString()
-      if (this.currentSolution !== this.lastSentSolution) {
-        this.solutionService.sendSolution(this.currentSolution)
-        this.lastSentSolution = this.currentSolution
+      if (value && this.isUserSolution) {
+        const currentSolution = this.editor.state.doc.toString()
+        if (currentSolution !== this.lastSentSolution) {
+          this.solutionService.sendSolution(currentSolution)
+          this.lastSentSolution = currentSolution
+        }
       }
-      // }
     })
   }
 
