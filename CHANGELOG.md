@@ -4,7 +4,49 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.3-RELEASE]
+### [ita-challenges-frontend-3.1.10-RELEASE]
+
+- Capture user solution 
+
+### [ita-challenges-frontend-3.1.9-RELEASE] - 2024-10-08 (feature#300)
+
+- Refactoring: Creación de User Service
+
+### [ita-challenges-frontend-3.1.8-RELEASE]
+- Several fixes in challenges screen
+
+### [ita-challenges-frontend-3.1.7-RELEASE] 
+
+- Added scroll by overflow
+  
+
+### [ita-challenges-frontend-3.1.6-RELEASE]
+
+- Fixed filters at responsive mode.
+
+### [ita-challenges-frontend-3.1.5-RELEASE]
+
+- Reviewing of icons difficulty-off/on 
+
+### [ita-challenges-frontend-3.1.4-RELEASE]
+
+- Reviewing of Challenge Screen & functionalities
+
+### [ita-challenges-frontend-3.1.3-RELEASE] - 2024-09-26 (feauture#405)
+
+- Refactoring: huge mocks must be externalized from tests.
+
+### [ita-challenges-frontend-3.1.2-RELEASE] - 2024-09-26 (feauture#408)
+
+- Tooltip is not translated.
+
+### [ita-challenges-frontend-3.1.0-RELEASE]
+
+- Added pipe to escape java characters to json.
+
+### [ita-challenges-frontend-3.0.6-RELEASE]
+
+- i18n of send-solution-modal
 
 - Progress filter hidden is user is not logged (desktop and mobile)
 
