@@ -51,8 +51,9 @@ export class StarterComponent implements OnInit {
 
   getChallengesByPage (page: number): void {
     const getChallengeOffset = 8 * (page - 1)
+    console.log(getChallengeOffset)
     this.pageNumber = page
-
+    console.log(this.pageNumber)
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
@@ -65,6 +66,7 @@ export class StarterComponent implements OnInit {
           this.getAndSortChallenges(getChallengeOffset, resp)
         } else {
           this.listChallenges = resp
+          console.log(this.listChallenges)
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
         }
       })
