@@ -79,6 +79,6 @@ export class StarterFiltersComponent {
 
       this.filtersSelected.emit(filters)
     })
-    this.isUserLoggedIn = this.authService.isUserLoggedIn()
+    // this.isUserLoggedIn = this.authService.isUserLoggedIn()
   }
 }
