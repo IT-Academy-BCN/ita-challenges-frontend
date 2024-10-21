@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, HostListener } from '@angular/core'
+import { Component, EventEmitter, Input, Output, ViewChild, type ElementRef } from '@angular/core'
 
 @Component({
   selector: 'app-pagination',
@@ -8,9 +8,8 @@ import { Component, EventEmitter, Input, Output, HostListener } from '@angular/c
 export class PaginationComponent {
   @Input() pageNumber!: number
   @Input() totalPages!: number
-
   @Output() pageEmitter = new EventEmitter<number>()
-  private readonly scrollThreshold = 50
+  @ViewChild('challenges', { static: false }) challengesElement?: ElementRef
   next (): void {
     if (this.pageNumber < this.totalPages) {
       this.pageNumber++
@@ -32,23 +31,5 @@ export class PaginationComponent {
   setPageOffset (page: number): void {
     this.pageNumber = page
     this.pageEmitter.emit(page)
-  }
-
-  // Método para detectar el scroll
-  @HostListener('scroll', ['$event'])
-  onScroll (event: Event): void {
-    const scrollTop = (event.target as HTMLElement).scrollTop
-    const scrollHeight = (event.target as HTMLElement).scrollHeight
-    const clientHeight = (event.target as HTMLElement).clientHeight
-
-    // Si se desplaza hacia abajo
-    if (scrollHeight - scrollTop - clientHeight <= this.scrollThreshold) {
-      this.next()
-    }
-
-    // Si se desplaza hacia arriba
-    if (scrollTop <= this.scrollThreshold) {
-      this.prev()
-    }
   }
 }
