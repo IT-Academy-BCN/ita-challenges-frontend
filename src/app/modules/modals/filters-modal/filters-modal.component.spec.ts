@@ -26,7 +26,7 @@ describe('FiltersModalComponent', () => {
   })
 
   beforeEach(() => {
-    const fixture = TestBed.createComponent(FiltersModalComponent)
+    fixture = TestBed.createComponent(FiltersModalComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
