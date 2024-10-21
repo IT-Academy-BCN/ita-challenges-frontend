@@ -21,6 +21,7 @@ describe('StarterFiltersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StarterFiltersComponent)
     component = fixture.componentInstance
+    component.isUserLoggedIn = true
     fixture.detectChanges()
   })
 
