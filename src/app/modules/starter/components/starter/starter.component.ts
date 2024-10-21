@@ -1,5 +1,5 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
-
+  @ViewChild('challenges') challengesContainer!: ElementRef
   challenges: Challenge[] = []
   params$!: Subscription
   challengesSubs$!: Subscription
