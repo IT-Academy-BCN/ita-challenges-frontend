@@ -3,8 +3,6 @@ nav{
     position:fixed;
     top: 0;
     width: 100%;
-    left:50%;
-    transform: translate(-50%, 0%);
     height: 42px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -42,6 +40,24 @@ $navbar-toggler-transition: none;
             height: 29px;
         }
 
+}
+
+#navbarToggleExternalContent {
+    margin-top: -7px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: fixed;
+    width: -webkit-fill-available;
+}
+
+.navbarToggle {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.nav-link {
+    color: white;
+    margin: 20px 0 20px 7px;
 }
 
 @media screen and (max-width: 768px) {
