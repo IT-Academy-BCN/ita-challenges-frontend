@@ -65,10 +65,12 @@ export class StarterComponent implements OnInit {
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if (this.sortBy !== '') {
           this.getAndSortChallenges(getChallengeOffset, resp)
+          this.isLoading = false
         } else {
           this.listChallenges = resp
           console.log(this.listChallenges)
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          this.isLoading = false
         }
         this.isLoading = false
       })
@@ -92,6 +94,9 @@ export class StarterComponent implements OnInit {
   }
 
   getChallengeFilters (filters: FilterChallenge): void {
+    if (this.filters !== filters) {
+      this.pageNumber = 1
+    }
     const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
@@ -110,6 +115,7 @@ export class StarterComponent implements OnInit {
                   orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
                     this.listChallenges = sortedResp
                     this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                    this.isLoading = false
                   })
                 } else {
                   console.error('filteredResp no es un array de Challenge')
@@ -117,15 +123,16 @@ export class StarterComponent implements OnInit {
               } else {
                 this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
                 this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+                this.isLoading = false
               }
             })
         } else {
           this.listChallenges = resp
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          this.isLoading = false
         }
       })
     } else {
-      this.isLoading = false
       this.getChallengesByPage(this.pageNumber)
     }
   }
@@ -158,7 +165,6 @@ export class StarterComponent implements OnInit {
     if (this.isLoading) {
       return
     }
-
     // Condición para cargar la siguiente página al llegar al final del contenedor
     if (scrollTop + containerHeight >= scrollHeight) {
       this.pageNumber++
