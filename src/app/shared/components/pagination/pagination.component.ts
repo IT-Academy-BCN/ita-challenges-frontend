@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, type ElementRef } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-pagination',
@@ -9,7 +9,6 @@ export class PaginationComponent {
   @Input() pageNumber!: number
   @Input() totalPages!: number
   @Output() pageEmitter = new EventEmitter<number>()
-  @ViewChild('challenges', { static: false }) challengesElement?: ElementRef
   next (): void {
     if (this.pageNumber < this.totalPages) {
       this.pageNumber++

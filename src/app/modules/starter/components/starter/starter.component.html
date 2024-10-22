@@ -32,7 +32,7 @@
     </ul>
 
     <!-- CHALLENGES CARD -->
-    <div class="d-flex flex-column gap-3" id="challenges">
+    <div class="d-flex flex-column gap-3" id="challenges" #challenges>
       <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
         [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
