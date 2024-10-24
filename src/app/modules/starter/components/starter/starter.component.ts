@@ -59,7 +59,6 @@ export class StarterComponent implements OnInit {
       const challengesObservable = this.sortBy !== ''
         ? this.starterService.getAllChallenges()
         : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
-      console.log(challengesObservable)
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if (this.sortBy !== '') {
           this.getAndSortChallenges(getChallengeOffset, resp.results)
@@ -84,7 +83,6 @@ export class StarterComponent implements OnInit {
 
     sortedChallenges$.subscribe(sortedResp => {
       this.listChallenges = sortedResp
-      console.log(this.listChallenges)
       this.totalPages = Math.ceil(respArray.length / this.pageSize)
     })
   }
