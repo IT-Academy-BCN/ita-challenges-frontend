@@ -118,7 +118,7 @@ export class StarterComponent implements OnInit {
               }
             })
         } else {
-          this.listChallenges = resp
+          this.listChallenges = resp.results
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
         }
       })
