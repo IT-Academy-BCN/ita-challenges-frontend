@@ -62,7 +62,7 @@ export class StarterComponent implements OnInit {
       console.log(challengesObservable)
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if (this.sortBy !== '') {
-          this.getAndSortChallenges(getChallengeOffset, resp)
+          this.getAndSortChallenges(getChallengeOffset, resp.results)
         } else {
           this.listChallenges = resp.results
           console.log(this.listChallenges)
