@@ -41,7 +41,7 @@ export class StarterService {
 
     const paginatedChallenges = sortedChallenges.slice(offset, offset + limit)
 
-    return new Observable<any>(observer => {
+    return new Observable<Challenge[]>(observer => {
       observer.next(paginatedChallenges)
       observer.complete()
     })
@@ -59,7 +59,7 @@ export class StarterService {
 
     const paginatedChallenges = sortedChallenges.slice(offset, offset + limit)
 
-    return new Observable<any>(observer => {
+    return new Observable<Challenge[]>(observer => {
       observer.next(paginatedChallenges)
       observer.complete()
     })
