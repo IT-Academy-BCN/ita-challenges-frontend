@@ -33,7 +33,7 @@ describe('StarterComponent', () => {
   })
 
   it('should call getAllChallenges when sortBy is not empty', (done) => {
-    const mockResponse = { challenge: 'challenge' }
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     component.sortBy = 'creation_date'
     spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
 
