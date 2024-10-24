@@ -156,6 +156,10 @@ export class AuthService {
     return user.idUser
   }
 
+  public getUserIdFromDummy (filePath: string): Observable<any> {
+    return this.http.get(filePath)
+  }
+
   /**
    * Log in with a user. Set user as current user.
    */

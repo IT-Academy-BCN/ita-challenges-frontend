@@ -41,6 +41,11 @@ and this project adheres to
 - Tooltip is not translated.
 
 ### [ita-challenges-frontend-3.1.0-RELEASE]
+- Solution tab redirection.
+- View accepted solutions.
+- It is detected if the user has already sent a solution.
+
+### [ita-challenges-frontend-3.1.0-RELEASE]
 
 - Added pipe to escape java characters to json.
 
