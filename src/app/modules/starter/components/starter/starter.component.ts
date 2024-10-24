@@ -65,7 +65,7 @@ export class StarterComponent implements OnInit {
           this.getAndSortChallenges(getChallengeOffset, resp.results)
         } else {
           this.listChallenges = resp.results
-          console.log(this.listChallenges)
+          console.log('Respuesta del servicio:', resp.results)
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
         }
       })
@@ -77,7 +77,7 @@ export class StarterComponent implements OnInit {
   }
 
   private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
-    const respArray: Challenge[] = Array.isArray(resp.results) ? resp.results : [resp.results]
+    const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
     const sortedChallenges$ = this.isAscending
       ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
       : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
