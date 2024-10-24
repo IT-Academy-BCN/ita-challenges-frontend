@@ -3,30 +3,29 @@ import { Observable, map, of } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { type FilterChallenge } from '../models/filter-challenge.model'
-import { type Challenge } from '../models/challenge.model'
-
+import { type Challenge, type ChallengeResponse } from '../models/challenge.model'
 @Injectable({
   providedIn: 'root'
 })
 export class StarterService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
 
-  getAllChallenges (): Observable<Challenge[]> {
+  getAllChallenges (): Observable<ChallengeResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get<Challenge[]>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
+    return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
       headers
     })
   }
 
-  getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<Challenge[]> {
+  getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {
     const params = new HttpParams().set('offset', pageOffset.toString()).set('limit', pageLimit.toString())
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get<Challenge[]>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
+    return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
       headers,
       params
     })
