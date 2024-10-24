@@ -43,7 +43,7 @@ describe('StarterComponent', () => {
   })
 
   it('should set listChallenges correctly when sortBy is empty', () => {
-    const mockResponse = { count: 22, results: [{ challenge: 'challenge' }] }
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     spyOn(starterService, 'getAllChallengesOffset').and.returnValue(of(mockResponse))
     component.sortBy = ''
     component.getChallengesByPage(1)
@@ -51,7 +51,7 @@ describe('StarterComponent', () => {
   })
 
   it('should set listChallenges correctly when sortBy is not empty', () => {
-    const mockResponse = { count: 22, results: [{ challenge: 'challenge' }] }
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
     spyOn(starterService, 'orderBySortAscending').and.returnValue(of(mockResponse))
     component.sortBy = 'creation_date'
