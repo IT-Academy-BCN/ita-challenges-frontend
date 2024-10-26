@@ -66,3 +66,17 @@
 #main-wrapper {
   height: 100%;
 }
+
+/* Nasconde per schermi con larghezza esattamente 768px */
+@media (max-width: 768px) {
+  .custom-md-block {
+      display: none !important;
+  }
+}
+
+/* Mostra per schermi con larghezza superiore a 768px */
+@media (min-width: 769px) {
+  .custom-md-block {
+      display: block !important;
+  }
+}

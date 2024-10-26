@@ -33,7 +33,7 @@ describe('StarterComponent', () => {
   })
 
   it('should call getAllChallenges when sortBy is not empty', (done) => {
-    const mockResponse = { challenge: 'challenge' }
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     component.sortBy = 'creation_date'
     spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
 
@@ -43,20 +43,20 @@ describe('StarterComponent', () => {
   })
 
   it('should set listChallenges correctly when sortBy is empty', () => {
-    const mockResponse = { challenge: 'challenge' }
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     spyOn(starterService, 'getAllChallengesOffset').and.returnValue(of(mockResponse))
     component.sortBy = ''
     component.getChallengesByPage(1)
-    expect(component.listChallenges).toBe(mockResponse)
+    expect(component.listChallenges).toBe(mockResponse.results)
   })
 
   it('should set listChallenges correctly when sortBy is not empty', () => {
-    const mockResponse = [{ challenge: 'challenge' }]
+    const mockResponse = { results: [{ challenge: 'challenge' }] }
     spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
     spyOn(starterService, 'orderBySortAscending').and.returnValue(of(mockResponse))
     component.sortBy = 'creation_date'
     component.getChallengesByPage(1)
-    expect(component.listChallenges).toStrictEqual(mockResponse)
+    expect(component.listChallenges).toStrictEqual(mockResponse.results)
   })
 
   // changeSort
