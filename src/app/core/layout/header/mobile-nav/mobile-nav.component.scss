@@ -3,9 +3,7 @@ nav{
     position:fixed;
     top: 0;
     width: 100%;
-    left:50%;
-    transform: translate(-50%, 0%);
-    height: 42px;
+    height: 48px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: black;
@@ -45,9 +43,10 @@ $navbar-toggler-transition: none;
 }
 
 #navbarToggleExternalContent {
-    margin-top: -5px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    position: fixed;
+    width: -webkit-fill-available;
 }
 
 .navbarToggle {

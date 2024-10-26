@@ -35,7 +35,7 @@
     background-color: $white;
     border-radius: 15px;
     width: 100%;
-    height: calc(100% - 60px) !important;
+    height: calc(100% - 75px) !important;
     padding: 20px 50px 20px 50px;
   }
   app-main-menu {
@@ -57,8 +57,8 @@
     padding: 30px 0px 0px;
 
     main {
-      padding: 20px;
-      margin-top: 15px;
+      padding: 30px;
+      height: calc(100% - 20px) !important;
     }
   }
 }

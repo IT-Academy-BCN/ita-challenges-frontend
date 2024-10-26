@@ -6,12 +6,11 @@
 @import 'styles/global';
 @import 'styles/fonts';
 
-html,
 body {
   height: 100%;
   background-color: $gray-4;
   margin: 0;
-  padding: 12px 10px 40px;
+  padding: 0rem 0.75rem 2rem 0.5rem;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
   app-root,
