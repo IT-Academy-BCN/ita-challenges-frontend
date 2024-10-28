@@ -50,9 +50,14 @@ export class StarterComponent implements OnInit {
   getChallenge (): void {
     this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
-        this.listChallenges = resp
+        this.listChallenges = resp.results
         console.log('Datos recibidos:', this.listChallenges)
+
         this.getChallengesByPage(this.pageNumber)
+
+        if (this.filters !== null && Object.keys(this.filters).length > 0) {
+          this.getChallengeFilters(this.filters)
+        }
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
@@ -64,25 +69,29 @@ export class StarterComponent implements OnInit {
     this.pageNumber = page
     const startIndex = (this.pageNumber - 1) * this.pageSize
 
-    if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
-      this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
-
-      if (this.sortBy !== '') {
-        this.getAndSortChallenges(startIndex, this.listChallenges)
-      }
-
-      if (window.innerWidth < 768) {
-        // Para móviles, podrías querer ajustar la lógica según cómo manejas la paginación
-        this.challenges = this.listChallenges
-      } else {
-        // Para escritorio, muestra los desafíos según la paginación
-        this.challenges = this.listChallenges.slice(startIndex, startIndex + this.pageSize)
-      }
-
-      console.log('Desafíos en la página actual:', this.challenges)
+    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+      this.getChallengeFilters(this.filters)
     } else {
-      console.warn('No hay desafíos disponibles.')
-      this.challenges = []
+      if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
+        this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
+
+        if (this.sortBy !== '') {
+          this.getAndSortChallenges(startIndex, this.listChallenges)
+        }
+
+        if (window.innerWidth < 768) {
+          // Para móviles, podrías querer ajustar la lógica según cómo manejas la paginación
+          this.challenges = this.listChallenges
+        } else {
+        // Para escritorio, muestra los desafíos según la paginación
+          this.challenges = this.listChallenges.slice(startIndex, startIndex + this.pageSize)
+        }
+
+        console.log('Desafíos en la página actual:', this.challenges)
+      } else {
+        console.warn('No hay desafíos disponibles.')
+        this.challenges = []
+      }
     }
   }
 
@@ -106,46 +115,30 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  /*  getChallengeFilters (filters: FilterChallenge): void {
-    if (this.filters !== filters) {
-      this.pageNumber = 1
-    }
-    const getChallengeOffset = 8 * (this.pageNumber - 1)
+  getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
-      const challengesObservable = (this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)
-        ? this.starterService.getAllChallenges()
-        : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+      const respArray: Challenge[] = this.listChallenges
 
-      this.challengesSubs$ = challengesObservable.subscribe(resp => {
-        if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
-          const respArray: Challenge[] = Array.isArray(resp.results) ? resp.results : [resp.results]
-          this.starterService.getAllChallengesFiltered(this.filters, respArray)
-            .subscribe((filteredResp: Challenge[]) => {
-              if (this.sortBy !== '') {
-                const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
-                if (filteredResp.every(item => item instanceof Challenge)) {
-                  orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
-                    this.listChallenges = sortedResp
-                    this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-                  })
-                } else {
-                  console.error('filteredResp no es un array de Challenge')
-                }
-              } else {
-                this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
-                this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-              }
-            })
+      this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
+        this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
+        this.pageNumber = 1
+        const startIndex = (this.pageNumber - 1) * this.pageSize
+        console.log('filteredResp:', filteredResp)
+
+        if (window.innerWidth < 768) {
+          // Para móviles, podrías querer ajustar la lógica según cómo manejas la paginación
+          this.challenges = filteredResp
         } else {
-          this.listChallenges = resp.results
-          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
-        }ç
+          // Para escritorio, muestra los desafíos según la paginación
+          this.challenges = filteredResp.slice(startIndex, startIndex + this.pageSize)
+        }
+        console.log('Desafíos filtrados y en la página actual:', this.challenges)
       })
     } else {
       this.getChallengesByPage(this.pageNumber)
     }
-  } */
+  }
 
   changeSort (newSort: string): void {
     this.sortBy = newSort

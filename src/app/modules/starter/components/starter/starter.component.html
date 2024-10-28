@@ -2,7 +2,7 @@
   <!-- FILTERS -->
   <div id="filters-container" class="d-none d-md-block col-2">
     <h2>{{ "modules.starter.main.section1" | translate }}</h2>
-   <!--  <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters> -->
+    <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
   </div>
 
   <!-- CHALLENGES -->
@@ -45,4 +45,4 @@
     </app-pagination>
   </div>
 </div>
-<!-- <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal> -->
+ <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal> 
