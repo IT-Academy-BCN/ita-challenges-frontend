@@ -119,7 +119,7 @@ export class StarterComponent implements OnInit {
 
       this.challengesSubs$ = challengesObservable.subscribe(resp => {
         if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
-          const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
+          const respArray: Challenge[] = Array.isArray(resp.results) ? resp.results : [resp.results]
           this.starterService.getAllChallengesFiltered(this.filters, respArray)
             .subscribe((filteredResp: Challenge[]) => {
               if (this.sortBy !== '') {
@@ -138,7 +138,7 @@ export class StarterComponent implements OnInit {
               }
             })
         } else {
-          this.listChallenges = resp
+          this.listChallenges = resp.results
           this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
         }ç
       })
