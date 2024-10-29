@@ -1,3 +1,5 @@
+@import "/src/styles/colors";
+
 nav{
     display: none;
     position:fixed;
@@ -42,12 +44,12 @@ $navbar-toggler-transition: none;
 
 }
 
-#navbarToggleExternalContent {
+#navbarToggle {
     margin-top: -7px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     position: fixed;
-    width: -webkit-fill-available;
+    width: 100%;
 }
 
 .navbarToggle {
@@ -58,6 +60,40 @@ $navbar-toggler-transition: none;
 .nav-link {
     color: white;
     margin: 20px 0 20px 7px;
+}
+
+.nav-ul {
+    padding-left: 0px;
+}
+
+.languageSelect {
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.625rem;
+    font-weight: 500;
+    background-color: $white;
+    padding-left: 8px;
+    color: $gray-6;
+    height: 41px;
+    transition: transform 0.3s ease 0s;
+}
+
+.user {
+    border: unset;
+    width: 48px;
+    height: 41px;
+    background: $white;
+    border-radius: 10px;
+}
+
+.setting {
+    width: 48px;
+    height: 41px;
+    background: $white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 768px) {
