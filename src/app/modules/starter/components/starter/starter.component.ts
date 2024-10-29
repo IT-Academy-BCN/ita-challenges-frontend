@@ -113,28 +113,30 @@ export class StarterComponent implements OnInit {
   }
 
   getChallengeFilters (filters: FilterChallenge): void {
-    const startIndex = (this.pageNumber - 1) * this.pageSize
-    this.filters = { ...filters }
+    this.filters = filters
     const respArray: Challenge[] = this.listChallenges
 
     this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
       this.paginationFilters = filteredResp
-      console.log(this.paginationFilters)
     })
+
     this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
-    if (this.totalPages === 0) {
-      this.pageNumber = 1 // O establece una lógica alternativa si no hay páginas
-    } else if (this.pageNumber > this.totalPages) {
-      this.pageNumber = this.totalPages // Ajusta pageNumber si es mayor que totalPages
+    if (this.pageNumber > this.totalPages) {
+      this.pageNumber = this.totalPages
     }
-    console.log('paginasStar:', startIndex)
-    if (this.sortBy !== '') {
-      this.getAndSortChallenges(startIndex, this.paginationFilters)
-    }
+    const startIndex = (this.pageNumber - 1) * this.pageSize
+
     this.challenges = window.innerWidth < 768
       ? this.paginationFilters
       : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
-    console.log('this.challenges:', this.challenges)
+
+    if (this.sortBy !== '') {
+      this.getAndSortChallenges(startIndex, this.paginationFilters)
+    }
+
+    console.log('Desafíos filtrados:', this.paginationFilters)
+    console.log('paginasStar:', startIndex)
+    console.log('this.pageNumber:', this.pageNumber)
   }
 
   changeSort (newSort: string): void {
