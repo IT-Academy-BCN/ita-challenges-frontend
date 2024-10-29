@@ -33,6 +33,7 @@ export class StarterComponent implements OnInit {
   selectedSort: string = ''
   isAscending: boolean = false
   startIndex: number = 0
+  paginationFilters: any
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -54,10 +55,6 @@ export class StarterComponent implements OnInit {
         console.log('Datos recibidos:', this.listChallenges)
 
         this.getChallengesByPage(this.pageNumber)
-
-        if (this.filters !== null && Object.keys(this.filters).length > 0) {
-          this.getChallengeFilters(this.filters)
-        }
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
@@ -116,28 +113,28 @@ export class StarterComponent implements OnInit {
   }
 
   getChallengeFilters (filters: FilterChallenge): void {
-    this.filters = filters
-    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
-      const respArray: Challenge[] = this.listChallenges
+    const startIndex = (this.pageNumber - 1) * this.pageSize
+    this.filters = { ...filters }
+    const respArray: Challenge[] = this.listChallenges
 
-      this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
-        this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-        this.pageNumber = 1
-        const startIndex = (this.pageNumber - 1) * this.pageSize
-        console.log('filteredResp:', filteredResp)
-
-        if (window.innerWidth < 768) {
-          // Para móviles, podrías querer ajustar la lógica según cómo manejas la paginación
-          this.challenges = filteredResp
-        } else {
-          // Para escritorio, muestra los desafíos según la paginación
-          this.challenges = filteredResp.slice(startIndex, startIndex + this.pageSize)
-        }
-        console.log('Desafíos filtrados y en la página actual:', this.challenges)
-      })
-    } else {
-      this.getChallengesByPage(this.pageNumber)
+    this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
+      this.paginationFilters = filteredResp
+      console.log(this.paginationFilters)
+    })
+    this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
+    if (this.totalPages === 0) {
+      this.pageNumber = 1 // O establece una lógica alternativa si no hay páginas
+    } else if (this.pageNumber > this.totalPages) {
+      this.pageNumber = this.totalPages // Ajusta pageNumber si es mayor que totalPages
     }
+    console.log('paginasStar:', startIndex)
+    if (this.sortBy !== '') {
+      this.getAndSortChallenges(startIndex, this.paginationFilters)
+    }
+    this.challenges = window.innerWidth < 768
+      ? this.paginationFilters
+      : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
+    console.log('this.challenges:', this.challenges)
   }
 
   changeSort (newSort: string): void {
