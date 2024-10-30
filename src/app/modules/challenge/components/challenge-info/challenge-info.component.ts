@@ -151,7 +151,7 @@ implements AfterContentChecked, OnInit {
     this.solutionService
       .getAllChallengeSolutions(idChallenge, idLanguage)
       .subscribe((data) => {
-        console.log('Soluzioni ricevute:', data.results) // Verifica i dati ricevuti
+        console.log('Solution recibe:', data.results) // Verifica i dati ricevuti
         this.challengeSolutions = data.results
       })
   }
