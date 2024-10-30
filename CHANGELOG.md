@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.1.18-RELEASE] 2024-10-30 (feature#439)
+
+- Change breackpoint for Filter Button
+
 ### [ita-challenges-frontend-3.1.17-RELEASE]
 
 * Added link to breadcrumb in challenge screen
@@ -67,7 +72,6 @@ and this project adheres to
 ### [ita-challenges-frontend-3.0.4-RELEASE]
 
 - Optimized size and build process.
-
 
 ### [ita-challenges-frontend-3.0.3-RELEASE]
 
