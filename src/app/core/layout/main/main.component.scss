@@ -41,6 +41,10 @@
   app-main-menu {
     height: 100%;
   }
+  #main-container {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 }
 
 .logo {
@@ -50,8 +54,7 @@
 
 @media screen and (max-width: 768px) {
   .container-fluid {
-    padding: 30px 0px;
-    background-color: white;
+    padding: 30px 0px 0px;
 
     main {
       padding: 20px;
@@ -65,4 +68,18 @@
 }
 #main-wrapper {
   height: 100%;
+}
+
+/* Nasconde per schermi con larghezza esattamente 768px */
+@media (max-width: 768px) {
+  .custom-md-block {
+      display: none !important;
+  }
+}
+
+/* Mostra per schermi con larghezza superiore a 768px */
+@media (min-width: 769px) {
+  .custom-md-block {
+      display: block !important;
+  }
 }
