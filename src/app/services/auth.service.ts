@@ -227,20 +227,20 @@ export class AuthService {
 
   /* Check if the user is  Logged in */
   // TODO: Desarrollar una vez validados los tokens. Por ahora, se usa solo cookie.service.
-  public isUserLoggedIn (): boolean {
-    const authToken = this.cookieService.get('authToken')
-    if (authToken !== null && authToken !== undefined && authToken !== '') {
-      console.log('is logged: true')
-      return true
-    }
+  // public isUserLoggedIn (): boolean {
+  //   const authToken = this.cookieService.get('authToken')
+  //   if (authToken !== null && authToken !== undefined && authToken !== '') {
+  //     console.log('is logged: true')
+  //     return true
+  //   }
 
-    const refreshToken = this.cookieService.get('refreshToken')
-    if (refreshToken !== null && refreshToken !== undefined && refreshToken !== '') {
-      console.log('is logged: true')
-      return true
-    }
+  //   const refreshToken = this.cookieService.get('refreshToken')
+  //   if (refreshToken !== null && refreshToken !== undefined && refreshToken !== '') {
+  //     console.log('is logged: true')
+  //     return true
+  //   }
 
-    console.log('is logged: false')
-    return false
-  }
+  //   console.log('is logged: false')
+  //   return false
+  // }
 }

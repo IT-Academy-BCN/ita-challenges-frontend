@@ -1,12 +1,18 @@
-import { Component, type ElementRef, Input, ViewChild, inject } from '@angular/core'
+import {
+  Component,
+  type ElementRef,
+  Input,
+  ViewChild,
+  inject
+} from '@angular/core'
 import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
-import { javascript } from '@codemirror/lang-javascript'
-import { python } from '@codemirror/lang-python'
 import { java } from '@codemirror/lang-java'
-import { php } from '@codemirror/lang-php'
+import { javascript } from '@codemirror/lang-javascript'
 import { minimalSetup } from 'codemirror'
-import { TranslateService } from '@ngx-translate/core'
+import { php } from '@codemirror/lang-php'
+import { python } from '@codemirror/lang-python'
+
 import { SolutionService } from 'src/app/services/solution.service'
 
 type Language = 'javascript' | 'java' | 'python' | 'php'
@@ -18,7 +24,11 @@ type Language = 'javascript' | 'java' | 'python' | 'php'
 })
 export class SolutionComponent {
   @ViewChild('editorSolution') editorSolution!: ElementRef
-  editor: EditorView = new EditorView()
+
+  private _number?: number
+  get number (): number | undefined {
+    return this._number
+  }
 
   @Input() set number (value: number | undefined) {
     setTimeout(() => {
@@ -26,17 +36,40 @@ export class SolutionComponent {
     }, 0)
   }
 
-  get number (): number | undefined {
-    return this._number
-  }
-
-  private _number?: number
   @Input() languageExt: Language = 'javascript'
-
   @Input() isUserSolution = false
 
-  /* code added by valerio */
+  public editor: EditorView = new EditorView()
+  public currentSolution: string = ''
+  public solutions: any[] = []
+
   private textRemoved = false
+  private readonly solutionService = inject(SolutionService)
+  private lastSentSolution: string = ''
+
+  ngOnInit (): void {
+    this.solutionService.solutionSent$.subscribe((value) => {
+      // if (this.editor && this.isUserSolution) {
+      this.currentSolution = this.editor.state.doc.toString()
+      if (this.currentSolution !== this.lastSentSolution) {
+        this.solutionService.sendSolution(this.currentSolution)
+        this.lastSentSolution = this.currentSolution
+      }
+      // }
+    })
+    this.solutionService
+      .getSolutions('../assets/dummy/challenge.json')
+      .subscribe((data) => {
+        this.solutions = data.solutions
+      })
+    this.solutionService.sendSolutionText$.subscribe(() => {
+      this.onSubmitSolution()
+    })
+  }
+
+  ngAfterViewInit (): void {
+    this.createEditor()
+  }
 
   handleClick (event: MouseEvent): void {
     if (!this.textRemoved) {
@@ -47,33 +80,6 @@ export class SolutionComponent {
     }
   }
 
-  solutions: any[] = []
-
-  private readonly solutionService = inject(SolutionService)
-  private readonly translateService = inject(TranslateService)
-
-  private lastSentSolution: string = ''
-
-  ngOnInit (): void {
-    this.solutionService.solutionSent$.subscribe((value) => {
-      // if (this.editor && this.isUserSolution) {
-      const currentSolution = this.editor.state.doc.toString()
-      if (currentSolution !== this.lastSentSolution) {
-        this.solutionService.sendSolution(currentSolution)
-        this.lastSentSolution = currentSolution
-      }
-      // }
-    })
-    this.solutionService.getSolutions('../assets/dummy/challenge.json').subscribe(data => {
-      this.solutions = data.solutions
-    })
-  }
-
-  ngAfterViewInit (): void {
-    this.createEditor()
-  }
-
-  // nota para equipo front end : tuve que eliminar la variable comment porque sino el handleclick no me funcionaba
   createEditor (): void {
     let languageExtension
 
@@ -97,15 +103,12 @@ export class SolutionComponent {
     let state: EditorState
     if (this.isUserSolution) {
       state = EditorState.create({
-        // doc: comment,
-        extensions: [
-          minimalSetup,
-          languageExtension
-        ]
+        doc: '',
+        extensions: [minimalSetup, languageExtension]
       })
     } else {
       state = EditorState.create({
-      // doc: 'Respuesta de ejemplo, no se puede modificar',
+        doc: 'Respuesta de ejemplo, no se puede modificar',
         extensions: [
           minimalSetup,
           languageExtension,
@@ -113,6 +116,13 @@ export class SolutionComponent {
         ]
       })
     }
-    this.editor = new EditorView({ state, parent: this.editorSolution.nativeElement })
+    this.editor = new EditorView({
+      state,
+      parent: this.editorSolution.nativeElement
+    })
+  }
+
+  onSubmitSolution (): void {
+    console.log('Solution submitted:', this.editor.state.doc.toString())
   }
 }
