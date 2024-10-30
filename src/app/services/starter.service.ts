@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core'
-import { Observable, map, of } from 'rxjs'
+import { Observable, map, of, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { type FilterChallenge } from '../models/filter-challenge.model'
@@ -9,14 +9,23 @@ import { type Challenge, type ChallengeResponse } from '../models/challenge.mode
 })
 export class StarterService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
-
+  cachedChallenges: ChallengeResponse | null = null
   getAllChallenges (): Observable<ChallengeResponse> {
+    if (this.cachedChallenges !== null) {
+      // Si hay datos en caché, devolverlos como un Observable
+      console.log('Datos obtenidos de la caché')
+      return of(this.cachedChallenges)
+    }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
     return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
       headers
-    })
+    }).pipe(
+      tap((response) => {
+        this.cachedChallenges = response
+        console.log('Datos almacenados en caché:', response)
+      }))
   }
 
   getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {

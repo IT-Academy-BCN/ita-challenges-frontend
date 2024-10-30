@@ -107,6 +107,7 @@ export class StarterComponent implements OnInit {
       this.listChallenges = sortedResp
       console.log('Todos los desafíos ordenados:', this.listChallenges)
       this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
+
       this.challenges = this.listChallenges.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
       console.log('Desafíos ordenados y en la página actual:', this.challenges)
     })
@@ -133,10 +134,6 @@ export class StarterComponent implements OnInit {
     if (this.sortBy !== '') {
       this.getAndSortChallenges(startIndex, this.paginationFilters)
     }
-
-    console.log('Desafíos filtrados:', this.paginationFilters)
-    console.log('paginasStar:', startIndex)
-    console.log('this.pageNumber:', this.pageNumber)
   }
 
   changeSort (newSort: string): void {
