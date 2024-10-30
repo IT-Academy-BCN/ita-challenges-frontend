@@ -33,7 +33,7 @@ export class StarterComponent implements OnInit {
   selectedSort: string = ''
   isAscending: boolean = false
   startIndex: number = 0
-  paginationFilters: any
+  paginationFilters: Challenge[] = []
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -132,7 +132,10 @@ export class StarterComponent implements OnInit {
       : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
 
     if (this.sortBy !== '') {
-      this.getAndSortChallenges(startIndex, this.paginationFilters)
+      const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
+      orderBySortFunction(this.sortBy, this.paginationFilters, startIndex, this.pageSize).subscribe(sortedResp => {
+        this.challenges = sortedResp
+      })
     }
   }
 
