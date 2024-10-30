@@ -7,7 +7,7 @@
         [activeId] = "activeId">
     </app-challenge-header>
 
-    <app-challenge-info
+    <app-challenge-info *ngIf="languages.length > 0"
         [detail] = "detail"
         [description] = "description"
         [examples] = "examples"

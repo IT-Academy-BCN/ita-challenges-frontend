@@ -82,7 +82,19 @@ implements AfterContentChecked, OnInit {
 
     this.isLogged = this.userService.isUserLoggedIn()
 
+    // Verifica che `languages` abbia dati
+    console.log('Languages in ChallengeInfoComponent:', this.languages)
+
+    // Imposta `idLanguage` con la prima lingua disponibile
+    if (this.languages.length > 0) {
+      this.idLanguage = this.languages[0].id_language
+    } else {
+      console.warn('No languages available for this challenge.')
+    }
+
     this.loadRelatedChallenges(this.idChallenge)
+
+    this.loadSolutions(this.idChallenge, this.idLanguage)
   }
 
   ngAfterContentChecked (): void {
@@ -134,9 +146,12 @@ implements AfterContentChecked, OnInit {
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
+    console.log('idChallenge:', idChallenge)
+    console.log('idLanguage:', idLanguage)
     this.solutionService
       .getAllChallengeSolutions(idChallenge, idLanguage)
       .subscribe((data) => {
+        console.log('Soluzioni ricevute:', data.results) // Verifica i dati ricevuti
         this.challengeSolutions = data.results
       })
   }

@@ -48,7 +48,7 @@
           <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
 
           <ng-container *ngIf="isLogged">
-            <app-solution style="background-color: white" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
+            <app-solution style="background-color: white" [isUserSolution]="true" [languageExt]="'java'" [challengeSolutions]="challengeSolutions"></app-solution>
           </ng-container>
           <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
         </div>
@@ -112,7 +112,8 @@
               [isUserSolution]="false" 
               class="mb-4"
               [languageExt]="'javascript'"
-              [solution_text]="solution.solution_text">
+              [solution_text]="solution.solution_text"
+              [challengeSolutions]="challengeSolutions">
             </app-solution>
 
           </ng-container>

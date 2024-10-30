@@ -54,6 +54,7 @@ export class SolutionComponent implements OnInit {
   private lastSentSolution: string = ''
 
   ngOnInit (): void {
+    console.log('Soluzioni ricevute:', this.challengeSolutions)
     this.solutionService.solutionSent$.subscribe((value) => {
       if (value && this.isUserSolution) {
         const currentSolution = this.editor.state.doc.toString()

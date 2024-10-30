@@ -127,7 +127,7 @@ describe('ChallengeComponent', () => {
       resources: [],
       solutions: [],
       popularity: 0,
-      languages: []
+      languages: [{ id_language: '1', language_name: 'Test Language' }]
     }
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
 
@@ -143,7 +143,7 @@ describe('ChallengeComponent', () => {
     expect(component.resources).toEqual([])
     expect(component.solutions).toEqual([])
     expect(component.popularity).toBe(0)
-    expect(component.languages).toEqual([])
+    expect(component.languages).toEqual([{ id_language: '1', language_name: 'Test Language' }])
   })
 
   it('should pass the input property value to the child  header component', () => {
@@ -176,9 +176,11 @@ describe('ChallengeComponent', () => {
       resources: [],
       solutions: [],
       popularity: 0,
-      languages: []
+      languages: [{ id_language: '1', language_name: 'Test Language' }]
     }
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
+
+    fixture.detectChanges()
 
     component.loadMasterData('123')
 
