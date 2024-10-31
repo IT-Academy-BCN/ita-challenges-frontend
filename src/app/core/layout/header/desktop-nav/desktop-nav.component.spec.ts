@@ -1,53 +1,63 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { DesktopNavComponent } from './desktop-nav.component'
-import { TranslateService } from '@ngx-translate/core'
-import { of } from 'rxjs'
-import { RouterModule } from '@angular/router'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DesktopNavComponent } from './desktop-nav.component';
+import { NavService } from 'src/app/services/nav.service';
+
+// Mock de NavService
+class MockNavService {
+  public selectWidth = '69px';
+  
+  openLoginModal = jest.fn(); // Simula la función openLoginModal
+  changeLanguage = jest.fn((language: string) => {
+    this.selectWidth = language === 'ca' ? '69px' : '57px';
+  });
+}
 
 describe('DesktopNavComponent', () => {
-  let component: DesktopNavComponent
-  let fixture: ComponentFixture<DesktopNavComponent>
-  let translateService: TranslateService
-  let translateServiceUseMock: jest.Mock
+  let component: DesktopNavComponent;
+  let fixture: ComponentFixture<DesktopNavComponent>;
+  let navService: NavService;
 
   beforeEach(() => {
-    translateServiceUseMock = jest.fn()
-
-    const translateServiceStub = {
-      use: translateServiceUseMock,
-      addLangs: jest.fn(),
-      setDefaultLang: jest.fn(),
-      get: jest.fn().mockImplementation((key) => of(key))
-    }
-
     TestBed.configureTestingModule({
       declarations: [DesktopNavComponent],
-      imports: [RouterModule.forRoot([])], // Añade esta línea
       providers: [
-        { provide: TranslateService, useValue: translateServiceStub }
+        { provide: NavService, useClass: MockNavService }
       ]
-    })
+    });
 
-    fixture = TestBed.createComponent(DesktopNavComponent)
-    component = fixture.componentInstance
-    translateService = TestBed.inject(TranslateService)
-    fixture.detectChanges()
-  })
+    fixture = TestBed.createComponent(DesktopNavComponent);
+    component = fixture.componentInstance;
+    navService = TestBed.inject(NavService);
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
+
+  it('should call openLoginModal when openLoginModal is invoked', () => {
+    component.openLoginModal();
+    expect(navService.openLoginModal).toHaveBeenCalled();
+  });
 
   it('should change language and update selectWidth', () => {
-    // Limpiar todas las llamadas a la función simulada
-    translateServiceUseMock.mockClear()
+    const event = new Event('change');
+    Object.defineProperty(event, 'target', { value: { value: 'es' }, enumerable: true });
 
-    const event = new Event('change')
-    Object.defineProperty(event, 'target', { value: { value: 'es' }, enumerable: true })
+    component.changeLanguage(event);
 
-    component.changeLanguage(event)
+    expect(navService.changeLanguage).toHaveBeenCalledWith('es');
+    expect(navService.selectWidth).toBe('57px'); // Verifica que el selectWidth se actualiza correctamente
+  });
 
-    expect(translateService.use).toHaveBeenCalledWith('es')
-    expect(component.selectWidth).toBe('57px')
-  })
-})
+  it('should change language to "ca" and update selectWidth accordingly', () => {
+    const event = new Event('change');
+    Object.defineProperty(event, 'target', { value: { value: 'ca' }, enumerable: true });
+
+    component.changeLanguage(event);
+
+    expect(navService.changeLanguage).toHaveBeenCalledWith('ca');
+    expect(navService.selectWidth).toBe('69px'); // Verifica que el selectWidth se actualiza correctamente
+  });
+});
+
