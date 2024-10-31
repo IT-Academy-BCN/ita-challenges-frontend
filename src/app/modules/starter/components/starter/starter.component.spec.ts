@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core'
 
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { of } from 'rxjs'
-/* import { environment } from 'src/environments/environment' */
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('StarterComponent', () => {
