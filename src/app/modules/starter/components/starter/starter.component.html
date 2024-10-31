@@ -1,24 +1,24 @@
 <div class="d-flex starter">
   <!-- FILTERS -->
-  <div id="filters-container" class="d-none d-md-block col-2">
+  <div id="filters-container" class="d-none d-xl-block col-2">
     <h2>{{ "modules.starter.main.section1" | translate }}</h2>
     <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
   </div>
 
   <!-- CHALLENGES -->
-  <div id="challenges-container" class="col-12 col-md-9">
+  <div id="challenges-container" class="col-12 col-xl-9">
     <div class="d-flex justify-content-between align-items-center  pb-2 challenges-filter">
       <!-- TITLE -->
       <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
 
       <!-- MOBILE FILTER BTN -->
-      <button class="d-md-none btn btn-outline-primary btnFiltrar" (click)="openModal()">
+      <button class="d-xl-none btn btn-outline-primary btnFiltrar" (click)="openModal()">
         <strong>Filtrar</strong>
       </button>
     </div>
 
     <!-- SORT BY -->
-    <ul id="sortBy" class="d-md-flex justify-content-end gap-2 d-none">
+    <ul id="sortBy" class="d-xl-flex justify-content-end gap-2 d-none">
       <li class="animated"
         [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
         (click)="changeSort('popularity')">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- PAGINATION -->
-    <app-pagination class="d-none d-md-block"  (pageEmitter)="getChallengesByPage($event)"  [totalPages]="totalPages" [pageNumber]="pageNumber">
+    <app-pagination class="d-none d-xl-block"  (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages" [pageNumber]="pageNumber">
     </app-pagination>
   </div>
 </div>

@@ -303,7 +303,7 @@ All features developed are deployed on the develop server for testing when are a
 - Make sure your feature branch is up to date with the develop branch.
 - Make sure the name of your feature branch is right (feature/#X).
 - Follow semantic versioning (https://semver.org/), and update version number in package.json.
-- Update version number (property MICROSERVICE_VERSION) at file .env.CI.dev as well. Make sure both versions are the same. There should be a white line at the end of the file.
-- Make necesary annotations at file CHANGELOG.md 
+- Update version number (property MICROSERVICE_VERSION) at file **.env.CI.dev** and **package.json** as well. Make sure both versions are the same. There should be a white line at the end of the file.
+- Make necesary annotations at file **CHANGELOG.md** 
 - Push your changes to the remote repository.
 - Create a pull request from your feature branch to the develop branch.
