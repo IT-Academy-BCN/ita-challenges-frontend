@@ -83,10 +83,7 @@ export class StarterComponent implements OnInit {
         // Para escritorio, muestra los desafíos según la paginación
           this.challenges = this.listChallenges.slice(startIndex, startIndex + this.pageSize)
         }
-
-        console.log('Desafíos en la página actual:', this.challenges)
       } else {
-        console.warn('No hay desafíos disponibles.')
         this.challenges = []
       }
     }
@@ -96,7 +93,7 @@ export class StarterComponent implements OnInit {
     this.modalContent.open()
   }
 
-  private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
+  getAndSortChallenges (getChallengeOffset: number, resp: any): void {
     const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
 
     const sortedChallenges$ = this.isAscending
@@ -105,11 +102,8 @@ export class StarterComponent implements OnInit {
 
     sortedChallenges$.subscribe(sortedResp => {
       this.listChallenges = sortedResp
-      console.log('Todos los desafíos ordenados:', this.listChallenges)
       this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
-
       this.challenges = this.listChallenges.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
-      console.log('Desafíos ordenados y en la página actual:', this.challenges)
     })
   }
 
