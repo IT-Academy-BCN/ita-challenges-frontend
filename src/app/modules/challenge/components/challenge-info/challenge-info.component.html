@@ -29,10 +29,10 @@
             </div>
 
             <!-- Examples -->
-            <div class="pb-1">
+            <div class="pb-1" *ngIf="examples && examples.length">
               <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
               <ul>
-                <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
+                <li class="mb-1" *ngFor="let example of examples">{{ example.example_text ? (example.example_text | dynamicTranslate) : '' }}</li>
               </ul>
             </div>
 
