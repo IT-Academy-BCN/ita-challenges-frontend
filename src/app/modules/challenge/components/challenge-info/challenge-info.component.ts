@@ -6,7 +6,7 @@ import {
   type OnInit,
   Output,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -20,6 +20,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { UserService } from 'src/app/services/user.service'
 // import { UserService } from 'src/app/services/user.service'
 
@@ -30,7 +31,17 @@ import { UserService } from 'src/app/services/user.service'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements OnInit {
+  isLogged: boolean = false
+  solutionSent: boolean = false
   isUserSolution: boolean = true
+  resources: string = ''
+  params$!: Subscription
+  relatedChallengesData!: DataChallenge
+  relatedListOfChallenges: Challenge[] = []
+  challengeSubs$!: Subscription
+  challengeSolutions: SolutionResults[] = []
+  idLanguage: string = ''
+  userId!: string
   private readonly challengeService = inject(ChallengeService)
   private readonly userService = inject(UserService)
   private readonly solutionService = inject(SolutionService)
@@ -41,7 +52,6 @@ export class ChallengeInfoComponent implements OnInit {
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
-  @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -54,14 +64,14 @@ export class ChallengeInfoComponent implements OnInit {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  showStatement = true
-  isLogged: boolean = false
-  solutionSent: boolean = false
-  resources: string = '' // TODO resources
-  params$!: Subscription
-  relatedChallengesData!: DataChallenge
-  relatedListOfChallenges: Challenge[] = []
-  challengeSubs$!: Subscription
+  // showStatement = true
+  // isLogged: boolean = false
+  // solutionSent: boolean = false
+  // resources: string = '' // TODO resources
+  // params$!: Subscription
+  // relatedChallengesData!: DataChallenge
+  // relatedListOfChallenges: Challenge[] = []
+  // challengeSubs$!: Subscription
 
   async ngOnInit (): Promise<void> {
     // Sottoscrizione allo stato di login
@@ -75,10 +85,12 @@ export class ChallengeInfoComponent implements OnInit {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
+      this.solutionSent = value
     })
 
     this.loadRelatedChallenges(this.idChallenge)
   }
+  
 
   // ngAfterContentChecked (): void {
   //   const token = localStorage.getItem('authToken') // TODO
