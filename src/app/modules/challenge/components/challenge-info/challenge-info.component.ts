@@ -6,7 +6,7 @@ import {
   type OnInit,
   Output,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -31,6 +31,7 @@ import { UserService } from 'src/app/services/user.service'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent implements OnInit {
+  showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
   isUserSolution: boolean = true
@@ -90,7 +91,6 @@ export class ChallengeInfoComponent implements OnInit {
 
     this.loadRelatedChallenges(this.idChallenge)
   }
-  
 
   // ngAfterContentChecked (): void {
   //   const token = localStorage.getItem('authToken') // TODO
