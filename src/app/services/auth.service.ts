@@ -1,11 +1,3 @@
-// import { add } from 'date-fns'
-// import { AbstractType, Injectable } from '@angular/core'
-// import { catchError, map, of, tap, throwError } from 'rxjs'
-// import { ResolveEnd} from '@angular/router'
-// import { fakeAsync } from '@angular/core/testing'
-// import { BlobOptions } from 'buffer'
-// import { error } from 'console'
-
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { BehaviorSubject, type Observable, firstValueFrom } from 'rxjs'
@@ -228,23 +220,4 @@ export class AuthService {
         })
     })
   }
-
-  /* Check if the user is  Logged in */
-  // TODO: Desarrollar una vez validados los tokens. Por ahora, se usa solo cookie.service.
-  // public isUserLoggedIn (): boolean {
-  //   const authToken = this.cookieService.get('authToken')
-  //   if (authToken !== null && authToken !== undefined && authToken !== '') {
-  //     console.log('is logged: true')
-  //     return true
-  //   }
-
-  //   const refreshToken = this.cookieService.get('refreshToken')
-  //   if (refreshToken !== null && refreshToken !== undefined && refreshToken !== '') {
-  //     console.log('is logged: true')
-  //     return true
-  //   }
-
-  //   console.log('is logged: false')
-  //   return false
-  // }
 }

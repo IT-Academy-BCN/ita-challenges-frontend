@@ -10,10 +10,10 @@ import { BehaviorSubject, type Observable } from 'rxjs'
 export class UserService {
   public userRegistered: boolean = false
   public userSentASolution: boolean = false
+  public userLoggedIn$: Observable<boolean>
 
   // BehaviorSubject para estado de login
   private readonly userLoggedInSubject: BehaviorSubject<boolean>
-  public userLoggedIn$: Observable<boolean>
 
   constructor (
     @Inject(AuthService) private readonly authService: AuthService,
