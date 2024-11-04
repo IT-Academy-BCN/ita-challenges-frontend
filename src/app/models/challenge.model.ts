@@ -29,3 +29,17 @@ export class Challenge {
     })
   }
 }
+
+export class ChallengeResponse {
+  count: number
+  limit: number
+  offset: number
+  results: Challenge[]
+
+  constructor (data: any) {
+    this.count = data.count
+    this.limit = data.limit
+    this.offset = data.offset
+    this.results = data.results.map((item: any) => new Challenge(item))
+  }
+}

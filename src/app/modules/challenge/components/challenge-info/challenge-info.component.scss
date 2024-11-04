@@ -175,3 +175,11 @@ p, ul li {
         display: none;
     }
 }
+
+@media (max-width: 1024px) {
+    .btn-send-solution {
+      width: 321px;
+      height: 63px;
+    }
+  }
+  
