@@ -61,6 +61,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   relatedChallengesData!: DataChallenge
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
+  isDropdownOpen: boolean = false
 
   async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
@@ -120,6 +121,30 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       })
     } else {
       this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
+    }
+  }
+
+  toggleDropdown (): void {
+    this.isDropdownOpen = !this.isDropdownOpen
+  }
+
+  selectTab (id: number): void {
+    this.activeId = id
+    this.isDropdownOpen = false // Cierra el menú desplegable si es necesario
+  }
+
+  getTranslatedTabLabel (): string {
+    switch (this.activeId) {
+      case 1:
+        return 'modules.challenge.info.detailsTitle'
+      case 2:
+        return 'modules.challenge.info.solutionsTitle'
+      case 3:
+        return 'modules.challenge.info.resourcesTitle'
+      case 4:
+        return 'modules.challenge.info.relatedTitle'
+      default:
+        return 'modules.challenge.info.detailsTitle'
     }
   }
 }
