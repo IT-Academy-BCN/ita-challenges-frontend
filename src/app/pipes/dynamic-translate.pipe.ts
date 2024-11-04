@@ -19,7 +19,7 @@ export class DynamicTranslatePipe implements PipeTransform {
   }
 
   transform (value: any): string {
-    if (typeof value !== 'object' || !(this.language in value)) {
+    if (value == null || typeof value !== 'object' || !(this.language in value)) {
       return ''
     }
 
