@@ -40,6 +40,23 @@ export class StarterService {
     })
   }
 
+  orderBySort (resp: Challenge[], offset: number, limit: number, isAscending: boolean): Observable<Challenge[]> {
+    let sortedChallenges = [...resp]
+
+    sortedChallenges = resp.sort((a: Challenge, b: Challenge) => {
+      const dateA = a.creation_date instanceof Date ? a.creation_date : new Date(a.creation_date)
+      const dateB = b.creation_date instanceof Date ? b.creation_date : new Date(b.creation_date)
+      return isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
+    })
+
+    const paginatedChallenges = sortedChallenges.slice(offset, offset + limit)
+
+    return new Observable<Challenge[]>(observer => {
+      observer.next(paginatedChallenges)
+      observer.complete()
+    })
+  }
+
   orderBySortAscending (sortBy: string, resp: Challenge[], offset: number, limit: number): Observable<Challenge[]> {
     let sortedChallenges = [...resp]
     sortedChallenges = resp.sort((a: Challenge, b: Challenge) => {

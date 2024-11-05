@@ -19,21 +19,23 @@ export class StarterComponent implements OnInit {
   @ViewChild('challenge') challengesContainer!: ElementRef
 
   challenges: Challenge[] = []
-  params$!: Subscription
   challengesSubs$!: Subscription
+  sortedChallengesSubs$!: Subscription
+  filteredChallengesSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
 
   totalPages!: number
   pageNumber: number = 1
-  listChallenges: any
+  listChallenges: Challenge[] = []
   pageSize = environment.pageSize
 
   selectedSort: string = ''
   isAscending: boolean = false
   startIndex: number = 0
   paginationFilters: Challenge[] = []
+
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -44,12 +46,13 @@ export class StarterComponent implements OnInit {
   }
 
   ngOnDestroy (): void {
-    if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
+    if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
+    if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
   }
 
   getChallenge (): void {
-    this.starterService.getAllChallenges().subscribe({
+    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
         console.log('Datos recibidos:', this.listChallenges)
@@ -73,7 +76,9 @@ export class StarterComponent implements OnInit {
         this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
 
         if (this.sortBy !== '') {
-          this.getAndSortChallenges(startIndex, this.listChallenges)
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+            this.challenges = sortedResp
+          })
         }
 
         if (window.innerWidth < 768) {
@@ -93,25 +98,11 @@ export class StarterComponent implements OnInit {
     this.modalContent.open()
   }
 
-  getAndSortChallenges (getChallengeOffset: number, resp: any): void {
-    const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
-
-    const sortedChallenges$ = this.isAscending
-      ? this.starterService.orderBySortAscending(this.sortBy, respArray, 0, respArray.length)
-      : this.starterService.orderBySortAsDescending(this.sortBy, respArray, 0, respArray.length)
-
-    sortedChallenges$.subscribe(sortedResp => {
-      this.listChallenges = sortedResp
-      this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
-      this.challenges = this.listChallenges.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
-    })
-  }
-
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
     const respArray: Challenge[] = this.listChallenges
 
-    this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
+    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
       this.paginationFilters = filteredResp
     })
 
@@ -126,8 +117,7 @@ export class StarterComponent implements OnInit {
       : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
 
     if (this.sortBy !== '') {
-      const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
-      orderBySortFunction(this.sortBy, this.paginationFilters, startIndex, this.pageSize).subscribe(sortedResp => {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
         this.challenges = sortedResp
       })
     }
