@@ -30,6 +30,7 @@ import { UserService } from 'src/app/services/user.service'
 })
 export class ChallengeInfoComponent implements AfterContentChecked {
   isUserSolution: boolean = true
+  challengeSolutions: any[] = []
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
