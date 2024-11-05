@@ -58,7 +58,7 @@ describe('ChallengeInfoComponent', () => {
     it('should call loadRelatedChallenges with the provided idChallenge', () => {
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
-      void component.ngOnInit()
+      await component.ngOnInit()
 
       expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengesSpy).toHaveBeenCalledWith('123')
