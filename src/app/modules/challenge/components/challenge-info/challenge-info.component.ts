@@ -5,7 +5,8 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
+  type OnInit
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -20,17 +21,29 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { UserService } from 'src/app/services/user.service'
-
 @Component({
   selector: 'app-challenge-info',
   templateUrl: './challenge-info.component.html',
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked {
+export class ChallengeInfoComponent
+implements AfterContentChecked, OnInit {
+  showStatement = true
+  isLogged: boolean = false
+  solutionSent: boolean = false
   isUserSolution: boolean = true
-  private readonly challengeService = inject(ChallengeService)
+  resources: string = ''
+  params$!: Subscription
+  relatedChallengesData!: DataChallenge
+  relatedListOfChallenges: Challenge[] = []
+  challengeSubs$!: Subscription
+  challengeSolutions: SolutionResults[] = []
+  idLanguage: string = ''
+  userId!: string
+
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -40,7 +53,6 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
-  @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -53,6 +65,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
+
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -63,22 +76,21 @@ export class ChallengeInfoComponent implements AfterContentChecked {
   challengeSubs$!: Subscription
   isDropdownOpen: boolean = false
 
+
   async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
+      this.solutionSent = value
     })
 
     this.isLogged = this.userService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.solutionSent = value
-    })
   }
 
   ngAfterContentChecked (): void {
     const token = localStorage.getItem('authToken') // TODO
-    const refreshToken = localStorage.getItem('refreshToken') // TODO
+    const refreshToken = localStorage.getItem('refreshToken') // TODO00000000
 
     if (
       token !== null &&
@@ -124,6 +136,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     }
   }
 
+
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen
   }
@@ -146,5 +159,13 @@ export class ChallengeInfoComponent implements AfterContentChecked {
       default:
         return 'modules.challenge.info.detailsTitle'
     }
+
+  loadSolutions (idChallenge: string, idLanguage: string): void {
+    this.solutionService
+      .getAllChallengeSolutions(idChallenge, idLanguage)
+      .subscribe((data) => {
+        this.challengeSolutions = data.results
+      })
+
   }
 }
