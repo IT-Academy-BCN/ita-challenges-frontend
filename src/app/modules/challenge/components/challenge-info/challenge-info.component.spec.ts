@@ -18,7 +18,6 @@ describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
-  // let challengeService: ChallengeService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,7 +34,6 @@ describe('ChallengeInfoComponent', () => {
         NgbNavModule,
         DynamicTranslatePipe],
       providers: [
-        // ChallengeService,
         AuthService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -47,7 +45,6 @@ describe('ChallengeInfoComponent', () => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
-    // challengeService = TestBed.inject(ChallengeService)
     fixture.detectChanges()
   })
 
@@ -56,10 +53,10 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided idChallenge', () => {
+    it('should call loadRelatedChallenge with the provided idChallenge', async () => {
       const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
-      void component.ngOnInit()
+      await component.ngOnInit()
 
       expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')

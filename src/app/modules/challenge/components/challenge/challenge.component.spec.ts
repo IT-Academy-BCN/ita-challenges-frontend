@@ -16,15 +16,19 @@ import { SolutionComponent } from '../../../../shared/components/solution/soluti
 import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { CookieService } from 'ngx-cookie-service'
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
   let fixture: ComponentFixture<ChallengeComponent>
   let mockChallengeService: any
+  let cookieService: CookieService
 
   beforeEach(async () => {
     mockChallengeService = {
-      getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({}))
+      getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({
+        solutions: []
+      }))
     }
 
     await TestBed.configureTestingModule({
@@ -58,10 +62,14 @@ describe('ChallengeComponent', () => {
           useValue: mockChallengeService
         },
         AuthService,
+        CookieService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     }).compileComponents()
+    cookieService = TestBed.inject(CookieService)
+    const mockUser = { idUser: 'testId' }
+    cookieService.set('user', JSON.stringify(mockUser))
   })
 
   beforeEach(() => {
@@ -182,7 +190,8 @@ describe('ChallengeComponent', () => {
     expect(challengeInfoComponent.detail.description).toBe(component.detail.description)
     expect(challengeInfoComponent.detail.examples).toEqual(component.detail.examples)
     expect(challengeInfoComponent.detail.notes).toBe(component.detail.notes)
-    expect(challengeInfoComponent.solutions).toEqual(component.solutions)
+    // expect(challengeInfoComponent.solutions).toEqual(component.solutions)
+    // Elimino esta línea porque no pasamos solutions de challenge a info-challenge
     expect(challengeInfoComponent.popularity).toBe(component.popularity)
     expect(challengeInfoComponent.languages).toEqual(component.languages)
   })
