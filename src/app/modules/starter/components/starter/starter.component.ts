@@ -35,7 +35,7 @@ export class StarterComponent implements OnInit {
   isAscending: boolean = false
   startIndex: number = 0
   paginationFilters: Challenge[] = []
-
+  isMobile: boolean = window.innerWidth < 768
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
@@ -75,18 +75,14 @@ export class StarterComponent implements OnInit {
       if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
         this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
 
+        this.challenges = this.isMobile
+          ? this.listChallenges
+          : this.listChallenges.slice(startIndex, startIndex + this.pageSize)
+
         if (this.sortBy !== '') {
-          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
             this.challenges = sortedResp
           })
-        }
-
-        if (window.innerWidth < 768) {
-          // Para móviles, podrías querer ajustar la lógica según cómo manejas la paginación
-          this.challenges = this.listChallenges
-        } else {
-        // Para escritorio, muestra los desafíos según la paginación
-          this.challenges = this.listChallenges.slice(startIndex, startIndex + this.pageSize)
         }
       } else {
         this.challenges = []
@@ -112,12 +108,12 @@ export class StarterComponent implements OnInit {
     }
     const startIndex = (this.pageNumber - 1) * this.pageSize
 
-    this.challenges = window.innerWidth < 768
+    this.challenges = this.isMobile
       ? this.paginationFilters
       : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
 
     if (this.sortBy !== '') {
-      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
         this.challenges = sortedResp
       })
     }

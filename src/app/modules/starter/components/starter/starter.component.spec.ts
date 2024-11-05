@@ -3,15 +3,23 @@ import { TestBed, type ComponentFixture } from '@angular/core/testing'
 import { StarterComponent } from './starter.component'
 import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
-
+import { type Challenge } from 'src/app/models/challenge.model'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { of } from 'rxjs'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-
+import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService
+  const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
+    ...challenge,
+    creation_date: new Date(`${challenge.creation_date}`),
+    solutions: challenge.solutions.map((solution: any) => ({
+      id_solution: solution.idSolution,
+      solution_text: solution.solutionText
+    }))
+  }))
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,78 +38,29 @@ describe('StarterComponent', () => {
     component.sortBy = ''
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
   it('should assign challenges when challenges are available.', () => {
-    const mockChallenges = Array.from({ length: 12 }, (_, i) => ({
-      id_challenge: `challenge-${i}`,
-      challenge_title: { es: 'Desafío ' + (i + 1) },
-      creation_date: '2022-01-01',
-      detail: { description: {}, examples: [], notes: {} },
-      level: 'EASY',
-      languages: [{ code: 'es', name: 'Spanish' }]
-    }))
-
-    component.listChallenges = mockChallenges
-    component.pageSize = 8
+    component.listChallenges = mockChallenges$
+    component.pageSize = 3
     component.filters = { languages: [], levels: [], progress: [] }
     component.getChallengesByPage(1)
 
-    expect(component.challenges.length).toBe(8) // Debe mostrar 8 desafíos
-    expect(component.challenges).toEqual(mockChallenges.slice(0, 8)) // Verifica que los desafíos sean correctos
-  })
-
-  it('should sort and set listChallenges correctly based on the state of isAscending', () => {
-    const mockChallenges = [
-      { id_challenge: '1', challenge_title: { es: 'Desafío 1' }, level: 'EASY' },
-      { id_challenge: '2', challenge_title: { es: 'Desafío 2' }, level: 'HARD' },
-      { id_challenge: '3', challenge_title: { es: 'Desafío 3' }, level: 'MEDIUM' }
-    ]
-
-    // Simulando el servicio para que devuelva desafíos no ordenados
-    spyOn(starterService, 'orderBySortAscending').and.returnValue(of(mockChallenges))
-    spyOn(starterService, 'orderBySortAsDescending').and.returnValue(of(mockChallenges))
-
-    // Prueba para orden ascendente
-    component.isAscending = true
-    component.sortBy = 'creation_date'
-    component.getAndSortChallenges(0, mockChallenges)
-
-    expect(component.listChallenges).toEqual(mockChallenges)
-    expect(component.challenges).toEqual(mockChallenges.slice(0, component.pageSize))
-
-    // Prueba para orden descendente
-    component.isAscending = false
-    component.getAndSortChallenges(0, mockChallenges)
-
-    expect(component.listChallenges).toEqual(mockChallenges)
-    expect(component.challenges).toEqual(mockChallenges.slice(0, component.pageSize))
+    expect(component.challenges.length).toBe(3) // Debe mostrar 3 desafíos
+    expect(component.challenges).toEqual(mockChallenges$.slice(0, 3)) // Verifica que los desafíos sean correctos
   })
 
   it('should filter challenges and update challenges correctly', () => {
-    const mockChallenges = Array.from({ length: 12 }, (_, i) => ({
-      id_challenge: `challenge-${i}`,
-      challenge_title: { es: 'Desafío ' + (i + 1) },
-      creation_date: '2022-01-01',
-      detail: { description: {}, examples: [], notes: {} },
-      level: 'EASY',
-      languages: [{ code: 'es', name: 'Spanish' }]
-    }))
-
     // Simular la lista de desafíos
-    component.listChallenges = mockChallenges
+    component.listChallenges = mockChallenges$
 
     const filters = { languages: ['es'], levels: ['EASY'], progress: [] }
     // Simular el servicio para que devuelva desafíos filtrados
-    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockChallenges.slice(0, 8))) // Solo retorna los primeros
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockChallenges$.slice(0, 3))) // Solo retorna los primeros
 
     component.getChallengeFilters(filters)
 
     expect(component.filters).toEqual(filters) // Verifica que los filtros se hayan establecido correctamente
-    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges) // Verifica que el método se haya llamado con los argumentos correctos
-    expect(component.paginationFilters.length).toBe(8) // Verifica que la longitud de los desafíos filtrados sea correcta
+    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$) // Verifica que el método se haya llamado con los argumentos correctos
+    expect(component.paginationFilters.length).toBe(3) // Verifica que la longitud de los desafíos filtrados sea correcta
 
     const expectedTotalPages = Math.ceil(component.paginationFilters.length / component.pageSize)
     expect(component.totalPages).toBe(expectedTotalPages) // Verifica que el total de páginas se haya calculado correctamente

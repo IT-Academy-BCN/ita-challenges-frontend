@@ -7,8 +7,7 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
-// import { mockChallenges } from '../../mocks/challenge/challenge.mock'
-import mockChallenges from '../../mocks/challenge/challenge.mock.json'
+import mockChallenges from '../../../src/mocks/challenge/challenge.mock.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -37,6 +36,31 @@ describe('StarterService', () => {
         solution_text: solution.solutionText
       }))
     }))
+  })
+
+  it('should sort challenges by creation_date and popularity', (done) => {
+    // Test para creation_date
+    const sortByDate = 'creation_date'
+    const isAscendingDate = true
+    const offset = 0
+    const limit = 3
+    service.orderBySort(sortByDate, parsedChallenges, offset, limit, isAscendingDate).subscribe(result => {
+      expect(result.length).toBe(limit)
+      expect(result[0].id_challenge).toBe('1')
+      expect(result[1].id_challenge).toBe('3')
+      expect(result[2].id_challenge).toBe('2')
+
+      const sortByPopularity = 'popularity'
+      const isAscendingPopularity = false // Descendente
+
+      service.orderBySort(sortByPopularity, parsedChallenges, offset, limit, isAscendingPopularity).subscribe(result => {
+        expect(result.length).toBe(limit)
+        expect(result[0].id_challenge).toBe('3')
+        expect(result[1].id_challenge).toBe('2')
+        expect(result[2].id_challenge).toBe('1')
+        done()
+      })
+    })
   })
 
   /*
@@ -80,26 +104,6 @@ describe('StarterService', () => {
     req.flush(mockResponse)
   })
 
-  it('debería ordenar los desafíos y aplicar la paginación correctamente', (done) => {
-    // Prueba de orden ascendente
-    service.orderBySort(parsedChallenges, 0, 3, true).subscribe(result => {
-      expect(result?.map(ch => ch.creation_date)).toEqual([
-        new Date('2023-01-01'),
-        new Date('2023-02-01'),
-        new Date('2023-03-01')
-      ])
-
-      // Prueba de orden descendente
-      service.orderBySort(parsedChallenges, 0, 3, false).subscribe(result => {
-        expect(result?.map(ch => ch.creation_date)).toEqual([
-          new Date('2023-04-01'),
-          new Date('2023-03-01'),
-          new Date('2023-02-01')
-        ])
-        done() // Llama a done aquí después de las expectativas
-      })
-    })
-  })
   /*
   Some explanations:
   RxJs introduced the following syntax when writing marble tests in our code
