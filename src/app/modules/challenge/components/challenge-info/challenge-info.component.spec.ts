@@ -55,10 +55,10 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenges with the provided idChallenge', () => {
+    it('should call loadRelatedChallenges with the provided idChallenge', async () => { // Añadido async aquí
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
-      await component.ngOnInit()
+      await component.ngOnInit() // Ahora el await se permite dentro de la función marcada como async
 
       expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
       expect(loadRelatedChallengesSpy).toHaveBeenCalledWith('123')
