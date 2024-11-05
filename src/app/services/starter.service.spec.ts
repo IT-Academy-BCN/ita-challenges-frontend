@@ -80,32 +80,26 @@ describe('StarterService', () => {
     req.flush(mockResponse)
   })
 
-  it('should sort challenges by creation date in asscending order', () => {
-    const offset = 0
-    const limit = 3
+  it('debería ordenar los desafíos y aplicar la paginación correctamente', (done) => {
+    // Prueba de orden ascendente
+    service.orderBySort(parsedChallenges, 0, 3, true).subscribe(result => {
+      expect(result?.map(ch => ch.creation_date)).toEqual([
+        new Date('2023-01-01'),
+        new Date('2023-02-01'),
+        new Date('2023-03-01')
+      ])
 
-    const sortedChallengesObservable = service.orderBySortAscending('creation_date', parsedChallenges, offset, limit)
-
-    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
-      expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
-      expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
-      expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
+      // Prueba de orden descendente
+      service.orderBySort(parsedChallenges, 0, 3, false).subscribe(result => {
+        expect(result?.map(ch => ch.creation_date)).toEqual([
+          new Date('2023-04-01'),
+          new Date('2023-03-01'),
+          new Date('2023-02-01')
+        ])
+        done() // Llama a done aquí después de las expectativas
+      })
     })
   })
-
-  it('should sort challenges by creation date in descending order', () => {
-    const offset = 0
-    const limit = 3
-
-    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', parsedChallenges, offset, limit)
-
-    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
-      expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
-      expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
-      expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
-    })
-  })
-
   /*
   Some explanations:
   RxJs introduced the following syntax when writing marble tests in our code
