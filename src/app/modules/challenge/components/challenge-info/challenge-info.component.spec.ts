@@ -18,7 +18,6 @@ describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
-  // let challengeService: ChallengeService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,13 +28,14 @@ describe('ChallengeInfoComponent', () => {
         SolutionComponent,
         RestrictedModalComponent
       ],
-      imports: [RouterTestingModule,
+      imports: [
+        RouterTestingModule,
         I18nModule,
         FormsModule,
         NgbNavModule,
-        DynamicTranslatePipe],
+        DynamicTranslatePipe
+      ],
       providers: [
-        // ChallengeService,
         AuthService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -47,7 +47,6 @@ describe('ChallengeInfoComponent', () => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
-    // challengeService = TestBed.inject(ChallengeService)
     fixture.detectChanges()
   })
 
@@ -56,39 +55,66 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided idChallenge', () => {
-      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
+    it('should call loadRelatedChallenges with the provided idChallenge', () => {
+      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
       void component.ngOnInit()
 
-      expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
-      expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
+      expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
+      expect(loadRelatedChallengesSpy).toHaveBeenCalledWith('123')
     })
   })
 
   it('should open send solution modal', () => {
-    spyOn(modalService, 'open').and.stub()
+    jest.spyOn(modalService, 'open').mockImplementation()
     component.openSendSolutionModal()
-
     expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
   })
 
   it('should open restricted modal if user is not logged in', () => {
-    spyOn(modalService, 'open').and.stub()
-    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+    jest.spyOn(modalService, 'open').mockImplementation()
+    component.isLogged = false
     component.clickSendButton()
-
     expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 
-  it('should onActiveIdchange correctly', () => {
-    const newActiveId = 2
-    const activeId = 1
+  it('should emit activeIdChange on onActiveIdChange call', () => {
+    jest.spyOn(component.activeIdChange, 'emit')
+    component.onActiveIdChange(2)
+    expect(component.activeId).toBe(2)
+    expect(component.activeIdChange.emit).toHaveBeenCalledWith(2)
+  })
 
-    component.onActiveIdChange(newActiveId)
+  describe('Dropdown functionality', () => {
+    it('should toggle dropdown visibility', () => {
+      component.isDropdownOpen = false
+      component.toggleDropdown()
+      expect(component.isDropdownOpen).toBe(true)
 
-    expect(component.activeIdChange).toBeTruthy()
-    component.activeIdChange.emit(activeId)
-    expect(component.activeId).toBe(newActiveId)
+      component.toggleDropdown()
+      expect(component.isDropdownOpen).toBe(false)
+    })
+
+    it('should close dropdown on outside click', () => {
+      component.isDropdownOpen = true
+      const event = new MouseEvent('click')
+      jest.spyOn(event, 'target', 'get').mockReturnValue(document.body)
+      component.handleOutsideClick(event)
+      expect(component.isDropdownOpen).toBe(false)
+    })
+
+    it('should select tab and close dropdown', () => {
+      component.isDropdownOpen = true
+      component.selectTab(3)
+      expect(component.activeId).toBe(3)
+      expect(component.isDropdownOpen).toBe(false)
+    })
+  })
+
+  it('should return correct translation key for active tab label', () => {
+    component.activeId = 2
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.solutionsTitle')
+    component.activeId = 3
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.resourcesTitle')
   })
 })

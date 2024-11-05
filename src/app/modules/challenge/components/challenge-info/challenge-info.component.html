@@ -181,21 +181,25 @@
   <button class="btn btn-primary dropdown-toggle w-100" (click)="toggleDropdown()">
     {{ getTranslatedTabLabel() | translate }}
   </button>
-  <div *ngIf="isDropdownOpen" class="dropdown-menu w-100">
-    <button class="dropdown-item" (click)="selectTab(1)">
-      {{ 'modules.challenge.info.detailsTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(2)">
-      {{ 'modules.challenge.info.solutionsTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(3)">
-      {{ 'modules.challenge.info.resourcesTitle' | translate }}
-    </button>
-    <button class="dropdown-item" (click)="selectTab(4)">
-      {{ 'modules.challenge.info.relatedTitle' | translate }}
-    </button>
-  </div>
+
+  @if (isDropdownOpen) {
+    <div class="dropdown-menu w-100">
+      <button class="dropdown-item" (click)="selectTab(1)">
+        {{ 'modules.challenge.info.detailsTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(2)">
+        {{ 'modules.challenge.info.solutionsTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(3)">
+        {{ 'modules.challenge.info.resourcesTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(4)">
+        {{ 'modules.challenge.info.relatedTitle' | translate }}
+      </button>
+    </div>
+  }
 </div>
+
 
 
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>

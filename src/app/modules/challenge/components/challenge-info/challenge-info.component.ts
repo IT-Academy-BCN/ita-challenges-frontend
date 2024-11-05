@@ -126,6 +126,25 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen
+    if (this.isDropdownOpen) {
+      document.addEventListener('click', this.handleOutsideClick)
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick)
+    }
+  }
+
+  handleOutsideClick = (event: MouseEvent): void => {
+    const target = event.target as HTMLElement
+    const dropdownElement: Element | null = document.querySelector('.dropdown-menu-mobile')
+    // Verificación explícita de null usando `!== null`
+    if (dropdownElement !== null && !dropdownElement.contains(target)) {
+      this.closeDropdown()
+    }
+  }
+
+  closeDropdown (): void {
+    this.isDropdownOpen = false
+    document.removeEventListener('click', this.handleOutsideClick)
   }
 
   selectTab (id: number): void {
