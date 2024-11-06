@@ -179,6 +179,7 @@ Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 4. Si el revisor de código aprueba tu pull request, se puede fusionar a la rama "develop".
 5. Mueve la tarjeta a la columna "Done".
 
+**NOTA IMPORTANTE: Una Pull Request es una solicitud para incluir tu código en el proyecto. No esperes a que tu PR sea aceptada para empezar a trabajar en otra card**
 
 
 ## 2.5 Trabajo con git

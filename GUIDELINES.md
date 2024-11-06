@@ -183,6 +183,9 @@ There isn't a set way to do commits. You can follow the style of "conventional c
 7. Go to the [dashboard](https://github.com/orgs/IT-Academy-BCN/projects/16/views/1) with the four columns. You will see that the task card you just completed has a reference to the corresponding PR. Move the card to the "Testing" column.
 
 
+**IMPORTANT NOTE: A pull request is a request to include your code into the project. Don't wait for your PR to be accepted to start working on another card.**
+
+
 ## 2.5 Working with git 
 The workflow we follow is similar to the Gitflow Workflow. 
 To work at the project, you should know at least following git commands:
