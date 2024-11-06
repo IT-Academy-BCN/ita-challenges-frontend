@@ -20,6 +20,7 @@ export const environment = {
   BACKEND_SSO_RESOURCES: '/resources',
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   ADMIN_USER: '../assets/dummy/admin-user.json',
+  USER_SOLUTION: '../assets/dummy/user-solution.mock.json',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',

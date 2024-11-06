@@ -1,0 +1,24 @@
+{
+    "uuid_user": "xxx",
+    "challenges": [
+      {
+        "uuid_challenge": "xxx",
+        "status": "STARTED",
+        "uuid_language": "xxx",
+        "score": 99
+      },
+      {
+        "uuid_challenge": "xxx",
+        "status": "ENDED",
+        "uuid_language": "xxx",
+        "score": 99
+      },
+      {
+        "uuid_challenge": "xxx",
+        "status": "STARTED",
+        "uuid_language": "xxx",
+        "score": 99
+      }
+    ]
+  }
+  

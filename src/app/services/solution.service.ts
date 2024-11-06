@@ -3,8 +3,7 @@ import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
-import { type UserSolution } from '../models/user-solution.interface'
-
+import { type Result } from '../models/user-solution.interface'
 @Injectable({
   providedIn: 'root'
 })
@@ -49,8 +48,8 @@ export class SolutionService {
     )
   }
 
-  getUserSolution (userId: string, challengeId: string, languageId: string): Observable<UserSolution> {
-    return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`,
+  getUserSolution (userId: string, challengeId: string, languageId: string): Observable<Result> {
+    return this.http.get<Result>(`${environment.USER_SOLUTION.replace('{idUser}', userId).replace('{challengeId}', challengeId).replace('{languageId}', languageId)}`,
       {
         headers: {
           'Content-Type': 'application/json'
