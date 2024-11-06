@@ -1,4 +1,4 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
+import { type ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeInfoComponent } from './challenge-info.component'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -78,14 +78,24 @@ describe('ChallengeInfoComponent', () => {
     expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 
-  it('should onActiveIdchange correctly', () => {
+  it('should onActiveIdChange correctly', fakeAsync(() => {
     const newActiveId = 2
-    const activeId = 1
 
     component.onActiveIdChange(newActiveId)
 
+    tick()
     expect(component.activeIdChange).toBeTruthy()
-    component.activeIdChange.emit(activeId)
     expect(component.activeId).toBe(newActiveId)
-  })
+  }))
+
+  // it('should onActiveIdchange correctly', () => {
+  //   const newActiveId = 2
+  //   const activeId = 1
+
+  //   component.onActiveIdChange(newActiveId)
+
+  //   expect(component.activeIdChange).toBeTruthy()
+  //   component.activeIdChange.emit(activeId)
+  //   expect(component.activeId).toBe(newActiveId)
+  // })
 })
