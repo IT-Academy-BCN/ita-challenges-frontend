@@ -79,7 +79,7 @@ app-starter-filters p {
    margin-bottom: 15px;
 }
 #filters-container {
-  position: sticky;
+  position: static;
   top: 40px;
   height: 100%;
   overflow-y: auto;

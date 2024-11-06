@@ -1,7 +1,5 @@
-import { Component, inject } from '@angular/core'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { LoginModalComponent } from './../../../../modules/modals/login-modal/login-modal.component'
-import { TranslateService } from '@ngx-translate/core'
+import { Component } from '@angular/core';
+import { NavService } from 'src/app/services/nav.service';
 
 @Component({
   selector: 'app-desktop-nav',
@@ -9,23 +7,15 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrl: './desktop-nav.component.scss'
 })
 export class DesktopNavComponent {
-  selectWidth = '69px'
-  private readonly modalService = inject(NgbModal)
-  private readonly translate = inject(TranslateService)
-  constructor () {
-    this.translate.addLangs(['en', 'es', 'ca'])
-    this.translate.setDefaultLang('ca')
-    this.translate.use('ca')
+  constructor(public navService: NavService) {}
+
+  openLoginModal(): void {
+    this.navService.openLoginModal();
   }
 
-  openLoginModal (): void {
-    this.modalService.open(LoginModalComponent, { centered: true, size: 'lg' })
-  }
-
-  changeLanguage (event: Event): void {
-    const selectElement = event.target as HTMLSelectElement
-    const language = selectElement.value
-    this.translate.use(language)
-    this.selectWidth = language === 'ca' ? '69px' : '57px'
+  changeLanguage(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const language = selectElement.value;
+    this.navService.changeLanguage(language);
   }
 }
