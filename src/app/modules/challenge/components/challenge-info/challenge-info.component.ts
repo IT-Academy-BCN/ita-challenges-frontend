@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   // type AfterContentChecked,
   Component,
   EventEmitter,
@@ -50,6 +51,7 @@ implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
   private readonly userService = inject(UserService)
+  private readonly cd = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -67,9 +69,17 @@ implements OnInit {
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
   async ngOnInit (): Promise<void> {
+    console.log('ngOnInit - inizializzazione del componente')
+    this.activeId = 1
+    this.activeIdChange.emit(this.activeId)
+
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
+    })
+
+    this.solutionService.activeId$.subscribe((newActiveId) => {
+      this.onActiveIdChange(newActiveId)
     })
 
     this.isLogged = this.userService.isUserLoggedIn()
@@ -78,20 +88,6 @@ implements OnInit {
 
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
-
-  // ngAfterContentChecked (): void {
-  //   const token = localStorage.getItem('authToken') // TODO
-  //   const refreshToken = localStorage.getItem('refreshToken') // TODO00000000
-
-  //   if (
-  //     token !== null &&
-  //     refreshToken !== null &&
-  //     token !== '' &&
-  //     refreshToken !== ''
-  //   ) {
-  //     this.isLogged = true
-  //   }
-  // }
 
   loadRelatedChallenges (id: string): void {
     this.challengeSubs$ = this.relatedService
@@ -103,9 +99,14 @@ implements OnInit {
   }
 
   onActiveIdChange (newActiveId: number): void {
+    console.log('onActiveIdChange - Cambio de activeId a:', newActiveId)
     if (this.activeIdChange !== null) {
-      this.activeId = newActiveId
-      this.activeIdChange.emit(this.activeId)
+      Promise.resolve().then(() => {
+        this.activeId = newActiveId
+        this.activeIdChange.emit(this.activeId)
+      }).catch((error) => {
+        console.error('Error in onActiveIdChange:', error)
+      })
     }
   }
 

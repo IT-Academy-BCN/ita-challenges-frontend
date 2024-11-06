@@ -13,10 +13,11 @@ export class SendSolutionModalComponent {
   private readonly solutionService = inject(SolutionService)
 
   public acceptSolution (): void {
+    console.log('acceptSolution chiamato - cambio a tab Solution')
     this.solutionService.updateSolutionSentState(true)
     this.solutionService.sendSolutionText(true)
-    this.closeModal()
     this.solutionService.activeIdSubject.next(2)
+    this.closeModal()
   }
 
   public closeModal (): void {
