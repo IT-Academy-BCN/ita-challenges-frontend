@@ -41,7 +41,8 @@ implements AfterContentChecked, OnInit {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
-  idLanguage: string = ''
+  // idLanguage: string = ''
+  idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   userId!: string
 
   private readonly authService = inject(AuthService)
@@ -83,6 +84,8 @@ implements AfterContentChecked, OnInit {
     this.isLogged = this.userService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
+
+    this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
 
   ngAfterContentChecked (): void {
@@ -129,14 +132,17 @@ implements AfterContentChecked, OnInit {
         size: 'lg'
       })
     } else {
-      this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
+      this.solutionService.sendSolution('')
+      this.loadSolutions(this.idChallenge, this.idLanguageJava)
+      this.onActiveIdChange(2)
     }
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
     this.solutionService
-      .getAllChallengeSolutions(idChallenge, idLanguage)
+      .getAllChallengeSolutions(idChallenge, this.idLanguageJava)
       .subscribe((data) => {
+        console.log('Challenge Solutions:', data)
         this.challengeSolutions = data.results
       })
   }
