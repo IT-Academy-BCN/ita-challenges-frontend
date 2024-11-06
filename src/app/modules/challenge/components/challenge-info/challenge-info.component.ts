@@ -1,5 +1,5 @@
 import {
-  type AfterContentChecked,
+  // type AfterContentChecked,
   Component,
   EventEmitter,
   Input,
@@ -30,7 +30,7 @@ import { UserService } from 'src/app/services/user.service'
   providers: [ChallengeService]
 })
 export class ChallengeInfoComponent
-implements AfterContentChecked, OnInit {
+implements OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -66,15 +66,6 @@ implements AfterContentChecked, OnInit {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  // showStatement = true
-  // isLogged: boolean = false
-  // solutionSent: boolean = false
-  // resources: string = '' // TODO resources
-  // params$!: Subscription
-  // relatedChallengesData!: DataChallenge
-  // relatedListOfChallenges: Challenge[] = []
-  // challengeSubs$!: Subscription
-
   async ngOnInit (): Promise<void> {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
@@ -88,19 +79,19 @@ implements AfterContentChecked, OnInit {
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
 
-  ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken') // TODO
-    const refreshToken = localStorage.getItem('refreshToken') // TODO00000000
+  // ngAfterContentChecked (): void {
+  //   const token = localStorage.getItem('authToken') // TODO
+  //   const refreshToken = localStorage.getItem('refreshToken') // TODO00000000
 
-    if (
-      token !== null &&
-      refreshToken !== null &&
-      token !== '' &&
-      refreshToken !== ''
-    ) {
-      this.isLogged = true
-    }
-  }
+  //   if (
+  //     token !== null &&
+  //     refreshToken !== null &&
+  //     token !== '' &&
+  //     refreshToken !== ''
+  //   ) {
+  //     this.isLogged = true
+  //   }
+  // }
 
   loadRelatedChallenges (id: string): void {
     this.challengeSubs$ = this.relatedService
@@ -133,17 +124,22 @@ implements AfterContentChecked, OnInit {
       })
     } else {
       this.solutionService.sendSolution('')
-      this.loadSolutions(this.idChallenge, this.idLanguageJava)
+      // this.loadSolutions(this.idChallenge, this.idLanguageJava)
       this.onActiveIdChange(2)
     }
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
     this.solutionService
-      .getAllChallengeSolutions(idChallenge, this.idLanguageJava)
+      .getAllChallengeSolutions(idChallenge, idLanguage)
       .subscribe((data) => {
-        console.log('Challenge Solutions:', data)
-        this.challengeSolutions = data.results
+        console.log('Raw data from API:', data)
+        if (data.results.length > 0) {
+          this.challengeSolutions = data.results
+          console.log('Challenge Solutions Loaded:', this.challengeSolutions)
+        } else {
+          console.log('No solutions found or data format issue')
+        }
       })
   }
 }
