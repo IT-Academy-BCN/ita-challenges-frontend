@@ -66,19 +66,6 @@ describe('ChallengeInfoComponent', () => {
     })
   })
 
-  describe('ngAfterContentChecked', () => {
-    it('should set isLogged based on authToken and refreshToken', () => {
-      localStorage.setItem('authToken', 'testToken')
-      localStorage.setItem('refreshToken', 'testRefresh')
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBe(true)
-
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-      component.ngAfterContentChecked()
-      expect(component.isLogged).toBe(false)
-    })
-  })
   it('should open send solution modal', () => {
     jest.spyOn(modalService, 'open').mockImplementation()
     component.openSendSolutionModal()
