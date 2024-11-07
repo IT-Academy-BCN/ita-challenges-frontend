@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { HeaderComponent } from './header.component'
 import { I18nModule } from '../../../../assets/i18n/i18n.module'
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component'
+import { DesktopNavComponent } from './desktop-nav/desktop-nav.component'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -10,7 +11,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderComponent, MobileNavComponent],
+      declarations: [HeaderComponent, MobileNavComponent, DesktopNavComponent],
       imports: [
         RouterTestingModule,
         I18nModule

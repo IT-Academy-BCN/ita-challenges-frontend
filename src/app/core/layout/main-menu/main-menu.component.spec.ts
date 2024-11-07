@@ -1,9 +1,9 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { MainMenuComponent } from './main-menu.component'
 import { RouterTestingModule } from '@angular/router/testing'
-import { I18nModule } from '../../../../assets/i18n/i18n.module'
+import { I18nModule } from 'src/assets/i18n/i18n.module'
 import { MobileNavComponent } from '../header/mobile-nav/mobile-nav.component'
+import { DesktopNavComponent } from '../header/desktop-nav/desktop-nav.component'
 
 describe('MainMenuComponent', () => {
   let component: MainMenuComponent
@@ -11,7 +11,7 @@ describe('MainMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainMenuComponent, MobileNavComponent],
+      declarations: [MainMenuComponent, MobileNavComponent, DesktopNavComponent],
       imports: [
         RouterTestingModule,
         I18nModule
