@@ -4,6 +4,7 @@ import { BehaviorSubject, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type Result } from '../models/user-solution.interface'
+import { tap } from 'rxjs/operators'
 @Injectable({
   providedIn: 'root'
 })
@@ -54,7 +55,12 @@ export class SolutionService {
         headers: {
           'Content-Type': 'application/json'
         }
+      }).pipe(
+      tap((response: Result) => {
+      // Aquí capturas y trabajas con la respuesta
+        console.log('Respuesta recibida:', response)
       })
+    )
   }
 
   public sendSolutionText (solution: boolean): void {

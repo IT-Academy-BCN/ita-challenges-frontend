@@ -8,7 +8,7 @@ import { type User } from 'src/app/models/user.model'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
 import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
-
+import { SolutionService } from 'src/app/services/solution.service'
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
@@ -20,6 +20,7 @@ export class LoginModalComponent {
   private readonly authService = inject(AuthService)
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly solutionService = inject(SolutionService)
 
   loginError: string = ''
 
