@@ -70,8 +70,8 @@ implements OnInit {
 
   async ngOnInit (): Promise<void> {
     console.log('ngOnInit - inizializzazione del componente')
-    this.activeId = 1
-    this.activeIdChange.emit(this.activeId)
+
+    this.solutionService.activeIdSubject.next(1)
 
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
