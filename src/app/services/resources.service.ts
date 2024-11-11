@@ -15,8 +15,7 @@ export class ResourcesService {
 
   constructor (@Inject(HttpClient) private readonly http: HttpClient) { }
   getResources (): Observable<ResourceResponse> {
-    // todo: need change the env api request.
-    return this.http.get<ResourceResponse>(environment.BACKEND_ITA_WIKI_BASE_URL.concat(environment.BACKEND_SSO_RESOURCES),
+    return this.http.get<ResourceResponse>(environment.BACKEND_ITA_WIKI_BASE_URL.concat(environment.BACKEND_ITA_WIKI_RESOURCES),
       {
         headers: {
           'Content-Type': 'application/json'
