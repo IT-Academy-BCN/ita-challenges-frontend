@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.1.22-RELEASE] (2024-11-11) (feature#464)
+
+- Fixed error translation on Challenge 'Isograms'
+
 ### [ita-challenges-frontend-3.1.21-RELEASE] (2024-11-04) (feature#271)
 
 - Dropdown menu in the ChallengeInfoComponent mobile version with Details, Solutions, Resources, Related
