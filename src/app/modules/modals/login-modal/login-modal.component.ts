@@ -43,7 +43,9 @@ export class LoginModalComponent {
       try {
         const res = await this.authService.login(user)
         const idUser: string = res.idUser
-        this.solutionService.fetchUserSolution(idUser)
+        this.solutionService.fetchUserSolution(idUser).subscribe(res => {
+          console.log('respuesta', res)
+        })
         this.openSuccessfulLoginModal(res)
       } catch (err) {
         this.notifyErrorLogin(err)
