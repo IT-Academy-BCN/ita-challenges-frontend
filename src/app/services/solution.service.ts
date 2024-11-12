@@ -22,7 +22,7 @@ export class SolutionService {
 
   solutionSent: boolean = false
   updatingState: boolean = false // Nuevo flag para evitar la recursividad
-
+  private readonly userSolutions: Result[] = []
   updateSolutionSentState (value: boolean): void {
     if (this.updatingState) return // Evita la recursividad
     this.updatingState = true
@@ -65,5 +65,24 @@ export class SolutionService {
 
   public sendSolutionText (solution: boolean): void {
     this.submitSolutionSubject.next(solution)
+  }
+
+  fetchUserSolution (userId: string): Observable<Result> {
+    return this.http.get<Result>(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).pipe(
+      tap((response: Result) => {
+        this.userSolutions.push(response)
+        console.log('Respuesta recibida:', response)
+      })
+    )
+  }
+
+  isSolutionSentb (challengeId: string): boolean {
+    // Comprobar si el challengeId está presente en las soluciones del usuario
+    return this.userSolutions.some(solution => solution.id_challenge === challengeId)
   }
 }

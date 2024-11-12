@@ -42,12 +42,14 @@ export class LoginModalComponent {
 
       try {
         const res = await this.authService.login(user)
+        const idUser: string = res.idUser
+        this.solutionService.fetchUserSolution(idUser)
         this.openSuccessfulLoginModal(res)
       } catch (err) {
         this.notifyErrorLogin(err)
       }
     }
-  };
+  }
 
   public isValidField (field: string): boolean {
     return isValidInput(field, this.loginForm)
