@@ -189,12 +189,6 @@ export class AuthService {
     this.cookieService.set('authToken', resp.authToken)
     this.cookieService.set('refreshToken', resp.refreshToken)
     this.cookieService.set('user', JSON.stringify(this.currentUser))
-    // const id = this.getUserIdFromCookie()
-    // if (id != null) {
-    //   this.solutionService.fetchUserSolution(id).subscribe(res => { console.log('respuesta', res) })
-    // } else {
-    //   console.error('User ID is undefined')
-    // }
 
     return resp
   }

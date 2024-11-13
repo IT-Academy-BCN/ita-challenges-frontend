@@ -39,11 +39,12 @@ export class ChallengeHeaderComponent implements OnInit {
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
     this.isLogged = this.userService.isUserLoggedIn()
+    this.userService.userSolutions$.subscribe((solutions) => {
+      this.solutionSent = solutions.includes(this.idChallenge)
+    })
 
-    this.userService.monitorSolutionState()
-
-    this.solutionSent = this.solutionService.isSolutionSent(this.idChallenge)
-    console.log(`Solution sent for challenge ${this.idChallenge}:`, this.solutionSent)
+    // this.solutionSent = this.solutionService.isSolutionSent(this.idChallenge)
+    // console.log(`Solution sent for challenge ${this.idChallenge}:`, this.solutionSent)
   }
 
   openSendSolutionModal (): void {

@@ -3,12 +3,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { RegisterModalComponent } from '../register-modal/register-modal.component'
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from './../../../services/auth.service'
-import { Router } from '@angular/router'
 import { type User } from 'src/app/models/user.model'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
 import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
-import { SolutionService } from 'src/app/services/solution.service'
+import { UserService } from 'src/app/services/user.service'
+
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
@@ -18,9 +18,8 @@ export class LoginModalComponent {
   private readonly modalService = inject(NgbModal)
   private readonly formBuilder = inject(FormBuilder)
   private readonly authService = inject(AuthService)
-  private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
-  private readonly solutionService = inject(SolutionService)
+  private readonly userService = inject(UserService)
 
   loginError: string = ''
 
@@ -42,10 +41,6 @@ export class LoginModalComponent {
 
       try {
         const res = await this.authService.login(user)
-        // const idUser: string = res.idUser
-        // this.solutionService.fetchUserSolution(idUser).subscribe(res => {
-        //   console.log('respuesta', res)
-        // })
         this.openSuccessfulLoginModal(res)
       } catch (err) {
         this.notifyErrorLogin(err)
@@ -58,6 +53,7 @@ export class LoginModalComponent {
   };
 
   public openSuccessfulLoginModal (res: any): void {
+    this.userService.monitorSolutionState()
     this.closeModal()
     // TODO create routing to the page after success login
   }

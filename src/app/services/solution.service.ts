@@ -33,10 +33,11 @@ export class SolutionService {
     this.updatingState = false
   }
 
-  sendSolution (solution: string): void {
+  sendSolution (solution: string, challengeId?: string): void {
     if (!this.solutionSent) {
       console.log('Sending solution:', solution)
-      this.updateSolutionSentState(true) // Cuando se haya enviado la solución, actualiza el estado
+      this.updateSolutionSentState(true)
+      // Cuando se haya enviado la solución, actualiza el estado
       // Lógica para enviar la solución al backend si es necesario
     }
   }
@@ -75,24 +76,6 @@ export class SolutionService {
         headers: {
           'Content-Type': 'application/json'
         }
-      }).pipe(
-      tap((response: any) => {
-        const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
-        this.userSolutions.push(...challengeIds)
-        console.log('Respuesta recibida:', response)
-        console.log(this.userSolutions)
       })
-    )
   }
-
-  isSolutionSent (challengeId: string): boolean {
-    // Comprobar si el challengeId está presente en las soluciones del usuario
-    return this.userSolutions.includes(challengeId)
-  }
-
-  // updateSolutionSentStateForChallenge (challengeId: string): void {
-  //   const isSent = this.isSolutionSent(challengeId)
-  //   console.log('Solution 1222222:', isSent)
-  //   this.updateSolutionSentState(isSent)
-  // }
 }

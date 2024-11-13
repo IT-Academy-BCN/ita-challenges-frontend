@@ -3,6 +3,7 @@ import { AuthService } from './auth.service'
 // import { type User } from '../models/user.model'
 import { SolutionService } from './solution.service'
 import { CookieService } from 'ngx-cookie-service'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,19 @@ export class UserService {
   public userLoggedIn: boolean = false
   public userSentASolution: boolean = false
 
+  private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
+  solutionSent$ = this.solutionSentSubject.asObservable()
+
+  private readonly userSolutionsSubject = new BehaviorSubject<string[]>([])
+  userSolutions$ = this.userSolutionsSubject.asObservable()
+
+  userSolutions: string[] = []
+
   constructor (
     @Inject(AuthService) private readonly authService: AuthService,
     @Inject(CookieService) private readonly cookieService: CookieService,
     @Inject(SolutionService) private readonly solutionService: SolutionService
-  ) {}
+  ) { }
 
   public isUserLoggedIn (): boolean {
     const authToken = this.cookieService.get('authToken')
@@ -47,13 +56,23 @@ export class UserService {
   public monitorSolutionState (): void {
     if (this.userLoggedIn) {
       const idUser = this.authService.currentUser.idUser
-      this.solutionService.fetchUserSolution(idUser).subscribe((res) => {
-        console.log('respuesta', res)
+      this.solutionService.fetchUserSolution(idUser).subscribe((response) => {
+        console.log('respuesta', response)
+        const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
+        this.userSolutions.push(...challengeIds)
+        console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
+        this.userSolutionsSubject.next(challengeIds)
+        localStorage.setItem('userSolutions', JSON.stringify(challengeIds))
       })
     }
-    this.solutionService.solutionSent$.subscribe((solutionSent) => {
-      this.userSentASolution = solutionSent
-      console.log(`userSentASolution: ${this.userSentASolution}`)
-    })
+    // this.solutionService.solutionSent$.subscribe((solutionSent) => {
+    //   this.userSentASolution = solutionSent
+    //   console.log(`userSentASolution: ${this.userSentASolution}`)
+    // })
+  }
+
+  isSolutionSent (challengeId: string): boolean {
+    // Comprobar si el challengeId está presente en las soluciones del usuario
+    return this.userSolutionsSubject.getValue().includes(challengeId)
   }
 }
