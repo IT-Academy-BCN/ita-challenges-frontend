@@ -1,28 +1,29 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { TestBed } from '@angular/core/testing'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { UserService } from './user.service'
 import { AuthService } from './auth.service'
 import { SolutionService } from './solution.service'
 // import { User } from '../models/user.model'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 
 describe('UserService', () => {
   let userService: UserService
-  // let authService: AuthService
   let solutionService: SolutionService
+  let authServiceMock: any
+  let solutionServiceMock: any
 
   beforeEach(() => {
-    const authServiceMock = {
+    authServiceMock = {
+      currentUser: { idUser: 'test-user-id' },
       login: jest.fn().mockResolvedValue({}),
       logout: jest.fn()
     }
 
-    const solutionServiceMock = {
-      solutionSent$: new BehaviorSubject<boolean>(false) // Inizialmente lo stato è "false"
+    solutionServiceMock = {
+      fetchUserSolution: jest.fn(),
+      solutionSent$: new BehaviorSubject<boolean>(false)
     }
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [
         UserService,
         { provide: AuthService, useValue: authServiceMock },
@@ -52,4 +53,21 @@ describe('UserService', () => {
     userService.logout()
     expect(userService.userSentASolution).toBe(false)
   })
+
+  it('should update userSolutions and userSolutionsSubject with challenge IDs on monitorSolutionState', fakeAsync(() => {
+    const mockChallengeIds = ['challenge1', 'challenge2', 'challenge3']
+    const mockResponse = { challenges: mockChallengeIds.map(id => ({ uuid_challenge: id })) };
+
+    (solutionService.fetchUserSolution as jest.Mock).mockReturnValue(of(mockResponse))
+
+    userService.userLoggedIn = true
+    userService.monitorSolutionState()
+    tick()
+
+    userService.userSolutions$.subscribe((solutions) => {
+      expect(solutions).toEqual(mockChallengeIds)
+    })
+    expect(userService.userSolutions).toEqual(mockChallengeIds)
+    expect(solutionService.fetchUserSolution).toHaveBeenCalledWith('test-user-id')
+  }))
 })

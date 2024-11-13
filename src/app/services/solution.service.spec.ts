@@ -108,4 +108,40 @@ describe('SolutionService', () => {
     expect(req.request.method).toBe('GET')
     req.flush(mockUserSolution)
   })
+
+  it('should fetch user solutions', (done) => {
+    const userId = 'user123'
+    const mockResponse = {
+      challenges: [
+        {
+          uuid_challenge: 'challenge1',
+          solutions: [
+            {
+              uuid: 'solution1',
+              solutionText: 'Sample solution text 1'
+            }
+          ]
+        },
+        {
+          uuid_challenge: 'challenge2',
+          solutions: [
+            {
+              uuid: 'solution2',
+              solutionText: 'Sample solution text 2'
+            }
+          ]
+        }
+      ]
+    }
+
+    service.fetchUserSolution(userId).subscribe((data) => {
+      expect(data).toEqual(mockResponse)
+      done()
+    })
+
+    const req = httpMock.expectOne(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`)
+    expect(req.request.method).toBe('GET')
+    expect(req.request.headers.get('Content-Type')).toBe('application/json')
+    req.flush(mockResponse)
+  })
 })

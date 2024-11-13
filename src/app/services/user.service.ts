@@ -64,18 +64,20 @@ export class UserService {
   public monitorSolutionState (): void {
     if (this.userLoggedIn) {
       const idUser = this.authService.currentUser.idUser
+      console.log(`Fetching solutions for user ID: ${idUser}`)
       this.solutionService.fetchUserSolution(idUser).subscribe((response) => {
-        console.log('respuesta', response)
+        console.log('Response received:', response)
         const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
-        this.userSolutions.push(...challengeIds)
-        console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
+        // this.userSolutions.push(...challengeIds)
+        this.userSolutions = challengeIds
+        console.log('Updated userSolutions:', this.userSolutions)
+        // console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
         this.userSolutionsSubject.next(challengeIds)
+        console.log('Emitted to userSolutionsSubject:', challengeIds)
       })
+    } else {
+      console.log('User is not logged in, skipping monitorSolutionState')
     }
-    // this.solutionService.solutionSent$.subscribe((solutionSent) => {
-    //   this.userSentASolution = solutionSent
-    //   console.log(`userSentASolution: ${this.userSentASolution}`)
-    // })
   }
 
   isSolutionSent (challengeId: string): boolean {
