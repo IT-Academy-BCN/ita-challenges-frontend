@@ -7,6 +7,7 @@ import { of } from 'rxjs'
 
 import { LoginModalComponent } from './login-modal.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent
@@ -26,12 +27,12 @@ describe('LoginModalComponent', () => {
     }
     modalServiceMock = {
       dismissAll: jest.fn(),
-      open: jest.fn()
+      open: jest.fn().mockReturnValue({ componentInstance: {} })
     }
 
     await TestBed.configureTestingModule({
       declarations: [LoginModalComponent],
-      imports: [FormsModule, ReactiveFormsModule, NgbModule, TranslateModule.forRoot()],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule, TranslateModule.forRoot(), HttpClientTestingModule],
       providers: [
         FormBuilder,
         { provide: AuthService, useValue: authServiceMock },

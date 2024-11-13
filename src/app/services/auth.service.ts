@@ -12,9 +12,7 @@ import { BehaviorSubject, type Observable, firstValueFrom } from 'rxjs'
 import { User } from '../models/user.model'
 import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
-import { TokenService } from './token.service'
 import { Inject, Injectable } from '@angular/core'
-import { SolutionService } from './solution.service'
 
 interface loginResponse {
   id: string
@@ -43,9 +41,7 @@ export class AuthService {
   constructor (
     @Inject(HttpClient) private readonly http: HttpClient,
     @Inject(Router) private readonly router: Router,
-    @Inject(CookieService) private readonly cookieService: CookieService,
-    @Inject(TokenService) private readonly tokenService: TokenService,
-    @Inject(SolutionService) private readonly solutionService: SolutionService
+    @Inject(CookieService) private readonly cookieService: CookieService
   ) {
     // private helper: CookieEncryptionHelper) {
 

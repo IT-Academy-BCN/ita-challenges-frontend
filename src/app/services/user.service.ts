@@ -29,6 +29,10 @@ export class UserService {
     if (this.isUserLoggedIn()) {
       this.monitorSolutionState()
     }
+    this.solutionService.solutionSent$.subscribe((solutionSent) => {
+      this.userSentASolution = solutionSent
+      console.log(`userSentASolution: ${this.userSentASolution}`)
+    })
   }
 
   public isUserLoggedIn (): boolean {

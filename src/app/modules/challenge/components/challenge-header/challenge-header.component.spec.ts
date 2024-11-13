@@ -56,10 +56,13 @@ describe('ChallengeHeaderComponent', () => {
   })
 
   it('should open send solution modal', () => {
-    spyOn(modalService, 'open').and.stub()
+    const mockModalRef = { componentInstance: { idChallenge: '' } }
+    spyOn(modalService, 'open').and.returnValue(mockModalRef as any)
+    component.idChallenge = 'testChallengeId'
     component.openSendSolutionModal()
 
     expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
+    expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId')
   })
 
   it('should open restricted modal if user is not logged in', () => {

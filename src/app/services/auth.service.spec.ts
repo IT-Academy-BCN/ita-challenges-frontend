@@ -17,7 +17,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { tap } from 'rxjs/operators'
 import { User } from '../models/user.model'
-import { type TokenService } from './token.service'
+// import { type TokenService } from './token.service'
 import { type Router } from '@angular/router'
 import { type CookieService } from 'ngx-cookie-service'
 // import { mockLoginResponse, mockRegisterResponse, mockLoginErrorResponse, mockRegisterErrorResponse, mockUnauthorizedErrorResponse } from 'src/mocks/auth/auth.mock'
@@ -34,7 +34,7 @@ describe('AuthService', () => {
   let routerMock: { navigate: jest.Mock }
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
-  let tokenServiceMock: TokenService
+  // let tokenServiceMock: TokenService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -69,7 +69,7 @@ describe('AuthService', () => {
       value: cookieServiceMock
     })
 
-    authService = new AuthService(httpClient, routerMock as unknown as Router, cookieServiceMock as unknown as CookieService, tokenServiceMock)
+    authService = new AuthService(httpClient, routerMock as unknown as Router, cookieServiceMock as unknown as CookieService)
   })
 
   it('should return the current user when user is NOT FOUND in cookies', (done) => {

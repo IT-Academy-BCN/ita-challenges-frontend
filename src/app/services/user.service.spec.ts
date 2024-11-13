@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
 import { UserService } from './user.service'
 import { AuthService } from './auth.service'
@@ -21,6 +22,7 @@ describe('UserService', () => {
     }
 
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         UserService,
         { provide: AuthService, useValue: authServiceMock },
@@ -36,19 +38,6 @@ describe('UserService', () => {
   it('should be created', () => {
     expect(userService).toBeTruthy()
   })
-
-  // it('should login user and set userLoggedIn to true', async () => {
-  //   const user: User = new User('1', '12345678', 'password', 'test@example.com', 'password')
-  //   await userService.login(user)
-  //   expect(authService.login).toHaveBeenCalledWith(user)
-  //   expect(userService.userLoggedIn).toBe(true)
-  // })
-
-  // it('should logout user and set userLoggedIn to false', () => {
-  //   userService.logout()
-  //   expect(authService.logout).toHaveBeenCalled()
-  //   expect(userService.userLoggedIn).toBe(false)
-  // })
 
   it('should update userSentASolution when solution is sent', () => {
     (solutionService.solutionSent$ as BehaviorSubject<boolean>).next(true)
