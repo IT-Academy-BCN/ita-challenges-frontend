@@ -25,7 +25,11 @@ export class UserService {
     @Inject(AuthService) private readonly authService: AuthService,
     @Inject(CookieService) private readonly cookieService: CookieService,
     @Inject(SolutionService) private readonly solutionService: SolutionService
-  ) { }
+  ) {
+    if (this.isUserLoggedIn()) {
+      this.monitorSolutionState()
+    }
+  }
 
   public isUserLoggedIn (): boolean {
     const authToken = this.cookieService.get('authToken')
@@ -62,7 +66,6 @@ export class UserService {
         this.userSolutions.push(...challengeIds)
         console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
         this.userSolutionsSubject.next(challengeIds)
-        localStorage.setItem('userSolutions', JSON.stringify(challengeIds))
       })
     }
     // this.solutionService.solutionSent$.subscribe((solutionSent) => {
@@ -74,5 +77,13 @@ export class UserService {
   isSolutionSent (challengeId: string): boolean {
     // Comprobar si el challengeId está presente en las soluciones del usuario
     return this.userSolutionsSubject.getValue().includes(challengeId)
+  }
+
+  public addSolutionForChallenge (challengeId: string): void {
+    const currentSolutions = this.userSolutionsSubject.getValue()
+    if (!currentSolutions.includes(challengeId)) {
+      const updatedSolutions = [...currentSolutions, challengeId]
+      this.userSolutionsSubject.next(updatedSolutions)
+    }
   }
 }

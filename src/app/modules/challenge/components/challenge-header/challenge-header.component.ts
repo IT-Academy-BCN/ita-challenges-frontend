@@ -35,6 +35,7 @@ export class ChallengeHeaderComponent implements OnInit {
   solutionSent: boolean = false
 
   async ngOnInit (): Promise<void> {
+    // this.userService.monitorSolutionState() // devo toglierlo dopo
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
@@ -48,10 +49,11 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   openSendSolutionModal (): void {
-    this.modalService.open(SendSolutionModalComponent, {
+    const modalRef = this.modalService.open(SendSolutionModalComponent, {
       centered: true,
       size: 'lg'
     })
+    modalRef.componentInstance.idChallenge = this.idChallenge
   }
 
   clickSendButton (): void {

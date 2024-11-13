@@ -53,7 +53,7 @@ export class LoginModalComponent {
   };
 
   public openSuccessfulLoginModal (res: any): void {
-    this.userService.monitorSolutionState()
+    // this.userService.monitorSolutionState()
     this.closeModal()
     // TODO create routing to the page after success login
   }
