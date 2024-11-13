@@ -67,7 +67,7 @@
         {{'modules.challenge.header.buttonAccept' | translate }}
       </button>
     </div>
-    } @else {
+    } @else if (isLogged && solutionSent) {
     <!-----if solution sent show this---->
     <div class="solutionSent col-3 d-none d-md-flex">
       <p>{{'modules.challenge.header.solutionSend' | translate }}</p>

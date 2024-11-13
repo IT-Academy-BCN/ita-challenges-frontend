@@ -37,12 +37,6 @@ export class UserService {
     return false
   }
 
-  // public async login (user: User): Promise<void> {
-  //   await this.authService.login(user)
-  //   this.userLoggedIn = true
-  //   console.log(`userLoggedIn: ${this.userLoggedIn}`)
-  // }
-
   public logout (): void {
     this.authService.logout()
     this.userLoggedIn = false
@@ -51,6 +45,12 @@ export class UserService {
   }
 
   public monitorSolutionState (): void {
+    if (this.userLoggedIn) {
+      const idUser = this.authService.currentUser.idUser
+      this.solutionService.fetchUserSolution(idUser).subscribe((res) => {
+        console.log('respuesta', res)
+      })
+    }
     this.solutionService.solutionSent$.subscribe((solutionSent) => {
       this.userSentASolution = solutionSent
       console.log(`userSentASolution: ${this.userSentASolution}`)

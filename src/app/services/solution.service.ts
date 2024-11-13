@@ -22,7 +22,9 @@ export class SolutionService {
 
   solutionSent: boolean = false
   updatingState: boolean = false // Nuevo flag para evitar la recursividad
-  private readonly userSolutions: Result[] = []
+
+  userSolutions: any[] = []
+
   updateSolutionSentState (value: boolean): void {
     if (this.updatingState) return // Evita la recursividad
     this.updatingState = true
@@ -67,22 +69,30 @@ export class SolutionService {
     this.submitSolutionSubject.next(solution)
   }
 
-  fetchUserSolution (userId: string): Observable<Result> {
-    return this.http.get<Result>(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`,
+  fetchUserSolution (userId: string): Observable<any> {
+    return this.http.get<any>(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`,
       {
         headers: {
           'Content-Type': 'application/json'
         }
       }).pipe(
-      tap((response: Result) => {
-        this.userSolutions.push(response)
+      tap((response: any) => {
+        const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
+        this.userSolutions.push(...challengeIds)
         console.log('Respuesta recibida:', response)
+        console.log(this.userSolutions)
       })
     )
   }
 
-  isSolutionSentb (challengeId: string): boolean {
+  isSolutionSent (challengeId: string): boolean {
     // Comprobar si el challengeId está presente en las soluciones del usuario
-    return this.userSolutions.some(solution => solution.id_challenge === challengeId)
+    return this.userSolutions.includes(challengeId)
   }
+
+  // updateSolutionSentStateForChallenge (challengeId: string): void {
+  //   const isSent = this.isSolutionSent(challengeId)
+  //   console.log('Solution 1222222:', isSent)
+  //   this.updateSolutionSentState(isSent)
+  // }
 }

@@ -13,6 +13,7 @@ export class SendSolutionModalComponent {
   private readonly solutionService = inject(SolutionService)
 
   public acceptSolution (): void {
+    this.solutionService.userSolutions.push(this.solutionService.activeIdSubject.value)
     this.solutionService.updateSolutionSentState(true)
     this.solutionService.sendSolutionText(true)
     this.closeModal()

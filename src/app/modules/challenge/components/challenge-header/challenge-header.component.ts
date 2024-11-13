@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core'
+import { Component, Input, type OnInit, inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service'
   templateUrl: './challenge-header.component.html',
   styleUrls: ['./challenge-header.component.scss']
 })
-export class ChallengeHeaderComponent {
+export class ChallengeHeaderComponent implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService)
@@ -25,6 +25,7 @@ export class ChallengeHeaderComponent {
   @Input() creation_date!: Date
   @Input() level = ''
   @Input() activeId!: number
+  @Input() idChallenge!: string
 
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
@@ -39,9 +40,10 @@ export class ChallengeHeaderComponent {
     this.challenge_level = this.level
     this.isLogged = this.userService.isUserLoggedIn()
 
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.solutionSent = value
-    })
+    this.userService.monitorSolutionState()
+
+    this.solutionSent = this.solutionService.isSolutionSent(this.idChallenge)
+    console.log(`Solution sent for challenge ${this.idChallenge}:`, this.solutionSent)
   }
 
   openSendSolutionModal (): void {
@@ -57,8 +59,6 @@ export class ChallengeHeaderComponent {
         centered: true,
         size: 'lg'
       })
-    } else {
-      this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
     }
   }
 

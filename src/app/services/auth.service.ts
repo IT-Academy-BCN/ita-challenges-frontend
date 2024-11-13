@@ -14,6 +14,7 @@ import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
 import { TokenService } from './token.service'
 import { Inject, Injectable } from '@angular/core'
+import { SolutionService } from './solution.service'
 
 interface loginResponse {
   id: string
@@ -43,7 +44,8 @@ export class AuthService {
     @Inject(HttpClient) private readonly http: HttpClient,
     @Inject(Router) private readonly router: Router,
     @Inject(CookieService) private readonly cookieService: CookieService,
-    @Inject(TokenService) private readonly tokenService: TokenService
+    @Inject(TokenService) private readonly tokenService: TokenService,
+    @Inject(SolutionService) private readonly solutionService: SolutionService
   ) {
     // private helper: CookieEncryptionHelper) {
 
@@ -187,6 +189,13 @@ export class AuthService {
     this.cookieService.set('authToken', resp.authToken)
     this.cookieService.set('refreshToken', resp.refreshToken)
     this.cookieService.set('user', JSON.stringify(this.currentUser))
+    // const id = this.getUserIdFromCookie()
+    // if (id != null) {
+    //   this.solutionService.fetchUserSolution(id).subscribe(res => { console.log('respuesta', res) })
+    // } else {
+    //   console.error('User ID is undefined')
+    // }
+
     return resp
   }
 
