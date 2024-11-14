@@ -1,7 +1,8 @@
 <!---Nav tabs-->
 <!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
-<ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
-  
+
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs d-none d-md-flex">
+
   <!--DETAILS TAB-->
 
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
@@ -34,7 +35,11 @@
             <div class="pb-1">
               <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
               <ul>
-                <li class="mb-1" *ngFor="let example of examples">{{ example.example_text | dynamicTranslate }}</li>
+                <ng-container *ngFor="let example of examples">
+                  <li class="mb-1" *ngIf="example.example_text">
+                    {{ example.example_text | dynamicTranslate }}
+                  </li>
+                </ng-container>
               </ul>
             </div>
 
@@ -187,5 +192,31 @@
     </ng-template>
   </li>
 </ul>
+<!-- Dropdown Menu for Mobile View -->
+<div class="dropdown-menu-mobile d-md-none">
+  <button class="btn btn-primary dropdown-toggle w-100" (click)="toggleDropdown()">
+    {{ getTranslatedTabLabel() | translate }}
+  </button>
+
+  @if (isDropdownOpen) {
+    <div class="dropdown-menu w-100">
+      <button class="dropdown-item" (click)="selectTab(1)">
+        {{ 'modules.challenge.info.detailsTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(2)">
+        {{ 'modules.challenge.info.solutionsTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(3)">
+        {{ 'modules.challenge.info.resourcesTitle' | translate }}
+      </button>
+      <button class="dropdown-item" (click)="selectTab(4)">
+        {{ 'modules.challenge.info.relatedTitle' | translate }}
+      </button>
+    </div>
+  }
+</div>
+
+
+
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
 <!--Nav panes-->

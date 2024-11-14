@@ -4,10 +4,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
-  inject,
-  type OnInit
+  inject
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -22,8 +22,9 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { UserService } from 'src/app/services/user.service'
+import { SolutionResults } from 'src/app/models/solution-results.model'
+
 @Component({
   selector: 'app-challenge-info',
   templateUrl: './challenge-info.component.html',
@@ -45,6 +46,7 @@ implements OnInit {
   // idLanguage: string = ''
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   userId!: string
+  isDropdownOpen: boolean = false
 
   private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
@@ -56,6 +58,7 @@ implements OnInit {
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
+  @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -142,5 +145,50 @@ implements OnInit {
           console.log('No solutions found or data format issue')
         }
       })
+
+      
+  }
+
+  toggleDropdown (): void {
+    this.isDropdownOpen = !this.isDropdownOpen
+    if (this.isDropdownOpen) {
+      document.addEventListener('click', this.handleOutsideClick)
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick)
+    }
+  }
+
+  handleOutsideClick = (event: MouseEvent): void => {
+    const target = event.target as HTMLElement
+    const dropdownElement: Element | null = document.querySelector('.dropdown-menu-mobile')
+    // Verificación explícita de null usando `!== null`
+    if (dropdownElement !== null && !dropdownElement.contains(target)) {
+      this.closeDropdown()
+    }
+  }
+
+  closeDropdown (): void {
+    this.isDropdownOpen = false
+    document.removeEventListener('click', this.handleOutsideClick)
+  }
+
+  selectTab (id: number): void {
+    this.activeId = id
+    this.isDropdownOpen = false // Cierra el menú desplegable si es necesario
+  }
+
+  getTranslatedTabLabel (): string {
+    switch (this.activeId) {
+      case 1:
+        return 'modules.challenge.info.detailsTitle'
+      case 2:
+        return 'modules.challenge.info.solutionsTitle'
+      case 3:
+        return 'modules.challenge.info.resourcesTitle'
+      case 4:
+        return 'modules.challenge.info.relatedTitle'
+      default:
+        return 'modules.challenge.info.detailsTitle'
+    }
   }
 }

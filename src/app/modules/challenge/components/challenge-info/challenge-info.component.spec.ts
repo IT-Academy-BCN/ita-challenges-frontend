@@ -28,11 +28,13 @@ describe('ChallengeInfoComponent', () => {
         SolutionComponent,
         RestrictedModalComponent
       ],
-      imports: [RouterTestingModule,
+      imports: [
+        RouterTestingModule,
         I18nModule,
         FormsModule,
         NgbNavModule,
-        DynamicTranslatePipe],
+        DynamicTranslatePipe
+      ],
       providers: [
         AuthService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -53,28 +55,26 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenge with the provided idChallenge', async () => {
-      const loadRelatedChallengeSpy = spyOn(component, 'loadRelatedChallenges')
+    it('should call loadRelatedChallenges with the provided idChallenge', async () => { // Añadido async aquí
+      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges')
       component.idChallenge = '123'
-      await component.ngOnInit()
+      await component.ngOnInit() // Ahora el await se permite dentro de la función marcada como async
 
-      expect(loadRelatedChallengeSpy).toHaveBeenCalledTimes(1)
-      expect(loadRelatedChallengeSpy).toHaveBeenCalledWith('123')
+      expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
+      expect(loadRelatedChallengesSpy).toHaveBeenCalledWith('123')
     })
   })
 
   it('should open send solution modal', () => {
-    spyOn(modalService, 'open').and.stub()
+    jest.spyOn(modalService, 'open').mockImplementation()
     component.openSendSolutionModal()
-
     expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
   })
 
   it('should open restricted modal if user is not logged in', () => {
-    spyOn(modalService, 'open').and.stub()
-    component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
+    jest.spyOn(modalService, 'open').mockImplementation()
+    component.isLogged = false
     component.clickSendButton()
-
     expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 

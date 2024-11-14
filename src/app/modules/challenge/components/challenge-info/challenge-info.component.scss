@@ -182,4 +182,56 @@ p, ul li {
       height: 63px;
     }
   }
+
+// Estilos para el menú desplegable en pantallas móviles
+@media screen and (max-width: 768px) {
+    .dropdown-menu-mobile {
+      position: relative;
+      margin-bottom: 1rem;
+  
+      .dropdown-toggle {
+        background-color: #B91879;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+        margin-top: 40px;
+        
+        &:hover {
+          background-color: darken(#B91879, 10%);
+        }
+      }
+  
+      .dropdown-menu {
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        margin-top: 5px;
+        padding: 0;
+        display: block;
+  
+        .dropdown-item {
+          padding: 10px;
+          color: #333;
+          text-align: left;
+          cursor: pointer;
+          width: 100%;
+          background: none;
+          border: none;
+          
+          &:hover {
+            background-color: #B91879;
+            color: white;
+          }
+        }
+      }
+    }
+  }
   
