@@ -62,7 +62,7 @@ export class ChallengeComponent {
       this.level = this.challenge.level
       this.detail = this.challenge.detail
       this.description = this.challenge.detail.description
-      this.examples = this.challenge.detail.examples
+      this.examples = this.challenge.detail?.examples
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages

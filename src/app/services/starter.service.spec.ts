@@ -7,8 +7,7 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { environment } from 'src/environments/environment'
 import { TestBed } from '@angular/core/testing'
 import { type Challenge } from '../models/challenge.model'
-// import { mockChallenges } from '../../mocks/challenge/challenge.mock'
-import mockChallenges from '../../mocks/challenge/challenge.mock.json'
+import mockChallenges from '../../../src/mocks/challenge/challenge.mock.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
@@ -37,6 +36,31 @@ describe('StarterService', () => {
         solution_text: solution.solutionText
       }))
     }))
+  })
+
+  it('should sort challenges by creation_date and popularity', (done) => {
+    // Test para creation_date
+    const sortByDate = 'creation_date'
+    const isAscendingDate = true
+    const offset = 0
+    const limit = 3
+    service.orderBySort(sortByDate, parsedChallenges, offset, limit, isAscendingDate).subscribe(result => {
+      expect(result.length).toBe(limit)
+      expect(result[0].id_challenge).toBe('1')
+      expect(result[1].id_challenge).toBe('3')
+      expect(result[2].id_challenge).toBe('2')
+
+      const sortByPopularity = 'popularity'
+      const isAscendingPopularity = false // Descendente
+
+      service.orderBySort(sortByPopularity, parsedChallenges, offset, limit, isAscendingPopularity).subscribe(result => {
+        expect(result.length).toBe(limit)
+        expect(result[0].id_challenge).toBe('3')
+        expect(result[1].id_challenge).toBe('2')
+        expect(result[2].id_challenge).toBe('1')
+        done()
+      })
+    })
   })
 
   /*
@@ -78,32 +102,6 @@ describe('StarterService', () => {
     const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`)
     expect(req.request.method).toEqual('GET')
     req.flush(mockResponse)
-  })
-
-  it('should sort challenges by creation date in asscending order', () => {
-    const offset = 0
-    const limit = 3
-
-    const sortedChallengesObservable = service.orderBySortAscending('creation_date', parsedChallenges, offset, limit)
-
-    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
-      expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
-      expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
-      expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
-    })
-  })
-
-  it('should sort challenges by creation date in descending order', () => {
-    const offset = 0
-    const limit = 3
-
-    const sortedChallengesObservable = service.orderBySortAsDescending('creation_date', parsedChallenges, offset, limit)
-
-    sortedChallengesObservable.subscribe((sortedChallenges: Challenge[]) => {
-      expect(sortedChallenges[2].creation_date).toBe('2022-05-10')
-      expect(sortedChallenges[1].creation_date).toBe('2022-05-09')
-      expect(sortedChallenges[0].creation_date).toBe('2022-05-08')
-    })
   })
 
   /*
