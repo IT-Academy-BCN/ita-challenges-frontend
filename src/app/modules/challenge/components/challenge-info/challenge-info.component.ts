@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
+  type OnInit,
   Output,
   ViewChild,
   inject
@@ -23,7 +23,7 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { UserService } from 'src/app/services/user.service'
-import { SolutionResults } from 'src/app/models/solution-results.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -145,8 +145,6 @@ implements OnInit {
           console.log('No solutions found or data format issue')
         }
       })
-
-      
   }
 
   toggleDropdown (): void {
