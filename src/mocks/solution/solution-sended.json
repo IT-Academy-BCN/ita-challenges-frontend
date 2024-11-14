@@ -1,0 +1,22 @@
+{
+    "challenges": [
+      {
+        "uuid_challenge": "challenge1",
+        "solutions": [
+          {
+            "uuid": "solution1",
+            "solutionText": "Sample solution text 1"
+          }
+        ]
+      },
+      {
+        "uuid_challenge": "challenge2",
+        "solutions": [
+          {
+            "uuid": "solution2",
+            "solutionText": "Sample solution text 2"
+          }
+        ]
+      }
+    ]
+  }
