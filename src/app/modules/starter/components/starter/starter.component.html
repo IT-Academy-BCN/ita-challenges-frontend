@@ -32,8 +32,8 @@
     </ul>
 
     <!-- CHALLENGES CARD -->
-    <div class="d-flex flex-column gap-3" id="challenges">
-      <app-challenge-card *ngFor="let challenge of listChallenges, let i = index"
+    <div class="d-flex flex-column gap-3" id="challenges" #challenge>
+      <app-challenge-card *ngFor="let challenge of challenges, let i = index"
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
         [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
         [id]="challenge.id_challenge">
@@ -45,4 +45,4 @@
     </app-pagination>
   </div>
 </div>
-<app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal>
+ <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal> 

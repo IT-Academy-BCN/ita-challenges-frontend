@@ -1,12 +1,13 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
-
+/* import { RouteConfigLoadEnd } from '@angular/router'
+ */
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
@@ -15,59 +16,77 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
+  @ViewChild('challenge') challengesContainer!: ElementRef
 
   challenges: Challenge[] = []
-  params$!: Subscription
   challengesSubs$!: Subscription
+  sortedChallengesSubs$!: Subscription
+  filteredChallengesSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
 
   totalPages!: number
   pageNumber: number = 1
-  listChallenges: any
+  listChallenges: Challenge[] = []
   pageSize = environment.pageSize
 
   selectedSort: string = ''
   isAscending: boolean = false
-
+  startIndex: number = 0
+  paginationFilters: Challenge[] = []
+  isMobile: boolean = window.innerWidth < 768
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService
-  ) {
-    /*    this.params$ = this.activatedRoute.params.subscribe(params => {
-
-    }) */
-  }
+  ) {}
 
   ngOnInit (): void {
-    this.getChallengesByPage(this.pageNumber)
+    this.getChallenge()
   }
 
   ngOnDestroy (): void {
-    if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
+    if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
+    if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
+  }
+
+  getChallenge (): void {
+    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
+      next: (resp) => {
+        this.listChallenges = resp.results
+        console.log('Datos recibidos:', this.listChallenges)
+
+        this.getChallengesByPage(this.pageNumber)
+      },
+      error: (err) => {
+        console.error('Error al obtener los desafíos:', err)
+      }
+    })
   }
 
   getChallengesByPage (page: number): void {
-    const getChallengeOffset = 8 * (page - 1)
     this.pageNumber = page
+    const startIndex = (this.pageNumber - 1) * this.pageSize
 
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
-      const challengesObservable = this.sortBy !== ''
-        ? this.starterService.getAllChallenges()
-        : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
-      this.challengesSubs$ = challengesObservable.subscribe(resp => {
+      if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
+        this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
+
+        this.challenges = this.isMobile
+          ? this.listChallenges
+          : this.listChallenges.slice(startIndex, startIndex + this.pageSize)
+
         if (this.sortBy !== '') {
-          this.getAndSortChallenges(getChallengeOffset, resp.results)
-        } else {
-          this.listChallenges = resp.results
-          console.log('Respuesta del servicio:', resp.results)
-          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+            this.challenges = sortedResp
+          })
         }
-      })
+      } else {
+        this.challenges = []
+      }
     }
   }
 
@@ -75,53 +94,28 @@ export class StarterComponent implements OnInit {
     this.modalContent.open()
   }
 
-  private getAndSortChallenges (getChallengeOffset: number, resp: any): void {
-    const respArray: Challenge[] = Array.isArray(resp) ? resp : [resp]
-    const sortedChallenges$ = this.isAscending
-      ? this.starterService.orderBySortAscending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-      : this.starterService.orderBySortAsDescending(this.sortBy, respArray, getChallengeOffset, this.pageSize)
-
-    sortedChallenges$.subscribe(sortedResp => {
-      this.listChallenges = sortedResp
-      this.totalPages = Math.ceil(respArray.length / this.pageSize)
-    })
-  }
-
   getChallengeFilters (filters: FilterChallenge): void {
-    const getChallengeOffset = 8 * (this.pageNumber - 1)
     this.filters = filters
-    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
-      const challengesObservable = (this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)
-        ? this.starterService.getAllChallenges()
-        : this.starterService.getAllChallengesOffset(getChallengeOffset, this.pageSize)
+    const respArray: Challenge[] = this.listChallenges
 
-      this.challengesSubs$ = challengesObservable.subscribe(resp => {
-        if ((this.filters.languages.length > 0 && this.filters.languages.length < 4) || (this.filters.levels.length > 0 && this.filters.levels.length < 3) || (this.filters.progress.length > 0 && this.filters.progress.length < 3)) {
-          const respArray: Challenge[] = Array.isArray(resp.results) ? resp.results : [resp.results]
-          this.starterService.getAllChallengesFiltered(this.filters, respArray)
-            .subscribe((filteredResp: Challenge[]) => {
-              if (this.sortBy !== '') {
-                const orderBySortFunction = this.isAscending ? this.starterService.orderBySortAscending : this.starterService.orderBySortAsDescending
-                if (filteredResp.every(item => item instanceof Challenge)) {
-                  orderBySortFunction(this.sortBy, filteredResp, getChallengeOffset, this.pageSize).subscribe(sortedResp => {
-                    this.listChallenges = sortedResp
-                    this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-                  })
-                } else {
-                  console.error('filteredResp no es un array de Challenge')
-                }
-              } else {
-                this.listChallenges = filteredResp.slice(getChallengeOffset, getChallengeOffset + this.pageSize)
-                this.totalPages = Math.ceil(filteredResp.length / this.pageSize)
-              }
-            })
-        } else {
-          this.listChallenges = resp.results
-          this.totalPages = Math.ceil(22 / this.pageSize) // Cambiar 22 por el valor de challenge.count
-        }
+    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
+      this.paginationFilters = filteredResp
+    })
+
+    this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
+    if (this.pageNumber > this.totalPages) {
+      this.pageNumber = this.totalPages
+    }
+    const startIndex = (this.pageNumber - 1) * this.pageSize
+
+    this.challenges = this.isMobile
+      ? this.paginationFilters
+      : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
+
+    if (this.sortBy !== '') {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+        this.challenges = sortedResp
       })
-    } else {
-      this.getChallengesByPage(this.pageNumber)
     }
   }
 
