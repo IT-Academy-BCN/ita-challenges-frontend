@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.26-RELEASE] (2024-11-14) (feature#475)
+
+- Refactoring: Fixed wrong names of config vars
+
+### [ita-challenges-frontend-3.1.25-RELEASE] (2024-11-14) (feature#475)
+
+- Fixed breadcrumb translation
+
+### [ita-challenges-frontend-3.1.24-RELEASE] (2024-11-14) (feature#449)
+
+- Fixed load of the challenge list
+
+### [ita-challenges-frontend-3.1.23-RELEASE] (2024-11-14) (feature#468)
+
+- Fixed error ordination icon
 
 ### [ita-challenges-frontend-3.1.22-RELEASE] (2024-11-11) (feature#464)
 

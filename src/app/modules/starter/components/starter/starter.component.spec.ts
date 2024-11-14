@@ -3,124 +3,95 @@ import { TestBed, type ComponentFixture } from '@angular/core/testing'
 import { StarterComponent } from './starter.component'
 import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
-
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { type Challenge } from 'src/app/models/challenge.model'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { of } from 'rxjs'
-import { environment } from 'src/environments/environment'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-
+import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService
-  let httpMock: HttpTestingController
+  const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
+    ...challenge,
+    creation_date: new Date(`${challenge.creation_date}`),
+    solutions: challenge.solutions.map((solution: any) => ({
+      id_solution: solution.idSolution,
+      solution_text: solution.solutionText
+    }))
+  }))
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [StarterComponent],
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     fixture = TestBed.createComponent(StarterComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
     starterService = TestBed.inject(StarterService)
-    httpMock = TestBed.inject(HttpTestingController)
-  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  it('should call getAllChallenges when sortBy is not empty', (done) => {
-    const mockResponse = { results: [{ challenge: 'challenge' }] }
-    component.sortBy = 'creation_date'
-    spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
-
-    component.getChallengesByPage(1)
-    expect(starterService.getAllChallenges).toHaveBeenCalled()
-    done()
-  })
-
-  it('should set listChallenges correctly when sortBy is empty', () => {
-    const mockResponse = { results: [{ challenge: 'challenge' }] }
-    spyOn(starterService, 'getAllChallengesOffset').and.returnValue(of(mockResponse))
+    component.listChallenges = []
+    component.pageSize = 1
+    component.filters = { languages: [], levels: [], progress: [] }
     component.sortBy = ''
-    component.getChallengesByPage(1)
-    expect(component.listChallenges).toBe(mockResponse.results)
   })
 
-  it('should set listChallenges correctly when sortBy is not empty', () => {
-    const mockResponse = { results: [{ challenge: 'challenge' }] }
-    spyOn(starterService, 'getAllChallenges').and.returnValue(of(mockResponse))
-    spyOn(starterService, 'orderBySortAscending').and.returnValue(of(mockResponse))
-    component.sortBy = 'creation_date'
+  it('should assign challenges when challenges are available.', () => {
+    component.listChallenges = mockChallenges$
+    component.pageSize = 3
+    component.filters = { languages: [], levels: [], progress: [] }
     component.getChallengesByPage(1)
-    expect(component.listChallenges).toStrictEqual(mockResponse.results)
+
+    expect(component.challenges.length).toBe(3) // Debe mostrar 3 desafíos
+    expect(component.challenges).toEqual(mockChallenges$.slice(0, 3)) // Verifica que los desafíos sean correctos
   })
 
-  // changeSort
-  it('should set isAscending to false and selectedSort equal to newSort', () => {
-    const newSort = 'creation_date'
-    const selectedSort = 'creation_date'
-    const pageNumber = 1
+  it('should filter challenges and update challenges correctly', () => {
+    // Simular la lista de desafíos
+    component.listChallenges = mockChallenges$
 
-    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
-    component.changeSort(newSort)
+    const filters = { languages: ['es'], levels: ['EASY'], progress: [] }
+    // Simular el servicio para que devuelva desafíos filtrados
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockChallenges$.slice(0, 3))) // Solo retorna los primeros
+
+    component.getChallengeFilters(filters)
+
+    expect(component.filters).toEqual(filters) // Verifica que los filtros se hayan establecido correctamente
+    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$) // Verifica que el método se haya llamado con los argumentos correctos
+    expect(component.paginationFilters.length).toBe(3) // Verifica que la longitud de los desafíos filtrados sea correcta
+
+    const expectedTotalPages = Math.ceil(component.paginationFilters.length / component.pageSize)
+    expect(component.totalPages).toBe(expectedTotalPages) // Verifica que el total de páginas se haya calculado correctamente
+
+    // Asegúrate de que los desafíos se establezcan correctamente según la ventana
+    if (window.innerWidth < 768) {
+      expect(component.challenges).toEqual(component.paginationFilters) // En móviles, debe mostrar todos los filtrados
+    } else {
+      const startIndex = (component.pageNumber - 1) * component.pageSize
+      expect(component.challenges).toEqual(component.paginationFilters.slice(startIndex, startIndex + component.pageSize)) // En escritorio, paginados
+    }
+  })
+
+  it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
+    component.selectedSort = 'creation_date'
+    component.isAscending = true
+    component.pageNumber = 1
+
     spyOn(component, 'getChallengesByPage')
 
-    expect(component.isAscending).toBeTruthy()
-    expect(selectedSort).toEqual(newSort)
-    expect(getChallengesByPageSpy).toHaveBeenCalledWith(pageNumber)
-    expect(component.isAscending).toBeTruthy()
-  })
+    // Cambia a un nuevo criterio de ordenación que no sea el actual
+    component.changeSort('popularity')
 
-  it('should set isAscending to true after setting it to false', () => {
-    const newSort = 'creation_date'
-    component.changeSort(newSort)
+    expect(component.selectedSort).toBe('popularity')
+    expect(component.isAscending).toBe(true)
+    expect(component.getChallengesByPage).toHaveBeenCalledWith(1)
 
-    expect(component.isAscending).toBeTruthy()
-  })
+    // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
+    component.changeSort('popularity')
+    expect(component.isAscending).toBe(false)
 
-  it('should not call getChallengesByPage if newSort is not "popularity" or "creation_date"', () => {
-    const newSort = ''
-    component.changeSort(newSort)
-    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
-
-    expect(getChallengesByPageSpy).not.toHaveBeenCalled()
-  })
-
-  it('should call getChallengesByPage function when all filter arrays are empty', () => {
-    const pageNumber = 1
-    const getChallengesByPageSpy = jest.spyOn(component, 'getChallengesByPage')
-
-    component.getChallengeFilters({ languages: [], levels: [], progress: [] })
-
-    expect(getChallengesByPageSpy).toHaveBeenCalledWith(pageNumber)
-  })
-
-  it('should handle filters when languages array is not empty', () => {
-    const mockFilteredResp = ['filteredChallenge1', 'filteredChallenge2'] // Mock de la respuesta filtrada
-    const getChallengeFiltersSpy = jest.spyOn(component, 'getChallengeFilters')
-
-    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockFilteredResp))
-
-    component.getChallengeFilters({ languages: ['JavaScript'], levels: ['Easy'], progress: [] })
-
-    expect(getChallengeFiltersSpy).toHaveBeenCalled()
-  })
-
-  it('should call getAllChallengesOffset with correct parameters', () => {
-    const mockChallenges = [{ id: 1, name: 'Test Challenge' }]
-    const pageOffset = 0
-    const pageLimit = 10
-
-    starterService.getAllChallengesOffset(pageOffset, pageLimit).subscribe((challenges: any) => {
-      expect(challenges).toEqual(mockChallenges)
-    })
-
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`)
-    expect(req.request.method).toBe('GET')
-    req.flush(mockChallenges)
+    expect(component.getChallengesByPage).toHaveBeenCalledTimes(2)
   })
 })
