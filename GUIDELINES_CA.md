@@ -175,6 +175,10 @@ Les targetes es mouen d'esquerra a dreta a mesura que es van completant.
 4. Si el revisor de codi aprova la teva pull request, es pot fusionar a la branca "develop".
 5. Mou la targeta a la columna "Done".
 
+
+**NOTA IMPORTANT**: Una Pull Request és una sol·licitud per a incloure el teu codi en el projecte. No esperis que el teu PR sigui acceptada per a començar a treballar en una altra card**
+
+
 ----------------------------------------------------------------
 
 ## 2.5 Treball amb git
