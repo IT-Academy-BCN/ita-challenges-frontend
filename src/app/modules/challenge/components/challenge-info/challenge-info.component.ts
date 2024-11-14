@@ -20,9 +20,8 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { UserService } from 'src/app/services/user.service'
-// import { UserService } from 'src/app/services/user.service'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -53,6 +52,7 @@ export class ChallengeInfoComponent implements OnInit {
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
+  @Input() solutions: any = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -73,6 +73,7 @@ export class ChallengeInfoComponent implements OnInit {
   // relatedChallengesData!: DataChallenge
   // relatedListOfChallenges: Challenge[] = []
   // challengeSubs$!: Subscription
+  isDropdownOpen: boolean = false
 
   async ngOnInit (): Promise<void> {
     // Sottoscrizione allo stato di login
@@ -86,10 +87,12 @@ export class ChallengeInfoComponent implements OnInit {
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
-      this.solutionSent = value
     })
 
     this.loadRelatedChallenges(this.idChallenge)
+    this.solutionService.solutionSent$.subscribe((value) => {
+      this.solutionSent = value
+    })
   }
 
   // ngAfterContentChecked (): void {
@@ -137,6 +140,49 @@ export class ChallengeInfoComponent implements OnInit {
       })
     } else {
       this.openSendSolutionModal()
+    }
+  }
+
+  toggleDropdown (): void {
+    this.isDropdownOpen = !this.isDropdownOpen
+    if (this.isDropdownOpen) {
+      document.addEventListener('click', this.handleOutsideClick)
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick)
+    }
+  }
+
+  handleOutsideClick = (event: MouseEvent): void => {
+    const target = event.target as HTMLElement
+    const dropdownElement: Element | null = document.querySelector('.dropdown-menu-mobile')
+    // Verificación explícita de null usando `!== null`
+    if (dropdownElement !== null && !dropdownElement.contains(target)) {
+      this.closeDropdown()
+    }
+  }
+
+  closeDropdown (): void {
+    this.isDropdownOpen = false
+    document.removeEventListener('click', this.handleOutsideClick)
+  }
+
+  selectTab (id: number): void {
+    this.activeId = id
+    this.isDropdownOpen = false // Cierra el menú desplegable si es necesario
+  }
+
+  getTranslatedTabLabel (): string {
+    switch (this.activeId) {
+      case 1:
+        return 'modules.challenge.info.detailsTitle'
+      case 2:
+        return 'modules.challenge.info.solutionsTitle'
+      case 3:
+        return 'modules.challenge.info.resourcesTitle'
+      case 4:
+        return 'modules.challenge.info.relatedTitle'
+      default:
+        return 'modules.challenge.info.detailsTitle'
     }
   }
 }
