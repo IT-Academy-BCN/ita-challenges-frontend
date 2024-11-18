@@ -1,14 +1,15 @@
-import packageInfo from '../../package.json'
+import { version } from '../../package.json'
 
 export const environment = {
   production: false,
-  appVersion: packageInfo.version,
+  appVersion: version,
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
   BACKEND_ITA_CHALLENGE_SOLUTION: '/challenge/solution',
   BACKEND_ITA_CHALLENGE_USER_SOLUTION: '/user/solution',
   BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
-  // BACKEND_ITA_WIKI_BASE_URL: 'https://dev.api.itadirectory.eurecatacademy.org/api/v1',
   BACKEND_ITA_WIKI_BASE_URL: 'https://dev.itawiki.eurecatacademy.org/api/v1',
+  BACKEND_ITA_WIKI_RESOURCES: '/resources',
+  BACKEND_ITA_WIKI_CATEGORIES: '/categories',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
   BACKEND_ALL_LANGUAGE_URL: '/challenge/language',
   BACKEND_SSO_ITINERARIES: '/itineraries',
@@ -16,8 +17,6 @@ export const environment = {
   BACKEND_SSO_POST_USER: '/users/me',
   BACKEND_SSO_PATCH_USER: '/users',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
-  BACKEND_SSO_CATEGORIES_URL: '/categories',
-  BACKEND_SSO_RESOURCES: '/resources',
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '../assets/dummy/user-solution.mock.json',

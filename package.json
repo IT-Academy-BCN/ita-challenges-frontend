@@ -1,6 +1,6 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "3.1.24-RELEASE",
+  "version": "3.1.27-RELEASE",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
@@ -37,7 +37,7 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.14.1",
     "@compodoc/compodoc": "^1.1.23",
-    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@popperjs/core": "^2.11.6",
