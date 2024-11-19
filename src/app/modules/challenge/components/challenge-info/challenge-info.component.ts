@@ -1,6 +1,6 @@
 import {
   ChangeDetectorRef,
-  // type AfterContentChecked,
+  // ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -17,7 +17,6 @@ import { type Subscription } from 'rxjs'
 import { DataChallenge } from '../../../../models/data-challenge.model'
 import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
-import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
@@ -48,12 +47,14 @@ implements OnInit {
   userId!: string
   isDropdownOpen: boolean = false
 
-  private readonly authService = inject(AuthService)
+  // private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
   private readonly userService = inject(UserService)
   private readonly cd = inject(ChangeDetectorRef)
+  private readonly challengeService = inject(ChallengeService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -72,10 +73,16 @@ implements OnInit {
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
   async ngOnInit (): Promise<void> {
-    console.log('ngOnInit - inizializzazione del componente')
-
     this.solutionService.activeIdSubject.next(1)
 
+    // Sottoscrizione allo stato di login
+    this.userService.userLoggedIn$.subscribe((loggedIn) => {
+      this.isLogged = loggedIn
+      console.log('ChallengeInfoComponent: isLogged updated to', this.isLogged)
+      this.cdr.detectChanges() // Forza il rilevamento delle modifiche
+    })
+
+    // Sottoscrizione allo stato delle soluzioni
     this.solutionService.solutionSent$.subscribe((value) => {
       this.isUserSolution = !value
       this.solutionSent = value
@@ -84,8 +91,6 @@ implements OnInit {
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })
-
-    this.isLogged = this.userService.isUserLoggedIn()
 
     this.loadRelatedChallenges(this.idChallenge)
 
