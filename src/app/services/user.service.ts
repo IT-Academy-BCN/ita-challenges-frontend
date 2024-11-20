@@ -11,7 +11,7 @@ export class UserService {
   public userRegistered: boolean = false
   public userLoggedIn: boolean = false
   public userSentASolution: boolean = false
-  // BehaviorSubject para estado de login
+
   private readonly userLoggedInSubject = new BehaviorSubject<boolean>(false)
   public userLoggedIn$ = this.userLoggedInSubject.asObservable()
 
@@ -39,23 +39,7 @@ export class UserService {
       this.userSentASolution = solutionSent
       console.log(`userSentASolution: ${this.userSentASolution}`)
     })
-    // this.userLoggedIn = this.isUserLoggedIn()
-    // this.userLoggedInSubject.next(this.userLoggedIn)
-
-    // if (this.userLoggedIn) {
-    //   this.monitorSolutionState()
-    // }
-    // this.solutionService.solutionSent$.subscribe((solutionSent) => {
-    //   this.userSentASolution = solutionSent
-    //   console.log(`userSentASolution: ${this.userSentASolution}`)
-    // })
   }
-
-  // private checkLoginStatus (): boolean {
-  //   const authToken = this.cookieService.get('authToken')
-  //   const refreshToken = this.cookieService.get('refreshToken')
-  //   return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
-  // }
 
   public isUserLoggedIn (): boolean {
     const authToken = this.cookieService.get('authToken')
@@ -65,9 +49,6 @@ export class UserService {
     this.userLoggedIn = isLoggedIn
     console.log(`userLoggedIn: ${this.userLoggedIn}`)
     return isLoggedIn
-    // const authToken = this.cookieService.get('authToken')
-    // const refreshToken = this.cookieService.get('refreshToken')
-    // return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
   }
 
   // metodo para actualizar el estado de login
@@ -75,8 +56,6 @@ export class UserService {
     this.userLoggedIn = isLoggedIn
     this.userLoggedInSubject.next(isLoggedIn)
     console.log('Login status updated:', isLoggedIn)
-    // console.log('UserService.updateLoginStatus() called with:', isLoggedIn)
-    // this.userLoggedInSubject.next(isLoggedIn)
   }
 
   // llamado después del login
@@ -92,10 +71,6 @@ export class UserService {
     this.userSolutions = []
     this.userSolutionsSubject.next([])
     console.log('User logged out.')
-    // console.log('UserService.login() called')
-    // this.authService.logout()
-    // this.updateLoginStatus(false)
-    // this.userSentASolution = false
   }
 
   // metodo para monitorear el estado de la solución
