@@ -5,7 +5,7 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-### [ita-challenges-frontend-3.1.29-RELEASE] (2024-11-20) (feature#463)
+### [ita-challenges-frontend-3.1.30-RELEASE] (2024-11-20) (feature#463)
 
 - View accepted solutions after Login
 
