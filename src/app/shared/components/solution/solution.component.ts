@@ -101,12 +101,12 @@ export class SolutionComponent implements OnInit {
     let state: EditorState
     if (this.isUserSolution) {
       state = EditorState.create({
-        // doc: comment,
+        doc: this.solution_text,
         extensions: [minimalSetup, languageExtension]
       })
     } else {
       state = EditorState.create({
-        // doc: 'Respuesta de ejemplo, no se puede modificar',
+        doc: this.solution_text,
         extensions: [
           minimalSetup,
           languageExtension,

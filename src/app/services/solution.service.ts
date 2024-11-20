@@ -41,14 +41,23 @@ export class SolutionService {
     }
   }
 
+  // getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
+  //   return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     }
+  //   )
+  // }
+
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
-    return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`
+    console.log('Request URL:', url) // Log per confermare l'URL finale
+
+    return this.http.get<DataSolution>(url, {
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
 
   getUserSolution (userId: string, challengeId: string, languageId: string): Observable<UserSolution> {

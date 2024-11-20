@@ -20,8 +20,8 @@ export class SendSolutionModalComponent {
     this.userService.addSolutionForChallenge(this.idChallenge)
     this.solutionService.updateSolutionSentState(true)
     this.solutionService.sendSolutionText(true)
-    this.closeModal()
     this.solutionService.activeIdSubject.next(2)
+    this.closeModal()
   }
 
   public closeModal (): void {

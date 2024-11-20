@@ -1,5 +1,6 @@
 import {
   ChangeDetectorRef,
+  // ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -29,7 +30,8 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements OnInit {
+export class ChallengeInfoComponent
+implements OnInit {
   showStatement = true
   isLogged: boolean = false
   solutionSent: boolean = false
@@ -40,13 +42,18 @@ export class ChallengeInfoComponent implements OnInit {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
-  idLanguage: string = ''
+  // idLanguage: string = ''
+  idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   userId!: string
-  private readonly challengeService = inject(ChallengeService)
-  private readonly userService = inject(UserService)
+  isDropdownOpen: boolean = false
+
+  // private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
+  private readonly userService = inject(UserService)
+  private readonly cd = inject(ChangeDetectorRef)
+  private readonly challengeService = inject(ChallengeService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
@@ -65,17 +72,9 @@ export class ChallengeInfoComponent implements OnInit {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  // showStatement = true
-  // isLogged: boolean = false
-  // solutionSent: boolean = false
-  // resources: string = '' // TODO resources
-  // params$!: Subscription
-  // relatedChallengesData!: DataChallenge
-  // relatedListOfChallenges: Challenge[] = []
-  // challengeSubs$!: Subscription
-  isDropdownOpen: boolean = false
-
   async ngOnInit (): Promise<void> {
+    this.solutionService.activeIdSubject.next(1)
+
     // Sottoscrizione allo stato di login
     this.userService.userLoggedIn$.subscribe((loggedIn) => {
       this.isLogged = loggedIn
@@ -89,25 +88,14 @@ export class ChallengeInfoComponent implements OnInit {
       this.solutionSent = value
     })
 
-    this.loadRelatedChallenges(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.solutionSent = value
+    this.solutionService.activeId$.subscribe((newActiveId) => {
+      this.onActiveIdChange(newActiveId)
     })
+
+    this.loadRelatedChallenges(this.idChallenge)
+
+    this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
-
-  // ngAfterContentChecked (): void {
-  //   const token = localStorage.getItem('authToken') // TODO
-  //   const refreshToken = localStorage.getItem('refreshToken') // TODO
-
-  //   if (
-  //     token !== null &&
-  //     refreshToken !== null &&
-  //     token !== '' &&
-  //     refreshToken !== ''
-  //   ) {
-  //     this.isLogged = true
-  //   }
-  // }
 
   loadRelatedChallenges (id: string): void {
     this.challengeSubs$ = this.relatedService
@@ -119,9 +107,14 @@ export class ChallengeInfoComponent implements OnInit {
   }
 
   onActiveIdChange (newActiveId: number): void {
+    console.log('onActiveIdChange - Cambio de activeId a:', newActiveId)
     if (this.activeIdChange !== null) {
-      this.activeId = newActiveId
-      this.activeIdChange.emit(this.activeId)
+      Promise.resolve().then(() => {
+        this.activeId = newActiveId
+        this.activeIdChange.emit(this.activeId)
+      }).catch((error) => {
+        console.error('Error in onActiveIdChange:', error)
+      })
     }
   }
 
@@ -139,8 +132,24 @@ export class ChallengeInfoComponent implements OnInit {
         size: 'lg'
       })
     } else {
-      this.openSendSolutionModal()
+      this.solutionService.sendSolution('')
+      // this.loadSolutions(this.idChallenge, this.idLanguageJava)
+      this.onActiveIdChange(2)
     }
+  }
+
+  loadSolutions (idChallenge: string, idLanguage: string): void {
+    this.solutionService
+      .getAllChallengeSolutions(idChallenge, idLanguage)
+      .subscribe((data) => {
+        console.log('Raw data from API:', data)
+        if (data.results.length > 0) {
+          this.challengeSolutions = data.results
+          console.log('Challenge Solutions Loaded:', this.challengeSolutions)
+        } else {
+          console.log('No solutions found or data format issue')
+        }
+      })
   }
 
   toggleDropdown (): void {

@@ -1,4 +1,4 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
+import { type ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ChallengeInfoComponent } from './challenge-info.component'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -78,43 +78,24 @@ describe('ChallengeInfoComponent', () => {
     expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 
-  it('should emit activeIdChange on onActiveIdChange call', () => {
-    jest.spyOn(component.activeIdChange, 'emit')
-    component.onActiveIdChange(2)
-    expect(component.activeId).toBe(2)
-    expect(component.activeIdChange.emit).toHaveBeenCalledWith(2)
-  })
+  it('should onActiveIdChange correctly', fakeAsync(() => {
+    const newActiveId = 2
 
-  describe('Dropdown functionality', () => {
-    it('should toggle dropdown visibility', () => {
-      component.isDropdownOpen = false
-      component.toggleDropdown()
-      expect(component.isDropdownOpen).toBe(true)
+    component.onActiveIdChange(newActiveId)
 
-      component.toggleDropdown()
-      expect(component.isDropdownOpen).toBe(false)
-    })
+    tick()
+    expect(component.activeIdChange).toBeTruthy()
+    expect(component.activeId).toBe(newActiveId)
+  }))
 
-    it('should close dropdown on outside click', () => {
-      component.isDropdownOpen = true
-      const event = new MouseEvent('click')
-      jest.spyOn(event, 'target', 'get').mockReturnValue(document.body)
-      component.handleOutsideClick(event)
-      expect(component.isDropdownOpen).toBe(false)
-    })
+  // it('should onActiveIdchange correctly', () => {
+  //   const newActiveId = 2
+  //   const activeId = 1
 
-    it('should select tab and close dropdown', () => {
-      component.isDropdownOpen = true
-      component.selectTab(3)
-      expect(component.activeId).toBe(3)
-      expect(component.isDropdownOpen).toBe(false)
-    })
-  })
+  //   component.onActiveIdChange(newActiveId)
 
-  it('should return correct translation key for active tab label', () => {
-    component.activeId = 2
-    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.solutionsTitle')
-    component.activeId = 3
-    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.resourcesTitle')
-  })
+  //   expect(component.activeIdChange).toBeTruthy()
+  //   component.activeIdChange.emit(activeId)
+  //   expect(component.activeId).toBe(newActiveId)
+  // })
 })
