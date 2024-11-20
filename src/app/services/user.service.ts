@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core'
 import { AuthService } from './auth.service'
 import { SolutionService } from './solution.service'
 import { CookieService } from 'ngx-cookie-service'
-import { BehaviorSubject, type Observable } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -23,32 +23,60 @@ export class UserService {
 
   userSolutions: string[] = []
 
-  
-
   constructor (
     @Inject(AuthService) private readonly authService: AuthService,
     @Inject(CookieService) private readonly cookieService: CookieService,
     @Inject(SolutionService) private readonly solutionService: SolutionService
   ) {
-    if (this.isUserLoggedIn()) {
+    const isLoggedIn = this.isUserLoggedIn()
+    this.userLoggedInSubject.next(isLoggedIn)
+
+    if (isLoggedIn) {
       this.monitorSolutionState()
     }
+
     this.solutionService.solutionSent$.subscribe((solutionSent) => {
       this.userSentASolution = solutionSent
       console.log(`userSentASolution: ${this.userSentASolution}`)
     })
+    // this.userLoggedIn = this.isUserLoggedIn()
+    // this.userLoggedInSubject.next(this.userLoggedIn)
+
+    // if (this.userLoggedIn) {
+    //   this.monitorSolutionState()
+    // }
+    // this.solutionService.solutionSent$.subscribe((solutionSent) => {
+    //   this.userSentASolution = solutionSent
+    //   console.log(`userSentASolution: ${this.userSentASolution}`)
+    // })
   }
+
+  // private checkLoginStatus (): boolean {
+  //   const authToken = this.cookieService.get('authToken')
+  //   const refreshToken = this.cookieService.get('refreshToken')
+  //   return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
+  // }
 
   public isUserLoggedIn (): boolean {
     const authToken = this.cookieService.get('authToken')
     const refreshToken = this.cookieService.get('refreshToken')
-    return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
+    const isLoggedIn = !(authToken.length === 0) || !(refreshToken.length === 0)
+
+    this.userLoggedIn = isLoggedIn
+    console.log(`userLoggedIn: ${this.userLoggedIn}`)
+    return isLoggedIn
+    // const authToken = this.cookieService.get('authToken')
+    // const refreshToken = this.cookieService.get('refreshToken')
+    // return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
   }
 
   // metodo para actualizar el estado de login
   public updateLoginStatus (isLoggedIn: boolean): void {
-    console.log('UserService.updateLoginStatus() called with:', isLoggedIn)
+    this.userLoggedIn = isLoggedIn
     this.userLoggedInSubject.next(isLoggedIn)
+    console.log('Login status updated:', isLoggedIn)
+    // console.log('UserService.updateLoginStatus() called with:', isLoggedIn)
+    // this.userLoggedInSubject.next(isLoggedIn)
   }
 
   // llamado después del login
@@ -58,10 +86,16 @@ export class UserService {
 
   // llamado después del logout
   public logout (): void {
-    console.log('UserService.login() called')
     this.authService.logout()
-    this.updateLoginStatus(false)
+    this.userLoggedIn = false
     this.userSentASolution = false
+    this.userSolutions = []
+    this.userSolutionsSubject.next([])
+    console.log('User logged out.')
+    // console.log('UserService.login() called')
+    // this.authService.logout()
+    // this.updateLoginStatus(false)
+    // this.userSentASolution = false
   }
 
   // metodo para monitorear el estado de la solución
@@ -84,7 +118,7 @@ export class UserService {
     }
   }
 
-  isSolutionSent (challengeId: string): boolean {
+  public isSolutionSent (challengeId: string): boolean {
     // Comprobar si el challengeId está presente en las soluciones del usuario
     return this.userSolutionsSubject.getValue().includes(challengeId)
   }

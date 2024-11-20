@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core'
 import { isValidDni, isValidInput, getInputError } from '../../../helpers/form-validator.helper'
 import { UserService } from 'src/app/services/user.service'
 
-
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
@@ -46,6 +45,7 @@ export class LoginModalComponent {
         this.ngZone.run(() => {
           console.log('LoginModalComponent: Login successful')
           this.userService.login()
+          this.modalService.dismissAll()
           this.openSuccessfulLoginModal(res)
         })
       } catch (err) {
