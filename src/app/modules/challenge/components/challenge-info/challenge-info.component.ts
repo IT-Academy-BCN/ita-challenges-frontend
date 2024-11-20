@@ -1,8 +1,9 @@
 import {
-  type AfterContentChecked,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
   ViewChild,
   inject
@@ -15,12 +16,12 @@ import { type Subscription } from 'rxjs'
 import { DataChallenge } from '../../../../models/data-challenge.model'
 import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
-import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { UserService } from 'src/app/services/user.service'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
   selector: 'app-challenge-info',
@@ -28,15 +29,25 @@ import { UserService } from 'src/app/services/user.service'
   styleUrls: ['./challenge-info.component.scss'],
   providers: [ChallengeService]
 })
-export class ChallengeInfoComponent implements AfterContentChecked {
+export class ChallengeInfoComponent implements OnInit {
+  showStatement = true
+  isLogged: boolean = false
+  solutionSent: boolean = false
   isUserSolution: boolean = true
-  challengeSolutions: any[] = []
+  resources: string = ''
+  params$!: Subscription
+  relatedChallengesData!: DataChallenge
+  relatedListOfChallenges: Challenge[] = []
+  challengeSubs$!: Subscription
+  challengeSolutions: SolutionResults[] = []
+  idLanguage: string = ''
+  userId!: string
   private readonly challengeService = inject(ChallengeService)
-  private readonly authService = inject(AuthService)
+  private readonly userService = inject(UserService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
-  private readonly userService = inject(UserService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -54,22 +65,29 @@ export class ChallengeInfoComponent implements AfterContentChecked {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  showStatement = true
-  isLogged: boolean = false
-  solutionSent: boolean = false
-  resources: string = '' // TODO resources
-  params$!: Subscription
-  relatedChallengesData!: DataChallenge
-  relatedListOfChallenges: Challenge[] = []
-  challengeSubs$!: Subscription
+  // showStatement = true
+  // isLogged: boolean = false
+  // solutionSent: boolean = false
+  // resources: string = '' // TODO resources
+  // params$!: Subscription
+  // relatedChallengesData!: DataChallenge
+  // relatedListOfChallenges: Challenge[] = []
+  // challengeSubs$!: Subscription
   isDropdownOpen: boolean = false
 
   async ngOnInit (): Promise<void> {
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.isUserSolution = !value
+    // Sottoscrizione allo stato di login
+    this.userService.userLoggedIn$.subscribe((loggedIn) => {
+      this.isLogged = loggedIn
+      console.log('ChallengeInfoComponent: isLogged updated to', this.isLogged)
+      this.cdr.detectChanges() // Forza il rilevamento delle modifiche
     })
 
-    this.isLogged = this.userService.isUserLoggedIn()
+    // Sottoscrizione allo stato delle soluzioni
+    this.solutionService.solutionSent$.subscribe((value) => {
+      this.isUserSolution = !value
+      this.solutionSent = value
+    })
 
     this.loadRelatedChallenges(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((value) => {
@@ -77,19 +95,19 @@ export class ChallengeInfoComponent implements AfterContentChecked {
     })
   }
 
-  ngAfterContentChecked (): void {
-    const token = localStorage.getItem('authToken') // TODO
-    const refreshToken = localStorage.getItem('refreshToken') // TODO
+  // ngAfterContentChecked (): void {
+  //   const token = localStorage.getItem('authToken') // TODO
+  //   const refreshToken = localStorage.getItem('refreshToken') // TODO
 
-    if (
-      token !== null &&
-      refreshToken !== null &&
-      token !== '' &&
-      refreshToken !== ''
-    ) {
-      this.isLogged = true
-    }
-  }
+  //   if (
+  //     token !== null &&
+  //     refreshToken !== null &&
+  //     token !== '' &&
+  //     refreshToken !== ''
+  //   ) {
+  //     this.isLogged = true
+  //   }
+  // }
 
   loadRelatedChallenges (id: string): void {
     this.challengeSubs$ = this.relatedService
@@ -121,7 +139,7 @@ export class ChallengeInfoComponent implements AfterContentChecked {
         size: 'lg'
       })
     } else {
-      this.solutionService.sendSolution('') // Puedes pasar la solución como argumento si es necesario
+      this.openSendSolutionModal()
     }
   }
 

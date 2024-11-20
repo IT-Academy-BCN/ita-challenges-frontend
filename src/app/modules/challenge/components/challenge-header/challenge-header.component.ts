@@ -1,4 +1,4 @@
-import { Component, Input, type OnInit, inject } from '@angular/core'
+import { ChangeDetectorRef, Component, Input, type OnInit, inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
@@ -20,6 +20,7 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   private readonly userService = inject(UserService)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -39,7 +40,12 @@ export class ChallengeHeaderComponent implements OnInit {
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
-    this.isLogged = this.userService.isUserLoggedIn()
+
+    this.userService.userLoggedIn$.subscribe((loggedIn) => {
+      this.isLogged = loggedIn
+      // Forza il rilevamento delle modifiche se necessario
+      this.cdr.detectChanges()
+    })
     this.userService.userSolutions$.subscribe((solutions) => {
       this.solutionSent = solutions.includes(this.idChallenge)
     })
@@ -62,6 +68,8 @@ export class ChallengeHeaderComponent implements OnInit {
         centered: true,
         size: 'lg'
       })
+    } else {
+      this.openSendSolutionModal()
     }
   }
 

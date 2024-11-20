@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@angular/core'
 import { AuthService } from './auth.service'
-// import { type User } from '../models/user.model'
 import { SolutionService } from './solution.service'
 import { CookieService } from 'ngx-cookie-service'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, type Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,9 @@ export class UserService {
   public userRegistered: boolean = false
   public userLoggedIn: boolean = false
   public userSentASolution: boolean = false
+  // BehaviorSubject para estado de login
+  private readonly userLoggedInSubject = new BehaviorSubject<boolean>(false)
+  public userLoggedIn$ = this.userLoggedInSubject.asObservable()
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
   solutionSent$ = this.solutionSentSubject.asObservable()
@@ -20,6 +22,8 @@ export class UserService {
   userSolutions$ = this.userSolutionsSubject.asObservable()
 
   userSolutions: string[] = []
+
+  
 
   constructor (
     @Inject(AuthService) private readonly authService: AuthService,
@@ -37,30 +41,30 @@ export class UserService {
 
   public isUserLoggedIn (): boolean {
     const authToken = this.cookieService.get('authToken')
-    if (authToken !== null && authToken !== undefined && authToken !== '') {
-      this.userLoggedIn = true
-      console.log(`userLoggedIn: ${this.userLoggedIn}`)
-      return true
-    }
-
     const refreshToken = this.cookieService.get('refreshToken')
-    if (refreshToken !== null && refreshToken !== undefined && refreshToken !== '') {
-      this.userLoggedIn = true
-      console.log(`userLoggedIn: ${this.userLoggedIn}`)
-      return true
-    }
-
-    console.log(`userLoggedIn: ${this.userLoggedIn}`)
-    return false
+    return (authToken !== null && authToken !== undefined && authToken !== '') || (refreshToken !== null && refreshToken !== undefined && refreshToken !== '')
   }
 
+  // metodo para actualizar el estado de login
+  public updateLoginStatus (isLoggedIn: boolean): void {
+    console.log('UserService.updateLoginStatus() called with:', isLoggedIn)
+    this.userLoggedInSubject.next(isLoggedIn)
+  }
+
+  // llamado después del login
+  public login (): void {
+    this.updateLoginStatus(true)
+  }
+
+  // llamado después del logout
   public logout (): void {
+    console.log('UserService.login() called')
     this.authService.logout()
-    this.userLoggedIn = false
+    this.updateLoginStatus(false)
     this.userSentASolution = false
-    console.log(`userLoggedIn: ${this.userLoggedIn}`)
   }
 
+  // metodo para monitorear el estado de la solución
   public monitorSolutionState (): void {
     if (this.userLoggedIn) {
       const idUser = this.authService.currentUser.idUser
