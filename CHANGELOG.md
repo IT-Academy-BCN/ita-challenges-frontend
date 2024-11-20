@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.1.29-RELEASE] (2024-11-20) (feature#463)
+
+- View accepted solutions after Login
+
 ### [ita-challenges-frontend-3.1.27-RELEASE] (2024-11-14) (feature#479)
 
 - Angular Bootstrap updated from 16.0.0 to 17.0.1
