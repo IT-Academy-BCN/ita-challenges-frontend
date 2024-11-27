@@ -47,13 +47,10 @@ implements OnInit {
   userId!: string
   isDropdownOpen: boolean = false
 
-  // private readonly authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
   private readonly userService = inject(UserService)
-  private readonly cd = inject(ChangeDetectorRef)
-  private readonly challengeService = inject(ChallengeService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
@@ -75,17 +72,17 @@ implements OnInit {
   async ngOnInit (): Promise<void> {
     this.solutionService.activeIdSubject.next(1)
 
-    // Sottoscrizione allo stato di login
+    // Vrificar si el usuario está logueado
     this.userService.userLoggedIn$.subscribe((loggedIn) => {
       this.isLogged = loggedIn
       console.log('ChallengeInfoComponent: isLogged updated to', this.isLogged)
-      this.cdr.detectChanges() // Forza il rilevamento delle modifiche
+      this.cdr.detectChanges()
     })
 
-    // Sottoscrizione allo stato delle soluzioni
-    this.solutionService.solutionSent$.subscribe((value) => {
-      this.isUserSolution = !value
-      this.solutionSent = value
+    // Verificar si el usuario ha enviado una solución
+    this.userService.userSolutions$.subscribe((solutions) => {
+      this.solutionSent = solutions.includes(this.idChallenge)
+      console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
     })
 
     this.solutionService.activeId$.subscribe((newActiveId) => {
@@ -132,8 +129,7 @@ implements OnInit {
         size: 'lg'
       })
     } else {
-      this.solutionService.sendSolution('')
-      // this.loadSolutions(this.idChallenge, this.idLanguageJava)
+      this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
       this.onActiveIdChange(2)
     }
   }

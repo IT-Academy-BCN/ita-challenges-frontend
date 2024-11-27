@@ -97,17 +97,20 @@
       
       <!--users can only see other solutions if they sent theirs-->
       <div class="tab-content">
-        <div class="restricted" *ngIf="isUserSolution">
-          <h3>
-            {{ "modules.challenge.info.solutionsTitleLocked" | translate }}
-          </h3>
-          <span class="lock">
-            <img src="assets/img/icon/lock.svg" alt="lock icon" />
-            <p>
-              {{ "modules.challenge.info.solutionsLocked" | translate }}
-            </p>
-          </span>
-        </div>
+        @if (!solutionSent) {
+          <div class="restricted">
+            <h3>
+              {{ "modules.challenge.info.solutionsTitleLocked" | translate }}
+            </h3>
+            <span class="lock">
+              <img src="assets/img/icon/lock.svg" alt="lock icon" />
+              <p>
+                {{ "modules.challenge.info.solutionsLocked" | translate }}
+              </p>
+            </span>
+          </div>
+        }
+        
         <!--if users sent their solution they can now see other solutions-->
         <div class="unrestricted" *ngIf="solutionSent && isLogged">
           <ng-container >

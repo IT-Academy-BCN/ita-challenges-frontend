@@ -2,9 +2,6 @@ import { ChangeDetectorRef, Component, Input, type OnInit, inject } from '@angul
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
-import { SolutionService } from '../../../../services/solution.service'
-import { AuthService } from 'src/app/services/auth.service'
-import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { UserService } from 'src/app/services/user.service'
 
@@ -15,9 +12,6 @@ import { UserService } from 'src/app/services/user.service'
 })
 export class ChallengeHeaderComponent implements OnInit {
   private readonly modalService = inject(NgbModal)
-  private readonly solutionService = inject(SolutionService)
-  private readonly authService = inject(AuthService)
-  private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   private readonly userService = inject(UserService)
   private readonly cdr = inject(ChangeDetectorRef)
@@ -43,15 +37,11 @@ export class ChallengeHeaderComponent implements OnInit {
 
     this.userService.userLoggedIn$.subscribe((loggedIn) => {
       this.isLogged = loggedIn
-      // Forza il rilevamento delle modifiche se necessario
       this.cdr.detectChanges()
     })
     this.userService.userSolutions$.subscribe((solutions) => {
       this.solutionSent = solutions.includes(this.idChallenge)
     })
-
-    // this.solutionSent = this.solutionService.isSolutionSent(this.idChallenge)
-    // console.log(`Solution sent for challenge ${this.idChallenge}:`, this.solutionSent)
   }
 
   openSendSolutionModal (): void {

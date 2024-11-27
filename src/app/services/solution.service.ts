@@ -19,45 +19,24 @@ export class SolutionService {
   submitSolutionSubject = new Subject<boolean>()
   public sendSolutionText$ = this.submitSolutionSubject.asObservable()
 
-  solutionSent: boolean = false
-  updatingState: boolean = false // Nuevo flag para evitar la recursividad
-
-  userSolutions: any[] = []
-
   updateSolutionSentState (value: boolean): void {
-    if (this.updatingState) return // Evita la recursividad
-    this.updatingState = true
     this.solutionSentSubject.next(value)
-    this.solutionSent = value
-    this.updatingState = false
   }
 
   sendSolution (solution: string, challengeId?: string): void {
-    if (!this.solutionSent) {
-      console.log('Sending solution:', solution)
-      this.updateSolutionSentState(true)
-      // Cuando se haya enviado la solución, actualiza el estado
-      // Lógica para enviar la solución al backend si es necesario
-    }
+    // Cuando se haya enviado la solución, actualiza el estado
+    this.updateSolutionSentState(true)
+    // Lógica para enviar la solución al backend si es necesario
   }
 
-  // getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
-  //   return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     }
-  //   )
-  // }
-
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`
-    console.log('Request URL:', url) // Log per confermare l'URL finale
-
-    return this.http.get<DataSolution>(url, {
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
   }
 
   getUserSolution (userId: string, challengeId: string, languageId: string): Observable<UserSolution> {

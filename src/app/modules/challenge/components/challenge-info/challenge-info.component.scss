@@ -94,6 +94,7 @@ input[type="checkbox"] {
     height: 1.15em;
     border-radius: 50%;
     border: 2px solid $primary;
+    transform: translateY(0.15em);
     display: grid;
     place-content: center;
 
@@ -102,7 +103,12 @@ input[type="checkbox"] {
         width: 0.65em;
         height: 0.65em;
         border-radius: 50%;
+        transform: scale(0);
         background-color: $primary;
+    }
+
+    &:checked::before {
+        transform: scale(1);
     }
 
     &:focus-visible {
