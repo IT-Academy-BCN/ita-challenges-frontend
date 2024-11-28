@@ -1,7 +1,7 @@
 import { LOCALE_ID, NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { HttpClient, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -54,8 +54,9 @@ export function HttpLoaderFactory (http: HttpClient): any {
   providers: [
     AuthService, // CookieEncryptionHelper
 
-    provideHttpClient(withInterceptorsFromDi()),
-    { provide: LOCALE_ID, useValue: 'ca' } // Establecemos Catalán como idioma por defecto.
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    { provide: LOCALE_ID, useValue: 'ca' }, // Establecemos Catalán como idioma por defecto.
+    provideClientHydration()
   ]
 })
 export class AppModule { }
