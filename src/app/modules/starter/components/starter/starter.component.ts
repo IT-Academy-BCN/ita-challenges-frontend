@@ -1,11 +1,12 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef, PLATFORM_ID } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
+import { isPlatformBrowser } from '@angular/common'
 /* import { RouteConfigLoadEnd } from '@angular/router'
  */
 @Component({
@@ -35,13 +36,21 @@ export class StarterComponent implements OnInit {
   isAscending: boolean = false
   startIndex: number = 0
   paginationFilters: Challenge[] = []
-  isMobile: boolean = window.innerWidth < 768
+  isMobile: boolean = false
+
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
-    @Inject(TranslateService) readonly translate: TranslateService
+    @Inject(TranslateService) readonly translate: TranslateService,
+    @Inject(PLATFORM_ID) private readonly platformId: unknown
   ) {}
 
   ngOnInit (): void {
+    if (typeof this.platformId === 'object' && this.platformId !== null) {
+      if (isPlatformBrowser(this.platformId)) {
+        this.isMobile = window.innerWidth < 768
+      }
+    }
+
     this.getChallenge()
   }
 
