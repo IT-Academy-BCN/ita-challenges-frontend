@@ -1,5 +1,4 @@
 import { TestBed, type ComponentFixture } from '@angular/core/testing'
-
 import { StarterComponent } from './starter.component'
 import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
@@ -8,6 +7,11 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { of } from 'rxjs'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
+import { StarterFiltersComponent } from '../starter-filters/starter-filters.component'
+import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component'
+import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
+import { ReactiveFormsModule } from '@angular/forms'
+
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
@@ -23,8 +27,8 @@ describe('StarterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [StarterComponent],
-      imports: [TranslateModule.forRoot()],
+      declarations: [StarterComponent, StarterFiltersComponent, PaginationComponent, FiltersModalComponent],
+      imports: [TranslateModule.forRoot(), ReactiveFormsModule],
       providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     fixture = TestBed.createComponent(StarterComponent)

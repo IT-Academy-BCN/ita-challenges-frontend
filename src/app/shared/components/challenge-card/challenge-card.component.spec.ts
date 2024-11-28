@@ -1,21 +1,24 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeCardComponent } from './challenge-card.component'
-import { RouterTestingModule } from '@angular/router/testing'
+import { RouterModule, ActivatedRoute } from '@angular/router'
 import { StarterService } from '../../../services/starter.service'
-import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
-import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-
-import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
-import { LOCALE_ID, Pipe, type PipeTransform } from '@angular/core'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateModule } from '@ngx-translate/core'
+import { LOCALE_ID } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { formatDate } from '@angular/common'
+import { formatDate, registerLocaleData } from '@angular/common'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
+import localeCa from '@angular/common/locales/ca'
 
-@Pipe({ name: 'translate' })
-class MockTranslatePipe implements PipeTransform {
-  transform (value: string): string {
-    return value// Restituisce semplicemente la chiave di traduzione
+registerLocaleData(localeCa, 'ca')
+
+// Mock de ActivatedRoute para pruebas
+const mockActivatedRoute = {
+  snapshot: {
+    paramMap: {
+      get: jest.fn().mockReturnValue(null)
+    }
   }
 }
 
@@ -25,24 +28,18 @@ describe('ChallengeCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChallengeCardComponent, MockTranslatePipe],
+      declarations: [ChallengeCardComponent],
       imports: [
         NgbTooltipModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        RouterModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         StarterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        { provide: LOCALE_ID, useValue: 'ca' } // Proveer LOCALE_ID para el idioma
+        { provide: LOCALE_ID, useValue: 'ca' }, // Proveer LOCALE_ID para el idioma
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ]
     }).compileComponents()
   })
