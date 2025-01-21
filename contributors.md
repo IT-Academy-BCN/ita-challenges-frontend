@@ -20,3 +20,4 @@
 - Sara Ortega - https://github.com/SaraAOrtega
 - Eloi Ginesti - https://github.com/xapolin1979
 - Fran Palmero - https://github.com/PacMM79
+- Daylin Mejía - https://github.com/DaylinMB
