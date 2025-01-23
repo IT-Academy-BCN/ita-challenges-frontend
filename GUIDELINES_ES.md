@@ -161,9 +161,9 @@ Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 
 ##### 2.4.2 Trabajar en una tarea
 
-1. Crea una nueva rama para la tarea **utilizando el formato "feature#numeroDeLaTarjeta"**. Se refiere al número de la tarjeta del Sprint Backlog. Por ejemplo:
+1. Crea una nueva rama para la tarea **utilizando el formato "feature/numeroDeLaTarjeta-descripcionCorta"**. Donde "numeroDeLaTarjeta" se refiere al número de la tarjeta del Sprint Backlog y "descripcionCorta" es una breve descripción de la tarea. Por ejemplo:
 
-       git checkout -b feature#123
+       git checkout -b feature/123-crearFormularioLogin
 2. Trabaja en tu tarea. Realiza commits con frecuencia.
 3. Cuando hayas finalizado la tarea, sube los cambios al repositorio.
 
