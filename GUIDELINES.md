@@ -148,12 +148,12 @@ IMPORTANT: It is expected that everyone on the project is online with their came
 - The tasks on the dashboard are actually "Issues" on Github. Therefore, these Issues can have labels (such as "Epic3", "Design", "Testing") that help provide an idea of the task's content.
 
 ### 2.4.2 Working on a task
--Once you have a task assigned, you will need to create a new branch dedicated exclusively to that task. **The branch name format should always be "feature/#X"**, where "X" is the task number (which can be found at the end of the task title). For example, if your task is number 101, you would create a branch named "feature/#101".
+-Once you have a task assigned, you will need to create a new branch dedicated exclusively to that task. **The branch name format should always be "feature/taskNumber-shortDescription"**, where "taskNumber" is the Kanban issue number (found at the end of the task title) and "shortDescription" is a brief description of the task. For example, if your task is number 101 and involves creating a login form, you would create a branch named "feature/101-createLoginForm".
 
 The typical flow is as follows:
 - Create a branch, make changes and commit:
 
-        git switch -c branchName (e.g., git switch -c feature/#101)
+        git switch -c branchName (e.g., git switch -c feature/101-createLoginForm)
         git add .
         git commit -m "Commit message"
 - As mentioned, the first time you push your branch to the remote repository you can set an upstream branch:
@@ -304,7 +304,7 @@ Also is available a guide about testing at https://martinfowler.com/articles/pra
 Project development is deployed on develop server through Continuous Integration, not manually.
 All features developed are deployed on the develop server for testing when are approved. When you finish a feature, follow next steps:
 - Make sure your feature branch is up to date with the develop branch.
-- Make sure the name of your feature branch is right (feature/#X).
+- Make sure the name of your feature branch is right (feature/taskNumber-shortDescription).
 - Follow semantic versioning (https://semver.org/), and update version number in package.json.
 - Update version number (property MICROSERVICE_VERSION) at file **.env.CI.dev** and **package.json** as well. Make sure both versions are the same. There should be a white line at the end of the file.
 - Make necesary annotations at file **CHANGELOG.md** 
