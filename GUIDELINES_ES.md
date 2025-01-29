@@ -75,7 +75,6 @@
          git push origin nombre-de-tu-rama
 8. Abre el repositorio en GitHub. Deberías ver un mensaje que te permite crear un pull request desde tu nueva rama a la rama "develop". Haz clic en el enlace para crear la pull request.
 
-
 ----------------------------------------------------------------
 
 #### 2.2 Configuraciones de Git
