@@ -18,7 +18,6 @@ import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { UserService } from 'src/app/services/user.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
@@ -32,7 +31,6 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 export class ChallengeInfoComponent
 implements OnInit {
   showStatement = true
-  isLogged: boolean = false
   solutionSent: boolean = false
   isUserSolution: boolean = true
   resources: string = ''
@@ -70,20 +68,8 @@ implements OnInit {
 
   async ngOnInit (): Promise<void> {
     this.solutionService.activeIdSubject.next(1)
-
-    // Vrificar si el usuario está logueado
-    this.userService.userLoggedIn$.subscribe((loggedIn) => {
-      this.isLogged = loggedIn
-      console.log('ChallengeInfoComponent: isLogged updated to', this.isLogged)
-      this.cdr.detectChanges()
-    })
-
-    // Verificar si el usuario ha enviado una solución
-    this.userService.userSolutions$.subscribe((solutions) => {
-      this.solutionSent = solutions.includes(this.idChallenge)
-      console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
-    })
-
+    this.solutionSent = this.solutions.includes(this.idChallenge)
+    console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })
@@ -122,12 +108,7 @@ implements OnInit {
   }
 
   clickSendButton (): void {
-    if (!this.isLogged) {
-      this.modalService.open(RestrictedModalComponent, {
-        centered: true,
-        size: 'lg'
-      })
-    } else {
+    if (this.isUserSolution) {
       this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
       this.onActiveIdChange(2)
     }

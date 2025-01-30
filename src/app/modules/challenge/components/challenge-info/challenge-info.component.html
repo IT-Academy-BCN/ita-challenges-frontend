@@ -1,6 +1,4 @@
 <!---Nav tabs-->
-<!-- <app-restricted-modal *ngIf="!isLogged" (click)="clickSendButton()">  </app-restricted-modal> -->
-
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs d-none d-md-flex">
 
   <!--DETAILS TAB-->
@@ -13,12 +11,10 @@
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3">
-          <span *ngIf="isLogged" class="right-span d-inline-flex">
             <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
             <label class="ms-1">{{
               "modules.challenge.info.showStatement" | translate
               }}</label>
-          </span>
         </div>
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
@@ -49,41 +45,11 @@
               <p>{{ notes | dynamicTranslate }}</p>
             </div>
           </div>
-          <!-- only if user logeed in -->
-          <!-- <app-solution *ngIf="isLogged && solutionSent" style="background-color: white;" [isUserSolution]="true" [languageExt]="'java'"></app-solution> -->
-
-          <ng-container *ngIf="isLogged">
-            <app-solution style="background-color: white" [isUserSolution]="true" [languageExt]="'java'"></app-solution>
-          </ng-container>
+          
           <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
         </div>
       </div>
-      <!-------if not logged show this------>
-      @if (!isLogged) {
-      <div class="w-100 mt-4 d-md-none">
-        <button class="w-100 btn btn-primary btn-send-solution" (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}">
-          {{ "modules.challenge.header.button" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!------ if logged show this------>
-      @if (isLogged && !solutionSent) {
-      <div class="w-100 button d-md-none">
-        <button class="w-100 btn btn-sm btn-outline-primary">
-          {{ "modules.challenge.header.buttonCancel" | translate }}
-        </button>
-        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
-          {{ "modules.challenge.header.buttonAccept" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!-----if solution sent show this---->
-      <div class="solutionSent w-100 d-flex d-md-none justify-content-center">
-        <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-        <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-      </div>
-      } }
+  
     </ng-template>
   </li>
 
@@ -95,24 +61,9 @@
       }}</a>
     <ng-template ngbNavContent>
       
-      <!--users can only see other solutions if they sent theirs-->
-      <div class="tab-content">
-        @if (!solutionSent) {
-          <div class="restricted">
-            <h3>
-              {{ "modules.challenge.info.solutionsTitleLocked" | translate }}
-            </h3>
-            <span class="lock">
-              <img src="assets/img/icon/lock.svg" alt="lock icon" />
-              <p>
-                {{ "modules.challenge.info.solutionsLocked" | translate }}
-              </p>
-            </span>
-          </div>
-        }
-        
+  
         <!--if users sent their solution they can now see other solutions-->
-        <div class="unrestricted" *ngIf="solutionSent && isLogged">
+        <div class="unrestricted" *ngIf="solutionSent">
           <ng-container >
             <app-solution 
               *ngFor="let solution of challengeSolutions; let i = index"
@@ -125,34 +76,13 @@
 
           </ng-container>
         </div>
-      </div>
 
-      <!-------if not logged show this------>
-      @if (!isLogged) {
-      <div class="w-100 mt-4 d-md-none">
-        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}">
-          {{ "modules.challenge.header.button" | translate }}
-        </button>
-      </div>
-      } @else {
-      <!------ if logged show this------>
-      @if (isLogged && !solutionSent) {
-      <div class="w-100 button d-md-none">
-        <button class="w-100 btn btn-sm btn-outline-primary">
-          {{ "modules.challenge.header.buttonCancel" | translate }}
-        </button>
-        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
-          {{ "modules.challenge.header.buttonAccept" | translate }}
-        </button>
-      </div>
-      } @else {
       <!-----if solution sent show this---->
       <div class="solutionSent w-100 d-flex d-md-none justify-content-center">
         <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
         <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
       </div>
-      } }
+      
     </ng-template>
   </li>
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">

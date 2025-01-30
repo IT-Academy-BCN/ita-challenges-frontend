@@ -1,6 +1,5 @@
 import { Component, inject, NgZone } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { RegisterModalComponent } from '../register-modal/register-modal.component'
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from './../../../services/auth.service'
 import { type User } from 'src/app/models/user.model'
@@ -44,7 +43,7 @@ export class LoginModalComponent {
         const res = await this.authService.login(user)
         this.ngZone.run(() => {
           console.log('LoginModalComponent: Login successful')
-          this.userService.login()
+          // this.userService.login()
           this.modalService.dismissAll()
           this.openSuccessfulLoginModal(res)
         })
@@ -84,11 +83,6 @@ export class LoginModalComponent {
 
   closeModal (): void {
     this.modalService.dismissAll()
-  }
-
-  openRegisterModal (): void {
-    this.closeModal()
-    this.modalService.open(RegisterModalComponent, { centered: true, size: 'lg' })
   }
 
   isValidInput (input: string): boolean | null {

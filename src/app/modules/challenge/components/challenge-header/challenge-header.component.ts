@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input, type OnInit, inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
-import { RestrictedModalComponent } from './../../../modals/restricted-modal/restricted-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { UserService } from 'src/app/services/user.service'
 
@@ -26,22 +25,18 @@ export class ChallengeHeaderComponent implements OnInit {
   challenge_date: Date | undefined
   challenge_level: string | undefined
 
-  isLogged: boolean = false
+  // isLogged: boolean = false
   solutionSent: boolean = false
 
-  async ngOnInit (): Promise<void> {
+  ngOnInit (): void {
     // this.userService.monitorSolutionState() // devo toglierlo dopo
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
 
-    this.userService.userLoggedIn$.subscribe((loggedIn) => {
-      this.isLogged = loggedIn
-      this.cdr.detectChanges()
-    })
-    this.userService.userSolutions$.subscribe((solutions) => {
-      this.solutionSent = solutions.includes(this.idChallenge)
-    })
+    const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
+    const solutions = this.userService.userSolutions
+    this.solutionSent = savedSolutions.includes(this.idChallenge) || solutions.includes(this.idChallenge)
   }
 
   openSendSolutionModal (): void {
@@ -53,14 +48,7 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   clickSendButton (): void {
-    if (!this.isLogged) {
-      this.modalService.open(RestrictedModalComponent, {
-        centered: true,
-        size: 'lg'
-      })
-    } else {
-      this.openSendSolutionModal()
-    }
+    this.openSendSolutionModal()
   }
 
   get currentLang (): string {
