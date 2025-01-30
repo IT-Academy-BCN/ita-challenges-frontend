@@ -1,7 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+/* eslint-disable @typescript-eslint/prefer-readonly */
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+import { environment } from 'src/environments/environment.prod'
 
 @Component({
   standalone: true,
@@ -10,14 +12,28 @@ import { ActivatedRoute } from '@angular/router'
   styleUrls: ['./mentor-login.component.scss']
 })
 export class MentorLoginComponent implements OnInit {
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly
-  constructor (private route: ActivatedRoute) {}
+  constructor (private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
       const code = params['code']
       if (code !== null && code !== undefined) {
         console.log('GitHub code recibido:', code)
+
+        const url = environment.BACKEND_ITA_CHALLENGE_BASE_URL + environment.BACKEND_GITHUB_VALIDATE_ENDPOINT
+
+        this.http.post(url, { code })
+          .subscribe({
+            next: (response: any) => {
+              console.log('GitHub backend response:', response)
+
+              if (response.status === 'success') {
+                void this.router.navigate(['/ita-challenge/challenges'])
+              } else {
+                console.error('no eres mentor, acceso denegado')
+              }
+            }
+          })
       }
     })
   }
