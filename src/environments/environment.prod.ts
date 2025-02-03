@@ -30,5 +30,7 @@ export const environment = {
   HTTP_CODE_SUCCESS: 200,
   HTTP_CODE_BAD_REQUEST: 400,
   HTTP_CODE_UNAUTHORIZED: 401,
-  HTTP_CODE_FORBIDDEN: 403
+  HTTP_CODE_FORBIDDEN: 403,
+  GITHUB_CLIENT_ID: 'Ov23liatIZRCf3flyPtL',
+  GITHUB_REDIRECT_URI: 'http://dev.ita-challenges.eurecatacademy.org/ita-challenge/mentor'
 }
