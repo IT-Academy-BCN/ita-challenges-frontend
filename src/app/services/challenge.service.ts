@@ -5,6 +5,7 @@ import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
+import { type CreateChallenge } from '../models/create-challenge.interface'
 // import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -51,5 +52,33 @@ export class ChallengeService {
       {
         headers
       })
+  }
+
+  /* createChallenge (challenge: CreateChallenge): Observable<any> {
+    return this.http.post(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
+      challenge
+    )
+  } */
+
+  /* createChallenge (challenge: CreateChallenge): Observable<any> {
+    return this.http.post(
+      '/itachallenge/api/v1/challenge/challenges',
+      challenge,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+  } */
+
+  // BACKEND_ITA_CHALLENGE_BASE_URL + BACKEND_ALL_CHALLENGES_URL
+  // = /itachallenge/api/v1 + /challenge/challenges
+
+  createChallenge (challenge: CreateChallenge): Observable<any> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
+    console.log('URL completa:', url) // Para depurar
+    return this.http.post(url, challenge)
   }
 }
