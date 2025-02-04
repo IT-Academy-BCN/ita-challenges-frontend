@@ -5,7 +5,6 @@ import { ChallengeInfoComponent } from './components/challenge-info/challenge-in
 const routes: Routes = [
   { path: 'ita-challenge/challenges/:id', component: ChallengeInfoComponent }
 ]
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
