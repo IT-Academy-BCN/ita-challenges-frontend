@@ -5,8 +5,9 @@
         [creation_date] = "creation_date"
         [level] = "level"
         [activeId] = "activeId"
-        [idChallenge] = "idChallenge">
-    </app-challenge-header>
+        [idChallenge] = "idChallenge"
+        (startChallengeEvent)="onStartChallenge($event)"
+>   </app-challenge-header>
 
     <app-challenge-info
         [detail] = "detail"
@@ -18,5 +19,6 @@
         [activeId]= "activeId"
         (activeIdChange)="onActiveIdChange($event)"
         [idChallenge] = "idChallenge"
+        [startChallenge]="startChallenge"
 >   </app-challenge-info>
 </div>

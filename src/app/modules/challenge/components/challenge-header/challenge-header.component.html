@@ -47,9 +47,17 @@
       </div>
     </div>
 
-
+  
+    @if ( activeId == 1) {
+      <div class="col-3 button d-none d-md-flex">
+        <button class="btn btn-sm btn-primary" (click)="onStartChallenge(true)">
+          {{'modules.challenge.header.buttonStart' | translate }}
+        </button>
+      </div>
+    }
+    
     <!-- only show if the user is on details section or solutions -->
-    @if (activeId == 1 || activeId == 2) {
+    @if ( activeId == 2) {
       @if (!solutionSent) {
       <div class="col-3 button d-none d-md-flex">
         <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
@@ -57,7 +65,7 @@
         </button>
       </div>
       } @else if (solutionSent) {
-      <!-----if solution sent show this---->
+      <!-- ---if solution sent show this-- -->
       <div class="solutionSent col-3 d-none d-md-flex">
         <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
         <img src="assets/img/icon/tick-pink.svg" alt="tick icon">

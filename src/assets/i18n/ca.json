@@ -31,9 +31,10 @@
             "header": {
                 "title": "Reptes",
                 "section":"Detall",
-                "button": "Enviar solució",
+                "button": "Iniciar repte",
                 "toolTip": "Inicia sessió per enviar la solució.",
                 "buttonAccept": "Enviar",
+                "buttonStart": "Iniciar repte",
                 "buttonCancel": "Cancel.lar",
                 "solutionSend": "Solució enviada"
             },
@@ -82,32 +83,12 @@
                 }
             }
         },"modals": {
-            "register": {
-                "title": "Registre",
-                "specialization": "Especialització",
-                "password": "Contrasenya",
-                "repeat": "Repetir contrasenya",
-                "legalTerms": "Accepto termes legals",
-                "loginRedirect": "Ja tens un compte?, accedeix",
-                "errorMsg": "Error en el registre, potser ja estàs registrat"
-            },
             "login": {
                 "forgotPassword": "Recordar/Canviar contrasenya",
                 "registerRedirect": "No tens un compte? Crea'n una",
                 "invalidInput": "Usuari o contrasenya incorrectes",
                 "notActive": "Usuari desactivat. Esperi al correu electrònic de confirmació",
                 "generalError": "Error en iniciar sessió"
-            },
-            "postRegister": {
-                "title": "Registre Exitós",
-                "body": "Un mentor ha de validar el seu registre. Esperi la confirmació per correu electrònic abans d'iniciar sessió,",
-                "btn":"D'acord"
-            },
-            "restricted": {
-                "title": "Accés restringit",
-                "description":"Registra't per pujar, lliurar i veure solucions dels reptes",
-                "register":"Registrar-me",
-                "loginRedirect":"Entrar"
             }, 
             "solution": {
                 "title": "Estàs segur?",

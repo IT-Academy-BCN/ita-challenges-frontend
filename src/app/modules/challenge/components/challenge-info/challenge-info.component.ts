@@ -21,6 +21,7 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { RelatedService } from '../../../../services/related.service'
 import { UserService } from 'src/app/services/user.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
+import { SimpleChanges } from '@angular/core'
 
 @Component({
   selector: 'app-challenge-info',
@@ -43,6 +44,8 @@ implements OnInit {
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   userId!: string
   isDropdownOpen: boolean = false
+  showEditor: boolean = false
+  isEditorReduced: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -61,6 +64,7 @@ implements OnInit {
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
   @Input() idChallenge: string = ''
+  @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
@@ -77,6 +81,27 @@ implements OnInit {
     this.loadRelatedChallenges(this.idChallenge)
 
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
+  }
+
+  ngOnChanges (changes: SimpleChanges): void {
+    if (changes['startChallenge']?.currentValue !== undefined && changes['startChallenge']?.currentValue !== null) {
+      console.log('startChallenge changed:', changes['startChallenge'].currentValue)
+      this.startingChallenge()
+    }
+  }
+
+  startingChallenge (): void {
+    console.log('startingChallenge called with startChallenge:', this.startChallenge)
+    if (this.startChallenge) {
+      this.showEditor = true
+      this.isEditorReduced = false
+      this.cdr.detectChanges()
+    }
+  }
+
+  toggleStatement (): void {
+    this.showStatement = !this.showStatement
+    this.isEditorReduced = !this.isEditorReduced
   }
 
   loadRelatedChallenges (id: string): void {
