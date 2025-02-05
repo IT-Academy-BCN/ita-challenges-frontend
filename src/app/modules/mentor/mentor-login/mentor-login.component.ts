@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment'
 interface GitHubAuthResponse {
   isValid: boolean
   username: string
+  token: string
 }
 
 @Component({
@@ -40,6 +41,8 @@ export class MentorLoginComponent implements OnInit {
             if (response.isValid) {
               alert(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
               localStorage.setItem('username', response.username)
+              localStorage.setItem('authToken', response.token)
+
               void this.router.navigate(['/ita-challenge/challenges'])
             } else {
               alert('❌ No eres mentor, acceso denegado.')
