@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core'
-import { type Observable } from 'rxjs'
+import { type Observable, of } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -55,30 +55,19 @@ export class ChallengeService {
   }
 
   /* createChallenge (challenge: CreateChallenge): Observable<any> {
-    return this.http.post(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
-      challenge
-    )
-  } */
-
-  /* createChallenge (challenge: CreateChallenge): Observable<any> {
-    return this.http.post(
-      '/itachallenge/api/v1/challenge/challenges',
-      challenge,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-  } */
-
-  // BACKEND_ITA_CHALLENGE_BASE_URL + BACKEND_ALL_CHALLENGES_URL
-  // = /itachallenge/api/v1 + /challenge/challenges
-
-  createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
     console.log('URL completa:', url) // Para depurar
     return this.http.post(url, challenge)
+  } */
+
+  createChallenge (challenge: CreateChallenge): Observable<any> {
+    console.log('Datos enviados al mock:', challenge)
+    // MOCK: Temporary implementation for testing purposes.
+    // TODO: Replace with real backend endpoint once the backend PR is merged.
+    return of({
+      success: true,
+      message: 'Mock: reto creado exitosamente',
+      data: challenge
+    })
   }
 }
