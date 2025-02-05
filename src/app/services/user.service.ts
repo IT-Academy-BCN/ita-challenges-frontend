@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core'
-import { AuthService } from './auth.service'
 import { SolutionService } from './solution.service'
 import { BehaviorSubject } from 'rxjs'
 
@@ -7,7 +6,6 @@ import { BehaviorSubject } from 'rxjs'
   providedIn: 'root'
 })
 export class UserService {
-  public userLoggedIn: boolean = false
   public userSentASolution: boolean = false
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
@@ -19,7 +17,6 @@ export class UserService {
   userSolutions: string[] = []
 
   constructor (
-    @Inject(AuthService) private readonly authService: AuthService,
     @Inject(SolutionService) private readonly solutionService: SolutionService
   ) {
     this.solutionService.solutionSent$.subscribe((solutionSent) => {
@@ -30,20 +27,16 @@ export class UserService {
 
   // metodo para monitorear el estado de la solución
   public monitorSolutionState (): void {
-    if (this.userLoggedIn) {
-      const idUser = this.authService.currentUser.idUser
-      console.log(`Fetching solutions for user ID: ${idUser}`)
-      this.solutionService.fetchUserSolution(idUser).subscribe((response) => {
-        console.log('Response received:', response)
-        const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
-        this.userSolutions.push(...challengeIds)
-        this.userSolutions = challengeIds
-        console.log('Updated userSolutions:', this.userSolutions)
-        console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
-        this.solutionSentSubject.next(this.userSolutions.length > 0)
-        console.log('Emitted to userSolutionsSubject:', this.userSolutions.length > 0)
-      })
-    }
+    console.log('Fetching solutions...')
+    this.solutionService.fetchUserSolution().subscribe((response) => {
+      console.log('Response received:', response)
+      const challengeIds: string[] = response.challenges.map((challenge: any) => challenge.uuid_challenge)
+      this.userSolutions = challengeIds
+      console.log('Updated userSolutions:', this.userSolutions)
+      console.log(`userSolutions: ${JSON.stringify(this.userSolutions)}`)
+      this.solutionSentSubject.next(this.userSolutions.length > 0)
+      console.log('Emitted to userSolutionsSubject:', this.userSolutions.length > 0)
+    })
   }
 
   public isSolutionSent (challengeId: string): boolean {
