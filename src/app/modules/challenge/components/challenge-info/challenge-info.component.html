@@ -11,11 +11,12 @@
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3">
+          <span class="right-span d-inline-flex">
             <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
-            <label class="ms-1">{{
-              "modules.challenge.info.showStatement" | translate
-              }}</label>
+            <label class="ms-1">{{ "modules.challenge.info.showStatement" | translate }}</label>
+          </span>
         </div>
+        
         <!-- Editor de código -->
         <div *ngIf="showEditor" class="editor-container" [ngClass]="{'reduced-editor': isEditorReduced}">
           <div id="code-editor"></div>
@@ -61,15 +62,25 @@
   <!--SOLUTIONS TAB-->
 
   <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
-    <a href="#solutions" ngbNavLink>{{
-      "modules.challenge.info.solutionsTitle" | translate
-      }}</a>
+    <a href="#solutions" ngbNavLink>{{ "modules.challenge.info.solutionsTitle" | translate }}</a>
     <ng-template ngbNavContent>
-      
-  
-        <!--if users sent their solution they can now see other solutions-->
+      <!-- Los usuarios solo pueden ver otras soluciones si enviaron la suya -->
+      <div class="tab-content">
+        <div class="restricted" *ngIf="!solutionSent">
+          <h3>
+            {{ "modules.challenge.info.solutionsTitleLocked" | translate }}
+          </h3>
+          <span class="lock">
+            <img src="assets/img/icon/lock.svg" alt="lock icon" />
+            <p>
+              {{ "modules.challenge.info.solutionsLocked" | translate }}
+            </p>
+          </span>
+        </div>
+        
+        <!-- Si el usuario envió su solución, ahora puede ver otras soluciones -->
         <div class="unrestricted" *ngIf="solutionSent">
-          <ng-container >
+          <ng-container>
             <app-solution 
               *ngFor="let solution of challengeSolutions; let i = index"
               [number]="i + 1" 
@@ -78,18 +89,37 @@
               [languageExt]="'javascript'"
               [solution_text]="solution.solution_text">
             </app-solution>
-
           </ng-container>
         </div>
-
-      <!-----if solution sent show this---->
-      <div class="solutionSent w-100 d-flex d-md-none justify-content-center">
+      </div>
+  
+      <!-- Si no se ha enviado una solución, mostrar el botón para enviarla -->
+      <div class="w-100 mt-4 d-md-none" *ngIf="!solutionSent">
+        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
+          title="{{ 'modules.challenge.header.toolTip' | translate }}">
+          {{ "modules.challenge.header.button" | translate }}
+        </button>
+      </div>
+      
+      <!-- Si la solución no ha sido enviada, mostrar las opciones de cancelación y aceptación -->
+      <div class="w-100 button d-md-none" *ngIf="solutionSent">
+        <button class="w-100 btn btn-sm btn-outline-primary">
+          {{ "modules.challenge.header.buttonCancel" | translate }}
+        </button>
+        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
+          {{ "modules.challenge.header.buttonAccept" | translate }}
+        </button>
+      </div>
+      
+      <!-- Si la solución fue enviada, mostrar un mensaje de confirmación -->
+      <div class="solutionSent w-100 d-flex d-md-none justify-content-center" *ngIf="solutionSent">
         <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
         <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
       </div>
-      
     </ng-template>
   </li>
+  
+  
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
     <a href="#resources" ngbNavLink>{{
       "modules.challenge.info.resourcesTitle" | translate
