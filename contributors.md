@@ -23,3 +23,4 @@
 - Daniela Villarreal - https://github.com/deuvede24
 - Ivan Elizalde - https://github.com/ivanetierra
 - Daylin Mejia - https://github.com/DaylinMB
+- Yana Evko - https://github.com/Yana-jev
