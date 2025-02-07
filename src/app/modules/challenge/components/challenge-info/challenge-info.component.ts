@@ -40,9 +40,7 @@ implements OnInit {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
-  // idLanguage: string = ''
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
-  userId!: string
   isDropdownOpen: boolean = false
   showEditor: boolean = false
   isEditorReduced: boolean = false
@@ -79,7 +77,6 @@ implements OnInit {
     })
 
     this.loadRelatedChallenges(this.idChallenge)
-
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
 
@@ -133,10 +130,8 @@ implements OnInit {
   }
 
   clickSendButton (): void {
-    if (this.isUserSolution) {
-      this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
-      this.onActiveIdChange(2)
-    }
+    this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
+    this.onActiveIdChange(2)
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {

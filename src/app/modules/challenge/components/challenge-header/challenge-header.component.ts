@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, Input, type OnInit, inject, EventEmitter, Output } from '@angular/core'
+import { Component, Input, type OnInit, inject, EventEmitter, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { TranslateService } from '@ngx-translate/core'
-import { UserService } from 'src/app/services/user.service'
 @Component({
   selector: 'app-challenge-header',
   templateUrl: './challenge-header.component.html',
@@ -14,8 +13,6 @@ export class ChallengeHeaderComponent implements OnInit {
 
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
-  private readonly userService = inject(UserService)
-  private readonly cdr = inject(ChangeDetectorRef)
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -38,8 +35,7 @@ export class ChallengeHeaderComponent implements OnInit {
     this.challenge_level = this.level
 
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
-    const solutions = this.userService.userSolutions
-    this.solutionSent = savedSolutions.includes(this.idChallenge) || solutions.includes(this.idChallenge)
+    this.solutionSent = savedSolutions.includes(this.idChallenge)
   }
 
   onStartChallenge (started: boolean): void {
