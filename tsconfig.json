@@ -23,13 +23,16 @@
       "ES2022",
       "dom"
     ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": [
+    "node_modules/@types"
+  ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "types": ["node"]
+    "types": ["node", "quill"]
   }
 }
