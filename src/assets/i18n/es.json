@@ -31,9 +31,10 @@
             "header": {
                 "title": "Retos",
                 "section":"Detalle",
-                "button": "Enviar solución",
+                "button": "Iniciar reto",
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
+                "buttonStart": "Iniciar reto",
                 "buttonCancel": "Cancelar",
                 "solutionSend": "Solución enviada"
             },
@@ -79,32 +80,12 @@
                 }
             }
         },"modals": {
-            "register": {
-                "title": "Registro",
-                "specialization": "Especialización",
-                "password": "Contraseña",
-                "repeat": "Repetir contraseña",
-                "legalTerms": "Acepto términos legales",
-                "loginRedirect": "¿Tienes cuenta?, acceder",
-                "errorMsg": "Error en el registro, puede ser que ya estés registrado"
-            },
             "login": {
                 "forgotPassword": "Recordar/cambiar contraseña",
                 "registerRedirect": "¿No tienes cuenta?, crear una.",
                 "invalidInput": "Usuario o contraseña incorrecto",
                 "notActive": "Usuario desactivado. Espere al email de confirmación",
                 "generalError": "Error en el login"
-            },
-            "postRegister": {
-                "title": "Registro con éxito",
-                "body": "Un mentor debe validar su registro. Espere la confirmación por correo electrónico antes de iniciar la sesión.",
-                "btn":"De acuerdo"
-            },
-            "restricted": {
-                "title": "Acceso restringido",
-                "description":"Regístrate para subir, entregar y ver soluciones a los retos",
-                "register":"Registrarme",
-                "loginRedirect":"Entrar"
             },
             "solution": {
                 "title": "¿Estás segur@?",

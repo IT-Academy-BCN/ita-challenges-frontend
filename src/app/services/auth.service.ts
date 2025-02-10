@@ -1,20 +1,10 @@
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
-import { BehaviorSubject, type Observable, firstValueFrom } from 'rxjs'
+import { BehaviorSubject, type Observable } from 'rxjs'
 import { User } from '../models/user.model'
 import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service'
 import { Inject, Injectable } from '@angular/core'
-
-interface loginResponse {
-  id: string
-  authToken: string
-  refreshToken: string
-}
-
-interface registerResponse {
-  id: string
-}
 
 interface UserResponse {
   dni: string
@@ -43,8 +33,6 @@ export class AuthService {
 
     this.userSubject = new BehaviorSubject(initialUser)
     this.user$ = this.userSubject.asObservable()
-    // this.userSubject = new BehaviorSubject(JSON.parse(this.cookieService.get('user')));
-    // this.user$ = this.userSubject.asObservable();
   }
 
   /**
@@ -61,124 +49,6 @@ export class AuthService {
   public set currentUser (user: User) {
     this.userSubject.next(user)
     this.cookieService.set('user', JSON.stringify(user))
-  }
-
-  /**
-   * Register a user and log in with the new user. Set new user as current user.
-   */
-  public registerRequest (user: User): Observable<any> {
-    return this.http.post(
-      environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_REGISTER_URL),
-      {
-        dni: user.dni,
-        email: user.email,
-        name: user.name,
-        itineraryId: user.itineraryId,
-        password: user.password,
-        confirmPassword: user.confirmPassword
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-  }
-
-  public async register (user: User): Promise<registerResponse> {
-    return await new Promise<registerResponse>((resolve, reject) => {
-      this.registerRequest(user).subscribe({
-        next: (resp: registerResponse) => {
-          this.modifyUserWithAdmin(resp.id)
-            .then(() => { resolve(resp) })
-            .catch(reject)
-        },
-        error: (err) => {
-          reject(err.error.message)
-        }
-      })
-    })
-  }
-
-  public async modifyUserWithAdmin (registerUserId: string): Promise<void> {
-    try {
-      const userAdmin = await firstValueFrom(this.http.get<User>(environment.ADMIN_USER))
-
-      if (userAdmin !== null && userAdmin !== undefined) {
-        await this.login(userAdmin)
-      } else {
-        console.error('Admin account not found')
-      }
-
-      const userLoggedData = await this.getLoggedUserData()
-      if (userLoggedData.role === 'ADMIN') {
-        await firstValueFrom(
-          this.http.patch(
-            environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_PATCH_USER).concat(
-            `/${registerUserId}`
-            ),
-            {
-              authToken: this.cookieService.get('authToken'),
-              status: 'ACTIVE'
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            }
-          )
-        )
-      } else {
-        throw new Error('The logged-in user is not an admin.')
-      }
-
-      this.logout() // Asegúrate de llamar a la función logout
-    // Asegúrate de llamar a la función logout
-    } catch (error) {
-      console.error('Error modifying user with admin:', error)
-      throw error
-    }
-  }
-
-  public getUserIdFromCookie (): string | undefined {
-    const stringifiedUser = this.cookieService.get('user')
-    const user = JSON.parse(stringifiedUser)
-    return user.idUser
-  }
-
-  public getUserIdFromDummy (filePath: string): Observable<any> {
-    return this.http.get(filePath)
-  }
-
-  /**
-   * Log in with a user. Set user as current user.
-   */
-  public loginRequest (user: User): Observable<loginResponse> {
-    return this.http.post<loginResponse>(
-      environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_LOGIN_URL),
-      {
-        dni: user.dni,
-        password: user.password
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-  }
-
-  public async login (user: User): Promise<any> {
-    const resp = await firstValueFrom(this.loginRequest(user))
-    if (resp === null || resp === undefined) {
-      throw new Error('Empty response')
-    }
-    this.currentUser = new User(resp.id)
-    this.cookieService.set('authToken', resp.authToken)
-    this.cookieService.set('refreshToken', resp.refreshToken)
-    this.cookieService.set('user', JSON.stringify(this.currentUser))
-
-    return resp
   }
 
   public logout (): void {

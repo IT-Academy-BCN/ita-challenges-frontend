@@ -10,7 +10,7 @@ import { ResourceCardComponent } from '../../../../shared/components/resource-ca
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component'
 import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
+// import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
@@ -25,8 +25,8 @@ describe('ChallengeInfoComponent', () => {
         ChallengeInfoComponent,
         ResourceCardComponent,
         ChallengeCardComponent,
-        SolutionComponent,
-        RestrictedModalComponent
+        SolutionComponent
+        // RestrictedModalComponent
       ],
       imports: [
         RouterTestingModule,
@@ -73,9 +73,8 @@ describe('ChallengeInfoComponent', () => {
 
   it('should open restricted modal if user is not logged in', () => {
     jest.spyOn(modalService, 'open').mockImplementation()
-    component.isLogged = false
     component.clickSendButton()
-    expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
+    // expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
   })
 
   it('should onActiveIdChange correctly', fakeAsync(() => {

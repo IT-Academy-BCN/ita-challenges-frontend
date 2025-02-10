@@ -18,10 +18,10 @@ import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
-import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { UserService } from 'src/app/services/user.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
+import { SimpleChanges } from '@angular/core'
 
 @Component({
   selector: 'app-challenge-info',
@@ -32,7 +32,6 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 export class ChallengeInfoComponent
 implements OnInit {
   showStatement = true
-  isLogged: boolean = false
   solutionSent: boolean = false
   isUserSolution: boolean = true
   resources: string = ''
@@ -41,10 +40,10 @@ implements OnInit {
   relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
-  // idLanguage: string = ''
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
-  userId!: string
   isDropdownOpen: boolean = false
+  showEditor: boolean = false
+  isEditorReduced: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -63,6 +62,7 @@ implements OnInit {
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
   @Input() idChallenge: string = ''
+  @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
 
@@ -70,27 +70,35 @@ implements OnInit {
 
   async ngOnInit (): Promise<void> {
     this.solutionService.activeIdSubject.next(1)
-
-    // Vrificar si el usuario está logueado
-    this.userService.userLoggedIn$.subscribe((loggedIn) => {
-      this.isLogged = loggedIn
-      console.log('ChallengeInfoComponent: isLogged updated to', this.isLogged)
-      this.cdr.detectChanges()
-    })
-
-    // Verificar si el usuario ha enviado una solución
-    this.userService.userSolutions$.subscribe((solutions) => {
-      this.solutionSent = solutions.includes(this.idChallenge)
-      console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
-    })
-
+    this.solutionSent = this.solutions.includes(this.idChallenge)
+    console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })
 
     this.loadRelatedChallenges(this.idChallenge)
-
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
+  }
+
+  ngOnChanges (changes: SimpleChanges): void {
+    if (changes['startChallenge']?.currentValue !== undefined && changes['startChallenge']?.currentValue !== null) {
+      console.log('startChallenge changed:', changes['startChallenge'].currentValue)
+      this.startingChallenge()
+    }
+  }
+
+  startingChallenge (): void {
+    console.log('startingChallenge called with startChallenge:', this.startChallenge)
+    if (this.startChallenge) {
+      this.showEditor = true
+      this.isEditorReduced = false
+      this.cdr.detectChanges()
+    }
+  }
+
+  toggleStatement (): void {
+    this.showStatement = !this.showStatement
+    this.isEditorReduced = !this.isEditorReduced
   }
 
   loadRelatedChallenges (id: string): void {
@@ -122,15 +130,8 @@ implements OnInit {
   }
 
   clickSendButton (): void {
-    if (!this.isLogged) {
-      this.modalService.open(RestrictedModalComponent, {
-        centered: true,
-        size: 'lg'
-      })
-    } else {
-      this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
-      this.onActiveIdChange(2)
-    }
+    this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
+    this.onActiveIdChange(2)
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
