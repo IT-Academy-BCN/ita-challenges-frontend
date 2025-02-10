@@ -10,13 +10,28 @@
           <input type="text" class="form-control" id="title" name="challengeTitle"
             [(ngModel)]="challenge.challengeTitle" required>
         </div>
-
-        <!-- Enunciado -->
+        
+         <!-- Enunciado -->
         <div class="mb-4">
           <label for="description" class="form-label">Enunciado</label>
-          <textarea class="form-control" id="description" name="description" rows="4"
-            [(ngModel)]="challenge.description" required></textarea>
+          <quill-editor
+            class="custom-quill-editor large-editor"
+            [(ngModel)]="challenge.description"
+            name="description"
+            id="description"
+            [modules]="{
+              toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                [{ header: [1, 2, 3, false] }],
+                [{ align: [] }]
+              ]
+            }"
+          ></quill-editor>
         </div>
+        
+
+
 
         <!-- Dificultad -->
         <div class="mb-4">

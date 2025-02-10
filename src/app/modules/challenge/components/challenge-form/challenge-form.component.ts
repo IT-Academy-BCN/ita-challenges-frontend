@@ -1,21 +1,22 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, type OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
+import { QuillModule } from 'ngx-quill'
 
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule] // Importa FormsModule y CommonModule
+  imports: [FormsModule, CommonModule, QuillModule]
 })
-export class ChallengeFormComponent {
+export class ChallengeFormComponent implements OnInit {
   challenge: CreateChallenge = {
     challengeTitle: '',
-    description: '',
+    description: '', // Aquí guardaremos el contenido enriquecido como HTML
     level: 'EASY',
     language: 'Java' as 'Java' | 'PHP' | 'Python' | 'JavaScript',
     solution: ''
@@ -24,19 +25,26 @@ export class ChallengeFormComponent {
   private readonly challengeService = inject(ChallengeService)
   private readonly router = inject(Router)
 
+  ngOnInit (): void {
+    // No necesitas inicializar nada extra para ngx-quill
+  }
+
   private isFormValid (): boolean {
     return (
       this.challenge.challengeTitle.trim() !== '' &&
-      this.challenge.description.trim() !== '' &&
-      ['Java', 'PHP', 'Python', 'JavaScript'].includes(this.challenge.language) &&
-      this.challenge.solution.trim() !== ''
+        this.challenge.description.trim() !== '' &&
+        ['Java', 'PHP', 'Python', 'JavaScript'].includes(this.challenge.language) &&
+        this.challenge.solution.trim() !== ''
     )
   }
 
   onSubmit (): void {
     if (!this.isFormValid()) {
       console.error('El formulario no es válido')
+      return
     }
+
+    console.log('Contenido enriquecido:', this.challenge.description)
 
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {

@@ -69,3 +69,48 @@
       }
     }
   }
+
+  quill-editor {
+    min-height: 300px;
+    border: none; /* Elimina bordes adicionales */
+    padding: 0; /* Ajusta los paddings */
+    background: transparent; /* Elimina cualquier fondo blanco */
+  }
+  
+.custom-quill-editor {
+  .ql-container {
+    min-height: 400px; /* Ajusta el tamaño mínimo para mayor altura */
+    max-height: 600px; /* Limita la altura máxima si es necesario */
+    height: 400px; /* Tamaño fijo recomendado para parecerse al diseño */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  .ql-toolbar {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-bottom: none; /* Evita doble borde */
+  }
+
+  .ql-editor {
+    height: calc(100% - 42px); /* Calcula el espacio restante para el contenido */
+    min-height: 400px; /* Ajusta la altura mínima */
+    max-height: 600px;
+    background-color: #fff;
+    padding: 10px;
+    overflow-y: auto; /* Asegura que el contenido sea desplazable */
+  }
+
+  .ql-editor.ql-blank::before {
+    color: #aaa;
+    font-style: italic;
+  }
+}
+
+.large-editor {
+  width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
+  max-width: 900px; /* Ajusta el ancho máximo si es necesario */
+  margin: 0 auto; /* Centra la caja si lo deseas */
+}
