@@ -127,10 +127,17 @@ p, ul li {
     color: $black-3;
 }
 
-#code-editor {
-    border: 1px solid #ccc;
-    height: 300px;
-  } 
+.editor-container {
+    width: 100%;
+    height: 800px;
+    border: 2px solid #ccc;
+}
+  
+.code-editor {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+} 
   
 .reduced-editor {
   width: 50%; 

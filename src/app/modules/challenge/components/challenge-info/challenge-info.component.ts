@@ -6,7 +6,9 @@ import {
   type OnInit,
   Output,
   ViewChild,
-  inject
+  inject,
+  type ElementRef,
+  type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -19,9 +21,14 @@ import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { UserService } from 'src/app/services/user.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
-import { SimpleChanges } from '@angular/core'
+
+import { EditorView, type ViewUpdate } from '@codemirror/view'
+import { EditorState } from '@codemirror/state'
+import { javascript } from '@codemirror/lang-javascript'
+import { keymap } from '@codemirror/view'
+import { defaultKeymap } from '@codemirror/commands'
+import { basicSetup } from 'codemirror'
 
 @Component({
   selector: 'app-challenge-info',
@@ -48,13 +55,15 @@ implements OnInit {
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
-  private readonly userService = inject(UserService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
+  @ViewChild('editorSolution') editorSolution!: ElementRef
+
+  public editor: EditorView = new EditorView()
 
   @Input() detail!: ChallengeDetails
-  @Input() solutions: any = []
+  @Input() solutions: string[] = []
   @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
@@ -85,6 +94,10 @@ implements OnInit {
       console.log('startChallenge changed:', changes['startChallenge'].currentValue)
       this.startingChallenge()
     }
+  }
+
+  ngAfterViewInit (): void {
+    this.initializeCodeMirror()
   }
 
   startingChallenge (): void {
@@ -120,6 +133,35 @@ implements OnInit {
         console.error('Error in onActiveIdChange:', error)
       })
     }
+  }
+
+  initializeCodeMirror (): void {
+    let savedContent = localStorage.getItem('editorContent') ?? ''
+
+    if (savedContent.trim() === '') {
+      savedContent = '// Escriu la teva solució aquí\n\n'
+    }
+
+    console.log('Contenido recuperado:', savedContent)
+
+    this.editor = new EditorView({
+      parent: this.editorSolution.nativeElement,
+      state: EditorState.create({
+        doc: savedContent,
+        extensions: [
+          basicSetup, // Configuración básica
+          javascript(), // Soporte para JavaScript
+          keymap.of(defaultKeymap), // Atajos de teclado
+          EditorView.updateListener.of((update: ViewUpdate) => {
+            if (update.docChanged) {
+              const content = this.editor.state.doc.toString()
+              localStorage.setItem('editorContent', content)
+            }
+          }),
+          EditorView.editable.of(true) // Habilita edición
+        ]
+      })
+    })
   }
 
   openSendSolutionModal (): void {
