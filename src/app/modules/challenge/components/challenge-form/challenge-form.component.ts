@@ -35,6 +35,7 @@ export class ChallengeFormComponent implements OnInit {
         this.challenge.description.trim() !== '' &&
         ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
         this.challenge.solution.trim() !== ''
+
     )
   }
 

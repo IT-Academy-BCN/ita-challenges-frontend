@@ -60,7 +60,7 @@ export class ChallengeService {
     return this.http.post(url, challenge)
   }
 
-  /* createChallenge (challenge: CreateChallenge): Observable<any> {
+/* createChallenge (challenge: CreateChallenge): Observable<any> {
     console.log('Datos enviados al mock:', challenge)
     // MOCK: Temporary implementation for testing purposes.
     // TODO: Replace with real backend endpoint once the backend PR is merged.
