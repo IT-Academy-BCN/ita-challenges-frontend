@@ -127,6 +127,16 @@ p, ul li {
     color: $black-3;
 }
 
+#code-editor {
+    border: 1px solid #ccc;
+    height: 300px;
+  } 
+  
+.reduced-editor {
+  width: 50%; 
+  height: 300px; 
+}
+  
 @media screen and (max-width: 768px) {
     .details-body {
         flex-direction: column;

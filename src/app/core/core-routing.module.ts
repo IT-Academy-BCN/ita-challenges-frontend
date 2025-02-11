@@ -33,6 +33,11 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'mentor',
+        loadComponent: async () =>
+          (await import('../modules/mentor/mentor-login/mentor-login.component')).MentorLoginComponent
       }
     ]
   }

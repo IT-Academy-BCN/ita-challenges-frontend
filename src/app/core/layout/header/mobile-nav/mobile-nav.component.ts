@@ -9,10 +9,6 @@ import { NavService } from 'src/app/services/nav.service'
 export class MobileNavComponent {
   constructor (@Inject(NavService) public navService: NavService) {}
 
-  openLoginModal (): void {
-    this.navService.openLoginModal()
-  }
-
   changeLanguage (event: Event): void {
     const selectElement = event.target as HTMLSelectElement
     const language = selectElement.value

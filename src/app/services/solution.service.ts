@@ -39,8 +39,8 @@ export class SolutionService {
     )
   }
 
-  getUserSolution (userId: string, challengeId: string, languageId: string): Observable<UserSolution> {
-    return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`,
+  getUserSolution (challengeId: string, languageId: string): Observable<UserSolution> {
+    return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`,
       {
         headers: {
           'Content-Type': 'application/json'
@@ -52,8 +52,8 @@ export class SolutionService {
     this.submitSolutionSubject.next(solution)
   }
 
-  fetchUserSolution (userId: string): Observable<any> {
-    return this.http.get<any>(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`,
+  fetchUserSolution (): Observable<any> {
+    return this.http.get<any>(`${environment.USER_SOLUTION}`,
       {
         headers: {
           'Content-Type': 'application/json'

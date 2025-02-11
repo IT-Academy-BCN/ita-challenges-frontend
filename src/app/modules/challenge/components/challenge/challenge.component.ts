@@ -33,6 +33,7 @@ export class ChallengeComponent {
   popularity!: number
   languages: Language[] = []
   activeId: number = 1
+  startChallenge: boolean = false
 
   private readonly route = inject(ActivatedRoute)
   private readonly challengeService = inject(ChallengeService)
@@ -43,6 +44,10 @@ export class ChallengeComponent {
       this.loadMasterData(this.idChallenge)
       this.activeId = 1
     })
+  }
+
+  onStartChallenge (started: boolean): void {
+    this.startChallenge = started
   }
 
   ngOnDestroy (): void {
