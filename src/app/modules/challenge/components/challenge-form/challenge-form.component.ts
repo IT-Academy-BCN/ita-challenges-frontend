@@ -17,7 +17,7 @@ export class ChallengeFormComponent {
     challengeTitle: '',
     description: '',
     level: 'EASY',
-    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'JavaScript',
+    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript',
     solution: ''
   }
 
@@ -28,7 +28,7 @@ export class ChallengeFormComponent {
     return (
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
-      ['Java', 'PHP', 'Python', 'JavaScript'].includes(this.challenge.language) &&
+      ['Java', 'PHP', 'Python', 'Javascript'].includes(this.challenge.language) &&
       this.challenge.solution.trim() !== ''
     )
   }
