@@ -10,26 +10,21 @@
           <input type="text" class="form-control" id="title" name="challengeTitle"
             [(ngModel)]="challenge.challengeTitle" required>
         </div>
-        
-         <!-- Enunciado -->
+
+        <!-- Enunciado -->
         <div class="mb-4">
           <label for="description" class="form-label">Enunciado</label>
-          <quill-editor
-            class="custom-quill-editor large-editor"
-            [(ngModel)]="challenge.description"
-            name="description"
-            id="description"
-            [modules]="{
+          <quill-editor class="custom-quill-editor large-editor" [(ngModel)]="challenge.description" name="description"
+            id="description" [modules]="{
               toolbar: [
                 ['bold', 'italic', 'underline'],
                 [{ list: 'ordered' }, { list: 'bullet' }],
                 [{ header: [1, 2, 3, false] }],
                 [{ align: [] }]
               ]
-            }"
-          ></quill-editor>
+            }"></quill-editor>
         </div>
-        
+
 
 
 
@@ -70,10 +65,19 @@
               (click)="challenge.language = 'Java'">
               Java
             </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'JavaScript'"
-              (click)="challenge.language = 'JavaScript'">
-              JS
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
+              (click)="challenge.language = 'Javascript'">
+              Javascript
             </button>
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
+              (click)="challenge.language = 'Typescript'">
+              Typescript
+            </button>
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'SQL'"
+              (click)="challenge.language = 'SQL'">
+              SQL
+            </button>
+
             <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'PHP'"
               (click)="challenge.language = 'PHP'">
               PHP

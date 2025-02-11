@@ -18,7 +18,7 @@ export class ChallengeFormComponent implements OnInit {
     challengeTitle: '',
     description: '', // Aquí guardaremos el contenido enriquecido como HTML
     level: 'EASY',
-    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'JavaScript',
+    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
     solution: ''
   }
 
@@ -33,7 +33,7 @@ export class ChallengeFormComponent implements OnInit {
     return (
       this.challenge.challengeTitle.trim() !== '' &&
         this.challenge.description.trim() !== '' &&
-        ['Java', 'PHP', 'Python', 'JavaScript'].includes(this.challenge.language) &&
+        ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
         this.challenge.solution.trim() !== ''
     )
   }
