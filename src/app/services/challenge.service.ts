@@ -59,15 +59,4 @@ export class ChallengeService {
     console.log('URL completa:', url) // Para depurar
     return this.http.post(url, challenge)
   }
-
-/* createChallenge (challenge: CreateChallenge): Observable<any> {
-    console.log('Datos enviados al mock:', challenge)
-    // MOCK: Temporary implementation for testing purposes.
-    // TODO: Replace with real backend endpoint once the backend PR is merged.
-    return of({
-      success: true,
-      message: 'Mock: reto creado exitosamente',
-      data: challenge
-    })
-  } */
 }
