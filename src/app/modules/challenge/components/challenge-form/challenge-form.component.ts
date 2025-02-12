@@ -4,14 +4,13 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
-import { QuillModule } from 'ngx-quill'
 
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule, QuillModule]
+  imports: [FormsModule, CommonModule]
 })
 export class ChallengeFormComponent implements OnInit {
   challenge: CreateChallenge = {
