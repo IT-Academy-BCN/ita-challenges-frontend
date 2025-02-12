@@ -47,7 +47,6 @@
             required></textarea>
         </div>
 
-        <!-- Lenguaje -->
         <div class="mb-4">
           <label class="form-label">Especialización</label>
           <div class="language-buttons">
@@ -55,10 +54,19 @@
               (click)="challenge.language = 'Java'">
               Java
             </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'JavaScript'"
-              (click)="challenge.language = 'JavaScript'">
-              JS
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
+              (click)="challenge.language = 'Javascript'">
+              Javascript
             </button>
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
+              (click)="challenge.language = 'Typescript'">
+              Typescript
+            </button>
+            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'SQL'"
+              (click)="challenge.language = 'SQL'">
+              SQL
+            </button>
+
             <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'PHP'"
               (click)="challenge.language = 'PHP'">
               PHP
