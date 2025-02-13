@@ -13,10 +13,11 @@ import { EditorModule } from '@tinymce/tinymce-angular'
   styleUrls: ['./challenge-form.component.scss'],
   imports: [FormsModule, CommonModule, EditorModule]
 })
-export class ChallengeFormComponent implements OnInit {
+
+export class ChallengeFormComponent {
   challenge: CreateChallenge = {
     challengeTitle: '',
-    description: '', // Aquí guardaremos el contenido enriquecido como HTML
+    description: '',
     level: 'EASY',
     language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
     solution: ''
@@ -56,7 +57,6 @@ export class ChallengeFormComponent implements OnInit {
         this.challenge.description.trim() !== '' &&
         ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
         this.challenge.solution.trim() !== ''
-
     )
   }
 

@@ -8,7 +8,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 class MockNavService {
   public selectWidth = '69px'
 
-  openLoginModal = jest.fn() // Simula la función openLoginModal
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
@@ -46,11 +45,6 @@ describe('MobileNavComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should call openLoginModal when openLoginModal is invoked', () => {
-    component.openLoginModal()
-    expect(navService.openLoginModal).toHaveBeenCalled()
   })
 
   it('should change language and update selectWidth', () => {

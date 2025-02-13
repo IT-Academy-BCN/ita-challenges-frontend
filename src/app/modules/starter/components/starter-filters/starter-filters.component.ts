@@ -4,7 +4,6 @@ import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type Language } from 'src/app/models/language.model'
-import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-starter-filters',
@@ -21,7 +20,6 @@ export class StarterFiltersComponent {
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
   private readonly challengeService = inject(ChallengeService)
-  private readonly authService = inject(AuthService)
 
   public isUserLoggedIn: boolean = false
 
@@ -79,6 +77,5 @@ export class StarterFiltersComponent {
 
       this.filtersSelected.emit(filters)
     })
-    // this.isUserLoggedIn = this.authService.isUserLoggedIn()
   }
 }

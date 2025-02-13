@@ -6,7 +6,8 @@ import {
   type OnInit,
   Output,
   ViewChild,
-  inject
+  inject,
+  type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
@@ -19,9 +20,7 @@ import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RelatedService } from '../../../../services/related.service'
-import { UserService } from 'src/app/services/user.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
-import { SimpleChanges } from '@angular/core'
 
 @Component({
   selector: 'app-challenge-info',
@@ -48,7 +47,6 @@ implements OnInit {
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly relatedService = inject(RelatedService)
-  private readonly userService = inject(UserService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
