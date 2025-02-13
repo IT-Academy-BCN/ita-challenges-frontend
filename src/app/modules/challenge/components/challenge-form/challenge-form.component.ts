@@ -4,13 +4,14 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
+import { EditorModule } from '@tinymce/tinymce-angular'
 
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, EditorModule]
 })
 export class ChallengeFormComponent implements OnInit {
   challenge: CreateChallenge = {
@@ -19,6 +20,27 @@ export class ChallengeFormComponent implements OnInit {
     level: 'EASY',
     language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
     solution: ''
+  }
+
+  // Configuración del editor
+  editorConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    height: 300,
+    menubar: false,
+    branding: false,
+    elementpath: false, // Quita el "p" pero mantiene la barra
+    statusbar: true, // Mantiene la barra de estado
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons'
+    ],
+    toolbar: 'undo redo | formatselect | ' +
+        'bold italic forecolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | emoticons | help',
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
   }
 
   private readonly challengeService = inject(ChallengeService)

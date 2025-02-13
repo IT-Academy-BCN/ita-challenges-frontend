@@ -14,9 +14,13 @@
         <!-- Enunciado -->
         <div class="mb-4">
           <label for="description" class="form-label">Enunciado</label>
-         
+          <editor
+            [(ngModel)]="challenge.description"
+            name="description"
+            [init]="editorConfig"
+            required
+          ></editor>
         </div>
-
 
 
 
@@ -60,7 +64,6 @@
             <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
               (click)="challenge.language = 'Javascript'">
               Javascript
-              JS
             </button>
             <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
               (click)="challenge.language = 'Typescript'">
