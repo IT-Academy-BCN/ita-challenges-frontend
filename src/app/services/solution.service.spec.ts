@@ -61,16 +61,15 @@ describe('SolutionService', () => {
   })
 
   it('should check the user solutions', (done) => {
-    const userId = 'user123'
     const challengeId = 'challenge123'
     const languageId = 'language123'
 
-    service.getUserSolution(userId, challengeId, languageId).subscribe(data => {
+    service.getUserSolution(challengeId, languageId).subscribe(data => {
       expect(data.results[0].solutions[0].uuid).toEqual('dcacb291-b4aa-4029-8e9b-284c8ca80296')
       done()
     })
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/user/${userId}/challenge/${challengeId}/language/${languageId}`)
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`)
     expect(req.request.method).toBe('GET')
     req.flush(mockUserSolution)
   })
@@ -78,7 +77,7 @@ describe('SolutionService', () => {
   it('should fetch user solutions', (done) => {
     const userId = 'user123'
 
-    service.fetchUserSolution(userId).subscribe((data) => {
+    service.fetchUserSolution().subscribe((data) => {
       expect(data).toEqual(mockResponse)
       done()
     })

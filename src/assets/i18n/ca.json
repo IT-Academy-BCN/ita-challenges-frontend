@@ -83,13 +83,6 @@
                 }
             }
         },"modals": {
-            "login": {
-                "forgotPassword": "Recordar/Canviar contrasenya",
-                "registerRedirect": "No tens un compte? Crea'n una",
-                "invalidInput": "Usuari o contrasenya incorrectes",
-                "notActive": "Usuari desactivat. Esperi al correu electrònic de confirmació",
-                "generalError": "Error en iniciar sessió"
-            }, 
             "solution": {
                 "title": "Estàs segur?",
                 "description":"Un cop enviat el codi no es pot editar" ,

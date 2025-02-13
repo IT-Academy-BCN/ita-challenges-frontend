@@ -80,13 +80,6 @@
                 }
             }
         },"modals": {
-            "login": {
-                "forgotPassword": "Recordar/cambiar contraseña",
-                "registerRedirect": "¿No tienes cuenta?, crear una.",
-                "invalidInput": "Usuario o contraseña incorrecto",
-                "notActive": "Usuario desactivado. Espere al email de confirmación",
-                "generalError": "Error en el login"
-            },
             "solution": {
                 "title": "¿Estás segur@?",
                 "description":"Una vez enviado el código no se puede editar" ,

@@ -38,7 +38,7 @@ class MockTranslateService {
 
 describe('NavService', () => {
   let service: NavService
-  let modalService: NgbModal
+  // let modalService: NgbModal
   let translateService: MockTranslateService
 
   beforeEach(() => {
@@ -50,18 +50,12 @@ describe('NavService', () => {
       ]
     })
     service = TestBed.inject(NavService)
-    modalService = TestBed.inject(NgbModal)
+    // modalService = TestBed.inject(NgbModal)
     translateService = TestBed.inject(TranslateService) as unknown as MockTranslateService
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
-  })
-
-  it('should open the login modal', () => {
-    const modalSpy = spyOn(modalService, 'open').and.callThrough()
-    service.openLoginModal()
-    expect(modalSpy).toHaveBeenCalledWith(jasmine.any(Function), { centered: true, size: 'lg' })
   })
 
   it('should change the language and update selectWidth correctly', () => {

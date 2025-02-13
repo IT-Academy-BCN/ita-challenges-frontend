@@ -8,9 +8,7 @@ import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
 import { ResourceCardComponent } from '../../../../shared/components/resource-card/resource-card.component'
 import { ChallengeCardComponent } from '../../../../shared/components/challenge-card/challenge-card.component'
-import { AuthService } from 'src/app/services/auth.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
-// import { RestrictedModalComponent } from 'src/app/modules/modals/restricted-modal/restricted-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
@@ -36,7 +34,6 @@ describe('ChallengeInfoComponent', () => {
         DynamicTranslatePipe
       ],
       providers: [
-        AuthService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
