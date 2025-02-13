@@ -29,7 +29,6 @@ export class ChallengeHeaderComponent implements OnInit {
   solutionSent: boolean = false
 
   ngOnInit (): void {
-    // this.userService.monitorSolutionState() // devo toglierlo dopo
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level

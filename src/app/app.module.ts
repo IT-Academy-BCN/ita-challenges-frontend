@@ -12,7 +12,6 @@ import { I18nModule } from '../assets/i18n/i18n.module'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
-import { AuthService } from './services/auth.service'
 // TODO - pending execution over secure environment
 // import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
@@ -52,8 +51,6 @@ export function HttpLoaderFactory (http: HttpClient): any {
       }
     })],
   providers: [
-    AuthService, // CookieEncryptionHelper
-
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'ca' } // Establecemos Catalán como idioma por defecto.
   ]
