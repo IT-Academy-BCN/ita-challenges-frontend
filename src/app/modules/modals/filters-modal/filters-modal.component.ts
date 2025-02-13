@@ -4,7 +4,6 @@ import { FormBuilder } from '@angular/forms'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type Language } from 'src/app/models/language.model'
-// import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-filters-modal',
@@ -94,8 +93,4 @@ export class FiltersModalComponent {
   open (): void {
     this.modalService.open(this.modalContent, { size: 'lg' })
   }
-
-  /* constructor () {
-    this.isUserLoggedIn = this.authService.isUserLoggedIn()
-  } */
 }

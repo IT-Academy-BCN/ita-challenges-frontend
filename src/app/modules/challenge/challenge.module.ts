@@ -11,7 +11,6 @@ import { ModalsModule } from '../modals/modals.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
-import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
 
 @NgModule({
@@ -20,7 +19,7 @@ import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
     ChallengeInfoComponent,
     ChallengeComponent
   ],
-  providers: [AuthService],
+  providers: [],
   imports: [
     CommonModule,
     SharedComponentsModule,
