@@ -4,6 +4,8 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
+import { Language } from 'src/app/models/challenges.interface'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 
 
 @Component({
@@ -23,9 +25,23 @@ export class ChallengeFormComponent {
   }
 
 
-  private readonly challengeService = inject(ChallengeService)
-  private readonly router = inject(Router)
+  languages: Language[] = []
 
+  private readonly challengeService = inject(ChallengeService)
+  private readonly challengeFormService = inject(ChallengeFormService)
+  private readonly router = inject(Router)
+  
+  constructor() {
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: (val) => {
+        this.languages = val;
+        console.log('languages:', val); 
+      },
+      error: (err) => {
+        console.error('Error de obtener lenguages:', err);
+      }
+    });
+  }
 
 
   private isFormValid (): boolean {
@@ -57,5 +73,6 @@ export class ChallengeFormComponent {
       }
     })
   }
+
 
 }

@@ -16,8 +16,10 @@ export class ChallengeFormService {
       'Content-Type': 'application/json'
     })
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`;
-    return this.http.get<Language[]>(url, {headers})
-  }
+;
+    console.log('llamo to API:', url); 
   
+    return this.http.get<Language[]>(url, { headers });
+  }
 
 }
