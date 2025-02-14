@@ -59,4 +59,6 @@ export class ChallengeService {
     console.log('URL completa:', url) // Para depurar
     return this.http.post(url, challenge)
   }
+
+  
 }
