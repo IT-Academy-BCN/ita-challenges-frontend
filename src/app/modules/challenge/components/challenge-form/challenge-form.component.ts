@@ -5,6 +5,7 @@ import { type CreateChallenge } from '../../../../models/create-challenge.interf
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 
+
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -21,8 +22,11 @@ export class ChallengeFormComponent {
     solution: ''
   }
 
+
   private readonly challengeService = inject(ChallengeService)
   private readonly router = inject(Router)
+
+
 
   private isFormValid (): boolean {
     return (
@@ -53,4 +57,5 @@ export class ChallengeFormComponent {
       }
     })
   }
+
 }

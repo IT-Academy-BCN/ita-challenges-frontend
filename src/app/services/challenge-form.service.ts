@@ -10,13 +10,14 @@ import { environment } from 'src/environments/environment'
 export class ChallengeFormService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
 
-  
+
   getAllLangugesCreateForm(): Observable<Language[]>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/itachallenge/api/v1/challenge/language`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`;
     return this.http.get<Language[]>(url, {headers})
   }
+  
 
 }
