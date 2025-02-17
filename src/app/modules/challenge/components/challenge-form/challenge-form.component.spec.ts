@@ -24,8 +24,7 @@ describe('ChallengeFormComponent', () => {
     } as unknown as jest.Mocked<Router>
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, CommonModule, EditorModule],
-      declarations: [ChallengeFormComponent],
+      imports: [FormsModule, CommonModule, EditorModule, ChallengeFormComponent],
       providers: [
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: Router, useValue: mockRouter }

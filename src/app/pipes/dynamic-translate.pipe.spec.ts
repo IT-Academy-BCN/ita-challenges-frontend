@@ -44,7 +44,7 @@ describe('DynamicTranslatePipe', () => {
     expect(pipe.transform(value)).toBe('Hola')
   })
 
-  it('should retrun an empty string if the value is not an object', () => {
+  it('should return an empty string if the value is not an object', () => {
     const value = 'Hello'
     expect(pipe.transform(value)).toBe('')
   })

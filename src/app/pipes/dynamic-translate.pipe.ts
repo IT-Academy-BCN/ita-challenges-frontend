@@ -25,16 +25,12 @@ export class DynamicTranslatePipe implements PipeTransform {
       return ''
     }
 
-    // Si es un string simple, devuélvelo tal cual
-    if (typeof value === 'string') {
-      return value
-    }
-
-    // Si es un objeto de traducción
+    // Solo procesa objetos de traducción
     if (typeof value === 'object' && this.language in value) {
       return value[this.language]
     }
 
+    // Cualquier otro tipo de valor (incluyendo strings) retorna string vacío
     return ''
   }
 }
