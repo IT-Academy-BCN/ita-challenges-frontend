@@ -1,4 +1,5 @@
-import { Component, inject, type OnInit } from '@angular/core'
+// import { Component, inject, type OnInit } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
@@ -23,24 +24,24 @@ export class ChallengeFormComponent {
     solution: ''
   }
 
-  // Configuración del editor
   editorConfig = {
     base_url: '/tinymce',
     suffix: '.min',
     height: 300,
     menubar: false,
     branding: false,
-    elementpath: false, // Quita el "p" pero mantiene la barra
-    statusbar: true, // Mantiene la barra de estado
+    elementpath: false,
+    statusbar: true,
+    license_key: 'gpl',
     plugins: [
-      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+      'advlist', 'autolink', 'lists', 'link', 'charmap',
       'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
       'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons'
     ],
     toolbar: 'undo redo | formatselect | ' +
-        'bold italic forecolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
-        'removeformat | emoticons | help',
+      'h2 h3 | bold italic underline | forecolor backcolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | emoticons | help',
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
   }
 
@@ -51,12 +52,12 @@ export class ChallengeFormComponent {
     // No necesitas inicializar nada extra para ngx-quill
   }
 
-  private isFormValid (): boolean {
+  public isFormValid (): boolean {
     return (
       this.challenge.challengeTitle.trim() !== '' &&
-        this.challenge.description.trim() !== '' &&
-        ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
-        this.challenge.solution.trim() !== ''
+      this.challenge.description.trim() !== '' &&
+      ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
+      this.challenge.solution.trim() !== ''
     )
   }
 
