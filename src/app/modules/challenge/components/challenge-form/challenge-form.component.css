@@ -46,7 +46,7 @@
   }
   
   .btn {
-    min-width: 100px; /* Ajustado para que no sean demasiado anchos */
+    min-width: 100px;
     max-width: 140px; 
     height: 40px; 
     display: flex;
@@ -56,7 +56,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 0.9rem; /* Tamaño de fuente más legible */
+    font-size: 0.9rem;
     font-weight: normal;
     border: 2px solid black; 
     border-radius: 8px; 
@@ -66,7 +66,7 @@
   }
   
   .btn img {
-    height: 20px; /* Ajusta el tamaño del icono */
+    height: 20px;
     width: 20px;
   }
   
@@ -76,7 +76,6 @@
     color: white;
   }
   
-
   .btn-primary {
     background-color: #C13584;
     border-color: #C13584;
@@ -92,56 +91,52 @@
       border-color: lighten(#C13584, 20%);
     }
   }
+
+  ::ng-deep {
+      .tox-tinymce-aux {
+          position: absolute !important;
+          z-index: 1000;
+      }
+
+      .tox-tbtn--bespoke {
+          position: static !important;
+      }
+
+      .tox-pop {
+          position: absolute !important;
+      }
+
+      .tox-toolbar__overflow {
+          position: static !important;
+      }
+
+      .tox-menu {
+          position: absolute !important;
+      }
+
+      .tox-toolbar__group {
+          position: static !important;
+      }
+
+      .tox-emoji-picker {
+          position: absolute !important;
+          z-index: 1000;
+          
+          @media (max-width: 768px) {
+              max-width: 280px !important;
+              max-height: 300px !important;
+          }
+      }
+  }
 }
 
 .text-end {
-display: flex;
-justify-content: flex-end; 
-width: 100%; 
-padding-top: 1rem; 
+  display: flex;
+  justify-content: flex-end; 
+  width: 100%; 
+  padding-top: 1rem; 
 }
 
-quill-editor {
-  min-height: 300px;
-  border: none; 
-  padding: 0; 
-  background: transparent; 
-}
-
-.custom-quill-editor {
-  .ql-container {
-    min-height: 400px;
-    max-height: 600px;
-    height: 400px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-  }
-
-  .ql-toolbar {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-bottom: none;
-  }
-
-  .ql-editor {
-    height: calc(100% - 42px);
-    min-height: 400px;
-    max-height: 600px;
-    background-color: #fff;
-    padding: 10px;
-    overflow-y: auto;
-  }
-
-  .ql-editor.ql-blank::before {
-    color: #aaa;
-    font-style: italic;
-  }
-}
-
-.large-editor {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
+.editor-container {
+  position: relative;
 }

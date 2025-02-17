@@ -5,21 +5,33 @@
 
       <form #challengeForm="ngForm" (ngSubmit)="onSubmit()">
         <!-- Título -->
-        <div class="mb-4">
+        <div class="form-group mb-4">
           <label for="title" class="form-label">Título</label>
-          <input type="text" class="form-control" id="title" name="challengeTitle"
-            [(ngModel)]="challenge.challengeTitle" required>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="title" 
+            name="challengeTitle"
+            [(ngModel)]="challenge.challengeTitle" 
+            required
+          >
         </div>
 
         <!-- Enunciado -->
-        <div class="mb-4">
+        <div class="form-group mb-4">
           <label for="description" class="form-label">Enunciado</label>
-          <textarea class="form-control" id="description" name="description" rows="4"
-            [(ngModel)]="challenge.description" required></textarea>
+          <div class="editor-container">
+            <editor
+              [(ngModel)]="challenge.description"
+              name="description"
+              [init]="editorConfig"
+              required
+            ></editor>
+          </div>
         </div>
 
         <!-- Dificultad -->
-        <div class="mb-4">
+        <div class="form-group mb-4">
           <label class="form-label d-block">Dificultad</label>
           <div class="difficulty-group">
             <div class="form-check form-check-inline">
@@ -41,11 +53,18 @@
         </div>
 
         <!-- Solución -->
-        <div class="mb-4">
+        <div class="form-group mb-4">
           <label for="solution" class="form-label">Solución</label>
-          <textarea class="form-control" id="solution" name="solution" rows="4" [(ngModel)]="challenge.solution"
-            required></textarea>
+          <textarea 
+            class="form-control" 
+            id="solution" 
+            name="solution" 
+            rows="4" 
+            [(ngModel)]="challenge.solution"
+            required
+          ></textarea>
         </div>
+
 
 
         <div class="mb-4">
@@ -61,38 +80,6 @@
           </div>
         </div>
         
-        
-        <!-- <div class="mb-4">
-          <label class="form-label">Especialización</label>
-          <div class="language-buttons">
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Java'"
-              (click)="challenge.language = 'Java'">
-              Java
-            </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
-              (click)="challenge.language = 'Javascript'">
-              Javascript
-            </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
-              (click)="challenge.language = 'Typescript'">
-              Typescript
-            </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'SQL'"
-              (click)="challenge.language = 'SQL'">
-              SQL
-            </button>
-
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'PHP'"
-              (click)="challenge.language = 'PHP'">
-              PHP
-            </button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Python'"
-              (click)="challenge.language = 'Python'">
-              Python
-            </button>
-          </div>
-        </div> -->
-
 
 
         <!-- Botón Guardar -->

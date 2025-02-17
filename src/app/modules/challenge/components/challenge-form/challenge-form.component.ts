@@ -1,11 +1,16 @@
+// import { Component, inject, type OnInit } from '@angular/core'
 import { Component, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
+
 import { Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
+
+
+import { EditorModule } from '@tinymce/tinymce-angular'
 
 
 @Component({
@@ -13,8 +18,9 @@ import { ChallengeFormService } from 'src/app/services/challenge-form.service'
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule] // Importa FormsModule y CommonModule
+  imports: [FormsModule, CommonModule, EditorModule]
 })
+
 export class ChallengeFormComponent {
   challenge: CreateChallenge = {
     challengeTitle: '',
@@ -24,7 +30,30 @@ export class ChallengeFormComponent {
     solution: ''
   }
 
+
   languages: Language[] = []
+
+  editorConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    height: 300,
+    menubar: false,
+    branding: false,
+    elementpath: false,
+    statusbar: true,
+    license_key: 'gpl',
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'charmap',
+      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons'
+    ],
+    toolbar: 'undo redo | formatselect | ' +
+      'h2 h3 | bold italic underline | forecolor backcolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | emoticons | help',
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+  }
+
 
   private readonly challengeService = inject(ChallengeService)
   private readonly challengeFormService = inject(ChallengeFormService)
@@ -35,8 +64,12 @@ export class ChallengeFormComponent {
   }
 
 
-  private isFormValid (): boolean {
-    const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
+
+
+    
+    private isFormValid (): boolean {
+      
+      const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
     return (
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
@@ -48,7 +81,10 @@ export class ChallengeFormComponent {
   onSubmit (): void {
     if (!this.isFormValid()) {
       console.error('El formulario no es válido')
+      return
     }
+
+    console.log('Contenido enriquecido:', this.challenge.description)
 
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
