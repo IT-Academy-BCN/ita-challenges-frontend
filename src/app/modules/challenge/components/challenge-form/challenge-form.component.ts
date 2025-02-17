@@ -20,7 +20,7 @@ export class ChallengeFormComponent {
     challengeTitle: '',
     description: '',
     level: 'EASY',
-    language: '' as any,
+    language: '' as string,
     solution: ''
   }
 
@@ -36,10 +36,11 @@ export class ChallengeFormComponent {
 
 
   private isFormValid (): boolean {
+    const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
     return (
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
-      ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
+      isLanguageValid &&
       this.challenge.solution.trim() !== ''
     )
   }

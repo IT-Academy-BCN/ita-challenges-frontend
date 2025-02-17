@@ -55,7 +55,7 @@
                     type="button" 
                     class="btn btn-outline-secondary" 
                     [class.active]="challenge.language === lang.language_name"
-                    (click)="challenge.language === lang.language_name">
+                    (click)="challenge.language = lang.language_name">
               {{ lang.language_name }}
             </button>
           </div>
@@ -93,7 +93,7 @@
           </div>
         </div> -->
 
-<!-- <pre>lenguages: {{languages | json}}</pre> -->
+
 
         <!-- Botón Guardar -->
         <div class="text-end">
