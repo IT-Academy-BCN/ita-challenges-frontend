@@ -47,6 +47,21 @@
             required></textarea>
         </div>
 
+
+        <div class="mb-4">
+          <label class="form-label">Lenguaje</label>
+          <div class="language-buttons">
+            <button *ngFor="let lang of languages"
+                    type="button" 
+                    class="btn btn-outline-secondary" 
+                    [class.active]="challenge.language === lang.language_name"
+                    (click)="challenge.language === lang.language_name">
+              {{ lang.language_name }}
+            </button>
+          </div>
+        </div>
+        
+        
         <!-- <div class="mb-4">
           <label class="form-label">Especialización</label>
           <div class="language-buttons">
@@ -78,7 +93,7 @@
           </div>
         </div> -->
 
-<pre>lenguages: {{languages | json}}</pre>
+<!-- <pre>lenguages: {{languages | json}}</pre> -->
 
         <!-- Botón Guardar -->
         <div class="text-end">

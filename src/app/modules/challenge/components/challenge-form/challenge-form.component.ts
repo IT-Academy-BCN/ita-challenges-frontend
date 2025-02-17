@@ -20,10 +20,9 @@ export class ChallengeFormComponent {
     challengeTitle: '',
     description: '',
     level: 'EASY',
-    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
+    language: '' as any,
     solution: ''
   }
-
 
   languages: Language[] = []
 
@@ -32,15 +31,7 @@ export class ChallengeFormComponent {
   private readonly router = inject(Router)
   
   constructor() {
-    this.challengeFormService.getAllLangugesCreateForm().subscribe({
-      next: (val) => {
-        this.languages = val;
-        console.log('languages:', val); 
-      },
-      error: (err) => {
-        console.error('Error de obtener lenguages:', err);
-      }
-    });
+    this.loadLanguages()
   }
 
 
@@ -74,5 +65,14 @@ export class ChallengeFormComponent {
     })
   }
 
+  loadLanguages(){
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: ({ results }) => this.languages = results || [],
+      error: (err) => {
+        console.error('Error al obtener los idiomas:', err);
+        this.languages = []
+      }
+    });
+  }
 
 }

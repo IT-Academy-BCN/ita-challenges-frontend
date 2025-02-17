@@ -11,15 +11,14 @@ export class ChallengeFormService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
 
 
-  getAllLangugesCreateForm(): Observable<Language[]>{
+  getAllLangugesCreateForm(): Observable<{ results: Language[] }>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`;
 ;
-    console.log('llamo to API:', url); 
-  
-    return this.http.get<Language[]>(url, { headers });
+
+    return this.http.get<{ results: Language[] }>(url, { headers });
   }
 
 }
