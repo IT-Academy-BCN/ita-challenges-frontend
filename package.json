@@ -41,6 +41,7 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@popperjs/core": "^2.11.6",
+    "@tinymce/tinymce-angular": "^8.0.1",
     "@types/codemirror": "^5.60.8",
     "bootstrap": "^5.3.2",
     "codemirror": "^6.0.1",
@@ -52,6 +53,7 @@
     "ngx-cookie-service": "^18.0.0",
     "playwright": "^1.33.0",
     "rxjs": "~7.8.0",
+    "tinymce": "^7.6.1",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.2"
   },

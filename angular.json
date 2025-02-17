@@ -32,16 +32,23 @@
               "src/assets/i18n",
               "src/assets/img",
               "src/assets/img/icon",
-              "src/assets/img/users"
+              "src/assets/img/users",
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce",
+                "output": "/tinymce/"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+             
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/tinymce/tinymce.min.js"
             ],
             "browser": "src/main.ts",
             "stylePreprocessorOptions": {
@@ -117,7 +124,9 @@
             ],
             "styles": [
               "src/styles.scss"
+       
             ],
+
             "scripts": []
           }
         },

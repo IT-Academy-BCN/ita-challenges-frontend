@@ -30,7 +30,8 @@
               <h3 class="mt-0">
                 {{ "modules.challenge.info.description" | translate }}
               </h3>
-              <p>{{ description | dynamicTranslate }}</p>
+             <p [innerHTML]="description | dynamicTranslate "></p>
+
             </div>
 
             <!-- Examples -->
