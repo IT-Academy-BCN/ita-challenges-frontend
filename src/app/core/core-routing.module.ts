@@ -4,6 +4,7 @@ import { MainComponent } from './layout/main/main.component'
 import { StarterComponent } from '../modules/starter/components/starter/starter.component'
 import { ChallengeComponent } from '../modules/challenge/components/challenge/challenge.component'
 import { ProfileComponent } from '../modules/profile/components/profile/profile.component'
+import { StarChallengeComponent } from '../modules/challenge/components/star-challenge/star-challenge.component'
 
 const routes: Routes = [
   {
@@ -13,12 +14,14 @@ const routes: Routes = [
       {
         path: 'challenges',
         children: [
+          // {
+          //   path: 'challenges/:idChallenge/start', component: StarChallengeComponent
+          // },
           {
             path: 'create',
             loadComponent: async () =>
               (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
           },
-
           {
             path: '',
             component: StarterComponent
@@ -27,7 +30,6 @@ const routes: Routes = [
             path: ':idChallenge',
             component: ChallengeComponent
           }
-
         ]
       },
       {

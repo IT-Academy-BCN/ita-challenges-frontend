@@ -32,7 +32,9 @@ import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
     ChallengeCardComponent,
     ResourceCardComponent,
     SolutionComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DynamicTranslatePipe,
+    EscapeJavaForJsonPipe
   ]
 })
 export class SharedComponentsModule { }

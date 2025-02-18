@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core'
-import { ActivatedRoute, type ParamMap } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
@@ -39,11 +39,14 @@ export class ChallengeComponent {
   private readonly challengeService = inject(ChallengeService)
 
   ngOnInit (): void {
-    this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
-      this.idChallenge = params.get('idChallenge') ?? ''
+    const id = this.route.snapshot.paramMap.get('idChallenge')
+    // Usar ?? para asignar valor por defecto solo si id es null o undefined
+    this.idChallenge = id ?? ''
+
+    if (this.idChallenge !== '') {
       this.loadMasterData(this.idChallenge)
-      this.activeId = 1
-    })
+    }
+    this.activeId = 1
   }
 
   onStartChallenge (started: boolean): void {
@@ -61,6 +64,7 @@ export class ChallengeComponent {
 
   loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
+      console.log(challenge)
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
