@@ -65,31 +65,3 @@ h3 {
     margin: .3rem;
   }
 }
-
-#color {
-  color: $primary;
-  font-weight: 600;
-}
-
-.breadcrumbs {
-  font-size: 16px;
-  line-height: 22.4px;
-  font-weight: 500;
-  color: #828282;
-}
-
-
-.desktop-nav {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-  }
-  
-  .desktop-nav .navbar-nav .nav-item .nav-link {
-    color: #fff;
-  }
-  
-  .desktop-nav .navbar-nav .nav-item .nav-link:hover {
-    color: #f87171; /* Ejemplo de color hover */
-  }
-  

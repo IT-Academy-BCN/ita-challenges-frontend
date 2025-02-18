@@ -1,0 +1,58 @@
+<!-- Botón para iniciar reto -->
+<button class="btn btn-primary" (click)="saveChallenge()">
+    Guardar reto
+  </button>
+  
+  <button class="btn btn-primary" (click)="openSendSolutionModal()">
+    Enviar reto
+  </button>
+  
+  <!-- Mostrar detalles cuando showDetails sea verdadero -->
+  <div *ngIf="showDetails">
+    <ng-template ngbNavContent>
+      <div class="tab-content">
+        <!-- Mostrar enunciado -->
+        <div class="d-block btn-row text-end mb-3">
+          <span class="right-span d-inline-flex">
+            <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
+            <label class="ms-1">{{ "modules.challenge.info.showStatement" | translate }}</label>
+          </span>
+        </div>
+  
+        <!-- Editor de código -->
+        <div *ngIf="showEditor" class="editor-container" [ngClass]="{'reduced-editor': isEditorReduced}">
+          <div id="code-editor"></div>
+        </div>
+  
+        <!-- Descripción y ejemplos -->
+        <div class="details-body d-flex">
+          <div *ngIf="showStatement" class="details-text">
+            <!-- Descripción -->
+            <div class="pb-1">
+              <h3 class="mt-0">{{ "modules.challenge.info.description" | translate }}</h3>
+              <p>{{ description | dynamicTranslate }}</p>
+            </div>
+  
+            <!-- Ejemplos -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
+              <ul>
+                <ng-container *ngFor="let example of examples">
+                  <li class="mb-1" *ngIf="example.example_text">
+                    {{ example.example_text | dynamicTranslate }}
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+  
+            <!-- Notas -->
+            <div class="pb-1">
+              <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
+              <p>{{ notes | dynamicTranslate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  
