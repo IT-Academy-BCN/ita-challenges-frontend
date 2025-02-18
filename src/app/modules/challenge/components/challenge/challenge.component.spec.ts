@@ -3,8 +3,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeComponent } from './challenge.component'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { RouterTestingModule } from '@angular/router/testing'
-import { ActivatedRoute, convertToParamMap } from '@angular/router'
+import { provideRouter, Router, ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component'
 import { of } from 'rxjs'
@@ -37,19 +36,26 @@ describe('ChallengeComponent', () => {
         ChallengeInfoComponent,
         SolutionComponent
       ],
-      imports: [RouterTestingModule,
+      imports: [
         SharedComponentsModule,
         I18nModule,
         NgbNavModule,
         FormsModule,
-        DynamicTranslatePipe],
+        DynamicTranslatePipe
+      ],
       providers: [
+        provideRouter([]),
+        {
+          provide: Router,
+          useValue: { navigate: jest.fn() }
+        },
         {
           provide: ActivatedRoute,
           useValue: {
             queryParams: of({}),
             paramMap: of(convertToParamMap({ idChallenge: '123' })),
             snapshot: {
+              paramMap: convertToParamMap({ idChallenge: '123' }),
               queryParams: {
                 tab: 'someTab'
               }
@@ -61,6 +67,7 @@ describe('ChallengeComponent', () => {
           useValue: mockChallengeService
         },
         CookieService,
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
