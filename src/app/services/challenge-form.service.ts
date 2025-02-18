@@ -3,12 +3,19 @@ import { Language } from '../models/challenges.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment'
+import { CreateChallenge } from '../models/create-challenge.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChallengeFormService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
+
+  createChallenge (challenge: CreateChallenge): Observable<any> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
+    console.log('URL completa:', url) // Para depurar
+    return this.http.post(url, challenge)
+  }
 
 
   getAllLangugesCreateForm(): Observable<{ results: Language[] }>{

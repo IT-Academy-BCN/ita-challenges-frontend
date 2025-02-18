@@ -61,12 +61,11 @@ export class ChallengeFormComponent {
   
   constructor() {
     this.loadLanguages()
+    this.onSubmit()
+  
   }
 
 
-
-
-    
     public isFormValid (): boolean {
       
       const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
@@ -86,7 +85,7 @@ export class ChallengeFormComponent {
 
     console.log('Contenido enriquecido:', this.challenge.description)
 
-    this.challengeService.createChallenge(this.challenge).subscribe({
+    this.challengeFormService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
         // Temporary: Redirects to /challenges for now.
