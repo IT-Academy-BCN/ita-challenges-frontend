@@ -4,6 +4,7 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { TestBed, inject } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
+import { type CreateChallenge } from '../models/create-challenge.interface'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('ChallengeService', () => {
@@ -108,4 +109,28 @@ describe('ChallengeService', () => {
       req.flush(mockResponse)
       httpMock.verify()
     }))
+
+  it('should call createChallenge() and return the created challenge', (done) => {
+    const mockChallenge: CreateChallenge = {
+      challengeTitle: 'Test Challenge',
+      description: 'Test Description',
+      level: 'EASY', // ✅ Asegurar que sea 'EASY' | 'MEDIUM' | 'HARD'
+      language: 'Java',
+      solution: 'Test Solution'
+    }
+
+    const mockResponse = { id: 1, ...mockChallenge }
+
+    service.createChallenge(mockChallenge).subscribe((response) => {
+      expect(response).toEqual(mockResponse)
+      done()
+    })
+
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
+    expect(req.request.method).toBe('POST')
+    expect(req.request.body).toEqual(mockChallenge)
+
+    req.flush(mockResponse)
+    httpClientMock.verify()
+  })
 })

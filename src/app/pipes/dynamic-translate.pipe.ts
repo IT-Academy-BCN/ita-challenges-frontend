@@ -1,14 +1,16 @@
 import { inject, Pipe, type PipeTransform } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Pipe({
   name: 'dynamicTranslate',
-  pure: false, // Pipe refreshes when the language changes
+  pure: false,
   standalone: true
 })
 export class DynamicTranslatePipe implements PipeTransform {
   private language!: string
   private readonly translateService = inject(TranslateService)
+  private readonly sanitizer = inject(DomSanitizer)
 
   constructor () {
     this.language = this.translateService.currentLang
@@ -19,10 +21,16 @@ export class DynamicTranslatePipe implements PipeTransform {
   }
 
   transform (value: any): string {
-    if (value == null || typeof value !== 'object' || !(this.language in value)) {
+    if (value === null) {
       return ''
     }
 
-    return value[this.language]
+    // Solo procesa objetos de traducción
+    if (typeof value === 'object' && this.language in value) {
+      return value[this.language]
+    }
+
+    // Cualquier otro tipo de valor (incluyendo strings) retorna string vacío
+    return ''
   }
 }

@@ -22,7 +22,8 @@ import { DesktopNavComponent } from './layout/header/desktop-nav/desktop-nav.com
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,

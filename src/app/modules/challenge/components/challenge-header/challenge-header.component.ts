@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrls: ['./challenge-header.component.scss']
 })
 export class ChallengeHeaderComponent implements OnInit {
-  constructor (private readonly router: Router) {}
+  constructor (private readonly Router: Router) {}
 
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
@@ -29,7 +29,6 @@ export class ChallengeHeaderComponent implements OnInit {
   solutionSent: boolean = false
 
   ngOnInit (): void {
-    // this.userService.monitorSolutionState() // devo toglierlo dopo
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
@@ -38,9 +37,15 @@ export class ChallengeHeaderComponent implements OnInit {
     this.solutionSent = savedSolutions.includes(this.idChallenge)
   }
 
-  onStartChallenge (started: boolean): void {
-    console.log('startChallenge event emitted:', started)
-    this.startChallengeEvent.emit(started)
+  async onStartChallenge (started: boolean): Promise<void> {
+    try {
+      console.log('Navigating to:', `/ita-challenge/challenges/${this.idChallenge}/start`)
+      await this.Router.navigate(['/ita-challenge/challenges/', this.idChallenge, 'start'])
+      console.log('startChallenge event emitted:', started)
+      this.startChallengeEvent.emit(started)
+    } catch (error) {
+      console.error('Error while starting challenge:', error)
+    }
   }
 
   openSendSolutionModal (): void {
@@ -50,10 +55,6 @@ export class ChallengeHeaderComponent implements OnInit {
     })
     modalRef.componentInstance.idChallenge = this.idChallenge
   }
-
-  // clickSendButton (): void {
-  //   this.openSendSolutionModal()
-  // }
 
   get currentLang (): string {
     return this.translate.currentLang

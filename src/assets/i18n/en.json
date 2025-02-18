@@ -84,13 +84,6 @@
             }
         },
         "modals": {
-            "login":{
-                "forgotPassword": "Remember/Change password",
-                "registerRedirect": "¿Don't have an account?, create one",
-                "invalidInput": "incorrect user or password",
-                "notActive": "Inactivated User. Await the confirmation email",
-                "generalError": "Login Error"
-            },
             "solution": {
                 "title": "Are you sure?",
                 "description":"Once the code is sent it cannot be edited" ,
