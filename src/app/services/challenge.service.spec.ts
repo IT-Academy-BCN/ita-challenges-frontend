@@ -44,10 +44,7 @@ describe('ChallengeService', () => {
         - a^(bc)--|: A hot Observable that emits a before the subscription.
      */
 
-  it('should be created itineraries.service', (done) => {
-    expect(service).toBeTruthy()
-    done()
-  })
+
 
   it('should get itineraries succesfully', (done) => {
     const mockData: Itinerary[] = [

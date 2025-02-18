@@ -85,7 +85,7 @@ export class ChallengeFormComponent {
 
     console.log('Contenido enriquecido:', this.challenge.description)
 
-    this.challengeFormService.createChallenge(this.challenge).subscribe({
+    this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
         // Temporary: Redirects to /challenges for now.
