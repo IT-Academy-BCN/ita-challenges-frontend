@@ -10,7 +10,7 @@ describe('ChallengeFormService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule], 
       providers: [ChallengeFormService],
     });
 
@@ -18,7 +18,10 @@ describe('ChallengeFormService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => httpMock.verify());
+  afterEach(() => {
+
+    httpMock.verify();
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -33,18 +36,21 @@ describe('ChallengeFormService', () => {
       solution: 'console.log("Hello World")'  
     };
   
-    service.createChallenge(mockChallenge).subscribe((res) => expect(res).toEqual({ success: true }));
+    service.createChallenge(mockChallenge).subscribe((res) => {
+      expect(res).toEqual({ success: true });
+    });
   
     const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`);
     expect(req.request.method).toBe('POST');
     req.flush({ success: true });
   });
-  
 
   it('should fetch languages', () => {
     const mockLanguages = { results: [{ id_language: 1, language_name: 'JS' }] };
 
-    service.getAllLangugesCreateForm().subscribe((res) => expect(res).toEqual(mockLanguages));
+    service.getAllLangugesCreateForm().subscribe((res) => {
+      expect(res).toEqual(mockLanguages);
+    });
 
     const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`);
     expect(req.request.method).toBe('GET');
