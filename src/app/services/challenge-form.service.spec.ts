@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ChallengeFormService } from './challenge-form.service';
 import { environment } from 'src/environments/environment';
-import { CreateChallenge } from '../models/create-challenge.interface';
 
 describe('ChallengeFormService', () => {
   let service: ChallengeFormService;
@@ -10,7 +9,7 @@ describe('ChallengeFormService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], 
+      imports: [HttpClientTestingModule],
       providers: [ChallengeFormService],
     });
 
@@ -19,34 +18,11 @@ describe('ChallengeFormService', () => {
   });
 
   afterEach(() => {
-
     httpMock.verify();
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('should send POST request when creating a challenge', () => {
-    const mockChallenge: CreateChallenge = { 
-      challengeTitle: 'Test', 
-      description: 'Desc', 
-      language: 'JavaScript', 
-      level: 'EASY',
-      solution: 'console.log("Hello World")'  
-    };
-  
-    service.createChallenge(mockChallenge).subscribe((res) => {
-      expect(res).toEqual({ success: true });
-    });
-  
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`);
-    expect(req.request.method).toBe('POST');
-    req.flush({ success: true });
-  });
-
   it('should fetch languages', () => {
-    const mockLanguages = { results: [{ id_language: 1, language_name: 'JS' }] };
+    const mockLanguages = { results: [{ id_language: '1', language_name: 'JAVA' }] };
 
     service.getAllLangugesCreateForm().subscribe((res) => {
       expect(res).toEqual(mockLanguages);

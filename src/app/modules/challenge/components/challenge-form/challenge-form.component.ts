@@ -5,11 +5,8 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
-
 import { Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
-
-
 import { EditorModule } from '@tinymce/tinymce-angular'
 
 
