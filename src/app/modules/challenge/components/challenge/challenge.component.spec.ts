@@ -74,6 +74,7 @@ describe('ChallengeComponent', () => {
     fixture = TestBed.createComponent(ChallengeComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+    component.loadMasterData('123')
   })
 
   it('should create', () => {
