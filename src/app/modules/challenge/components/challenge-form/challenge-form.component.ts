@@ -67,7 +67,7 @@ export class ChallengeFormComponent {
 
 
     
-    private isFormValid (): boolean {
+    public isFormValid (): boolean {
       
       const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
     return (
