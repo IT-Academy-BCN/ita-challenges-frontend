@@ -50,4 +50,38 @@ describe('ChallengeFormComponent', () => {
     component.loadLanguages();
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
   });
+
+
+
+  it('should load languages correctly', () => {
+    component.loadLanguages();
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
+    expect(component.languages.length).toBeGreaterThan(0);
+    expect(component.languages[0].language_name).toBe('JavaScript');
+  });
+  
+
+  it('should return true if the form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'JavaScript';
+    component.challenge.solution = 'Valid solution content';
+  
+    expect(component.isFormValid()).toBe(true);
+  });
+  
+  it('should return false if the form is invalid', () => {
+    component.challenge.challengeTitle = 'Invalid Challenge Title';
+    component.challenge.description = 'Some description';
+    component.challenge.language = ''; 
+    component.challenge.solution = 'Some solution content';
+  
+
+    expect(component.isFormValid()).toBe(false);
+  });
+  
+
+  
 });
+
+
