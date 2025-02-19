@@ -12,6 +12,8 @@ import { ModalsModule } from '../modals/modals.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
+import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
+
 @NgModule({
   declarations: [
     ChallengeHeaderComponent,
@@ -29,11 +31,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
     ModalsModule,
     TranslateModule,
     FormsModule,
-    NgbNavModule
-  ],
-  exports: [
-    ChallengeComponent,
-    ChallengeHeaderComponent
+    NgbNavModule,
+    DynamicTranslatePipe
   ]
 })
 export class ChallengeModule {}

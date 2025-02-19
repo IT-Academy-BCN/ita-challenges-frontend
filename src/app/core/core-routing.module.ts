@@ -14,9 +14,6 @@ const routes: Routes = [
       {
         path: 'challenges',
         children: [
-          // {
-          //   path: 'challenges/:idChallenge/start', component: StarChallengeComponent
-          // },
           {
             path: 'create',
             loadComponent: async () =>
