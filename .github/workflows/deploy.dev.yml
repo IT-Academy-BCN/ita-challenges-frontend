@@ -100,7 +100,6 @@ jobs:
         with:
           context: .
           push: true
-          no-cache: true
           tags: itacademybcn/itachallenges:itachallenge-nginx-${{ env.MICROSERVICE_VERSION }}
 
   deploy:
