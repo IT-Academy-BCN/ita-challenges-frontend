@@ -10,6 +10,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
+import { FormsModule } from '@angular/forms'
+import { EditorModule } from '@tinymce/tinymce-angular'
 
 @NgModule({
   declarations: [
@@ -25,14 +27,18 @@ import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
     TranslateModule,
     NgbTooltipModule,
     DynamicTranslatePipe,
-    EscapeJavaForJsonPipe
+    EscapeJavaForJsonPipe,
+    FormsModule,
+    EditorModule
   ],
   exports: [
     PaginationComponent,
     ChallengeCardComponent,
     ResourceCardComponent,
     SolutionComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DynamicTranslatePipe,
+    EscapeJavaForJsonPipe
   ]
 })
 export class SharedComponentsModule { }
