@@ -127,14 +127,9 @@ p, ul li {
     color: $black-3;
 }
 
-#code-editor {
-    border: 1px solid #ccc;
-    height: 300px;
-  } 
-  
-.reduced-editor {
-  width: 50%; 
-  height: 300px; 
+.editor-container {
+    width: 100%;
+    border: 1.5px solid #dadada;
 }
   
 @media screen and (max-width: 768px) {

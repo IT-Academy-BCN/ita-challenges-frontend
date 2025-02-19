@@ -18,9 +18,11 @@
         </div>
         
         <!-- Editor de código -->
-        <div *ngIf="showEditor" class="editor-container" [ngClass]="{'reduced-editor': isEditorReduced}">
-          <div id="code-editor"></div>
+        <div class="editor-container">
+           <div #editorSolution ></div>
         </div>
+
+        
         
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
