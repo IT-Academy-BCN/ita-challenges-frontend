@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChallengeFormComponent } from './challenge-form.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // Импортирование модуля для тестов HTTP-запросов
+import { HttpClientTestingModule } from '@angular/common/http/testing'; 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -51,24 +51,13 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
   });
 
-
   it('should load languages and set the languages array', () => {
     component.loadLanguages();
 
     expect(component.languages.length).toBe(1);
     expect(component.languages[0].language_name).toBe('JavaScript');
-
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
   });
-
-
-  it('should load languages correctly', () => {
-    component.loadLanguages();
-    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
-    expect(component.languages.length).toBeGreaterThan(0);
-    expect(component.languages[0].language_name).toBe('JavaScript');
-  });
-  
 
   it('should return true if the form is valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title';
@@ -85,12 +74,8 @@ describe('ChallengeFormComponent', () => {
     component.challenge.language = ''; 
     component.challenge.solution = 'Some solution content';
   
-
     expect(component.isFormValid()).toBe(false);
   });
-  
-
-
 
   it('should call createChallenge when the form is valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title';
@@ -116,11 +101,4 @@ describe('ChallengeFormComponent', () => {
     expect(createChallengeSpy).not.toHaveBeenCalled();
     expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido');
   });
-  
-  
-
-
-  
 });
-
-
