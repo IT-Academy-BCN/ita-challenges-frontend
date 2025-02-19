@@ -1,22 +1,32 @@
 <!---Nav tabs-->
-<ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs d-none d-md-flex">
-
+<ul
+  ngbNav
+  #nav="ngbNav"
+  [(activeId)]="activeId"
+  class="nav-tabs d-none d-md-flex"
+>
   <!--DETAILS TAB-->
 
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
     <a href="#details" ngbNavLink>{{
       "modules.challenge.info.detailsTitle" | translate
-      }}</a>
+    }}</a>
     <ng-template ngbNavContent>
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3">
           <span class="right-span d-inline-flex">
-            <input type="checkbox" name="checkbox" [(ngModel)]="showStatement" />
-            <label class="ms-1">{{ "modules.challenge.info.showStatement" | translate }}</label>
+            <input
+              type="checkbox"
+              name="checkbox"
+              [(ngModel)]="showStatement"
+            />
+            <label class="ms-1">{{
+              "modules.challenge.info.showStatement" | translate
+            }}</label>
           </span>
         </div>
-        
+
         <!-- Editor de código -->
         <div class="editor-container">
            <div #editorSolution ></div>
@@ -54,18 +64,19 @@
               <p>{{ notes | dynamicTranslate }}</p>
             </div>
           </div>
-          
+
           <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
         </div>
       </div>
-  
     </ng-template>
   </li>
 
   <!--SOLUTIONS TAB-->
 
   <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
-    <a href="#solutions" ngbNavLink>{{ "modules.challenge.info.solutionsTitle" | translate }}</a>
+    <a href="#solutions" ngbNavLink>{{
+      "modules.challenge.info.solutionsTitle" | translate
+    }}</a>
     <ng-template ngbNavContent>
       <!-- Los usuarios solo pueden ver otras soluciones si enviaron la suya -->
       <div class="tab-content">
@@ -80,83 +91,87 @@
             </p>
           </span>
         </div>
-        
+
         <!-- Si el usuario envió su solución, ahora puede ver otras soluciones -->
         <div class="unrestricted" *ngIf="solutionSent">
           <ng-container>
-            <app-solution 
+            <app-solution
               *ngFor="let solution of challengeSolutions; let i = index"
-              [number]="i + 1" 
-              [isUserSolution]="false" 
+              [number]="i + 1"
+              [isUserSolution]="false"
               class="mb-4"
               [languageExt]="'javascript'"
-              [solution_text]="solution.solution_text">
+              [solution_text]="solution.solution_text"
+            >
             </app-solution>
           </ng-container>
         </div>
       </div>
-  
+
       <!-- Si no se ha enviado una solución, mostrar el botón para enviarla -->
       <div class="w-100 mt-4 d-md-none" *ngIf="!solutionSent">
-        <button class="w-100 btn btn-primary" (click)="clickSendButton()"
-          title="{{ 'modules.challenge.header.toolTip' | translate }}">
+        <button
+          class="w-100 btn btn-primary"
+          (click)="clickSendButton()"
+          title="{{ 'modules.challenge.header.toolTip' | translate }}"
+        >
           {{ "modules.challenge.header.button" | translate }}
         </button>
       </div>
-      
+
       <!-- Si la solución no ha sido enviada, mostrar las opciones de cancelación y aceptación -->
       <div class="w-100 button d-md-none" *ngIf="solutionSent">
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}
         </button>
-        <button class="w-100 btn btn-sm btn-primary mt-2 mt-md-0" (click)="openSendSolutionModal()">
+        <button
+          class="w-100 btn btn-sm btn-primary mt-2 mt-md-0"
+          (click)="openSendSolutionModal()"
+        >
           {{ "modules.challenge.header.buttonAccept" | translate }}
         </button>
       </div>
-      
+
       <!-- Si la solución fue enviada, mostrar un mensaje de confirmación -->
-      <div class="solutionSent w-100 d-flex d-md-none justify-content-center" *ngIf="solutionSent">
-        <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-        <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+      <div
+        class="solutionSent w-100 d-flex d-md-none justify-content-center"
+        *ngIf="solutionSent"
+      >
+        <p>{{ "modules.challenge.header.solutionSend" | translate }}</p>
+        <img src="assets/img/icon/tick-pink.svg" alt="tick icon" />
       </div>
     </ng-template>
   </li>
-  
-  
+
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
     <a href="#resources" ngbNavLink>{{
       "modules.challenge.info.resourcesTitle" | translate
-      }}</a>
+    }}</a>
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
-      <div class="tab-content info-app-resource-cardcard w-100">
-        <section class="title d-flex align-items-baseline">
-          <h3 class="title_text">
-            {{ "modules.challenge.info.resources" | translate }}
-          </h3>
-          <a class="title_link" href="https://dev.itawiki.eurecatacademy.org/">{{ "modules.challenge.info.resourcesLink"
-            | translate }} ></a>
-        </section>
-        <section class="info-card w-100">
-          <app-resource-card [inputResources]="resources"> </app-resource-card>
-        </section>
+      <div class="tab-content">
+        <p>There are no resources for now.</p>
       </div>
     </ng-template>
   </li>
   <li [ngbNavItem]="4" class="related" (click)="onActiveIdChange(4)">
     <a href="#related" ngbNavLink>{{
       "modules.challenge.info.relatedTitle" | translate
-      }}</a>
+    }}</a>
     <ng-template ngbNavContent>
       <!--RELATED TAB-->
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
         <section class="info-card d-flex flex-column gap-3">
-          <app-challenge-card *ngFor="let relatedChallenge of relatedListOfChallenges"
+          <app-challenge-card
+            *ngFor="let relatedChallenge of relatedListOfChallenges"
             [title]="relatedChallenge.challenge_title | dynamicTranslate"
-            [creation_date]="relatedChallenge.creation_date" [level]="relatedChallenge.level"
-            [popularity]="relatedChallenge.popularity" [languages]="relatedChallenge.languages"
-            [id]="relatedChallenge.id_challenge">
+            [creation_date]="relatedChallenge.creation_date"
+            [level]="relatedChallenge.level"
+            [popularity]="relatedChallenge.popularity"
+            [languages]="relatedChallenge.languages"
+            [id]="relatedChallenge.id_challenge"
+          >
           </app-challenge-card>
         </section>
       </div>
@@ -165,29 +180,30 @@
 </ul>
 <!-- Dropdown Menu for Mobile View -->
 <div class="dropdown-menu-mobile d-md-none">
-  <button class="btn btn-primary dropdown-toggle w-100" (click)="toggleDropdown()">
+  <button
+    class="btn btn-primary dropdown-toggle w-100"
+    (click)="toggleDropdown()"
+  >
     {{ getTranslatedTabLabel() | translate }}
   </button>
 
   @if (isDropdownOpen) {
     <div class="dropdown-menu w-100">
       <button class="dropdown-item" (click)="selectTab(1)">
-        {{ 'modules.challenge.info.detailsTitle' | translate }}
+        {{ "modules.challenge.info.detailsTitle" | translate }}
       </button>
       <button class="dropdown-item" (click)="selectTab(2)">
-        {{ 'modules.challenge.info.solutionsTitle' | translate }}
+        {{ "modules.challenge.info.solutionsTitle" | translate }}
       </button>
       <button class="dropdown-item" (click)="selectTab(3)">
-        {{ 'modules.challenge.info.resourcesTitle' | translate }}
+        {{ "modules.challenge.info.resourcesTitle" | translate }}
       </button>
       <button class="dropdown-item" (click)="selectTab(4)">
-        {{ 'modules.challenge.info.relatedTitle' | translate }}
+        {{ "modules.challenge.info.relatedTitle" | translate }}
       </button>
     </div>
   }
 </div>
-
-
 
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>
 <!--Nav panes-->
