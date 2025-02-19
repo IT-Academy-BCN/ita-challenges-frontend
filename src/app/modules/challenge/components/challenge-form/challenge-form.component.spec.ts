@@ -81,6 +81,33 @@ describe('ChallengeFormComponent', () => {
   });
   
 
+
+
+  it('should call createChallenge when the form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'JavaScript'; // Язык из mock данных
+    component.challenge.solution = 'Valid solution content';
+  
+    const createChallengeSpy = jest.spyOn(component['challengeService'], 'createChallenge').mockReturnValue(of({}));
+    component.onSubmit(); 
+    expect(createChallengeSpy).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  });
+  
+  it('should not call createChallenge and log error when the form is invalid', () => {
+    component.challenge.challengeTitle = '';
+    component.challenge.description = 'Some description';
+    component.challenge.language = ''; 
+    component.challenge.solution = 'Some solution content';
+  
+    const createChallengeSpy = jest.spyOn(component['challengeService'], 'createChallenge');
+    const consoleSpy = jest.spyOn(console, 'error');
+    component.onSubmit();
+    expect(createChallengeSpy).not.toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido');
+  });
+  
   
 });
 
