@@ -52,6 +52,15 @@ describe('ChallengeFormComponent', () => {
   });
 
 
+  it('should load languages and set the languages array', () => {
+    component.loadLanguages();
+
+    expect(component.languages.length).toBe(1);
+    expect(component.languages[0].language_name).toBe('JavaScript');
+
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
+  });
+
 
   it('should load languages correctly', () => {
     component.loadLanguages();
@@ -86,7 +95,7 @@ describe('ChallengeFormComponent', () => {
   it('should call createChallenge when the form is valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title';
     component.challenge.description = 'Valid description for the challenge';
-    component.challenge.language = 'JavaScript'; // Язык из mock данных
+    component.challenge.language = 'JavaScript'; 
     component.challenge.solution = 'Valid solution content';
   
     const createChallengeSpy = jest.spyOn(component['challengeService'], 'createChallenge').mockReturnValue(of({}));
@@ -108,6 +117,9 @@ describe('ChallengeFormComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido');
   });
   
+  
+
+
   
 });
 
