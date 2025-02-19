@@ -13,7 +13,6 @@ import { By } from '@angular/platform-browser'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
 import { SolutionComponent } from '../../../../shared/components/solution/solution.component'
-import { AuthService } from 'src/app/services/auth.service'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { CookieService } from 'ngx-cookie-service'
@@ -61,7 +60,6 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
-        AuthService,
         CookieService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -76,6 +74,7 @@ describe('ChallengeComponent', () => {
     fixture = TestBed.createComponent(ChallengeComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+    component.loadMasterData('123')
   })
 
   it('should create', () => {

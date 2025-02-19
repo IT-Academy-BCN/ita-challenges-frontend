@@ -23,7 +23,10 @@
       "ES2022",
       "dom"
     ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": [
+    "node_modules/@types"
+  ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

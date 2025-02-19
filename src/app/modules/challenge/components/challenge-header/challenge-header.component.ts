@@ -1,5 +1,5 @@
 import { Component, Input, type OnInit, inject, EventEmitter, Output } from '@angular/core'
-import { Router } from '@angular/router'
+// import { Router } from '@angular/router'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { TranslateService } from '@ngx-translate/core'
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrls: ['./challenge-header.component.scss']
 })
 export class ChallengeHeaderComponent implements OnInit {
-  constructor (private readonly router: Router) {}
+  // constructor (private readonly Router: Router) {}
 
   private readonly modalService = inject(NgbModal)
   private readonly translate = inject(TranslateService)
@@ -29,7 +29,6 @@ export class ChallengeHeaderComponent implements OnInit {
   solutionSent: boolean = false
 
   ngOnInit (): void {
-    // this.userService.monitorSolutionState() // devo toglierlo dopo
     this.challenge_title = this.title
     this.challenge_date = this.creation_date
     this.challenge_level = this.level

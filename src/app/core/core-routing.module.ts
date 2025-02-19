@@ -14,6 +14,11 @@ const routes: Routes = [
         path: 'challenges',
         children: [
           {
+            path: 'create',
+            loadComponent: async () =>
+              (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
+          },
+          {
             path: '',
             component: StarterComponent
           },
@@ -26,6 +31,11 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'mentor',
+        loadComponent: async () =>
+          (await import('../modules/mentor/mentor-login/mentor-login.component')).MentorLoginComponent
       }
     ]
   }
