@@ -37,14 +37,9 @@ export class ChallengeHeaderComponent implements OnInit {
     this.solutionSent = savedSolutions.includes(this.idChallenge)
   }
 
-  async onStartChallenge (started: boolean): Promise<void> {
-    try {
-      console.log('Navigating to:', `/ita-challenge/challenges/${this.idChallenge}/start`)
-      await this.Router.navigate(['/ita-challenge/challenges/', this.idChallenge, 'start'])
-      console.log('startChallenge event emitted:', started)
-      this.startChallengeEvent.emit(started)
-    } catch (error) {
-      console.error('Error while starting challenge:', error)
+  onStartChallenge (redirect: boolean): void {
+    if (redirect) {
+      this.Router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
     }
   }
 
@@ -56,7 +51,15 @@ export class ChallengeHeaderComponent implements OnInit {
     modalRef.componentInstance.idChallenge = this.idChallenge
   }
 
+  // clickSendButton (): void {
+  //   this.openSendSolutionModal()
+  // }
+
   get currentLang (): string {
     return this.translate.currentLang
+  }
+
+  saveChallenge (): void {
+    // Lógica para guardar el reto
   }
 }

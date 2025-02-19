@@ -18,8 +18,7 @@ import { ProfileModule } from './modules/profile/profile.module'
 import localeEs from '@angular/common/locales/es'
 import localeCa from '@angular/common/locales/ca'
 import localeEn from '@angular/common/locales/en'
-import { registerLocaleData } from '@angular/common';
-import { StartChallengeComponent } from './modules/challenge/components/start-challenge/start-challenge.component'
+import { registerLocaleData } from '@angular/common'
 
 registerLocaleData(localeEs, 'es')
 registerLocaleData(localeCa, 'ca')
@@ -31,8 +30,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    StartChallengeComponent
+    AppComponent
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,

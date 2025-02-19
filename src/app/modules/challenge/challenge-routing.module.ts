@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core'
 import { type Routes, RouterModule } from '@angular/router'
-import { StartChallengeComponent } from '../challenge/components/start-challenge/start-challenge.component'
+import { ChallengeComponent } from './components/challenge/challenge.component'
 
 const routes: Routes = [
-  { path: 'ita-challenge/challenges/:idChallenge/start', component: StartChallengeComponent }
+  { path: 'ita-challenge/challenges/:idChallenge/start', component: ChallengeComponent }
 ]
 @NgModule({
   imports: [RouterModule.forChild(routes)],

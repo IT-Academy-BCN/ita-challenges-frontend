@@ -72,5 +72,25 @@
       </div>
       }
     }
+
+
+
+    <!-- Verifica que estés en la ruta correcta y muestra los botones -->
+<div *ngIf="activeId === 1">
+  <div class="col-3 button d-none d-md-flex">
+    <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
+      {{'modules.challenge.header.buttonSendSolution' | translate }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="activeId === 2">
+  <div class="col-3 button d-none d-md-flex">
+    <button class="btn btn-sm btn-primary" (click)="saveChallenge()">
+      {{'modules.challenge.header.buttonSaveChallenge' | translate }}
+    </button>
+  </div>
+</div>
+
   </div>
 </div>
