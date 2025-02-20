@@ -1,4 +1,3 @@
-<div>
   <div class="row">
     <div class="col-12 col-md-9">
       <p class="breadcrumbs">
@@ -47,50 +46,52 @@
       </div>
     </div>
 
-  
-    @if ( activeId == 1) {
-      <div class="col-3 button d-none d-md-flex">
-        <button class="btn btn-sm btn-primary" (click)="onStartChallenge(true)">
-          {{'modules.challenge.header.buttonStart' | translate }}
-        </button>
-      </div>
-    }
+    <div class="actions" class="col-3 button d-none d-md-flex">
+      <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+    </div>
+
     
-    <!-- only show if the user is on details section or solutions -->
-    @if ( activeId == 2) {
-      @if (!solutionSent) {
-      <div class="col-3 button d-none d-md-flex">
-        <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
-          {{'modules.challenge.header.buttonAccept' | translate }}
-        </button>
-      </div>
-      } @else if (solutionSent) {
-      <!-- ---if solution sent show this-- -->
-      <div class="solutionSent col-3 d-none d-md-flex">
-        <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-        <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-      </div>
-      }
-    }
-
-
-
-    <!-- Verifica que estés en la ruta correcta y muestra los botones -->
-<div *ngIf="activeId === 1">
-  <div class="col-3 button d-none d-md-flex">
-    <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
-      {{'modules.challenge.header.buttonSendSolution' | translate }}
-    </button>
-  </div>
 </div>
 
-<div *ngIf="activeId === 2">
-  <div class="col-3 button d-none d-md-flex">
-    <button class="btn btn-sm btn-primary" (click)="saveChallenge()">
-      {{'modules.challenge.header.buttonSaveChallenge' | translate }}
-    </button>
-  </div>
-</div>
 
-  </div>
-</div>
+
+
+
+  
+<!-- Si la solución fue enviada, muestra mensaje de confirmación
+  <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
+    <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
+    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+  </div> -->
+
+   <!-- Botón para empezar el reto -->
+    <!-- <div *ngIf="activeId == 1" class="col-3 button d-none d-md-flex">
+      <button class="btn btn-sm btn-primary" (click)="onStartChallenge()">
+        {{'modules.challenge.header.buttonStart' | translate }}
+      </button>
+    </div> -->
+
+    <!-- Botón para aceptar solución -->
+    <!-- <div *ngIf="activeId == 2 && !solutionSent" class="col-3 button d-none d-md-flex">
+      <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
+        {{'modules.challenge.header.buttonAccept' | translate }}
+      </button>
+    </div> -->
+
+    <!-- Si ya se envió la solución
+    <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
+      <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
+      <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+    </div> -->
+
+    <!-- Botones para guardar reto y enviar solución si el reto ha comenzado -->
+    <!-- <div *ngIf="challengeStarted && !solutionSent" class="col-3 button d-none d-md-flex">
+      <button class="btn btn-sm btn-primary" (click)="saveChallenge()">
+        {{ 'modules.challenge.header.buttonSaveChallenge' | translate }}
+      </button>
+      <button class="btn btn-sm btn-primary" (click)="sendSolution()">
+        {{ 'modules.challenge.header.buttonSendSolution' | translate }}
+      </button>
+    </div> -->

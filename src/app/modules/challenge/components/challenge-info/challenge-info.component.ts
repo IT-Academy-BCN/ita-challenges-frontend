@@ -51,6 +51,7 @@ implements OnInit {
   isDropdownOpen: boolean = false
   showEditor: boolean = false
   isEditorReduced: boolean = false
+  challengeStarted: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -94,6 +95,10 @@ implements OnInit {
       console.log('startChallenge changed:', changes['startChallenge'].currentValue)
       this.startingChallenge()
     }
+  }
+
+  onChallengeStart (): void {
+    this.challengeStarted = true
   }
 
   ngAfterViewInit (): void {

@@ -4,7 +4,6 @@ import { MainComponent } from './layout/main/main.component'
 import { StarterComponent } from '../modules/starter/components/starter/starter.component'
 import { ChallengeComponent } from '../modules/challenge/components/challenge/challenge.component'
 import { ProfileComponent } from '../modules/profile/components/profile/profile.component'
-import { StartChallengeComponent } from '../modules/challenge/components/start-challenge/start-challenge.component'
 
 const routes: Routes = [
   {
