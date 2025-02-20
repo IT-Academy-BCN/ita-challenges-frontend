@@ -33,8 +33,11 @@
               "src/assets/img",
               "src/assets/img/icon",
               "src/assets/img/users",
-              "src/assets/tinymce"
-            
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce",
+                "output": "assets/tinymce/"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
