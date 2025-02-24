@@ -39,7 +39,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
     // Obtener el idChallenge desde la ruta activa
     this.route.params.subscribe(params => {
-      this.idChallenge = params['idChallenge'] // Asegúrate de que se obtiene el idChallenge desde la URL
+      this.idChallenge = params['idChallenge']
     })
 
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
@@ -49,14 +49,28 @@ export class ChallengeHeaderComponent implements OnInit {
     if (this.challengeStarted) {
       this.activeId = 2 // Cambia el activeId a 2 para mostrar los botones de guardar y enviar solución
     }
+
+    // Recuperar el estado del reto desde localStorage
+    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
+
+    console.log(localStorage.getItem('challengeStarted'))
+
+    if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
+      this.challengeStarted = true
+      this.activeId = 2 // Mostrar botones de guardar y enviar solución
+    }
   }
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
     this.activeId = 2 // Cambia el valor de activeId a 2, lo que hará desaparecer el primer botón
 
+    // Guardar el estado en localStorage
+    localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
+
     // Emitir el evento para notificar al componente padre
     this.startChallenge.emit(true)
+    console.log(localStorage.getItem('challengeStarted'))
 
     try {
       // await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
@@ -79,6 +93,11 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   emitStartChallenge (): void {
+    this.startChallenge.emit(true)
+  }
+
+  startChallengeEvent (): void {
+    this.challengeStarted = true
     this.startChallenge.emit(true)
   }
 

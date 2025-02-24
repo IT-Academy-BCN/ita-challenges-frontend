@@ -18,6 +18,9 @@
         [activeId]= "activeId"
         (activeIdChange)="onActiveIdChange($event)"
         [idChallenge] = "idChallenge"
-        [startChallenge]="startChallenge"
+        [startChallenge]="challengeStarted"
 >   </app-challenge-info>
+
+<app-editor-challenge *ngIf="showEditor" [showEditor]="showEditor"></app-editor-challenge>
+
 </div>

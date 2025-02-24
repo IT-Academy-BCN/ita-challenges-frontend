@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core'
-import { ActivatedRoute, type ParamMap } from '@angular/router'
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
@@ -33,9 +33,13 @@ export class ChallengeComponent {
   popularity!: number
   languages: Language[] = []
   activeId: number = 1
+
+  showEditor = false
   startChallenge: boolean = false
+  challengeStarted: boolean = false
 
   private readonly route = inject(ActivatedRoute)
+  private readonly router = inject(Router)
   private readonly challengeService = inject(ChallengeService)
 
   ngOnInit (): void {
@@ -44,10 +48,18 @@ export class ChallengeComponent {
       this.loadMasterData(this.idChallenge)
       this.activeId = 1
     })
+
+    this.route.url.subscribe(() => {
+      if (this.route.snapshot.routeConfig?.path === 'ita-challenge/challenges/:idChallenge/start') {
+        this.showEditor = true
+      } else {
+        this.showEditor = false
+      }
+    })
   }
 
   onStartChallenge (started: boolean): void {
-    this.startChallenge = started
+    this.challengeStarted = started
   }
 
   ngOnDestroy (): void {
