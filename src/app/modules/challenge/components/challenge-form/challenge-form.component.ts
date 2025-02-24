@@ -264,6 +264,11 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     )
   }
 
+  onCancel (): void {
+    // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
+    void this.router.navigate(['/ita-challenge/challenges'])
+  }
+
   // Envío del formulario (código original)
   onSubmit (): void {
     if (!this.isFormValid()) {
@@ -274,6 +279,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
+        // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
         void this.router.navigate(['/ita-challenge/challenges'])
       },
       error: (err) => {
