@@ -24,3 +24,4 @@
 - Ivan Elizalde - https://github.com/ivanetierra
 - Daylin Mejia - https://github.com/DaylinMB
 - Yana Evko - https://github.com/Yana-jev
+- Míriam Martín Casas - https://github.com/mmartincasas

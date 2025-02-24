@@ -31,7 +31,7 @@ export class ChallengeFormComponent {
   languages: Language[] = []
 
   editorConfig = {
-    base_url: '/tinymce',
+    base_url: '/assets/tinymce',
     suffix: '.min',
     height: 300,
     menubar: false,

@@ -18,7 +18,7 @@ export const environment = {
   BACKEND_SSO_PATCH_USER: '/users',
   BACKEND_SSO_REGISTER_URL: '/auth/register',
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
-  BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/validate',
+  BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/authenticate',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '../assets/dummy/user-solution.mock.json',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
@@ -32,5 +32,5 @@ export const environment = {
   HTTP_CODE_UNAUTHORIZED: 401,
   HTTP_CODE_FORBIDDEN: 403,
   GITHUB_CLIENT_ID: 'Ov23liatIZRCf3flyPtL',
-  GITHUB_REDIRECT_URI: 'http://localhost:4200/ita-challenge/mentor'
+  GITHUB_REDIRECT_URI: 'http://dev.ita-challenges.eurecatacademy.org/ita-challenge/mentor'
 }
