@@ -30,60 +30,93 @@
           </div>
         </div>
 
-        <!-- Dificultad -->
-        <div class="form-group mb-4">
-          <label class="form-label d-block">Dificultad</label>
-          <div class="difficulty-group">
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="easy" name="level" value="EASY"
-                [(ngModel)]="challenge.level">
-              <label class="form-check-label" for="easy">Iniciación</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="medium" name="level" value="MEDIUM"
-                [(ngModel)]="challenge.level">
-              <label class="form-check-label" for="medium">Intermedio</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="hard" name="level" value="HARD"
-                [(ngModel)]="challenge.level">
-              <label class="form-check-label" for="hard">Avanzado</label>
-            </div>
-          </div>
+<!-- Dificultad -->
+<div class="form-group mb-4">
+  <label class="form-label">Dificultad</label>
+  <div class="difficulty-group">
+    <!-- Fácil -->
+    <div class="difficulty-option">
+      <input 
+        type="radio" 
+        class="form-check-input" 
+        id="easy" 
+        name="level" 
+        value="EASY"
+        [(ngModel)]="challenge.level">
+      <label class="difficulty-label" for="easy">
+        <div class="radio-circle" [class.selected]="challenge.level === 'EASY'"></div>
+        <div class="lightning-group">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty" class="gray-bolt">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty" class="gray-bolt">
         </div>
+        <span>Fácil</span>
+      </label>
+    </div>
 
-        <!-- Solución -->
+    <!-- Medio -->
+    <div class="difficulty-option">
+      <input 
+        type="radio" 
+        class="form-check-input" 
+        id="medium" 
+        name="level" 
+        value="MEDIUM"
+        [(ngModel)]="challenge.level">
+      <label class="difficulty-label" for="medium">
+        <div class="radio-circle" [class.selected]="challenge.level === 'MEDIUM'"></div>
+        <div class="lightning-group">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty" class="gray-bolt">
+        </div>
+        <span>Media</span>
+      </label>
+    </div>
+
+    <!-- Difícil -->
+    <div class="difficulty-option">
+      <input 
+        type="radio" 
+        class="form-check-input" 
+        id="hard" 
+        name="level" 
+        value="HARD"
+        [(ngModel)]="challenge.level">
+      <label class="difficulty-label" for="hard">
+        <div class="radio-circle" [class.selected]="challenge.level === 'HARD'"></div>
+        <div class="lightning-group">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty" class="pink-bolt">
+        </div>
+        <span>Difícil</span>
+      </label>
+    </div>
+  </div>
+</div>
+        <!-- Solución con CodeMirror -->
         <div class="form-group mb-4">
-          <label for="solution" class="form-label">Solución</label>
-          <textarea 
-            class="form-control" 
-            id="solution" 
-            name="solution" 
-            rows="4" 
-            [(ngModel)]="challenge.solution"
-            required
-          ></textarea>
+          <label class="form-label">Solución</label>
+          <div #codeMirrorEditor class="codemirror-container"></div>
         </div>
 
         <!-- Lenguaje -->
-        <div class="form-group mb-4">
-          <label class="form-label">Especialización</label>
+        <div class="mb-4">
+          <label class="form-label">Lenguaje</label>
           <div class="language-buttons">
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Java'"
-              (click)="challenge.language = 'Java'">Java</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
-              (click)="challenge.language = 'Javascript'">Javascript</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
-              (click)="challenge.language = 'Typescript'">Typescript</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'SQL'"
-              (click)="challenge.language = 'SQL'">SQL</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'PHP'"
-              (click)="challenge.language = 'PHP'">PHP</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Python'"
-              (click)="challenge.language = 'Python'">Python</button>
+            @for (lang of languages; track lang.language_name) {
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                [class.active]="challenge.language === lang.language_name"
+                (click)="onLanguageChange(lang.language_name)">
+                {{ lang.language_name }}
+              </button>
+            }
           </div>
         </div>
-
+        
         <!-- Botón Guardar -->
         <div class="text-end">
           <button type="submit" class="btn btn-primary" [disabled]="!challengeForm.form.valid">

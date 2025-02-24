@@ -140,3 +140,71 @@
 .editor-container {
   position: relative;
 }
+
+.difficulty-group {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+
+  .difficulty-option {
+    position: relative;
+
+    .form-check-input {
+      display: none;
+    }
+  }
+
+  .difficulty-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: rgba(#C13584, 0.1);
+    }
+  }
+
+  .radio-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #C13584;
+    border-radius: 50%;
+    
+    &.selected {
+      background-color: #C13584;
+    }
+  }
+
+  .lightning-group {
+    display: flex;
+    gap: 2px;
+    
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  span {
+    margin-left: 0.25rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+}
+
+
+.codemirror-container {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 300px;
+
+  .cm-editor {
+    height: 100%;
+    min-height: 300px;
+  }
+}
