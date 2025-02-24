@@ -98,14 +98,19 @@ export class ChallengeFormComponent {
     })
   }
 
-  loadLanguages(){
+  loadLanguages() {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
-      next: ({ results }) => this.languages = results || [],
+      next: ({ results }) => {
+        this.languages = results || [];
+        console.log('Idiomas cargados:', this.languages); // Lista completa de idiomas
+        console.log('URLs de imágenes:', this.languages.map(lang => lang.language_image)); // Solo las imágenes
+      },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err);
-        this.languages = []
+        this.languages = [];
       }
     });
   }
+  
 
 }

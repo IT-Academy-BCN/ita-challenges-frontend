@@ -72,8 +72,8 @@
                     type="button" 
                     class="btn btn-outline-secondary" 
                     [class.active]="challenge.language === lang.language_name"
-                    (click)="challenge.language = lang.language_name">
-                    {{ lang.language_image}}{{ lang.language_name }}
+            (click)="challenge.language = lang.language_name">
+            <img [src]="lang.language_image" alt="{{ lang.language_name }}" width="24" height="24" style="margin-right: 8px;">
             </button>
           </div>
         </div>
