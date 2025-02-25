@@ -158,7 +158,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   // Nuevo método para manejar el cambio de lenguaje
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   onLanguageChange (language: string) {
-    // Actualiza el lenguaje en el modelo (lo que hacía el código de Yana)
     this.challenge.language = language
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
