@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
 import { type CreateChallenge } from '../models/create-challenge.interface'
+
+
 // import {environment} from "../../environments/environment";
 import { BehaviorSubject } from 'rxjs'
 
@@ -57,6 +59,14 @@ export class ChallengeService {
     )
   }
 
+
+    createChallenge (challenge: CreateChallenge): Observable<any> {
+      const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
+      console.log('URL completa:', url) // Para depurar
+      return this.http.post(url, challenge)
+    }
+
+    
   async getItineraries (): Promise<Itinerary[]> {
     return await new Promise((resolve, reject) =>
       this.http

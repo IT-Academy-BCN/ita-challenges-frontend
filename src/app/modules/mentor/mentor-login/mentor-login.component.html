@@ -8,3 +8,17 @@
     <span>Sign in with GitHub</span>
   </button>
 </div>
+
+@if(isSuccessVisible){
+  <div class="success-popup">
+    <div class="success-message">{{ successMessage }}</div>
+    <button (click)="closeSuccess()">Cerrar</button>
+  </div>
+  
+  @if(isErrorVisible){
+    <div class="success-popup">
+      <div class="error-message">{{ errorMessage }}</div>
+      <button (click)="closeError()">Cerrar</button>
+    </div>
+  }
+}

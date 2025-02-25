@@ -5,7 +5,10 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
+import { Language } from 'src/app/models/challenges.interface'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
+
 
 @Component({
   standalone: true,
@@ -20,9 +23,12 @@ export class ChallengeFormComponent {
     challengeTitle: '',
     description: '',
     level: 'EASY',
-    language: 'Java' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
+    language: '' as string,
     solution: ''
   }
+
+
+  languages: Language[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -45,18 +51,25 @@ export class ChallengeFormComponent {
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
   }
 
-  private readonly challengeService = inject(ChallengeService)
-  private readonly router = inject(Router)
 
-  ngOnInit (): void {
-    // No necesitas inicializar nada extra para ngx-quill
+  private readonly challengeService = inject(ChallengeService)
+  private readonly challengeFormService = inject(ChallengeFormService)
+  private readonly router = inject(Router)
+  
+  constructor() {
+    this.loadLanguages()
+    this.onSubmit()
+  
   }
 
-  public isFormValid (): boolean {
+
+    public isFormValid (): boolean {
+      
+      const isLanguageValid = this.languages.some(lang => lang.language_name === this.challenge.language);
     return (
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
-      ['Java', 'PHP', 'Python', 'Javascript', 'Typescript', 'SQL'].includes(this.challenge.language) &&
+      isLanguageValid &&
       this.challenge.solution.trim() !== ''
     )
   }
@@ -84,4 +97,20 @@ export class ChallengeFormComponent {
       }
     })
   }
+
+  loadLanguages() {
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: ({ results }) => {
+        this.languages = results || [];
+        console.log('Idiomas cargados:', this.languages); // Lista completa de idiomas
+        console.log('URLs de imágenes:', this.languages.map(lang => lang.language_image)); // Solo las imágenes
+      },
+      error: (err) => {
+        console.error('Error al obtener los idiomas:', err);
+        this.languages = [];
+      }
+    });
+  }
+  
+
 }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
+import { CommonModule } from '@angular/common'
 
 interface GitHubAuthResponse {
   isValid: boolean
@@ -18,11 +19,19 @@ interface GitHubAuthResponse {
   styleUrls: ['./mentor-login.component.scss']
 })
 export class MentorLoginComponent implements OnInit {
+
+  isErrorVisible = false;
+  isSuccessVisible = false;
+  errorMessage = '';
+  successMessage = '';
+
   constructor (
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router
   ) {}
+
+
 
   ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
@@ -39,22 +48,22 @@ export class MentorLoginComponent implements OnInit {
             console.log('GitHub backend response:', response)
 
             if (response.isValid) {
-              alert(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
+              this.showSaccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
               localStorage.setItem('username', response.username)
               localStorage.setItem('authToken', response.token)
 
               void this.router.navigate(['/ita-challenge/challenges'])
             } else {
-              alert('❌ No eres mentor, acceso denegado.')
+              this.showError('❌ No eres mentor, acceso denegado.')
             }
           },
           error: (err) => {
             if (err.status === 401) {
-              console.error(
+              this.showError(
                 '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
               )
             } else if (err.status === 500) {
-              console.error('💥 Error 500: Error interno en el servidor.')
+              this.showError('💥 Error 500: Error interno en el servidor.')
             } else {
               console.error(
                 '❌ Error desconocido en la petición al backend:',
@@ -74,5 +83,22 @@ export class MentorLoginComponent implements OnInit {
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=read:user user:email`
 
     window.location.href = githubAuthUrl
+  }
+
+
+  showError(message: string){
+    this.errorMessage = message;
+    this.isErrorVisible = true
+  }
+
+  showSaccess(message: string){
+    this.successMessage = message
+  }
+
+  closeSuccess(){
+    this.isSuccessVisible = false
+  }
+  closeError(){
+    this.isErrorVisible = false
   }
 }
