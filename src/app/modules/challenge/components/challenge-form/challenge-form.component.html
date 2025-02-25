@@ -65,24 +65,20 @@
           ></textarea>
         </div>
 
-        <!-- Lenguaje -->
-        <div class="form-group mb-4">
-          <label class="form-label">Especialización</label>
+        <div class="mb-4">
+          <label class="form-label">Lenguaje</label>
           <div class="language-buttons">
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Java'"
-              (click)="challenge.language = 'Java'">Java</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Javascript'"
-              (click)="challenge.language = 'Javascript'">Javascript</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Typescript'"
-              (click)="challenge.language = 'Typescript'">Typescript</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'SQL'"
-              (click)="challenge.language = 'SQL'">SQL</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'PHP'"
-              (click)="challenge.language = 'PHP'">PHP</button>
-            <button type="button" class="btn btn-outline-secondary" [class.active]="challenge.language === 'Python'"
-              (click)="challenge.language = 'Python'">Python</button>
+            <button *ngFor="let lang of languages"
+                    type="button" 
+                    class="btn btn-outline-secondary" 
+                    [class.active]="challenge.language === lang.language_name"
+            (click)="challenge.language = lang.language_name">
+            <img [src]="lang.language_image" alt="{{ lang.language_name }}" width="24" height="24" style="margin-right: 8px;">
+            </button>
           </div>
         </div>
+        
+
 
         <!-- Botón Guardar -->
         <div class="text-end">

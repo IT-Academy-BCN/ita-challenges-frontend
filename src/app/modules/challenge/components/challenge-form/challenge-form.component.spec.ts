@@ -1,96 +1,104 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { ChallengeFormComponent } from './challenge-form.component'
-import { ChallengeService } from 'src/app/services/challenge.service'
-import { Router } from '@angular/router'
-import { FormsModule } from '@angular/forms'
-import { CommonModule } from '@angular/common'
-import { EditorModule } from '@tinymce/tinymce-angular'
-import { of } from 'rxjs'
-import { type CreateChallenge } from '../../../../models/create-challenge.interface'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ChallengeFormComponent } from './challenge-form.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; 
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { ChallengeFormService } from 'src/app/services/challenge-form.service';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 describe('ChallengeFormComponent', () => {
-  let component: ChallengeFormComponent
-  let fixture: ComponentFixture<ChallengeFormComponent>
-  let mockChallengeService: jest.Mocked<ChallengeService>
-  let mockRouter: jest.Mocked<Router>
+  let component: ChallengeFormComponent;
+  let fixture: ComponentFixture<ChallengeFormComponent>;
+  let mockChallengeFormService: jest.Mocked<ChallengeFormService>;
+  let mockRouter: jest.Mocked<Router>;
 
   beforeEach(async () => {
-    mockChallengeService = {
-      createChallenge: jest.fn()
-    } as unknown as jest.Mocked<ChallengeService>
+    mockChallengeFormService = {
+      getAllLangugesCreateForm: jest.fn().mockReturnValue(of({ results: [{ language_name: 'JavaScript', id_language: 1 }] }))
+    } as unknown as jest.Mocked<ChallengeFormService>;
 
     mockRouter = {
       navigate: jest.fn()
-    } as unknown as jest.Mocked<Router>
+    } as unknown as jest.Mocked<Router>;
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, CommonModule, EditorModule, ChallengeFormComponent],
+      imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule],  
       providers: [
-        { provide: ChallengeService, useValue: mockChallengeService },
+        { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: Router, useValue: mockRouter }
       ]
-    }).compileComponents()
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(ChallengeFormComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
+    fixture = TestBed.createComponent(ChallengeFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges(); 
+  });
 
   it('should create the component', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
 
   it('should initialize TinyMCE configuration', () => {
-    expect(component.editorConfig).toBeTruthy()
-    expect(component.editorConfig.plugins).toContain('code')
-    expect(component.editorConfig.toolbar).toContain('bold')
-  })
+    expect(component.editorConfig).toBeTruthy();
+    expect(component.editorConfig.plugins).toContain('code');
+    expect(component.editorConfig.toolbar).toContain('bold');
+  });
 
-  it('should validate form correctly', () => {
-    component.challenge = {
-      challengeTitle: 'Test Challenge',
-      description: 'Test Description',
-      level: 'EASY',
-      language: 'Java',
-      solution: 'Test Solution'
-    }
-    expect(component.isFormValid()).toBe(true)
+  it('should call ChallengeFormService to load languages', () => {
+    component.loadLanguages();
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
+  });
 
-    component.challenge.challengeTitle = ''
-    expect(component.isFormValid()).toBe(false)
-  })
+  it('should load languages and set the languages array', () => {
+    component.loadLanguages();
 
-  it('should not submit the form if invalid', () => {
-    jest.spyOn(console, 'error')
+    expect(component.languages.length).toBe(1);
+    expect(component.languages[0].language_name).toBe('JavaScript');
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled();
+  });
 
-    component.challenge = {
-      challengeTitle: '',
-      description: '',
-      level: 'EASY',
-      language: 'Java',
-      solution: ''
-    }
+  it('should return true if the form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'JavaScript';
+    component.challenge.solution = 'Valid solution content';
+  
+    expect(component.isFormValid()).toBe(true);
+  });
+  
+  it('should return false if the form is invalid', () => {
+    component.challenge.challengeTitle = 'Invalid Challenge Title';
+    component.challenge.description = 'Some description';
+    component.challenge.language = ''; 
+    component.challenge.solution = 'Some solution content';
+  
+    expect(component.isFormValid()).toBe(false);
+  });
 
-    component.onSubmit()
-    expect(console.error).toHaveBeenCalledWith('El formulario no es válido')
-    expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()
-  })
-
-  it('should call ChallengeService on valid form submission', () => {
-    const mockChallenge: CreateChallenge = {
-      challengeTitle: 'Test Challenge',
-      description: 'Test Description',
-      level: 'EASY',
-      language: 'Java',
-      solution: 'Test Solution'
-    }
-
-    mockChallengeService.createChallenge.mockReturnValue(of({ success: true }))
-
-    component.challenge = mockChallenge
-    component.onSubmit()
-
-    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(mockChallenge)
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
-  })
-})
+  it('should call createChallenge when the form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'JavaScript'; 
+    component.challenge.solution = 'Valid solution content';
+  
+    const createChallengeSpy = jest.spyOn(component['challengeService'], 'createChallenge').mockReturnValue(of({}));
+    component.onSubmit(); 
+    expect(createChallengeSpy).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  });
+  
+  it('should not call createChallenge and log error when the form is invalid', () => {
+    component.challenge.challengeTitle = '';
+    component.challenge.description = 'Some description';
+    component.challenge.language = ''; 
+    component.challenge.solution = 'Some solution content';
+  
+    const createChallengeSpy = jest.spyOn(component['challengeService'], 'createChallenge');
+    const consoleSpy = jest.spyOn(console, 'error');
+    component.onSubmit();
+    expect(createChallengeSpy).not.toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido');
+  });
+});

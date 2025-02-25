@@ -241,13 +241,13 @@ a:hover {
 }
 
 body {
-  font-size: 12px;
-  line-height: 16.8px;
+  font-size: 16px;
+  line-height: 22.4px;
 }
 
 p {
-  margin-top: 16.8px;
-  margin-bottom: 16.8px;
+  margin-top: 22.4px;
+  margin-bottom: 22.4px;
 }
 
 h1 {
@@ -264,6 +264,7 @@ h2 {
   margin-top: 26.4px;
   margin-bottom: 26.4px;
   font-weight: bold;
+  color: #282828;
 }
 
 h3 {
@@ -276,11 +277,12 @@ h3 {
 
 html,
 body {
-  min-height: 100vh;
+  height: 100%;
   background-color: #EBEBEB;
   margin: 0;
-  padding: 12px 10px 50px;
+  padding: 12px 10px 40px;
   font-family: "Poppins", sans-serif;
+  overflow: hidden;
 }
 html app-root,
 html app-main,
@@ -291,8 +293,13 @@ body app-main {
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 768px) {
-  html, body {
+  html,
+  body {
     padding: 0;
   }
 }/*# sourceMappingURL=styles.css.map */
