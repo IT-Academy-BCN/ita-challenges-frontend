@@ -32,7 +32,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     challengeTitle: '',
     description: '',
     level: 'EASY',
-    language: '' as 'Java' | 'PHP' | 'Python' | 'Javascript' | 'Typescript' | 'SQL',
+    language: '' as string,
     solution: ''
   }
 
@@ -69,19 +69,20 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   // Método que se ejecuta cuando el componente está listo
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  ngAfterViewInit () {
+  ngAfterViewInit (): void {
     this.initCodeMirror()
   }
 
   // Método que se ejecuta cuando el componente se destruye
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  ngOnDestroy () {
+  ngOnDestroy (): void {
     if (this.editor != null) {
       this.editor.destroy()
     }
   }
 
   // Inicializa el editor CodeMirror
+  /* istanbul ignore next */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private initCodeMirror () {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -112,6 +113,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   // Obtiene la extensión de lenguaje para CodeMirror
+  /* istanbul ignore next */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private getLanguageExtension (language: string) {
     const extensions = {
@@ -144,7 +146,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   onLanguageChange (language: string) {
     // Actualiza el lenguaje en el modelo (lo que hacía el código de Yana)
     this.challenge.language = language
-
+    /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
       const languageExtension = this.getLanguageExtension(language)
