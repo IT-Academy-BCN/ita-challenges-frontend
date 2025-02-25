@@ -59,14 +59,12 @@ export class ChallengeService {
     )
   }
 
+  createChallenge (challenge: CreateChallenge): Observable<any> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
+    console.log('URL completa:', url) // Para depurar
+    return this.http.post(url, challenge)
+  }
 
-    createChallenge (challenge: CreateChallenge): Observable<any> {
-      const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-      console.log('URL completa:', url) // Para depurar
-      return this.http.post(url, challenge)
-    }
-
-    
   async getItineraries (): Promise<Itinerary[]> {
     return await new Promise((resolve, reject) =>
       this.http
@@ -94,12 +92,5 @@ export class ChallengeService {
       {
         headers
       })
-  }
-
-  // Form-challenge
-  createChallenge (challenge: CreateChallenge): Observable<any> {
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    console.log('URL completa:', url) // Para depurar
-    return this.http.post(url, challenge)
   }
 }
