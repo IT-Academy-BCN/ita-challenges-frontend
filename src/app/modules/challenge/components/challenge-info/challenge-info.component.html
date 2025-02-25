@@ -13,8 +13,9 @@
     }}</a>
     <ng-template ngbNavContent>
 
-      <!-- Mostrar el editor de código solo si el reto ha comenzado -->
-      <app-editor-challenge *ngIf="challengeStarted" [showEditor]="showEditor"></app-editor-challenge>
+      <app-editor-challenge 
+      *ngIf="showEditor" [showEditor]="showEditor">
+      </app-editor-challenge>
 
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->

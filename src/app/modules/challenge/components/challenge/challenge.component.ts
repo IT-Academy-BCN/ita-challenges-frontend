@@ -1,6 +1,6 @@
 import { Component, inject, type OnInit, type OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
@@ -56,6 +56,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   }
 
   onStartChallenge (started: boolean): void {
+    console.log('onStartChallenge triggered with:', started)
     this.challengeStarted = started
     this.startChallenge = started
     this.showEditor = started

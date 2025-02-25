@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef, inject, Input } from '@angular/core'
+import { Component, OnInit, type OnDestroy, type OnChanges, type SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef, inject, Input } from '@angular/core'
 import { EditorView, keymap, type ViewUpdate } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
 import { javascript } from '@codemirror/lang-javascript'
 import { basicSetup } from 'codemirror'
 import { defaultKeymap } from '@codemirror/commands'
+import { lineNumbers } from '@codemirror/view'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -30,7 +31,8 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    if (changes['showEditor']?.currentValue === true) {
+    if (changes['showEditor']?.currentValue === true && this.editor == null) {
+      // this.cdr.detectChanges() // Forzar una detección de cambios
       this.initializeCodeMirror()
     }
   }
@@ -45,9 +47,10 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
     let savedContent = localStorage.getItem('editorContent')?.trim() ?? ''
 
     if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n\n'
+      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(6)
     }
 
+    // Imprimir en consola el contenido antes de inicializar el editor
     console.log('Contenido recuperado:', savedContent)
 
     this.editor = new EditorView({
@@ -58,6 +61,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
           basicSetup, // Configuración básica
           javascript(), // Soporte para JavaScript
           keymap.of(defaultKeymap), // Atajos de teclado
+          lineNumbers(), // Habilitar números de línea
           EditorView.updateListener.of((update: ViewUpdate) => {
             if (update.docChanged) {
               const content = this.editor.state.doc.toString()

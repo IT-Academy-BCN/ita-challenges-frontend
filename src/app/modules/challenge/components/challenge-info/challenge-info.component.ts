@@ -121,6 +121,7 @@ implements OnInit {
   clickSendButton (): void {
     this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
     this.onActiveIdChange(2)
+    this.showEditor = false
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {

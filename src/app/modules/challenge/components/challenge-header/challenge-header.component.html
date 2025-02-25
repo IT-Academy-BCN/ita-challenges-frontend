@@ -52,46 +52,16 @@
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
     </div>
 
+     <!-- Si la solución fue enviada, muestra mensaje de confirmación -->
+     <!-- <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
+      <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
+      <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+      </div> -->
     
-</div>
-
-
-
-
-
-  
-<!-- Si la solución fue enviada, muestra mensaje de confirmación
-  <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
-    <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
-    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-  </div> -->
-
-   <!-- Botón para empezar el reto -->
-    <!-- <div *ngIf="activeId == 1" class="col-3 button d-none d-md-flex">
-      <button class="btn btn-sm btn-primary" (click)="onStartChallenge()">
-        {{'modules.challenge.header.buttonStart' | translate }}
-      </button>
-    </div> -->
-
-    <!-- Botón para aceptar solución -->
-    <!-- <div *ngIf="activeId == 2 && !solutionSent" class="col-3 button d-none d-md-flex">
-      <button class="btn btn-sm btn-primary" (click)="openSendSolutionModal()">
-        {{'modules.challenge.header.buttonAccept' | translate }}
-      </button>
-    </div> -->
-
-    <!-- Si ya se envió la solución
+     <!-- Si ya se envió la solución -->
     <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
       <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
       <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-    </div> -->
-
-    <!-- Botones para guardar reto y enviar solución si el reto ha comenzado -->
-    <!-- <div *ngIf="challengeStarted && !solutionSent" class="col-3 button d-none d-md-flex">
-      <button class="btn btn-sm btn-primary" (click)="saveChallenge()">
-        {{ 'modules.challenge.header.buttonSaveChallenge' | translate }}
-      </button>
-      <button class="btn btn-sm btn-primary" (click)="sendSolution()">
-        {{ 'modules.challenge.header.buttonSendSolution' | translate }}
-      </button>
-    </div> -->
+    </div>
+    
+</div>

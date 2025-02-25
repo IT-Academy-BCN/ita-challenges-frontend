@@ -22,6 +22,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() level = ''
   @Input() activeId!: number
   @Input() idChallenge!: string
+  @Input() showEditor: boolean = false
 
   @Output() startChallenge = new EventEmitter<boolean>()
 
@@ -37,7 +38,6 @@ export class ChallengeHeaderComponent implements OnInit {
     this.challenge_date = this.creation_date
     this.challenge_level = this.level
 
-    // Obtener el idChallenge desde la ruta activa
     this.route.params.subscribe(params => {
       this.idChallenge = params['idChallenge']
     })
@@ -47,7 +47,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
-      this.activeId = 2 // Cambia el activeId a 2 para mostrar los botones de guardar y enviar solución
+      this.activeId = 2
     }
 
     // Recuperar el estado del reto desde localStorage
@@ -63,18 +63,16 @@ export class ChallengeHeaderComponent implements OnInit {
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
-    this.activeId = 2 // Cambia el valor de activeId a 2, lo que hará desaparecer el primer botón
-
-    // Guardar el estado en localStorage
+    this.activeId = 2
     localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
 
-    // Emitir el evento para notificar al componente padre
+    localStorage.setItem('currentChallengeId', this.idChallenge)
+
     this.startChallenge.emit(true)
     console.log(localStorage.getItem('challengeStarted'))
 
     try {
-      // await this.router.navigate([`/ita-challenge/challenges/${this.idChaawait this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`]);
-      await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
+      await this.router.navigate(['/ita-challenge/challenges/start'])
     } catch (error) {
       console.error('Error en la navegación:', error)
     }
