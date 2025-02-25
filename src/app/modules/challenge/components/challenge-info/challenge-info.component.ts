@@ -43,7 +43,7 @@ implements OnInit {
   isDropdownOpen: boolean = false
 
   challengeStarted: boolean = false
-  showEditor: boolean = false
+  // showEditor: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -61,6 +61,8 @@ implements OnInit {
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
   @Input() idChallenge: string = ''
+
+  @Input() showEditor: boolean = false
   @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
@@ -81,6 +83,7 @@ implements OnInit {
 
   ngOnChanges (changes: SimpleChanges): void {
     if (changes['startChallenge']?.currentValue === true) {
+      this.showEditor = true
       this.onChallengeStart()
     }
   }
@@ -89,11 +92,6 @@ implements OnInit {
     this.challengeStarted = true
     this.showEditor = true
   }
-
-  // startingChallenge (): void {
-  //   console.log('Challenge started, showing editor')
-  //   this.cdr.detectChanges()
-  // }
 
   toggleStatement (): void {
     this.showStatement = !this.showStatement

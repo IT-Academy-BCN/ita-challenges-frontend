@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, type OnInit, type OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
-import { type Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
@@ -14,7 +14,7 @@ import { type Language } from 'src/app/models/language.model'
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss']
 })
-export class ChallengeComponent {
+export class ChallengeComponent implements OnInit, OnDestroy {
   idChallenge: string = ''
   params$!: Subscription
   challenge!: Challenge
@@ -60,6 +60,8 @@ export class ChallengeComponent {
 
   onStartChallenge (started: boolean): void {
     this.challengeStarted = started
+    this.startChallenge = started
+    this.showEditor = started
   }
 
   ngOnDestroy (): void {
