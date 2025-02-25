@@ -148,21 +148,24 @@
   /* BOTONES DE LENGUAJE */
   .language-buttons {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
   }
-
+  
   .btn-outline-secondary {
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 0.625rem 1.25rem;
-    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
     background-color: white;
     color: #333;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    min-width: 120px;
     
     &:hover {
       border-color: #C13584;
@@ -173,8 +176,25 @@
       border-color: #C13584;
       color: white;
     }
+  
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      object-fit: contain;
+    }
   }
-
+  
+  /* Fallback para imágenes no cargadas */
+  .btn-outline-secondary img {
+    opacity: 1;
+  }
+  
+  .btn-outline-secondary img[src$="undefined_asgn04.svg"],
+  .btn-outline-secondary img:not([src]),
+  .btn-outline-secondary img[src=""] {
+    display: none;
+  }
   /* DIFICULTAD */
   .difficulty-group {
     display: flex;

@@ -41,6 +41,11 @@
                   class="btn-outline-secondary" 
                   [class.active]="challenge.language === lang.language_name"
                   (click)="onLanguageChange(lang.language_name)">
+                  <img 
+                    [src]="lang.language_image" 
+                    alt="{{ lang.language_name }}" 
+                    width="16" 
+                    height="16">
                   {{ lang.language_name }}
                 </button>
               }

@@ -130,10 +130,24 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   // Carga los lenguajes del backend (código de Yana)
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  loadLanguages () {
+  /* loadLanguages () {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
       // eslint-disable-next-line no-return-assign, @typescript-eslint/strict-boolean-expressions
       next: ({ results }) => this.languages = results || [],
+      error: (err) => {
+        console.error('Error al obtener los idiomas:', err)
+        this.languages = []
+      }
+    })
+  } */
+  loadLanguages (): void {
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: ({ results }) => {
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        this.languages = results || []
+        console.log('Idiomas cargados:', this.languages) // Lista completa de idiomas
+        console.log(JSON.stringify(this.languages, null, 2))
+      },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
         this.languages = []
