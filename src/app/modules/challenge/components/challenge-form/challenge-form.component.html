@@ -73,7 +73,8 @@
                     class="btn btn-outline-secondary" 
                     [class.active]="challenge.language === lang.language_name"
             (click)="challenge.language = lang.language_name">
-            <img [src]="lang.language_image" alt="{{ lang.language_name }}" width="24" height="24" style="margin-right: 8px;">
+            {{lang.language_name}}
+            <img [src]="'https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_icon_Javascript_asgn04.svg'" alt="{{ lang.language_name }}" width="16" height="16" style="margin-right: 8px;">
             </button>
           </div>
         </div>
