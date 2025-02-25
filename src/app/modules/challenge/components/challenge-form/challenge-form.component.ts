@@ -102,8 +102,6 @@ export class ChallengeFormComponent {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
       next: ({ results }) => {
         this.languages = results || [];
-        console.log('Idiomas cargados:', this.languages); // Lista completa de idiomas
-        console.log(JSON.stringify(this.languages, null, 2));
       },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err);
