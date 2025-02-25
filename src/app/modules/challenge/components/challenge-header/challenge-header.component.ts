@@ -73,8 +73,8 @@ export class ChallengeHeaderComponent implements OnInit {
     console.log(localStorage.getItem('challengeStarted'))
 
     try {
-      // await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
-      await this.router.navigate(['/ita-challenge/challenges/start'])
+      // await this.router.navigate([`/ita-challenge/challenges/${this.idChaawait this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`]);
+      await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
     } catch (error) {
       console.error('Error en la navegación:', error)
     }

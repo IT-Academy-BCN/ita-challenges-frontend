@@ -50,11 +50,8 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     })
 
     this.route.url.subscribe(() => {
-      if (this.route.snapshot.routeConfig?.path === 'ita-challenge/challenges/:idChallenge/start') {
-        this.showEditor = true
-      } else {
-        this.showEditor = false
-      }
+      const url = this.router.url // Obtiene la URL actual
+      this.showEditor = url.includes('/start') // Verifica si contiene "/start"
     })
   }
 
