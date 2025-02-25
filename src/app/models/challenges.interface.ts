@@ -32,4 +32,5 @@ export type Note = Record<string, string>
 export interface Language {
   id_language: string
   language_name: string
+  language_image?: string
 }
