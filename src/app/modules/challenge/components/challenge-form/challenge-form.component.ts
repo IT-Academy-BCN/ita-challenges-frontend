@@ -26,7 +26,7 @@ import { basicSetup } from 'codemirror'
 export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
 
-  private editor: EditorView | null = null
+  public editor: EditorView | null = null
 
   challenge: CreateChallenge = {
     challengeTitle: '',
@@ -85,7 +85,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private initCodeMirror () {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (!this.codeMirrorEditor) return
+    if (!this.codeMirrorEditor?.nativeElement) return
 
     const languageExtension = this.getLanguageExtension(this.challenge.language)
 
