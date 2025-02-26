@@ -128,18 +128,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     return extensions[language as keyof typeof extensions] || javascript
   }
 
-  // Carga los lenguajes del backend (código de Yana)
+  // Carga los lenguajes del backend
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  /* loadLanguages () {
-    this.challengeFormService.getAllLangugesCreateForm().subscribe({
-      // eslint-disable-next-line no-return-assign, @typescript-eslint/strict-boolean-expressions
-      next: ({ results }) => this.languages = results || [],
-      error: (err) => {
-        console.error('Error al obtener los idiomas:', err)
-        this.languages = []
-      }
-    })
-  } */
   loadLanguages (): void {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
       next: ({ results }) => {
@@ -186,6 +176,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     return (
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
+      isLanguageValid &&
       isLanguageValid &&
       this.challenge.solution.trim() !== ''
     )
