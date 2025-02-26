@@ -13,9 +13,6 @@
     }}</a>
     <ng-template ngbNavContent>
 
-      <app-editor-challenge 
-      *ngIf="showEditor" [showEditor]="showEditor">
-      </app-editor-challenge>
 
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
@@ -31,7 +28,9 @@
             }}</label>
           </span>
         </div>
-        
+        <app-editor-challenge 
+        *ngIf="showEditor" [showEditor]="showEditor">
+        </app-editor-challenge>
         
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
