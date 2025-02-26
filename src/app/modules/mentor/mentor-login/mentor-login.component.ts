@@ -53,10 +53,13 @@ export class MentorLoginComponent implements OnInit {
               this.showSuccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
               localStorage.setItem('username', response.username)
               localStorage.setItem('authToken', response.token)
-
-              void this.router.navigate(['/ita-challenge/challenges'])
+              setTimeout(()=>{
+                void this.router.navigate(['/ita-challenge/challenges']);
+              }, 1500)
             } else {
               this.showError('❌ No eres mentor, acceso denegado.')
+              localStorage.removeItem('username')
+              localStorage.removeItem('authToken')
             }
           },
           error: (err) => {
@@ -65,7 +68,12 @@ export class MentorLoginComponent implements OnInit {
                 '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
               )
             } else if (err.status === 500) {
+              this.showError(
+                '💥 Error 500: Error interno en el servidor.'
+              )
               console.log('💥 Error 500: Error interno en el servidor.')
+            } else if (err.status === 403){
+              this.showError('🚫 El usuario no existe en GitHub.')
             } else {
               this.showError(
                 '❌ Error desconocido en la petición al backend:',
@@ -95,6 +103,7 @@ export class MentorLoginComponent implements OnInit {
   }
 
   showSuccess(message: string){
+    console.log('Success function triggered:', message);
     this.successMessage = message;
     this.isSuccessVisible = true;
   }
