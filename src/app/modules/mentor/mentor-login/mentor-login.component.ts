@@ -26,6 +26,7 @@ export class MentorLoginComponent implements OnInit {
   isSuccessVisible = false;
   errorMessage = '';
   successMessage = '';
+  showRegisterButton = false;
 
   constructor (
     private route: ActivatedRoute,
@@ -68,15 +69,15 @@ export class MentorLoginComponent implements OnInit {
                 '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
               )
             } else if (err.status === 500) {
-              this.showError(
-                '💥 Error 500: Error interno en el servidor.'
-              )
               console.log('💥 Error 500: Error interno en el servidor.')
             } else if (err.status === 403){
               this.showError('🚫 El usuario no existe en GitHub.')
+              this.showRegisterButton = true;
+              localStorage.removeItem('username')
+              localStorage.removeItem('authToken')
             } else {
               this.showError(
-                '❌ Error desconocido en la petición al backend:',
+                '❌ Error desconocido en la petición al backend',
                 
               ),
               console.log(err)
@@ -114,4 +115,9 @@ export class MentorLoginComponent implements OnInit {
   closeError(){
     this.isErrorVisible = false
   }
+
+  redirectToRegister(): void {
+    window.location.href = 'https://github.com/signup';
+  }
+  
 }

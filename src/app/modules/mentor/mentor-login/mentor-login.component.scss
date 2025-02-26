@@ -65,4 +65,20 @@
   .error-popup {
     border-color: rgb(255, 93, 93);
   }
+
+  .reg-btn {
+
+    color: rgb(0, 0, 0);
+    text-decoration: underline;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .reg-btn:hover {
+    color: #ff00c3;
+  }
+  
   

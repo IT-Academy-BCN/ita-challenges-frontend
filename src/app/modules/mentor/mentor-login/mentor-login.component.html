@@ -15,7 +15,15 @@
   <div class="success-message">{{ successMessage }}</div>
 </div>
 
+<!-- <div *ngIf="isErrorVisible" class="popup error-popup">
+  <button class="close-btn" (click)="closeError()">×</button>
+  <div class="error-message">{{ errorMessage }}</div>
+</div> -->
 <div *ngIf="isErrorVisible" class="popup error-popup">
   <button class="close-btn" (click)="closeError()">×</button>
   <div class="error-message">{{ errorMessage }}</div>
+
+  <button *ngIf="showRegisterButton" class="reg-btn" (click)="redirectToRegister()">
+    Registrarse en GitHub
+  </button>
 </div>
