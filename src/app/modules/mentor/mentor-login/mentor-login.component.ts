@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
 
 interface GitHubAuthResponse {
   isValid: boolean
@@ -16,8 +16,10 @@ interface GitHubAuthResponse {
   standalone: true,
   selector: 'app-mentor-login',
   templateUrl: './mentor-login.component.html',
-  styleUrls: ['./mentor-login.component.scss']
+  styleUrls: ['./mentor-login.component.scss'],
+  imports: [CommonModule] 
 })
+
 export class MentorLoginComponent implements OnInit {
 
   isErrorVisible = false;
@@ -48,7 +50,7 @@ export class MentorLoginComponent implements OnInit {
             console.log('GitHub backend response:', response)
 
             if (response.isValid) {
-              this.showSaccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
+              this.showSuccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
               localStorage.setItem('username', response.username)
               localStorage.setItem('authToken', response.token)
 
@@ -65,10 +67,11 @@ export class MentorLoginComponent implements OnInit {
             } else if (err.status === 500) {
               this.showError('💥 Error 500: Error interno en el servidor.')
             } else {
-              console.error(
+              this.showError(
                 '❌ Error desconocido en la petición al backend:',
-                err
-              )
+                
+              ),
+              console.log(err)
             }
           }
         })
@@ -91,8 +94,9 @@ export class MentorLoginComponent implements OnInit {
     this.isErrorVisible = true
   }
 
-  showSaccess(message: string){
-    this.successMessage = message
+  showSuccess(message: string){
+    this.successMessage = message;
+    this.isSuccessVisible = true;
   }
 
   closeSuccess(){

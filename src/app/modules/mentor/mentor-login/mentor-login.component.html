@@ -9,16 +9,13 @@
   </button>
 </div>
 
-@if(isSuccessVisible){
-  <div class="success-popup">
-    <div class="success-message">{{ successMessage }}</div>
-    <button (click)="closeSuccess()">Cerrar</button>
-  </div>
-  
-  @if(isErrorVisible){
-    <div class="success-popup">
-      <div class="error-message">{{ errorMessage }}</div>
-      <button (click)="closeError()">Cerrar</button>
-    </div>
-  }
-}
+
+<div *ngIf="isSuccessVisible" class="popup success-popup">
+  <button class="close-btn" (click)="closeSuccess()">×</button>
+  <div class="success-message">{{ successMessage }}</div>
+</div>
+
+<div *ngIf="isErrorVisible" class="popup error-popup">
+  <button class="close-btn" (click)="closeError()">×</button>
+  <div class="error-message">{{ errorMessage }}</div>
+</div>
