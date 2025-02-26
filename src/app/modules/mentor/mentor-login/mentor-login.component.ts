@@ -65,7 +65,7 @@ export class MentorLoginComponent implements OnInit {
                 '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
               )
             } else if (err.status === 500) {
-              this.showError('💥 Error 500: Error interno en el servidor.')
+              console.log('💥 Error 500: Error interno en el servidor.')
             } else {
               this.showError(
                 '❌ Error desconocido en la petición al backend:',
