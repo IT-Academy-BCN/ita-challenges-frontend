@@ -28,7 +28,7 @@
     transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, 0.9);
     color: black; 
-    padding: 1.5rem;
+    padding: 1.47rem;
     border-radius: 8px;
     border: 2px solid white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
@@ -38,6 +38,7 @@
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
+    gap: 1.5rem;
     z-index: 9999;
     position: relative;
     text-align: center;
@@ -50,35 +51,20 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 2rem;
     cursor: pointer;
     background: none;
     border: none;
-    color: black;
+    color: rgba(0, 0, 0, 0.733);
   }
   
   .success-popup {
-    border-color: green;
+    color: rgba(0, 0, 0, 0.564);
+    font-size: 0.84rem;
   }
   
-  .error-popup {
-    border-color: rgb(255, 93, 93);
+  .error-message {
+    color: rgb(255, 93, 93);
+    font-size: 0.84rem;
   }
 
-  .reg-btn {
-
-    color: rgb(0, 0, 0);
-    text-decoration: underline;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .reg-btn:hover {
-    color: #ff00c3;
-  }
-  
-  

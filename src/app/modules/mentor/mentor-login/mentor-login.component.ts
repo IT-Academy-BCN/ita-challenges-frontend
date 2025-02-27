@@ -58,7 +58,8 @@ export class MentorLoginComponent implements OnInit {
                 void this.router.navigate(['/ita-challenge/challenges']);
               }, 1500)
             } else {
-              this.showError('❌ No eres mentor, acceso denegado.')
+              this.showError(
+                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')
               localStorage.removeItem('username')
               localStorage.removeItem('authToken')
             }
@@ -66,19 +67,19 @@ export class MentorLoginComponent implements OnInit {
           error: (err) => {
             if (err.status === 401) {
               this.showError(
-                '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
+                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador'  //Error 401: No autorizado. El usuario no es mentor o el token es inválido
               )
             } else if (err.status === 500) {
+              this.showError(
+                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')  //Error 500: Error interno en el servidor.
               console.log('💥 Error 500: Error interno en el servidor.')
             } else if (err.status === 403){
-              this.showError('🚫 El usuario no existe en GitHub.')
-              this.showRegisterButton = true;
+              this.showError('Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')  //Error 403: El usuario no existe en GitHub.
               localStorage.removeItem('username')
               localStorage.removeItem('authToken')
             } else {
               this.showError(
-                '❌ Error desconocido en la petición al backend',
-                
+                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador' //Error desconocido en la petición al backend 
               ),
               console.log(err)
             }

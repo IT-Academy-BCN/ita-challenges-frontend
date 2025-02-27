@@ -15,15 +15,17 @@
   <div class="success-message">{{ successMessage }}</div>
 </div>
 
-<!-- <div *ngIf="isErrorVisible" class="popup error-popup">
-  <button class="close-btn" (click)="closeError()">×</button>
-  <div class="error-message">{{ errorMessage }}</div>
-</div> -->
 <div *ngIf="isErrorVisible" class="popup error-popup">
+  <div class="d-flex justify-content-center mt-5">
+    <button class="github-button" (click)="loginWithGitHub()">
+      <img
+        src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        alt="GitHub Logo"
+        width="25"
+      />
+      <span>Sign in with GitHub</span>
+    </button>
+  </div>
   <button class="close-btn" (click)="closeError()">×</button>
   <div class="error-message">{{ errorMessage }}</div>
-
-  <button *ngIf="showRegisterButton" class="reg-btn" (click)="redirectToRegister()">
-    Registrarse en GitHub
-  </button>
 </div>
