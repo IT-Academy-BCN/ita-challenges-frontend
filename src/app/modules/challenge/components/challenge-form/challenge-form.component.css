@@ -6,137 +6,321 @@
   overflow-y: auto; 
 
   .card {
-    max-width: 800px;
+    max-width: 880px;
     margin: 0 auto;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 2rem; 
-  }
-
-  .form-container {
-    padding-bottom: 4rem; 
-  }
-
-  h3 {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
-    font-weight: 500;
   }
 
-  .form-label {
-    font-weight: 500;
+  /* CABECERA */
+  .card-header {
+    padding: 1rem 1.5rem;
+    background: white;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: #666;
     margin-bottom: 0.5rem;
   }
 
-  .difficulty-group {
+  .header-content {
     display: flex;
-    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
-    .form-check-input:checked {
-      background-color: #C13584;
-      border-color: #C13584;
+  .form-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-cancel {
+    background: white;
+    border: 1px solid #ddd;
+    color: #666;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      border-color: #999;
+      color: #333;
     }
   }
 
-  .language-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  
-  .btn {
-    min-width: 100px;
-    max-width: 140px; 
-    height: 40px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.9rem;
-    font-weight: normal;
-    border: 2px solid black; 
-    border-radius: 8px; 
-    background-color: white;
-    padding: 0.5rem 1rem;
-    gap: 0.5rem;
-  }
-  
-  .btn img {
-    height: 20px;
-    width: 20px;
-  }
-  
-  .btn.active {
-    background-color: #C13584;
-    border-color: #C13584;
-    color: white;
-  }
-  
   .btn-primary {
     background-color: #C13584;
     border-color: #C13584;
     padding: 0.5rem 2rem;
-
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    
     &:hover {
       background-color: darken(#C13584, 5%);
-      border-color: darken(#C13584, 5%);
     }
-
+    
     &:disabled {
       background-color: lighten(#C13584, 20%);
       border-color: lighten(#C13584, 20%);
+      cursor: not-allowed;
     }
   }
 
-  ::ng-deep {
-      .tox-tinymce-aux {
-          position: absolute !important;
-          z-index: 1000;
-      }
+  /* CUERPO DEL FORMULARIO */
+  .card-body {
+    padding: 1.5rem;
+  }
 
-      .tox-tbtn--bespoke {
-          position: static !important;
-      }
+  /* SECCIONES DEL FORMULARIO */
+  .section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
 
-      .tox-pop {
-          position: absolute !important;
-      }
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
 
-      .tox-toolbar__overflow {
-          position: static !important;
-      }
+  .section h4 {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+    color: #333;
+  }
 
-      .tox-menu {
-          position: absolute !important;
-      }
+  .section-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+  }
 
-      .tox-toolbar__group {
-          position: static !important;
-      }
+  /* CAMPOS DEL FORMULARIO */
+  .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
 
-      .tox-emoji-picker {
-          position: absolute !important;
-          z-index: 1000;
-          
-          @media (max-width: 768px) {
-              max-width: 280px !important;
-              max-height: 300px !important;
-          }
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    
+    &:focus {
+      border-color: #C13584;
+      box-shadow: 0 0 0 0.2rem rgba(193, 53, 132, 0.25);
+    }
+  }
+
+  /* BOTONES DE LENGUAJE */
+  .language-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  
+  .btn-outline-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    min-width: 120px;
+    
+    &:hover {
+      border-color: #C13584;
+    }
+    
+    &.active {
+      background-color: #C13584;
+      border-color: #C13584;
+      color: white;
+    }
+  
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      object-fit: contain;
+    }
+  }
+  
+  /* Fallback para imágenes no cargadas */
+  .btn-outline-secondary img {
+    opacity: 1;
+  }
+  
+  .btn-outline-secondary img[src$="undefined_asgn04.svg"],
+  .btn-outline-secondary img:not([src]),
+  .btn-outline-secondary img[src=""] {
+    display: none;
+  }
+  /* DIFICULTAD */
+  .difficulty-group {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .difficulty-option {
+    position: relative;
+  }
+
+  .form-check-input.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .difficulty-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .radio-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #C13584;
+    position: relative;
+    
+    &.selected {
+      background-color: #C13584;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
+    }
+  }
+
+  .lightning-group {
+    display: flex;
+    gap: 2px;
+  }
+
+  .lightning-group img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* CodeMirror */
+  .codemirror-container {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 300px;
+    resize: vertical;
+  }
+
+ /* TinyMCE - MODIFICADO PARA PERMITIR REDIMENSIONAMIENTO */
+ .editor-container {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  overflow: visible; /* Cambiado a visible para permitir el redimensionamiento */
+  position: relative;
+  z-index: 0;
+}
+
+/* TinyMCE Fixes */
+::ng-deep {
+  .tox-tinymce-aux {
+    position: absolute !important;
+    z-index: 1000;
+  }
+
+  .tox-tbtn--bespoke {
+    position: static !important;
+  }
+
+  .tox-pop {
+    position: absolute !important;
+  }
+
+  .tox-toolbar__overflow {
+    position: static !important;
+  }
+
+  .tox-menu {
+    position: absolute !important;
+  }
+
+  .tox-toolbar__group {
+    position: static !important;
+  }
+
+  .tox-emoji-picker {
+    position: absolute !important;
+    z-index: 1000;
+    
+    @media (max-width: 768px) {
+      max-width: 280px !important;
+      max-height: 300px !important;
+    }
+  }
+
+  /* Asegurar que el control de redimensionamiento sea visible y funcional */
+  .tox-statusbar__resize-handle {
+    display: block !important;
+    cursor: ns-resize !important;
+    visibility: visible !important;
   }
 }
-
-.text-end {
-  display: flex;
-  justify-content: flex-end; 
-  width: 100%; 
-  padding-top: 1rem; 
-}
-
-.editor-container {
-  position: relative;
 }
