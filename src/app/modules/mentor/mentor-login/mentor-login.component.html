@@ -12,7 +12,7 @@
 
 <div *ngIf="isSuccessVisible" class="popup success-popup">
   <button class="close-btn" (click)="closeSuccess()">×</button>
-  <div class="success-message">{{ successMessage }}</div>
+  <div class="success-message">{{'messages.success.welcome' | translate}}</div>
 </div>
 
 <div *ngIf="isErrorVisible" class="popup error-popup">
@@ -27,5 +27,5 @@
     </button>
   </div>
   <button class="close-btn" (click)="closeError()">×</button>
-  <div class="error-message">{{ errorMessage }}</div>
+  <div class="error-message">{{ 'messages.errors.unauthorized' | translate }}</div>
 </div>

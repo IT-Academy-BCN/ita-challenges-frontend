@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 interface GitHubAuthResponse {
   isValid: boolean
@@ -17,7 +19,7 @@ interface GitHubAuthResponse {
   selector: 'app-mentor-login',
   templateUrl: './mentor-login.component.html',
   styleUrls: ['./mentor-login.component.scss'],
-  imports: [CommonModule] 
+  imports: [CommonModule, TranslateModule] 
 })
 
 export class MentorLoginComponent implements OnInit {
@@ -31,7 +33,8 @@ export class MentorLoginComponent implements OnInit {
   constructor (
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
 
@@ -51,36 +54,31 @@ export class MentorLoginComponent implements OnInit {
             console.log('GitHub backend response:', response)
 
             if (response.isValid) {
-              this.showSuccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
+              this.showSuccess(response.username)
               localStorage.setItem('username', response.username)
               localStorage.setItem('authToken', response.token)
               setTimeout(()=>{
                 void this.router.navigate(['/ita-challenge/challenges']);
               }, 1500)
             } else {
-              this.showError(
-                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')
+              this.showError('unauthorized')
               localStorage.removeItem('username')
               localStorage.removeItem('authToken')
             }
           },
           error: (err) => {
             if (err.status === 401) {
-              this.showError(
-                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador'  //Error 401: No autorizado. El usuario no es mentor o el token es inválido
-              )
+              this.showError('unauthorized')  //Error 401: No autorizado. El usuario no es mentor o el token es inválido
+              
             } else if (err.status === 500) {
-              this.showError(
-                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')  //Error 500: Error interno en el servidor.
+              this.showError('unauthorized')  //Error 500: Error interno en el servidor.
               console.log('💥 Error 500: Error interno en el servidor.')
             } else if (err.status === 403){
-              this.showError('Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador')  //Error 403: El usuario no existe en GitHub.
+              this.showError('unauthorized');  //Error 403: El usuario no existe en GitHub.
               localStorage.removeItem('username')
               localStorage.removeItem('authToken')
             } else {
-              this.showError(
-                'Lo sentimos, no se ha podido iniciar sesión, contacte con el administrador' //Error desconocido en la petición al backend 
-              ),
+              this.showError('unauthorized'),
               console.log(err)
             }
           }
@@ -99,15 +97,18 @@ export class MentorLoginComponent implements OnInit {
   }
 
 
-  showError(message: string){
-    this.errorMessage = message;
-    this.isErrorVisible = true
+  showError(errorKey: string) {
+    this.translate.get(`messages.errors.${errorKey}`).subscribe((translatedMessage: string) => {
+      this.errorMessage = translatedMessage;
+      this.isErrorVisible = true;
+    });
   }
-
-  showSuccess(message: string){
-    console.log('Success function triggered:', message);
-    this.successMessage = message;
-    this.isSuccessVisible = true;
+  
+  showSuccess(username: string) {
+    this.translate.get('messages.success.welcome', { username }).subscribe((translatedMessage: string) => {
+      this.successMessage = translatedMessage;
+      this.isSuccessVisible = true;
+    });
   }
 
   closeSuccess(){
