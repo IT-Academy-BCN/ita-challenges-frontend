@@ -19,19 +19,16 @@ interface GitHubAuthResponse {
   styleUrls: ['./mentor-login.component.scss']
 })
 export class MentorLoginComponent implements OnInit {
-
-  isErrorVisible = false;
-  isSuccessVisible = false;
-  errorMessage = '';
-  successMessage = '';
+  isErrorVisible = false
+  isSuccessVisible = false
+  errorMessage = ''
+  successMessage = ''
 
   constructor (
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router
   ) {}
-
-
 
   ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
@@ -85,20 +82,20 @@ export class MentorLoginComponent implements OnInit {
     window.location.href = githubAuthUrl
   }
 
-
-  showError(message: string){
-    this.errorMessage = message;
+  showError (message: string) {
+    this.errorMessage = message
     this.isErrorVisible = true
   }
 
-  showSaccess(message: string){
+  showSaccess (message: string) {
     this.successMessage = message
   }
 
-  closeSuccess(){
+  closeSuccess () {
     this.isSuccessVisible = false
   }
-  closeError(){
+
+  closeError () {
     this.isErrorVisible = false
   }
 }
