@@ -23,19 +23,15 @@ interface GitHubAuthResponse {
 })
 
 export class MentorLoginComponent implements OnInit {
-<<<<<<< HEAD
 
-  isErrorVisible = false;
-  isSuccessVisible = false;
-  errorMessage = '';
-  successMessage = '';
-  showRegisterButton = false;
-=======
+
   isErrorVisible = false
   isSuccessVisible = false
   errorMessage = ''
   successMessage = ''
->>>>>>> origin/develop
+  showRegisterButton = false
+
+
 
   constructor (
     private route: ActivatedRoute,
@@ -76,15 +72,15 @@ export class MentorLoginComponent implements OnInit {
               this.showError('unauthorized')  //Error 401: No autorizado. El usuario no es mentor o el token es inválido
               
             } else if (err.status === 500) {
-              this.showError('unauthorized')  //Error 500: Error interno en el servidor.
-              console.log('💥 Error 500: Error interno en el servidor.')
+              this.showError ('unauthorized')  //Error 500: Error interno en el servidor.
+              console.log ('💥 Error 500: Error interno en el servidor.')
             } else if (err.status === 403){
-              this.showError('unauthorized');  //Error 403: El usuario no existe en GitHub.
-              localStorage.removeItem('username')
-              localStorage.removeItem('authToken')
+              this.showError('unauthorized')  //Error 403: El usuario no existe en GitHub.
+              localStorage.removeItem ('username')
+              localStorage.removeItem ('authToken')
             } else {
-              this.showError('unauthorized'),
-              console.log(err)
+              this.showError ('unauthorized')
+              console.log (err)
             }
           }
         })
@@ -101,40 +97,32 @@ export class MentorLoginComponent implements OnInit {
     window.location.href = githubAuthUrl
   }
 
-<<<<<<< HEAD
 
-  showError(errorKey: string) {
+
+  showError (errorKey: string): void {
     this.translate.get(`messages.errors.${errorKey}`).subscribe((translatedMessage: string) => {
-      this.errorMessage = translatedMessage;
+      this.errorMessage = translatedMessage
       this.isErrorVisible = true;
     });
   }
   
-  showSuccess(username: string) {
+  showSuccess (username: string): void {
     this.translate.get('messages.success.welcome', { username }).subscribe((translatedMessage: string) => {
-      this.successMessage = translatedMessage;
+      this.successMessage = translatedMessage
       this.isSuccessVisible = true;
     });
-=======
-  showError (message: string) {
-    this.errorMessage = message
-    this.isErrorVisible = true
+
   }
 
-  showSaccess (message: string) {
-    this.successMessage = message
->>>>>>> origin/develop
-  }
-
-  closeSuccess () {
+  closeSuccess (): void {
     this.isSuccessVisible = false
   }
 
-  closeError () {
+  closeError (): void {
     this.isErrorVisible = false
   }
 
-  redirectToRegister(): void {
+  redirectToRegister (): void {
     window.location.href = 'https://github.com/signup';
   }
   
