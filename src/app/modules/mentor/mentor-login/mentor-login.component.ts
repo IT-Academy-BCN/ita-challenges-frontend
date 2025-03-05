@@ -23,12 +23,19 @@ interface GitHubAuthResponse {
 })
 
 export class MentorLoginComponent implements OnInit {
+<<<<<<< HEAD
 
   isErrorVisible = false;
   isSuccessVisible = false;
   errorMessage = '';
   successMessage = '';
   showRegisterButton = false;
+=======
+  isErrorVisible = false
+  isSuccessVisible = false
+  errorMessage = ''
+  successMessage = ''
+>>>>>>> origin/develop
 
   constructor (
     private route: ActivatedRoute,
@@ -36,8 +43,6 @@ export class MentorLoginComponent implements OnInit {
     private router: Router,
     private translate: TranslateService
   ) {}
-
-
 
   ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
@@ -96,6 +101,7 @@ export class MentorLoginComponent implements OnInit {
     window.location.href = githubAuthUrl
   }
 
+<<<<<<< HEAD
 
   showError(errorKey: string) {
     this.translate.get(`messages.errors.${errorKey}`).subscribe((translatedMessage: string) => {
@@ -109,12 +115,22 @@ export class MentorLoginComponent implements OnInit {
       this.successMessage = translatedMessage;
       this.isSuccessVisible = true;
     });
+=======
+  showError (message: string) {
+    this.errorMessage = message
+    this.isErrorVisible = true
   }
 
-  closeSuccess(){
+  showSaccess (message: string) {
+    this.successMessage = message
+>>>>>>> origin/develop
+  }
+
+  closeSuccess () {
     this.isSuccessVisible = false
   }
-  closeError(){
+
+  closeError () {
     this.isErrorVisible = false
   }
 
