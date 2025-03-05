@@ -5,9 +5,9 @@
 .title {
   margin-bottom: 16px;
   max-width: 100%;
-  h3{
-    line-height: 2rem;
-  }
+}
+.title h3 {
+  line-height: 2rem;
 }
 
 .difficulty img {
@@ -21,13 +21,12 @@
   line-height: 16px;
   font-weight: 600;
   color: #808080;
-
-  .stat {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-right: 20px;
-  }
+}
+.stats .stat {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .button {
@@ -59,11 +58,10 @@ h3 {
   align-items: center;
   color: $primary;
   font-weight: bold;
-
-  img {
-    width: 1.5em;
-    margin: .3rem;
-  }
+}
+.solutionSent img {
+  width: 1.5em;
+  margin: .3rem;
 }
 
 #color {
