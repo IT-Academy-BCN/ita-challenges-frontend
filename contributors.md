@@ -26,3 +26,4 @@
 - Yana Evko - https://github.com/Yana-jev
 - Míriam Martín Casas - https://github.com/mmartincasas
 - Alvaro Ledesma - https://github.com/7ldsma
+- Guillem Babot - https://github.com/GuillemBo
