@@ -44,7 +44,7 @@ export class MentorLoginComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const code = params['code']
       if (code !== null && code !== undefined) {
-        console.log('GitHub code recibido:', code)
+        console.warn('GitHub code recibido:', code)
 
         const url =
           environment.BACKEND_ITA_CHALLENGE_BASE_URL +
@@ -52,7 +52,7 @@ export class MentorLoginComponent implements OnInit {
 
         this.http.post<GitHubAuthResponse>(url, { code }).subscribe({
           next: (response) => {
-            console.log('GitHub backend response:', response)
+            console.warn('GitHub backend response:', response)
 
             if (response.isValid) {
               this.showSuccess(response.username)
@@ -73,14 +73,14 @@ export class MentorLoginComponent implements OnInit {
               
             } else if (err.status === 500) {
               this.showError ('unauthorized')  //Error 500: Error interno en el servidor.
-              console.log ('💥 Error 500: Error interno en el servidor.')
+              console.error ('💥 Error 500: Error interno en el servidor.')
             } else if (err.status === 403){
               this.showError('unauthorized')  //Error 403: El usuario no existe en GitHub.
               localStorage.removeItem ('username')
               localStorage.removeItem ('authToken')
             } else {
               this.showError ('unauthorized')
-              console.log (err)
+              console.error (err)
             }
           }
         })
