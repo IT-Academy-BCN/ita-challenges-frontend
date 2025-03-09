@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { By } from '@angular/platform-browser'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
@@ -37,18 +37,22 @@ describe('ChallengeComponent', () => {
         ChallengeInfoComponent,
         SolutionComponent
       ],
-      imports: [RouterTestingModule,
+      imports: [
+        RouterTestingModule,
         SharedComponentsModule,
         I18nModule,
         NgbNavModule,
         FormsModule,
-        DynamicTranslatePipe],
+        DynamicTranslatePipe
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
             queryParams: of({}),
             paramMap: of(convertToParamMap({ idChallenge: '123' })),
+            params: of({ idChallenge: '123' }), 
+            url: of([]),
             snapshot: {
               queryParams: {
                 tab: 'someTab'
@@ -65,6 +69,8 @@ describe('ChallengeComponent', () => {
         provideHttpClientTesting()
       ]
     }).compileComponents()
+
+    // Инициализация CookieService
     cookieService = TestBed.inject(CookieService)
     const mockUser = { idUser: 'testId' }
     cookieService.set('user', JSON.stringify(mockUser))
@@ -77,19 +83,18 @@ describe('ChallengeComponent', () => {
     component.loadMasterData('123')
   })
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should create and get idChallenge param', () => {
-    expect(component).toBeTruthy()
+  it('should extract idChallenge param from the route', () => {
+    expect(component.idChallenge).toBeDefined()
     expect(component.idChallenge).not.toBeNull()
-    expect(component.idChallenge).not.toBeUndefined()
     expect(component.idChallenge).not.toHaveLength(0)
     expect(component.idChallenge).not.toContain(' ')
   })
 
-  it('should call getChallengeById when loadMasterdata is called', () => {
+  it('should call getChallengeById when loadMasterData is called', () => {
     const challenge = {
       challenge_title: 'Test Challenge',
       creation_date: new Date(),
@@ -105,6 +110,7 @@ describe('ChallengeComponent', () => {
       popularity: 0,
       languages: []
     }
+
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
 
     component.loadMasterData('123')
@@ -112,7 +118,7 @@ describe('ChallengeComponent', () => {
     expect(mockChallengeService.getChallengeById).toHaveBeenCalledWith('123')
   })
 
-  it('should set challenge details when loadMasterdata is called', () => {
+  it('should set challenge details when loadMasterData is called', () => {
     const challenge = {
       challenge_title: 'Test Challenge',
       creation_date: new Date(),
@@ -128,6 +134,7 @@ describe('ChallengeComponent', () => {
       popularity: 0,
       languages: []
     }
+
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
 
     component.loadMasterData('123')
@@ -145,16 +152,16 @@ describe('ChallengeComponent', () => {
     expect(component.languages).toEqual([])
   })
 
-  it('should pass the input property value to the child  header component', () => {
+  it('should pass title, creation_date, and level to ChallengeHeaderComponent', () => {
     const challenge = {
       challenge_title: 'Test Challenge',
       creation_date: new Date(),
       level: 'Easy'
     }
+
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
 
     component.loadMasterData('123')
-
     fixture.detectChanges()
 
     const challengeHeaderComponent = fixture.debugElement.query(By.directive(ChallengeHeaderComponent)).componentInstance
@@ -164,7 +171,7 @@ describe('ChallengeComponent', () => {
     expect(challengeHeaderComponent.level).toBe(component.level)
   })
 
-  it('should pass the input property value to the child  info component', () => {
+  it('should pass challenge detail to ChallengeInfoComponent', () => {
     const challenge = {
       detail: {
         description: 'Test Challenge Description',
@@ -177,10 +184,10 @@ describe('ChallengeComponent', () => {
       popularity: 0,
       languages: []
     }
+
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
 
     component.loadMasterData('123')
-
     fixture.detectChanges()
 
     const challengeInfoComponent = fixture.debugElement.query(By.directive(ChallengeInfoComponent)).componentInstance
@@ -189,16 +196,17 @@ describe('ChallengeComponent', () => {
     expect(challengeInfoComponent.detail.description).toBe(component.detail.description)
     expect(challengeInfoComponent.detail.examples).toEqual(component.detail.examples)
     expect(challengeInfoComponent.detail.notes).toBe(component.detail.notes)
-    // expect(challengeInfoComponent.solutions).toEqual(component.solutions)
-    // Elimino esta línea porque no pasamos solutions de challenge a info-challenge
     expect(challengeInfoComponent.popularity).toBe(component.popularity)
     expect(challengeInfoComponent.languages).toEqual(component.languages)
   })
 
-  it('should onActiveIdchange correctly', () => {
+  it('should update activeId when onActiveIdChange is called', () => {
     const newActiveId = 2
     component.onActiveIdChange(newActiveId)
 
     expect(component.activeId).toBe(newActiveId)
   })
+
+
+  
 })
