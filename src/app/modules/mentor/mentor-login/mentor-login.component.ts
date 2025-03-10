@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 interface GitHubAuthResponse {
   isValid: boolean
@@ -16,25 +18,33 @@ interface GitHubAuthResponse {
   standalone: true,
   selector: 'app-mentor-login',
   templateUrl: './mentor-login.component.html',
-  styleUrls: ['./mentor-login.component.scss']
+  styleUrls: ['./mentor-login.component.scss'],
+  imports: [CommonModule, TranslateModule] 
 })
+
 export class MentorLoginComponent implements OnInit {
+
+
   isErrorVisible = false
   isSuccessVisible = false
   errorMessage = ''
   successMessage = ''
+  showRegisterButton = false
+
+
 
   constructor (
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
       const code = params['code']
       if (code !== null && code !== undefined) {
-        console.log('GitHub code recibido:', code)
+        console.warn('GitHub code recibido:', code)
 
         const url =
           environment.BACKEND_ITA_CHALLENGE_BASE_URL +
@@ -42,30 +52,35 @@ export class MentorLoginComponent implements OnInit {
 
         this.http.post<GitHubAuthResponse>(url, { code }).subscribe({
           next: (response) => {
-            console.log('GitHub backend response:', response)
+            console.warn('GitHub backend response:', response)
 
             if (response.isValid) {
-              this.showSaccess(`✅ Bienvenido, ${response.username}! Redirigiendo...`)
+              this.showSuccess(response.username)
               localStorage.setItem('username', response.username)
               localStorage.setItem('authToken', response.token)
-
-              void this.router.navigate(['/ita-challenge/challenges'])
+              setTimeout(()=>{
+                void this.router.navigate(['/ita-challenge/challenges']);
+              }, 1500)
             } else {
-              this.showError('❌ No eres mentor, acceso denegado.')
+              this.showError('unauthorized')
+              localStorage.removeItem('username')
+              localStorage.removeItem('authToken')
             }
           },
           error: (err) => {
             if (err.status === 401) {
-              this.showError(
-                '🚫 Error 401: No autorizado. El usuario no es mentor o el token es inválido.'
-              )
+              this.showError('unauthorized')  //Error 401: No autorizado. El usuario no es mentor o el token es inválido
+              
             } else if (err.status === 500) {
-              this.showError('💥 Error 500: Error interno en el servidor.')
+              this.showError ('unauthorized')  //Error 500: Error interno en el servidor.
+              console.error ('💥 Error 500: Error interno en el servidor.')
+            } else if (err.status === 403){
+              this.showError('unauthorized')  //Error 403: El usuario no existe en GitHub.
+              localStorage.removeItem ('username')
+              localStorage.removeItem ('authToken')
             } else {
-              console.error(
-                '❌ Error desconocido en la petición al backend:',
-                err
-              )
+              this.showError ('unauthorized')
+              console.error (err)
             }
           }
         })
@@ -82,20 +97,33 @@ export class MentorLoginComponent implements OnInit {
     window.location.href = githubAuthUrl
   }
 
-  showError (message: string) {
-    this.errorMessage = message
-    this.isErrorVisible = true
+
+
+  showError (errorKey: string): void {
+    this.translate.get(`messages.errors.${errorKey}`).subscribe((translatedMessage: string) => {
+      this.errorMessage = translatedMessage
+      this.isErrorVisible = true;
+    });
+  }
+  
+  showSuccess (username: string): void {
+    this.translate.get('messages.success.welcome', { username }).subscribe((translatedMessage: string) => {
+      this.successMessage = translatedMessage
+      this.isSuccessVisible = true;
+    });
+
   }
 
-  showSaccess (message: string) {
-    this.successMessage = message
-  }
-
-  closeSuccess () {
+  closeSuccess (): void {
     this.isSuccessVisible = false
   }
 
-  closeError () {
+  closeError (): void {
     this.isErrorVisible = false
   }
+
+  redirectToRegister (): void {
+    window.location.href = 'https://github.com/signup';
+  }
+  
 }

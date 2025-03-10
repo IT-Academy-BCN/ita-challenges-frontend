@@ -108,5 +108,17 @@
         "startedFinished": "Started and finished",
         "savedTimes": "Times saved",
         "creationDate": "Creation date"
+    },
+    "messages": {
+    "errors": {
+        "unauthorized": "Sorry, you are not authorized to log in. Please contact the administrator.",
+        "server_error": "An internal server error occurred. Please try again later.",
+        "forbidden": "Your GitHub account is not authorized to access this platform.",
+        "unknown": "An unknown error occurred. Please try again."
+    },
+    "success": {
+        "welcome": "Welcome! Redirecting..."
     }
+}
+
 }    
