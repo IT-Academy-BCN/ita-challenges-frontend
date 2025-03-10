@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class DynamicTranslatePipe implements PipeTransform {
   private language: string
-  private readonly DEFAULT_LANGUAGE = 'ES'
+  private readonly DEFAULT_LANGUAGE = 'CA'
   private readonly translateService = inject(TranslateService)
   // private readonly sanitizer = inject(DomSanitizer)
 

@@ -72,7 +72,7 @@ describe('DynamicTranslatePipe', () => {
 
   it('should use the default language if currentLang is empty or undefined', () => {
     translateService.use('')
-    const value = { EN: 'Hello', ES: 'Hola' }
-    expect(pipe.transform(value)).toBe('Hola')
+    const value = { EN: 'Hello', ES: 'Hola', CA: 'Bon dia' }
+    expect(pipe.transform(value)).toBe('Bon dia')
   })
 })
