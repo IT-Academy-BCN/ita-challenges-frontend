@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ProfileHeaderComponent } from './profile-header.component';
+import { ProfileHeaderComponent } from './profile-header.component'
 
 describe('ProfileHeaderComponent', () => {
-  let component: ProfileHeaderComponent;
-  let fixture: ComponentFixture<ProfileHeaderComponent>;
+  let component: ProfileHeaderComponent
+  let fixture: ComponentFixture<ProfileHeaderComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ProfileHeaderComponent]
-    });
-    fixture = TestBed.createComponent(ProfileHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    })
+    fixture = TestBed.createComponent(ProfileHeaderComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

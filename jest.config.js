@@ -8,5 +8,8 @@ module.exports = {
        `<rootDir>/node_modules/.pnpm/(?!.*\\.mjs$|${esModules.join('|')}@)`,        
     ],
     modulePathIgnorePatterns: ['<rootDir>/dist', '<rootDir>/node_modules'],
-    testRunner: 'jest-jasmine2'
+    testRunner: 'jest-jasmine2',
+    moduleNameMapper: {
+        '^src/(.*)$': '<rootDir>/src/$1',
+      },
 };

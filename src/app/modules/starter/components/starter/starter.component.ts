@@ -1,90 +1,136 @@
-import { FilterChallenge } from './../../../../models/filter-challenge.model';
-import { Component, ViewChild } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {StarterService} from "../../../../services/starter.service";
-import {DataChallenge} from "../../../../models/data-challenge.model";
-import {Challenge} from "../../../../models/challenge.model";
-import { environment } from '../../../../../environments/environment';
-import { FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component';
-
-
+import { type FilterChallenge } from './../../../../models/filter-challenge.model'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
+import { type Subscription } from 'rxjs'
+import { StarterService } from '../../../../services/starter.service'
+import { Challenge } from '../../../../models/challenge.model'
+import { environment } from '../../../../../environments/environment'
+import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
+import { TranslateService } from '@ngx-translate/core'
+/* import { RouteConfigLoadEnd } from '@angular/router'
+ */
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
-  styleUrls: ['./starter.component.scss']
+  styleUrls: ['./starter.component.scss'],
+  providers: []
 })
-export class StarterComponent {
-  @ViewChild('modal') private modalContent!: FiltersModalComponent;
+export class StarterComponent implements OnInit {
+  @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
+  @ViewChild('challenge') challengesContainer!: ElementRef
 
-  dataChallenge!: DataChallenge;
-  challenges: Challenge[] = [];
-  params$!: Subscription;
-  challengesSubs$!: Subscription;
-  filters!: FilterChallenge;
-  sortBy: string = "popularity";
-  challenge = Challenge;
+  challenges: Challenge[] = []
+  challengesSubs$!: Subscription
+  sortedChallengesSubs$!: Subscription
+  filteredChallengesSubs$!: Subscription
+  filters: FilterChallenge = { languages: [], levels: [], progress: [] }
+  sortBy: string = ''
+  challenge = Challenge
 
-  page: number = 1;
-  totalPages!: number;
-  numChallenges!: number;
-  listChallenges: any;
-  pageSize = environment.pageSize;
+  totalPages!: number
+  pageNumber: number = 1
+  listChallenges: Challenge[] = []
+  pageSize = environment.pageSize
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private starterService: StarterService
-              ) {
+  selectedSort: string = ''
+  isAscending: boolean = false
+  startIndex: number = 0
+  paginationFilters: Challenge[] = []
+  isMobile: boolean = window.innerWidth < 768
+  constructor (
+    @Inject(StarterService) private readonly starterService: StarterService,
+    @Inject(TranslateService) readonly translate: TranslateService
+  ) {}
 
-    this.params$ = this.activatedRoute.params.subscribe(params => {
-
-    });
-
+  ngOnInit (): void {
+    this.getChallenge()
   }
 
-  ngOnInit(): void {
-    this.getChallengesByPage(this.page);
+  ngOnDestroy (): void {
+    if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
+    if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
+    if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
   }
 
-  ngOnDestroy() {
-    if (this.params$ != undefined) this.params$.unsubscribe();
-    if (this.challengesSubs$ != undefined) this.challengesSubs$.unsubscribe();
+  getChallenge (): void {
+    this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
+      next: (resp) => {
+        this.listChallenges = resp.results
+        console.log('Datos recibidos:', this.listChallenges)
+
+        this.getChallengesByPage(this.pageNumber)
+      },
+      error: (err) => {
+        console.error('Error al obtener los desafíos:', err)
+      }
+    })
   }
 
-  getChallengesByPage(page: number) {
-    this.challengesSubs$ = this.starterService.getAllChallenges(page, this.pageSize).subscribe(resp => {
-      this.dataChallenge = new DataChallenge(resp);
-      this.challenges = this.dataChallenge.challenges;
-      this.numChallenges = this.challenges.length;
-      this.totalPages = Math.ceil(this.numChallenges / this.pageSize);
+  getChallengesByPage (page: number): void {
+    this.pageNumber = page
+    const startIndex = (this.pageNumber - 1) * this.pageSize
 
-      const startIndex = (page -1) * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      this.listChallenges = this.challenges.slice(startIndex, endIndex);
-      
-      return this.listChallenges;
-    });
-  }
+    if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
+      this.getChallengeFilters(this.filters)
+    } else {
+      if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
+        this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
 
-  goToPage(page: number){
-    this.page = page;
-    this.getChallengesByPage(page);
-  }
+        this.challenges = this.isMobile
+          ? this.listChallenges
+          : this.listChallenges.slice(startIndex, startIndex + this.pageSize)
 
-  openModal() {
-  this.modalContent.open();
-  }
-
-  getChallengeFilters(filters: FilterChallenge){
-    console.log('llamada componente padre desde emitter: '+ filters.languages, filters.levels, filters.progress)
-    this.filters = filters;
-    //TODO: llamar al endpoint
-  }
-  changeSort(newSort: string){
-    if(newSort != this.sortBy){
-      this.sortBy = newSort;
-      //TODO: llamar al endpoint
+        if (this.sortBy !== '') {
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+            this.challenges = sortedResp
+          })
+        }
+      } else {
+        this.challenges = []
+      }
     }
   }
-  
+
+  openModal (): void {
+    this.modalContent.open()
+  }
+
+  getChallengeFilters (filters: FilterChallenge): void {
+    this.filters = filters
+    const respArray: Challenge[] = this.listChallenges
+
+    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
+      this.paginationFilters = filteredResp
+    })
+
+    this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
+    if (this.pageNumber > this.totalPages) {
+      this.pageNumber = this.totalPages
+    }
+    const startIndex = (this.pageNumber - 1) * this.pageSize
+
+    this.challenges = this.isMobile
+      ? this.paginationFilters
+      : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
+
+    if (this.sortBy !== '') {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+        this.challenges = sortedResp
+      })
+    }
+  }
+
+  changeSort (newSort: string): void {
+    this.sortBy = newSort
+    if (newSort === 'popularity' || newSort === 'creation_date') {
+      if (this.selectedSort === newSort) {
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = !this.isAscending
+      } else {
+        this.isAscending = false
+        this.selectedSort = newSort
+        this.getChallengesByPage(this.pageNumber)
+        this.isAscending = true
+      }
+    }
+  }
 }

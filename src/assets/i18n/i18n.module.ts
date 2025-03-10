@@ -1,30 +1,27 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
-export function httpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, 
-                                './assets/i18n/', 
-                                '.json');
+export function httpLoaderFactory (http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http,
+    'assets/i18n/',
+    '.json')
 }
-
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule,
+  exports: [TranslateModule],
+  imports: [CommonModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'es',
+      defaultLanguage: 'ca',
       loader: {
         provide: TranslateLoader,
         useFactory: httpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-  ],
-  exports: [TranslateModule],
+    })],
+  providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class I18nModule { }

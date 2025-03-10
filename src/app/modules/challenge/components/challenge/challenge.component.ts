@@ -1,76 +1,88 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Challenge } from "../../../../models/challenge.model";
-import { ChallengeService } from '../../../../services/challenge.service';
-import { ChallengeDetails } from 'src/app/models/challenge-details.model';
-import { Solution } from 'src/app/models/solution.model';
-import { Resource } from 'src/app/models/resource.model';
-import { Example } from 'src/app/models/challenge-example.model';
-import { Language } from 'src/app/models/language.model';
+import { Component, inject, type OnInit, type OnDestroy } from '@angular/core'
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
+import { type Subscription } from 'rxjs'
+import { Challenge } from '../../../../models/challenge.model'
+import { ChallengeService } from '../../../../services/challenge.service'
+import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
+import { type SolutionResults } from 'src/app/models/solution-results.model'
+import { type Resource } from 'src/app/models/resource.model'
+import { type Example } from 'src/app/models/challenge-example.model'
+import { type Language } from 'src/app/models/language.model'
 
 @Component({
   selector: 'app-challenge',
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss']
 })
-export class ChallengeComponent {
-  idChallenge: string | any;
-  params$!: Subscription;
-  challenge!: Challenge;
-  challengeSubs$!: Subscription;
-  dataChallenge!: Challenge;
+export class ChallengeComponent implements OnInit, OnDestroy {
+  idChallenge: string = ''
+  params$!: Subscription
+  challenge!: Challenge
+  challengeSubs$!: Subscription
+  dataChallenge!: Challenge
+  title: string = ''
+  creation_date!: Date
+  level = ''
+  detail!: ChallengeDetails
+  related: string[] = []
+  resources: Resource[] = []
+  solutions: SolutionResults[] = []
+  description: string = ''
+  examples: Example[] = []
+  notes: string = ''
+  popularity!: number
+  languages: Language[] = []
+  activeId: number = 1
 
-  title = "";
-  creation_date!: Date;
-  level = "";
-  details!: ChallengeDetails;
-  related: string [] = [];
-  resources:  Resource[] = [];
-  solutions:  Solution[] = [];
-  description = "";
-  examples: Example[] = [];
-  notes = "";
-  popularity!: number;
-  languages: Language[] = [];
-  
+  showEditor = false
+  startChallenge: boolean = false
+  challengeStarted: boolean = false
 
-  constructor(
-    private route: ActivatedRoute,
-    private challengeService: ChallengeService,
-  ){
-    this.params$ =  this.route.paramMap.subscribe((params: ParamMap) => {
-      this.idChallenge = params.get('idChallenge')
-      console.log(this.idChallenge)
-    });
+  private readonly route = inject(ActivatedRoute)
+  private readonly router = inject(Router)
+  private readonly challengeService = inject(ChallengeService)
+
+  ngOnInit (): void {
+    this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
+      this.idChallenge = params.get('idChallenge') ?? ''
+      this.loadMasterData(this.idChallenge)
+      this.activeId = 1
+    })
+
+    this.route.url.subscribe(() => {
+      const url = this.router.url // Obtiene la URL actual
+      this.showEditor = url.includes('/start') // Verifica si contiene "/start"
+    })
   }
 
-  ngOnInit(){
-    this.loadMasterData(this.idChallenge);
-    console.log(this.idChallenge)
+  onStartChallenge (started: boolean): void {
+    console.log('onStartChallenge triggered with:', started)
+    this.challengeStarted = started
+    this.startChallenge = started
+    this.showEditor = started
   }
 
-  ngOnDestroy() {
-    if (this.params$ != undefined) this.params$.unsubscribe();
-    if(this.challengeSubs$ != undefined) this.challengeSubs$.unsubscribe();
+  ngOnDestroy (): void {
+    if (this.params$ !== undefined) this.params$.unsubscribe()
+    if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
+  onActiveIdChange (newActiveId: number): void {
+    this.activeId = newActiveId
+  }
 
-  loadMasterData(id: string) {
-    this.challengeSubs$ = this.challengeService.getChallengeById(this.idChallenge).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge); 
-      this.title = this.challenge.challenge_title;
-      this.creation_date = this.challenge.creation_date;
-      this.level = this.challenge.level;
-      this.details = this.challenge.details;
-      this.related = this.challenge.related;
-      this.resources = this.challenge.resources;
-      this.solutions = this.challenge.solutions;
-      this.description = this.challenge.details.description
-      this.examples = this.challenge.details.examples
-      this.notes = this.challenge.details.notes;
-      this.popularity = this.challenge.popularity;
-      this.languages = this.challenge.languages;
-    });
+  loadMasterData (id: string): void {
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
+      this.challenge = new Challenge(challenge)
+      this.title = this.challenge.challenge_title
+      this.creation_date = this.challenge.creation_date
+      this.level = this.challenge.level
+      this.detail = this.challenge.detail
+      this.description = this.challenge.detail.description
+      this.examples = this.challenge.detail?.examples
+      this.notes = this.challenge.detail.notes
+      this.popularity = this.challenge.popularity
+      this.languages = this.challenge.languages
+    })
   }
 }

@@ -1,28 +1,25 @@
 export class User {
-	dni: string;
-	email: string;
-	password: string;
-	confirmPassword: string;
-	token?: string;
-	specialization?: string;
-	name?: string;
-	accept?: boolean;
+  idUser: string
+  dni?: string
+  email?: string
+  name?: string
+  itineraryId?: string
+  password?: string
+  confirmPassword?: string
 
-	constructor(
-		dni: string,
-		email: string,
-		password: string,
-		confirmPassword: string,
-		// specialization: string,
-		// name: string,
-		// accept: boolean
-	) {
-		this.dni = dni;
-		this.email = email;
-		this.password = password;
-		this.confirmPassword = confirmPassword;
-		// this.specialization = specialization;
-		// this.name = name;
-		// this.accept = accept;
-	}
+  constructor (
+    idUser: string,
+    dni?: string,
+    password?: string,
+    email?: string,
+    confirmPassword?: string,
+    itineraryId?: string
+  ) {
+    this.idUser = idUser
+    this.dni = dni
+    this.email = email
+    this.password = password
+    this.confirmPassword = confirmPassword
+    this.itineraryId = itineraryId
+  }
 }

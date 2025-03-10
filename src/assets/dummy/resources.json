@@ -1,0 +1,236 @@
+[
+    {
+        "id": "e7b6b5a0-5b0a-4b0e-8b0a-9b0a0b0a0b0a",
+        "title": "Tutorial completo de Angular desde cero",
+        "slug": "tutorial-completo-de-angular-desde-cero",
+        "description": "Tutorial completo de Angular desde cero hasta la creación de una aplicación de gestión de tareas",
+        "url": "https://tutorials.cat/learn/angular",
+        "resourceType": "BLOG",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "Ana Pérez"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Angular",
+                    "slug": "angular",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 14,
+            "downvote": 2,
+            "total": 12,
+            "userVote": 1
+        },
+        "isFavorite": false
+    },
+    {
+        "id": "51a0ec36-c500-4615-8910-460c1bed1495",
+        "title": "Mejora tus habilidades en React con desafíos prácticos",
+        "slug": "mejora-tus-habilidades-en-react-con-desafios-practicos",
+        "description": "Cómo mejorar tus habilidades en React con desafíos prácticos y ejercicios de codificación",
+        "url": "https://tutorials.cat/learn/react",
+        "resourceType": "BLOG",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "Juan García"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "React",
+                    "slug": "react",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 14,
+            "downvote": 2,
+            "total": 12,
+            "userVote": 1
+        },
+        "isFavorite": false
+    },
+    {
+        "id": "959e09ae-9d65-45e2-9f95-f13b5e188492",
+        "title": "Video tutorial: Pruebas unitarias y de integración en React con Jest y Enzyme",
+        "slug": "video-tutorial-pruebas-unitarias-y-de-integracion-en-react-con-jest-y-enzyme",
+        "description": "Video tutorial sobre pruebas unitarias y de integración en aplicaciones React utilizando Jest y Enzyme",
+        "url": "https://tutorials.cat/learn/testing-react",
+        "resourceType": "VIDEO",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "Luisa Martínez"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Testing",
+                    "slug": "testing",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            },
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "React",
+                    "slug": "react",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 14,
+            "downvote": 2,
+            "total": 12,
+            "userVote": 1
+        },
+        "isFavorite": false
+    },
+    {
+        "id": "959e09ae-9d65-45e2-9f95-f13b5e188492",
+        "title": "Mastering React Hooks",
+        "slug": "mastering-react-hooks",
+        "description": "A comprehensive guide to mastering React Hooks and optimizing your React applications",
+        "url": "https://example.com/mastering-react-hooks",
+        "resourceType": "TUTORIAL",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "John Smith"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "React",
+                    "slug": "react",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 27,
+            "downvote": 3,
+            "total": 24,
+            "userVote": 1
+        },
+        "isFavorite": false
+    },
+    {
+        "id": "ae8111e4-117b-4f20-a28e-1893d4455e49",
+        "title": "Angular Testing Best Practices",
+        "slug": "angular-testing-best-practices",
+        "description": "Learn the best practices for writing tests in Angular applications to ensure robustness and reliability",
+        "url": "https://example.com/angular-testing-best-practices",
+        "resourceType": "BLOG",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "Emily Johnson"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Angular",
+                    "slug": "angular",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            },
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Testing",
+                    "slug": "testing",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 35,
+            "downvote": 5,
+            "total": 30,
+            "userVote": 1
+        },
+        "isFavorite": false
+    },
+    {
+        "id": "7b50bb2c-1f75-47e3-b896-d20375bba0b9",
+        "title": "Java Spring Boot Fundamentals",
+        "slug": "java-spring-boot-fundamentals",
+        "description": "A beginner-friendly tutorial covering the fundamentals of building web applications with Java Spring Boot framework",
+        "url": "https://example.com/java-spring-boot-fundamentals",
+        "resourceType": "TUTORIAL",
+        "userId": "string",
+        "categoryId": "clocr0bi20000h8vwipfbazso",
+        "createdAt": "Mar 25, 2023",
+        "updatedAt": "Mar 25, 2023",
+        "user": {
+            "name": "David Miller"
+        },
+        "topics": [
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Java",
+                    "slug": "java",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            },
+            {
+                "topic": {
+                    "id": "string",
+                    "name": "Spring Boot",
+                    "slug": "spring-boot",
+                    "categoryId": "string",
+                    "createdAt": "string",
+                    "updatedAt": "string"
+                }
+            }
+        ],
+        "voteCount": {
+            "upvote": 42,
+            "downvote": 8,
+            "total": 34,
+            "userVote": 1
+        },
+        "isFavorite": false
+    }
+]

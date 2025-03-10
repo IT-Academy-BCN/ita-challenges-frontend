@@ -7,6 +7,10 @@
     border-radius: 20px;
     border: none;
     background-color: $white;
+
+    input::placeholder {
+        color: $gray-5;
+    }
     
     .modal-header{
         border: none;
@@ -64,4 +68,24 @@
         margin-top:0;
     }
 
+}
+
+@media (max-width: 767px) {
+    .modal-dialog-centered {
+        display: block;
+        min-height: auto;
+    }
+    
+    .modal-content {
+        margin-top: 2.5rem;
+
+        h4 {
+            margin-top: 1.8rem;
+            font-size: 1.625rem;
+        }
+    
+        p {
+            font-size: 1rem;
+        }
+    }
 }

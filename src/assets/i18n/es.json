@@ -31,7 +31,14 @@
             "header": {
                 "title": "Retos",
                 "section":"Detalle",
-                "button": "Enviar solución"
+                "button": "Iniciar reto",
+                "toolTip": "Inicia sesión para enviar la solución.",
+                "buttonAccept": "Enviar",
+                "buttonStart": "Iniciar reto",
+                "buttonSaveChallenge": "Guardar reto",
+                "buttonSendSolution": "Enviar solución",
+                "buttonCancel": "Cancelar",
+                "solutionSend": "Solución enviada"
             },
             "info": {
                 "detailsTitle": "Detalles",
@@ -49,7 +56,9 @@
                 "showStatement": "Mostrar enunciado",
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
-                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar"
+                "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
+                "solutionsTitleLocked":"Las soluciones están bloqueadas",
+                "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
             }
         },
         "starter": {
@@ -72,7 +81,42 @@
                     "date": "Fecha"
                 }
             }
+        },"modals": {
+            "solution": {
+                "title": "¿Estás segur@?",
+                "description":"Una vez enviado el código no se puede editar" ,
+                "btn-accept": "Aceptar",
+                "btn-cancel": "Cancelar"
+            }
         }
+    },
+    "services": {
+        "validators": {
+            "required": "Campo obligatorio",
+            "email": "Email Erróneo",
+            "minLength": "carácteres mínimo",
+            "isValidDni": "DNI inválido",
+            "notSamePassword": "Las contraseñas no coinciden",
+            "notChecked": "Casilla obligatoria",
+            "invalidPassword": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
+            "pattern": "Formato incorrecto"
+        }
+    },
+    "tooltips": {
+        "startedFinished": "Empezado y finalizado",
+        "savedTimes": "Veces guardado",
+        "creationDate": "Fecha creación"
+    },
+    "messages": {
+    "errors": {
+        "unauthorized": "Lo sentimos, no estás autorizado para iniciar sesión. Contacta con el administrador.",
+        "server_error": "Se ha producido un error interno del servidor. Inténtalo más tarde.",
+        "forbidden": "Tu cuenta de GitHub no está autorizada para acceder a esta plataforma.",
+        "unknown": "Se ha producido un error desconocido. Inténtalo de nuevo."
+    },
+    "success": {
+        "welcome": "¡Bienvenido! Redirigiendo..."
     }
 }
-      
+
+}

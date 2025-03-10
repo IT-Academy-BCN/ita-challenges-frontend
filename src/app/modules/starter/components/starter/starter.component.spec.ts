@@ -1,118 +1,97 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, type ComponentFixture } from '@angular/core/testing'
 
-import { StarterComponent } from './starter.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {RouterTestingModule} from "@angular/router/testing";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import { StarterFiltersComponent } from '../starter-filters/starter-filters.component';
-import { FilterChallenge } from 'src/app/models/filter-challenge.model';
-import { By } from '@angular/platform-browser';
-import { I18nModule } from '../../../../../assets/i18n/i18n.module'
-
+import { StarterComponent } from './starter.component'
+import { StarterService } from 'src/app/services/starter.service'
+import { TranslateModule } from '@ngx-translate/core'
+import { type Challenge } from 'src/app/models/challenge.model'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { of } from 'rxjs'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
 describe('StarterComponent', () => {
-  let component: StarterComponent;
-  let fixture: ComponentFixture<StarterComponent>;
-  let childComponent: StarterFiltersComponent;
-  let filters: FilterChallenge = {languages:[], levels: [], progress: []}
-  let selectedFilters: FilterChallenge;
-  
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ 
-        StarterComponent,
-        StarterFiltersComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        I18nModule
-      ]
+  let component: StarterComponent
+  let fixture: ComponentFixture<StarterComponent>
+  let starterService: StarterService
+  const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
+    ...challenge,
+    creation_date: new Date(`${challenge.creation_date}`),
+    solutions: challenge.solutions.map((solution: any) => ({
+      id_solution: solution.idSolution,
+      solution_text: solution.solutionText
+    }))
+  }))
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [StarterComponent],
+      imports: [TranslateModule.forRoot()],
+      providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
-    .compileComponents();
+    fixture = TestBed.createComponent(StarterComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+    starterService = TestBed.inject(StarterService)
 
-    fixture = TestBed.createComponent(StarterComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    childComponent = fixture.debugElement.query(By.directive(StarterFiltersComponent)).componentInstance;
-  });
+    component.listChallenges = []
+    component.pageSize = 1
+    component.filters = { languages: [], levels: [], progress: [] }
+    component.sortBy = ''
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should assign challenges when challenges are available.', () => {
+    component.listChallenges = mockChallenges$
+    component.pageSize = 3
+    component.filters = { languages: [], levels: [], progress: [] }
+    component.getChallengesByPage(1)
 
-  it('should create child', () => {
-    expect(childComponent).toBeTruthy();
-  });
+    expect(component.challenges.length).toBe(3) // Debe mostrar 3 desafíos
+    expect(component.challenges).toEqual(mockChallenges$.slice(0, 3)) // Verifica que los desafíos sean correctos
+  })
 
-  it('should receive filter values from child component when it emits', () => {
-    const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
-    const expectedFilters: FilterChallenge = {
-      languages: [1],
-      levels: ['easy'],
-      progress: [1]
-    };
-    
-    childComponent.filtersSelected.emit(expectedFilters);
+  it('should filter challenges and update challenges correctly', () => {
+    // Simular la lista de desafíos
+    component.listChallenges = mockChallenges$
 
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledWith(expectedFilters);
-  });
+    const filters = { languages: ['es'], levels: ['EASY'], progress: [] }
+    // Simular el servicio para que devuelva desafíos filtrados
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockChallenges$.slice(0, 3))) // Solo retorna los primeros
 
-it('should receive filter values from child component when languagesForm changes', () => {
-  spyOn(component, 'getChallengeFilters').and.callThrough();
+    component.getChallengeFilters(filters)
 
-  childComponent.filtersForm.controls['languages'].setValue({javascript: true, java:false, php: false, python: false});
+    expect(component.filters).toEqual(filters) // Verifica que los filtros se hayan establecido correctamente
+    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$) // Verifica que el método se haya llamado con los argumentos correctos
+    expect(component.paginationFilters.length).toBe(3) // Verifica que la longitud de los desafíos filtrados sea correcta
 
-  fixture.detectChanges();
+    const expectedTotalPages = Math.ceil(component.paginationFilters.length / component.pageSize)
+    expect(component.totalPages).toBe(expectedTotalPages) // Verifica que el total de páginas se haya calculado correctamente
 
-  expect(component.getChallengeFilters).toHaveBeenCalled();
-  expect(component.filters.languages).toContain(1);
-});
-  
-it('should receive filter values from child component when levelsForm changes', () => {
-  spyOn(component, 'getChallengeFilters').and.callThrough();
+    // Asegúrate de que los desafíos se establezcan correctamente según la ventana
+    if (window.innerWidth < 768) {
+      expect(component.challenges).toEqual(component.paginationFilters) // En móviles, debe mostrar todos los filtrados
+    } else {
+      const startIndex = (component.pageNumber - 1) * component.pageSize
+      expect(component.challenges).toEqual(component.paginationFilters.slice(startIndex, startIndex + component.pageSize)) // En escritorio, paginados
+    }
+  })
 
-  childComponent.filtersForm.controls['levels'].setValue({easy: true, medium: false, hard: false});
+  it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
+    component.selectedSort = 'creation_date'
+    component.isAscending = true
+    component.pageNumber = 1
 
-  fixture.detectChanges();
+    spyOn(component, 'getChallengesByPage')
 
-  expect(component.getChallengeFilters).toHaveBeenCalled();
-  expect(component.filters.levels).toContain('easy');
-});
+    // Cambia a un nuevo criterio de ordenación que no sea el actual
+    component.changeSort('popularity')
 
-it('should receive filter values from child component when progressForm changes', () => {
-  spyOn(component, 'getChallengeFilters').and.callThrough();
+    expect(component.selectedSort).toBe('popularity')
+    expect(component.isAscending).toBe(true)
+    expect(component.getChallengesByPage).toHaveBeenCalledWith(1)
 
-  childComponent.filtersForm.controls['progress'].setValue({noStarted: true, started:false, finished: false});
+    // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
+    component.changeSort('popularity')
+    expect(component.isAscending).toBe(false)
 
-  fixture.detectChanges();
-
-  expect(component.getChallengeFilters).toHaveBeenCalled();
-  expect(component.filters.progress).toContain(1);
+    expect(component.getChallengesByPage).toHaveBeenCalledTimes(2)
+  })
 })
-
-  
-it('should receive all filter values from child component', () => {
-  const spy = spyOn(component, 'getChallengeFilters').and.callThrough();
-  const expectedFilters: FilterChallenge = {
-    languages: [1],
-    levels: ['easy'],
-    progress: [1]
-  };
-
-  childComponent.filtersForm.get('languages')!.get('javascript')!.setValue(true);
-  childComponent.filtersForm.get('levels')!.get('easy')!.setValue(true);
-  childComponent.filtersForm.get('progress')!.get('noStarted')!.setValue(true);
-
-  fixture.whenStable().then(() => {
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledWith(expectedFilters);
-    expect(component.filters).toEqual(expectedFilters);
-  });
-});
-
-
-
-});
-

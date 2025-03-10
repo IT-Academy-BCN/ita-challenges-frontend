@@ -1,0 +1,125 @@
+{
+    "components": {
+        "footer": { },
+        "header": { },
+        "mainMenu": {
+            "section0": {
+                "title": "Inici"
+            },
+            "section1": {
+                "title": "Reptes"
+            },
+            "section2": {
+                "title": "Proves tècniques"
+            },
+            "section4": {
+                "title": "Crear repte"
+            },
+            "section5": {
+                "title": "Guies útils"
+            },
+            "section6": {
+                "title": "Configuració"
+            },
+            "section7": {
+                "title": "El meu espai"
+            }
+        }
+    },
+    "modules": {
+        "challenge": {
+            "header": {
+                "title": "Reptes",
+                "section":"Detall",
+                "button": "Iniciar repte",
+                "toolTip": "Inicia sessió per enviar la solució.",
+                "buttonAccept": "Enviar",
+                "buttonStart": "Iniciar repte",
+                "buttonSaveChallenge": "Guardar reto",
+                "buttonSendSolution": "Enviar solució",
+                "buttonCancel": "Cancel.lar",
+                "solutionSend": "Solució enviada"
+            },
+            "info": {
+                "detailsTitle": "Detalls",
+                "solutionsTitle": "Solucions",
+                "resourcesTitle": "Recursos",
+                "relatedTitle": "Relacionat",
+                "description": "Descripció",
+                "examples": "Exemples",
+                "notes": "Notes",
+                "blocked": "Les solucions estan bloquejades",
+                "blokedMsg": "Les solucions romandran bloquejades fins que lliuris el repte",
+                "resources": "Recursos trobats a ITA-Wiki",
+                "resourcesLink": "Anar a ITA-Wiki",
+                "related": "Reptes similars",
+                "showStatement": "Mostrar enunciat",
+                "solution": "Solució",
+                "solutionCode": "// Escriu el teu codi aquí",
+                "solutionsChallenge": "Resposta d'exemple, no es pot modificar",
+                "solutionsTitleLocked":"Les solucions estan bloquejades.",
+
+                "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
+
+
+            }
+        },
+        "starter": {
+            "filters": {
+                "lenguaje": "Llenguatge",
+                "dificulty": "Dificultat",
+                "easy": "Fàcil",
+                "medium": "Mitja",
+                "hard": "Difícil",
+                "progress": "Progrés",
+                "noStarted": "No començats",
+                "started": "Falta completar",
+                "finished": "Completats"
+            },
+            "main": {
+                "section1": "Filtres",
+                "section2": {
+                    "title": "Reptes",
+                    "popularity": "Popularitat",
+                    "date": "Data"
+                }
+            }
+        },"modals": {
+            "solution": {
+                "title": "Estàs segur?",
+                "description":"Un cop enviat el codi no es pot editar" ,
+                "btn-accept": "Acceptar",
+                "btn-cancel": "Cancel.lar"
+            }
+        }
+    },
+    "services": {
+        "validators": {
+            "required": "Camp Obligatori",
+            "email": "Email erroni",
+            "minLength": "caràcters mínim",
+            "isValidDni": "DNI invàlid",
+            "notSamePassword": "Les contrasenyes no coincideixen",
+            "notChecked": "Casella obligatòria",
+            "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
+            "pattern": "Format incorrecte"
+        }
+    },
+    "tooltips": {
+        "startedFinished": "Començat i finalitzat",
+        "savedTimes": "Vegades guardat",
+        "creationDate": "Data de creació"
+    },
+    "messages": {
+    "errors": {
+        "unauthorized": "Ho sentim, no estàs autoritzat per iniciar sessió. Contacta amb l'administrador.",
+        "server_error": "S'ha produït un error intern del servidor. Torna-ho a intentar més tard.",
+        "forbidden": "El teu compte de GitHub no està autoritzat per accedir a aquesta plataforma.",
+        "unknown": "S'ha produït un error desconegut. Torna-ho a intentar."
+    },
+    "success": {
+        "welcome": "Benvingut! Redirigint..."
+    }
+}
+
+}   

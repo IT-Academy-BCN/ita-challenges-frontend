@@ -1,35 +1,44 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
-import { PaginationComponent } from './pagination/pagination.component';
-import { ChallengeCardComponent } from "./challenge-card/challenge-card.component";
-import { ResourceCardComponent } from './resource-card/resource-card.component';
-import { SolutionComponent } from './solution/solution.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import {TranslateModule} from "@ngx-translate/core";
-
+import { NgModule } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
+import { CommonModule } from '@angular/common'
+import { PaginationComponent } from './pagination/pagination.component'
+import { ChallengeCardComponent } from './challenge-card/challenge-card.component'
+import { ResourceCardComponent } from './resource-card/resource-card.component'
+import { SolutionComponent } from './solution/solution.component'
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
+import { FormsModule } from '@angular/forms'
+import { EditorModule } from '@tinymce/tinymce-angular'
 
 @NgModule({
-    declarations: [
-        PaginationComponent,
-        ChallengeCardComponent,
-        ResourceCardComponent,
-        SolutionComponent,
-        BreadcrumbComponent
-    ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        TranslateModule,
-        NgbTooltipModule
-    ],
-    exports: [
-        PaginationComponent,
-        ChallengeCardComponent,
-        ResourceCardComponent,
-        SolutionComponent,
-        BreadcrumbComponent
-    ],  
+  declarations: [
+    PaginationComponent,
+    ChallengeCardComponent,
+    ResourceCardComponent,
+    SolutionComponent,
+    BreadcrumbComponent
+  ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+    NgbTooltipModule,
+    DynamicTranslatePipe,
+    EscapeJavaForJsonPipe,
+    FormsModule,
+    EditorModule
+  ],
+  exports: [
+    PaginationComponent,
+    ChallengeCardComponent,
+    ResourceCardComponent,
+    SolutionComponent,
+    BreadcrumbComponent,
+    DynamicTranslatePipe,
+    EscapeJavaForJsonPipe
+  ]
 })
 export class SharedComponentsModule { }

@@ -13,7 +13,8 @@
     2.4.1 [Asignarte una tarjeta de tareas](#241-asignarte-una-tarjeta-de-tareas)\
     2.4.2 [Trabajar en una tarea](#242-trabajar-en-una-tarea)\
     2.4.3 [Pull request](#243-pull-request)\
-   2.5 [Metodología Scrum](#25-metodología-scrum)
+   2.5 [Trabajo con git](#25-trabajo-con-git)\
+   2.6 [Metodología Scrum](#26-metodología-scrum)
 
 3. [**REGLAS DE CÓDIGO**](#3-reglas-de-código)
    
@@ -27,7 +28,9 @@
 
 7. [**DESARROLLO**](#7-desarrollo)
 
-8. [**PRUEBAS**](#8-pruebas)
+8. [**TESTING**](#8-testing)
+
+9. [**DEPLOY**](#9-deploy) 
 
 ----------------------------------------------------------------
 
@@ -72,7 +75,6 @@
          git push origin nombre-de-tu-rama
 8. Abre el repositorio en GitHub. Deberías ver un mensaje que te permite crear un pull request desde tu nueva rama a la rama "develop". Haz clic en el enlace para crear la pull request.
 
-
 ----------------------------------------------------------------
 
 #### 2.2 Configuraciones de Git
@@ -95,11 +97,8 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
 
 ##### 2.2.2 Autocrlf
 
-1. Abre Git Bash.
-2. Ejecuta el siguiente comando para configurar Git para que convierta los saltos de línea a CRLF cuando se hace un checkout de un archivo:
+**Antes de comenzar a trabajar en el proyecto**, por favor revisa https://docs.github.com/es/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
 
-       git config --global core.autocrlf true
-3. Todos los archivos nuevos que se creen tendrán un salto de línea LF. Sin embargo, cuando los archivos se comprueban en tu máquina, Git convertirá estos saltos de línea a CRLF. Cuando se hace un commit de archivos a tu repositorio, Git volverá a convertir los saltos de línea a LF.
 
 ##### 2.2.3 Safe CRLF
 
@@ -108,6 +107,18 @@ Recuerda, el archivo ".gitignore" global se aplicará a todos tus proyectos de G
 
        git config --global core.safecrlf warn
 3. Con esta configuración, si intentas hacer un commit de un archivo con saltos de línea CRLF, recibirás una advertencia. La misma advertencia se producirá si intentas convertir un archivo con saltos de línea CRLF a LF.
+
+#### 2.2.4 File Mode
+
+Para evitar que git monitorice los cambios de permisos de los archivos, ejecuta el siguiente comando:
+
+       git config --global core.fileMode false
+
+Esto evitará que git marque los archivos como modificados cuando cambien sus permisos, en todos los repositorios de tu sistema. Si prefieres que no se aplique a todos, ejecuta solamente:
+
+        git config core.fileMode false
+
+----------------------------------------------------------------
 
 #### 2.3 Procedimiento diario
 
@@ -136,7 +147,9 @@ El procedimiento a seguir cada día sería este:
 
 #### 2.4 Procedimiento de trabajo con tarjetas
 
-Las tarjetas de tareas están organizadas según su estado de desarrollo. Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
+Las tarjetas de tareas están organizadas según su estado de desarrollo. Están clasificadas por niveles (1, 2, 3), siendo 1 el nivel más bajo de complejidad.
+
+Las tarjetas se mueven de izquierda a derecha a medida que se van completando.
 
 ##### 2.4.1 Asignarte una tarjeta de tareas
 
@@ -147,9 +160,9 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 
 ##### 2.4.2 Trabajar en una tarea
 
-1. Crea una nueva rama para la tarea.
+1. Crea una nueva rama para la tarea **utilizando el formato "feature/numeroDeLaTarjeta-descripcionCorta"**. Donde "numeroDeLaTarjeta" se refiere al número de la tarjeta del Sprint Backlog y "descripcionCorta" es una breve descripción de la tarea. Por ejemplo:
 
-       git switch -c nombre-de-la-rama-tarea
+       git checkout -b feature/123-crearFormularioLogin
 2. Trabaja en tu tarea. Realiza commits con frecuencia.
 3. Cuando hayas finalizado la tarea, sube los cambios al repositorio.
 
@@ -165,9 +178,25 @@ Las tarjetas de tareas están organizadas según su estado de desarrollo. Las ta
 4. Si el revisor de código aprueba tu pull request, se puede fusionar a la rama "develop".
 5. Mueve la tarjeta a la columna "Done".
 
+**NOTA IMPORTANTE: Una Pull Request es una solicitud para incluir tu código en el proyecto. No esperes a que tu PR sea aceptada para empezar a trabajar en otra card**
+
+
+## 2.5 Trabajo con git
+
+El workflow de git que seguimos en proyecto es similar a Gitflow.
+Para poder trabajar en el proyecto, debería conocer al menos los siguientes comandos git:
+- git clone
+- git merge
+- git push
+- git pull
+- git branch
+- git checkout
+
+Puede encontrar un buen tutorial en https://www.atlassian.com/git, y hay muchos otros recursos en https://docs.github.com/en/get-started/using-github/github-flow
+
 ----------------------------------------------------------------
 
-#### 2.5 Metodología SCRUM
+#### 2.6 Metodología SCRUM
 
 [Guía Scrum](https://scrumguides.org/)
 
@@ -245,7 +274,7 @@ Intenta no sobrecargar el proyecto con librerías innecesarias.
         npm install
     (o 'npm i') para instalar todas las dependencias del proyecto especificadas en el archivo package.json.
 
-----------------------------------------------------------------
+--
 
 ### 7. DESARROLLO
 Para propósitos de desarrollo, utiliza el comando
@@ -253,13 +282,34 @@ Para propósitos de desarrollo, utiliza el comando
         ng serve
 para iniciar el servidor de desarrollo. Esto compilará el proyecto y lo servirá localmente, permitiéndote ver e interactuar con él en tu navegador.
 
-----------------------------------------------------------------
+--
 
-### 8. PRUEBAS
-Para ejecutar las pruebas, utiliza el comando
+### 8. TESTING 
+
+Para ejecutar testing, utiliza el comando
 
     npm test
-Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados de las pruebas.
+
+Esto ejecutará el conjunto de pruebas y proporcionará retroalimentación sobre los resultados.
 Si prefieres ejecutar las pruebas en modo de vigilancia, que reejecuta automáticamente las pruebas cuando un archivo cambia, utiliza el comando
 
     npm run test:watch.
+
+
+Si necesitas alguna referencia sobre testing en Angular, puedes consultar https://angular.io/guide/testing. \
+También està disponible una guía sobre testing en https://martinfowler.com/articles/practical-test-pyramid.html
+
+--
+
+### 9. DEPLOY
+
+El desarrollo del proyecto es desplegado en un servidor de desarrollo mediante integración continua. No es necesario realizar un deploy manual.
+Todas las features desarrolladas, cuando son aprobadas, se despliegan en el servidor de desarrollo.
+Cuando termines de desarrollar la feature correspondiente (asegúrate de que la branch tenga la nomenclatura correcta), sigue los siguientes pasos:
+- Según las normas de versionado semántico (https://semver.org/), actualiza el número de versión en el archivo package.json.
+- Actualiza también el número de versión de la propiedad MICROSERVICE_VERSION en el archivo .env.CI.dev. Ten en cuenta que debes dejar una línea en blanco al final del archivo.
+  - Asegúrate de que ambas versiones coinciden.
+- Introduce las anotaciones necesarias en el archivo CHANGELOG.md. No olvides poner el número de issue al que pertenece la nueva versión.
+- Realiza el push de la branch a la que pertenece la feature.
+- Realiza la PR correspondiente.
+

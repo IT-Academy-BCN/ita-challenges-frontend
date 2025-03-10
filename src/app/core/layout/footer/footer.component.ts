@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { Component } from '@angular/core'
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +7,5 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  currentApplicationVersion = environment.appVersion;
+  currentApplicationVersion = environment.appVersion
 }

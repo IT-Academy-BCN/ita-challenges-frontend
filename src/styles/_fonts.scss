@@ -1,6 +1,6 @@
 //BODY
 
-$font-size-base: 12px;
+$font-size-base: 16px;
 $font-size-lg: 16px;
 
 $line-height-base: $font-size-base * 1.4;
@@ -36,6 +36,7 @@ h2{
     margin-top: $line-height-base;
     margin-bottom: $line-height-base;
     font-weight: bold;
+    color: #282828;
 }
 h3{
     font-size: $h3-font-size;

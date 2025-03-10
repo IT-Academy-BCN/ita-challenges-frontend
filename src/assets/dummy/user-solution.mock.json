@@ -1,0 +1,24 @@
+{
+    "uuid_user": "xxx",
+    "challenges": [
+      {
+        "uuid_challenge": "dcacb291-b4aa-4029-8e9b-284c8ca80296",
+        "status": "STARTED",
+        "uuid_language": "xxx",
+        "score": 99
+      },
+      {
+        "uuid_challenge": "f6e0f877-9560-4e68-bab6-7dd5f16b46a5",
+        "status": "ENDED",
+        "uuid_language": "xxx",
+        "score": 99
+      },
+      {
+        "uuid_challenge": "9d2c4e2b-02af-4327-81b2-7dbf5c3f5a7d",
+        "status": "STARTED",
+        "uuid_language": "xxx",
+        "score": 99
+      }
+    ]
+  }
+  

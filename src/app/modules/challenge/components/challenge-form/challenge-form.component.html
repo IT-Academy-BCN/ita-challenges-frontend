@@ -1,0 +1,149 @@
+<div class="container mt-4">
+  <div class="card">
+    <!-- Header con título y botones -->
+    <div class="card-header">
+      <div class="breadcrumb">Retos / crear reto</div>
+      <div class="header-content">
+        <h3 class="form-title">Nuevo reto</h3>
+        <div class="button-group">
+          <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+          <button type="button" class="btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
+            Publicar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form #challengeForm="ngForm">
+        <!-- INFORMACIÓN GENERAL -->
+        <div class="section">
+          <h4><span class="section-number">1</span> Información general</h4>
+          <div class="form-group mb-4">
+            <label for="title" class="form-label">Título</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="title" 
+              name="challengeTitle"
+              [(ngModel)]="challenge.challengeTitle" 
+              required
+            >
+          </div>
+
+          <!-- Lenguaje -->
+          <div class="mb-4">
+            <label class="form-label">Lenguaje</label>
+            <div class="language-buttons">
+              @for (lang of languages; track lang.language_name) {
+                <button 
+                  type="button" 
+                  class="btn-outline-secondary" 
+                  [class.active]="challenge.language === lang.language_name"
+                  (click)="onLanguageChange(lang.language_name)">
+                  <img 
+                    [src]="lang.language_image" 
+                    alt="{{ lang.language_name }}" 
+                    width="16" 
+                    height="16">
+                  {{ lang.language_name }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENIDO DEL RETO -->
+        <div class="section">
+          <h4><span class="section-number">2</span> Contenido del reto</h4>
+          <div class="form-group mb-4">
+            <label for="description" class="form-label">Enunciado</label>
+            <div class="editor-container">
+              <editor
+                [(ngModel)]="challenge.description"
+                name="description"
+                [init]="editorConfig"
+                required
+              ></editor>
+            </div>
+          </div>
+
+          <!-- Solución con CodeMirror -->
+          <div class="form-group mb-4">
+            <label class="form-label">Solución</label>
+            <div #codeMirrorEditor class="codemirror-container"></div>
+          </div>
+        </div>
+
+        <!-- INFORMACIÓN ADICIONAL -->
+        <div class="section">
+          <h4><span class="section-number">3</span> Información adicional</h4>
+          <div class="form-group mb-4">
+            <label class="form-label">Dificultad</label>
+            <div class="difficulty-group">
+              <!-- Fácil -->
+              <div class="difficulty-option">
+                <input 
+                  type="radio" 
+                  class="form-check-input visually-hidden" 
+                  id="easy" 
+                  name="level" 
+                  value="EASY"
+                  [(ngModel)]="challenge.level">
+                <label class="difficulty-label" for="easy">
+                  <div class="radio-circle" [class.selected]="challenge.level === 'EASY'"></div>
+                  <div class="lightning-group">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Fácil">
+                    <img src="assets/img/icon/difficulty-off.svg" alt="Fácil">
+                    <img src="assets/img/icon/difficulty-off.svg" alt="Fácil">
+                  </div>
+                  <span>Fácil</span>
+                </label>
+              </div>
+
+              <!-- Medio -->
+              <div class="difficulty-option">
+                <input 
+                  type="radio" 
+                  class="form-check-input visually-hidden" 
+                  id="medium" 
+                  name="level" 
+                  value="MEDIUM"
+                  [(ngModel)]="challenge.level">
+                <label class="difficulty-label" for="medium">
+                  <div class="radio-circle" [class.selected]="challenge.level === 'MEDIUM'"></div>
+                  <div class="lightning-group">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Medio">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Medio">
+                    <img src="assets/img/icon/difficulty-off.svg" alt="Medio">
+                  </div>
+                  <span>Media</span>
+                </label>
+              </div>
+
+              <!-- Difícil -->
+              <div class="difficulty-option">
+                <input 
+                  type="radio" 
+                  class="form-check-input visually-hidden" 
+                  id="hard" 
+                  name="level" 
+                  value="HARD"
+                  [(ngModel)]="challenge.level">
+                <label class="difficulty-label" for="hard">
+                  <div class="radio-circle" [class.selected]="challenge.level === 'HARD'"></div>
+                  <div class="lightning-group">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
+                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
+                  </div>
+                  <span>Difícil</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

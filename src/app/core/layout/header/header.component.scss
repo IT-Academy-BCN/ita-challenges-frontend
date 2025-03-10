@@ -26,3 +26,66 @@
 		}
 	}
 }
+
+.languageSelect {
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.625rem;
+  font-weight: 500;
+  background-color: $white;
+  margin: 0px;
+  padding: 2px;
+  color: $gray-6;
+  height: 41px;
+  transition: transform 0.3s ease 0s;
+
+      font-size: 1rem;
+    border: none;
+    border-radius: 0.625rem;
+    font-weight: 500;
+    background-color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 0.47rem;
+    color: rgb(130, 130, 130);
+    width: 69px;
+    height: 40px;
+    transition: transform 0.3s ease 0s;
+}
+
+.languageSelect{
+      font-size: 1rem;
+    border: none;
+    border-radius: 0.625rem;
+    font-weight: 500;
+    background-color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 0.47rem;
+    color: rgb(130, 130, 130);
+    width: 57px;
+    height: 40px;
+    transition: transform 0.3s ease 0s;
+}
+
+.user{
+    border: unset;
+    width: 48px;
+    height: 41px;
+    background: $white;
+    border-radius: 10px;
+}
+
+.setting{
+    width: 48px;
+    height: 41px;
+    background: $white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-web{
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}

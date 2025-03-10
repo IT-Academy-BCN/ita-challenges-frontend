@@ -1,14 +1,53 @@
+<div class="collapse" id="navbarToggle" data-bs-theme="dark">
+  <!-- Main menu -->
+  <div class="navbarToggle bg-black p-4">
+    <ul class="nav-ul">
+      <a class="nav-link" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']" data-bs-toggle="collapse" data-bs-target="#navbarToggle">{{
+        "components.mainMenu.section0.title" | translate }}</a>
+
+      <a class="nav-link" [routerLink]="['challenges']" [routerLinkActive]="['active']" data-bs-toggle="collapse" data-bs-target="#navbarToggle">{{
+        "components.mainMenu.section1.title" | translate }}</a>
+
+      <a class="nav-link" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']" data-bs-toggle="collapse" data-bs-target="#navbarToggle">{{
+        "components.mainMenu.section2.title" | translate }}</a>
+
+      <a class="nav-link" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']" data-bs-toggle="collapse" data-bs-target="#navbarToggle">Hackathons</a>
+
+      <a class="nav-link" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']" data-bs-toggle="collapse" data-bs-target="#navbarToggle">{{
+        "components.mainMenu.section4.title" | translate }}</a>
+
+      <a class="nav-link" href="https://dev.itawiki.eurecatacademy.org/" target="_blank" rel="noopener">{{
+        "components.mainMenu.section5.title" | translate }}</a>
+    </ul>
+
+    <div class="d-flex justify-content-end">
+      <!-- languageSelect -->
+      <div class="ms-2 pe-3">
+        <label for="languageSelect">
+          <select class="languageSelect" (change)="changeLanguage($event)" [style.width]="navService.selectWidth">
+            <option value="ca">CAT</option>
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Settings -->
+      <div class="pe-3">
+        <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+          <img src="assets/img/icon/setting.svg" alt="Settings" />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <nav class="navbar navbar-expand-md align-items-center">
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <!--No desenvolupo perquè a Figma encara no hi ha disseny d'aquesta part-->
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-    <li class="nav-link">item menu</li>
-    </ul>
-  </div>
-
-  <span class="breadcrumb">Breadcrumb</span>
+  <span class="breadcrumb">{{ "modules.starter.main.section2.title" | translate }}</span>
  </nav>

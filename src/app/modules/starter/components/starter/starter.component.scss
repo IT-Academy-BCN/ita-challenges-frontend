@@ -1,45 +1,112 @@
-@import "/src/styles/colors";
-h2{
-    margin-bottom: 3rem;
-}
-img[alt="filter-icon"]{
-    cursor: pointer;
-}
-ul{
-    list-style: none;
-    li{
-        display: flex;
-        font-weight: 700;
-        color: $gray-3;
-        gap: 2px;
-        cursor: pointer;
-        &::after{
-            content: "";
-            display: block;
-            width: 17px;
-            height: 17px;
-            background-image: url('../../../../../assets/img/icon/sort-selected.svg');
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            
-        }
-        &.selected{
-            color: $black-1;
-            font-weight: 700;
-            &::after{
-                opacity: 1;
-            }
-        }
-        &:not(.selected):hover{
-            color: $primary
-        }
-    }
+@import '/src/styles/colors';
+@import '/src/styles/buttons';
+@import '/src/styles/fonts';
+
+.starter {
+  height: 100%;
 }
 
-@media screen and (max-width: 768px) {
-    h2 {
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
+h2 {
+  font-size: 1.4rem;
+  line-height: 34px;
+  font-weight: 700;
+}
+
+img[alt='filter-icon'] {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  
+  li {
+    display: flex;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+    color: $gray-3;
+    gap: 2px;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 17px;
+      height: 17px;
+      background-image: url('/assets/img/icon/sort-selected.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0; // Oculto por defecto
+      transition: transform 0.3s ease; // Animación suave de rotación
     }
+
+    &.selected {
+      color: $black-3;
+      font-weight: 700;
+
+      &::after {
+        opacity: 1; // Muestra el icono cuando está seleccionado
+      }
+    }
+
+    &.up::after {
+      transform: rotate(180deg); // Rota solo el icono cuando tiene la clase 'up'
+    }
+
+    &:not(.selected):hover {
+      color: $primary;
+    }
+  }
+}
+
+
+app-starter-filters p {
+  font-size: 16px;
+  line-height: 34px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  h2 {
+    margin: 0.5rem 0 1rem;
+  }
+  .btnFiltrar{
+    width: 70px;
+    height: 30px;
+   padding: 0px;
+   font-size: 14px;
+  }
+}
+.challenges-filter{
+   margin-bottom: 15px;
+}
+#filters-container {
+  position: static;
+  top: 40px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#challenges-container {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#challenges {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#challenges::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+app-pagination {
+  flex-shrink: 0;
+  padding: 10px 0;
 }

@@ -13,7 +13,6 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -25,7 +24,9 @@
       "dom"
     ],
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "typeRoots": [
+    "node_modules/@types"
+  ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

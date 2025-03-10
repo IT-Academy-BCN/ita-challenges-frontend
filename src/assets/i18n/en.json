@@ -31,7 +31,14 @@
             "header": {
                 "title": "Challenges",
                 "section":"Detail",
-                "button": "Send solution"
+                "button": "Start challenge",
+                "toolTip": "Log in to submit the solution.",
+                "buttonAccept": "Send",
+                "buttonStart": "Start challenge",
+                "buttonSaveChallenge": "Save challenge",
+                "buttonSendSolution": "Send solution",
+                "buttonCancel": "Cancel",
+                "solutionSend": "Solution sent"
             },
             "info": {
                 "detailsTitle": "Details",
@@ -49,7 +56,9 @@
                 "showStatement": "Show statement", 
                 "solution": "Solution",
                 "solutionCode": "// Write your code here",
-                "solutionsChallenge": "Example answer, cannot be modified"
+                "solutionsChallenge": "Example answer, cannot be modified",
+                "solutionsTitleLocked":"The solutions are locked.",
+                "solutionsLocked": "Solutions will remain locked until you submit the challenge"
 
 
                
@@ -75,7 +84,43 @@
                     "date": "Date"
                 }
             }
+        },
+        "modals": {
+            "solution": {
+                "title": "Are you sure?",
+                "description":"Once the code is sent it cannot be edited" ,
+                "btn-accept": "Accept",
+                "btn-cancel": "Cancel"
+            }
         }
+    },
+    "services":{
+        "validators":{
+            "required": "Required Field",
+            "email": "Incorrect email",
+            "minLength": "minimum characters",
+            "isValidDni": "Invalid DNI",
+            "notSamePassword": "Passwords don't match",
+            "notChecked": "Required",
+            "invalidPassword": "Minimum  1 uppercase and 1 lower case letter, 1 number, and no special characters",
+            "pattern": "Invalid format"
+        }
+    },
+    "tooltips": {
+        "startedFinished": "Started and finished",
+        "savedTimes": "Times saved",
+        "creationDate": "Creation date"
+    },
+    "messages": {
+    "errors": {
+        "unauthorized": "Sorry, you are not authorized to log in. Please contact the administrator.",
+        "server_error": "An internal server error occurred. Please try again later.",
+        "forbidden": "Your GitHub account is not authorized to access this platform.",
+        "unknown": "An unknown error occurred. Please try again."
+    },
+    "success": {
+        "welcome": "Welcome! Redirecting..."
     }
 }
-      
+
+}    
