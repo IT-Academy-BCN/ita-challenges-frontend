@@ -35,6 +35,8 @@
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar reto",
+                "buttonSaveChallenge": "Guardar reto",
+                "buttonSendSolution": "Enviar solución",
                 "buttonCancel": "Cancelar",
                 "solutionSend": "Solución enviada"
             },

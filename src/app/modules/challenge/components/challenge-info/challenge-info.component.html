@@ -12,6 +12,8 @@
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
+
+
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3">
@@ -26,13 +28,9 @@
             }}</label>
           </span>
         </div>
-
-        <!-- Editor de código -->
-        <div class="editor-container">
-           <div #editorSolution ></div>
-        </div>
-
-        
+        <app-editor-challenge 
+        *ngIf="showEditor" [showEditor]="showEditor">
+        </app-editor-challenge>
         
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">

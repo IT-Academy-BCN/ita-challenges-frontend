@@ -25,6 +25,10 @@ const routes: Routes = [
           {
             path: ':idChallenge',
             component: ChallengeComponent
+          },
+          {
+            path: ':idChallenge/start',
+            component: ChallengeComponent
           }
         ]
       },

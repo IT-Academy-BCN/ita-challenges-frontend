@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core'
 import { type Routes, RouterModule } from '@angular/router'
 
-const routes: Routes = [
-  // { path: 'ita-challenge/challenges/:idChallenge/start', component: StarChallengeComponent }
-]
+const routes: Routes = []
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SharedComponentsModule } from '../../shared/components/shared-components.module'
 import { ChallengeHeaderComponent } from './components/challenge-header/challenge-header.component'
+import { editorChallengeComponent } from './components/editor-challenge/editor-challenge.component'
 import { ChallengeInfoComponent } from './components/challenge-info/challenge-info.component'
 import { ChallengeComponent } from './components/challenge/challenge.component'
 import { ChallengeRoutingModule } from './challenge-routing.module'
@@ -17,7 +18,8 @@ import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
   declarations: [
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
-    ChallengeComponent
+    ChallengeComponent,
+    editorChallengeComponent
   ],
   providers: [],
   imports: [

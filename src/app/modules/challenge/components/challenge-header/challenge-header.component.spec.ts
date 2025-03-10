@@ -1,74 +1,82 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing'
-import { I18nModule } from '../../../../../assets/i18n/i18n.module'
-import { ChallengeHeaderComponent } from './challenge-header.component'
-import { SolutionService } from '../../../../services/solution.service'
-import { provideRouter, Router } from '@angular/router'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ChallengeHeaderComponent } from './challenge-header.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { I18nModule } from '../../../../../assets/i18n/i18n.module';
+import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ChallengeHeaderComponent', () => {
-  let component: ChallengeHeaderComponent
-  let fixture: ComponentFixture<ChallengeHeaderComponent>
-  let modalService: NgbModal
+  let component: ChallengeHeaderComponent;
+  let fixture: ComponentFixture<ChallengeHeaderComponent>;
+  let modalService: NgbModal;
+  let router: Router;
 
   beforeEach(async () => {
+    const mockRouter = { navigate: jest.fn() };
+
     await TestBed.configureTestingModule({
-      declarations: [
-        ChallengeHeaderComponent
-      ],
-      imports: [I18nModule,
-        DynamicTranslatePipe],
+      declarations: [ChallengeHeaderComponent],
+      imports: [I18nModule, DynamicTranslatePipe],
       providers: [
         NgbModal,
-        SolutionService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
         provideRouter([]),
-        { provide: Router, useValue: { navigate: () => {} } }
-      ]
-    }).compileComponents()
+        { provide: Router, useValue: mockRouter },
+        { provide: NgbModal, useValue: { open: jest.fn() } },
+        { 
+          provide: ActivatedRoute, 
+          useValue: { 
+            params: of({ idChallenge: 'testChallengeId' }), 
+            snapshot: { params: { idChallenge: 'testChallengeId' } } 
+          }
+        }
+      ],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(ChallengeHeaderComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-    modalService = TestBed.inject(NgbModal)
-  })
+    fixture = TestBed.createComponent(ChallengeHeaderComponent);
+    component = fixture.componentInstance;
+    modalService = TestBed.inject(NgbModal);
+    router = TestBed.inject(Router);
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    console.log(component)
-    expect(component).toBeTruthy()
-  })
+    fixture.detectChanges(); 
+    expect(component).toBeTruthy();
+  });
 
   it('should initialize input correctly', () => {
-    component.title = 'Test Title'
-    component.creation_date = new Date()
-    component.level = 'Easy'
-    component.activeId = 1
+    component.title = 'Test Title';
+    component.creation_date = new Date();
+    component.level = 'Easy';
+    component.activeId = 1;
 
-    expect(component.title).toEqual('Test Title')
-    expect(component.creation_date).toBeDefined()
-    expect(component.level).toEqual('Easy')
-    expect(component.activeId).toEqual(1)
-  })
+    expect(component.title).toEqual('Test Title');
+    expect(component.creation_date).toBeDefined();
+    expect(component.level).toEqual('Easy');
+    expect(component.activeId).toEqual(1);
+  });
 
   it('should open send solution modal', () => {
-    const mockModalRef = { componentInstance: { idChallenge: '' } }
-    spyOn(modalService, 'open').and.returnValue(mockModalRef as any)
-    component.idChallenge = 'testChallengeId'
-    component.openSendSolutionModal()
+    const mockModalRef = { componentInstance: { idChallenge: '' } };
+    jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
+    component.idChallenge = 'testChallengeId';
+    component.openSendSolutionModal();
 
-    // expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
-    expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId')
-  })
+    expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId');
+  });
 
-  it('should open restricted modal if user is not logged in', () => {
-    if (modalService !== null && modalService !== undefined) { // Asegúrate de que modalService existe antes de espiarlo
-      spyOn(modalService, 'open').and.stub()
-      // component.isLogged = false // Cambiado a false para simular que el usuario no está autenticado
-      // component.clickSendButton()
-    }
-    // expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
-  })
-})
+  it('should start challenge and navigate', async () => {
+    component.idChallenge = '123';
+    await component.onStartChallenge();
+
+    expect(component.challengeStarted).toBe(true);
+    expect(component.activeId).toBe(2);
+    expect(localStorage.getItem('challengeStarted')).toContain('123');
+    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/123/start']);
+  });
+
+
+  
+});

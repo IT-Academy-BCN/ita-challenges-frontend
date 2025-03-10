@@ -7,7 +7,6 @@ import {
   Output,
   ViewChild,
   inject,
-  type ElementRef,
   type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
@@ -22,13 +21,6 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { RelatedService } from '../../../../services/related.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
-
-import { EditorView, type ViewUpdate } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
-import { javascript } from '@codemirror/lang-javascript'
-import { keymap } from '@codemirror/view'
-import { defaultKeymap } from '@codemirror/commands'
-import { basicSetup } from 'codemirror'
 
 @Component({
   selector: 'app-challenge-info',
@@ -49,8 +41,9 @@ implements OnInit {
   challengeSolutions: SolutionResults[] = []
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
-  showEditor: boolean = false
-  isEditorReduced: boolean = false
+
+  challengeStarted: boolean = false
+  // showEditor: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
@@ -58,9 +51,6 @@ implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
-  @ViewChild('editorSolution') editorSolution!: ElementRef
-
-  public editor: EditorView = new EditorView()
 
   @Input() detail!: ChallengeDetails
   @Input() solutions: string[] = []
@@ -71,6 +61,8 @@ implements OnInit {
   @Input() languages: Language[] = []
   @Input() activeId: number = 1
   @Input() idChallenge: string = ''
+
+  @Input() showEditor: boolean = false
   @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
@@ -90,28 +82,19 @@ implements OnInit {
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    if (changes['startChallenge']?.currentValue !== undefined && changes['startChallenge']?.currentValue !== null) {
-      console.log('startChallenge changed:', changes['startChallenge'].currentValue)
-      this.startingChallenge()
-    }
-  }
-
-  ngAfterViewInit (): void {
-    this.initializeCodeMirror()
-  }
-
-  startingChallenge (): void {
-    console.log('startingChallenge called with startChallenge:', this.startChallenge)
-    if (this.startChallenge) {
+    if (changes['startChallenge']?.currentValue === true) {
       this.showEditor = true
-      this.isEditorReduced = false
-      this.cdr.detectChanges()
+      this.onChallengeStart()
     }
+  }
+
+  onChallengeStart (): void {
+    this.challengeStarted = true
+    this.showEditor = true
   }
 
   toggleStatement (): void {
     this.showStatement = !this.showStatement
-    this.isEditorReduced = !this.isEditorReduced
   }
 
   loadRelatedChallenges (id: string): void {
@@ -124,44 +107,8 @@ implements OnInit {
   }
 
   onActiveIdChange (newActiveId: number): void {
-    console.log('onActiveIdChange - Cambio de activeId a:', newActiveId)
-    if (this.activeIdChange !== null) {
-      Promise.resolve().then(() => {
-        this.activeId = newActiveId
-        this.activeIdChange.emit(this.activeId)
-      }).catch((error) => {
-        console.error('Error in onActiveIdChange:', error)
-      })
-    }
-  }
-
-  initializeCodeMirror (): void {
-    let savedContent = localStorage.getItem('editorContent') ?? ''
-
-    if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n\n'
-    }
-
-    console.log('Contenido recuperado:', savedContent)
-
-    this.editor = new EditorView({
-      parent: this.editorSolution.nativeElement,
-      state: EditorState.create({
-        doc: savedContent,
-        extensions: [
-          basicSetup, // Configuración básica
-          javascript(), // Soporte para JavaScript
-          keymap.of(defaultKeymap), // Atajos de teclado
-          EditorView.updateListener.of((update: ViewUpdate) => {
-            if (update.docChanged) {
-              const content = this.editor.state.doc.toString()
-              localStorage.setItem('editorContent', content)
-            }
-          }),
-          EditorView.editable.of(true) // Habilita edición
-        ]
-      })
-    })
+    this.activeId = newActiveId
+    this.activeIdChange.emit(this.activeId) // Emite el nuevo activeId
   }
 
   openSendSolutionModal (): void {
@@ -174,6 +121,7 @@ implements OnInit {
   clickSendButton (): void {
     this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
     this.onActiveIdChange(2)
+    this.showEditor = false
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
@@ -202,7 +150,6 @@ implements OnInit {
   handleOutsideClick = (event: MouseEvent): void => {
     const target = event.target as HTMLElement
     const dropdownElement: Element | null = document.querySelector('.dropdown-menu-mobile')
-    // Verificación explícita de null usando `!== null`
     if (dropdownElement !== null && !dropdownElement.contains(target)) {
       this.closeDropdown()
     }

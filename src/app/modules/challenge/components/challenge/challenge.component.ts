@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core'
-import { ActivatedRoute, type ParamMap } from '@angular/router'
+import { Component, inject, type OnInit, type OnDestroy } from '@angular/core'
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
 import { ChallengeService } from '../../../../services/challenge.service'
@@ -14,7 +14,7 @@ import { type Language } from 'src/app/models/language.model'
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss']
 })
-export class ChallengeComponent {
+export class ChallengeComponent implements OnInit, OnDestroy {
   idChallenge: string = ''
   params$!: Subscription
   challenge!: Challenge
@@ -33,9 +33,13 @@ export class ChallengeComponent {
   popularity!: number
   languages: Language[] = []
   activeId: number = 1
+
+  showEditor = false
   startChallenge: boolean = false
+  challengeStarted: boolean = false
 
   private readonly route = inject(ActivatedRoute)
+  private readonly router = inject(Router)
   private readonly challengeService = inject(ChallengeService)
 
   ngOnInit (): void {
@@ -44,10 +48,18 @@ export class ChallengeComponent {
       this.loadMasterData(this.idChallenge)
       this.activeId = 1
     })
+
+    this.route.url.subscribe(() => {
+      const url = this.router.url // Obtiene la URL actual
+      this.showEditor = url.includes('/start') // Verifica si contiene "/start"
+    })
   }
 
   onStartChallenge (started: boolean): void {
+    console.log('onStartChallenge triggered with:', started)
+    this.challengeStarted = started
     this.startChallenge = started
+    this.showEditor = started
   }
 
   ngOnDestroy (): void {

@@ -1,4 +1,3 @@
-
 <div class="challenge-component">
     <app-challenge-header
         [title] = "title"
@@ -6,7 +5,7 @@
         [level] = "level"
         [activeId] = "activeId"
         [idChallenge] = "idChallenge"
-        (startChallengeEvent)="onStartChallenge($event)"
+        (startChallenge)="onStartChallenge($event)"
 >   </app-challenge-header>
 
     <app-challenge-info
@@ -19,6 +18,9 @@
         [activeId]= "activeId"
         (activeIdChange)="onActiveIdChange($event)"
         [idChallenge] = "idChallenge"
-        [startChallenge]="startChallenge"
+        [startChallenge]="challengeStarted"
+        [showEditor]="showEditor"
 >   </app-challenge-info>
+
+
 </div>
