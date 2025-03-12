@@ -44,7 +44,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            // padding: 0 7px 0 0;
+            padding: 0 10px 0 0;
             border-radius: 20px;
             &[ngbTooltip]:hover{
                 background-color: $gray-4;
@@ -52,13 +52,13 @@
             
             > div {
                 &:not(:first-child) {
-                  padding-left: 2px;
+                  padding-left: 1px;
                 }
             }
 
             // Quitar si todas las imágenes tienen el mismo tamaño y margen transparente
             .txt{
-                margin-left: 3px;
+                //margin-left: 3px;
             }
         }
     }
@@ -71,7 +71,7 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
-  color: #808080;
+  color: $gray-3;
 }
 
 @media screen and (max-width: 437px) {
