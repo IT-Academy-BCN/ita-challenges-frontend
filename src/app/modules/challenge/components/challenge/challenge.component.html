@@ -1,26 +1,27 @@
 <div class="challenge-component">
     <app-challenge-header
-        [title] = "title"
-        [creation_date] = "creation_date"
-        [level] = "level"
-        [activeId] = "activeId"
-        [idChallenge] = "idChallenge"
+        [title]="title"
+        [creation_date]="creation_date"
+        [level]="level"
+        [activeId]="activeId"
+        [idChallenge]="idChallenge"
+        [saved_count]="challenge?.saved_count || 0"
+        [favorites_count]="challenge?.favorites_count || 0"
         (startChallenge)="onStartChallenge($event)"
 >   </app-challenge-header>
 
     <app-challenge-info
-        [detail] = "detail"
-        [description] = "description"
-        [examples] = "examples"
-        [notes] = "notes"
-        [popularity] = "popularity"
-        [languages] = "languages"
-        [activeId]= "activeId"
+        [detail]="detail"
+        [description]="description"
+        [examples]="examples"
+        [notes]="notes"
+        [popularity]="popularity"
+        [languages]="languages"
+        [activeId]="activeId"
         (activeIdChange)="onActiveIdChange($event)"
-        [idChallenge] = "idChallenge"
+        [idChallenge]="idChallenge"
         [startChallenge]="challengeStarted"
         [showEditor]="showEditor"
 >   </app-challenge-info>
-
 
 </div>

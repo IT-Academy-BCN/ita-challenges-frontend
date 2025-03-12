@@ -35,11 +35,15 @@
           <img src="assets/img/icon/bullseye.svg" alt="Bullseye">
           87%
         </span>
-        <span class="stat">
+        <span class="stat" [ngbTooltip]="'tooltips.savedTimes' | translate">
           <img src="assets/img/icon/bookmark.svg" alt="Bookmark">
-          82
+          {{saved_count}}
         </span>
-        <span class="stat">
+        <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate">
+          <img src="assets/img/icon/heart.svg" alt="Favorites">
+          {{favorites_count}}
+        </span>
+        <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
           <img src="assets/img/icon/clock.svg" alt="Date">
           {{creation_date | date:'mediumDate':'':currentLang}}
         </span>

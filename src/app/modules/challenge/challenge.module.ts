@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router'
 import { ModalsModule } from '../modals/modals.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
 
 @NgModule({
@@ -32,6 +32,7 @@ import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
     TranslateModule,
     FormsModule,
     NgbNavModule,
+    NgbTooltipModule,
     DynamicTranslatePipe
   ]
 })
