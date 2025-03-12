@@ -46,6 +46,11 @@
         <div class="txt">82</div>
       </div>
 
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.favorites' | translate">
+        <div><img src="assets/img/icon/heart.svg" alt="Favorites"></div>
+        <div class="txt">22</div>
+      </div>
+
       <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
         <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
         <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>

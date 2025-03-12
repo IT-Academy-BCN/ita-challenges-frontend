@@ -109,6 +109,7 @@
     "tooltips": {
         "startedFinished": "Started and finished",
         "savedTimes": "Times saved",
+        "favorites": "Times favorited",
         "creationDate": "Creation date"
     },
     "messages": {

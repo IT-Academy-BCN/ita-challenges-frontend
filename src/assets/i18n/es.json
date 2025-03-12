@@ -105,6 +105,7 @@
     "tooltips": {
         "startedFinished": "Empezado y finalizado",
         "savedTimes": "Veces guardado",
+        "favorites": "Veces marcado como favorito",
         "creationDate": "Fecha creación"
     },
     "messages": {
