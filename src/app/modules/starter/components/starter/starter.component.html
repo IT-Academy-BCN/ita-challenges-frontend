@@ -33,6 +33,12 @@
 
     <!-- CHALLENGES CARD -->
     <div class="d-flex flex-column gap-3" id="challenges" #challenge>
+      <!-- NEW CHALLENGE BTN (Visible only for mentors) -->
+      <div *ngIf="isMentor" class="new-challenge-container" (click)="openNewChallengeForm()">
+        <button class="new-challenge-btn">
+          <span>+</span> {{ "components.mainMenu.section4.title" | translate }}
+        </button>
+      </div>
       <app-challenge-card *ngFor="let challenge of challenges, let i = index"
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
         [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"

@@ -6,6 +6,7 @@ import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
+import { AuthService } from 'src/app/services/auth.service'
 /* import { RouteConfigLoadEnd } from '@angular/router'
  */
 @Component({
@@ -36,13 +37,19 @@ export class StarterComponent implements OnInit {
   startIndex: number = 0
   paginationFilters: Challenge[] = []
   isMobile: boolean = window.innerWidth < 768
+  isMentor: boolean = false;
+
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
-    @Inject(TranslateService) readonly translate: TranslateService
+    @Inject(TranslateService) readonly translate: TranslateService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit (): void {
     this.getChallenge()
+    this._authService.getUserRole().subscribe(role => {
+      this.isMentor = role === 'ADMIN'
+    })
   }
 
   ngOnDestroy (): void {
@@ -132,5 +139,9 @@ export class StarterComponent implements OnInit {
         this.isAscending = true
       }
     }
+  }
+
+  openNewChallengeForm(): void {
+    // Lógica para abrir el formulario de nuevo reto
   }
 }
