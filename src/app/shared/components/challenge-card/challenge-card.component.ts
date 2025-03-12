@@ -18,6 +18,7 @@ export class ChallengeCardComponent {
   @Input() level = ''
   @Input() popularity!: number
   @Input() id = ''
+  @Input() favorites_count: number = 0
 
   get currentLang (): string {
     return this.translate.currentLang
