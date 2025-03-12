@@ -11,6 +11,7 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
+import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component";
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
     SharedComponentsModule,
     TranslateModule,
     ModalsModule,
-    DynamicTranslatePipe
-  ],
+    DynamicTranslatePipe,
+    ChallengeFormComponent
+],
   providers: [
     ChallengeService
   ]

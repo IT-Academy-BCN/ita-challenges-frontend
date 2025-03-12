@@ -7,6 +7,7 @@ import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
+import * as bootstrap from 'bootstrap'
 /* import { RouteConfigLoadEnd } from '@angular/router'
  */
 @Component({
@@ -18,6 +19,7 @@ import { AuthService } from 'src/app/services/auth.service'
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
+  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef;
 
   challenges: Challenge[] = []
   challengesSubs$!: Subscription
@@ -142,6 +144,6 @@ export class StarterComponent implements OnInit {
   }
 
   openNewChallengeForm(): void {
-    // Lógica para abrir el formulario de nuevo reto
+
   }
 }

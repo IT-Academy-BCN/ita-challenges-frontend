@@ -11,6 +11,11 @@
       <!-- TITLE -->
       <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
 
+      <!-- NEW CHALLENGE BTN (Visible only for mentors) -->
+        <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isMentor"  class="btn btn-primary new-challenge-btn">
+          {{ "components.mainMenu.section4.title" | translate }}
+        </button>
+
       <!-- MOBILE FILTER BTN -->
       <button class="d-xl-none btn btn-outline-primary btnFiltrar" (click)="openModal()">
         <strong>Filtrar</strong>
@@ -33,12 +38,6 @@
 
     <!-- CHALLENGES CARD -->
     <div class="d-flex flex-column gap-3" id="challenges" #challenge>
-      <!-- NEW CHALLENGE BTN (Visible only for mentors) -->
-      <div *ngIf="isMentor" class="new-challenge-container" (click)="openNewChallengeForm()">
-        <button class="new-challenge-btn">
-          <span>+</span> {{ "components.mainMenu.section4.title" | translate }}
-        </button>
-      </div>
       <app-challenge-card *ngFor="let challenge of challenges, let i = index"
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
         [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
