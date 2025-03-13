@@ -129,6 +129,9 @@ export class ChallengeService {
     // Store the updated favorite count in localStorage for persistence
     this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
     
+    // Store the favorite state
+    localStorage.setItem(`is_favorite_${challengeId}`, 'true')
+    
     // Return an observable that emits the mock response
     return of(mockResponse).pipe(
       // Simulate network delay
@@ -160,6 +163,9 @@ export class ChallengeService {
     }
     // Store the updated favorite count in localStorage for persistence
     this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
+    
+    // Store the favorite state
+    localStorage.setItem(`is_favorite_${challengeId}`, 'false')
     
     // Return an observable that emits the mock response
     return of(mockResponse).pipe(

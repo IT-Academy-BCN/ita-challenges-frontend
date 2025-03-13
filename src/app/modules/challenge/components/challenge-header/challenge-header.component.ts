@@ -1,8 +1,9 @@
-import { Component, Input, type OnInit, EventEmitter, Output } from '@angular/core'
+import { Component, Input, type OnInit, EventEmitter, Output, inject } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { TranslateService } from '@ngx-translate/core'
+import { ChallengeService } from '../../../../services/challenge.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -17,6 +18,8 @@ export class ChallengeHeaderComponent implements OnInit {
     private readonly route: ActivatedRoute
   ) {}
 
+  private readonly challengeService = inject(ChallengeService)
+
   @Input() title = ''
   @Input() creation_date!: Date
   @Input() level = ''
@@ -27,6 +30,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() favorites_count: number = 0
 
   @Output() startChallenge = new EventEmitter<boolean>()
+  @Output() favoritesUpdated = new EventEmitter<number>()
 
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
@@ -34,6 +38,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
   challengeStarted: boolean = false
   solutionSent: boolean = false
+  isFavorite: boolean = false
 
   ngOnInit (): void {
     this.challenge_title = this.title
@@ -46,6 +51,9 @@ export class ChallengeHeaderComponent implements OnInit {
 
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
     this.solutionSent = savedSolutions.includes(this.idChallenge)
+
+    // Check if challenge is favorited
+    this.checkFavoriteStatus()
 
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
@@ -107,5 +115,42 @@ export class ChallengeHeaderComponent implements OnInit {
 
   sendSolution (): void {
     this.openSendSolutionModal()
+  }
+
+  // Method to toggle favorites
+  toggleFavorite(): void {
+    if (this.isFavorite) {
+      this.removeFromFavorites()
+    } else {
+      this.addToFavorites()
+    }
+  }
+
+  // Method to add to favorites
+  private addToFavorites(): void {
+    this.challengeService.addToFavorites(this.idChallenge).subscribe(response => {
+      this.isFavorite = response.isFavorite
+      this.favorites_count = response.timesFavorited
+      this.favoritesUpdated.emit(this.favorites_count)
+      console.log('Added to favorites:', response)
+    })
+  }
+
+  // Method to remove from favorites
+  private removeFromFavorites(): void {
+    this.challengeService.removeFromFavorites(this.idChallenge).subscribe(response => {
+      this.isFavorite = response.isFavorite
+      this.favorites_count = response.timesFavorited
+      this.favoritesUpdated.emit(this.favorites_count)
+      console.log('Removed from favorites:', response)
+    })
+  }
+
+  // Check if the challenge is in favorites
+  private checkFavoriteStatus(): void {
+    // For mock purposes, we'll check localStorage
+    const key = `favorite_count_${this.idChallenge}`
+    const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`)
+    this.isFavorite = isFavorited === 'true'
   }
 }

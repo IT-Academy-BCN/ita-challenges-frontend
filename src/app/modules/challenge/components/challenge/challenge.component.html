@@ -8,6 +8,7 @@
         [saved_count]="challenge.saved_count || 0"
         [favorites_count]="challenge.favorites_count || 0"
         (startChallenge)="onStartChallenge($event)"
+        (favoritesUpdated)="onFavoritesUpdated($event)"
 >   </app-challenge-header>
 
     <app-challenge-info
