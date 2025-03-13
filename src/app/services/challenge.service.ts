@@ -1,5 +1,6 @@
 import { Inject, Injectable, inject } from '@angular/core'
-import { type Observable, catchError } from 'rxjs'
+import { Observable, catchError, BehaviorSubject, of } from 'rxjs'
+import { delay } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -8,7 +9,6 @@ import { type Language } from '../models/language.model'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 // import {environment} from "../../environments/environment";
-import { BehaviorSubject } from 'rxjs'
 import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
@@ -23,11 +23,12 @@ export class ChallengeService {
     this.checkChallengeStartedFromStorage()
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+//  Commented, waiting for favorites endpoint
+  // private getAuthHeaders(): HttpHeaders {
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   })
+  // }
 
   get challengeStarted$ (): Observable<boolean> {
     return this.challengeStartedSubject.asObservable()
@@ -103,28 +104,79 @@ export class ChallengeService {
     return this.http.post(url, challenge)
   }
 
+
+  // Real implementation - commented out for testing
+  // addToFavorites(challengeId: string): Observable<FavoriteResponse> {
+  //   const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
+  //   console.log('Adding favorite, URL:', url, 'challengeId:', challengeId)
+  //   return this.http.post<FavoriteResponse>(url, {}, { headers: this.getAuthHeaders() })
+  //     .pipe(
+  //       catchError((error: HttpErrorResponse) => {
+  //         console.error('Error adding favorite:', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+
+  // Mocked version for frontend testing
   addToFavorites(challengeId: string): Observable<FavoriteResponse> {
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
-    console.log('Adding favorite, URL:', url, 'challengeId:', challengeId)
-    return this.http.post<FavoriteResponse>(url, {}, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error adding favorite:', error);
-          throw error;
-        })
-      );
+    console.log('MOCK: Adding favorite for challengeId:', challengeId)
+    // Create a mock response that simulates a successful API call
+    const mockResponse: FavoriteResponse = {
+      isFavorite: true,
+      timesFavorited: this.getMockFavoriteCount(challengeId) + 1
+    }
+    // Store the updated favorite count in localStorage for persistence
+    this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
+    
+    // Return an observable that emits the mock response
+    return of(mockResponse).pipe(
+      // Simulate network delay
+      delay(300)
+    )
   }
 
+  // Real implementation - commented out for testing
+  // removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
+  //   const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
+  //   console.log('Removing favorite, URL:', url)
+  //   return this.http.delete<FavoriteResponse>(url, { headers: this.getAuthHeaders() })
+  //     .pipe(
+  //       catchError((error: HttpErrorResponse) => {
+  //         console.error('Error removing favorite:', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+
+  // Mocked version for frontend testing
   removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
-    console.log('Removing favorite, URL:', url)
-    return this.http.delete<FavoriteResponse>(url, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error removing favorite:', error);
-          throw error;
-        })
-      );
+    console.log('MOCK: Removing favorite for challengeId:', challengeId)
+    // Create a mock response that simulates a successful API call
+    const currentCount = this.getMockFavoriteCount(challengeId)
+    const mockResponse: FavoriteResponse = {
+      isFavorite: false,
+      timesFavorited: currentCount > 0 ? currentCount - 1 : 0
+    }
+    // Store the updated favorite count in localStorage for persistence
+    this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
+    
+    // Return an observable that emits the mock response
+    return of(mockResponse).pipe(
+      // Simulate network delay
+      delay(300)
+    )
   }
 
+  // Helper methods for mock implementation
+  private getMockFavoriteCount(challengeId: string): number {
+    const key = `favorite_count_${challengeId}`
+    const storedCount = localStorage.getItem(key)
+    return storedCount ? parseInt(storedCount, 10) : 0
+  }
+
+  private updateMockFavoriteCount(challengeId: string, count: number): void {
+    const key = `favorite_count_${challengeId}`
+    localStorage.setItem(key, count.toString())
+  }
 }
