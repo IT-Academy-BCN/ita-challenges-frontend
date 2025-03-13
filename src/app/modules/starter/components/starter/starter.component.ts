@@ -39,7 +39,7 @@ export class StarterComponent implements OnInit {
   startIndex: number = 0
   paginationFilters: Challenge[] = []
   isMobile: boolean = window.innerWidth < 768
-  isMentor: boolean = false;
+  isAdmin: boolean = false;
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -50,7 +50,7 @@ export class StarterComponent implements OnInit {
   ngOnInit (): void {
     this.getChallenge()
     this._authService.getUserRole().subscribe(role => {
-      this.isMentor = role === 'ADMIN'
+      this.isAdmin = role === 'ADMIN'
     })
   }
 
@@ -143,7 +143,4 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  openNewChallengeForm(): void {
-
-  }
 }
