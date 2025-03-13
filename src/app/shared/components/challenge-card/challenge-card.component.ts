@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core'
+import { Component, Input, inject, OnInit } from '@angular/core'
 import { StarterService } from '../../../services/starter.service'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
@@ -9,7 +9,7 @@ import { ChallengeService } from '../../../services/challenge.service'
   styleUrls: ['./challenge-card.component.scss'],
   providers: []
 })
-export class ChallengeCardComponent {
+export class ChallengeCardComponent implements OnInit {
   private readonly starterService = inject(StarterService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
@@ -22,6 +22,11 @@ export class ChallengeCardComponent {
   @Input() id = ''
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false;
+
+  ngOnInit(): void {
+    // Check if challenge is favorited in localStorage
+    this.checkFavoriteStatus();
+  }
 
   get currentLang (): string {
     return this.translate.currentLang
@@ -54,5 +59,13 @@ export class ChallengeCardComponent {
         },
       });
     }
+  }
+
+  // Check if the challenge is in favorites
+  private checkFavoriteStatus(): void {
+    if (!this.id) return;
+    // For mock purposes, we'll check localStorage
+    const isFavorited = localStorage.getItem(`is_favorite_${this.id}`);
+    this.isFavorite = isFavorited === 'true';
   }
 }
