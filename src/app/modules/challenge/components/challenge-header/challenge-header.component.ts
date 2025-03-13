@@ -149,8 +149,15 @@ export class ChallengeHeaderComponent implements OnInit {
   // Check if the challenge is in favorites
   private checkFavoriteStatus(): void {
     // For mock purposes, we'll check localStorage
-    const key = `favorite_count_${this.idChallenge}`
-    const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`)
-    this.isFavorite = isFavorited === 'true'
+    const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`);
+    this.isFavorite = isFavorited === 'true';
+    
+    // Also update the favorites count from localStorage if available
+    const storedCount = localStorage.getItem(`favorites_count_${this.idChallenge}`);
+    if (storedCount) {
+      this.favorites_count = parseInt(storedCount, 10);
+      // Emit the updated count
+      this.favoritesUpdated.emit(this.favorites_count);
+    }
   }
 }

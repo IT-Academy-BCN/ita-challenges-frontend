@@ -120,23 +120,22 @@ export class ChallengeService {
 
   // Mocked version for frontend testing
   addToFavorites(challengeId: string): Observable<FavoriteResponse> {
-    console.log('MOCK: Adding favorite for challengeId:', challengeId)
-    // Create a mock response that simulates a successful API call
+    // Get current count
+    const currentCount = this.getMockFavoriteCount(challengeId);
+    
+    // Create a mock response
     const mockResponse: FavoriteResponse = {
       isFavorite: true,
-      timesFavorited: this.getMockFavoriteCount(challengeId) + 1
+      timesFavorited: currentCount + 1
     }
-    // Store the updated favorite count in localStorage for persistence
-    this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
     
     // Store the favorite state
-    localStorage.setItem(`is_favorite_${challengeId}`, 'true')
+    localStorage.setItem(`is_favorite_${challengeId}`, 'true');
+    // Store the updated count
+    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
     
     // Return an observable that emits the mock response
-    return of(mockResponse).pipe(
-      // Simulate network delay
-      delay(300)
-    )
+    return of(mockResponse).pipe(delay(300));
   }
 
   // Real implementation - commented out for testing
@@ -154,35 +153,33 @@ export class ChallengeService {
 
   // Mocked version for frontend testing
   removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-    console.log('MOCK: Removing favorite for challengeId:', challengeId)
-    // Create a mock response that simulates a successful API call
-    const currentCount = this.getMockFavoriteCount(challengeId)
+    // Get current count
+    const currentCount = this.getMockFavoriteCount(challengeId);
+    
+    // Create a mock response
     const mockResponse: FavoriteResponse = {
       isFavorite: false,
       timesFavorited: currentCount > 0 ? currentCount - 1 : 0
     }
-    // Store the updated favorite count in localStorage for persistence
-    this.updateMockFavoriteCount(challengeId, mockResponse.timesFavorited)
     
     // Store the favorite state
-    localStorage.setItem(`is_favorite_${challengeId}`, 'false')
+    localStorage.setItem(`is_favorite_${challengeId}`, 'false');
+    // Store the updated count
+    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
     
     // Return an observable that emits the mock response
-    return of(mockResponse).pipe(
-      // Simulate network delay
-      delay(300)
-    )
+    return of(mockResponse).pipe(delay(300));
   }
 
   // Helper methods for mock implementation
   private getMockFavoriteCount(challengeId: string): number {
-    const key = `favorite_count_${challengeId}`
+    const key = `favorites_count_${challengeId}`
     const storedCount = localStorage.getItem(key)
     return storedCount ? parseInt(storedCount, 10) : 0
   }
 
   private updateMockFavoriteCount(challengeId: string, count: number): void {
-    const key = `favorite_count_${challengeId}`
+    const key = `favorites_count_${challengeId}`
     localStorage.setItem(key, count.toString())
   }
 }
