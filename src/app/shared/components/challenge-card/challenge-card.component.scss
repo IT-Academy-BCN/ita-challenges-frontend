@@ -69,6 +69,18 @@
   color: $gray-3;
 }
 
+.favorite-icon {
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 437px) {
     .challenge-list-element {
 

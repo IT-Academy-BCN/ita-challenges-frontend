@@ -46,8 +46,14 @@
         <div class="txt">82</div>
       </div>
 
-      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.favorites' | translate">
-        <div><img src="assets/img/icon/heart.svg" alt="Favorites"></div>
+      <div class="stat d-flex align-items-center cursor-pointer" 
+           [ngbTooltip]="'tooltips.favorites' | translate" 
+           (click)="toggleFavorite($event)">
+        <div>
+          <img [src]="isFavorite ? 'assets/img/icon/heart-filled.svg' : 'assets/img/icon/heart.svg'" 
+               [alt]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+               class="favorite-icon">
+        </div>
         <div class="txt">{{favorites_count}}</div>
       </div>
 

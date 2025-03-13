@@ -9,7 +9,6 @@ import { CookieService } from 'ngx-cookie-service'
   providedIn: 'root'
 })
 export class JwtInterceptor implements HttpInterceptor {
-  // private readonly tokenService = inject(TokenService)
   private readonly cookieService = inject(CookieService)
 
   intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
