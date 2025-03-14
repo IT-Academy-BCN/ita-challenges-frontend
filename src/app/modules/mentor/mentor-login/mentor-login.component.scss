@@ -1,70 +1,86 @@
 .github-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #24292F;
-    color: #ffffff;
-    padding: 8px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #24292F;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+
+  min-width: 180px; // 🔥 🔹 Fija un ancho mínimo para evitar cambios de tamaño
+  height: 40px; // 🔥 🔹 Asegura una altura constante
+}
   
-  .github-button:hover {
-    background-color: #3d3d3d;
-  }
+.github-button:hover {
+  background-color: #3d3d3d;
+}
+
+.github-button:disabled {
+  background-color: #3d3d3d;
+  opacity: 0.5; 
+  cursor: not-allowed;
+  pointer-events: none; 
+}
   
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0.733);
+}
+
+.success-message {
+  color: rgba(0, 0, 0, 0.564);
+  font-size: 0.84rem;
+}
+
+.error-message {
+  color: rgb(255, 93, 93);
+  font-size: 0.84rem;
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.loader {
+  --d: 12px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: relative;
+  animation: spin 1s infinite linear;
+  background: none;
+  box-shadow: 
+    calc(1 * var(--d))      calc(0 * var(--d))      0 #ffffff,
+    calc(0.866 * var(--d))  calc(0.5 * var(--d))   0 #e0e0e0,
+    calc(0.5 * var(--d))    calc(0.866 * var(--d)) 0 #cfcfcf,
+    calc(0 * var(--d))      calc(1 * var(--d))     0 #bfbfbf,
+    calc(-0.5 * var(--d))   calc(0.866 * var(--d)) 0 #a0a0a0,
+    calc(-0.866 * var(--d)) calc(0.5 * var(--d))   0 #808080,
+    calc(-1 * var(--d))     calc(0 * var(--d))     0 #606060,
+    calc(-0.866 * var(--d)) calc(-0.5 * var(--d))  0 #404040,
+    calc(-0.5 * var(--d))   calc(-0.866 * var(--d)) 0 #303030,
+    calc(0 * var(--d))      calc(-1 * var(--d))    0 #202020,
+    calc(0.5 * var(--d))    calc(-0.866 * var(--d)) 0 #101010,
+    calc(0.866 * var(--d))  calc(-0.5 * var(--d))  0 #000000;
+}
+
+@keyframes spin {
+  100% { transform: rotate(1turn); }
+}
 
 
-
-
-
-
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    color: black; 
-    padding: 1.47rem;
-    border-radius: 8px;
-    border: 2px solid white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-    max-width: 400px; 
-    width: 100%; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    gap: 1.5rem;
-    z-index: 9999;
-    position: relative;
-    text-align: center;
-    opacity: 1;
-  transition: opacity 0.5s ease-in-out; 
-  }
-  
-
-  .close-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 2rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: rgba(0, 0, 0, 0.733);
-  }
-  
-  .success-popup {
-    color: rgba(0, 0, 0, 0.564);
-    font-size: 0.84rem;
-  }
-  
-  .error-message {
-    color: rgb(255, 93, 93);
-    font-size: 0.84rem;
-  }
 

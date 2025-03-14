@@ -10,10 +10,11 @@
     </label>
   </div>
 
-  <!-- Settings -->
-  <div>
-    <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
-      <img src="assets/img/icon/setting.svg" alt="Settings" />
-    </a>
-  </div>
+  <!-- Login -->
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
+    Iniciar sessió
+  </button>
+
+  <app-mentor-login></app-mentor-login>
+
 </div>

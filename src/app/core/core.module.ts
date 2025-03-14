@@ -10,6 +10,7 @@ import { I18nModule } from 'src/assets/i18n/i18n.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component'
 import { DesktopNavComponent } from './layout/header/desktop-nav/desktop-nav.component'
+import { MentorLoginComponent } from '../modules/mentor/mentor-login/mentor-login.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DesktopNavComponent } from './layout/header/desktop-nav/desktop-nav.com
     CoreRoutingModule,
     ModalsModule,
     I18nModule,
-    TranslateModule
+    TranslateModule,
+    MentorLoginComponent
   ]
 })
 export class CoreModule { }

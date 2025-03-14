@@ -1,31 +1,56 @@
-<div class="d-flex justify-content-center mt-5">
-  <button class="github-button" (click)="loginWithGitHub()">
-    <img
-      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      alt="GitHub Logo"
-      width="25"
-    />
-    <span>Sign in with GitHub</span>
-  </button>
-</div>
+<div class="modal fade" id="mentorLoginModal" tabindex="-1" aria-labelledby="mentorLoginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mentorLoginModalLabel">Inici de sessió</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
+        <div class="text-center mt-4">
+        
+          <form [formGroup]="loginForm">
+        
+            <div class="d-flex flex-column align-items-center mt-4 gap-3">
+              <button class="github-button d-flex align-items-center gap-2" 
+                  (click)="loginWithGitHub()"
+                  [disabled]="isLoading">
+                @if (isLoading){
+                  <div class="loader"><div></div><div></div><div></div><div></div></div>
+                }@else{
+                  <img
+                    src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                    alt="GitHub Logo"
+                    width="25"
+                  />
+                  <span>Sign in with GitHub</span>
+                }
+              </button>
+          
+              <label class="d-flex align-items-center gap-2">
+                <input type="checkbox" class="form-check-input" formControlName="termsCheck">
+                <span>Accepto els termes legals</span>
+              </label>    
+            </div>
+        
+          </form>
+                
+          @if (isErrorVisible){
+            <div class="error-message mt-3">
+              {{ 'messages.errors.unauthorized' | translate }}
+            </div>
+          }
+        
+          @if (showTermsError){
+            <div class="error-message mt-3">
+              Ha d'acceptar els termes i condicions.
+            </div>
+          }
+        
+        </div>
 
-<div *ngIf="isSuccessVisible" class="popup success-popup">
-  <button class="close-btn" (click)="closeSuccess()">×</button>
-  <div class="success-message">{{'messages.success.welcome' | translate}}</div>
-</div>
-
-<div *ngIf="isErrorVisible" class="popup error-popup">
-  <div class="d-flex justify-content-center mt-5">
-    <button class="github-button" (click)="loginWithGitHub()">
-      <img
-        src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-        alt="GitHub Logo"
-        width="25"
-      />
-      <span>Sign in with GitHub</span>
-    </button>
+      </div>
+    </div>
   </div>
-  <button class="close-btn" (click)="closeError()">×</button>
-  <div class="error-message">{{ 'messages.errors.unauthorized' | translate }}</div>
 </div>
+
