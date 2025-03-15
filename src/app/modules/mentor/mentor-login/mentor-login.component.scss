@@ -10,9 +10,8 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
-
-  min-width: 180px; // 🔥 🔹 Fija un ancho mínimo para evitar cambios de tamaño
-  height: 40px; // 🔥 🔹 Asegura una altura constante
+  min-width: 180px;
+  height: 40px;
 }
   
 .github-button:hover {

@@ -11,10 +11,16 @@
   </div>
 
   <!-- Login -->
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
-    Iniciar sessió
-  </button>
+  @if(isLoggedIn){
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
+      Sessió ya iniciada
+    </button>
+  } @else {
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
+      Iniciar sessió
+    </button>
+  }
 
-  <app-mentor-login></app-mentor-login>
+  <app-mentor-login (loginSuccess)="onLoginSuccess($event)"></app-mentor-login>
 
 </div>

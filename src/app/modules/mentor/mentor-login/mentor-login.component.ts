@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
 import { HttpClient } from '@angular/common/http'
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
 import { CommonModule } from '@angular/common'
@@ -35,27 +35,26 @@ export class MentorLoginComponent implements OnInit {
   errorMessage = ''
   isLoading = false
 
+  route = inject(ActivatedRoute)
+  http = inject(HttpClient)
+  router = inject(Router)
+  translate = inject(TranslateService)
+
   loginForm = new FormGroup({
     termsCheck: new FormControl(false, { nonNullable: true })
   })
-
-  constructor (
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private router: Router,
-    private translate: TranslateService
-  ) {}
 
   ngOnInit (): void {
     this.checkGitHubCode()
   }
 
-  private checkGitHubCode (): void {
+  checkGitHubCode (): void {
     this.route.queryParams.subscribe((params) => {
       const code = params['code']
 
       if (!(code)) return
 
+      this.openModal()
       this.isLoading = true
       this.loginForm.controls.termsCheck.setValue(true)
       this.loginForm.controls.termsCheck.disable()
@@ -64,7 +63,7 @@ export class MentorLoginComponent implements OnInit {
     })
   }
 
-  private authenticateWithGitHub (code: string): void {
+  authenticateWithGitHub (code: string): void {
     const url =
     environment.BACKEND_ITA_CHALLENGE_BASE_URL +
     environment.BACKEND_GITHUB_VALIDATE_ENDPOINT
@@ -77,12 +76,8 @@ export class MentorLoginComponent implements OnInit {
           localStorage.setItem('username', response.username)
           localStorage.setItem('authToken', response.token)
 
-          void this.router.navigate([], {
-            queryParams: { code: null },
-            queryParamsHandling: 'merge'
-
-          })
           this.closeModal()
+          this.loginSuccess.emit(true)
         } else {
           this.showError('unauthorized')
           localStorage.removeItem('username')
@@ -91,6 +86,7 @@ export class MentorLoginComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false
+        this.resetForm()
 
         if (err.status === 401) {
           this.showError('unauthorized') // Error 401: No autorizado. El usuario no es mentor o el token es inválido
@@ -106,6 +102,11 @@ export class MentorLoginComponent implements OnInit {
           console.error(err)
         }
       }
+    })
+
+    void this.router.navigate([], {
+      queryParams: { code: null },
+      queryParamsHandling: 'merge'
     })
   }
 
@@ -148,6 +149,14 @@ export class MentorLoginComponent implements OnInit {
     this.loginForm.controls.termsCheck.setValue(false)
     this.loginForm.controls.termsCheck.enable()
     this.closeError()
+  }
+
+  openModal (): void {
+    const modalElement = document.getElementById('mentorLoginModal')
+    if (modalElement !== null) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement)
+      modalInstance.show()
+    }
   }
 
   closeModal (): void {
