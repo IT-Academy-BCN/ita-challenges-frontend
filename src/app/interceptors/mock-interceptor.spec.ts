@@ -3,6 +3,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpInterceptorFn } from '@angular/commo
 
 import { MockInterceptor } from './mock-interceptor';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { environment } from 'src/environments/environment';
 
 describe('mockInterceptor', () => {
   let http: HttpClient;
@@ -23,7 +24,7 @@ describe('mockInterceptor', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Verifica que no haya peticiones pendientes
+    httpMock.verify(); 
   });
 
   it('should be created', () => {
@@ -32,8 +33,8 @@ describe('mockInterceptor', () => {
 
   it('It must intercept a request to endpoint (/related) and return the mocked response.', () => {
 
-    const challengeId = 'dcacb291-b4aa-4029-8e9b-284c8ca80296';  // Asegúrate de poner un challenge id válido
-    const url = `http://dev.ita-challenges.eurecatacademy.org/itachallenge/api/v1/challenge/challenges/${challengeId}/related`;
+    const challengeId = 'dcacb291-b4aa-4029-8e9b-284c8ca80296';
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/related`;
     http.get(url).subscribe(response => {
       expect(response).toEqual({
         count: 1,
