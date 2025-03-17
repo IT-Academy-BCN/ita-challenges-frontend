@@ -165,5 +165,6 @@ export class MentorLoginComponent implements OnInit {
         modalInstance.hide()
       }
     }
+    document.activeElement instanceof HTMLElement && document.activeElement.blur()
   }
 }

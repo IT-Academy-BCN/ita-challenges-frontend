@@ -9,7 +9,9 @@ import { NavService } from 'src/app/services/nav.service'
 export class DesktopNavComponent {
   isLoggedIn = false
 
-  constructor (@Inject(NavService) public navService: NavService) {}
+  constructor (@Inject(NavService) public navService: NavService) {
+    this.isLoggedIn = !(localStorage.getItem('authToken') == null)
+  }
 
   changeLanguage (event: Event): void {
     const selectElement = event.target as HTMLSelectElement
