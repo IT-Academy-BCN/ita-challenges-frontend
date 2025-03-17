@@ -91,7 +91,6 @@
 
 .section h4 {
   display: flex;
-  align-items: center;
   font-weight: 600;
   font-size: 1.1rem;
   margin-bottom: 1.25rem;
@@ -233,6 +232,7 @@
 .lightning-group {
   display: flex;
   gap: 2px;
+  height: 15px;
 }
 .lightning-group img {
   width: 20px;
