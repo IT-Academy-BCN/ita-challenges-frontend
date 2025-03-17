@@ -35,12 +35,6 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
-      },
-      { // Redirección del Login de GITHUB
-        path: 'mentor',
-        redirectTo: 'challenges'
-        // loadComponent: async () =>
-        //  (await import('../modules/mentor/mentor-login/mentor-login.component')).MentorLoginComponent
       }
     ]
   }
