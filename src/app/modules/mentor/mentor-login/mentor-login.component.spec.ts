@@ -2,7 +2,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { MentorLoginComponent } from './mentor-login.component'
 import { provideHttpClient } from '@angular/common/http'
 import { provideRouter, ActivatedRoute } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { of, BehaviorSubject, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
@@ -13,7 +13,6 @@ declare global {
   }
 }
 
-// 🔹 Mock de `bootstrap`
 window.bootstrap = {
   Modal: jest.fn().mockImplementation(() => ({
     hide: jest.fn(),
@@ -24,7 +23,6 @@ window.bootstrap.Modal.getInstance = jest.fn().mockReturnValue({
   hide: jest.fn()
 })
 
-// 🔹 Interfaz para los test de errores
 interface ErrorHandlingTestCase {
   statusCode: number
   expectedError: string
@@ -51,8 +49,7 @@ describe('MentorLoginComponent', () => {
       providers: [
         provideHttpClient(),
         provideRouter([]),
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: TranslateService, useValue: { get: () => of('mocked translation') } }
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
       ]
     }).compileComponents()
   })
@@ -63,12 +60,10 @@ describe('MentorLoginComponent', () => {
     fixture.detectChanges()
   })
 
-  // ✅ **Renderizado del componente**
   it('✅ Should create the component', () => {
     expect(component).toBeTruthy()
   })
 
-  // ✅ **Formulario**
   it('✅ Should enable the login button when terms are accepted', () => {
     component.loginForm.controls.termsCheck.setValue(true)
     fixture.detectChanges()
@@ -79,7 +74,7 @@ describe('MentorLoginComponent', () => {
 
   it('✅ Should show an error if login is attempted without accepting terms', () => {
     component.loginWithGitHub()
-    expect(component.showTermsError).toBe(true)
+    expect(component.isShowTermsError).toBe(true)
   })
 
   it('✅ Should disable the checkbox and activate loading when logging in', () => {
@@ -89,7 +84,6 @@ describe('MentorLoginComponent', () => {
     expect(component.isLoading).toBe(true)
   })
 
-  // ✅ **Manejo de modales**
   it('✅ Should open the modal', () => {
     const modalSpy = jest.spyOn(window.bootstrap.Modal, 'getInstance').mockReturnValue({
       show: jest.fn()
@@ -113,7 +107,6 @@ describe('MentorLoginComponent', () => {
     expect(component.isLoading).toBe(false)
   })
 
-  // ✅ **Autenticación con GitHub**
   describe('GitHub Authentication', () => {
     it('✅ Should open modal and disable terms checkbox when code is present', () => {
       jest.spyOn(component, 'openModal').mockImplementation(() => {})
@@ -158,11 +151,10 @@ describe('MentorLoginComponent', () => {
     expect(loginSuccessSpy).toHaveBeenCalledWith(true)
   })
 
-  // ✅ **Manejo de errores en autenticación**
   it.each<ErrorHandlingTestCase>([
     { statusCode: 401, expectedError: 'unauthorized' },
     { statusCode: 403, expectedError: 'unauthorized' },
-    { statusCode: 500, expectedError: 'unauthorized' }
+    { statusCode: 500, expectedError: 'server_error' }
   ])('❌ Should handle error %i and show error message', ({ statusCode, expectedError }, done) => {
     localStorage.setItem('username', 'testUser')
     localStorage.setItem('authToken', '123456')
@@ -184,15 +176,14 @@ describe('MentorLoginComponent', () => {
     }, 100)
   })
 
-  // ✅ **Errores generales**
   it('✅ Should hide the error when closeError is called', () => {
     component.isErrorVisible = true
-    component.showTermsError = true
+    component.isShowTermsError = true
 
     component.closeError()
     fixture.detectChanges()
 
     expect(component.isErrorVisible).toBe(false)
-    expect(component.showTermsError).toBe(false)
+    expect(component.isShowTermsError).toBe(false)
   })
 })

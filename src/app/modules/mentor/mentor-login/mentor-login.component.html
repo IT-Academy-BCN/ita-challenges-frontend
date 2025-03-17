@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="mentorLoginModalLabel">Inici de sessió</h5>
+        <h5 class="modal-title" id="mentorLoginModalLabel">{{'modules.mentor.login.title' | translate}}</h5>
         <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -23,13 +23,13 @@
                     alt="GitHub Logo"
                     width="25"
                   />
-                  <span>Sign in with GitHub</span>
+                  <span>{{'modules.mentor.login.button' | translate}}</span>
                 }
               </button>
           
               <label class="d-flex align-items-center gap-2">
                 <input type="checkbox" class="form-check-input" formControlName="termsCheck">
-                <span>Accepto els termes legals</span>
+                <span>{{'modules.mentor.login.legal' | translate}}</span>
               </label>    
             </div>
         
@@ -41,9 +41,9 @@
             </div>
           }
         
-          @if (showTermsError){
+          @if (isShowTermsError){
             <div class="error-message mt-3">
-              Ha d'acceptar els termes i condicions.
+              {{'modules.mentor.login.validation.legal' | translate}}
             </div>
           }
         

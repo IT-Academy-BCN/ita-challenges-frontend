@@ -31,7 +31,7 @@ export class MentorLoginComponent implements OnInit {
   @Output() loginSuccess = new EventEmitter<boolean>()
 
   isErrorVisible = false
-  showTermsError = false
+  isShowTermsError = false
   errorMessage = ''
   isLoading = false
 
@@ -70,8 +70,6 @@ export class MentorLoginComponent implements OnInit {
 
     this.http.post<GitHubAuthResponse>(url, { code }).subscribe({
       next: (response) => {
-        console.warn('GitHub backend response:', response)
-
         if (response.isValid) {
           localStorage.setItem('username', response.username)
           localStorage.setItem('authToken', response.token)
@@ -91,8 +89,7 @@ export class MentorLoginComponent implements OnInit {
         if (err.status === 401) {
           this.showError('unauthorized') // Error 401: No autorizado. El usuario no es mentor o el token es inválido
         } else if (err.status === 500) {
-          this.showError('unauthorized') // Error 500: Error interno en el servidor.
-          console.error('💥 Error 500: Error interno en el servidor.')
+          this.showError('server_error')
         } else if (err.status === 403) {
           this.showError('unauthorized') // Error 403: El usuario no existe en GitHub.
           localStorage.removeItem('username')
@@ -112,7 +109,7 @@ export class MentorLoginComponent implements OnInit {
 
   loginWithGitHub (): void {
     if (!this.loginForm.controls.termsCheck.value) {
-      this.showTermsError = true
+      this.isShowTermsError = true
       return
     }
 
@@ -141,7 +138,7 @@ export class MentorLoginComponent implements OnInit {
 
   closeError (): void {
     this.isErrorVisible = false
-    this.showTermsError = false
+    this.isShowTermsError = false
   }
 
   resetForm (): void {

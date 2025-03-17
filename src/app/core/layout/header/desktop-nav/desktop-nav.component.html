@@ -13,11 +13,11 @@
   <!-- Login -->
   @if(isLoggedIn){
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
-      Sessió ya iniciada
+      {{'modules.challenge.header.login' | translate}}
     </button>
   } @else {
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
-      Iniciar sessió
+      {{'modules.challenge.header.login' | translate}}
     </button>
   }
 
