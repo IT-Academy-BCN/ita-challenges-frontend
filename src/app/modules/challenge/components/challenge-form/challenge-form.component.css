@@ -1,18 +1,9 @@
 :host {
   display: block;
-  /* padding: 2rem 0; */
   min-height: auto;
-  /* background-color: #f5f5f5; */
   overflow-y: auto; 
 }
 
-/* .card {
-  max-width: 880px;
-  margin: 0 auto 2rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
 
 /* CABECERA */
 .header {
@@ -306,13 +297,10 @@
     flex-direction: column;
     gap: 1rem;
   }
-
 }
 
 @media (min-width: 768px) {
   .editor-container, .codemirror-container, .form-control {
     width: 75%;
   }
-
-
 }
