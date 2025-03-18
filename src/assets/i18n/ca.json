@@ -58,10 +58,8 @@
                 "solutionCode": "// Escriu el teu codi aquí",
                 "solutionsChallenge": "Resposta d'exemple, no es pot modificar",
                 "solutionsTitleLocked":"Les solucions estan bloquejades.",
-
-                "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
-
-
+                "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte.",
+                "noResources": "No hi ha recursos disponibles per a aquest repte."
             }
         },
         "starter": {
