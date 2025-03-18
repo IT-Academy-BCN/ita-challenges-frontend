@@ -38,7 +38,8 @@
                 "buttonSaveChallenge": "Save challenge",
                 "buttonSendSolution": "Send solution",
                 "buttonCancel": "Cancel",
-                "solutionSend": "Solution sent"
+                "solutionSend": "Solution sent",
+                "login": "Log In"
             },
             "info": {
                 "detailsTitle": "Details",
@@ -62,6 +63,16 @@
 
 
                
+            }
+        },
+        "mentor": {
+            "login": {
+                "title": "Sign in to continue",
+                "button": "Sign in with GitHub",
+                "legal": "I accept the legal terms",
+                "validation": {
+                    "legal": "You must accept the terms and conditions."
+                 }
             }
         },
         "starter": {
