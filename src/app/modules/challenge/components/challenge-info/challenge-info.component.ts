@@ -19,7 +19,6 @@ import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
-import { RelatedService } from '../../../../services/related.service'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
 
 @Component({
@@ -35,8 +34,6 @@ implements OnInit {
   isUserSolution: boolean = true
   resources: string = ''
   params$!: Subscription
-  relatedChallengesData!: DataChallenge
-  relatedListOfChallenges: Challenge[] = []
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
@@ -47,7 +44,6 @@ implements OnInit {
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
-  private readonly relatedService = inject(RelatedService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
@@ -77,7 +73,6 @@ implements OnInit {
       this.onActiveIdChange(newActiveId)
     })
 
-    this.loadRelatedChallenges(this.idChallenge)
     this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
 
@@ -95,15 +90,6 @@ implements OnInit {
 
   toggleStatement (): void {
     this.showStatement = !this.showStatement
-  }
-
-  loadRelatedChallenges (id: string): void {
-    this.challengeSubs$ = this.relatedService
-      .getRelatedChallenges(id)
-      .subscribe((data) => {
-        this.relatedChallengesData = new DataChallenge(data)
-        this.relatedListOfChallenges = this.relatedChallengesData.challenges
-      })
   }
 
   onActiveIdChange (newActiveId: number): void {
