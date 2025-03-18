@@ -93,8 +93,9 @@
   display: flex;
   font-weight: 600;
   font-size: 1.1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2.75rem;
   color: #333;
+  align-items: center;
 }
 
 .section-number {
