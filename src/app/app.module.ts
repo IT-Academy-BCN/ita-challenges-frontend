@@ -19,7 +19,6 @@ import localeEs from '@angular/common/locales/es'
 import localeCa from '@angular/common/locales/ca'
 import localeEn from '@angular/common/locales/en'
 import { registerLocaleData } from '@angular/common'
-import { MockInterceptor } from './interceptors/mock-interceptor'
 
 registerLocaleData(localeEs, 'es')
 registerLocaleData(localeCa, 'ca')
@@ -54,7 +53,6 @@ export function HttpLoaderFactory (http: HttpClient): any {
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'ca' }, // Establecemos Catalán como idioma por defecto.
-    { provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true }
   ]
 })
 export class AppModule { }
