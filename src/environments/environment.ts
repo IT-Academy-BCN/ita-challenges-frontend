@@ -31,6 +31,6 @@ export const environment = {
   HTTP_CODE_BAD_REQUEST: 400,
   HTTP_CODE_UNAUTHORIZED: 401,
   HTTP_CODE_FORBIDDEN: 403,
-  GITHUB_CLIENT_ID: 'Ov23liatIZRCf3flyPtL',
+  GITHUB_CLIENT_ID: 'Ov23lieA4pZVvg3Vn9Vt',
   GITHUB_REDIRECT_URI: 'http://localhost:4200/ita-challenge/challenges'
 }
