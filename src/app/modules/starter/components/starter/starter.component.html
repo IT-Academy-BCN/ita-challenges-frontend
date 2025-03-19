@@ -11,6 +11,11 @@
       <!-- TITLE -->
       <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
 
+      <!-- NEW CHALLENGE BTN (Visible only for mentors) -->
+        <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin"  class="btn btn-primary new-challenge-btn">
+          {{ "components.mainMenu.section4.title" | translate }}
+        </button>
+
       <!-- MOBILE FILTER BTN -->
       <button class="d-xl-none btn btn-outline-primary btnFiltrar" (click)="openModal()">
         <strong>Filtrar</strong>

@@ -10,10 +10,17 @@
     </label>
   </div>
 
-  <!-- Settings -->
-  <div>
-    <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
-      <img src="assets/img/icon/setting.svg" alt="Settings" />
-    </a>
-  </div>
+  <!-- Login -->
+  @if(isLoggedIn){
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
+      {{'modules.challenge.header.login' | translate}}
+    </button>
+  } @else {
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
+      {{'modules.challenge.header.login' | translate}}
+    </button>
+  }
+
+  <app-mentor-login (loginSuccess)="onLoginSuccess($event)"></app-mentor-login>
+
 </div>
