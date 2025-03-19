@@ -38,7 +38,8 @@
                 "buttonSaveChallenge": "Guardar reto",
                 "buttonSendSolution": "Enviar solució",
                 "buttonCancel": "Cancel.lar",
-                "solutionSend": "Solució enviada"
+                "solutionSend": "Solució enviada",
+                "login": "Iniciar sessió"
             },
             "info": {
                 "detailsTitle": "Detalls",
@@ -62,6 +63,16 @@
                 "solutionsLocked": "Les solucions romandran bloquejades fins que entreguis el repte."
 
 
+            }
+        },
+        "mentor": {
+            "login": {
+                "title": "Inici de sessió",
+                "button": "Iniciar sessió amb GitHub",
+                "legal": "Accepto els termes legals",
+                "validation": {
+                   "legal": "Ha d'acceptar els termes i condicions."
+                }
             }
         },
         "starter": {
