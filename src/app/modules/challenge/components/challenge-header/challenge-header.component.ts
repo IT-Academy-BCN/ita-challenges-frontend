@@ -26,7 +26,6 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() activeId!: number
   @Input() idChallenge!: string
   @Input() showEditor: boolean = false
-  @Input() saved_count: number = 0
   @Input() favorites_count: number = 0
 
   @Output() startChallenge = new EventEmitter<boolean>()

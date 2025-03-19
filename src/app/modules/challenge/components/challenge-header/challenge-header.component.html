@@ -1,72 +1,72 @@
   <div class="row">
-    <div class="col-12 col-md-9">
-      <p class="breadcrumbs">
-        <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
-        <span id="color">{{ "modules.challenge.header.section" | translate }}</span>
-      </p>
-      <div class="d-flex align-items-start">
-        <div class="difficulty">
-          <div class="difficulty d-flex" *ngIf="level == 'EASY'">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-          </div>
-          <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-          </div>
-          <div class="difficulty d-flex" *ngIf="level == 'HARD'">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-            <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          </div>
+  <div class="col-12 col-md-9">
+    <p class="breadcrumbs">
+      <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
+      <span id="color">{{ "modules.challenge.header.section" | translate }}</span>
+    </p>
+    <div class="d-flex align-items-start">
+      <div class="difficulty">
+        <div class="difficulty d-flex" *ngIf="level == 'EASY'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
         </div>
-        <div class="title">
-          <h3 class="ms-2">{{title | dynamicTranslate}}</h3>
+        <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
+        </div>
+        <div class="difficulty d-flex" *ngIf="level == 'HARD'">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
         </div>
       </div>
-      <div class="stats">
-        <span class="stat">
-          <img src="assets/img/icon/user.svg" alt="User">
-          IT-Academy
-        </span>
-        <span class="stat">
-          <img src="assets/img/icon/bullseye.svg" alt="Bullseye">
-          87%
-        </span>
-        <span class="stat" [ngbTooltip]="'tooltips.savedTimes' | translate">
-          <img src="assets/img/icon/bookmark.svg" alt="Bookmark">
-          {{saved_count}}
-        </span>
-        <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" style="cursor: pointer;">
-          <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Add to favorites">
-          <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Remove from favorites">
-          {{favorites_count}}
-        </span>
-        <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
-          <img src="assets/img/icon/clock.svg" alt="Date">
-          {{creation_date | date:'mediumDate':'':currentLang}}
-        </span>
+      <div class="title">
+        <h3 class="ms-2">{{title | dynamicTranslate}}</h3>
       </div>
     </div>
-
-    <div class="actions" class="col-3 button d-none d-md-flex">
-      <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
-      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
-      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+    <div class="stats">
+      <span class="stat">
+        <img src="assets/img/icon/user.svg" alt="User">
+        IT-Academy
+      </span>
+      <span class="stat">
+        <img src="assets/img/icon/bullseye.svg" alt="Bullseye">
+        87%
+      </span>
+      <span class="stat" [ngbTooltip]="'tooltips.savedTimes' | translate">
+        <img src="assets/img/icon/bookmark.svg" alt="Bookmark">
+        0
+      </span>
+      <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" style="cursor: pointer;">
+        <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Add to favorites">
+        <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Remove from favorites">
+        {{favorites_count}}
+      </span>
+      <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
+        <img src="assets/img/icon/clock.svg" alt="Date">
+        {{creation_date | date:'mediumDate':'':currentLang}}
+      </span>
     </div>
+  </div>
 
-     <!-- Si la solución fue enviada, muestra mensaje de confirmación -->
-     <!-- <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
-      <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
-      <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-      </div> -->
-    
-     <!-- Si ya se envió la solución -->
-    <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
-      <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-      <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-    </div>
-    
+  <div class="actions" class="col-3 button d-none d-md-flex">
+    <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
+    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+  </div>
+
+   <!-- Si la solución fue enviada, muestra mensaje de confirmación -->
+   <!-- <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
+    <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
+    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+    </div> -->
+  
+   <!-- Si ya se envió la solución -->
+  <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
+    <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
+    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+  </div>
+  
 </div>
