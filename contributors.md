@@ -28,3 +28,4 @@
 - Alvaro Ledesma - https://github.com/7ldsma
 - Guillem Babot - https://github.com/GuillemBo
 - Manuel Krapovickas - https://github.com/manuK1777
+- Miranda Callejón - https://github.com/mcallejo-10
