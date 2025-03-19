@@ -8,7 +8,6 @@ import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
-// import {environment} from "../../environments/environment";
 import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
@@ -120,7 +119,7 @@ export class ChallengeService {
 
   // Mocked version for frontend testing
   addToFavorites(challengeId: string): Observable<FavoriteResponse> {
-    // Get current count
+  
     const currentCount = this.getMockFavoriteCount(challengeId);
     
     // Create a mock response
@@ -129,12 +128,11 @@ export class ChallengeService {
       timesFavorited: currentCount + 1
     }
     
-    // Store the favorite state
+    
     localStorage.setItem(`is_favorite_${challengeId}`, 'true');
-    // Store the updated count
+   
     localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
     
-    // Return an observable that emits the mock response
     return of(mockResponse).pipe(delay(300));
   }
 
@@ -153,7 +151,7 @@ export class ChallengeService {
 
   // Mocked version for frontend testing
   removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-    // Get current count
+
     const currentCount = this.getMockFavoriteCount(challengeId);
     
     // Create a mock response
@@ -162,12 +160,9 @@ export class ChallengeService {
       timesFavorited: currentCount > 0 ? currentCount - 1 : 0
     }
     
-    // Store the favorite state
     localStorage.setItem(`is_favorite_${challengeId}`, 'false');
-    // Store the updated count
     localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
     
-    // Return an observable that emits the mock response
     return of(mockResponse).pipe(delay(300));
   }
 
@@ -178,8 +173,4 @@ export class ChallengeService {
     return storedCount ? parseInt(storedCount, 10) : 0
   }
 
-  private updateMockFavoriteCount(challengeId: string, count: number): void {
-    const key = `favorites_count_${challengeId}`
-    localStorage.setItem(key, count.toString())
-  }
 }
