@@ -4,7 +4,6 @@ import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
 
-// Mock de NavService
 class MockNavService {
   public selectWidth = '69px'
 
@@ -13,7 +12,6 @@ class MockNavService {
   })
 }
 
-// Mock de ActivatedRoute para pruebas
 const mockActivatedRoute = {
   snapshot: {
     paramMap: {
@@ -54,7 +52,7 @@ describe('DesktopNavComponent', () => {
     component.changeLanguage(event)
 
     expect(navService.changeLanguage).toHaveBeenCalledWith('es')
-    expect(navService.selectWidth).toBe('57px') // Verifica que el selectWidth se actualiza correctamente
+    expect(navService.selectWidth).toBe('57px')
   })
 
   it('should change language to "ca" and update selectWidth accordingly', () => {
@@ -64,6 +62,14 @@ describe('DesktopNavComponent', () => {
     component.changeLanguage(event)
 
     expect(navService.changeLanguage).toHaveBeenCalledWith('ca')
-    expect(navService.selectWidth).toBe('69px') // Verifica que el selectWidth se actualiza correctamente
+    expect(navService.selectWidth).toBe('69px')
+  })
+
+  it('should update isLoggedIn when onLoginSuccess is called', () => {
+    component.onLoginSuccess(true)
+    expect(component.isLoggedIn).toBe(true)
+
+    component.onLoginSuccess(false)
+    expect(component.isLoggedIn).toBe(false)
   })
 })
