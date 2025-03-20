@@ -25,6 +25,7 @@ export class StarterComponent implements OnInit {
   challengesSubs$!: Subscription
   sortedChallengesSubs$!: Subscription
   filteredChallengesSubs$!: Subscription
+  userRoleSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
@@ -49,7 +50,7 @@ export class StarterComponent implements OnInit {
 
   ngOnInit (): void {
     this.getChallenge()
-    this._authService.getUserRole().subscribe(role => {
+    this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
   }
@@ -58,6 +59,7 @@ export class StarterComponent implements OnInit {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
+    if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
   }
 
   getChallenge (): void {

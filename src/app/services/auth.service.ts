@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -7,18 +7,29 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
   private userRole: string = '';
+  private userRoleSubject = new BehaviorSubject<string>('');
 
-  constructor() {}
+  constructor() {
+    // Initialize the role from localStorage on service creation
+    this.updateUserRoleFromToken();
+  }
 
   getUserRole(): Observable<string> {
+    return this.userRoleSubject.asObservable();
+  }
+
+  // Method to update the user role when authentication changes
+  updateUserRoleFromToken(): void {
     const token = localStorage.getItem('authToken');
-    return of(token).pipe(
-      map(t => {
-        if (!t) return '';
-        const decodedToken = this.decodeToken(t);
-        return decodedToken?.role ?? '';
-      })
-    );
+    if (!token) {
+      this.userRole = '';
+      this.userRoleSubject.next('');
+      return;
+    }
+    
+    const decodedToken = this.decodeToken(token);
+    this.userRole = decodedToken?.role ?? '';
+    this.userRoleSubject.next(this.userRole);
   }
 
   private decodeToken(token: string): any {
