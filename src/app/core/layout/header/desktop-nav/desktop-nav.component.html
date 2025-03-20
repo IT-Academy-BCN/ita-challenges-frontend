@@ -12,11 +12,11 @@
 
   <!-- Login -->
   @if(isLoggedIn){
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
+    <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
       {{'modules.challenge.header.login' | translate}}
     </button>
   } @else {
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
+    <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
       {{'modules.challenge.header.login' | translate}}
     </button>
   }
