@@ -41,43 +41,42 @@
       color: $white;
       border: 1px solid $white;
       cursor: not-allowed;
-  }
-}
-
-.setting {
-  width: 45px;
-  height: 32px;
-  background: $white;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      color: $primary;
-    }
-
-    &::before {
-      -moz-transition: all 0.15s ease-out;
-      -webkit-transition: all 0.15s ease-out;
-      -ms-transition: all 0.15s ease-out;
-      -o-transition: all 0.15s ease-out;
-      transition: all 0.15s ease-out;
-      content: "";
-      position: absolute;
-      left: 0;
-      display: block;
-      width: 9px;
-      height: 9px;
-      background: transparent;
-      border-radius: 9px;
     }
   }
-}
 
+  .setting {
+    width: 45px;
+    height: 32px;
+    background: $white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: $primary;
+      }
+
+      &::before {
+        -moz-transition: all 0.15s ease-out;
+        -webkit-transition: all 0.15s ease-out;
+        -ms-transition: all 0.15s ease-out;
+        -o-transition: all 0.15s ease-out;
+        transition: all 0.15s ease-out;
+        content: "";
+        position: absolute;
+        left: 0;
+        display: block;
+        width: 9px;
+        height: 9px;
+        background: transparent;
+        border-radius: 9px;
+      }
+    }
+  }
 
   .user {
     border: unset;
@@ -87,7 +86,6 @@
     border-radius: 10px;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .desktop-nav {

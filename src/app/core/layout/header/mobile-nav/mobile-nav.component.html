@@ -32,15 +32,23 @@
         </label>
       </div>
 
-      <!-- Settings -->
-      <div class="pe-3">
-        <a class="setting" [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
-          <img src="assets/img/icon/setting.svg" alt="Settings" />
-        </a>
+      <!-- Login -->
+      @if(isLoggedIn){
+        <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
+          {{'modules.challenge.header.login' | translate}}
+        </button>
+      } @else {
+        <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
+          {{'modules.challenge.header.login' | translate}}
+        </button>
+      }
+
       </div>
-    </div>
   </div>
 </div>
+
+<app-mentor-login (loginSuccess)="onLoginSuccess($event)"></app-mentor-login>
+ 
 
 <nav class="navbar navbar-expand-md align-items-center">
   

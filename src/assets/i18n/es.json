@@ -38,7 +38,8 @@
                 "buttonSaveChallenge": "Guardar reto",
                 "buttonSendSolution": "Enviar solución",
                 "buttonCancel": "Cancelar",
-                "solutionSend": "Solución enviada"
+                "solutionSend": "Solución enviada",
+                "login": "Iniciar sesión"
             },
             "info": {
                 "detailsTitle": "Detalles",
@@ -59,6 +60,16 @@
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
                 "solutionsTitleLocked":"Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto"
+            }
+        },
+        "mentor": {
+            "login": {
+                "title": "Inicio de sesión",
+                "button": "Iniciar sesión con GitHub",
+                "legal": "Acepto los términos legales",
+                "validation": {
+                    "legal": "Debes aceptar los términos y condiciones."
+                 }  
             }
         },
         "starter": {
