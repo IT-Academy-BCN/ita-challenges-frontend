@@ -183,8 +183,8 @@
 /* DIFICULTAD */
 .difficulty-group {
   display: flex;
-  gap: 2.5rem;
-  margin-top: 1rem;
+  gap: 0.6rem;
+  font-size: 12px;
 }
 
 .difficulty-option {
@@ -205,9 +205,7 @@
 .difficulty-label {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   cursor: pointer;
-  padding: 0.5rem;
   border-radius: 8px;
   transition: all 0.2s;
 }
@@ -236,12 +234,11 @@
 
 .lightning-group {
   display: flex;
-  gap: 2px;
   height: 15px;
 }
 .lightning-group img {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 18px;
 }
 
 /* CodeMirror */
@@ -249,8 +246,9 @@
   border: 1px solid #ced4da;
   border-radius: 8px;
   overflow: hidden;
-  min-height: 300px;
+  min-height: 260px;
   resize: vertical;
+  height: 260px;
 }
 
 /* TinyMCE */
@@ -306,6 +304,6 @@
 
 @media (min-width: 768px) {
   .editor-container, .codemirror-container, .form-control {
-    width: 50%;
+    width: 68%;
   }
 }
