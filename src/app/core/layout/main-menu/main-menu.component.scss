@@ -4,6 +4,12 @@
   height: 500px;
   gap: 175px;
 
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+
   a {
     position: relative;
     width: max-content;
@@ -11,7 +17,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    margin-bottom: 38px;
+    margin-bottom: 23px;
     padding-right: 15px;
     padding-left: 0;
 
@@ -21,7 +27,7 @@
     -o-transition: all 0.15s ease-out;
     transition: all 0.15s ease-out;
 
-    font-size: 14px;
+    font-size: 10px;
     line-height: 16px;
     font-weight: 600;
 

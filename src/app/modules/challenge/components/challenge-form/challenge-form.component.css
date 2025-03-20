@@ -13,9 +13,9 @@
 }
 
 .breadcrumb {
-  font-size: 0.85rem;
+  font-size: 0.70rem;
   color: #666;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0rem;
 }
 
 .header-content {
@@ -26,7 +26,7 @@
 }
 
 .form-title {
-  font-size: 1.5rem;
+  font-size: 1.18rem;
   font-weight: bold;
   margin: 0;
   color: #333;
@@ -41,7 +41,7 @@
 /* Botones */
 .btn-cancel, .btn-primary {
   font-size: 0.9rem;
-  padding: 0.8rem 2.7rem;
+  padding: 0.25rem 0.625rem;
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
@@ -92,8 +92,8 @@
 .section h4 {
   display: flex;
   font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 2.75rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.90rem;
   color: #333;
   align-items: center;
 }
@@ -102,11 +102,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   background-color: black;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: bold;
   border-radius: 50%;
   margin-right: 0.75rem;
@@ -115,14 +115,19 @@
 /* CAMPOS DEL FORMULARIO */
 .form-label {
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: #333;
+  font-size: 0.7rem;
+}
+
+.form-group {
+  margin-bottom: 0.8rem;
 }
 
 .form-control {
   border: 1px solid #ced4da;
   border-radius: 8px;
-  padding: 0.625rem 0.875rem;
+  padding: 0.125rem 0.275rem;
   font-size: 0.95rem;
   transition: border-color 0.2s;
 }
@@ -136,18 +141,17 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 12px;
 }
 
 .btn-outline-secondary {
-  font-weight: bold;
+  font-weight: normal;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #ddd;
   border-radius: 8px;
-  padding: 16px 20px;
-  font-size: 14px;
+  padding: 0.563rem 0.563rem;
+  font-size: 12px;
   background-color: white;
   color: #333;
   cursor: pointer;
@@ -302,6 +306,6 @@
 
 @media (min-width: 768px) {
   .editor-container, .codemirror-container, .form-control {
-    width: 75%;
+    width: 50%;
   }
 }
