@@ -1,21 +1,12 @@
 :host {
   display: block;
-  padding: 2rem 0;
   min-height: auto;
-  background-color: #f5f5f5;
   overflow-y: auto; 
 }
 
-.card {
-  max-width: 880px;
-  margin: 0 auto 2rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 /* CABECERA */
-.card-header {
+.header {
   padding: 1rem 1.5rem;
   background: white;
   border-bottom: 1px solid #ddd;
@@ -36,7 +27,7 @@
 
 .form-title {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: bold;
   margin: 0;
   color: #333;
 }
@@ -50,9 +41,9 @@
 /* Botones */
 .btn-cancel, .btn-primary {
   font-size: 0.9rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0.8rem 2.7rem;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -69,7 +60,6 @@
 .btn-primary {
   background-color: #C13584;
   border-color: #C13584;
-  padding: 0.5rem 2rem;
   font-weight: 500;
   color: white;
 }
@@ -83,7 +73,7 @@
 }
 
 /* CUERPO DEL FORMULARIO */
-.card-body {
+.body {
   padding: 1.5rem;
 }
 
@@ -101,11 +91,11 @@
 
 .section h4 {
   display: flex;
-  align-items: center;
   font-weight: 600;
   font-size: 1.1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2.75rem;
   color: #333;
+  align-items: center;
 }
 
 .section-number {
@@ -131,7 +121,7 @@
 
 .form-control {
   border: 1px solid #ced4da;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.625rem 0.875rem;
   font-size: 0.95rem;
   transition: border-color 0.2s;
@@ -150,12 +140,13 @@
 }
 
 .btn-outline-secondary {
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 8px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 16px 20px;
   font-size: 14px;
   background-color: white;
   color: #333;
@@ -163,14 +154,15 @@
   transition: all 0.2s;
   min-width: 120px;
 }
+
 .btn-outline-secondary:hover {
   border-color: #C13584;
 }
+
 .btn-outline-secondary.active {
-  background-color: #C13584;
   border-color: #C13584;
-  color: white;
 }
+
 .btn-outline-secondary img {
   width: 16px;
   height: 16px;
@@ -212,7 +204,7 @@
   gap: 0.75rem;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   transition: all 0.2s;
 }
 
@@ -220,19 +212,19 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid #C13584;
+  border: 1px solid #C13584;
   position: relative;
 }
 .radio-circle.selected {
-  background-color: #C13584;
+  background-color: white;
 }
 .radio-circle.selected:after {
   content: '';
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #C13584;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -241,6 +233,7 @@
 .lightning-group {
   display: flex;
   gap: 2px;
+  height: 15px;
 }
 .lightning-group img {
   width: 20px;
@@ -290,5 +283,25 @@
   ::ng-deep .tox-emoji-picker {
     max-width: 280px !important;
     max-height: 300px !important;
+  }
+  .form-control {
+    width: 100%;
+  }
+  .difficulty-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 574px) { 
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .editor-container, .codemirror-container, .form-control {
+    width: 75%;
   }
 }
