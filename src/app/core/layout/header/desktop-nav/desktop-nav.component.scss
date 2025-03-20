@@ -21,15 +21,6 @@
     }
   }
 
-  .setting {
-    width: 45px;
-    height: 32px;
-    background: $white;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
  .login {
     font-size: 1rem;
     border: none;
@@ -54,8 +45,8 @@
 }
 
 .setting {
-  width: 48px;
-  height: 41px;
+  width: 45px;
+  height: 32px;
   background: $white;
   border-radius: 10px;
   display: flex;
@@ -102,5 +93,4 @@
   .desktop-nav {
     display: none;
   }
-}
 }
