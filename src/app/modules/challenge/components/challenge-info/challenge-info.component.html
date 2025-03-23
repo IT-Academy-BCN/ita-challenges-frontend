@@ -16,7 +16,7 @@
 
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
-        <div class="d-block btn-row text-end mb-3">
+        <div class="d-block btn-row text-end mb-3" *ngIf="!isAdmin">
           <span class="right-span d-inline-flex">
             <input
               type="checkbox"
