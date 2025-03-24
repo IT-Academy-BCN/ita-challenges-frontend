@@ -52,7 +52,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
     })],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: LOCALE_ID, useValue: 'ca' }, // Establecemos Catalán como idioma por defecto.
+    { provide: LOCALE_ID, useValue: 'ca' } // Establecemos Catalán como idioma por defecto.
   ]
 })
 export class AppModule { }
