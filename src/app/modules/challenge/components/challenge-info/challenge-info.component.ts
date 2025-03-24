@@ -127,13 +127,9 @@ implements OnInit {
     this.solutionService
       .getAllChallengeSolutions(idChallenge, idLanguage)
       .subscribe((data) => {
-        console.log('Raw data from API:', data)
         if (data.results.length > 0) {
           this.challengeSolutions = data.results
-          console.log('Challenge Solutions Loaded:', this.challengeSolutions)
-        } else {
-          console.log('No solutions found or data format issue')
-        }
+        } 
       })
   }
 
