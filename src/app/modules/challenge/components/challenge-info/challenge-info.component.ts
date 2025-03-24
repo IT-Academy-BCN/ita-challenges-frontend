@@ -79,20 +79,25 @@ implements OnInit {
 
     this.solutionService.activeIdSubject.next(1)
 
-      this.solutionSent = this.solutions.includes(this.idChallenge)
-      console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
-      this.solutionService.activeId$.subscribe((newActiveId) => {
-        this.onActiveIdChange(newActiveId)
-      })          
+    this.solutionSent = this.solutions.includes(this.idChallenge)
+    this.solutionService.activeId$.subscribe((newActiveId) => {
+      this.onActiveIdChange(newActiveId)
+    })    
 
     this.loadRelatedChallenges(this.idChallenge)
-    this.loadSolutions(this.idChallenge, this.idLanguageJava)
   }
 
   ngOnChanges (changes: SimpleChanges): void {
     if (changes['startChallenge']?.currentValue === true) {
       this.showEditor = true
       this.onChallengeStart()
+    }
+
+    if (changes['activeId']?.currentValue === 2) {
+      const idLanguage = this.languages[0].id_language;
+      if (this.isAdmin && this.idChallenge && idLanguage) {
+        this.loadSolutions(this.idChallenge, idLanguage);
+      }
     }
   }
 
@@ -145,6 +150,14 @@ implements OnInit {
         }
       })
   }
+
+  // loadAdminSolutions(idChallenge: string, idLanguage: string): void {
+
+  //   this.solutionService.getAllChallengeSolutions(idChallenge, idLanguage).subscribe((data) => {
+  //     this.challengeSolutions = data.results;
+  //   });
+
+  // }
 
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen

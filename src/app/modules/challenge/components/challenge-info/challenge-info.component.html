@@ -71,16 +71,46 @@
 
   <!--SOLUTIONS TAB-->
 
-  <li [ngbNavItem]="2" (click)="onActiveIdChange(2)">
+  <li *ngIf="isAdmin" [ngbNavItem]="2" (click)="onActiveIdChange(2)">
+    <a href="#solutions" ngbNavLink>{{ "modules.challenge.info.solutionsTitle" | translate }}</a>
+    <ng-template ngbNavContent>
+
+      <div class="tab-content">
+        <div class="pb-1">
+          <h3 class="mt-0">
+            {{ "modules.challenge.info.solutionsTitle" | translate }}
+          </h3>
+        </div>
+
+        <ng-container *ngIf="challengeSolutions && challengeSolutions.length > 0">
+          <ng-container *ngFor="let solution of challengeSolutions; let i = index">
+            <app-solution
+              [number]="i + 1"
+              class="mb-4"
+              [solution_text]="solution.solution_text"
+            >
+            </app-solution>
+          </ng-container>
+        </ng-container>
+  
+        <div *ngIf="challengeSolutions?.length === 0">
+          <p>{{ "modules.challenge.info.noSolutions" | translate }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+
+  <li *ngIf="!isAdmin" [ngbNavItem]="2" (click)="onActiveIdChange(2)">
     <a href="#solutions" ngbNavLink>{{
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
       <!-- Los usuarios solo pueden ver otras soluciones si enviaron la suya -->
       <div class="tab-content">
+
         <div class="restricted" *ngIf="!solutionSent">
           <h3>
-            {{ "modules.challenge.info.solutionsTitleLocked" | translate }}
+            {{ "modules.challenge.info.solutionsTitle" | translate }}
           </h3>
           <span class="lock">
             <img src="assets/img/icon/lock.svg" alt="lock icon" />
