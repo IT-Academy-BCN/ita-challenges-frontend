@@ -59,9 +59,8 @@
                 "solutionCode": "// Write your code here",
                 "solutionsChallenge": "Example answer, cannot be modified",
                 "solutionsTitleLocked":"The solutions are locked.",
-                "solutionsLocked": "Solutions will remain locked until you submit the challenge"
-
-
+                "solutionsLocked": "Solutions will remain locked until you submit the challenge",
+                "noResources": "There are no resources available for this challenge."
                
             }
         },

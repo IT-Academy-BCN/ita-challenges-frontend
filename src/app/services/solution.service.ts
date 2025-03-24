@@ -30,7 +30,7 @@ export class SolutionService {
   }
 
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {
-    return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${idChallenge}/language/${idLanguage}`,
+    return this.http.get<DataSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/challenge/${idChallenge}/language/${idLanguage}`,
       {
         headers: {
           'Content-Type': 'application/json'

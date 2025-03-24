@@ -148,7 +148,10 @@
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
       <div class="tab-content">
-        <p>There are no resources for now.</p>
+        <h3>{{ "modules.challenge.info.resourcesTitle" | translate }}</h3>
+        <section class="info-card d-flex flex-column gap-3">
+          <p>{{ "modules.challenge.info.noResources" | translate }} </p>
+        </section>
       </div>
     </ng-template>
   </li>
