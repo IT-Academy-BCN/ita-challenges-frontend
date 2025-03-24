@@ -7,11 +7,19 @@ import { NavService } from 'src/app/services/nav.service'
   styleUrl: './desktop-nav.component.scss'
 })
 export class DesktopNavComponent {
-  constructor (@Inject(NavService) public navService: NavService) {}
+  isLoggedIn = false
+
+  constructor (@Inject(NavService) public navService: NavService) {
+    this.isLoggedIn = !(localStorage.getItem('authToken') == null)
+  }
 
   changeLanguage (event: Event): void {
     const selectElement = event.target as HTMLSelectElement
     const language = selectElement.value
     this.navService.changeLanguage(language)
+  }
+
+  onLoginSuccess (isLogged: boolean): void {
+    this.isLoggedIn = isLogged
   }
 }

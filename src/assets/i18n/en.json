@@ -38,7 +38,8 @@
                 "buttonSaveChallenge": "Save challenge",
                 "buttonSendSolution": "Send solution",
                 "buttonCancel": "Cancel",
-                "solutionSend": "Solution sent"
+                "solutionSend": "Solution sent",
+                "login": "Log In"
             },
             "info": {
                 "detailsTitle": "Details",
@@ -61,6 +62,16 @@
                 "solutionsLocked": "Solutions will remain locked until you submit the challenge",
                 "noResources": "There are no resources available for this challenge."
                
+            }
+        },
+        "mentor": {
+            "login": {
+                "title": "Sign in to continue",
+                "button": "Sign in with GitHub",
+                "legal": "I accept the legal terms",
+                "validation": {
+                    "legal": "You must accept the terms and conditions."
+                 }
             }
         },
         "starter": {

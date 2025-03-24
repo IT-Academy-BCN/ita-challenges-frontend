@@ -6,6 +6,8 @@ import { Challenge } from '../../../../models/challenge.model'
 import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
+import { AuthService } from 'src/app/services/auth.service'
+import * as bootstrap from 'bootstrap'
 /* import { RouteConfigLoadEnd } from '@angular/router'
  */
 @Component({
@@ -17,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core'
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
+  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef;
 
   challenges: Challenge[] = []
   challengesSubs$!: Subscription
@@ -36,13 +39,19 @@ export class StarterComponent implements OnInit {
   startIndex: number = 0
   paginationFilters: Challenge[] = []
   isMobile: boolean = window.innerWidth < 768
+  isAdmin: boolean = false;
+
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
-    @Inject(TranslateService) readonly translate: TranslateService
+    @Inject(TranslateService) readonly translate: TranslateService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit (): void {
     this.getChallenge()
+    this._authService.getUserRole().subscribe(role => {
+      this.isAdmin = role === 'ADMIN'
+    })
   }
 
   ngOnDestroy (): void {
@@ -133,4 +142,5 @@ export class StarterComponent implements OnInit {
       }
     }
   }
+
 }

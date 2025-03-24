@@ -1,31 +1,55 @@
-<div class="d-flex justify-content-center mt-5">
-  <button class="github-button" (click)="loginWithGitHub()">
-    <img
-      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      alt="GitHub Logo"
-      width="25"
-    />
-    <span>Sign in with GitHub</span>
-  </button>
-</div>
+<div class="modal fade" id="mentorLoginModal" tabindex="-1" aria-labelledby="mentorLoginModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-end border-0">
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-title text-center w-100" id="mentorLoginModalLabel">
+        {{'modules.mentor.login.title' | translate}}
+      </div>
+      <div class="modal-body">
 
+        <div class="text-center">
+        
+          <form [formGroup]="loginForm">
+        
+            <div class="d-flex flex-column align-items-center">
+              <button class="github-button d-flex align-items-center gap-2" 
+                  (click)="loginWithGitHub()"
+                  [disabled]="isLoading">
+                @if (isLoading){
+                  <div class="loader"><div></div><div></div><div></div><div></div></div>
+                }@else{
+                  <img src="assets/img/icon/github-white.svg" alt="GitHub Logo" width="32" />
 
-<div *ngIf="isSuccessVisible" class="popup success-popup">
-  <button class="close-btn" (click)="closeSuccess()">×</button>
-  <div class="success-message">{{'messages.success.welcome' | translate}}</div>
-</div>
+                  <div class="github-text">{{'modules.mentor.login.button' | translate}}</div>
+                }
+              </button>
+          
+              <label class="d-flex align-items-center gap-2">
+                <input type="checkbox" class="form-check-input" formControlName="termsCheck">
+                <div class="term-text">{{'modules.mentor.login.legal' | translate}}</div>
+              </label>    
+            </div>
+        
+          </form>
+                
+            <div class="error-container">         
+            @if (isShowTermsError){
+              <div class="error-message">
+                {{'modules.mentor.login.validation.legal' | translate}}
+              </div>
+            }
+            @if (isErrorVisible){
+              <div class="error-message">
+                {{ 'messages.errors.unauthorized' | translate }}
+              </div>
+            }
+          </div>
 
-<div *ngIf="isErrorVisible" class="popup error-popup">
-  <div class="d-flex justify-content-center mt-5">
-    <button class="github-button" (click)="loginWithGitHub()">
-      <img
-        src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-        alt="GitHub Logo"
-        width="25"
-      />
-      <span>Sign in with GitHub</span>
-    </button>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <button class="close-btn" (click)="closeError()">×</button>
-  <div class="error-message">{{ 'messages.errors.unauthorized' | translate }}</div>
 </div>
