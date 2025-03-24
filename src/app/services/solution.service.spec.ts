@@ -55,7 +55,7 @@ describe('SolutionService', () => {
       done()
     })
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/${testChallengeId}/language/${testLanguageId}`)
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SOLUTION}/challenge/${testChallengeId}/language/${testLanguageId}`)
     expect(req.request.method).toBe('GET')
     req.flush(mockData)
   })
