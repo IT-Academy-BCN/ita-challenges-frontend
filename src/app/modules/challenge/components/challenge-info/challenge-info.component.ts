@@ -46,11 +46,7 @@ implements OnInit {
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
-<<<<<<< HEAD
-  private readonly relatedService = inject(RelatedService)
   private readonly authService = inject(AuthService)
-=======
->>>>>>> 64ba63cfff7bdbca56353cec1a0497228aea8405
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
@@ -77,7 +73,6 @@ implements OnInit {
       this.isAdmin = role === 'ADMIN'
     })
 
-<<<<<<< HEAD
     this.solutionService.activeIdSubject.next(1)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
@@ -85,10 +80,6 @@ implements OnInit {
       this.onActiveIdChange(newActiveId)
     })    
 
-    this.loadRelatedChallenges(this.idChallenge)
-=======
-    this.loadSolutions(this.idChallenge, this.idLanguageJava)
->>>>>>> 64ba63cfff7bdbca56353cec1a0497228aea8405
   }
 
   ngOnChanges (changes: SimpleChanges): void {
@@ -145,14 +136,6 @@ implements OnInit {
         }
       })
   }
-
-  // loadAdminSolutions(idChallenge: string, idLanguage: string): void {
-
-  //   this.solutionService.getAllChallengeSolutions(idChallenge, idLanguage).subscribe((data) => {
-  //     this.challengeSolutions = data.results;
-  //   });
-
-  // }
 
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen
