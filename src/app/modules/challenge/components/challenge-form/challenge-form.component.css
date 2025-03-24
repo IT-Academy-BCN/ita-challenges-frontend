@@ -13,7 +13,7 @@
 }
 
 .breadcrumb {
-  font-size: 0.70rem;
+  font-size: 14px;
   color: #666;
   margin-bottom: 0rem;
 }
@@ -26,9 +26,9 @@
 }
 
 .form-title {
-  font-size: 1.18rem;
+  font-size: 1.50rem;
   font-weight: bold;
-  margin: 0;
+  margin-top: 8px;
   color: #333;
 }
 
@@ -40,8 +40,8 @@
 
 /* Botones */
 .btn-cancel, .btn-primary {
-  font-size: 0.9rem;
-  padding: 0.25rem 0.625rem;
+  font-size: 0.875rem;
+  padding: 0.50rem 0.80rem;
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
@@ -62,6 +62,7 @@
   border-color: #C13584;
   font-weight: 500;
   color: white;
+  border: none;
 }
 .btn-primary:hover {
   background-color: #a12d6e;
@@ -80,7 +81,7 @@
 /* SECCIONES DEL FORMULARIO */
 .section {
   margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
 }
 .section:last-child {
@@ -92,7 +93,7 @@
 .section h4 {
   display: flex;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 14px;
   margin-bottom: 0.90rem;
   color: #333;
   align-items: center;
@@ -106,7 +107,7 @@
   height: 16px;
   background-color: black;
   color: white;
-  font-size: 0.6rem;
+  font-size: 14px;
   font-weight: bold;
   border-radius: 50%;
   margin-right: 0.75rem;
@@ -117,7 +118,7 @@
   font-weight: 500;
   margin-bottom: 0.3rem;
   color: #333;
-  font-size: 0.7rem;
+  font-size: 14px;
 }
 
 .form-group {
@@ -127,7 +128,7 @@
 .form-control {
   border: 1px solid #ced4da;
   border-radius: 8px;
-  padding: 0.125rem 0.275rem;
+  padding: 0.325rem 0.275rem;
   font-size: 0.95rem;
   transition: border-color 0.2s;
 }
@@ -151,7 +152,7 @@
   border: 2px solid #ddd;
   border-radius: 8px;
   padding: 0.563rem 0.563rem;
-  font-size: 12px;
+  font-size: 14px;
   background-color: white;
   color: #333;
   cursor: pointer;
@@ -183,8 +184,9 @@
 /* DIFICULTAD */
 .difficulty-group {
   display: flex;
-  gap: 1rem;
-  font-size: 12px;
+  gap: 2rem;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .difficulty-option {
