@@ -29,7 +29,6 @@ describe('AuthService', () => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
 
-    // Force the service to update the role from token
     service.updateUserRoleFromToken();
 
     let role: string | undefined;
@@ -50,18 +49,15 @@ describe('AuthService', () => {
   });
 
   it('should emit updated role when updateUserRoleFromToken is called', fakeAsync(() => {
-    // Initial state - no token
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
     tick();
     expect(initialRole).toBe('');
 
-    // Set token and update role
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleFromToken();
 
-    // Check if role was updated
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
     tick();
@@ -69,22 +65,18 @@ describe('AuthService', () => {
   }));
 
   it('should emit empty role when token is removed', fakeAsync(() => {
-    // Set initial token and role
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleFromToken();
 
-    // Verify initial role
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
     tick();
     expect(initialRole).toBe('ADMIN');
 
-    // Remove token and update role
     localStorage.removeItem('authToken');
     service.updateUserRoleFromToken();
 
-    // Check if role was updated to empty
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
     tick();

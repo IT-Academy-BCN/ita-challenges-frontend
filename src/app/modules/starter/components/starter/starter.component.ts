@@ -8,8 +8,7 @@ import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
-/* import { RouteConfigLoadEnd } from '@angular/router'
- */
+
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',

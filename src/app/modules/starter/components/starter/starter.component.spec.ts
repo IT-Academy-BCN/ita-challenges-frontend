@@ -114,36 +114,28 @@ describe('StarterComponent', () => {
   })
 
   it('should update isAdmin flag when user role changes to ADMIN', () => {
-    // Initially not admin
     expect(component.isAdmin).toBe(false)
     
-    // Emit ADMIN role
     authRoleSubject.next('ADMIN')
     
-    // Check if isAdmin was updated
-    expect(component.isAdmin).toBe(true)
+   expect(component.isAdmin).toBe(true)
   })
   
   it('should update isAdmin flag when user role changes to non-ADMIN', () => {
-    // Set initial state to admin
     authRoleSubject.next('ADMIN')
     expect(component.isAdmin).toBe(true)
     
-    // Change to non-admin role
     authRoleSubject.next('USER')
     
-    // Check if isAdmin was updated
     expect(component.isAdmin).toBe(false)
   })
   
   it('should unsubscribe from userRoleSubs$ on component destruction', () => {
-    // Create a spy on the subscription's unsubscribe method
-    spyOn(component.userRoleSubs$, 'unsubscribe')
+   spyOn(component.userRoleSubs$, 'unsubscribe')
     
-    // Trigger ngOnDestroy
+    // Trigger the component's ngOnDestroy lifecycle hook to clean up subscriptions
     component.ngOnDestroy()
     
-    // Verify unsubscribe was called
     expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled()
   })
 })
