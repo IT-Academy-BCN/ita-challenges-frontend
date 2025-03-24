@@ -164,17 +164,7 @@
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
         <section class="info-card d-flex flex-column gap-3">
-          <app-challenge-card
-            *ngFor="let relatedChallenge of relatedListOfChallenges"
-            [title]="relatedChallenge.challenge_title | dynamicTranslate"
-            [creation_date]="relatedChallenge.creation_date"
-            [level]="relatedChallenge.level"
-            [popularity]="relatedChallenge.popularity"
-            [languages]="relatedChallenge.languages"
-            [id]="relatedChallenge.id_challenge"
-            [favorites_count]="relatedChallenge.favorites_count || 0"
-          >
-          </app-challenge-card>
+          <p>{{ "modules.challenge.info.noResources" | translate }} </p>
         </section>
       </div>
     </ng-template>
