@@ -117,6 +117,7 @@
     "tooltips": {
         "startedFinished": "Començat i finalitzat",
         "savedTimes": "Vegades guardat",
+        "favorites": "Vegades marcat com favorit",
         "creationDate": "Data de creació"
     },
     "messages": {

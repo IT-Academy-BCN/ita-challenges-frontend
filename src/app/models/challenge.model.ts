@@ -8,6 +8,8 @@ export class Challenge {
   level: string
   creation_date: Date
   popularity: number
+  favorites_count: number
+  saved_count: number
   detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
@@ -18,6 +20,8 @@ export class Challenge {
     this.level = element.level
     this.creation_date = element.creation_date
     this.popularity = element.popularity
+    this.favorites_count = element.favorites_count || 0
+    this.saved_count = element.saved_count || 0
     this.detail = element.detail
 
     element.languages.forEach((language: Language) => {

@@ -71,6 +71,12 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     this.activeId = newActiveId
   }
 
+  onFavoritesUpdated(count: number): void {
+    if (this.challenge) {
+      this.challenge.favorites_count = count;
+    }
+  }
+
   loadMasterData (id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge)
