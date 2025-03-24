@@ -30,4 +30,5 @@
 - Manuel Krapovickas - https://github.com/manuK1777
 - Miranda Callejón - https://github.com/mcallejo-10
 - Jhorman Cadena - https://github.com/jhor94
+- Raul Garcia - https://github.com/rawl0408
 
