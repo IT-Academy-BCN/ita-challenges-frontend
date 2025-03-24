@@ -111,6 +111,8 @@ app-pagination {
   padding: 10px 0;
 }
 
-.new-challenge-btn {
- height: 4rem;
+.starter #challenges-container .btn.btn-sm.btn-primary.new-challenge-btn {
+  height: 2.8rem;
+  padding-left: 1.3rem !important;
+  padding-right: 1.3rem !important;
 }
