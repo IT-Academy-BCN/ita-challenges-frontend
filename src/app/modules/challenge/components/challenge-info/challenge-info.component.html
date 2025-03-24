@@ -76,17 +76,12 @@
     <ng-template ngbNavContent>
 
       <div class="tab-content">
-        <div class="pb-1">
-          <h3 class="mt-0">
-            {{ "modules.challenge.info.solutionsTitle" | translate }}
-          </h3>
-        </div>
 
         <ng-container *ngIf="challengeSolutions && challengeSolutions.length > 0">
           <ng-container *ngFor="let solution of challengeSolutions; let i = index">
             <app-solution
               [number]="i + 1"
-              class="mb-4"
+              class="mb-4 solution-container"
               [solution_text]="solution.solution_text"
             >
             </app-solution>

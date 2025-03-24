@@ -63,6 +63,13 @@
   flex-basis: 100%;
 }
 
+.solution-container{
+  width: 50%;
+  max-width: 500px;
+  margin-left: 0;
+  margin-right: auto;
+}
+
 .lock {
   display: flex;
   align-items: center;
@@ -227,4 +234,9 @@ p, ul li {
   .info-card {
       width: 100%; 
   }
+
+  .solution-container{
+    width: 100%;
+  }
+  
 }
