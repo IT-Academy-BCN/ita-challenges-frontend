@@ -1,49 +1,95 @@
+@import "/src/styles/colors";
+
+.modal-content {
+  min-height: 300px;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  min-height: 100%;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
 .github-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background-color: #24292F;
+  background-color: #050607;
   color: #ffffff;
-  padding: 8px 12px;
+  width: 15rem;
+  height: 3rem;
   border-radius: 4px;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  min-width: 180px;
-  height: 40px;
-}
-  
-.github-button:hover {
-  background-color: #3d3d3d;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background-color: #3d3d3d;
+  }
+
+  &:disabled {
+    background-color: #3d3d3d;
+    opacity: 0.5; 
+    cursor: not-allowed;
+    pointer-events: none; 
+  }
 }
 
-.github-button:disabled {
-  background-color: #3d3d3d;
-  opacity: 0.5; 
-  cursor: not-allowed;
-  pointer-events: none; 
-}
-  
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 2rem;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: rgba(0, 0, 0, 0.733);
+.github-text, .term-text {
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
-.success-message {
-  color: rgba(0, 0, 0, 0.564);
-  font-size: 0.84rem;
+.term-text:hover {
+  color: $primary;
+}
+
+.form-check-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-top: -1px;
+  border-color: #000000;
+
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  &:hover, &:focus {
+    border-color: $primary;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: inherit;
+  }
+}
+
+.error-container {
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .error-message {
+  margin-top: 1rem;
   color: rgb(255, 93, 93);
-  font-size: 0.84rem;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .loader-container {
@@ -80,6 +126,5 @@
 @keyframes spin {
   100% { transform: rotate(1turn); }
 }
-
 
 
