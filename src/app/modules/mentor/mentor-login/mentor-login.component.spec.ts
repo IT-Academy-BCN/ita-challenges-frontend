@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { of, BehaviorSubject, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
+import { AuthService } from 'src/app/services/auth.service'
 
 declare global {
   interface Window {
@@ -32,9 +33,13 @@ describe('MentorLoginComponent', () => {
   let component: MentorLoginComponent
   let fixture: ComponentFixture<MentorLoginComponent>
   let queryParams$: BehaviorSubject<any>
+  let authServiceMock: { updateUserRoleFromToken: jest.Mock }
 
   beforeEach(async () => {
     queryParams$ = new BehaviorSubject<any>({})
+    authServiceMock = {
+      updateUserRoleFromToken: jest.fn()
+    }
 
     const activatedRouteMock = {
       queryParams: queryParams$.asObservable()
@@ -49,7 +54,8 @@ describe('MentorLoginComponent', () => {
       providers: [
         provideHttpClient(),
         provideRouter([]),
-        { provide: ActivatedRoute, useValue: activatedRouteMock }
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
+        { provide: AuthService, useValue: authServiceMock }
       ]
     }).compileComponents()
   })
@@ -146,6 +152,7 @@ describe('MentorLoginComponent', () => {
     )
     expect(localStorage.getItem('username')).toBe('testUser')
     expect(localStorage.getItem('authToken')).toBe('123456')
+    expect(authServiceMock.updateUserRoleFromToken).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalledWith([], { queryParams: { code: null }, queryParamsHandling: 'merge' })
     expect(modalSpy).toHaveBeenCalled()
     expect(loginSuccessSpy).toHaveBeenCalledWith(true)

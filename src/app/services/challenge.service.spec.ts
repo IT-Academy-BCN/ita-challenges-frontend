@@ -5,6 +5,8 @@ import { TestBed, inject } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
+import { type FavoriteResponse } from '../models/favorite-response.interface'
+import { fakeAsync, tick } from '@angular/core/testing'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('ChallengeService', () => {
@@ -132,5 +134,130 @@ describe('ChallengeService', () => {
 
     req.flush(mockResponse)
     httpClientMock.verify()
+  })
+
+  // Tests for mocked favorites functionality
+  describe('Favorites functionality', () => {
+    const testChallengeId = 'test-challenge-123'
+    
+    beforeEach(() => {
+      // Clear localStorage before each test
+      localStorage.removeItem(`is_favorite_${testChallengeId}`)
+      localStorage.removeItem(`favorites_count_${testChallengeId}`)
+    })
+    
+    it('should add a challenge to favorites', fakeAsync(() => {
+      // Initial state should be empty
+      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBeNull()
+      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBeNull()
+      
+      let result: FavoriteResponse | undefined
+      
+      service.addToFavorites(testChallengeId).subscribe(response => {
+        result = response
+      })
+      
+      // Simulate the delay
+      tick(300)
+      
+      // Check the response
+      expect(result).toBeDefined()
+      expect(result?.isFavorite).toBe(true)
+      expect(result?.timesFavorited).toBe(1)
+      
+      // Check localStorage was updated correctly
+      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('true')
+      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('1')
+    }))
+    
+    it('should increment favorites count when adding multiple times', fakeAsync(() => {
+      // Set initial state
+      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
+      localStorage.setItem(`favorites_count_${testChallengeId}`, '5')
+      
+      let result: FavoriteResponse | undefined
+      
+      service.addToFavorites(testChallengeId).subscribe(response => {
+        result = response
+      })
+      
+      // Simulate the delay
+      tick(300)
+      
+      // Check the response
+      expect(result).toBeDefined()
+      expect(result?.isFavorite).toBe(true)
+      expect(result?.timesFavorited).toBe(6) // Should increment from 5 to 6
+      
+      // Check localStorage was updated correctly
+      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('true')
+      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('6')
+    }))
+    
+    it('should remove a challenge from favorites', fakeAsync(() => {
+      // Set initial state
+      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
+      localStorage.setItem(`favorites_count_${testChallengeId}`, '3')
+      
+      let result: FavoriteResponse | undefined
+      
+      service.removeFromFavorites(testChallengeId).subscribe(response => {
+        result = response
+      })
+      
+      // Simulate the delay
+      tick(300)
+      
+      // Check the response
+      expect(result).toBeDefined()
+      expect(result?.isFavorite).toBe(false)
+      expect(result?.timesFavorited).toBe(2) // Should decrement from 3 to 2
+      
+      // Check localStorage was updated correctly
+      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('false')
+      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('2')
+    }))
+    
+    it('should not decrement below zero when removing favorites', fakeAsync(() => {
+      // Set initial state with zero count
+      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
+      localStorage.setItem(`favorites_count_${testChallengeId}`, '0')
+      
+      let result: FavoriteResponse | undefined
+      
+      service.removeFromFavorites(testChallengeId).subscribe(response => {
+        result = response
+      })
+      
+      // Simulate the delay
+      tick(300)
+      
+      // Check the response
+      expect(result).toBeDefined()
+      expect(result?.isFavorite).toBe(false)
+      expect(result?.timesFavorited).toBe(0) // Should remain at 0
+      
+      // Check localStorage was updated correctly
+      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('false')
+      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('0')
+    }))
+    
+    it('should handle empty localStorage when getting mock favorite count', fakeAsync(() => {
+      // Ensure localStorage is empty
+      localStorage.removeItem(`favorites_count_${testChallengeId}`)
+      
+      let result: FavoriteResponse | undefined
+      
+      service.addToFavorites(testChallengeId).subscribe(response => {
+        result = response
+      })
+      
+      // Simulate the delay
+      tick(300)
+      
+      // Check the response starts from 0
+      expect(result).toBeDefined()
+      expect(result?.timesFavorited).toBe(1) // Should start from 0 and increment to 1
+    }))
   })
 })

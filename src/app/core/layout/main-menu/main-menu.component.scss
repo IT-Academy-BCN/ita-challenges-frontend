@@ -4,6 +4,12 @@
   height: 500px;
   gap: 175px;
 
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+
   a {
     position: relative;
     width: max-content;
@@ -11,7 +17,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    margin-bottom: 38px;
+    margin-bottom: 35px;
     padding-right: 15px;
     padding-left: 0;
 

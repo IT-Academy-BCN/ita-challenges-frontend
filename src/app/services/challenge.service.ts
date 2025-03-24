@@ -1,13 +1,14 @@
-import { Inject, Injectable } from '@angular/core'
-import { type Observable } from 'rxjs'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Inject, Injectable, inject } from '@angular/core'
+import { Observable, catchError, BehaviorSubject, of } from 'rxjs'
+import { delay } from 'rxjs/operators'
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
+import { type FavoriteResponse } from '../models/favorite-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
-// import {environment} from "../../environments/environment";
-import { BehaviorSubject } from 'rxjs'
+import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ import { BehaviorSubject } from 'rxjs'
 export class ChallengeService {
   private challengeStarted: boolean = false
   private readonly challengeStartedSubject = new BehaviorSubject<boolean>(this.getChallengeStartedFromStorage())
+  private readonly cookieService = inject(CookieService)
 
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {
     this.checkChallengeStartedFromStorage()
@@ -38,7 +40,6 @@ export class ChallengeService {
     return localStorage.getItem('challengeStarted') === 'true'
   }
 
-  // Método para verificar si el reto ha sido iniciado desde el almacenamiento local
   checkChallengeStartedFromStorage (): void {
     const storedState = localStorage.getItem('challengeStarted')
     if (storedState !== null && storedState !== '') {
@@ -56,7 +57,6 @@ export class ChallengeService {
       }
     )
   }
-
 
   async getItineraries (): Promise<Itinerary[]> {
     return await new Promise((resolve, reject) =>
@@ -90,8 +90,48 @@ export class ChallengeService {
 
   createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    console.log('URL completa:', url) // Para depurar
+    console.log('URL completa:', url) 
     return this.http.post(url, challenge)
+  }
+
+  // Mocked version for frontend testing
+  addToFavorites(challengeId: string): Observable<FavoriteResponse> {
+  
+    const currentCount = this.getMockFavoriteCount(challengeId);
+    
+    const mockResponse: FavoriteResponse = {
+      isFavorite: true,
+      timesFavorited: currentCount + 1
+    }
+    
+    localStorage.setItem(`is_favorite_${challengeId}`, 'true');
+   
+    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
+    
+    return of(mockResponse).pipe(delay(300));
+  }
+
+  // Mocked version for frontend testing
+  removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
+
+    const currentCount = this.getMockFavoriteCount(challengeId);
+    
+    const mockResponse: FavoriteResponse = {
+      isFavorite: false,
+      timesFavorited: currentCount > 0 ? currentCount - 1 : 0
+    }
+    
+    localStorage.setItem(`is_favorite_${challengeId}`, 'false');
+    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
+    
+    return of(mockResponse).pipe(delay(300));
+  }
+
+  // Helper methods for mock implementation
+  private getMockFavoriteCount(challengeId: string): number {
+    const key = `favorites_count_${challengeId}`
+    const storedCount = localStorage.getItem(key)
+    return storedCount ? parseInt(storedCount, 10) : 0
   }
 
 }

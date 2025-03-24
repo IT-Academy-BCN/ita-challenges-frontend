@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { of } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -29,6 +29,8 @@ describe('AuthService', () => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
 
+    service.updateUserRoleFromToken();
+
     let role: string | undefined;
     service.getUserRole().subscribe(r => role = r);
     tick();
@@ -45,4 +47,39 @@ describe('AuthService', () => {
     const decodedToken = service['decodeToken']('invalid.token');
     expect(decodedToken).toBeNull();
   });
+
+  it('should emit updated role when updateUserRoleFromToken is called', fakeAsync(() => {
+    let initialRole: string | undefined;
+    service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
+    tick();
+    expect(initialRole).toBe('');
+
+    const token = btoa(JSON.stringify({ role: 'ADMIN' }));
+    localStorage.setItem('authToken', `header.${token}.signature`);
+    service.updateUserRoleFromToken();
+
+    let updatedRole: string | undefined;
+    service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
+    tick();
+    expect(updatedRole).toBe('ADMIN');
+  }));
+
+  it('should emit empty role when token is removed', fakeAsync(() => {
+    const token = btoa(JSON.stringify({ role: 'ADMIN' }));
+    localStorage.setItem('authToken', `header.${token}.signature`);
+    service.updateUserRoleFromToken();
+
+    let initialRole: string | undefined;
+    service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
+    tick();
+    expect(initialRole).toBe('ADMIN');
+
+    localStorage.removeItem('authToken');
+    service.updateUserRoleFromToken();
+
+    let updatedRole: string | undefined;
+    service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
+    tick();
+    expect(updatedRole).toBe('');
+  }));
 });

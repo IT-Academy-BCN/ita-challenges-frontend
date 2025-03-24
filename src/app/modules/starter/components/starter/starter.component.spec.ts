@@ -5,13 +5,18 @@ import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { type Challenge } from 'src/app/models/challenge.model'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { of } from 'rxjs'
+import { of, BehaviorSubject } from 'rxjs'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
+import { AuthService } from 'src/app/services/auth.service'
+
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService
+  let authService: AuthService
+  let authRoleSubject: BehaviorSubject<string>
+  
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
     creation_date: new Date(`${challenge.creation_date}`),
@@ -22,15 +27,28 @@ describe('StarterComponent', () => {
   }))
 
   beforeEach(() => {
+    // Create a mock AuthService with a BehaviorSubject we can control
+    authRoleSubject = new BehaviorSubject<string>('')
+    const authServiceMock = {
+      getUserRole: () => authRoleSubject.asObservable(),
+      updateUserRoleFromToken: () => {}
+    }
+
     TestBed.configureTestingModule({
       declarations: [StarterComponent],
       imports: [TranslateModule.forRoot()],
-      providers: [StarterService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      providers: [
+        StarterService, 
+        { provide: AuthService, useValue: authServiceMock },
+        provideHttpClient(withInterceptorsFromDi()), 
+        provideHttpClientTesting()
+      ]
     })
     fixture = TestBed.createComponent(StarterComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
     starterService = TestBed.inject(StarterService)
+    authService = TestBed.inject(AuthService)
 
     component.listChallenges = []
     component.pageSize = 1
@@ -93,5 +111,31 @@ describe('StarterComponent', () => {
     expect(component.isAscending).toBe(false)
 
     expect(component.getChallengesByPage).toHaveBeenCalledTimes(2)
+  })
+
+  it('should update isAdmin flag when user role changes to ADMIN', () => {
+    expect(component.isAdmin).toBe(false)
+    
+    authRoleSubject.next('ADMIN')
+    
+   expect(component.isAdmin).toBe(true)
+  })
+  
+  it('should update isAdmin flag when user role changes to non-ADMIN', () => {
+    authRoleSubject.next('ADMIN')
+    expect(component.isAdmin).toBe(true)
+    
+    authRoleSubject.next('USER')
+    
+    expect(component.isAdmin).toBe(false)
+  })
+  
+  it('should unsubscribe from userRoleSubs$ on component destruction', () => {
+   spyOn(component.userRoleSubs$, 'unsubscribe')
+    
+    // Trigger the component's ngOnDestroy lifecycle hook to clean up subscriptions
+    component.ngOnDestroy()
+    
+    expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled()
   })
 })

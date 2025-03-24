@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment'
 import { CommonModule } from '@angular/common'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { AuthService } from 'src/app/services/auth.service'
 
 declare let bootstrap: any
 
@@ -39,6 +40,7 @@ export class MentorLoginComponent implements OnInit {
   http = inject(HttpClient)
   router = inject(Router)
   translate = inject(TranslateService)
+  authService = inject(AuthService)
 
   loginForm = new FormGroup({
     termsCheck: new FormControl(false, { nonNullable: true })
@@ -80,6 +82,8 @@ export class MentorLoginComponent implements OnInit {
         if (response.isValid) {
           localStorage.setItem('username', response.username)
           localStorage.setItem('authToken', response.token)
+          
+          this.authService.updateUserRoleFromToken()
 
           this.closeModal()
           this.loginSuccess.emit(true)
