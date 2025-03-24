@@ -1,4 +1,5 @@
 @import '/src/styles/colors';
+
 .container-fluid {
   min-height: 100%;
   gap: 30px;
@@ -7,20 +8,20 @@
   flex-direction: row;
   -webkit-box-align: center;
   background-color: rgb(235, 235, 235);
+
+  .logo {
+    max-width: 100px;
+    height: auto;
+  }
   nav {
-    // height: 100%;
-    //   display: flex;
-    //   -webkit-box-pack: justify;
-    //   justify-content: space-between;
-    //   align-items: flex-start;
-    //   margin-top: 1.75rem;
+    width: 9%;
     #menu {
       display: flex;
       flex-direction: column;
       max-width: fit-content;
       position: static;
       top: 14px;
-      gap: 70px;
+      gap: 48px;
 
       #logo {
         max-width: 100%;
@@ -36,14 +37,14 @@
     border-radius: 15px;
     width: 100%;
     height: calc(100% - 60px) !important;
-    padding: 20px 50px 20px 50px;
+    padding: 0px 40px 20px 40px;
   }
   app-main-menu {
     height: 100%;
   }
   #main-container {
     overflow: auto;
-    scrollbar-width: none;
+    // scrollbar-width: none;
   }
 }
 
@@ -65,9 +66,11 @@
 
 #main-container {
   height: 100%;
+  margin-top: 1.5rem;
 }
 #main-wrapper {
   height: 100%;
+  padding: 0%;
 }
 
 /* Nasconde per schermi con larghezza esattamente 768px */

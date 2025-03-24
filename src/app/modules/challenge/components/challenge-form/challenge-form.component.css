@@ -13,9 +13,9 @@
 }
 
 .breadcrumb {
-  font-size: 0.85rem;
+  font-size: 14px;
   color: #666;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0rem;
 }
 
 .header-content {
@@ -26,9 +26,9 @@
 }
 
 .form-title {
-  font-size: 1.5rem;
+  font-size: 1.50rem;
   font-weight: bold;
-  margin: 0;
+  margin-top: 8px;
   color: #333;
 }
 
@@ -40,8 +40,8 @@
 
 /* Botones */
 .btn-cancel, .btn-primary {
-  font-size: 0.9rem;
-  padding: 0.8rem 2.7rem;
+  font-size: 0.875rem;
+  padding: 0.50rem 0.80rem;
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
@@ -62,13 +62,13 @@
   border-color: #C13584;
   font-weight: 500;
   color: white;
+  border: none;
 }
 .btn-primary:hover {
   background-color: #a12d6e;
 }
 .btn-primary:disabled {
-  background-color: #e282b4;
-  border-color: #e282b4;
+  background-color: #dddddd;
   cursor: not-allowed;
 }
 
@@ -80,7 +80,7 @@
 /* SECCIONES DEL FORMULARIO */
 .section {
   margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
 }
 .section:last-child {
@@ -92,8 +92,8 @@
 .section h4 {
   display: flex;
   font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 2.75rem;
+  font-size: 14px;
+  margin-bottom: 0.90rem;
   color: #333;
   align-items: center;
 }
@@ -102,11 +102,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   background-color: black;
   color: white;
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: bold;
   border-radius: 50%;
   margin-right: 0.75rem;
@@ -115,14 +115,19 @@
 /* CAMPOS DEL FORMULARIO */
 .form-label {
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: #333;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 0.8rem;
 }
 
 .form-control {
   border: 1px solid #ced4da;
   border-radius: 8px;
-  padding: 0.625rem 0.875rem;
+  padding: 0.325rem 0.275rem;
   font-size: 0.95rem;
   transition: border-color 0.2s;
 }
@@ -136,17 +141,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 12px;
 }
 
 .btn-outline-secondary {
-  font-weight: bold;
+  font-weight: normal;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #ddd;
   border-radius: 8px;
-  padding: 16px 20px;
+  padding: 0.563rem 0.563rem;
   font-size: 14px;
   background-color: white;
   color: #333;
@@ -179,8 +183,9 @@
 /* DIFICULTAD */
 .difficulty-group {
   display: flex;
-  gap: 2.5rem;
-  margin-top: 1rem;
+  gap: 3rem;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .difficulty-option {
@@ -201,9 +206,7 @@
 .difficulty-label {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   cursor: pointer;
-  padding: 0.5rem;
   border-radius: 8px;
   transition: all 0.2s;
 }
@@ -232,12 +235,11 @@
 
 .lightning-group {
   display: flex;
-  gap: 2px;
   height: 15px;
 }
 .lightning-group img {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 18px;
 }
 
 /* CodeMirror */
@@ -245,8 +247,9 @@
   border: 1px solid #ced4da;
   border-radius: 8px;
   overflow: hidden;
-  min-height: 300px;
+  min-height: 260px;
   resize: vertical;
+  height: 260px;
 }
 
 /* TinyMCE */
@@ -302,6 +305,6 @@
 
 @media (min-width: 768px) {
   .editor-container, .codemirror-container, .form-control {
-    width: 75%;
+    width: 68%;
   }
 }

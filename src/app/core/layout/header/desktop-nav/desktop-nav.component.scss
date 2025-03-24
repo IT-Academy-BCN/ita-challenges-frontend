@@ -5,19 +5,16 @@
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
-  height: 4rem;
+  height: 1rem;
 
   .languageSelect {
-    font-size: 1rem;
+    font-size: 0.7rem;
     border: none;
     border-radius: 0.625rem;
-    font-weight: 500;
+    font-weight: 450;
     background-color: $white;
-    margin: 0px;
-    padding: 0.47rem;
     color: $gray-6;
-    width: 69px;
-    height: 41px;
+    height: 38px;
     transition: transform 0.3s ease 0s;
 
     &:focus-visible {
@@ -33,54 +30,54 @@
     background-color: $white;
     padding-left: 8px;
     color: $gray-6;
-    height: 41px;
+    height: 38px;
     transition: transform 0.3s ease 0s;
     min-width: 7rem;
     padding: 0 12px;
     margin-right: -1rem;
+
 
     &:disabled {
       background-color: $gray-4;
       color: $white;
       border: 1px solid $white;
       cursor: not-allowed;
-  }
-}
-
-.setting {
-  width: 48px;
-  height: 41px;
-  background: $white;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      color: $primary;
-    }
-
-    &::before {
-      -moz-transition: all 0.15s ease-out;
-      -webkit-transition: all 0.15s ease-out;
-      -ms-transition: all 0.15s ease-out;
-      -o-transition: all 0.15s ease-out;
-      transition: all 0.15s ease-out;
-      content: "";
-      position: absolute;
-      left: 0;
-      display: block;
-      width: 9px;
-      height: 9px;
-      background: transparent;
-      border-radius: 9px;
     }
   }
-}
 
+  .setting {
+    width: 45px;
+    height: 32px;
+    background: $white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: $primary;
+      }
+
+      &::before {
+        -moz-transition: all 0.15s ease-out;
+        -webkit-transition: all 0.15s ease-out;
+        -ms-transition: all 0.15s ease-out;
+        -o-transition: all 0.15s ease-out;
+        transition: all 0.15s ease-out;
+        content: "";
+        position: absolute;
+        left: 0;
+        display: block;
+        width: 9px;
+        height: 9px;
+        background: transparent;
+        border-radius: 9px;
+      }
+    }
+  }
 
   .user {
     border: unset;
@@ -90,7 +87,6 @@
     border-radius: 10px;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .desktop-nav {
