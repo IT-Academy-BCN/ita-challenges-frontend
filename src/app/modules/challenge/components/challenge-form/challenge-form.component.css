@@ -68,8 +68,7 @@
   background-color: #a12d6e;
 }
 .btn-primary:disabled {
-  background-color: #e282b4;
-  border-color: #e282b4;
+  background-color: #dddddd;
   cursor: not-allowed;
 }
 
@@ -184,7 +183,7 @@
 /* DIFICULTAD */
 .difficulty-group {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   font-size: 14px;
   margin-top: 10px;
 }
