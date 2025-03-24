@@ -51,7 +51,6 @@ export class ChallengeHeaderComponent implements OnInit {
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
     this.solutionSent = savedSolutions.includes(this.idChallenge)
 
-    // Check if challenge is favorited
     this.checkFavoriteStatus()
 
     // Verifica si el reto ya ha comenzado
@@ -116,7 +115,6 @@ export class ChallengeHeaderComponent implements OnInit {
     this.openSendSolutionModal()
   }
 
-  // Method to toggle favorites
   toggleFavorite(): void {
     if (this.isFavorite) {
       this.removeFromFavorites()
@@ -125,37 +123,29 @@ export class ChallengeHeaderComponent implements OnInit {
     }
   }
 
-  // Method to add to favorites
   private addToFavorites(): void {
     this.challengeService.addToFavorites(this.idChallenge).subscribe(response => {
       this.isFavorite = response.isFavorite
       this.favorites_count = response.timesFavorited
       this.favoritesUpdated.emit(this.favorites_count)
-      console.log('Added to favorites:', response)
     })
   }
 
-  // Method to remove from favorites
   private removeFromFavorites(): void {
     this.challengeService.removeFromFavorites(this.idChallenge).subscribe(response => {
       this.isFavorite = response.isFavorite
       this.favorites_count = response.timesFavorited
       this.favoritesUpdated.emit(this.favorites_count)
-      console.log('Removed from favorites:', response)
     })
   }
 
-  // Check if the challenge is in favorites
   private checkFavoriteStatus(): void {
-    // For mock purposes, we'll check localStorage
     const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`);
     this.isFavorite = isFavorited === 'true';
     
-    // Also update the favorites count from localStorage if available
     const storedCount = localStorage.getItem(`favorites_count_${this.idChallenge}`);
     if (storedCount) {
       this.favorites_count = parseInt(storedCount, 10);
-      // Emit the updated count
       this.favoritesUpdated.emit(this.favorites_count);
     }
   }

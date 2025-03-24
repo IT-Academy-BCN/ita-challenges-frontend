@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { SharedComponentsModule } from '../../shared/components/shared-components.module'
-import { ChallengeHeaderComponent } from './components/challenge-header/challenge-header.component'
-import { editorChallengeComponent } from './components/editor-challenge/editor-challenge.component'
-import { ChallengeInfoComponent } from './components/challenge-info/challenge-info.component'
 import { ChallengeComponent } from './components/challenge/challenge.component'
+import { ChallengeHeaderComponent } from './components/challenge-header/challenge-header.component'
+import { ChallengeInfoComponent } from './components/challenge-info/challenge-info.component'
 import { ChallengeRoutingModule } from './challenge-routing.module'
+import { CommonModule } from '@angular/common'
 import { CoreModule } from 'src/app/core/core.module'
-import { RouterModule } from '@angular/router'
-import { ModalsModule } from '../modals/modals.module'
-import { TranslateModule } from '@ngx-translate/core'
+import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
+import { editorChallengeComponent } from './components/editor-challenge/editor-challenge.component'
 import { FormsModule } from '@angular/forms'
 import { NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
-import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
+import { NgModule } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { SharedComponentsModule } from '../../shared/components/shared-components.module'
+import { TranslateModule } from '@ngx-translate/core'
+
+
+import { ModalsModule } from '../modals/modals.module'
 
 @NgModule({
   declarations: [

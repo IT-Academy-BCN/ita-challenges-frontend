@@ -56,13 +56,7 @@
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
   </div>
-
-   <!-- Si la solución fue enviada, muestra mensaje de confirmación -->
-   <!-- <div *ngIf="solutionSent" class="solutionSent col-3 d-none d-md-flex">
-    <p>{{ 'modules.challenge.header.solutionSend' | translate }}</p>
-    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
-    </div> -->
-  
+ 
    <!-- Si ya se envió la solución -->
   <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
     <p>{{'modules.challenge.header.solutionSend' | translate }}</p>

@@ -22,13 +22,6 @@ export class ChallengeService {
     this.checkChallengeStartedFromStorage()
   }
 
-//  Commented, waiting for favorites endpoint
-  // private getAuthHeaders(): HttpHeaders {
-  //   return new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   })
-  // }
-
   get challengeStarted$ (): Observable<boolean> {
     return this.challengeStartedSubject.asObservable()
   }
@@ -47,7 +40,6 @@ export class ChallengeService {
     return localStorage.getItem('challengeStarted') === 'true'
   }
 
-  // Método para verificar si el reto ha sido iniciado desde el almacenamiento local
   checkChallengeStartedFromStorage (): void {
     const storedState = localStorage.getItem('challengeStarted')
     if (storedState !== null && storedState !== '') {
@@ -65,7 +57,6 @@ export class ChallengeService {
       }
     )
   }
-
 
   async getItineraries (): Promise<Itinerary[]> {
     return await new Promise((resolve, reject) =>
@@ -99,35 +90,19 @@ export class ChallengeService {
 
   createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    console.log('URL completa:', url) // Para depurar
+    console.log('URL completa:', url) 
     return this.http.post(url, challenge)
   }
-
-
-  // Real implementation - commented out for testing
-  // addToFavorites(challengeId: string): Observable<FavoriteResponse> {
-  //   const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
-  //   console.log('Adding favorite, URL:', url, 'challengeId:', challengeId)
-  //   return this.http.post<FavoriteResponse>(url, {}, { headers: this.getAuthHeaders() })
-  //     .pipe(
-  //       catchError((error: HttpErrorResponse) => {
-  //         console.error('Error adding favorite:', error);
-  //         throw error;
-  //       })
-  //     );
-  // }
 
   // Mocked version for frontend testing
   addToFavorites(challengeId: string): Observable<FavoriteResponse> {
   
     const currentCount = this.getMockFavoriteCount(challengeId);
     
-    // Create a mock response
     const mockResponse: FavoriteResponse = {
       isFavorite: true,
       timesFavorited: currentCount + 1
     }
-    
     
     localStorage.setItem(`is_favorite_${challengeId}`, 'true');
    
@@ -136,25 +111,11 @@ export class ChallengeService {
     return of(mockResponse).pipe(delay(300));
   }
 
-  // Real implementation - commented out for testing
-  // removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-  //   const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`
-  //   console.log('Removing favorite, URL:', url)
-  //   return this.http.delete<FavoriteResponse>(url, { headers: this.getAuthHeaders() })
-  //     .pipe(
-  //       catchError((error: HttpErrorResponse) => {
-  //         console.error('Error removing favorite:', error);
-  //         throw error;
-  //       })
-  //     );
-  // }
-
   // Mocked version for frontend testing
   removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
 
     const currentCount = this.getMockFavoriteCount(challengeId);
     
-    // Create a mock response
     const mockResponse: FavoriteResponse = {
       isFavorite: false,
       timesFavorited: currentCount > 0 ? currentCount - 1 : 0
