@@ -48,6 +48,13 @@ export class MentorLoginComponent implements OnInit {
     this.checkGitHubCode()
   }
 
+  ngAfterViewInit (): void {
+    const modalElement = document.getElementById('mentorLoginModal')
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => { this.closeModal() })
+    }
+  }
+
   checkGitHubCode (): void {
     this.route.queryParams.subscribe((params) => {
       const code = params['code']
@@ -85,6 +92,7 @@ export class MentorLoginComponent implements OnInit {
       error: (err) => {
         this.isLoading = false
         this.resetForm()
+        this.loginForm.controls.termsCheck.setValue(true)
 
         if (err.status === 401) {
           this.showError('unauthorized') // Error 401: No autorizado. El usuario no es mentor o el token es inválido
@@ -109,6 +117,7 @@ export class MentorLoginComponent implements OnInit {
 
   loginWithGitHub (): void {
     if (!this.loginForm.controls.termsCheck.value) {
+      this.closeError()
       this.isShowTermsError = true
       return
     }
@@ -165,6 +174,7 @@ export class MentorLoginComponent implements OnInit {
         modalInstance.hide()
       }
     }
+    this.closeError()
     document.activeElement instanceof HTMLElement && document.activeElement.blur()
   }
 }
