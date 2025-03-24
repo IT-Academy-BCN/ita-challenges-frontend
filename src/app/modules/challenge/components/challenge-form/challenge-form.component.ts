@@ -41,7 +41,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   editorConfig = {
     base_url: '/assets/tinymce',
     suffix: '.min',
-    height: 300,
+    height: 260,
     menubar: false,
     branding: false,
     elementpath: false,

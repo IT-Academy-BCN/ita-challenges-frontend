@@ -8,8 +8,7 @@ import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
-/* import { RouteConfigLoadEnd } from '@angular/router'
- */
+
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
@@ -25,6 +24,7 @@ export class StarterComponent implements OnInit {
   challengesSubs$!: Subscription
   sortedChallengesSubs$!: Subscription
   filteredChallengesSubs$!: Subscription
+  userRoleSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
@@ -49,7 +49,7 @@ export class StarterComponent implements OnInit {
 
   ngOnInit (): void {
     this.getChallenge()
-    this._authService.getUserRole().subscribe(role => {
+    this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
   }
@@ -58,6 +58,7 @@ export class StarterComponent implements OnInit {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
+    if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
   }
 
   getChallenge (): void {

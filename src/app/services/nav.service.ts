@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
   providedIn: 'root'
 })
 export class NavService {
-  public selectWidth = '69px'
+  public selectWidth = '45px'
 
   constructor (
     @Inject(NgbModal) private readonly modalService: NgbModal,

@@ -7,19 +7,19 @@
 
   <!-- CHALLENGES -->
   <div id="challenges-container" class="col-12 col-xl-9">
-    <div class="d-flex justify-content-between align-items-center  pb-2 challenges-filter">
-      <!-- TITLE -->
-      <h2 class="mb-0">{{ "modules.starter.main.section2.title" | translate }}</h2>
-
-      <!-- NEW CHALLENGE BTN (Visible only for mentors) -->
-        <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin"  class="btn btn-primary new-challenge-btn">
+    <div class="challenges-filter">
+      <div class="d-flex justify-content-between align-items-center pb-2">
+        <h2 class="mb-4">{{ "modules.starter.main.section2.title" | translate }}</h2>
+        <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin" class="btn btn-sm btn-primary new-challenge-btn">
           {{ "components.mainMenu.section4.title" | translate }}
         </button>
-
-      <!-- MOBILE FILTER BTN -->
-      <button class="d-xl-none btn btn-outline-primary btnFiltrar" (click)="openModal()">
-        <strong>Filtrar</strong>
-      </button>
+      </div>
+      
+      <div class="d-flex justify-content-end d-xl-none mb-2">
+        <button class="btn btn-outline-primary btnFiltrar" (click)="openModal()">
+          <strong>Filtrar</strong>
+        </button>
+      </div>
     </div>
 
     <!-- SORT BY -->
