@@ -20,6 +20,7 @@ import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-challenge-info',
@@ -38,12 +39,14 @@ implements OnInit {
   challengeSolutions: SolutionResults[] = []
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
+  isAdmin:boolean = false;
 
   challengeStarted: boolean = false
   // showEditor: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
+  private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
 
   @ViewChild('nav') nav!: NgbNav
@@ -66,20 +69,30 @@ implements OnInit {
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
   async ngOnInit (): Promise<void> {
-    this.solutionService.activeIdSubject.next(1)
-    this.solutionSent = this.solutions.includes(this.idChallenge)
-    console.log('ChallengeInfoComponent: solutionSent updated to', this.solutionSent)
-    this.solutionService.activeId$.subscribe((newActiveId) => {
-      this.onActiveIdChange(newActiveId)
+    this.authService.getUserRole().subscribe(role => {
+      this.isAdmin = role === 'ADMIN'
     })
 
-    this.loadSolutions(this.idChallenge, this.idLanguageJava)
+    this.solutionService.activeIdSubject.next(1)
+
+    this.solutionSent = this.solutions.includes(this.idChallenge)
+    this.solutionService.activeId$.subscribe((newActiveId) => {
+      this.onActiveIdChange(newActiveId)
+    })    
+
   }
 
   ngOnChanges (changes: SimpleChanges): void {
     if (changes['startChallenge']?.currentValue === true) {
       this.showEditor = true
       this.onChallengeStart()
+    }
+
+    if (changes['activeId']?.currentValue === 2) {
+      const idLanguage = this.languages[0].id_language;
+      if (this.isAdmin && this.idChallenge && idLanguage) {
+        this.loadSolutions(this.idChallenge, idLanguage);
+      }
     }
   }
 
@@ -114,13 +127,9 @@ implements OnInit {
     this.solutionService
       .getAllChallengeSolutions(idChallenge, idLanguage)
       .subscribe((data) => {
-        console.log('Raw data from API:', data)
         if (data.results.length > 0) {
           this.challengeSolutions = data.results
-          console.log('Challenge Solutions Loaded:', this.challengeSolutions)
-        } else {
-          console.log('No solutions found or data format issue')
-        }
+        } 
       })
   }
 

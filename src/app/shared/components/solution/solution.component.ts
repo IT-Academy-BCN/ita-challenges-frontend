@@ -103,7 +103,7 @@ export class SolutionComponent implements OnInit {
     if (this.isUserSolution) {
       state = EditorState.create({
         doc: this.solution_text,
-        extensions: [minimalSetup, languageExtension]
+        extensions: [minimalSetup, languageExtension, EditorView.lineWrapping]
       })
     } else {
       state = EditorState.create({
@@ -111,7 +111,8 @@ export class SolutionComponent implements OnInit {
         extensions: [
           minimalSetup,
           languageExtension,
-          EditorView.editable.of(false)
+          EditorView.editable.of(false),
+          EditorView.lineWrapping
         ]
       })
     }
