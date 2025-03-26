@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
+  public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
   constructor(private _cookieService: CookieService) {
     this.updateUserRoleFromToken();
@@ -28,6 +30,7 @@ export class AuthService {
     } else {
       this.userRoleSubject.next('');
     }
+    this.updateAuthStatus();
   }
 
   isUserLoggedIn(): boolean {
@@ -44,6 +47,16 @@ export class AuthService {
   logout(): void {
     this._cookieService.delete('authToken', '/');
     this.userRoleSubject.next('');
+    this.updateAuthStatus();
+  }
+
+  private checkAuthToken(): boolean {
+    return this._cookieService.check('authToken');
+  }
+
+  private updateAuthStatus(): void {
+    const isLoggedIn = this.checkAuthToken();
+    this.isLoggedInSubject.next(isLoggedIn);
   }
 
   private decodeToken(token: string): any {
