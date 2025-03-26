@@ -21,6 +21,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
+import { StarterService } from 'src/app/services/starter.service' 
 
 @Component({
   selector: 'app-challenge-info',
@@ -40,6 +41,7 @@ implements OnInit {
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
   isAdmin:boolean = false;
+  relatedChallenges: Challenge[] = []; 
 
   challengeStarted: boolean = false
   // showEditor: boolean = false
@@ -48,6 +50,7 @@ implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly starterService = inject(StarterService) 
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -108,6 +111,10 @@ implements OnInit {
   onActiveIdChange (newActiveId: number): void {
     this.activeId = newActiveId
     this.activeIdChange.emit(this.activeId) // Emite el nuevo activeId
+    
+    if (newActiveId === 4) {
+      this.loadRelatedChallenges();
+    }
   }
 
   openSendSolutionModal (): void {
@@ -173,5 +180,41 @@ implements OnInit {
       default:
         return 'modules.challenge.info.detailsTitle'
     }
+  }
+
+  // MOCK: Method to load random related challenges
+  // TODO: Call the endpoint instead of selecting random challenges
+  loadRelatedChallenges(): void {
+    this.starterService.getAllChallenges().subscribe(response => {
+      if (response && response.results) {
+        const filteredChallenges = response.results.filter(
+          challenge => challenge.id_challenge !== this.idChallenge
+        );
+        
+        const numberOfRelated = Math.floor(Math.random() * 3) + 2;
+        this.relatedChallenges = this.getRandomChallenges(filteredChallenges, numberOfRelated);
+        
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  // Helper method to randomly select challenges
+  // TODO: delete when related challenges endpoint is available 
+  private getRandomChallenges(challenges: Challenge[], count: number): Challenge[] {
+    // If we don't have enough challenges, return all of them to avoid errors
+    if (challenges.length <= count) {
+      return challenges;
+    }
+    
+    // Create a copy of the array to avoid modifying the original
+    const shuffled = [...challenges];
+    
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    return shuffled.slice(0, count);
   }
 }

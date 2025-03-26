@@ -188,7 +188,24 @@
       <!--RELATED TAB-->
       <div class="tab-content">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
-        <section class="info-card d-flex flex-column gap-3">
+        
+        <!-- Display related challenges when available -->
+        <section *ngIf="relatedChallenges && relatedChallenges.length > 0" class="info-card">
+          <div class="d-flex flex-column gap-3">
+            <app-challenge-card *ngFor="let challenge of relatedChallenges"
+              [title]="challenge.challenge_title | dynamicTranslate" 
+              [creation_date]="challenge.creation_date"
+              [level]="challenge.level" 
+              [popularity]="challenge.popularity" 
+              [languages]="challenge.languages"
+              [id]="challenge.id_challenge" 
+              [favorites_count]="challenge.favorites_count || 0">
+            </app-challenge-card>
+          </div>
+        </section>
+        
+        <!-- Show placeholder when no related challenges are found -->
+        <section *ngIf="!relatedChallenges || relatedChallenges.length === 0" class="info-card d-flex flex-column gap-3">
           <p>{{ "modules.challenge.info.noResources" | translate }} </p>
         </section>
       </div>
