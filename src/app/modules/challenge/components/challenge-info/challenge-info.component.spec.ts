@@ -52,13 +52,22 @@ describe('ChallengeInfoComponent', () => {
   })
 
   describe('ngOnInit', () => {
-    it('should call loadRelatedChallenges with the provided idChallenge', async () => { // Añadido async aquí
-      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges')
-      component.idChallenge = '123'
-      await component.ngOnInit() // Ahora el await se permite dentro de la función marcada como async
-
-      expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
-      expect(loadRelatedChallengesSpy).toHaveBeenCalledWith('123')
+    it('should initialize component properties correctly', async () => {
+      // Arrange
+      const authServiceSpy = jest.spyOn((component as any).authService, 'getUserRole')
+      authServiceSpy.mockReturnValue({
+        subscribe: (fn: any) => {
+          fn('USER') // Not ADMIN
+          return { unsubscribe: () => {} }
+        }
+      })
+      
+      // Act
+      await component.ngOnInit()
+      
+      // Assert
+      expect(authServiceSpy).toHaveBeenCalledTimes(1)
+      expect(component.isAdmin).toBe(false)
     })
   })
 
@@ -84,14 +93,136 @@ describe('ChallengeInfoComponent', () => {
     expect(component.activeId).toBe(newActiveId)
   }))
 
-  // it('should onActiveIdchange correctly', () => {
-  //   const newActiveId = 2
-  //   const activeId = 1
 
-  //   component.onActiveIdChange(newActiveId)
-
-  //   expect(component.activeIdChange).toBeTruthy()
-  //   component.activeIdChange.emit(activeId)
-  //   expect(component.activeId).toBe(newActiveId)
-  // })
+  describe('Related Challenges Feature', () => {
+    let component: ChallengeInfoComponent
+    let fixture: ComponentFixture<ChallengeInfoComponent>
+    let starterServiceMock: any
+  
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ChallengeInfoComponent)
+      component = fixture.componentInstance
+      starterServiceMock = (component as any).starterService
+      fixture.detectChanges()
+    })
+  
+  
+    // The following tests check if related challenges are loaded when the correct tab is selected.
+    // These tests should remain the same when implementing the real related challenges endpoint.
+    it('should load related challenges when tab #4 is selected', fakeAsync(() => {
+      // Arrange
+      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
+      
+      // Act
+      component.onActiveIdChange(4)
+      tick()
+      
+      // Assert
+      expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
+    }))
+  
+    it('should not load related challenges when other tabs are selected', fakeAsync(() => {
+      // Arrange
+      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
+      
+      // Act - select tabs 1, 2, and 3
+      component.onActiveIdChange(1)
+      tick()
+      component.onActiveIdChange(2)
+      tick()
+      component.onActiveIdChange(3)
+      tick()
+      
+      // Assert
+      expect(loadRelatedChallengesSpy).not.toHaveBeenCalled()
+    }))
+  
+    
+    // The following test will need to be updated when implementing the real related challenges endpoint.
+    // Instead of mocking StarterService.getAllChallenges and filtering locally,
+    // you'll need to mock the new endpoint that directly returns related challenges.
+    it('should filter out current challenge from related challenges', () => {
+      // Arrange
+      const mockChallenges = [
+        { id_challenge: '1', challenge_title: 'Challenge 1' },
+        { id_challenge: '2', challenge_title: 'Challenge 2' },
+        { id_challenge: '3', challenge_title: 'Challenge 3' }
+      ] as any[]
+      
+      component.idChallenge = '2' // Current challenge ID
+      
+      // Mock the StarterService.getAllChallenges method
+      const getAllChallengesSpy = jest.spyOn(starterServiceMock, 'getAllChallenges')
+      getAllChallengesSpy.mockReturnValue({
+        subscribe: (fn: any) => {
+          fn({ results: mockChallenges })
+          return { unsubscribe: () => {} }
+        }
+      })
+      
+      // Mock the getRandomChallenges method
+      const getRandomChallengesSpy = jest.spyOn(component as any, 'getRandomChallenges')
+      getRandomChallengesSpy.mockReturnValue([
+        { id_challenge: '1', challenge_title: 'Challenge 1' },
+        { id_challenge: '3', challenge_title: 'Challenge 3' }
+      ])
+      
+      // Act
+      component.loadRelatedChallenges()
+      
+      // Assert
+      expect(getAllChallengesSpy).toHaveBeenCalledTimes(1)
+      expect(getRandomChallengesSpy).toHaveBeenCalledTimes(1)
+      
+      // Verify filtered challenges were passed to getRandomChallenges
+      const filteredChallenges = mockChallenges.filter(c => c.id_challenge !== '2')
+      expect(getRandomChallengesSpy).toHaveBeenCalledWith(
+        filteredChallenges,
+        expect.any(Number)
+      )
+    })
+  
+    // The following tests for getRandomChallenges will be obsolete when implementing
+    // the real related challenges endpoint, as this method will be removed.
+    // These tests should be replaced with tests for the new endpoint integration.
+    it('should return all challenges when count is greater than available challenges', () => {
+      // Arrange
+      const mockChallenges = [
+        { id_challenge: '1', challenge_title: 'Challenge 1' },
+        { id_challenge: '2', challenge_title: 'Challenge 2' }
+      ] as any[]
+      
+      // Act - Call the private method directly
+      const result = (component as any).getRandomChallenges(mockChallenges, 3)
+      
+      // Assert
+      expect(result.length).toBe(2)
+      expect(result).toEqual(mockChallenges)
+    })
+    
+    it('should select random challenges correctly', () => {
+      // Arrange
+      const mockChallenges = [
+        { id_challenge: '1', challenge_title: 'Challenge 1' },
+        { id_challenge: '2', challenge_title: 'Challenge 2' },
+        { id_challenge: '3', challenge_title: 'Challenge 3' },
+        { id_challenge: '4', challenge_title: 'Challenge 4' },
+        { id_challenge: '5', challenge_title: 'Challenge 5' }
+      ] as any[]
+      
+      // Act
+      const result = (component as any).getRandomChallenges(mockChallenges, 3)
+      
+      // Assert
+      expect(result.length).toBe(3)
+      // Each result should be one of the original challenges
+      result.forEach((challenge: any) => {
+        expect(mockChallenges).toContainEqual(challenge)
+      })
+      
+      // Verify we're getting unique challenges (no duplicates)
+      const uniqueIds = new Set(result.map((c: any) => c.id_challenge))
+      expect(uniqueIds.size).toBe(result.length)
+    })
+  })
 })
