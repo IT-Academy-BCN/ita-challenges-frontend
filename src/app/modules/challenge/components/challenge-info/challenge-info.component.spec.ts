@@ -109,8 +109,9 @@ describe('ChallengeInfoComponent', () => {
   
     // The following tests check if related challenges are loaded when the correct tab is selected.
     // These tests should remain the same when implementing the real related challenges endpoint.
-    it('should load related challenges when tab #4 is selected', fakeAsync(() => {
+    it('should load related challenges when tab #4 is selected and challenges are not yet loaded', fakeAsync(() => {
       // Arrange
+      component.relatedChallengesLoaded = false;
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
       
       // Act
@@ -119,6 +120,19 @@ describe('ChallengeInfoComponent', () => {
       
       // Assert
       expect(loadRelatedChallengesSpy).toHaveBeenCalledTimes(1)
+    }))
+
+    it('should not reload related challenges when tab #4 is selected if challenges are already loaded', fakeAsync(() => {
+      // Arrange
+      component.relatedChallengesLoaded = true;
+      const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
+      
+      // Act
+      component.onActiveIdChange(4)
+      tick()
+      
+      // Assert
+      expect(loadRelatedChallengesSpy).not.toHaveBeenCalled()
     }))
   
     it('should not load related challenges when other tabs are selected', fakeAsync(() => {

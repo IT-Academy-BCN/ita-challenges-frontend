@@ -41,7 +41,8 @@ implements OnInit {
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
   isAdmin:boolean = false;
-  relatedChallenges: Challenge[] = []; 
+  relatedChallenges: any[] = [];
+  relatedChallengesLoaded = false;
 
   challengeStarted: boolean = false
   // showEditor: boolean = false
@@ -112,7 +113,7 @@ implements OnInit {
     this.activeId = newActiveId
     this.activeIdChange.emit(this.activeId) // Emite el nuevo activeId
     
-    if (newActiveId === 4) {
+    if (newActiveId === 4 && !this.relatedChallengesLoaded) {
       this.loadRelatedChallenges();
     }
   }
@@ -185,15 +186,15 @@ implements OnInit {
   // MOCK: Method to load random related challenges
   // TODO: Call the endpoint instead of selecting random challenges
   loadRelatedChallenges(): void {
+    const numberOfRelated = Math.floor(Math.random() * 3) + 2;
+
     this.starterService.getAllChallenges().subscribe(response => {
       if (response && response.results) {
         const filteredChallenges = response.results.filter(
           challenge => challenge.id_challenge !== this.idChallenge
         );
-        
-        const numberOfRelated = Math.floor(Math.random() * 3) + 2;
         this.relatedChallenges = this.getRandomChallenges(filteredChallenges, numberOfRelated);
-        
+        this.relatedChallengesLoaded = true;
         this.cdr.detectChanges();
       }
     });
@@ -207,7 +208,6 @@ implements OnInit {
       return challenges;
     }
     
-    // Create a copy of the array to avoid modifying the original
     const shuffled = [...challenges];
     
     for (let i = shuffled.length - 1; i > 0; i--) {
