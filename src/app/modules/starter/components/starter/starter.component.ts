@@ -52,6 +52,11 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
+    if (this._authService.isUserLoggedIn()) {
+      console.log('El usuario está logueado');
+    } else {
+      console.log('El usuario no está logueado');
+    }
   }
 
   ngOnDestroy (): void {

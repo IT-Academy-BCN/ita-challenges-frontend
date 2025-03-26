@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,8 +10,7 @@ export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
 
-  constructor() {
-    // Initialize the role from localStorage on service creation
+  constructor(private _cookieService: CookieService) {
     this.updateUserRoleFromToken();
   }
 
@@ -20,16 +20,30 @@ export class AuthService {
 
   // Method to update the user role when authentication changes
   updateUserRoleFromToken(): void {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      this.userRole = '';
+    const token = this._cookieService.get('authToken');
+    if (token) {
+      const decodedToken = this.decodeToken(token);
+      this.userRole = decodedToken?.role ?? '';
+      this.userRoleSubject.next(this.userRole);
+    } else {
       this.userRoleSubject.next('');
-      return;
     }
-    
-    const decodedToken = this.decodeToken(token);
-    this.userRole = decodedToken?.role ?? '';
-    this.userRoleSubject.next(this.userRole);
+  }
+
+  isUserLoggedIn(): boolean {
+    return this._cookieService.check('authToken');
+  }
+
+
+  setAuthToken(token: string): void {
+    this._cookieService.set('authToken', token, {path: '/', secure: true, sameSite: 'Strict'});
+    this.updateUserRoleFromToken();
+  }
+
+
+  logout(): void {
+    this._cookieService.delete('authToken', '/');
+    this.userRoleSubject.next('');
   }
 
   private decodeToken(token: string): any {
