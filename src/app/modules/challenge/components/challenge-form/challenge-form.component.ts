@@ -42,6 +42,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   languages: Language[] = []
+  selectedTags: string[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -142,7 +143,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
         this.languages = results || []
         console.log('Idiomas cargados:', this.languages) // Lista completa de idiomas
-        console.log(JSON.stringify(this.languages, null, 2))
+        // console.log(JSON.stringify(this.languages, null, 2))
       },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
@@ -186,7 +187,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     }
 
     const selectedLanguageTags = tagMap[language as keyof typeof tagMap]
-    this.currentTags = selectedLanguageTags?.results || []
+    this.currentTags = selectedLanguageTags?.results ?? []
     this.selectedTags = [] // Resetear tags seleccionados al cambiar de lenguaje
   }
 
@@ -216,6 +217,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       return
     }
 
+    this.challenge.tags = [...this.selectedTags]
+
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
@@ -227,8 +230,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       }
     })
   }
-
-  selectedTags: string[] = []
 
   onTagSelect (tag: string): void {
     const index = this.selectedTags.indexOf(tag)
