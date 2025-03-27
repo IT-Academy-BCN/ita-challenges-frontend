@@ -78,7 +78,10 @@ app-starter-filters p {
   }
 }
 .challenges-filter{
-   margin-bottom: 15px;
+   
+   h2 {
+     margin-bottom: 0;
+   }
 }
 #filters-container {
   position: static;
