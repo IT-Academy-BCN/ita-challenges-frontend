@@ -205,4 +205,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       }
     })
   }
+
+  onTagSelect (tag: string): void {
+    console.log('Se ha seleccionado el tag:', tag)
+  }
 }
