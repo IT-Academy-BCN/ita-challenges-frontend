@@ -12,9 +12,15 @@
 
   <!-- Login -->
   @if(isLoggedIn){
-    <button class="user">
+    <div class="user-container">
+      <button class="user" (click)="toggleDropdown()">
         <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
-    </button>
+      </button>
+      <div class="dropdown" [ngClass]="{ 'show': dropdownOpen }">
+          <a href="#">{{this.user}}</a>
+          <a href="#">Cerrar sesión</a>
+      </div>
+    </div>
   } @else {
     <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
       {{'modules.challenge.header.login' | translate}}
