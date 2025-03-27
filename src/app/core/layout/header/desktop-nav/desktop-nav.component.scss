@@ -103,12 +103,13 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left: -7.25rem;
+    left: -6.75rem;
     border-radius: 10px;
     margin-top: 0.4rem;
-    height: 100px;
-    width: 176px;
+    height: 92px;
+    width: 168px;
     border: 1px solid #ccc;
+    font-size: 14px;
   }
   .dropdown.show {
     display: flex;
@@ -122,6 +123,10 @@
     text-decoration: none;
     width: 100%;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
   .dropdown a:not(:last-child) {
