@@ -145,41 +145,23 @@
             </div>
           </div>
           <!-- Tags actuales -->
-          <div class="form-group mb-4">
-            <label class="form-label">Tags</label>
-            <div class="tags-group">
-              <button 
-                type="button" 
-                class="tag-button active"
-                (click)="onTagSelect('Laravel')">
-                Laravel
-              </button>
-              <button 
-                type="button" 
-                class="tag-button"
-                (click)="onTagSelect('Variables')">
-                Variables
-              </button>
-              <button 
-                type="button" 
-                class="tag-button"
-                (click)="onTagSelect('Algoritmos')">
-                Algoritmos
-              </button>
-              <button 
-                type="button" 
-                class="tag-button"
-                (click)="onTagSelect('Clases')">
-                Clases
-              </button>
-              <button 
-                type="button" 
-                class="tag-button"
-                (click)="onTagSelect('POO')">
-                POO
-              </button>
+          @if (challenge.language) {
+            <div class="form-group mb-4">
+              <label class="form-label">Tags</label>
+              <div class="tags-group">
+                @for (tag of currentTags; track tag.id_tag) {
+                  <button 
+                    type="button" 
+                    class="tag-button"
+                    [class.active]="isTagSelected(tag.tag_name)"
+                    (click)="onTagSelect(tag.tag_name)"
+                    [title]="tag.tag_description">
+                    {{ tag.tag_name }}
+                  </button>
+                }
+              </div>
             </div>
-          </div>          
+          }
         </div>
       </form>
     </div>
