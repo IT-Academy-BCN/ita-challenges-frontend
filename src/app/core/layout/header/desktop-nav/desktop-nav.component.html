@@ -12,8 +12,8 @@
 
   <!-- Login -->
   @if(isLoggedIn){
-    <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal" disabled>
-      {{'modules.challenge.header.login' | translate}}
+    <button class="user">
+        <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
     </button>
   } @else {
     <button class="login" data-bs-toggle="modal" data-bs-target="#mentorLoginModal">
