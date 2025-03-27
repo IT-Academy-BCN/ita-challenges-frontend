@@ -22,6 +22,15 @@
         font-weight: 500;
         padding-left: .3rem;
         color: $black-3;
+        
+        /* Add styles for multi-line text */
+        display: inline-block;
+        vertical-align: middle;
+        
+        span, ::ng-deep span {
+            display: inline-block;
+            line-height: 1.2;
+        }
     }
 
     p {
