@@ -23,7 +23,6 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     }
 
     ngOnDestroy(): void {
-      // Cancelar la suscripción para evitar fugas de memoria
       if (this.authSubscription) {
         this.authSubscription.unsubscribe();
       }
