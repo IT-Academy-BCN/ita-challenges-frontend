@@ -72,4 +72,68 @@ describe('MobileNavComponent', () => {
     component.onLoginSuccess(false)
     expect(component.isLoggedIn).toBe(false)
   })
+
+  it('should toggle dropdownOpen', () => {
+    expect(component.dropdownOpen).toBeFalsy();
+    component.toggleDropdown();
+    expect(component.dropdownOpen).toBe(true);
+    component.toggleDropdown();
+    expect(component.dropdownOpen).toBe(false);
+  });
+
+  it('should close dropdown when clicking outside', () => {
+    component.dropdownOpen = true;
+
+    const event = new MouseEvent('click');
+    const fakeTarget = document.createElement('div');
+    Object.defineProperty(event, 'target', { value: fakeTarget });
+
+    component.onClickOutside(event);
+    expect(component.dropdownOpen).toBe(false);
+  });
+
+  it('should not close dropdown if click is inside .dropdown-mobile', () => {
+    component.dropdownOpen = true;
+
+    const dropdown = document.createElement('div');
+    dropdown.classList.add('dropdown-mobile');
+    document.body.appendChild(dropdown);
+
+    const event = new MouseEvent('click');
+    Object.defineProperty(event, 'target', { value: dropdown });
+
+    component.onClickOutside(event);
+    expect(component.dropdownOpen).toBe(true);
+
+    document.body.removeChild(dropdown);
+  });
+
+  it('should not close dropdown if click is on .user-mobile button', () => {
+    component.dropdownOpen = true;
+
+    const userBtn = document.createElement('button');
+    userBtn.classList.add('user-mobile');
+    document.body.appendChild(userBtn);
+
+    const event = new MouseEvent('click');
+    Object.defineProperty(event, 'target', { value: userBtn });
+
+    component.onClickOutside(event);
+    expect(component.dropdownOpen).toBe(true);
+
+    document.body.removeChild(userBtn);
+  });
+
+  it('should load user from localStorage', () => {
+    localStorage.setItem('username', 'test-user');
+    component.getUserFromLocalStorage();
+    expect(component.user).toBe('test-user');
+    localStorage.removeItem('username');
+  });
+
+  it('should set user to empty string if no username in localStorage', () => {
+    localStorage.removeItem('username');
+    component.getUserFromLocalStorage();
+    expect(component.user).toBe('');
+  });
 })
