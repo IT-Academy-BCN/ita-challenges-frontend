@@ -8,10 +8,15 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
+  private userIdSubject = new BehaviorSubject<string | null>(null);
 
   constructor() {
     // Initialize the role from localStorage on service creation
     this.updateUserRoleFromToken();
+  }
+
+  getUserId(): Observable<string | null> {
+    return this.userIdSubject.asObservable();
   }
 
   getUserRole(): Observable<string> {
@@ -23,6 +28,7 @@ export class AuthService {
     const token = localStorage.getItem('authToken');
     if (!token) {
       this.userRole = '';
+      this.userIdSubject.next('');
       this.userRoleSubject.next('');
       return;
     }
@@ -30,6 +36,8 @@ export class AuthService {
     const decodedToken = this.decodeToken(token);
     this.userRole = decodedToken?.role ?? '';
     this.userRoleSubject.next(this.userRole);
+    const userId = decodedToken?.uuid ?? '';
+    this.userIdSubject.next(userId); '';
   }
 
   private decodeToken(token: string): any {
