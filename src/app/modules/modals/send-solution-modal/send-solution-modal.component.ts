@@ -25,7 +25,7 @@ export class SendSolutionModalComponent {
     this.getSolutionText(); 
   }
 
-  private getLanguageId(): void {
+  public getLanguageId(): void {
     this.challengeService.getChallengeById(this.idChallenge).subscribe({
       next: (challenge) => {
         this.languageId = challenge.languages[0].id_language;
@@ -36,7 +36,7 @@ export class SendSolutionModalComponent {
     });
   }
 
-  private getSolutionText(): void {
+  public getSolutionText(): void {
     this.solutionText = localStorage.getItem('editorContent') || '';
   }
 
