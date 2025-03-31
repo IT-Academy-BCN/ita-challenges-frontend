@@ -80,7 +80,7 @@ export class MentorLoginComponent implements OnInit {
     this.http.post<GitHubAuthResponse>(url, { code }).subscribe({
       next: (response) => {
         if (response.isValid) {
-          this.authService.setAuthToken(response.token)
+          localStorage.setItem('authToken', response.token)
           localStorage.setItem('username', response.username)
           
           this.authService.updateUserRoleFromToken()
@@ -90,7 +90,7 @@ export class MentorLoginComponent implements OnInit {
         } else {
           this.showError('unauthorized')
           localStorage.removeItem('username')
-          this.authService.logout();
+          localStorage.removeItem('authToken')
         }
       },
       error: (err) => {
@@ -105,7 +105,7 @@ export class MentorLoginComponent implements OnInit {
         } else if (err.status === 403) {
           this.showError('unauthorized') // Error 403: El usuario no existe en GitHub.
           localStorage.removeItem('username')
-          this.authService.logout();
+          localStorage.removeItem('authToken')
         } else {
           this.showError('unauthorized')
           console.error(err)

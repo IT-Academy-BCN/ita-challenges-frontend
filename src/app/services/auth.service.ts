@@ -43,13 +43,6 @@ export class AuthService {
     this.updateUserRoleFromToken();
   }
 
-
-  logout(): void {
-    this._cookieService.delete('authToken', '/');
-    this.userRoleSubject.next('');
-    this.updateAuthStatus();
-  }
-
   private checkAuthToken(): boolean {
     return this._cookieService.check('authToken');
   }
