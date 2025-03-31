@@ -3,6 +3,8 @@ import { DesktopNavComponent } from './desktop-nav.component'
 import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
+import { AuthService } from 'src/app/services/auth.service';
+import { of } from 'rxjs';
 
 class MockNavService {
   public selectWidth = '69px'
@@ -10,6 +12,10 @@ class MockNavService {
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
+}
+class MockAuthService {
+  updateUserRoleFromToken = jest.fn();
+  getUsername = jest.fn(() => of('test-user')); // Simula un observable que devuelve 'test-user'
 }
 
 const mockActivatedRoute = {
@@ -24,6 +30,7 @@ describe('DesktopNavComponent', () => {
   let component: DesktopNavComponent
   let fixture: ComponentFixture<DesktopNavComponent>
   let navService: MockNavService
+  let authService: MockAuthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,6 +38,7 @@ describe('DesktopNavComponent', () => {
       imports: [RouterModule.forRoot([]), TranslateModule.forRoot()],
       providers: [
         { provide: NavService, useClass: MockNavService },
+        { provide: AuthService, useClass: MockAuthService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ]
     })
@@ -38,6 +46,7 @@ describe('DesktopNavComponent', () => {
     fixture = TestBed.createComponent(DesktopNavComponent)
     component = fixture.componentInstance
     navService = TestBed.inject(NavService) as unknown as MockNavService
+    authService = TestBed.inject(AuthService) as unknown as MockAuthService;
     fixture.detectChanges()
   })
 
@@ -124,16 +133,15 @@ describe('DesktopNavComponent', () => {
     document.body.removeChild(userBtn);
   });
 
-  it('should load user from localStorage', () => {
-    localStorage.setItem('username', 'test-user');
-    component.getUserFromLocalStorage();
+  it('should load user from AuthService', () => {
+    jest.spyOn(authService, 'getUsername').mockReturnValue(of('test-user')); 
+    component.ngOnInit();
     expect(component.user).toBe('test-user');
-    localStorage.removeItem('username');
   });
 
-  it('should set user to empty string if no username in localStorage', () => {
-    localStorage.removeItem('username');
-    component.getUserFromLocalStorage();
+  it('should set user to empty string if AuthService returns empty', () => {
+    jest.spyOn(authService, 'getUsername').mockReturnValue(of('')); 
+    component.ngOnInit(); 
     expect(component.user).toBe('');
   });
 })

@@ -1,4 +1,5 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core'
+import { AuthService } from 'src/app/services/auth.service'
 import { NavService } from 'src/app/services/nav.service'
 
 @Component({
@@ -11,12 +12,16 @@ export class DesktopNavComponent implements OnInit{
   dropdownOpen: boolean = false
   user: string = ''
 
-  constructor (@Inject(NavService) public navService: NavService) {
+  constructor (@Inject(NavService) public navService: NavService,
+              @Inject(AuthService) private _authService: AuthService) {
     this.isLoggedIn = !(localStorage.getItem('authToken') == null)
   }
 
   ngOnInit(): void {
-    this.getUserFromLocalStorage()
+    this._authService.updateUserRoleFromToken();
+    this._authService.getUsername().subscribe((username) => {
+      this.user = username;
+    });
   }
 
   changeLanguage (event: Event): void {
@@ -46,9 +51,4 @@ export class DesktopNavComponent implements OnInit{
     this.isLoggedIn = isLogged
   }
 
-  getUserFromLocalStorage (): void {
-    const username = localStorage.getItem('username');
-    console.log('Username from localStorage:', username);
-    this.user = username || '';
-  }
 }

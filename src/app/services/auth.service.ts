@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
+  private username: string = '';
+  private usernameSubject = new BehaviorSubject<string>('');
 
   constructor() {
     // Initialize the role from localStorage on service creation
@@ -18,18 +20,26 @@ export class AuthService {
     return this.userRoleSubject.asObservable();
   }
 
+  getUsername(): Observable<string> {
+    return this.usernameSubject.asObservable();
+  }
+
   // Method to update the user role when authentication changes
   updateUserRoleFromToken(): void {
     const token = localStorage.getItem('authToken');
     if (!token) {
       this.userRole = '';
       this.userRoleSubject.next('');
+      this.username = '';
+      this.usernameSubject.next('');
       return;
     }
     
     const decodedToken = this.decodeToken(token);
     this.userRole = decodedToken?.role ?? '';
     this.userRoleSubject.next(this.userRole);
+    this.username = decodedToken?.sub ?? '';
+    this.usernameSubject.next(this.username);
   }
 
   private decodeToken(token: string): any {
