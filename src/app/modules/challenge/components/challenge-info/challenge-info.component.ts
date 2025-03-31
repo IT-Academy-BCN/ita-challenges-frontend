@@ -87,8 +87,9 @@ implements OnInit {
     // Check if challenge is already started from localStorage
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
-      this.challengeStarted = true
-      this.showEditor = true
+      this.challengeStarted = true;
+      this.showEditor = true;
+      this.showStatement = false;
     }
   }
 
@@ -96,7 +97,8 @@ implements OnInit {
     
     if (changes['startChallenge']?.currentValue === true) {
       this.challengeStarted = true;
-      this.showEditor = true
+      this.showEditor = true;
+      this.showStatement = false;
     }
 
     if (changes['activeId']?.currentValue === 2) {
@@ -110,6 +112,7 @@ implements OnInit {
   onChallengeStart (): void {
     this.challengeStarted = true
     this.showEditor = true
+    this.showStatement = false;
   }
 
   toggleStatement (): void {

@@ -34,7 +34,7 @@
         
         <!-- description of statement on the left of the box where you put your code for the solution  -->
         <div class="details-body d-flex">
-          <div *ngIf="showStatement" class="details-text">
+          <div *ngIf="!challengeStarted || showStatement" class="details-text">
             <!-- Description -->
             <div class="pb-1">
               <h3 class="mt-0">
