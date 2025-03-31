@@ -1,4 +1,4 @@
-  <div class="row">
+  <div class="row w-100">
   <div class="col-12 col-md-9">
     <p class="breadcrumbs">
       <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
@@ -51,14 +51,14 @@
     </div>
   </div>
 
-  <div class="actions" class="col-3 button d-none d-md-flex">
+  <div class="col-md-3 button d-none d-md-flex">
     <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
   </div>
  
    <!-- Si ya se envió la solución -->
-  <div *ngIf="activeId == 2 && solutionSent" class="col-3 d-none d-md-flex">
+  <div *ngIf="activeId == 2 && solutionSent" class="col-md-3 d-none d-md-flex">
     <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
     <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
   </div>
