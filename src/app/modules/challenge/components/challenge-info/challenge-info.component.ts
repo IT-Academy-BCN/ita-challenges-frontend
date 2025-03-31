@@ -84,12 +84,19 @@ implements OnInit {
       this.onActiveIdChange(newActiveId)
     })    
 
+    // Check if challenge is already started from localStorage
+    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
+    if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
+      this.challengeStarted = true
+      this.showEditor = true
+    }
   }
 
   ngOnChanges (changes: SimpleChanges): void {
+    
     if (changes['startChallenge']?.currentValue === true) {
+      this.challengeStarted = true;
       this.showEditor = true
-      this.onChallengeStart()
     }
 
     if (changes['activeId']?.currentValue === 2) {
@@ -111,7 +118,7 @@ implements OnInit {
 
   onActiveIdChange (newActiveId: number): void {
     this.activeId = newActiveId
-    this.activeIdChange.emit(this.activeId) // Emite el nuevo activeId
+    this.activeIdChange.emit(this.activeId)
     
     if (newActiveId === 4 && !this.relatedChallengesLoaded) {
       this.loadRelatedChallenges();
@@ -126,7 +133,7 @@ implements OnInit {
   }
 
   clickSendButton (): void {
-    this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
+    this.solutionService.sendSolution('') 
     this.onActiveIdChange(2)
     this.showEditor = false
   }
@@ -165,7 +172,7 @@ implements OnInit {
 
   selectTab (id: number): void {
     this.activeId = id
-    this.isDropdownOpen = false // Cierra el menú desplegable si es necesario
+    this.isDropdownOpen = false 
   }
 
   getTranslatedTabLabel (): string {

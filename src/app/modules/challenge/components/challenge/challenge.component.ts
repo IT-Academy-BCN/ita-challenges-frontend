@@ -56,7 +56,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   }
 
   onStartChallenge (started: boolean): void {
-    console.log('onStartChallenge triggered with:', started)
     this.challengeStarted = started
     this.startChallenge = started
     this.showEditor = started
