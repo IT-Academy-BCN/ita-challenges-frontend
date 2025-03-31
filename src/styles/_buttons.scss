@@ -1,7 +1,7 @@
 $btn-padding-y: .6rem;
 $btn-padding-x: 3rem;
-$btn-padding-y-sm: .4rem;
-$btn-padding-x-sm: 2.8rem;
+$btn-padding-y-sm: .8rem;
+$btn-padding-x-sm: 2.5rem;
 $btn-padding-y-lg: .7rem;
 $btn-padding-x-lg: 3.2rem;
 $btn-radius: .7rem;
@@ -48,8 +48,8 @@ $btn-disabled-opacity: .35;
     border-color: $secondary-hover;
 }
 .btn.btn-outline-primary, .btn.btn-outline-secondary{
-    border: 2px solid $gray-3;
-    color: $black-3;
+    border: 1px solid $gray-7;
+    color: $gray-2;
 }
 .btn.btn-outline-primary[active]{
     background-color: #E399CB;

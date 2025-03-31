@@ -53,7 +53,7 @@
 
   <div class="actions" class="col-3 button d-none d-md-flex">
     <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
-    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+    <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
   </div>
  

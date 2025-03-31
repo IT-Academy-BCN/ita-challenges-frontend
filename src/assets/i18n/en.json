@@ -35,8 +35,8 @@
                 "toolTip": "Log in to submit the solution.",
                 "buttonAccept": "Send",
                 "buttonStart": "Start challenge",
-                "buttonSaveChallenge": "Save challenge",
-                "buttonSendSolution": "Send solution",
+                "buttonSaveChallenge": "Save",
+                "buttonSendSolution": "Finish",
                 "buttonCancel": "Cancel",
                 "solutionSend": "Solution sent",
                 "login": "Log In"
