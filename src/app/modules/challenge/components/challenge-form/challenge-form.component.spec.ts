@@ -53,6 +53,23 @@ describe('ChallengeFormComponent', () => {
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockRouter: jest.Mocked<Router>
 
+  // Mock data for tags
+  const mockJavascriptTags = {
+    results: [
+      { tag_name: 'Arrays' },
+      { tag_name: 'Functions' },
+      { tag_name: 'Objects' }
+    ]
+  }
+
+  const mockPythonTags = {
+    results: [
+      { tag_name: 'Lists' },
+      { tag_name: 'Dictionaries' },
+      { tag_name: 'Functions' }
+    ]
+  }
+
   beforeEach(async () => {
     mockChallengeFormService = {
       getAllLangugesCreateForm: jest.fn().mockReturnValue(of({
@@ -234,5 +251,35 @@ describe('ChallengeFormComponent', () => {
   it('should call onCancel and navigate to challenges list', () => {
     component.onCancel()
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
+  })
+
+  describe('Tag Management', () => {
+    it('should load tags when language is selected', () => {
+      // Now you can use the mock data in your tests
+      component.onLanguageChange('Javascript')
+      expect(component.currentTags).toEqual(mockJavascriptTags.results)
+    })
+
+    it('should clear selected tags when language changes', () => {
+      // Setup initial state
+      component.selectedTags = ['Arrays', 'Functions']
+      expect(component.selectedTags.length).toBe(2)
+
+      // Change language
+      component.onLanguageChange('Python')
+      expect(component.selectedTags).toEqual([])
+    })
+
+    it('should toggle tag selection correctly', () => {
+      const testTag = 'Arrays'
+      // Test selecting a tag
+      component.onTagSelect(testTag)
+      expect(component.selectedTags).toContain(testTag)
+      expect(component.isTagSelected(testTag)).toBeTruthy()
+      // Test deselecting the same tag
+      component.onTagSelect(testTag)
+      expect(component.selectedTags).not.toContain(testTag)
+      expect(component.isTagSelected(testTag)).toBeFalsy()
+    })
   })
 })
