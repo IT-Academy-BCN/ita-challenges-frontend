@@ -227,4 +227,13 @@ implements OnInit {
     
     return shuffled.slice(0, count);
   }
+
+  isTabVisible(tabId: number): boolean {
+
+    if (this.challengeStarted) {
+      return false;
+    }    
+    // Default: all tabs are visible when challenge hasn't started
+    return true;
+  }
 }

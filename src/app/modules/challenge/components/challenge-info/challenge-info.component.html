@@ -8,12 +8,10 @@
   <!--DETAILS TAB-->
 
   <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
-    <a href="#details" ngbNavLink>{{
+    <a href="#details" ngbNavLink *ngIf="isTabVisible(1)">{{
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
-
-
       <div class="tab-content">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3" *ngIf="!isAdmin && challengeStarted">
@@ -96,7 +94,7 @@
   </li>
 
   <li *ngIf="!isAdmin" [ngbNavItem]="2" (click)="onActiveIdChange(2)">
-    <a href="#solutions" ngbNavLink>{{
+    <a href="#solutions" ngbNavLink *ngIf="isTabVisible(2)">{{
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -167,7 +165,7 @@
   </li>
 
   <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
-    <a href="#resources" ngbNavLink>{{
+    <a href="#resources" ngbNavLink *ngIf="isTabVisible(3)">{{
       "modules.challenge.info.resourcesTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -181,7 +179,7 @@
     </ng-template>
   </li>
   <li [ngbNavItem]="4" class="related" (click)="onActiveIdChange(4)">
-    <a href="#related" ngbNavLink>{{
+    <a href="#related" ngbNavLink *ngIf="isTabVisible(4)">{{
       "modules.challenge.info.relatedTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
