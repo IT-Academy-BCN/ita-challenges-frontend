@@ -117,17 +117,28 @@
 
         <!-- Si el usuario envió su solución, ahora puede ver otras soluciones -->
         <div class="unrestricted" *ngIf="solutionSent">
-          <ng-container>
-            <app-solution
-              *ngFor="let solution of challengeSolutions; let i = index"
-              [number]="i + 1"
-              [isUserSolution]="false"
-              class="mb-4"
-              [languageExt]="'javascript'"
-              [solution_text]="solution.solution_text"
-            >
-            </app-solution>
-          </ng-container>
+          <div class="solution-container d-flex gap-5">
+            <div class="user-solution w-50" *ngIf="userSolution">
+              <h3>{{ "Tu solución" }}</h3>
+              <app-solution
+                [number]="1"
+                [isUserSolution]="true"
+                class="mb-4"
+                [solution_text]="userSolution.solution_text"
+              >
+              </app-solution>
+            </div>
+
+            <div class="official-solution w-50" *ngIf="challengeSolutions.length > 0">
+              <h3>{{ "Solución oficial" }}</h3>
+              <app-solution
+                [number]="2"
+                class="mb-4"
+                [solution_text]="challengeSolutions[0].solution_text"
+              >
+              </app-solution>
+            </div>
+        </div>
         </div>
       </div>
 
