@@ -135,8 +135,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     return extensions[language as keyof typeof extensions] || javascript
   }
 
-  // Carga los lenguajes del backend
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   loadLanguages (): void {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
       next: ({ results }) => {
@@ -235,7 +233,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     } else {
       this.selectedTags.splice(index, 1)
     }
-    console.log('Tags seleccionados:', this.selectedTags)
   }
 
   isTagSelected (tag: string): boolean {
