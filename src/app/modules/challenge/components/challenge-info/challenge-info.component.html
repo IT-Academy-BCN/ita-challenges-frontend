@@ -12,7 +12,7 @@
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
-      <div class="tab-content">
+      <div class="tab-content w-100">
         <!-- show statement / mostrar enunciado -->
         <div class="d-block btn-row text-end mb-3" *ngIf="!isAdmin && challengeStarted">
           <span class="right-span d-inline-flex">
@@ -26,12 +26,9 @@
             }}</label>
           </span>
         </div>
-        <app-editor-challenge 
-        *ngIf="showEditor" [showEditor]="showEditor">
-        </app-editor-challenge>
         
-        <!-- description of statement on the left of the box where you put your code for the solution  -->
-        <div class="details-body d-flex">
+        <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': showStatement && showEditor}">
+          <!-- Description section -->
           <div *ngIf="!challengeStarted || showStatement" class="details-text">
             <!-- Description -->
             <div class="pb-1">
@@ -61,7 +58,10 @@
             </div>
           </div>
 
-          <!-- CAJA DE TEXTO QUE TIENE QUE DESAPARECER -->
+          <!-- Editor section -->
+          <div class="editor-section" *ngIf="showEditor">
+            <app-editor-challenge [showEditor]="showEditor"></app-editor-challenge>
+          </div>
         </div>
       </div>
     </ng-template>
@@ -73,7 +73,7 @@
     <a href="#solutions" ngbNavLink>{{ "modules.challenge.info.solutionsTitle" | translate }}</a>
     <ng-template ngbNavContent>
 
-      <div class="tab-content">
+      <div class="tab-content w-100">
 
         <ng-container *ngIf="challengeSolutions && challengeSolutions.length > 0">
           <ng-container *ngFor="let solution of challengeSolutions; let i = index">
@@ -99,7 +99,7 @@
     }}</a>
     <ng-template ngbNavContent>
       <!-- Los usuarios solo pueden ver otras soluciones si enviaron la suya -->
-      <div class="tab-content">
+      <div class="tab-content w-100">
 
         <div class="restricted" *ngIf="!solutionSent">
           <h3>
@@ -170,7 +170,7 @@
     }}</a>
     <ng-template ngbNavContent>
       <!--RESOURCES TAB-->
-      <div class="tab-content">
+      <div class="tab-content w-100">
         <h3>{{ "modules.challenge.info.resourcesTitle" | translate }}</h3>
         <section class="info-card d-flex flex-column gap-3">
           <p>{{ "modules.challenge.info.noResources" | translate }} </p>
@@ -184,7 +184,7 @@
     }}</a>
     <ng-template ngbNavContent>
       <!--RELATED TAB-->
-      <div class="tab-content">
+      <div class="tab-content w-100">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
         
         <!-- Display related challenges when available -->
