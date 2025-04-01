@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, Subject, type Observable } from 'rxjs'
+import { BehaviorSubject, of, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
@@ -47,16 +47,17 @@ export class SolutionService {
       solutionText,
       status,
     };
-  
-    return this.http.put<any>(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+
+    return of(body);
+    // return this.http.put<any>(
+    //   `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
+    //   body,
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   }
+    // );
   }
 
   getUserSolution (challengeId: string, languageId: string): Observable<UserSolution> {
