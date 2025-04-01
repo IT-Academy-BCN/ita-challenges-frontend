@@ -19,6 +19,9 @@ export class SolutionService {
   submitSolutionSubject = new Subject<boolean>()
   public sendSolutionText$ = this.submitSolutionSubject.asObservable()
 
+  private readonly challengeCompletedSubject = new Subject<string>()
+  challengeCompleted$ = this.challengeCompletedSubject.asObservable()
+
   updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
   }
@@ -27,6 +30,17 @@ export class SolutionService {
     // Cuando se haya enviado la solución, actualiza el estado
     this.updateSolutionSentState(true)
     // Lógica para enviar la solución al backend si es necesario
+  }
+
+  completeChallenge(challengeId: string): void {
+    // Remove from localStorage
+    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}')
+    if (savedChallenge.id === challengeId) {
+      localStorage.removeItem('challengeStarted')
+    }
+    
+    // Notify subscribers
+    this.challengeCompletedSubject.next(challengeId)
   }
 
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {

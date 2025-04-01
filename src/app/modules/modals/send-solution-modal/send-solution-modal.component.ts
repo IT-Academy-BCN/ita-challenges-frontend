@@ -18,6 +18,9 @@ export class SendSolutionModalComponent {
     this.solutionService.updateSolutionSentState(true)
     this.solutionService.sendSolutionText(true)
     this.solutionService.activeIdSubject.next(2)
+    
+    this.solutionService.completeChallenge(this.idChallenge)
+    
     this.closeModal()
   }
 

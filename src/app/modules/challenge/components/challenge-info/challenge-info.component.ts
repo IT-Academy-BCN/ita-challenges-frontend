@@ -83,6 +83,13 @@ implements OnInit {
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })    
+    this.solutionService.challengeCompleted$.subscribe(challengeId => {
+      if (challengeId === this.idChallenge) {
+        this.challengeStarted = false;
+        this.showEditor = true;
+        this.cdr.detectChanges();
+      }
+    });
 
     // Check if challenge is already started from localStorage
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }

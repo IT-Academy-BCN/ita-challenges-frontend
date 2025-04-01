@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../../services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -19,6 +20,7 @@ export class ChallengeHeaderComponent implements OnInit {
   ) {}
 
   private readonly challengeService = inject(ChallengeService)
+  private readonly solutionService = inject(SolutionService)
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -52,6 +54,13 @@ export class ChallengeHeaderComponent implements OnInit {
     this.solutionSent = savedSolutions.includes(this.idChallenge)
 
     this.checkFavoriteStatus()
+
+    this.solutionService.challengeCompleted$.subscribe((challengeId: string) => {
+      if (challengeId === this.idChallenge) {
+        this.challengeStarted = false;
+        this.activeId = 2; 
+      }
+    });
 
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
