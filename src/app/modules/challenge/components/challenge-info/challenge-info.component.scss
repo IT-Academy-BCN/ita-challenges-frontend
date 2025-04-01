@@ -6,6 +6,10 @@
   margin-top: 2rem;
   padding: 0;
   border-radius: 2px;
+  
+  &.no-tabs {
+    border-bottom: none;
+  }
 }
 
 .nav-item {

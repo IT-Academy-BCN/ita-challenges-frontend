@@ -4,6 +4,7 @@
   #nav="ngbNav"
   [(activeId)]="activeId"
   class="nav-tabs d-none d-md-flex"
+  [ngClass]="{'no-tabs': challengeStarted}"
 >
   <!--DETAILS TAB-->
 
@@ -30,7 +31,6 @@
         <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': showStatement && showEditor}">
           <!-- Description section -->
           <div *ngIf="!challengeStarted || showStatement" class="details-text">
-            <!-- Description -->
             <div class="pb-1">
               <h3 class="mt-0">
                 {{ "modules.challenge.info.description" | translate }}
