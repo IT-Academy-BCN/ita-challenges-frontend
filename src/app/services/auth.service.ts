@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,9 +11,10 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string>('');
   private username: string = '';
   private usernameSubject = new BehaviorSubject<string>('');
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
+  public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor() {
-    // Initialize the role from localStorage on service creation
+  constructor(private _cookieService: CookieService) {
     this.updateUserRoleFromToken();
   }
 
@@ -27,19 +29,34 @@ export class AuthService {
   // Method to update the user role when authentication changes
   updateUserRoleFromToken(): void {
     const token = localStorage.getItem('authToken');
-    if (!token) {
-      this.userRole = '';
+    if (token) {
+      const decodedToken = this.decodeToken(token);
+      this.userRole = decodedToken?.role ?? '';
+      this.userRoleSubject.next(this.userRole);
+      this.username = decodedToken?.sub ?? '';
+      this.usernameSubject.next(this.username);
+    } else {
       this.userRoleSubject.next('');
       this.username = '';
       this.usernameSubject.next('');
-      return;
     }
-    
-    const decodedToken = this.decodeToken(token);
-    this.userRole = decodedToken?.role ?? '';
-    this.userRoleSubject.next(this.userRole);
-    this.username = decodedToken?.sub ?? '';
-    this.usernameSubject.next(this.username);
+    this.updateAuthStatus();
+  }
+
+  isUserLoggedIn(): boolean {
+    return localStorage.getItem('authToken') !== null;
+  }
+
+
+  private checkAuthToken(): boolean {
+    return localStorage.getItem('authToken') !== null;
+
+  }
+
+  private updateAuthStatus(): void {
+    const isLoggedIn = this.checkAuthToken();
+    this.isLoggedInSubject.next(isLoggedIn);
+
   }
 
   private decodeToken(token: string): any {
