@@ -1,13 +1,18 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from './auth.service';
+import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let cookieService: CookieService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [CookieService]
+    });
     service = TestBed.inject(AuthService);
+    cookieService = TestBed.inject(CookieService);
   });
 
   afterEach(() => {
@@ -82,4 +87,15 @@ describe('AuthService', () => {
     tick();
     expect(updatedRole).toBe('');
   }));
+
+  it('should return true if user is logged in (auth token exists)', () => {
+    localStorage.setItem('authToken', 'test-token');
+    expect(service.isUserLoggedIn()).toBe(true);
+  });
+
+  it('should return false if user is not logged in (no auth token)', () => {
+    localStorage.removeItem('authToken');
+    expect(service.isUserLoggedIn()).toBe(false);
+  });
+
 });
