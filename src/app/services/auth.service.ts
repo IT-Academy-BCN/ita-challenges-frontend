@@ -22,7 +22,7 @@ export class AuthService {
 
   // Method to update the user role when authentication changes
   updateUserRoleFromToken(): void {
-    const token = this._cookieService.get('authToken');
+    const token = localStorage.getItem('authToken');
     if (token) {
       const decodedToken = this.decodeToken(token);
       this.userRole = decodedToken?.role ?? '';

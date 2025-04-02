@@ -16,7 +16,7 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
-    cookieService.delete('authToken', '/');
+    localStorage.clear();
   });
 
   it('should be created', () => {
@@ -32,7 +32,7 @@ describe('AuthService', () => {
 
   it('should return the correct role when there is a valid token', fakeAsync(() => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    cookieService.set('authToken', `header.${token}.signature`, { path: '/' });
+    localStorage.setItem('authToken', `header.${token}.signature`);
 
     service.updateUserRoleFromToken();
 
@@ -60,7 +60,7 @@ describe('AuthService', () => {
     expect(initialRole).toBe('');
 
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    cookieService.set('authToken', `header.${token}.signature`, { path: '/' });
+    localStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleFromToken();
 
     let updatedRole: string | undefined;
@@ -71,7 +71,7 @@ describe('AuthService', () => {
 
   it('should emit empty role when token is removed', fakeAsync(() => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    cookieService.set('authToken', `header.${token}.signature`, { path: '/' });
+    localStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleFromToken();
 
     let initialRole: string | undefined;
@@ -79,7 +79,7 @@ describe('AuthService', () => {
     tick();
     expect(initialRole).toBe('ADMIN');
 
-    cookieService.delete('authToken', '/');
+    localStorage.removeItem('authToken');
     service.updateUserRoleFromToken();
 
     let updatedRole: string | undefined;
