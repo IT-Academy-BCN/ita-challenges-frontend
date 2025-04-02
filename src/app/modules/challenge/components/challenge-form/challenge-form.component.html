@@ -152,8 +152,8 @@
                   <button 
                     type="button" 
                     class="tag-button"
-                    [class.active]="isTagSelected(tag.tag_name)"
-                    (click)="onTagSelect(tag.tag_name)"
+                    [class.active]="isTagSelected(tag.id_tag)"
+                    (click)="onTagSelect(tag.id_tag)"
                     [title]="tag.tag_description">
                     {{ tag.tag_name }}
                   </button>

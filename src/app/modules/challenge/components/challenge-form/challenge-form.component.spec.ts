@@ -55,9 +55,26 @@ describe('ChallengeFormComponent', () => {
 
   const mockJavascriptTags = {
     results: [
-      { tag_name: 'Arrays' },
-      { tag_name: 'Functions' },
-      { tag_name: 'Objects' }
+      {
+        id_tag: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+        tag_name: 'Promises',
+        tag_description: 'Retos sobre programación asíncrona y manejo de promesas.'
+      },
+      {
+        id_tag: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        tag_name: 'DOM',
+        tag_description: 'Ejercicios de manipulación del Document Object Model.'
+      },
+      {
+        id_tag: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
+        tag_name: 'Arrays',
+        tag_description: 'Desafíos utilizando métodos de array como map, filter, reduce.'
+      },
+      {
+        id_tag: 'dddddddd-dddd-dddd-dddd-dddddddddddd',
+        tag_name: 'Closures',
+        tag_description: 'Retos sobre scope y closures en JavaScript.'
+      }
     ]
   }
 
@@ -251,22 +268,22 @@ describe('ChallengeFormComponent', () => {
     })
 
     it('should clear selected tags when language changes', () => {
-      component.selectedTags = ['Arrays', 'Functions']
+      component.selectedTags = ['1', '2']
       expect(component.selectedTags.length).toBe(2)
       component.onLanguageChange('Python')
       expect(component.selectedTags).toEqual([])
     })
 
     it('should toggle tag selection correctly', () => {
-      const testTag = 'Arrays'
+      const testTagId = '1'
       // Selecting a tag
-      component.onTagSelect(testTag)
-      expect(component.selectedTags).toContain(testTag)
-      expect(component.isTagSelected(testTag)).toBeTruthy()
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeTruthy()
       // Deselecting the same tag
-      component.onTagSelect(testTag)
-      expect(component.selectedTags).not.toContain(testTag)
-      expect(component.isTagSelected(testTag)).toBeFalsy()
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).not.toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeFalsy()
     })
   })
 })

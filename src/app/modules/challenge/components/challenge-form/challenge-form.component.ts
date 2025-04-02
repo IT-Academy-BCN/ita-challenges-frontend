@@ -37,7 +37,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     level: 'EASY',
     language: '' as string,
     solution: '',
-    topic: '',
     tags: []
   }
 
@@ -140,7 +139,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       next: ({ results }) => {
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
         this.languages = results || []
-        console.log('Idiomas cargados:', this.languages) // Lista completa de idiomas
       },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
@@ -226,16 +224,16 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  onTagSelect (tag: string): void {
-    const index = this.selectedTags.indexOf(tag)
+  onTagSelect (idTag: string): void {
+    const index = this.selectedTags.indexOf(idTag)
     if (index === -1) {
-      this.selectedTags.push(tag)
+      this.selectedTags.push(idTag)
     } else {
       this.selectedTags.splice(index, 1)
     }
   }
 
-  isTagSelected (tag: string): boolean {
-    return this.selectedTags.includes(tag)
+  isTagSelected (idTag: string): boolean {
+    return this.selectedTags.includes(idTag)
   }
 }

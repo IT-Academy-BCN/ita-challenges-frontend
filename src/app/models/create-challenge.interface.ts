@@ -11,6 +11,5 @@ export interface CreateChallenge {
   level: 'EASY' | 'MEDIUM' | 'HARD'
   language: string
   solution: string
-  topic: string
   tags: string[]
 }
