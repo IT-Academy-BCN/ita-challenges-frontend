@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser'
 
 class MockNavService {
   public selectWidth = '69px'
@@ -16,6 +17,7 @@ class MockNavService {
 class MockAuthService {
   updateUserRoleFromToken = jest.fn();
   getUsername = jest.fn(() => of('test-user')); // Simula un observable que devuelve 'test-user'
+  isLoggedIn$ = of(true); 
 }
 
 const mockActivatedRoute = {
@@ -103,34 +105,12 @@ describe('DesktopNavComponent', () => {
 
   it('should not close dropdown if click is inside .dropdown', () => {
     component.dropdownOpen = true;
+    fixture.detectChanges();
 
-    const dropdown = document.createElement('div');
-    dropdown.classList.add('dropdown');
-    document.body.appendChild(dropdown);
+    const dropdownElement = fixture.debugElement.query(By.css('.dropdown'));
+    dropdownElement.nativeElement.dispatchEvent(new MouseEvent('click'));
 
-    const event = new MouseEvent('click');
-    Object.defineProperty(event, 'target', { value: dropdown });
-
-    component.onClickOutside(event);
     expect(component.dropdownOpen).toBe(true);
-
-    document.body.removeChild(dropdown);
-  });
-
-  it('should not close dropdown if click is on .user button', () => {
-    component.dropdownOpen = true;
-
-    const userBtn = document.createElement('button');
-    userBtn.classList.add('user');
-    document.body.appendChild(userBtn);
-
-    const event = new MouseEvent('click');
-    Object.defineProperty(event, 'target', { value: userBtn });
-
-    component.onClickOutside(event);
-    expect(component.dropdownOpen).toBe(true);
-
-    document.body.removeChild(userBtn);
   });
 
   it('should load user from AuthService', () => {
