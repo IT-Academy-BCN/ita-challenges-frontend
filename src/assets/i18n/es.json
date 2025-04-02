@@ -60,6 +60,8 @@
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
                 "solutionsTitleLocked":"Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto",
+                "solutionsUserHeader": "Tu solución",
+                "solutionsOfficialHeader":"Solución aportada por IT Academy",
                 "noResources": "No hay recursos disponibles para este reto."
             }
         },
