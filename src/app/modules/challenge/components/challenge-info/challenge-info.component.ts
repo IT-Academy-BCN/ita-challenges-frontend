@@ -236,10 +236,14 @@ implements OnInit {
   }
 
   isTabVisible(tabId: number): boolean {
-
+    if (this.isAdmin) {
+      return true;
+    }
+    
     if (this.challengeStarted) {
       return false;
     }    
+    
     // Default: all tabs are visible when challenge hasn't started
     return true;
   }

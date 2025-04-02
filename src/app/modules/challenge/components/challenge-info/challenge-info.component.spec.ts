@@ -11,20 +11,38 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { By } from '@angular/platform-browser'
+import { of, Subject } from 'rxjs'
+import { Component, Input } from '@angular/core'
+
+// Mock EditorChallengeComponent
+@Component({
+  selector: 'app-editor-challenge',
+  template: '<div>Mock Editor Component</div>'
+})
+class MockEditorChallengeComponent {
+  @Input() showEditor: boolean = false;
+}
 
 describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
+  let mockActiveIdSubject: Subject<number>
+  let mockChallengeCompletedSubject: Subject<string>
 
   beforeEach(async () => {
+    // Create new subjects for each test
+    mockActiveIdSubject = new Subject<number>()
+    mockChallengeCompletedSubject = new Subject<string>()
+    
     await TestBed.configureTestingModule({
       declarations: [
         ChallengeInfoComponent,
         ResourceCardComponent,
         ChallengeCardComponent,
-        SolutionComponent
-        // RestrictedModalComponent
+        SolutionComponent,
+        MockEditorChallengeComponent
       ],
       imports: [
         RouterTestingModule,
@@ -35,7 +53,13 @@ describe('ChallengeInfoComponent', () => {
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        {
+          provide: NgbModal,
+          useValue: {
+            open: jest.fn()
+          }
+        }
       ]
     }).compileComponents()
   })
@@ -44,6 +68,20 @@ describe('ChallengeInfoComponent', () => {
     fixture = TestBed.createComponent(ChallengeInfoComponent)
     component = fixture.componentInstance
     modalService = TestBed.inject(NgbModal)
+    
+    // Mock the SolutionService properties
+    Object.defineProperty(component['solutionService'], 'activeIdSubject', {
+      value: mockActiveIdSubject
+    })
+    
+    Object.defineProperty(component['solutionService'], 'activeId$', {
+      value: mockActiveIdSubject.asObservable()
+    })
+    
+    Object.defineProperty(component['solutionService'], 'challengeCompleted$', {
+      value: mockChallengeCompletedSubject.asObservable()
+    })
+    
     fixture.detectChanges()
   })
 
@@ -93,6 +131,149 @@ describe('ChallengeInfoComponent', () => {
     expect(component.activeId).toBe(newActiveId)
   }))
 
+  describe('Challenge State-Based Display', () => {
+    beforeEach(() => {
+      // Set up common test data
+      component.idChallenge = 'test-challenge-id'
+      component.languages = [{ id_language: 'test-language-id', language_name: 'JavaScript' }]
+      
+      // Mock authService - default to non-admin user
+      const authServiceSpy = jest.spyOn((component as any).authService, 'getUserRole')
+      authServiceSpy.mockReturnValue({
+        subscribe: (fn: any) => {
+          fn('USER') // Default to non-admin user
+          return { unsubscribe: () => {} }
+        }
+      })
+      
+      // Clear localStorage to ensure consistent test state
+      localStorage.removeItem('challengeStarted')
+      
+      fixture.detectChanges()
+    })
+    
+    it('should display show statement checkbox only if user is not admin and challenge has started', async () => {
+      // Test case 1: User is not admin and challenge has started - should show checkbox
+      component.isAdmin = false
+      component.challengeStarted = true
+      fixture.detectChanges()
+      
+      let checkbox = fixture.debugElement.query(By.css('.btn-row input[type="checkbox"]'))
+      expect(checkbox).toBeTruthy()
+      
+      // Test case 2: User is admin and challenge has started - should not show checkbox
+      // Note: In reality, admins don't start challenges, but we test the UI logic anyway
+      component.isAdmin = true
+      component.challengeStarted = true
+      fixture.detectChanges()
+      
+      checkbox = fixture.debugElement.query(By.css('.btn-row input[type="checkbox"]'))
+      expect(checkbox).toBeFalsy()
+      
+      // Test case 3: User is not admin but challenge has not started - should not show checkbox
+      component.isAdmin = false
+      component.challengeStarted = false
+      fixture.detectChanges()
+      
+      checkbox = fixture.debugElement.query(By.css('.btn-row input[type="checkbox"]'))
+      expect(checkbox).toBeFalsy()
+    })
+    
+    it('should initialize show statement checkbox as unchecked when starting a challenge (non-admin only)', () => {
+      // Arrange - non-admin user with challenge not started
+      component.isAdmin = false
+      component.challengeStarted = false
+      component.showStatement = true
+      fixture.detectChanges()
+      
+      // Act - start the challenge
+      component.onChallengeStart()
+      fixture.detectChanges()
+      
+      // Assert
+      expect(component.challengeStarted).toBe(true)
+      expect(component.showStatement).toBe(false)
+    })
+    
+    it('should display tabs only if challenge has not started (for non-admin users)', () => {
+      // Set up as non-admin user
+      component.isAdmin = false
+      
+      // Test case 1: Challenge not started - tabs should be visible
+      component.challengeStarted = false
+      fixture.detectChanges()
+      
+      expect(component.isTabVisible(1)).toBe(true)
+      expect(component.isTabVisible(2)).toBe(true)
+      expect(component.isTabVisible(3)).toBe(true)
+      expect(component.isTabVisible(4)).toBe(true)
+      
+      // Test case 2: Challenge started - tabs should be hidden
+      component.challengeStarted = true
+      fixture.detectChanges()
+      
+      expect(component.isTabVisible(1)).toBe(false)
+      expect(component.isTabVisible(2)).toBe(false)
+      expect(component.isTabVisible(3)).toBe(false)
+      expect(component.isTabVisible(4)).toBe(false)
+    })
+    
+    it('should always display tabs for admin users regardless of challenge state', () => {
+      // Set up as admin user
+      component.isAdmin = true
+      
+      // Even if challengeStarted is true (which shouldn't happen for admins), tabs should still be visible
+      component.challengeStarted = true
+      fixture.detectChanges()
+      
+      // For admins, isTabVisible should ignore the challengeStarted flag
+      // Note: This test might fail if the current implementation doesn't have this logic
+      // If it fails, it indicates a potential improvement to make tabs always visible for admins
+      expect(component.isTabVisible(1)).toBe(true)
+    })
+    
+    it('should show tabs again when user sends solution (non-admin only)', fakeAsync(() => {
+      // Arrange - non-admin user with challenge started, tabs hidden
+      component.isAdmin = false
+      component.challengeStarted = true
+      component.showEditor = true
+      fixture.detectChanges()
+      
+      // Verify tabs are hidden
+      expect(component.isTabVisible(1)).toBe(false)
+      
+      // Act - simulate solution sent by emitting the challenge ID
+      mockChallengeCompletedSubject.next(component.idChallenge)
+      tick()
+      fixture.detectChanges()
+      
+      // Assert
+      expect(component.challengeStarted).toBe(false)
+      expect(component.showEditor).toBe(true)
+      expect(component.isTabVisible(1)).toBe(true)
+    }))
+    
+    it('should display side-by-side layout when showing both statement and editor', () => {
+      // Arrange - non-admin user
+      component.isAdmin = false
+      component.showStatement = true
+      component.showEditor = true
+      fixture.detectChanges()
+      
+      // Act
+      const detailsBody = fixture.debugElement.query(By.css('.details-body'))
+      
+      // Assert
+      expect(detailsBody.classes['side-by-side']).toBe(true)
+      
+      // Change state
+      component.showStatement = false
+      fixture.detectChanges()
+      
+      // Assert
+      expect(detailsBody.classes['side-by-side']).toBeFalsy()
+    })
+  })
 
   describe('Related Challenges Feature', () => {
     let component: ChallengeInfoComponent
