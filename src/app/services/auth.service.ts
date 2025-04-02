@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   isUserLoggedIn(): boolean {
-    return this._cookieService.check('authToken');
+    return localStorage.getItem('authToken') !== null;
   }
 
 
@@ -44,7 +44,8 @@ export class AuthService {
   }
 
   private checkAuthToken(): boolean {
-    return this._cookieService.check('authToken');
+    return localStorage.getItem('authToken') !== null;
+
   }
 
   private updateAuthStatus(): void {
