@@ -116,9 +116,10 @@ describe('ChallengeService', () => {
     const mockChallenge: CreateChallenge = {
       challengeTitle: 'Test Challenge',
       description: 'Test Description',
-      level: 'EASY', // ✅ Asegurar que sea 'EASY' | 'MEDIUM' | 'HARD'
+      level: 'EASY',
       language: 'Java',
-      solution: 'Test Solution'
+      solution: 'Test Solution',
+      tags: [] // Add the required tags property
     }
 
     const mockResponse = { id: 1, ...mockChallenge }
