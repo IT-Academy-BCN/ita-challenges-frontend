@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from '../../../services/challenge.service';
 import { AuthService } from '../../../services/auth.service';
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -47,7 +48,7 @@ export class SendSolutionModalComponent {
       this.languageId,
       this.solutionText,
       this.userId,
-      "ENDED"
+      SolutionStatus.ENDED
     ).subscribe({
       next: (response) => {
         this.solutionService.updateSolutionSentState(true);
