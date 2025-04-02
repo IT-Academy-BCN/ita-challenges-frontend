@@ -52,9 +52,9 @@
   </div>
 
   <div class="col-md-3 button d-none d-md-flex">
-    <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
-    <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
-    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+    <button *ngIf="!challengeStarted" class="btn btn-sm btn-primary" (click)="onStartChallenge()">{{'modules.challenge.header.buttonStart' | translate }}</button>
+    <button *ngIf="challengeStarted" class="btn btn-sm btn-outline-primary mt-3" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+    <button *ngIf="challengeStarted" class="btn btn-sm btn-primary mt-3" (click)="openSendSolutionModal()">{{'modules.challenge.header.buttonSendSolution' | translate }}</button>
   </div>
  
    <!-- Si ya se envió la solución -->

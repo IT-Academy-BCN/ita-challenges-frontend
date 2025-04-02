@@ -30,17 +30,19 @@
 }
 
 .button {
-  padding: .5rem 0 0 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   text-align: center;
+  margin-top: 32px;
+  padding-right: 0;
   
   .btn.btn-sm {
-    margin-right: 0.9rem;
+    margin-left: 0.9rem;
+    display: flex;
     
-    &:last-child {
-      margin-right: 0;
+    &:first-child {
+      margin-left: 0;
     }
   }
 }

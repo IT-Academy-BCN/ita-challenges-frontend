@@ -12,6 +12,7 @@ $btn-disabled-opacity: .35;
 .btn{
     padding: $btn-padding-y $btn-padding-x $btn-padding-y $btn-padding-x;
     border-radius: $btn-radius;
+    font-weight: 500;
 }
 .btn.btn-sm{
     padding: $btn-padding-y-sm $btn-padding-x-sm $btn-padding-y-sm $btn-padding-x-sm;
