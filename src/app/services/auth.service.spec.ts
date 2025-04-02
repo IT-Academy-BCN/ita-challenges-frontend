@@ -89,12 +89,12 @@ describe('AuthService', () => {
   }));
 
   it('should return true if user is logged in (auth token exists)', () => {
-    cookieService.set('authToken', 'test-token', { path: '/' });
+    localStorage.setItem('authToken', 'test-token');
     expect(service.isUserLoggedIn()).toBe(true);
   });
 
   it('should return false if user is not logged in (no auth token)', () => {
-    cookieService.delete('authToken', '/');
+    localStorage.removeItem('authToken');
     expect(service.isUserLoggedIn()).toBe(false);
   });
 

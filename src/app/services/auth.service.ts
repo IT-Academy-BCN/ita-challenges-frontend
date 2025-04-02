@@ -38,11 +38,6 @@ export class AuthService {
   }
 
 
-  setAuthToken(token: string): void {
-    this._cookieService.set('authToken', token, {path: '/', secure: true, sameSite: 'Strict'});
-    this.updateUserRoleFromToken();
-  }
-
   private checkAuthToken(): boolean {
     return localStorage.getItem('authToken') !== null;
 
