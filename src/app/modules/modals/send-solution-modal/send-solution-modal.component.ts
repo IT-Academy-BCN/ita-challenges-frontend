@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core'
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from '../../../services/challenge.service';
@@ -19,6 +19,7 @@ export class SendSolutionModalComponent {
   @Input() userId!: string;
   languageId: string = ''; 
   solutionText: string = '';
+  @Output() solutionAccepted = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.getLanguageId(); 
@@ -53,6 +54,7 @@ export class SendSolutionModalComponent {
         this.solutionService.updateSolutionSentState(true);
         this.solutionService.sendSolutionText(true);
         this.solutionService.activeIdSubject.next(2);
+        this.solutionAccepted.emit();
         this.closeModal();
       },
       error: (error) => {
