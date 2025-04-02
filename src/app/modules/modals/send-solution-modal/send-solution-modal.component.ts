@@ -32,7 +32,7 @@ export class SendSolutionModalComponent {
         this.languageId = challenge.languages[0].id_language;
       },
       error: (error) => {
-        console.error("Error al obtener Language ID:", error);
+        console.error("Error obtaining Language ID:", error);
       }
     });
   }
@@ -57,7 +57,7 @@ export class SendSolutionModalComponent {
         this.closeModal();
       },
       error: (error) => {
-        console.error('Error al enviar la solución:', error);
+        console.error('Error sending solution:', error);
       }
     });
   }
