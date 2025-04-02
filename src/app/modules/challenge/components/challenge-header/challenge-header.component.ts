@@ -105,6 +105,14 @@ export class ChallengeHeaderComponent implements OnInit {
     })
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.solutionAccepted.subscribe(() => {
+      this.onSolutionAccepted();
+    });
+  }
+
+  onSolutionAccepted(): void {
+    this.solutionSent = true; 
+    this.activeId = 2; 
   }
 
   get currentLang (): string {
