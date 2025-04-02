@@ -26,7 +26,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
       this.isLoggedIn = isLoggedIn;
     });
 
-    this._authService.updateUserRoleFromToken();
+    this._authService.updateUserRoleAndUserNameFromToken();
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
     });

@@ -33,12 +33,12 @@ describe('MentorLoginComponent', () => {
   let component: MentorLoginComponent
   let fixture: ComponentFixture<MentorLoginComponent>
   let queryParams$: BehaviorSubject<any>
-  let authServiceMock: { updateUserRoleFromToken: jest.Mock }
+  let authServiceMock: { updateUserRoleAndUserNameFromToken: jest.Mock }
 
   beforeEach(async () => {
     queryParams$ = new BehaviorSubject<any>({})
     authServiceMock = {
-      updateUserRoleFromToken: jest.fn()
+      updateUserRoleAndUserNameFromToken: jest.fn()
     }
 
     const activatedRouteMock = {
@@ -152,7 +152,7 @@ describe('MentorLoginComponent', () => {
     )
     expect(localStorage.getItem('username')).toBe('testUser')
     expect(localStorage.getItem('authToken')).toBe('123456')
-    expect(authServiceMock.updateUserRoleFromToken).toHaveBeenCalled()
+    expect(authServiceMock.updateUserRoleAndUserNameFromToken).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalledWith([], { queryParams: { code: null }, queryParamsHandling: 'merge' })
     expect(modalSpy).toHaveBeenCalled()
     expect(loginSuccessSpy).toHaveBeenCalledWith(true)

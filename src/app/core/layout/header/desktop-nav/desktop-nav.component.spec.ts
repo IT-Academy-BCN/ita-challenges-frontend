@@ -15,8 +15,8 @@ class MockNavService {
   })
 }
 class MockAuthService {
-  updateUserRoleFromToken = jest.fn();
-  getUsername = jest.fn(() => of('test-user')); // Simula un observable que devuelve 'test-user'
+  updateUserRoleAndUserNameFromToken = jest.fn();
+  getUsername = jest.fn(() => of('test-user'));
   isLoggedIn$ = of(true); 
 }
 

@@ -14,9 +14,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private _cookieService: CookieService) {
-    this.updateUserRoleFromToken();
-  }
+  constructor() {}
 
   getUserRole(): Observable<string> {
     return this.userRoleSubject.asObservable();
@@ -26,8 +24,7 @@ export class AuthService {
     return this.usernameSubject.asObservable();
   }
 
-  // Method to update the user role when authentication changes
-  updateUserRoleFromToken(): void {
+  updateUserRoleAndUserNameFromToken(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
       const decodedToken = this.decodeToken(token);
