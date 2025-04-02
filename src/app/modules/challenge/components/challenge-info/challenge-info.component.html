@@ -119,7 +119,6 @@
         <div class="unrestricted" *ngIf="solutionSent">
           <div class="solution-container d-flex gap-5">
             <div class="user-solution w-50" *ngIf="userSolution">
-              <h3>{{ "Tu solución" }}</h3>
               <app-solution
                 [number]="1"
                 [isUserSolution]="true"
@@ -130,7 +129,6 @@
             </div>
 
             <div class="official-solution w-50" *ngIf="challengeSolutions.length > 0">
-              <h3>{{ "Solución oficial" }}</h3>
               <app-solution
                 [number]="2"
                 class="mb-4"
