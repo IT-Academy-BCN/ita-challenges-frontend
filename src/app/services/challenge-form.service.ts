@@ -3,7 +3,7 @@ import { type Language } from '../models/challenges.interface'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
-// import { CreateChallenge } from '../models/create-challenge.interface'
+import { type TagResponse } from '../models/tag-response.interface'
 
 @Injectable({
   providedIn: 'root'

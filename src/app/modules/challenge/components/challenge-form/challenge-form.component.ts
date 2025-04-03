@@ -17,7 +17,11 @@ import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
 // Añadir el import al inicio del archivo, temporalmente
-import { phpTags, javaTags, javascriptTags, sqlTags, pythonTags, typescriptTags } from 'src/mocks/challenge/tags.mock'
+// Remove this import
+// import { phpTags, javaTags, javascriptTags, sqlTags, pythonTags, typescriptTags } from 'src/mocks/challenge/tags.mock'
+
+// Add to imports at the top
+import { type Tag, type TagResponse } from '../../../../models/tag-response.interface'
 
 @Component({
   standalone: true,
@@ -42,7 +46,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   languages: Language[] = []
   selectedTags: string[] = []
-  currentTags: any[] = []
+  currentTags: Tag[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -170,18 +174,17 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadTagsForLanguage (language: string): void {
-    const tagMap = {
-      PHP: phpTags,
-      Java: javaTags,
-      Javascript: javascriptTags,
-      SQL: sqlTags,
-      Python: pythonTags,
-      Typescript: typescriptTags
-    }
-
-    const selectedLanguageTags = tagMap[language as keyof typeof tagMap]
-    this.currentTags = selectedLanguageTags?.results ?? []
-    this.selectedTags = []
+    this.challengeFormService.getTagsByLanguage(language).subscribe({
+      next: (response: TagResponse) => {
+        this.currentTags = response.results ?? []
+        this.selectedTags = []
+      },
+      error: (error) => {
+        console.error('Error loading tags:', error)
+        this.currentTags = []
+        this.selectedTags = []
+      }
+    })
   }
 
   // Validación del formulario (código original)
