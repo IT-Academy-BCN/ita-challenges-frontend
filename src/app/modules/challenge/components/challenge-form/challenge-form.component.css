@@ -308,3 +308,44 @@
     width: 68%;
   }
 }
+
+
+/* TAGS */
+.tags-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.tag-button {
+  padding: 5px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  background: white;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.tag-button:hover {
+  background: #f5f5f5;
+  border-color: #ccc;
+}
+
+.tag-button.active {
+  background: #C13584;
+  color: white;
+  border-color: #C13584;
+}
+
+@media (max-width: 768px) {
+  .tags-group {
+    width: 100%;
+  }
+}
+
+

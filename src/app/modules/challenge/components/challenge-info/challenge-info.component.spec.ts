@@ -88,6 +88,7 @@ describe('ChallengeInfoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+91|
 
   describe('ngOnInit', () => {
     it('should initialize component properties correctly', async () => {

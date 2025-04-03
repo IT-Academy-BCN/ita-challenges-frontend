@@ -1,13 +1,18 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from './auth.service';
+import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let cookieService: CookieService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [CookieService]
+    });
     service = TestBed.inject(AuthService);
+    cookieService = TestBed.inject(CookieService);
   });
 
   afterEach(() => {
@@ -29,7 +34,7 @@ describe('AuthService', () => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
 
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let role: string | undefined;
     service.getUserRole().subscribe(r => role = r);
@@ -48,7 +53,7 @@ describe('AuthService', () => {
     expect(decodedToken).toBeNull();
   });
 
-  it('should emit updated role when updateUserRoleFromToken is called', fakeAsync(() => {
+  it('should emit updated role when updateUserRoleAndUserNameFromToken is called', fakeAsync(() => {
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
     tick();
@@ -56,7 +61,7 @@ describe('AuthService', () => {
 
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
@@ -67,7 +72,7 @@ describe('AuthService', () => {
   it('should emit empty role when token is removed', fakeAsync(() => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
@@ -75,11 +80,22 @@ describe('AuthService', () => {
     expect(initialRole).toBe('ADMIN');
 
     localStorage.removeItem('authToken');
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
     tick();
     expect(updatedRole).toBe('');
   }));
+
+  it('should return true if user is logged in (auth token exists)', () => {
+    localStorage.setItem('authToken', 'test-token');
+    expect(service.isUserLoggedIn()).toBe(true);
+  });
+
+  it('should return false if user is not logged in (no auth token)', () => {
+    localStorage.removeItem('authToken');
+    expect(service.isUserLoggedIn()).toBe(false);
+  });
+
 });

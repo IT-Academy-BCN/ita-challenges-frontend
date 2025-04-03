@@ -80,10 +80,10 @@ export class MentorLoginComponent implements OnInit {
     this.http.post<GitHubAuthResponse>(url, { code }).subscribe({
       next: (response) => {
         if (response.isValid) {
-          localStorage.setItem('username', response.username)
           localStorage.setItem('authToken', response.token)
+          localStorage.setItem('username', response.username)
           
-          this.authService.updateUserRoleFromToken()
+          this.authService.updateUserRoleAndUserNameFromToken()
 
           this.closeModal()
           this.loginSuccess.emit(true)
