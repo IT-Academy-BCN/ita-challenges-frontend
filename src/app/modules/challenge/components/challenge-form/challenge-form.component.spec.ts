@@ -53,6 +53,31 @@ describe('ChallengeFormComponent', () => {
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockRouter: jest.Mocked<Router>
 
+  const mockJavascriptTags = {
+    results: [
+      {
+        id_tag: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+        tag_name: 'Promises',
+        tag_description: 'Retos sobre programación asíncrona y manejo de promesas.'
+      },
+      {
+        id_tag: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        tag_name: 'DOM',
+        tag_description: 'Ejercicios de manipulación del Document Object Model.'
+      },
+      {
+        id_tag: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
+        tag_name: 'Arrays',
+        tag_description: 'Desafíos utilizando métodos de array como map, filter, reduce.'
+      },
+      {
+        id_tag: 'dddddddd-dddd-dddd-dddd-dddddddddddd',
+        tag_name: 'Closures',
+        tag_description: 'Retos sobre scope y closures en JavaScript.'
+      }
+    ]
+  }
+
   beforeEach(async () => {
     mockChallengeFormService = {
       getAllLangugesCreateForm: jest.fn().mockReturnValue(of({
@@ -234,5 +259,31 @@ describe('ChallengeFormComponent', () => {
   it('should call onCancel and navigate to challenges list', () => {
     component.onCancel()
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
+  })
+
+  describe('Tag Management', () => {
+    it('should load tags when language is selected', () => {
+      component.onLanguageChange('Javascript')
+      expect(component.currentTags).toEqual(mockJavascriptTags.results)
+    })
+
+    it('should clear selected tags when language changes', () => {
+      component.selectedTags = ['1', '2']
+      expect(component.selectedTags.length).toBe(2)
+      component.onLanguageChange('Python')
+      expect(component.selectedTags).toEqual([])
+    })
+
+    it('should toggle tag selection correctly', () => {
+      const testTagId = '1'
+      // Selecting a tag
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeTruthy()
+      // Deselecting the same tag
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).not.toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeFalsy()
+    })
   })
 })

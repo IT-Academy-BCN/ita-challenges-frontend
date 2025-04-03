@@ -3,6 +3,9 @@ import { MobileNavComponent } from './mobile-nav.component'
 import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
+import { AuthService } from 'src/app/services/auth.service';
+import { of } from 'rxjs';
+import { By } from '@angular/platform-browser'
 
 class MockNavService {
   public selectWidth = '69px'
@@ -10,6 +13,11 @@ class MockNavService {
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
+}
+class MockAuthService {
+  updateUserRoleAndUserNameFromToken = jest.fn();
+  getUsername = jest.fn(() => of('test-user'));
+  isLoggedIn$ = of(true); 
 }
 
 const mockActivatedRoute = {
@@ -24,6 +32,7 @@ describe('MobileNavComponent', () => {
   let component: MobileNavComponent
   let fixture: ComponentFixture<MobileNavComponent>
   let navService: MockNavService
+  let authService: MockAuthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,6 +40,7 @@ describe('MobileNavComponent', () => {
       imports: [TranslateModule.forRoot(), RouterModule.forRoot([])],
       providers: [
         { provide: NavService, useClass: MockNavService },
+        { provide: AuthService, useClass: MockAuthService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ]
     })
@@ -38,6 +48,7 @@ describe('MobileNavComponent', () => {
     fixture = TestBed.createComponent(MobileNavComponent)
     component = fixture.componentInstance
     navService = TestBed.inject(NavService) as unknown as MockNavService
+    authService = TestBed.inject(AuthService) as unknown as MockAuthService;
     fixture.detectChanges()
   })
 
@@ -72,4 +83,46 @@ describe('MobileNavComponent', () => {
     component.onLoginSuccess(false)
     expect(component.isLoggedIn).toBe(false)
   })
+
+  it('should toggle dropdownOpen', () => {
+    expect(component.dropdownOpen).toBeFalsy();
+    component.toggleDropdown();
+    expect(component.dropdownOpen).toBe(true);
+    component.toggleDropdown();
+    expect(component.dropdownOpen).toBe(false);
+  });
+
+  it('should close dropdown when clicking outside', () => {
+    component.dropdownOpen = true;
+
+    const event = new MouseEvent('click');
+    const fakeTarget = document.createElement('div');
+    Object.defineProperty(event, 'target', { value: fakeTarget });
+
+    component.onClickOutside(event);
+    expect(component.dropdownOpen).toBe(false);
+  });
+
+  it('should not close dropdown if click is inside .dropdown-mobile', () => {
+    component.dropdownOpen = true;
+    fixture.detectChanges();
+
+    const dropdownElement = fixture.debugElement.query(By.css('.dropdown-mobile'));
+    dropdownElement.nativeElement.dispatchEvent(new MouseEvent('click'));
+
+    expect(component.dropdownOpen).toBe(true);
+  });
+
+
+  it('should load user from AuthService', () => {
+    jest.spyOn(authService, 'getUsername').mockReturnValue(of('test-user')); 
+    component.ngOnInit();
+    expect(component.user).toBe('test-user');
+  });
+
+  it('should set user to empty string if AuthService returns empty', () => {
+    jest.spyOn(authService, 'getUsername').mockReturnValue(of('')); 
+    component.ngOnInit(); 
+    expect(component.user).toBe('');
+  });
 })
