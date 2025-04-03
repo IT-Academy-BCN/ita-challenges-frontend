@@ -22,6 +22,7 @@ import { basicSetup } from 'codemirror'
 
 // Add to imports at the top
 import { type Tag, type TagResponse } from '../../../../models/tag-response.interface'
+import { log } from 'console'
 
 @Component({
   standalone: true,
@@ -174,8 +175,9 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadTagsForLanguage (language: string): void {
-    this.challengeFormService.getTagsByLanguage(language).subscribe({
+    this.challengeFormService.getTagsByLanguage().subscribe({
       next: (response: TagResponse) => {
+        console.log(response);        
         this.currentTags = response.results ?? []
         this.selectedTags = []
       },
