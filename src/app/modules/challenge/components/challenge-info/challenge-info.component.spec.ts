@@ -88,26 +88,23 @@ describe('ChallengeInfoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
-91|
 
-  describe('ngOnInit', () => {
-    it('should initialize component properties correctly', async () => {
-      // Arrange
-      const authServiceSpy = jest.spyOn((component as any).authService, 'getUserRole')
-      authServiceSpy.mockReturnValue({
-        subscribe: (fn: any) => {
-          fn('USER') // Not ADMIN
-          return { unsubscribe: () => {} }
-        }
-      })
-      
-      // Act
-      await component.ngOnInit()
-      
-      // Assert
-      expect(authServiceSpy).toHaveBeenCalledTimes(1)
-      expect(component.isAdmin).toBe(false)
+  it('should initialize component properties correctly', async () => {
+    // Arrange
+    const authServiceSpy = jest.spyOn((component as any).authService, 'getUserRole')
+    authServiceSpy.mockReturnValue({
+      subscribe: (fn: any) => {
+        fn('USER') // Not ADMIN
+        return { unsubscribe: () => {} }
+      }
     })
+    
+    // Act
+    await component.ngOnInit()
+    
+    // Assert
+    expect(authServiceSpy).toHaveBeenCalledTimes(1)
+    expect(component.isAdmin).toBe(false)
   })
 
   it('should open send solution modal', () => {
