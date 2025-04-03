@@ -16,6 +16,9 @@ import { java } from '@codemirror/lang-java'
 import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
+// Añadir el import al inicio del archivo, temporalmente
+import { phpTags, javaTags, javascriptTags, sqlTags, pythonTags, typescriptTags } from 'src/mocks/challenge/tags.mock'
+
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -33,10 +36,13 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     description: '',
     level: 'EASY',
     language: '' as string,
-    solution: ''
+    solution: '',
+    tags: []
   }
 
   languages: Language[] = []
+  selectedTags: string[] = []
+  currentTags: any[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -128,15 +134,11 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     return extensions[language as keyof typeof extensions] || javascript
   }
 
-  // Carga los lenguajes del backend
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   loadLanguages (): void {
     this.challengeFormService.getAllLangugesCreateForm().subscribe({
       next: ({ results }) => {
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
         this.languages = results || []
-        console.log('Idiomas cargados:', this.languages) // Lista completa de idiomas
-        console.log(JSON.stringify(this.languages, null, 2))
       },
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
@@ -145,10 +147,9 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  // Nuevo método para manejar el cambio de lenguaje
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  onLanguageChange (language: string) {
+  onLanguageChange (language: string): void {
     this.challenge.language = language
+    this.loadTagsForLanguage(language)
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
@@ -166,6 +167,21 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         ]
       }))
     }
+  }
+
+  private loadTagsForLanguage (language: string): void {
+    const tagMap = {
+      PHP: phpTags,
+      Java: javaTags,
+      Javascript: javascriptTags,
+      SQL: sqlTags,
+      Python: pythonTags,
+      Typescript: typescriptTags
+    }
+
+    const selectedLanguageTags = tagMap[language as keyof typeof tagMap]
+    this.currentTags = selectedLanguageTags?.results ?? []
+    this.selectedTags = []
   }
 
   // Validación del formulario (código original)
@@ -194,6 +210,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       return
     }
 
+    this.challenge.tags = [...this.selectedTags]
+
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
@@ -204,5 +222,18 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         console.error('Error al crear el reto:', err)
       }
     })
+  }
+
+  onTagSelect (idTag: string): void {
+    const index = this.selectedTags.indexOf(idTag)
+    if (index === -1) {
+      this.selectedTags.push(idTag)
+    } else {
+      this.selectedTags.splice(index, 1)
+    }
+  }
+
+  isTagSelected (idTag: string): boolean {
+    return this.selectedTags.includes(idTag)
   }
 }
