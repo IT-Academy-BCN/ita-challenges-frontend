@@ -2,21 +2,33 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from 'src/environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let cookieService: CookieService;
+  let httpMock: HttpTestingController;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CookieService]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers: [AuthService, CookieService]
     });
     service = TestBed.inject(AuthService);
-    cookieService = TestBed.inject(CookieService);
+    httpMock = TestBed.inject(HttpTestingController);
+    router = TestBed.inject(Router);
+
   });
 
   afterEach(() => {
     localStorage.clear();
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -96,6 +108,45 @@ describe('AuthService', () => {
   it('should return false if user is not logged in (no auth token)', () => {
     localStorage.removeItem('authToken');
     expect(service.isUserLoggedIn()).toBe(false);
+  });
+
+  it('should call backend logout and clear localStorage on logout', fakeAsync(() => {
+    localStorage.setItem('authToken', 'test-token');
+    localStorage.setItem('username', 'test-user');
+
+    const logoutUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_LOGOUT_ENDPOINT}`;
+    const mockResponse = { message: 'Logout successful' };
+
+    const routerSpy = spyOn(router, 'navigate');
+
+    service.logout();
+
+    const req = httpMock.expectOne(logoutUrl);
+    expect(req.request.method).toBe('POST');
+
+    req.flush(mockResponse);
+
+    tick();
+
+    expect(localStorage.getItem('authToken')).toBeNull();
+    expect(localStorage.getItem('username')).toBeNull();
+
+    expect(routerSpy).toHaveBeenCalledWith([environment.REDIRECT_URL]);
+  }));
+
+  it('should return authorization header with token if token exists', () => {
+    localStorage.setItem('authToken', 'test-token');
+    
+    const headers = service.getAuthHeaders();
+
+    expect(headers.Authorization).toBe('Bearer test-token');
+  });
+
+  it('should return empty authorization header if no token exists', () => {
+    localStorage.removeItem('authToken');
+
+    const headers = service.getAuthHeaders();
+    expect(headers.Authorization).toBe('');
   });
 
 });
