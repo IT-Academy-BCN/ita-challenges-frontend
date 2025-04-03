@@ -84,8 +84,14 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userRoleSubs$ = this.authService.getUserRole().subscribe(role => {
-      this.isUserLoggedIn = role !== '' && role !== 'ADMIN'
+    this.userRoleSubs$ = this.authService.getUserRole().subscribe({
+      next: (role) => {
+        this.isUserLoggedIn = role !== '' && role !== 'ADMIN'
+      },
+      error: (error) => {
+        console.error('Error getting user role:', error)
+        this.isUserLoggedIn = false 
+      }
     })
   }
 
