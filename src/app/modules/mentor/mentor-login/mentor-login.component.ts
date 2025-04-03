@@ -83,7 +83,7 @@ export class MentorLoginComponent implements OnInit {
           localStorage.setItem('authToken', response.token)
           localStorage.setItem('username', response.username)
           
-          this.authService.updateUserRoleFromToken()
+          this.authService.updateUserRoleAndUserNameFromToken()
 
           this.closeModal()
           this.loginSuccess.emit(true)

@@ -12,6 +12,8 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
+  private username: string = '';
+  private usernameSubject = new BehaviorSubject<string>('');
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
@@ -21,15 +23,22 @@ export class AuthService {
     return this.userRoleSubject.asObservable();
   }
 
-  // Method to update the user role when authentication changes
-  updateUserRoleFromToken(): void {
+  getUsername(): Observable<string> {
+    return this.usernameSubject.asObservable();
+  }
+
+  updateUserRoleAndUserNameFromToken(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
       const decodedToken = this.decodeToken(token);
       this.userRole = decodedToken?.role ?? '';
       this.userRoleSubject.next(this.userRole);
+      this.username = decodedToken?.sub ?? '';
+      this.usernameSubject.next(this.username);
     } else {
       this.userRoleSubject.next('');
+      this.username = '';
+      this.usernameSubject.next('');
     }
     this.updateAuthStatus();
   }
@@ -47,6 +56,7 @@ export class AuthService {
   private updateAuthStatus(): void {
     const isLoggedIn = this.checkAuthToken();
     this.isLoggedInSubject.next(isLoggedIn);
+
   }
 
   private decodeToken(token: string): any {

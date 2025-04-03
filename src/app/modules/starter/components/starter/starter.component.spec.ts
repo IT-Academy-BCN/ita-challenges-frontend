@@ -31,7 +31,7 @@ describe('StarterComponent', () => {
     authRoleSubject = new BehaviorSubject<string>('')
     const authServiceMock = {
       getUserRole: () => authRoleSubject.asObservable(),
-      updateUserRoleFromToken: () => {}
+      updateUserRoleAndUserNameFromToken: () => {}
     }
 
     TestBed.configureTestingModule({

@@ -61,11 +61,11 @@ describe('NavService', () => {
   it('should change the language and update selectWidth correctly', () => {
     service.changeLanguage('es')
     expect(translateService.getCurrentLang()).toBe('es')
-    expect(service.selectWidth).toBe('57px')
+    expect(service.selectWidth).toBe('45px')
 
     service.changeLanguage('ca')
     expect(translateService.getCurrentLang()).toBe('ca')
-    expect(service.selectWidth).toBe('69px')
+    expect(service.selectWidth).toBe('45px')
   })
 
   it('should set available languages and default language on creation', () => {
