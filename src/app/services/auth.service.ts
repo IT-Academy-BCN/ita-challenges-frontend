@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +15,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private _cookieService: CookieService) {
-    this.updateUserRoleFromToken();
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getUserRole(): Observable<string> {
     return this.userRoleSubject.asObservable();
@@ -58,4 +59,32 @@ export class AuthService {
       return null;
     }
   }
+
+  getAuthToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  getAuthHeaders(): { Authorization: string } {
+    const token = this.getAuthToken();
+    return token ? { Authorization: `Bearer ${token}` } : { Authorization: '' };
+  }
+
+  logout(): void {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_LOGOUT_ENDPOINT}`;
+
+    this.http.post(url, {}, { headers: this.getAuthHeaders() }).subscribe({
+      next: (response) => {
+        console.log( response);
+    },
+    error: (error) => {
+      console.error('Logout failed in backend', error);
+    },
+    complete: () => {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('username');
+      this.router.navigate([environment.REDIRECT_URL]);
+      this.updateAuthStatus();
+    }
+  });
+}
 }
