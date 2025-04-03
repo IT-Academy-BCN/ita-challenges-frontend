@@ -65,4 +65,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this.isLoggedIn = isLogged
   }
 
+  logout(): void {
+    this._authService.logout()
+  }
 }

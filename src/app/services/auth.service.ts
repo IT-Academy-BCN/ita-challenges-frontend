@@ -84,7 +84,7 @@ export class AuthService {
 
     this.http.post(url, {}, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
-        console.log( response);
+        console.log(response);
     },
     error: (error) => {
       console.error('Logout failed in backend', error);
@@ -94,6 +94,7 @@ export class AuthService {
       localStorage.removeItem('username');
       this.router.navigate([environment.REDIRECT_URL]);
       this.updateAuthStatus();
+      this.updateUserRoleAndUserNameFromToken();
     }
   });
 }
