@@ -169,18 +169,17 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private loadTags (): void {
+  loadTags (): void {
     this.challengeFormService.getTags().subscribe({
       next: (response: TagResponse) => {
-        console.log('mock', mockTags.results)
-
+        console.log(response);
+        
         this.currentTags = response.results ?? []
-        // Use backend response if available, otherwise fallback to mock data
+        // Use backend response if available, otherwise fallback to mock data for demonstration, temporaly solution
         if (this.currentTags.length === 0) {
           this.currentTags = mockTags.results
         }
         this.selectedTags = []
-        console.log('Response:', response)
       },
       error: (error) => {
         console.error('Error loading tags:', error)

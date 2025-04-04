@@ -3,6 +3,7 @@
         "target": "http://87.106.229.175:9080",
         "secure": false,
         "changeOrigin": true,
-        "logLevel": "debug"
+        "logLevel": "debug",
+        "withCredentials": true
     }
 }

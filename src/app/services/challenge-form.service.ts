@@ -24,8 +24,7 @@ export class ChallengeFormService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}`
-
+    const url = `/itachallenge/api/v1/challenge/tags`
     return this.http.get<TagResponse>(url, { headers })
   }
 }
