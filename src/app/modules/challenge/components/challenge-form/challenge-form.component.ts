@@ -169,11 +169,11 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadTags (): void {
-    this.challengeFormService.getTagsByLanguage().subscribe({
+    this.challengeFormService.getTags().subscribe({
       next: (response: TagResponse) => {
         this.currentTags = response.results ?? []
         this.selectedTags = []
-        console.log('Tags ', this.currentTags)
+        console.log('Response:', response)
       },
       error: (error) => {
         console.error('Error loading tags:', error)

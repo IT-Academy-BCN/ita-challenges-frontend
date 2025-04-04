@@ -20,7 +20,7 @@ export class ChallengeFormService {
     return this.http.get<{ results: Language[] }>(url, { headers })
   }
 
-  getTagsByLanguage (): Observable<TagResponse> {
+  getTags (): Observable<TagResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
