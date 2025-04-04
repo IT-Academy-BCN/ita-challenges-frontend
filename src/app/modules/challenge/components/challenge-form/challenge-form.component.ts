@@ -16,13 +16,7 @@ import { java } from '@codemirror/lang-java'
 import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
-// Añadir el import al inicio del archivo, temporalmente
-// Remove this import
-// import { phpTags, javaTags, javascriptTags, sqlTags, pythonTags, typescriptTags } from 'src/mocks/challenge/tags.mock'
-
-// Add to imports at the top
-import { type Tag, type TagResponse } from '../../../../models/tag-response.interface'
-import { log } from 'console'
+import { type TagResponse } from 'src/app/models/tag-response.interface'
 
 @Component({
   standalone: true,
@@ -47,7 +41,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   languages: Language[] = []
   selectedTags: string[] = []
-  currentTags: Tag[] = []
+  currentTags: any[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -76,6 +70,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   constructor () {
     this.loadLanguages()
+    this.loadTags()
   }
 
   // Método que se ejecuta cuando el componente está listo
@@ -154,7 +149,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   onLanguageChange (language: string): void {
     this.challenge.language = language
-    this.loadTagsForLanguage(language)
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
@@ -174,12 +168,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private loadTagsForLanguage (language: string): void {
+  private loadTags (): void {
     this.challengeFormService.getTagsByLanguage().subscribe({
       next: (response: TagResponse) => {
-        console.log(response);        
         this.currentTags = response.results ?? []
         this.selectedTags = []
+        console.log('Tags ', this.currentTags)
       },
       error: (error) => {
         console.error('Error loading tags:', error)
@@ -214,9 +208,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       console.error('El formulario no es válido')
       return
     }
-
     this.challenge.tags = [...this.selectedTags]
-
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
