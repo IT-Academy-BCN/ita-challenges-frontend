@@ -1,6 +1,6 @@
 import { type TagResponse } from 'src/app/models/tag-response.interface'
 
-export const tags: TagResponse = {
+export const mockTags: TagResponse = {
   offset: 0,
   limit: 4,
   count: 4,
