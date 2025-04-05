@@ -46,9 +46,9 @@ export class SendSolutionModalComponent {
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
-      this.solutionText,
       this.userId,
-      SolutionStatus.ENDED
+      SolutionStatus.ENDED,
+      this.solutionText
     ).subscribe({
       next: (response) => {
         this.solutionService.updateSolutionSentState(true);
