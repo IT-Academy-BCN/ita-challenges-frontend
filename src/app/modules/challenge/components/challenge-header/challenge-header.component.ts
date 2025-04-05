@@ -57,12 +57,11 @@ export class ChallengeHeaderComponent implements OnInit {
     this.checkFavoriteStatus()
 
     this.authService.getUserId().subscribe(userId => {
+      this.userId = userId;
   
-      if (userId) {
-        this.userId = userId;
-      } else {
-        console.error("No se pudo obtener el User ID");
-      }
+      if (!userId) {
+        console.error("Could not get User ID");
+      } 
     }); 
 
     // Verifica si el reto ya ha comenzado

@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from '../../../services/challenge.service';
 import { AuthService } from '../../../services/auth.service';
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -32,7 +33,7 @@ export class SendSolutionModalComponent {
         this.languageId = challenge.languages[0].id_language;
       },
       error: (error) => {
-        console.error("Error al obtener Language ID:", error);
+        console.error("Error obtaining Language ID:", error);
       }
     });
   }
@@ -46,9 +47,9 @@ export class SendSolutionModalComponent {
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
-      this.solutionText,
       this.userId,
-      "ENDED"
+      SolutionStatus.ENDED,
+      this.solutionText
     ).subscribe({
       next: (response) => {
         this.solutionService.updateSolutionSentState(true);
@@ -58,7 +59,7 @@ export class SendSolutionModalComponent {
         this.closeModal();
       },
       error: (error) => {
-        console.error('Error al enviar la solución:', error);
+        console.error('Error sending solution:', error);
       }
     });
   }

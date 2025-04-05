@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,11 +10,12 @@ export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
   private userIdSubject = new BehaviorSubject<string | null>(null);
+  private username: string = '';
+  private usernameSubject = new BehaviorSubject<string>('');
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
+  public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor() {
-    // Initialize the role from localStorage on service creation
-    this.updateUserRoleFromToken();
-  }
+  constructor() {}
 
   getUserId(): Observable<string | null> {
     return this.userIdSubject.asObservable();
@@ -23,21 +25,42 @@ export class AuthService {
     return this.userRoleSubject.asObservable();
   }
 
-  // Method to update the user role when authentication changes
-  updateUserRoleFromToken(): void {
+  getUsername(): Observable<string> {
+    return this.usernameSubject.asObservable();
+  }
+
+  updateUserRoleAndUserNameFromToken(): void {
     const token = localStorage.getItem('authToken');
-    if (!token) {
-      this.userRole = '';
-      this.userIdSubject.next('');
+
+    if (token) {
+      const decodedToken = this.decodeToken(token);
+      this.userRole = decodedToken?.role ?? '';
+      this.userRoleSubject.next(this.userRole);
+      this.username = decodedToken?.sub ?? '';
+      this.usernameSubject.next(this.username);
+      const userId = decodedToken?.uuid ?? null;
+      this.userIdSubject.next(userId);
+    } else {
       this.userRoleSubject.next('');
-      return;
+      this.usernameSubject.next('');
+      this.userIdSubject.next(null);
     }
-    
-    const decodedToken = this.decodeToken(token);
-    this.userRole = decodedToken?.role ?? '';
-    this.userRoleSubject.next(this.userRole);
-    const userId = decodedToken?.uuid ?? '';
-    this.userIdSubject.next(userId); '';
+
+    this.updateAuthStatus();
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.checkAuthToken();
+  }
+
+
+  private checkAuthToken(): boolean {
+    return localStorage.getItem('authToken') !== null;
+
+  }
+
+  private updateAuthStatus(): void {
+    this.isLoggedInSubject.next(this.checkAuthToken());
   }
 
   private decodeToken(token: string): any {

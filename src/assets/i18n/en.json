@@ -39,7 +39,8 @@
                 "buttonSendSolution": "Send solution",
                 "buttonCancel": "Cancel",
                 "solutionSend": "Solution sent",
-                "login": "Log In"
+                "login": "Log In",
+                "logout": "Log Out"
             },
             "info": {
                 "detailsTitle": "Details",
