@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment'
 import mockResponse from '../../mocks/solution/solution-sended.json'
 import mockData from '../../mocks/solution/data-solution.json'
 import mockUserSolution from '../../mocks/solution/user-solution.json'
+import { SolutionStatus } from '../models/user-solution-status.enum'
 
 describe('SolutionService', () => {
   let service: SolutionService
@@ -119,7 +120,7 @@ describe('SolutionService', () => {
     const languageId = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
     const userId = '12345';
     const solutionText = 'Mi solución de prueba';
-    const status = 'ENDED';
+    const status = SolutionStatus.ENDED;
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
@@ -149,7 +150,7 @@ describe('SolutionService', () => {
   const languageId = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
   const userId = 'user123';
   const solutionText = 'Mi solución de prueba';
-  const status = 'ENDED';
+  const status = SolutionStatus.ENDED;
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 

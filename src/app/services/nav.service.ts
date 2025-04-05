@@ -19,6 +19,6 @@ export class NavService {
 
   changeLanguage (language: string): void {
     this.translate.use(language)
-    this.selectWidth = language === 'ca' ? '69px' : '57px'
+    this.selectWidth = language === 'ca' ? '45px' : '45px'
   }
 }
