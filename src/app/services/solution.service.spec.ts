@@ -90,25 +90,25 @@ describe('SolutionService', () => {
   })
 
   it('should send the correct data in PUT request', () => {
-  const challengeId = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const languageId = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const userId = 'user123';
-  const solutionText = 'Mi solución de prueba';
+  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
+  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
+  const uuid_user = 'user123';
+  const solution_text = 'Mi solución de prueba';
   const status = 'ENDED';
 
   const mockResponse = { success: true };
 
-  service.submitSolution(challengeId, languageId, solutionText, userId, status).subscribe(response => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
     expect(response.success).toBe(true);
   });
 
   const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
   expect(req.request.method).toBe('PUT');
   expect(req.request.body).toEqual({
-    challengeId,
-    languageId,
-    userId,
-    solutionText,
+    uuid_challenge,
+    uuid_language,
+    uuid_user,
+    solution_text,
     status
   });
 
@@ -116,15 +116,15 @@ describe('SolutionService', () => {
 });
 
   it('should send a PUT request to submit solution', (done) => {
-    const challengeId = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-    const languageId = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-    const userId = '12345';
-    const solutionText = 'Mi solución de prueba';
+    const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
+    const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
+    const uuid_user = '12345';
+    const solution_text = 'Mi solución de prueba';
     const status = SolutionStatus.ENDED;
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
-    service.submitSolution(challengeId, languageId, solutionText, userId, status).subscribe(response => {
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
@@ -134,10 +134,10 @@ describe('SolutionService', () => {
     expect(req.request.method).toBe('PUT');
     
     expect(req.request.body).toEqual({
-      challengeId,
-      languageId,
-      userId,
-      solutionText,
+      uuid_challenge,
+      uuid_language,
+      uuid_user,
+      solution_text,
       status
     });
   
@@ -146,15 +146,15 @@ describe('SolutionService', () => {
 
   
   it('should handle error when submitting solution', (done) => {
-  const challengeId = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const languageId = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const userId = 'user123';
-  const solutionText = 'Mi solución de prueba';
+  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
+  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
+  const uuid_user = 'user123';
+  const solution_text = 'Mi solución de prueba';
   const status = SolutionStatus.ENDED;
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(challengeId, languageId, solutionText, userId, status).subscribe(
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, status).subscribe(
     () => fail('Expected error, but got success response'),
     (error) => {
       expect(error.status).toBe(500);
