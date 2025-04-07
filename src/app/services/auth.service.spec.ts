@@ -1,6 +1,5 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
@@ -8,15 +7,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 
-class MockToastrService {
-  success(message: string, title: string, options?: any) {
-    console.log(`Mock toastr success: ${message}`);
-  }
-
-  error(message: string, title: string, options?: any) {
-    console.log(`Mock toastr error: ${message}`);
-  }
-}
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -29,7 +19,7 @@ describe('AuthService', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      providers: [AuthService, CookieService, { provide: ToastrService, useClass: MockToastrService }]
+      providers: [AuthService]
     });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
