@@ -17,7 +17,6 @@ import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
 import { type TagResponse } from 'src/app/models/tag-response.interface'
-import { mockTags } from 'src/mocks/challenge/tags.mock'
 
 @Component({
   standalone: true,
@@ -37,6 +36,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     level: 'EASY',
     language: '' as string,
     solution: '',
+    topic: 'ALL',
     tags: []
   }
 
@@ -172,13 +172,9 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   loadTags (): void {
     this.challengeFormService.getTags().subscribe({
       next: (response: TagResponse) => {
-        console.log(response);
-        
+        console.log(response)
         this.currentTags = response.results ?? []
-        // Use backend response if available, otherwise fallback to mock data for demonstration, temporaly solution
-        if (this.currentTags.length === 0) {
-          this.currentTags = mockTags.results
-        }
+
         this.selectedTags = []
       },
       error: (error) => {
