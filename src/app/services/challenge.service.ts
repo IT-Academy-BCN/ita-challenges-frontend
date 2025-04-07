@@ -88,12 +88,8 @@ export class ChallengeService {
   }
 
 
-  createChallenge(challenge: CreateChallenge): Observable<any> {
+  createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    
-    console.log('URL completa:', url)
-    console.log('Datos del reto:', challenge)
-  
     return this.http.post(url, challenge, {
       headers: {
         'Content-Type': 'application/json'
