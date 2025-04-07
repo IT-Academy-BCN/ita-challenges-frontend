@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {}
 
   getUserId(): Observable<string | null> {
     return this.userIdSubject.asObservable();
@@ -91,18 +92,17 @@ export class AuthService {
 
     this.http.post(url, {}, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
-        console.log(response);
+        this.toastr.success('Logout successful', 'Success', { timeOut: 3000 });
+
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('username');
+        this.router.navigate([environment.REDIRECT_URL]);
+        this.updateAuthStatus();
+        this.updateUserRoleAndUserNameFromToken();
     },
     error: (error) => {
-      console.error('Logout failed in backend', error);
+      this.toastr.error('Logout failed in backend', 'Error', { timeOut: 3000 });
     },
-    complete: () => {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('username');
-      this.router.navigate([environment.REDIRECT_URL]);
-      this.updateAuthStatus();
-      this.updateUserRoleAndUserNameFromToken();
-    }
   });
 }
 }

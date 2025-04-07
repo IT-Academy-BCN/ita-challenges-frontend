@@ -12,6 +12,7 @@ import { I18nModule } from '../assets/i18n/i18n.module'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { ProfileModule } from './modules/profile/profile.module'
+import { ToastrModule } from 'ngx-toastr'
 // TODO - pending execution over secure environment
 // import { CookieEncryptionHelper } from './helpers/cookie-encryption.helper'
 
@@ -42,6 +43,7 @@ export function HttpLoaderFactory (http: HttpClient): any {
     ChallengeModule,
     ProfileModule,
     I18nModule,
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       defaultLanguage: 'ca',
       loader: {

@@ -6,6 +6,17 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
+
+class MockToastrService {
+  success(message: string, title: string, options?: any) {
+    console.log(`Mock toastr success: ${message}`);
+  }
+
+  error(message: string, title: string, options?: any) {
+    console.log(`Mock toastr error: ${message}`);
+  }
+}
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -18,7 +29,7 @@ describe('AuthService', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      providers: [AuthService, CookieService]
+      providers: [AuthService, CookieService, { provide: ToastrService, useClass: MockToastrService }]
     });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -118,6 +129,8 @@ describe('AuthService', () => {
     const mockResponse = { message: 'Logout successful' };
 
     const routerSpy = spyOn(router, 'navigate');
+    const updateAuthStatusSpy = spyOn<any>(service as any, 'updateAuthStatus');
+    const updateUserRoleAndUserNameFromTokenSpy = spyOn(service, 'updateUserRoleAndUserNameFromToken');
 
     service.logout();
 
@@ -132,6 +145,8 @@ describe('AuthService', () => {
     expect(localStorage.getItem('username')).toBeNull();
 
     expect(routerSpy).toHaveBeenCalledWith([environment.REDIRECT_URL]);
+    expect(updateAuthStatusSpy).toHaveBeenCalled();
+    expect(updateUserRoleAndUserNameFromTokenSpy).toHaveBeenCalled();
   }));
 
   it('should return authorization header with token if token exists', () => {
