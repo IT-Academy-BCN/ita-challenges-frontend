@@ -48,7 +48,6 @@ export class SolutionService {
       status,
     };
 
-    console.log(body)
     return this.http.put<any>(
       `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
       body,
