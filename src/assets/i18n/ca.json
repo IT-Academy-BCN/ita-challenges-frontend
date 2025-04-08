@@ -126,10 +126,12 @@
         "unauthorized": "Ho sentim, no estàs autoritzat per iniciar sessió. Contacta amb l'administrador.",
         "server_error": "S'ha produït un error intern del servidor. Torna-ho a intentar més tard.",
         "forbidden": "El teu compte de GitHub no està autoritzat per accedir a aquesta plataforma.",
-        "unknown": "S'ha produït un error desconegut. Torna-ho a intentar."
+        "unknown": "S'ha produït un error desconegut. Torna-ho a intentar.",
+        "logout": "Tancament de sessió incorrecte"
     },
     "success": {
-        "welcome": "Benvingut! Redirigint..."
+        "welcome": "Benvingut! Redirigint...",
+        "logout": "Tancament de sessió correcte"
     }
 }
 

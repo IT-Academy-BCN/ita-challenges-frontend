@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 
 describe('AuthService', () => {
@@ -14,12 +15,21 @@ describe('AuthService', () => {
   let router: Router;
 
   beforeEach(() => {
+
+    const translateServiceMock = {
+      instant: (key: string) => key,
+      addLangs: () => {},
+      setDefaultLang: () => {},
+      use: () => {}
+    };
+    
+
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      providers: [AuthService]
+      providers: [AuthService, { provide: TranslateService, useValue: translateServiceMock }]
     });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -126,10 +126,12 @@
         "unauthorized": "Lo sentimos, no estás autorizado para iniciar sesión. Contacta con el administrador.",
         "server_error": "Se ha producido un error interno del servidor. Inténtalo más tarde.",
         "forbidden": "Tu cuenta de GitHub no está autorizada para acceder a esta plataforma.",
-        "unknown": "Se ha producido un error desconocido. Inténtalo de nuevo."
+        "unknown": "Se ha producido un error desconocido. Inténtalo de nuevo.",
+        "logout": "Cierre de sesión incorrecto"
     },
     "success": {
-        "welcome": "¡Bienvenido! Redirigiendo..."
+        "welcome": "¡Bienvenido! Redirigiendo...",
+        "logout": "Cierre de sesión exitoso"
     }
 }
 

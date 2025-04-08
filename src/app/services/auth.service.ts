@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core'
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,11 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es', 'ca'])
+    this.translate.setDefaultLang('ca')
+    this.translate.use('ca')
+  }
 
   getUserId(): Observable<string | null> {
     return this.userIdSubject.asObservable();
@@ -86,12 +92,13 @@ export class AuthService {
     return token ? { Authorization: `Bearer ${token}` } : { Authorization: '' };
   }
 
+
   logout(): void {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_LOGOUT_ENDPOINT}`;
 
     this.http.post(url, {}, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
-        this.toastr.success('Logout successful', 'Success', { timeOut: 3000 });
+        this.toastr.success(this.translate.instant("messages.success.logout"), '', { timeOut: 3000 });
 
         localStorage.removeItem('authToken');
         localStorage.removeItem('username');
@@ -100,7 +107,7 @@ export class AuthService {
         this.updateUserRoleAndUserNameFromToken();
     },
     error: (error) => {
-      this.toastr.error('Logout failed in backend', 'Error', { timeOut: 3000 });
+      this.toastr.error(this.translate.instant("messages.errors.logout"), '', { timeOut: 3000 });
     },
   });
 }
