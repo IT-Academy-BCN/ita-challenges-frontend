@@ -37,6 +37,7 @@ implements OnInit {
   params$!: Subscription
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
+  solutionText: string = "" 
   userSolution: { solution_text: string } | null = null;
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
@@ -74,13 +75,21 @@ implements OnInit {
       this.isAdmin = role === 'ADMIN'
     })
 
+    this.solutionService.solutionText$.subscribe((solutionText: string) => {
+      this.solutionText = solutionText;
+      if (solutionText) {
+        this.userSolution = { solution_text: solutionText };
+        this.solutionSent = true;
+        this.cdr.detectChanges(); 
+      }
+    });
+
     this.solutionService.activeIdSubject.next(1)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((sent) => {
       this.solutionSent = sent;
       if (sent) {
-        this.loadUserSolution();
         this.loadSolutions(this.idChallenge, this.languages[0].id_language);
       }
       this.cdr.detectChanges();
@@ -131,14 +140,6 @@ implements OnInit {
     this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
     this.onActiveIdChange(2)
     this.showEditor = false
-  }
-
-  private loadUserSolution(): void {
-    const userSolutionText = localStorage.getItem('editorContent');
-    
-    if (userSolutionText) {
-      this.userSolution = { solution_text: userSolutionText };
-    }
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
