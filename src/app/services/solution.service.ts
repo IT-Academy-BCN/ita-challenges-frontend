@@ -39,6 +39,13 @@ export class SolutionService {
     )
   }
 
+  private solutionTextSubject = new BehaviorSubject<string>('');
+  solutionText$ = this.solutionTextSubject.asObservable();
+
+  solutionText(text: string): void {
+    this.solutionTextSubject.next(text);
+  }
+
   submitSolution(uuid_challenge: string, uuid_language: string, uuid_user: string, status: string, solution_text: string): Observable<any> {
     const body = {
       uuid_challenge,
