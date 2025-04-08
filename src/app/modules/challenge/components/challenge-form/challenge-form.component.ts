@@ -176,7 +176,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
         this.selectedTags = []
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error al obtener las etiquetas:', error)
         this.currentTags = []
         this.selectedTags = []
       }
