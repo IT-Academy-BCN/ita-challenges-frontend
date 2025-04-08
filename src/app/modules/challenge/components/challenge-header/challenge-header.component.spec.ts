@@ -6,6 +6,7 @@ import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -59,7 +60,11 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should open send solution modal', () => {
-    const mockModalRef = { componentInstance: { idChallenge: '' } };
+    const mockModalRef = {
+       componentInstance: {
+        idChallenge: '',
+        userId: '',
+        solutionAccepted: new EventEmitter<void>() } };
     jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
     component.idChallenge = 'testChallengeId';
     component.openSendSolutionModal();
