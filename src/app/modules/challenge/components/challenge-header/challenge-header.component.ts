@@ -80,7 +80,6 @@ export class ChallengeHeaderComponent implements OnInit {
       } 
     }); 
 
-    // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
       this.activeId = ChallengeTab.SOLUTIONS
     }
