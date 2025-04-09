@@ -9,32 +9,48 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private userRole: string = '';
   private userRoleSubject = new BehaviorSubject<string>('');
+  private userIdSubject = new BehaviorSubject<string | null>(null);
+  private username: string = '';
+  private usernameSubject = new BehaviorSubject<string>('');
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private _cookieService: CookieService) {
-    this.updateUserRoleFromToken();
+  constructor() {}
+
+  getUserId(): Observable<string | null> {
+    return this.userIdSubject.asObservable();
   }
 
   getUserRole(): Observable<string> {
     return this.userRoleSubject.asObservable();
   }
 
-  // Method to update the user role when authentication changes
-  updateUserRoleFromToken(): void {
+  getUsername(): Observable<string> {
+    return this.usernameSubject.asObservable();
+  }
+
+  updateUserRoleAndUserNameFromToken(): void {
     const token = localStorage.getItem('authToken');
+
     if (token) {
       const decodedToken = this.decodeToken(token);
       this.userRole = decodedToken?.role ?? '';
       this.userRoleSubject.next(this.userRole);
+      this.username = decodedToken?.sub ?? '';
+      this.usernameSubject.next(this.username);
+      const userId = decodedToken?.uuid ?? null;
+      this.userIdSubject.next(userId);
     } else {
       this.userRoleSubject.next('');
+      this.usernameSubject.next('');
+      this.userIdSubject.next(null);
     }
+
     this.updateAuthStatus();
   }
 
   isUserLoggedIn(): boolean {
-    return localStorage.getItem('authToken') !== null;
+    return this.checkAuthToken();
   }
 
 
@@ -44,8 +60,7 @@ export class AuthService {
   }
 
   private updateAuthStatus(): void {
-    const isLoggedIn = this.checkAuthToken();
-    this.isLoggedInSubject.next(isLoggedIn);
+    this.isLoggedInSubject.next(this.checkAuthToken());
   }
 
   private decodeToken(token: string): any {

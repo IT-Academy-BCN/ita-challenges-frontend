@@ -32,7 +32,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges (changes: SimpleChanges): void {
     if (changes['showEditor']?.currentValue === true && this.editor == null) {
-      // this.cdr.detectChanges() // Forzar una detección de cambios
+      this.cdr.detectChanges() 
       this.initializeCodeMirror()
     }
   }

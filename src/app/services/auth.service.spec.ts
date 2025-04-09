@@ -34,7 +34,7 @@ describe('AuthService', () => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
 
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let role: string | undefined;
     service.getUserRole().subscribe(r => role = r);
@@ -53,7 +53,7 @@ describe('AuthService', () => {
     expect(decodedToken).toBeNull();
   });
 
-  it('should emit updated role when updateUserRoleFromToken is called', fakeAsync(() => {
+  it('should emit updated role when updateUserRoleAndUserNameFromToken is called', fakeAsync(() => {
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
     tick();
@@ -61,7 +61,7 @@ describe('AuthService', () => {
 
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
@@ -72,7 +72,7 @@ describe('AuthService', () => {
   it('should emit empty role when token is removed', fakeAsync(() => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
@@ -80,7 +80,7 @@ describe('AuthService', () => {
     expect(initialRole).toBe('ADMIN');
 
     localStorage.removeItem('authToken');
-    service.updateUserRoleFromToken();
+    service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
