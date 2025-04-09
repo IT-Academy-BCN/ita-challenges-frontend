@@ -101,6 +101,7 @@ describe('SendSolutionModalComponent', () => {
     solutionServiceMock.submitSolution = jest.fn().mockReturnValue(of({}));
     solutionServiceMock.updateSolutionSentState = jest.fn();
     solutionServiceMock.sendSolutionText = jest.fn();
+    solutionServiceMock.solutionText = jest.fn();
     solutionServiceMock.activeIdSubject = { next: jest.fn() };
   
     component.acceptSolution();
