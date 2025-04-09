@@ -22,6 +22,8 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
+  public userRole: string | null = null;
+
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -63,6 +65,10 @@ export class ChallengeHeaderComponent implements OnInit {
         console.error("Could not get User ID");
       } 
     }); 
+
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role
+    })
 
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
