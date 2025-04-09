@@ -16,8 +16,7 @@ import { java } from '@codemirror/lang-java'
 import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
-// Añadir el import al inicio del archivo, temporalmente
-import { phpTags, javaTags, javascriptTags, sqlTags, pythonTags, typescriptTags } from 'src/mocks/challenge/tags.mock'
+import { type TagResponse } from 'src/app/models/tag-response.interface'
 
 @Component({
   standalone: true,
@@ -37,6 +36,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     level: 'EASY',
     language: '' as string,
     solution: '',
+    topic: 'ALL',
     tags: []
   }
 
@@ -71,6 +71,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   constructor () {
     this.loadLanguages()
+    this.loadTags()
   }
 
   // Método que se ejecuta cuando el componente está listo
@@ -149,7 +150,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   onLanguageChange (language: string): void {
     this.challenge.language = language
-    this.loadTagsForLanguage(language)
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
@@ -169,19 +169,19 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private loadTagsForLanguage (language: string): void {
-    const tagMap = {
-      PHP: phpTags,
-      Java: javaTags,
-      Javascript: javascriptTags,
-      SQL: sqlTags,
-      Python: pythonTags,
-      Typescript: typescriptTags
-    }
+  loadTags (): void {
+    this.challengeFormService.getTags().subscribe({
+      next: (response: TagResponse) => {
+        this.currentTags = response.results ?? []
 
-    const selectedLanguageTags = tagMap[language as keyof typeof tagMap]
-    this.currentTags = selectedLanguageTags?.results ?? []
-    this.selectedTags = []
+        this.selectedTags = []
+      },
+      error: (error) => {
+        console.error('Error al obtener las etiquetas:', error)
+        this.currentTags = []
+        this.selectedTags = []
+      }
+    })
   }
 
   // Validación del formulario (código original)
@@ -209,9 +209,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       console.error('El formulario no es válido')
       return
     }
-
     this.challenge.tags = [...this.selectedTags]
-
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
