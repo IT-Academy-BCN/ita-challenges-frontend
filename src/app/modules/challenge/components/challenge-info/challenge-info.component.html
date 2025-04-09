@@ -8,8 +8,8 @@
 >
   <!--DETAILS TAB-->
 
-  <li [ngbNavItem]="1" (click)="onActiveIdChange(1)">
-    <a href="#details" ngbNavLink *ngIf="isTabVisible(1)">{{
+  <li [ngbNavItem]="challengeTab.DETAILS" (click)="onActiveIdChange(challengeTab.DETAILS)">
+    <a href="#details" ngbNavLink *ngIf="isTabVisible(challengeTab.DETAILS)">{{
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -69,7 +69,7 @@
 
   <!--SOLUTIONS TAB-->
 
-  <li *ngIf="isAdmin" [ngbNavItem]="2" (click)="onActiveIdChange(2)">
+  <li *ngIf="isAdmin" [ngbNavItem]="challengeTab.SOLUTIONS" (click)="onActiveIdChange(challengeTab.SOLUTIONS)">
     <a href="#solutions" ngbNavLink>{{ "modules.challenge.info.solutionsTitle" | translate }}</a>
     <ng-template ngbNavContent>
 
@@ -93,8 +93,8 @@
     </ng-template>
   </li>
 
-  <li *ngIf="!isAdmin" [ngbNavItem]="2" (click)="onActiveIdChange(2)">
-    <a href="#solutions" ngbNavLink *ngIf="isTabVisible(2)">{{
+  <li *ngIf="!isAdmin" [ngbNavItem]="challengeTab.SOLUTIONS" (click)="onActiveIdChange(challengeTab.SOLUTIONS)">
+    <a href="#solutions" ngbNavLink *ngIf="isTabVisible(challengeTab.SOLUTIONS)">{{
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -164,8 +164,8 @@
     </ng-template>
   </li>
 
-  <li [ngbNavItem]="3" (click)="onActiveIdChange(3)">
-    <a href="#resources" ngbNavLink *ngIf="isTabVisible(3)">{{
+  <li [ngbNavItem]="challengeTab.RESOURCES" (click)="onActiveIdChange(challengeTab.RESOURCES)">
+    <a href="#resources" ngbNavLink *ngIf="isTabVisible(challengeTab.RESOURCES)">{{
       "modules.challenge.info.resourcesTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -178,8 +178,8 @@
       </div>
     </ng-template>
   </li>
-  <li [ngbNavItem]="4" class="related" (click)="onActiveIdChange(4)">
-    <a href="#related" ngbNavLink *ngIf="isTabVisible(4)">{{
+  <li [ngbNavItem]="challengeTab.RELATED" class="related" (click)="onActiveIdChange(challengeTab.RELATED)">
+    <a href="#related" ngbNavLink *ngIf="isTabVisible(challengeTab.RELATED)">{{
       "modules.challenge.info.relatedTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -219,22 +219,36 @@
     {{ getTranslatedTabLabel() | translate }}
   </button>
 
-  @if (isDropdownOpen) {
-    <div class="dropdown-menu w-100">
-      <button class="dropdown-item" (click)="selectTab(1)">
-        {{ "modules.challenge.info.detailsTitle" | translate }}
-      </button>
-      <button class="dropdown-item" (click)="selectTab(2)">
-        {{ "modules.challenge.info.solutionsTitle" | translate }}
-      </button>
-      <button class="dropdown-item" (click)="selectTab(3)">
-        {{ "modules.challenge.info.resourcesTitle" | translate }}
-      </button>
-      <button class="dropdown-item" (click)="selectTab(4)">
-        {{ "modules.challenge.info.relatedTitle" | translate }}
-      </button>
-    </div>
-  }
+  <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
+    <button
+      class="dropdown-item"
+      (click)="selectTab(challengeTab.DETAILS)"
+      *ngIf="isTabVisible(challengeTab.DETAILS)"
+    >
+      {{ "modules.challenge.info.detailsTitle" | translate }}
+    </button>
+    <button
+      class="dropdown-item"
+      (click)="selectTab(challengeTab.SOLUTIONS)"
+      *ngIf="isTabVisible(challengeTab.SOLUTIONS)"
+    >
+      {{ "modules.challenge.info.solutionsTitle" | translate }}
+    </button>
+    <button
+      class="dropdown-item"
+      (click)="selectTab(challengeTab.RESOURCES)"
+      *ngIf="isTabVisible(challengeTab.RESOURCES)"
+    >
+      {{ "modules.challenge.info.resourcesTitle" | translate }}
+    </button>
+    <button
+      class="dropdown-item"
+      (click)="selectTab(challengeTab.RELATED)"
+      *ngIf="isTabVisible(challengeTab.RELATED)"
+    >
+      {{ "modules.challenge.info.relatedTitle" | translate }}
+    </button>
+  </div>
 </div>
 
 <div [ngbNavOutlet]="nav" class="tab-content mt-2"></div>

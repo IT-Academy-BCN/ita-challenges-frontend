@@ -22,6 +22,7 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge-info',
@@ -43,6 +44,7 @@ implements OnInit {
   isAdmin:boolean = false;
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
+  challengeTab = ChallengeTab;
 
   challengeStarted: boolean = false
   // showEditor: boolean = false
@@ -62,7 +64,7 @@ implements OnInit {
   @Input() notes!: string
   @Input() popularity!: number
   @Input() languages: Language[] = []
-  @Input() activeId: number = 1
+  @Input() activeId: number = ChallengeTab.DETAILS
   @Input() idChallenge: string = ''
 
   @Input() showEditor: boolean = false
@@ -77,7 +79,7 @@ implements OnInit {
       this.isAdmin = role === 'ADMIN'
     })
 
-    this.solutionService.activeIdSubject.next(1)
+    this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
     this.solutionService.activeId$.subscribe((newActiveId) => {
@@ -108,7 +110,7 @@ implements OnInit {
       this.showStatement = false;
     }
 
-    if (changes['activeId']?.currentValue === 2) {
+    if (changes['activeId']?.currentValue === ChallengeTab.SOLUTIONS) {
       const idLanguage = this.languages[0].id_language;
       if (this.isAdmin && this.idChallenge && idLanguage) {
         this.loadSolutions(this.idChallenge, idLanguage);
@@ -130,7 +132,7 @@ implements OnInit {
     this.activeId = newActiveId
     this.activeIdChange.emit(this.activeId)
     
-    if (newActiveId === 4 && !this.relatedChallengesLoaded) {
+    if (newActiveId === ChallengeTab.RELATED && !this.relatedChallengesLoaded) {
       this.loadRelatedChallenges();
     }
   }
@@ -144,7 +146,7 @@ implements OnInit {
 
   clickSendButton (): void {
     this.solutionService.sendSolution('') 
-    this.onActiveIdChange(2)
+    this.onActiveIdChange(ChallengeTab.SOLUTIONS)
     this.showEditor = false
   }
 
@@ -187,21 +189,19 @@ implements OnInit {
 
   getTranslatedTabLabel (): string {
     switch (this.activeId) {
-      case 1:
+      case ChallengeTab.DETAILS:
         return 'modules.challenge.info.detailsTitle'
-      case 2:
+      case ChallengeTab.SOLUTIONS:
         return 'modules.challenge.info.solutionsTitle'
-      case 3:
+      case ChallengeTab.RESOURCES:
         return 'modules.challenge.info.resourcesTitle'
-      case 4:
+      case ChallengeTab.RELATED:
         return 'modules.challenge.info.relatedTitle'
       default:
         return 'modules.challenge.info.detailsTitle'
     }
   }
 
-  // MOCK: Method to load random related challenges
-  // TODO: Call the endpoint instead of selecting random challenges
   loadRelatedChallenges(): void {
     const numberOfRelated = Math.floor(Math.random() * 3) + 2;
 

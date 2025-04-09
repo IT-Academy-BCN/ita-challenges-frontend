@@ -8,6 +8,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { type Resource } from 'src/app/models/resource.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge',
@@ -32,7 +33,8 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   notes: string = ''
   popularity!: number
   languages: Language[] = []
-  activeId: number = 1
+  activeId: number = ChallengeTab.DETAILS
+  challengeTab = ChallengeTab;
 
   showEditor = false
   startChallenge: boolean = false
@@ -46,7 +48,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
       this.loadMasterData(this.idChallenge)
-      this.activeId = 1
+      this.activeId = ChallengeTab.DETAILS
     })
 
     this.route.url.subscribe(() => {
