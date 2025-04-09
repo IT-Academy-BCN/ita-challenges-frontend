@@ -31,7 +31,11 @@ describe('SendSolutionModalComponent', () => {
     }
 
     solutionServiceMock = {
-      submitSolution: jest.fn().mockReturnValue(of({}))
+      submitSolution: jest.fn().mockReturnValue(of({})),
+      completeChallenge: jest.fn(),
+      updateSolutionSentState: jest.fn(),
+      sendSolutionText: jest.fn(),
+      activeIdSubject: { next: jest.fn() }
     };
 
     challengeServiceMock = {
@@ -98,11 +102,6 @@ describe('SendSolutionModalComponent', () => {
     component.solutionText = solutionData.solutionText;
     component.userId = solutionData.userId;
   
-    solutionServiceMock.submitSolution = jest.fn().mockReturnValue(of({}));
-    solutionServiceMock.updateSolutionSentState = jest.fn();
-    solutionServiceMock.sendSolutionText = jest.fn();
-    solutionServiceMock.activeIdSubject = { next: jest.fn() };
-  
     component.acceptSolution();
     tick();
   
@@ -119,6 +118,7 @@ describe('SendSolutionModalComponent', () => {
     expect(solutionServiceMock.updateSolutionSentState).toHaveBeenCalledWith(true);
     expect(solutionServiceMock.sendSolutionText).toHaveBeenCalledWith(true);
     expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+    expect(solutionServiceMock.completeChallenge).toHaveBeenCalledWith(solutionData.idChallenge);
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   }));
 
