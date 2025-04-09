@@ -74,42 +74,33 @@ describe('StarterFiltersComponent', () => {
 
   describe('User role-based display', () => {
     it('should display progress filters when user role is not empty and not ADMIN', () => {
-      // Arrange
       authServiceMock.getUserRole.mockReturnValue(of('ALUMNI'))
       
-      // Act - reinitialize component to trigger ngOnInit with new mock value
       component.ngOnInit()
       fixture.detectChanges()
       
-      // Assert
       expect(component.isUserLoggedIn).toBe(true)
       const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
       expect(progressSection).toBeTruthy()
     })
     
     it('should hide progress filters when user role is ADMIN', () => {
-      // Arrange
       authServiceMock.getUserRole.mockReturnValue(of('ADMIN'))
       
-      // Act - reinitialize component to trigger ngOnInit with new mock value
       component.ngOnInit()
       fixture.detectChanges()
       
-      // Assert
       expect(component.isUserLoggedIn).toBe(false)
       const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
       expect(progressSection).toBeFalsy()
     })
     
     it('should hide progress filters when user is not logged in (empty role)', () => {
-      // Arrange
       authServiceMock.getUserRole.mockReturnValue(of(''))
       
-      // Act - reinitialize component to trigger ngOnInit with new mock value
       component.ngOnInit()
       fixture.detectChanges()
       
-      // Assert
       expect(component.isUserLoggedIn).toBe(false)
       const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
       expect(progressSection).toBeFalsy()
