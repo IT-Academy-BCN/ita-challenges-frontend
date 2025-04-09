@@ -8,6 +8,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { of } from 'rxjs'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 describe('SendSolutionModalComponent', () => {
   let component: SendSolutionModalComponent
@@ -117,7 +118,7 @@ describe('SendSolutionModalComponent', () => {
   
     expect(solutionServiceMock.updateSolutionSentState).toHaveBeenCalledWith(true);
     expect(solutionServiceMock.sendSolutionText).toHaveBeenCalledWith(true);
-    expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(2);
+    expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   }));
 

@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge-header',
@@ -24,11 +25,12 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
+  challengeTab = ChallengeTab;
 
   @Input() title = ''
   @Input() creation_date!: Date
   @Input() level = ''
-  @Input() activeId!: number
+  @Input() activeId!: ChallengeTab
   @Input() idChallenge!: string
   @Input() showEditor: boolean = false
   @Input() favorites_count: number = 0
@@ -61,7 +63,7 @@ export class ChallengeHeaderComponent implements OnInit {
     this.solutionService.challengeCompleted$.subscribe((challengeId: string) => {
       if (challengeId === this.idChallenge) {
         this.challengeStarted = false;
-        this.activeId = 2; 
+        this.activeId = ChallengeTab.SOLUTIONS; 
       }
     });
 
@@ -75,7 +77,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
-      this.activeId = 2
+      this.activeId = ChallengeTab.SOLUTIONS
     }
 
     // Recuperar el estado del reto desde localStorage
@@ -85,13 +87,13 @@ export class ChallengeHeaderComponent implements OnInit {
 
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true
-      this.activeId = 2 // Mostrar botones de guardar y enviar solución
+      this.activeId = ChallengeTab.SOLUTIONS // Mostrar botones de guardar y enviar solución
     }
   }
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
-    this.activeId = 2
+    this.activeId = ChallengeTab.SOLUTIONS
     localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
 
     localStorage.setItem('currentChallengeId', this.idChallenge)

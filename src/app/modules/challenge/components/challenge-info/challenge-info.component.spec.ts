@@ -14,6 +14,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { By } from '@angular/platform-browser'
 import { of, Subject } from 'rxjs'
 import { Component, Input } from '@angular/core'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 // Mock EditorChallengeComponent
 @Component({
@@ -28,12 +29,12 @@ describe('ChallengeInfoComponent', () => {
   let component: ChallengeInfoComponent
   let fixture: ComponentFixture<ChallengeInfoComponent>
   let modalService: NgbModal
-  let mockActiveIdSubject: Subject<number>
+  let mockActiveIdSubject: Subject<ChallengeTab>
   let mockChallengeCompletedSubject: Subject<string>
 
   beforeEach(async () => {
     // Create new subjects for each test
-    mockActiveIdSubject = new Subject<number>()
+    mockActiveIdSubject = new Subject<ChallengeTab>()
     mockChallengeCompletedSubject = new Subject<string>()
     
     await TestBed.configureTestingModule({
@@ -120,7 +121,7 @@ describe('ChallengeInfoComponent', () => {
   })
 
   it('should onActiveIdChange correctly', fakeAsync(() => {
-    const newActiveId = 2
+    const newActiveId = ChallengeTab.SOLUTIONS
 
     component.onActiveIdChange(newActiveId)
 
@@ -201,19 +202,19 @@ describe('ChallengeInfoComponent', () => {
       component.challengeStarted = false
       fixture.detectChanges()
       
-      expect(component.isTabVisible(1)).toBe(true)
-      expect(component.isTabVisible(2)).toBe(true)
-      expect(component.isTabVisible(3)).toBe(true)
-      expect(component.isTabVisible(4)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.SOLUTIONS)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.RESOURCES)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.RELATED)).toBe(true)
       
       // Test case 2: Challenge started - tabs should be hidden
       component.challengeStarted = true
       fixture.detectChanges()
       
-      expect(component.isTabVisible(1)).toBe(false)
-      expect(component.isTabVisible(2)).toBe(false)
-      expect(component.isTabVisible(3)).toBe(false)
-      expect(component.isTabVisible(4)).toBe(false)
+      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(false)
+      expect(component.isTabVisible(ChallengeTab.SOLUTIONS)).toBe(false)
+      expect(component.isTabVisible(ChallengeTab.RESOURCES)).toBe(false)
+      expect(component.isTabVisible(ChallengeTab.RELATED)).toBe(false)
     })
     
     it('should always display tabs for admin users regardless of challenge state', () => {
@@ -227,7 +228,7 @@ describe('ChallengeInfoComponent', () => {
       // For admins, isTabVisible should ignore the challengeStarted flag
       // Note: This test might fail if the current implementation doesn't have this logic
       // If it fails, it indicates a potential improvement to make tabs always visible for admins
-      expect(component.isTabVisible(1)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
     })
     
     it('should show tabs again when user sends solution (non-admin only)', fakeAsync(() => {
@@ -238,7 +239,7 @@ describe('ChallengeInfoComponent', () => {
       fixture.detectChanges()
       
       // Verify tabs are hidden
-      expect(component.isTabVisible(1)).toBe(false)
+      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(false)
       
       // Act - simulate solution sent by emitting the challenge ID
       mockChallengeCompletedSubject.next(component.idChallenge)
@@ -248,7 +249,7 @@ describe('ChallengeInfoComponent', () => {
       // Assert
       expect(component.challengeStarted).toBe(false)
       expect(component.showEditor).toBe(true)
-      expect(component.isTabVisible(1)).toBe(true)
+      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
     }))
     
     it('should display side-by-side layout when showing both statement and editor', () => {
@@ -294,7 +295,7 @@ describe('ChallengeInfoComponent', () => {
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
       
       // Act
-      component.onActiveIdChange(4)
+      component.onActiveIdChange(ChallengeTab.RELATED)
       tick()
       
       // Assert
@@ -307,7 +308,7 @@ describe('ChallengeInfoComponent', () => {
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
       
       // Act
-      component.onActiveIdChange(4)
+      component.onActiveIdChange(ChallengeTab.RELATED)
       tick()
       
       // Assert
@@ -319,11 +320,11 @@ describe('ChallengeInfoComponent', () => {
       const loadRelatedChallengesSpy = jest.spyOn(component, 'loadRelatedChallenges').mockImplementation()
       
       // Act - select tabs 1, 2, and 3
-      component.onActiveIdChange(1)
+      component.onActiveIdChange(ChallengeTab.DETAILS)
       tick()
-      component.onActiveIdChange(2)
+      component.onActiveIdChange(ChallengeTab.SOLUTIONS)
       tick()
-      component.onActiveIdChange(3)
+      component.onActiveIdChange(ChallengeTab.RESOURCES)
       tick()
       
       // Assert

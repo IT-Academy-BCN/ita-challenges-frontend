@@ -33,7 +33,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   notes: string = ''
   popularity!: number
   languages: Language[] = []
-  activeId: number = ChallengeTab.DETAILS
+  activeId: ChallengeTab = ChallengeTab.DETAILS
   challengeTab = ChallengeTab;
 
   showEditor = false
@@ -68,7 +68,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
-  onActiveIdChange (newActiveId: number): void {
+  onActiveIdChange (newActiveId: ChallengeTab): void {
     this.activeId = newActiveId
   }
 

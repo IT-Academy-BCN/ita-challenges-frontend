@@ -4,13 +4,15 @@ import { BehaviorSubject, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
 
-  activeIdSubject = new BehaviorSubject<number>(1)
+  activeIdSubject = new BehaviorSubject<ChallengeTab>(ChallengeTab.DETAILS)
   activeId$ = this.activeIdSubject.asObservable()
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)

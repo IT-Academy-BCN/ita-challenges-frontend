@@ -64,13 +64,13 @@ implements OnInit {
   @Input() notes!: string
   @Input() popularity!: number
   @Input() languages: Language[] = []
-  @Input() activeId: number = ChallengeTab.DETAILS
+  @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
   @Input() idChallenge: string = ''
 
   @Input() showEditor: boolean = false
   @Input() startChallenge: boolean = false
 
-  @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
+  @Output() activeIdChange: EventEmitter<ChallengeTab> = new EventEmitter<ChallengeTab>()
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
@@ -128,7 +128,7 @@ implements OnInit {
     this.showStatement = !this.showStatement
   }
 
-  onActiveIdChange (newActiveId: number): void {
+  onActiveIdChange (newActiveId: ChallengeTab): void {
     this.activeId = newActiveId
     this.activeIdChange.emit(this.activeId)
     
@@ -182,7 +182,7 @@ implements OnInit {
     document.removeEventListener('click', this.handleOutsideClick)
   }
 
-  selectTab (id: number): void {
+  selectTab (id: ChallengeTab): void {
     this.activeId = id
     this.isDropdownOpen = false 
   }
@@ -235,7 +235,7 @@ implements OnInit {
     return shuffled.slice(0, count);
   }
 
-  isTabVisible(tabId: number): boolean {
+  isTabVisible(tabId: ChallengeTab): boolean {
     if (this.isAdmin) {
       return true;
     }

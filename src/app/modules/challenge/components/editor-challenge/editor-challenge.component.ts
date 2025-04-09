@@ -5,6 +5,7 @@ import { javascript } from '@codemirror/lang-javascript'
 import { basicSetup } from 'codemirror'
 import { defaultKeymap } from '@codemirror/commands'
 import { lineNumbers } from '@codemirror/view'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -15,7 +16,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('editorSolution', { static: false }) editorSolution!: ElementRef
   @Input() showEditor: boolean = false
   @Input() initialContent: string = '// Escribe tu solución aquí'
-  @Input() activeId: number = 1
+  @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
 
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)

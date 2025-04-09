@@ -58,7 +58,7 @@
   </div>
  
    <!-- Si ya se envió la solución -->
-  <div *ngIf="activeId == 2 && solutionSent" class="col-md-3 d-none d-md-flex">
+  <div *ngIf="activeId == challengeTab.SOLUTIONS && solutionSent" class="col-md-3 d-none d-md-flex">
     <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
     <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
   </div>
