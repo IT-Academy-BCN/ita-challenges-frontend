@@ -21,16 +21,6 @@ export class SendSolutionModalComponent {
   languageId: string = ''; 
   solutionText: string = '';
 
-<<<<<<< HEAD
-  public acceptSolution (): void {
-    this.solutionService.updateSolutionSentState(true)
-    this.solutionService.sendSolutionText(true)
-    this.solutionService.activeIdSubject.next(2)
-    
-    this.solutionService.completeChallenge(this.idChallenge)
-    
-    this.closeModal()
-=======
   ngOnInit(): void {
     this.getLanguageId(); 
     this.getSolutionText(); 
@@ -52,7 +42,6 @@ export class SendSolutionModalComponent {
   }
 
   public acceptSolution(): void {
-
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
@@ -64,13 +53,15 @@ export class SendSolutionModalComponent {
         this.solutionService.updateSolutionSentState(true);
         this.solutionService.sendSolutionText(true);
         this.solutionService.activeIdSubject.next(2);
+        
+        this.solutionService.completeChallenge(this.idChallenge);
+        
         this.closeModal();
       },
       error: (error) => {
         console.error('Error sending solution:', error);
       }
     });
->>>>>>> develop
   }
 
   public closeModal (): void {
