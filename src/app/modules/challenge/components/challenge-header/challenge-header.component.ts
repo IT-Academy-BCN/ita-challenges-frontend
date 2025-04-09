@@ -60,10 +60,15 @@ export class ChallengeHeaderComponent implements OnInit {
 
     this.checkFavoriteStatus()
 
-    this.solutionService.challengeCompleted$.subscribe((challengeId: string) => {
-      if (challengeId === this.idChallenge) {
-        this.challengeStarted = false;
-        this.activeId = ChallengeTab.SOLUTIONS; 
+    this.solutionService.challengeCompleted$.subscribe({
+      next: (challengeId: string) => {
+        if (challengeId === this.idChallenge) {
+          this.challengeStarted = false;
+          this.activeId = ChallengeTab.SOLUTIONS; 
+        }
+      },
+      error: (error) => {
+        console.error('Error in challengeCompleted$ subscription:', error);
       }
     });
 
