@@ -5,6 +5,7 @@ import { SendSolutionModalComponent } from './../../../modals/send-solution-moda
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-challenge-header',
@@ -21,6 +22,8 @@ export class ChallengeHeaderComponent implements OnInit {
 
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
+  private readonly authService = inject(AuthService);
+  public userId: string | null = null;
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -62,6 +65,14 @@ export class ChallengeHeaderComponent implements OnInit {
       }
     });
 
+    this.authService.getUserId().subscribe(userId => {
+      this.userId = userId;
+  
+      if (!userId) {
+        console.error("Could not get User ID");
+      } 
+    }); 
+
     // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
       this.activeId = 2
@@ -100,7 +111,8 @@ export class ChallengeHeaderComponent implements OnInit {
       centered: true,
       size: 'lg'
     })
-    modalRef.componentInstance.idChallenge = this.idChallenge
+    modalRef.componentInstance.idChallenge = this.idChallenge;
+    modalRef.componentInstance.userId = this.userId;
   }
 
   get currentLang (): string {

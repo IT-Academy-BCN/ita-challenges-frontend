@@ -53,6 +53,26 @@ export class SolutionService {
     )
   }
 
+  submitSolution(challengeId: string, languageId: string, solutionText: string, userId: string, status: string): Observable<any> {
+    const body = {
+      challengeId,
+      languageId,
+      userId,
+      solutionText,
+      status,
+    };
+  
+    return this.http.put<any>(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
+      body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
+
   getUserSolution (challengeId: string, languageId: string): Observable<UserSolution> {
     return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`,
       {
