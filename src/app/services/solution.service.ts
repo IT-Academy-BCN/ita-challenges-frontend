@@ -35,7 +35,6 @@ export class SolutionService {
   }
 
   completeChallenge(challengeId: string): void {
-    // Remove from localStorage
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}')
     if (savedChallenge.id === challengeId) {
       localStorage.removeItem('challengeStarted')
