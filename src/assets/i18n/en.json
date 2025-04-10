@@ -128,10 +128,12 @@
         "unauthorized": "Sorry, you are not authorized to log in. Please contact the administrator.",
         "server_error": "An internal server error occurred. Please try again later.",
         "forbidden": "Your GitHub account is not authorized to access this platform.",
-        "unknown": "An unknown error occurred. Please try again."
+        "unknown": "An unknown error occurred. Please try again.",
+        "logout": "Logout failed"
     },
     "success": {
-        "welcome": "Welcome! Redirecting..."
+        "welcome": "Welcome! Redirecting...",
+        "logout": "Logout successful"
     }
 }
 

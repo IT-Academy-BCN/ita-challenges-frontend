@@ -131,7 +131,7 @@ export class MentorLoginComponent implements OnInit {
     this.loginForm.controls.termsCheck.disable()
 
     const clientId = environment.GITHUB_CLIENT_ID
-    const redirectUri = environment.GITHUB_REDIRECT_URI
+    const redirectUri = environment.AUTH_REDIRECT_URL
 
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=read:user user:email`
 
