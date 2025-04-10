@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, Subject, type Observable } from 'rxjs'
+import { BehaviorSubject, of, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
@@ -54,15 +54,22 @@ export class SolutionService {
     )
   }
 
-  submitSolution(challengeId: string, languageId: string, solutionText: string, userId: string, status: string): Observable<any> {
+  private solutionTextSubject = new BehaviorSubject<string>('');
+  solutionText$ = this.solutionTextSubject.asObservable();
+
+  solutionText(text: string): void {
+    this.solutionTextSubject.next(text);
+  }
+
+  submitSolution(uuid_challenge: string, uuid_language: string, uuid_user: string, status: string, solution_text: string): Observable<any> {
     const body = {
-      challengeId,
-      languageId,
-      userId,
-      solutionText,
+      uuid_challenge,
+      uuid_language,
+      uuid_user,
+      solution_text,
       status,
     };
-  
+
     return this.http.put<any>(
       `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
       body,
