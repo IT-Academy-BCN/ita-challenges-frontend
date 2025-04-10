@@ -76,8 +76,8 @@
     padding: 0;
     
     .details-text {
-      flex: 0 0 50%;
-      max-width: 50%;
+      flex: 0 0 45%;
+      max-width: 45%;
       overflow-y: auto;
       max-height: 80vh;
       padding-right: 1rem;
@@ -85,8 +85,8 @@
     
     .editor-section {
       order: 1;
-      flex: 0 0 50%;
-      max-width: 50%;
+      flex: 0 0 55%;
+      max-width: 55%;
       width: 100%;
     }
   }
