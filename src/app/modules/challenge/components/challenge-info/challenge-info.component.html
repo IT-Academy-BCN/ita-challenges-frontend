@@ -96,7 +96,6 @@
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
-      <!-- Los usuarios solo pueden ver otras soluciones si enviaron la suya -->
       <div class="tab-content w-100">
 
         <div class="restricted" *ngIf="!solutionSent">
@@ -185,7 +184,8 @@
       <div class="tab-content w-100">
         <h3>{{ "modules.challenge.info.related" | translate }}</h3>
         
-        <!-- Display related challenges when available -->
+        <!-- Display related challenges when available. By now this
+          is a temporary mocked solution for demo purposes -->
         <section *ngIf="relatedChallenges && relatedChallenges.length > 0" class="info-card">
           <div class="d-flex flex-column gap-3">
             <app-challenge-card *ngFor="let challenge of relatedChallenges"
