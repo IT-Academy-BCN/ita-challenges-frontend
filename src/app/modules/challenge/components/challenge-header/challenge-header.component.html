@@ -55,7 +55,7 @@
     <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
     <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
-    <button *ngIf="userRole === 'MENTOR' || userRole === 'ADMIN'" class="btn btn-sm btn-secondary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>
+    <button *ngIf="userRole === 'MENTOR' || userRole === 'ADMIN'" class="btn btn-sm btn-primary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>
   </div>
  
    <!-- Si ya se envió la solución -->
