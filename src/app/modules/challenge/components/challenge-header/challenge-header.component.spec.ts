@@ -83,5 +83,4 @@ describe('ChallengeHeaderComponent', () => {
     component.navigateToEditChallenge()
     expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/1234/edit'])
   })
-  
 });
