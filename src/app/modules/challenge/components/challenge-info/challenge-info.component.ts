@@ -37,6 +37,8 @@ implements OnInit {
   params$!: Subscription
   challengeSubs$!: Subscription
   challengeSolutions: SolutionResults[] = []
+  solutionText: string = "" 
+  userSolution: { solution_text: string } | null = null;
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
   isAdmin:boolean = false;
@@ -73,9 +75,26 @@ implements OnInit {
       this.isAdmin = role === 'ADMIN'
     })
 
+    this.solutionService.solutionText$.subscribe((solutionText: string) => {
+      this.solutionText = solutionText;
+      if (solutionText) {
+        this.userSolution = { solution_text: solutionText };
+        this.solutionSent = true;
+        this.cdr.detectChanges(); 
+      }
+    });
+
     this.solutionService.activeIdSubject.next(1)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
+    this.solutionService.solutionSent$.subscribe((sent) => {
+      this.solutionSent = sent;
+      if (sent) {
+        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
+      }
+      this.cdr.detectChanges();
+    });
+
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })    
