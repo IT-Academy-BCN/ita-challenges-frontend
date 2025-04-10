@@ -220,8 +220,9 @@ implements OnInit {
     }
   }
 
+  //Temporary Mocked Implementation
   loadRelatedChallenges(): void {
-    const numberOfRelated = Math.floor(Math.random() * 3) + 2;
+    const numberOfRelated = 2;
 
     this.starterService.getAllChallenges().subscribe(response => {
       if (response && response.results) {
