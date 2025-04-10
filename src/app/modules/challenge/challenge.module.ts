@@ -14,14 +14,16 @@ import { SharedComponentsModule } from '../../shared/components/shared-component
 import { TranslateModule } from '@ngx-translate/core'
 
 
-import { ModalsModule } from '../modals/modals.module'
+import { ModalsModule } from '../modals/modals.module';
+import { EditChallengeComponent } from './components/edit-challenge/edit-challenge.component'
 
 @NgModule({
   declarations: [
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
     ChallengeComponent,
-    editorChallengeComponent
+    editorChallengeComponent,
+    EditChallengeComponent
   ],
   providers: [],
   imports: [
