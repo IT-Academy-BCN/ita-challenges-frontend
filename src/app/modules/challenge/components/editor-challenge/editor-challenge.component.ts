@@ -14,7 +14,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 })
 export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('editorSolution', { static: false }) editorSolution!: ElementRef
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() initialContent: string = '// Escribe tu solución aquí'
   @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
 
@@ -22,7 +22,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef)
 
   ngOnInit (): void {
-    if (this.showEditor) {
+    if (this.isEditorChallengeVisible) {
       this.initializeCodeMirror()
     }
   }
@@ -32,14 +32,14 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    if (changes['showEditor']?.currentValue === true && this.editor == null) {
+    if (changes['isEditorChallengeVisible']?.currentValue === true && this.editor == null) {
       this.cdr.detectChanges() 
       this.initializeCodeMirror()
     }
   }
 
   ngAfterViewInit (): void {
-    if (this.showEditor && this.editorSolution !== null && this.editorSolution !== undefined) {
+    if (this.isEditorChallengeVisible && this.editorSolution !== null && this.editorSolution !== undefined) {
       this.initializeCodeMirror()
     }
   }

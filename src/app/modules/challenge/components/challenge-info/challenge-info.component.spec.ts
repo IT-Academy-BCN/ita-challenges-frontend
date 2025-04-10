@@ -22,7 +22,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
   template: '<div>Mock Editor Component</div>'
 })
 class MockEditorChallengeComponent {
-  @Input() showEditor: boolean = false;
+  @Input() isEditorChallengeVisible: boolean = false;
 }
 
 describe('ChallengeInfoComponent', () => {
@@ -235,7 +235,7 @@ describe('ChallengeInfoComponent', () => {
       // Arrange - non-admin user with challenge started, tabs hidden
       component.isAdmin = false
       component.challengeStarted = true
-      component.showEditor = true
+      component.isEditorChallengeVisible = true
       fixture.detectChanges()
       
       // Verify tabs are hidden
@@ -248,7 +248,7 @@ describe('ChallengeInfoComponent', () => {
       
       // Assert
       expect(component.challengeStarted).toBe(false)
-      expect(component.showEditor).toBe(true)
+      expect(component.isEditorChallengeVisible).toBe(true)
       expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
     }))
     
@@ -256,7 +256,7 @@ describe('ChallengeInfoComponent', () => {
       // Arrange - non-admin user
       component.isAdmin = false
       component.showStatement = true
-      component.showEditor = true
+      component.isEditorChallengeVisible = true
       fixture.detectChanges()
       
       // Act

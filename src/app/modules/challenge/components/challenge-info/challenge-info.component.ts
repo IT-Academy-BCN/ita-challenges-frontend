@@ -66,7 +66,7 @@ implements OnInit {
   @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
   @Input() idChallenge: string = ''
 
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<ChallengeTab> = new EventEmitter<ChallengeTab>()
@@ -87,7 +87,7 @@ implements OnInit {
     this.solutionService.challengeCompleted$.subscribe(challengeId => {
       if (challengeId === this.idChallenge) {
         this.challengeStarted = false;
-        this.showEditor = true;
+        this.isEditorChallengeVisible = true;
         this.cdr.detectChanges();
       }
     });
@@ -96,7 +96,7 @@ implements OnInit {
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true;
-      this.showEditor = true;
+      this.isEditorChallengeVisible = true;
       this.showStatement = false;
     }
   }
@@ -105,7 +105,7 @@ implements OnInit {
     
     if (changes['startChallenge']?.currentValue === true) {
       this.challengeStarted = true;
-      this.showEditor = true;
+      this.isEditorChallengeVisible = true;
       this.showStatement = false;
     }
 
@@ -119,7 +119,7 @@ implements OnInit {
 
   onChallengeStart (): void {
     this.challengeStarted = true
-    this.showEditor = true
+    this.isEditorChallengeVisible = true
     this.showStatement = false;
   }
 
@@ -146,7 +146,7 @@ implements OnInit {
   clickSendButton (): void {
     this.solutionService.sendSolution('') 
     this.onActiveIdChange(ChallengeTab.SOLUTIONS)
-    this.showEditor = false
+    this.isEditorChallengeVisible = false
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {

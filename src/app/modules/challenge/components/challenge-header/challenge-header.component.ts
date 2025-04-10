@@ -32,7 +32,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() level = ''
   @Input() activeId!: ChallengeTab
   @Input() idChallenge!: string
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() favorites_count: number = 0
 
   @Output() startChallenge = new EventEmitter<boolean>()

@@ -36,7 +36,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   activeId: ChallengeTab = ChallengeTab.DETAILS
   challengeTab = ChallengeTab;
 
-  showEditor = false
+  isEditorChallengeVisible = false
   startChallenge: boolean = false
   challengeStarted: boolean = false
 
@@ -53,14 +53,14 @@ export class ChallengeComponent implements OnInit, OnDestroy {
 
     this.route.url.subscribe(() => {
       const url = this.router.url // Obtiene la URL actual
-      this.showEditor = url.includes('/start') // Verifica si contiene "/start"
+      this.isEditorChallengeVisible = url.includes('/start') // Verifica si contiene "/start"
     })
   }
 
   onStartChallenge (started: boolean): void {
     this.challengeStarted = started
     this.startChallenge = started
-    this.showEditor = started
+    this.isEditorChallengeVisible = started
   }
 
   ngOnDestroy (): void {

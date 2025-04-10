@@ -28,7 +28,7 @@
           </span>
         </div>
         
-        <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': showStatement && showEditor}">
+        <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': showStatement && isEditorChallengeVisible}">
           <div *ngIf="!challengeStarted || showStatement" class="details-text">
             <div class="pb-1">
               <h3 class="mt-0">
@@ -57,8 +57,8 @@
             </div>
           </div>
 
-          <div class="editor-section" *ngIf="showEditor">
-            <app-editor-challenge [showEditor]="showEditor"></app-editor-challenge>
+          <div class="editor-section" *ngIf="isEditorChallengeVisible">
+            <app-editor-challenge [isEditorChallengeVisible]="isEditorChallengeVisible"></app-editor-challenge>
           </div>
         </div>
       </div>
