@@ -33,5 +33,5 @@ export const environment = {
   HTTP_CODE_UNAUTHORIZED: 401,
   HTTP_CODE_FORBIDDEN: 403,
   GITHUB_CLIENT_ID: 'Ov23lieA4pZVvg3Vn9Vt',
-  GITHUB_REDIRECT_URI: 'http://dev.ita-challenges.eurecatacademy.org/ita-challenge/challenges'
+  AUTH_REDIRECT_URL: 'http://dev.ita-challenges.eurecatacademy.org/ita-challenge/challenges'
 }

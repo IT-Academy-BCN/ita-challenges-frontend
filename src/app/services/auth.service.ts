@@ -100,7 +100,7 @@ export class AuthService {
   private handleLogoutSuccess(): void {
     this.toastr.success(this.translate.instant("messages.success.logout"), '', { timeOut: 3000 });
     this.clearAuthData();
-    this.router.navigate([environment.GITHUB_REDIRECT_URI]);
+    this.router.navigate([environment.AUTH_REDIRECT_URL]);
     this.updateAuthStatus();
     this.updateUserRoleAndUserNameFromToken();
   }
