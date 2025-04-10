@@ -2,6 +2,7 @@ import { SharedComponentsModule } from '../../../../shared/components/shared-com
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeComponent } from './challenge.component'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
@@ -201,7 +202,7 @@ describe('ChallengeComponent', () => {
   })
 
   it('should update activeId when onActiveIdChange is called', () => {
-    const newActiveId = 2
+    const newActiveId = ChallengeTab.SOLUTIONS
     component.onActiveIdChange(newActiveId)
 
     expect(component.activeId).toBe(newActiveId)

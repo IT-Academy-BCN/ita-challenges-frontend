@@ -95,3 +95,16 @@
     }
   }
 }
+
+@media (max-width: 1150px) {
+  .main-menu {
+    a {
+      max-width: 120px;
+      white-space: normal;
+      word-wrap: break-word;
+      line-height: 1.2;
+      height: auto;
+      margin-bottom: 30px;
+    }
+  }
+}
