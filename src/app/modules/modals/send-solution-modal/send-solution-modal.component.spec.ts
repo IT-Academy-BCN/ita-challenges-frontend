@@ -31,7 +31,8 @@ describe('SendSolutionModalComponent', () => {
     }
 
     solutionServiceMock = {
-      submitSolution: jest.fn().mockReturnValue(of({}))
+      submitSolution: jest.fn().mockReturnValue(of({})),
+      completeChallenge: jest.fn()
     };
 
     challengeServiceMock = {
