@@ -133,6 +133,10 @@ export class ChallengeHeaderComponent implements OnInit {
     this.openSendSolutionModal()
   }
 
+  navigateToEditChallenge (): void {
+    void this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/edit`])
+  }
+
   toggleFavorite(): void {
     if (this.isFavorite) {
       this.removeFromFavorites()
