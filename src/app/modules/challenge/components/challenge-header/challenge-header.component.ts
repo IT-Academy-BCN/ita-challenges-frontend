@@ -4,7 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../../services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge-header',
@@ -20,15 +22,17 @@ export class ChallengeHeaderComponent implements OnInit {
   ) {}
 
   private readonly challengeService = inject(ChallengeService)
+  private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
+  challengeTab = ChallengeTab;
 
   @Input() title = ''
   @Input() creation_date!: Date
   @Input() level = ''
-  @Input() activeId!: number
+  @Input() activeId!: ChallengeTab
   @Input() idChallenge!: string
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() favorites_count: number = 0
 
   @Output() startChallenge = new EventEmitter<boolean>()
@@ -56,6 +60,18 @@ export class ChallengeHeaderComponent implements OnInit {
 
     this.checkFavoriteStatus()
 
+    this.solutionService.challengeCompleted$.subscribe({
+      next: (challengeId: string) => {
+        if (challengeId === this.idChallenge) {
+          this.challengeStarted = false;
+          this.activeId = ChallengeTab.SOLUTIONS; 
+        }
+      },
+      error: (error) => {
+        console.error('Error in challengeCompleted$ subscription:', error);
+      }
+    });
+
     this.authService.getUserId().subscribe(userId => {
       this.userId = userId;
   
@@ -64,9 +80,8 @@ export class ChallengeHeaderComponent implements OnInit {
       } 
     }); 
 
-    // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
-      this.activeId = 2
+      this.activeId = ChallengeTab.SOLUTIONS
     }
 
     // Recuperar el estado del reto desde localStorage
@@ -76,13 +91,13 @@ export class ChallengeHeaderComponent implements OnInit {
 
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true
-      this.activeId = 2 // Mostrar botones de guardar y enviar solución
+      this.activeId = ChallengeTab.SOLUTIONS // Mostrar botones de guardar y enviar solución
     }
   }
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
-    this.activeId = 2
+    this.activeId = ChallengeTab.SOLUTIONS
     localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
 
     localStorage.setItem('currentChallengeId', this.idChallenge)
