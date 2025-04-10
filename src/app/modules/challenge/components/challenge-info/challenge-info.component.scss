@@ -296,9 +296,9 @@ p, ul li {
   }
 
   .solution-container{
+    display: flex;
     width: 100%;
     flex-direction: column;
-
   }
   
   .user-solution, .official-solution{

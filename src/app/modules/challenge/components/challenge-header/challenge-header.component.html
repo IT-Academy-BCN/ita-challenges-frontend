@@ -1,5 +1,5 @@
   <div class="row w-100">
-  <div class="col-12 col-md-9">
+  <div class="col-12 col-md-8">
     <p class="breadcrumbs">
       <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
       <span id="color">{{ "modules.challenge.header.section" | translate }}</span>
@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <div class="col-md-3 button d-none d-md-flex">
+  <div class="col-md-4 button d-none d-md-flex">
     <ng-container *ngIf="!solutionSent; else solutionSentMessage">
       <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
@@ -60,7 +60,7 @@
     
     <!-- Si ya se envió la solución -->
      <ng-template #solutionSentMessage>
-       <div *ngIf="activeId == challengeTab.SOLUTIONS" class="col-md-6 d-none d-md-flex align-items-center gap-3 solutionSent">
+       <div *ngIf="activeId == challengeTab.SOLUTIONS" class="d-none d-md-flex align-items-center gap-2 solutionSent">
          <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
          <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
        </div>
