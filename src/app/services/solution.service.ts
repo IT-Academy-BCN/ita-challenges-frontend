@@ -4,13 +4,15 @@ import { BehaviorSubject, of, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
 
-  activeIdSubject = new BehaviorSubject<number>(1)
+  activeIdSubject = new BehaviorSubject<ChallengeTab>(ChallengeTab.DETAILS)
   activeId$ = this.activeIdSubject.asObservable()
 
   private readonly solutionSentSubject = new BehaviorSubject<boolean>(false)
@@ -18,6 +20,9 @@ export class SolutionService {
 
   submitSolutionSubject = new Subject<boolean>()
   public sendSolutionText$ = this.submitSolutionSubject.asObservable()
+
+  private readonly challengeCompletedSubject = new Subject<string>()
+  challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
   updateSolutionSentState (value: boolean): void {
     this.solutionSentSubject.next(value)
@@ -27,6 +32,16 @@ export class SolutionService {
     // Cuando se haya enviado la solución, actualiza el estado
     this.updateSolutionSentState(true)
     // Lógica para enviar la solución al backend si es necesario
+  }
+
+  completeChallenge(challengeId: string): void {
+    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}')
+    if (savedChallenge.id === challengeId) {
+      localStorage.removeItem('challengeStarted')
+    }
+    
+    // Notify subscribers
+    this.challengeCompletedSubject.next(challengeId)
   }
 
   getAllChallengeSolutions (idChallenge: string, idLanguage: string): Observable<DataSolution> {

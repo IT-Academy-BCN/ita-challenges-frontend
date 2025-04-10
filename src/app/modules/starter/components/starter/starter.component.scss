@@ -78,13 +78,16 @@ app-starter-filters p {
   }
 }
 .challenges-filter{
-   margin-bottom: 15px;
+   
+   h2 {
+     margin-bottom: 0;
+   }
 }
 #filters-container {
   position: static;
   top: 40px;
   height: 100%;
-  overflow-y: auto;
+  padding-left: 20px;
 }
 
 #challenges-container {
@@ -108,7 +111,6 @@ app-starter-filters p {
 
 app-pagination {
   flex-shrink: 0;
-  padding: 10px 0;
 }
 
 .starter #challenges-container .btn.btn-sm.btn-primary.new-challenge-btn {

@@ -2,7 +2,6 @@
 
 .form {
     padding-right: 50px;
-    margin-bottom: 2rem;
 
     .form-check-input {
         width: 24px;
@@ -23,6 +22,15 @@
         font-weight: 500;
         padding-left: .3rem;
         color: $black-3;
+        
+        /* Add styles for multi-line text */
+        display: inline-block;
+        vertical-align: middle;
+        
+        span, ::ng-deep span {
+            display: inline-block;
+            line-height: 1.2;
+        }
     }
 
     p {
@@ -30,5 +38,11 @@
         line-height: 34px;
         font-weight: 700;
         color: $black-3;
+        margin-top: 45px;
     }
+}
+
+// Target all .form elements except the first one to reduce the gap
+.form + .form p {
+    margin-top: 17px;
 }
