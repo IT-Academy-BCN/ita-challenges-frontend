@@ -56,24 +56,44 @@ describe('ChallengeFormComponent', () => {
   const mockJavascriptTags = {
     results: [
       {
-        id_tag: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-        tag_name: 'Promises',
-        tag_description: 'Retos sobre programación asíncrona y manejo de promesas.'
+        id_tag: '00000000-0000-0000-0000-000000000000',
+        tag_name: 'Recursividad',
+        tag_description: 'Retos que implican resolver problemas mediante funciones que se llaman a sí mismas.'
       },
       {
-        id_tag: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
-        tag_name: 'DOM',
-        tag_description: 'Ejercicios de manipulación del Document Object Model.'
+        id_tag: '04104104-1041-0410-4104-104104104104',
+        tag_name: 'Algoritmos',
+        tag_description: 'Ejercicios centrados en diseño y optimización de algoritmos clásicos y personalizados.'
       },
       {
-        id_tag: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
-        tag_name: 'Arrays',
-        tag_description: 'Desafíos utilizando métodos de array como map, filter, reduce.'
+        id_tag: '08208208-2082-0820-8208-208208208208',
+        tag_name: 'Estructuras',
+        tag_description: 'Retos sobre listas, pilas, colas, árboles, grafos y otras estructuras de datos.'
       },
       {
-        id_tag: 'dddddddd-dddd-dddd-dddd-dddddddddddd',
-        tag_name: 'Closures',
-        tag_description: 'Retos sobre scope y closures en JavaScript.'
+        id_tag: '0c30c30c-30c3-0c30-c30c-30c30c30c30c',
+        tag_name: 'POO',
+        tag_description: 'Desafíos enfocados en Programación Orientada a Objetos: clases, herencia, polimorfismo, etc.'
+      },
+      {
+        id_tag: '11111111-1111-1111-1111-111111111111',
+        tag_name: 'Spring',
+        tag_description: 'Retos utilizando el framework Spring y Spring Boot.'
+      },
+      {
+        id_tag: '22222222-2222-2222-2222-222222222222',
+        tag_name: 'Collections',
+        tag_description: 'Ejercicios sobre el uso de ArrayList, HashSet, HashMap y otras colecciones.'
+      },
+      {
+        id_tag: '33333333-3333-3333-3333-333333333333',
+        tag_name: 'Threads',
+        tag_description: 'Desafíos de programación concurrente y multihilos.'
+      },
+      {
+        id_tag: '44444444-4444-4444-4444-444444444444',
+        tag_name: 'Interfaces',
+        tag_description: 'Retos sobre implementación y uso de interfaces en Java.'
       }
     ]
   }
@@ -89,7 +109,8 @@ describe('ChallengeFormComponent', () => {
           { language_name: 'Typescript', id_language: 5 },
           { language_name: 'SQL', id_language: 6 }
         ]
-      }))
+      })),
+      getTags: jest.fn().mockReturnValue(of(mockJavascriptTags))
     } as unknown as jest.Mocked<ChallengeFormService>
 
     mockChallengeService = {
@@ -262,16 +283,9 @@ describe('ChallengeFormComponent', () => {
   })
 
   describe('Tag Management', () => {
-    it('should load tags when language is selected', () => {
-      component.onLanguageChange('Javascript')
+    it('should load tags on component initialization', () => {
+      expect(mockChallengeFormService.getTags).toHaveBeenCalled()
       expect(component.currentTags).toEqual(mockJavascriptTags.results)
-    })
-
-    it('should clear selected tags when language changes', () => {
-      component.selectedTags = ['1', '2']
-      expect(component.selectedTags.length).toBe(2)
-      component.onLanguageChange('Python')
-      expect(component.selectedTags).toEqual([])
     })
 
     it('should toggle tag selection correctly', () => {
@@ -281,6 +295,17 @@ describe('ChallengeFormComponent', () => {
       expect(component.selectedTags).toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeTruthy()
       // Deselecting the same tag
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).not.toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeFalsy()
+    })
+
+    it('should handle tag selection correctly', () => {
+      const testTagId = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+      component.onTagSelect(testTagId)
+      expect(component.selectedTags).toContain(testTagId)
+      expect(component.isTagSelected(testTagId)).toBeTruthy()
+
       component.onTagSelect(testTagId)
       expect(component.selectedTags).not.toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeFalsy()
