@@ -8,6 +8,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { type Resource } from 'src/app/models/resource.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge',
@@ -32,9 +33,10 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   notes: string = ''
   popularity!: number
   languages: Language[] = []
-  activeId: number = 1
+  activeId: ChallengeTab = ChallengeTab.DETAILS
+  challengeTab = ChallengeTab;
 
-  showEditor = false
+  isEditorChallengeVisible = false
   startChallenge: boolean = false
   challengeStarted: boolean = false
 
@@ -46,20 +48,19 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
       this.loadMasterData(this.idChallenge)
-      this.activeId = 1
+      this.activeId = ChallengeTab.DETAILS
     })
 
     this.route.url.subscribe(() => {
       const url = this.router.url // Obtiene la URL actual
-      this.showEditor = url.includes('/start') // Verifica si contiene "/start"
+      this.isEditorChallengeVisible = url.includes('/start') // Verifica si contiene "/start"
     })
   }
 
   onStartChallenge (started: boolean): void {
-    console.log('onStartChallenge triggered with:', started)
     this.challengeStarted = started
     this.startChallenge = started
-    this.showEditor = started
+    this.isEditorChallengeVisible = started
   }
 
   ngOnDestroy (): void {
@@ -67,7 +68,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
-  onActiveIdChange (newActiveId: number): void {
+  onActiveIdChange (newActiveId: ChallengeTab): void {
     this.activeId = newActiveId
   }
 

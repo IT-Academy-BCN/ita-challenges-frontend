@@ -5,6 +5,7 @@ import { javascript } from '@codemirror/lang-javascript'
 import { basicSetup } from 'codemirror'
 import { defaultKeymap } from '@codemirror/commands'
 import { lineNumbers } from '@codemirror/view'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -13,15 +14,15 @@ import { lineNumbers } from '@codemirror/view'
 })
 export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('editorSolution', { static: false }) editorSolution!: ElementRef
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() initialContent: string = '// Escribe tu solución aquí'
-  @Input() activeId: number = 1
+  @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
 
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)
 
   ngOnInit (): void {
-    if (this.showEditor) {
+    if (this.isEditorChallengeVisible) {
       this.initializeCodeMirror()
     }
   }
@@ -31,14 +32,14 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    if (changes['showEditor']?.currentValue === true && this.editor == null) {
+    if (changes['isEditorChallengeVisible']?.currentValue === true && this.editor == null) {
       this.cdr.detectChanges() 
       this.initializeCodeMirror()
     }
   }
 
   ngAfterViewInit (): void {
-    if (this.showEditor && this.editorSolution !== null && this.editorSolution !== undefined) {
+    if (this.isEditorChallengeVisible && this.editorSolution !== null && this.editorSolution !== undefined) {
       this.initializeCodeMirror()
     }
   }
@@ -47,7 +48,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
     let savedContent = localStorage.getItem('editorContent')?.trim() ?? ''
 
     if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(6)
+      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(220)
     }
 
     // Imprimir en consola el contenido antes de inicializar el editor

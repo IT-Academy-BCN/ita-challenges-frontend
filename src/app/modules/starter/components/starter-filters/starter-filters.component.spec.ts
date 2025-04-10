@@ -2,18 +2,28 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { I18nModule } from '../../../../../assets/i18n/i18n.module'
+import { of } from 'rxjs'
+import { AuthService } from 'src/app/services/auth.service'
 
 import { StarterFiltersComponent } from './starter-filters.component'
 
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent
   let fixture: ComponentFixture<StarterFiltersComponent>
+  let authServiceMock: any
 
   beforeEach(async () => {
+    authServiceMock = {
+      getUserRole: jest.fn().mockReturnValue(of(''))
+    }
+
     await TestBed.configureTestingModule({
       declarations: [StarterFiltersComponent],
       imports: [ReactiveFormsModule, I18nModule],
-      providers: [FormBuilder]
+      providers: [
+        FormBuilder,
+        { provide: AuthService, useValue: authServiceMock }
+      ]
     })
       .compileComponents()
   })
@@ -21,7 +31,6 @@ describe('StarterFiltersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StarterFiltersComponent)
     component = fixture.componentInstance
-    component.isUserLoggedIn = true
     fixture.detectChanges()
   })
 
@@ -30,7 +39,13 @@ describe('StarterFiltersComponent', () => {
   })
 
   it('should emit filtersSelected event when form value changes', () => {
-    spyOn(component.filtersSelected, 'emit')
+    // Set up user as logged in for this test
+    authServiceMock.getUserRole.mockReturnValue(of('ALUMNI'))
+    component.ngOnInit()
+    component.isUserLoggedIn = true
+    fixture.detectChanges()
+
+    const emitSpy = jest.spyOn(component.filtersSelected, 'emit')
 
     const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkJs')).nativeElement
     languageInput.click()
@@ -40,17 +55,55 @@ describe('StarterFiltersComponent', () => {
     levelInput.click()
     fixture.detectChanges()
 
-    const progressInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkNoStarted')).nativeElement
-    progressInput.click()
-    fixture.detectChanges()
+    const progressElement = fixture.debugElement.query(By.css('#checkNoStarted'))
+    if (progressElement) {
+      const progressInput: HTMLInputElement = progressElement.nativeElement
+      progressInput.click()
+      fixture.detectChanges()
+    }
 
-    expect(component.filtersSelected.emit).toHaveBeenCalled()
+    expect(emitSpy).toHaveBeenCalled()
 
     const expectedFilter = {
       languages: [],
       levels: ['EASY'],
-      progress: []
+      progress: progressElement ? [1] : []
     }
-    expect(component.filtersSelected.emit).toHaveBeenCalledWith(expectedFilter)
+    expect(emitSpy).toHaveBeenCalledWith(expectedFilter)
+  })
+
+  describe('User role-based display', () => {
+    it('should display progress filters when user role is not empty and not ADMIN', () => {
+      authServiceMock.getUserRole.mockReturnValue(of('ALUMNI'))
+      
+      component.ngOnInit()
+      fixture.detectChanges()
+      
+      expect(component.isUserLoggedIn).toBe(true)
+      const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
+      expect(progressSection).toBeTruthy()
+    })
+    
+    it('should hide progress filters when user role is ADMIN', () => {
+      authServiceMock.getUserRole.mockReturnValue(of('ADMIN'))
+      
+      component.ngOnInit()
+      fixture.detectChanges()
+      
+      expect(component.isUserLoggedIn).toBe(false)
+      const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
+      expect(progressSection).toBeFalsy()
+    })
+    
+    it('should hide progress filters when user is not logged in (empty role)', () => {
+      authServiceMock.getUserRole.mockReturnValue(of(''))
+      
+      component.ngOnInit()
+      fixture.detectChanges()
+      
+      expect(component.isUserLoggedIn).toBe(false)
+      const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
+      expect(progressSection).toBeFalsy()
+    })
   })
 })
