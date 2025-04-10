@@ -55,7 +55,7 @@
                 "resources": "Recursos trobats a ITA-Wiki",
                 "resourcesLink": "Anar a ITA-Wiki",
                 "related": "Reptes similars",
-                "showStatement": "Mostrar enunciat",
+                "isChallengeStatementVisible": "Mostrar enunciat",
                 "solution": "Solució",
                 "solutionCode": "// Escriu el teu codi aquí",
                 "solutionsChallenge": "Resposta d'exemple, no es pot modificar",

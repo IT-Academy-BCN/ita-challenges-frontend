@@ -32,7 +32,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 })
 export class ChallengeInfoComponent
 implements OnInit {
-  showStatement = true
+  isChallengeStatementVisible = true
   solutionSent: boolean = false
   isUserSolution: boolean = true
   resources: string = ''
@@ -97,7 +97,7 @@ implements OnInit {
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true;
       this.isEditorChallengeVisible = true;
-      this.showStatement = false;
+      this.isChallengeStatementVisible = false;
     }
   }
 
@@ -106,7 +106,7 @@ implements OnInit {
     if (changes['startChallenge']?.currentValue === true) {
       this.challengeStarted = true;
       this.isEditorChallengeVisible = true;
-      this.showStatement = false;
+      this.isChallengeStatementVisible = false;
     }
 
     if (changes['activeId']?.currentValue === ChallengeTab.SOLUTIONS) {
@@ -120,11 +120,11 @@ implements OnInit {
   onChallengeStart (): void {
     this.challengeStarted = true
     this.isEditorChallengeVisible = true
-    this.showStatement = false;
+    this.isChallengeStatementVisible = false;
   }
 
   toggleStatement (): void {
-    this.showStatement = !this.showStatement
+    this.isChallengeStatementVisible = !this.isChallengeStatementVisible
   }
 
   onActiveIdChange (newActiveId: ChallengeTab): void {

@@ -182,7 +182,7 @@ describe('ChallengeInfoComponent', () => {
       // Arrange - non-admin user with challenge not started
       component.isAdmin = false
       component.challengeStarted = false
-      component.showStatement = true
+      component.isChallengeStatementVisible = true
       fixture.detectChanges()
       
       // Act - start the challenge
@@ -191,7 +191,7 @@ describe('ChallengeInfoComponent', () => {
       
       // Assert
       expect(component.challengeStarted).toBe(true)
-      expect(component.showStatement).toBe(false)
+      expect(component.isChallengeStatementVisible).toBe(false)
     })
     
     it('should display tabs only if challenge has not started (for non-admin users)', () => {
@@ -255,7 +255,7 @@ describe('ChallengeInfoComponent', () => {
     it('should display side-by-side layout when showing both statement and editor', () => {
       // Arrange - non-admin user
       component.isAdmin = false
-      component.showStatement = true
+      component.isChallengeStatementVisible = true
       component.isEditorChallengeVisible = true
       fixture.detectChanges()
       
@@ -266,7 +266,7 @@ describe('ChallengeInfoComponent', () => {
       expect(detailsBody.classes['side-by-side']).toBe(true)
       
       // Change state
-      component.showStatement = false
+      component.isChallengeStatementVisible = false
       fixture.detectChanges()
       
       // Assert

@@ -20,16 +20,16 @@
             <input
               type="checkbox"
               name="checkbox"
-              [(ngModel)]="showStatement"
+              [(ngModel)]="isChallengeStatementVisible"
             />
             <label class="ms-1">{{
-              "modules.challenge.info.showStatement" | translate
+              "modules.challenge.info.isChallengeStatementVisible" | translate
             }}</label>
           </span>
         </div>
         
-        <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': showStatement && isEditorChallengeVisible}">
-          <div *ngIf="!challengeStarted || showStatement" class="details-text">
+        <div class="details-body d-flex w-100" [ngClass]="{'side-by-side': isChallengeStatementVisible && isEditorChallengeVisible}">
+          <div *ngIf="!challengeStarted || isChallengeStatementVisible" class="details-text">
             <div class="pb-1">
               <h3 class="mt-0">
                 {{ "modules.challenge.info.description" | translate }}

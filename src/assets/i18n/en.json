@@ -55,7 +55,7 @@
                 "resources": "Resources found on ITA-Wiki",
                 "resourcesLink": "Go to ITA-Wiki",
                 "related": "Similar challenges",
-                "showStatement": "Show statement", 
+                "isChallengeStatementVisible": "Show statement", 
                 "solution": "Solution",
                 "solutionCode": "// Write your code here",
                 "solutionsChallenge": "Example answer, cannot be modified",
