@@ -48,7 +48,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
     let savedContent = localStorage.getItem('editorContent')?.trim() ?? ''
 
     if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(6)
+      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(220)
     }
 
     // Imprimir en consola el contenido antes de inicializar el editor
