@@ -47,7 +47,6 @@ implements OnInit {
   challengeTab = ChallengeTab;
 
   challengeStarted: boolean = false
-  // showEditor: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
