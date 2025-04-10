@@ -9,7 +9,7 @@
   <!--DETAILS TAB-->
 
   <li [ngbNavItem]="challengeTab.DETAILS" (click)="onActiveIdChange(challengeTab.DETAILS)">
-    <a href="#details" ngbNavLink *ngIf="isTabVisible(challengeTab.DETAILS)">{{
+    <a href="#details" ngbNavLink *ngIf="isChallengeTabVisible(challengeTab.DETAILS)">{{
       "modules.challenge.info.detailsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -92,7 +92,7 @@
   </li>
 
   <li *ngIf="!isAdmin" [ngbNavItem]="challengeTab.SOLUTIONS" (click)="onActiveIdChange(challengeTab.SOLUTIONS)">
-    <a href="#solutions" ngbNavLink *ngIf="isTabVisible(challengeTab.SOLUTIONS)">{{
+    <a href="#solutions" ngbNavLink *ngIf="isChallengeTabVisible(challengeTab.SOLUTIONS)">{{
       "modules.challenge.info.solutionsTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -163,7 +163,7 @@
   </li>
 
   <li [ngbNavItem]="challengeTab.RESOURCES" (click)="onActiveIdChange(challengeTab.RESOURCES)">
-    <a href="#resources" ngbNavLink *ngIf="isTabVisible(challengeTab.RESOURCES)">{{
+    <a href="#resources" ngbNavLink *ngIf="isChallengeTabVisible(challengeTab.RESOURCES)">{{
       "modules.challenge.info.resourcesTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -177,7 +177,7 @@
     </ng-template>
   </li>
   <li [ngbNavItem]="challengeTab.RELATED" class="related" (click)="onActiveIdChange(challengeTab.RELATED)">
-    <a href="#related" ngbNavLink *ngIf="isTabVisible(challengeTab.RELATED)">{{
+    <a href="#related" ngbNavLink *ngIf="isChallengeTabVisible(challengeTab.RELATED)">{{
       "modules.challenge.info.relatedTitle" | translate
     }}</a>
     <ng-template ngbNavContent>
@@ -221,28 +221,28 @@
     <button
       class="dropdown-item"
       (click)="selectTab(challengeTab.DETAILS)"
-      *ngIf="isTabVisible(challengeTab.DETAILS)"
+      *ngIf="isChallengeTabVisible(challengeTab.DETAILS)"
     >
       {{ "modules.challenge.info.detailsTitle" | translate }}
     </button>
     <button
       class="dropdown-item"
       (click)="selectTab(challengeTab.SOLUTIONS)"
-      *ngIf="isTabVisible(challengeTab.SOLUTIONS)"
+      *ngIf="isChallengeTabVisible(challengeTab.SOLUTIONS)"
     >
       {{ "modules.challenge.info.solutionsTitle" | translate }}
     </button>
     <button
       class="dropdown-item"
       (click)="selectTab(challengeTab.RESOURCES)"
-      *ngIf="isTabVisible(challengeTab.RESOURCES)"
+      *ngIf="isChallengeTabVisible(challengeTab.RESOURCES)"
     >
       {{ "modules.challenge.info.resourcesTitle" | translate }}
     </button>
     <button
       class="dropdown-item"
       (click)="selectTab(challengeTab.RELATED)"
-      *ngIf="isTabVisible(challengeTab.RELATED)"
+      *ngIf="isChallengeTabVisible(challengeTab.RELATED)"
     >
       {{ "modules.challenge.info.relatedTitle" | translate }}
     </button>

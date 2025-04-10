@@ -234,7 +234,7 @@ implements OnInit {
     return shuffled.slice(0, count);
   }
 
-  isTabVisible(tabId: ChallengeTab): boolean {
+  isChallengeTabVisible(tabId: ChallengeTab): boolean {
     if (this.isAdmin) {
       return true;
     }

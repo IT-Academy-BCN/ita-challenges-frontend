@@ -202,19 +202,19 @@ describe('ChallengeInfoComponent', () => {
       component.challengeStarted = false
       fixture.detectChanges()
       
-      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
-      expect(component.isTabVisible(ChallengeTab.SOLUTIONS)).toBe(true)
-      expect(component.isTabVisible(ChallengeTab.RESOURCES)).toBe(true)
-      expect(component.isTabVisible(ChallengeTab.RELATED)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.DETAILS)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.SOLUTIONS)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.RESOURCES)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.RELATED)).toBe(true)
       
       // Test case 2: Challenge started - tabs should be hidden
       component.challengeStarted = true
       fixture.detectChanges()
       
-      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(false)
-      expect(component.isTabVisible(ChallengeTab.SOLUTIONS)).toBe(false)
-      expect(component.isTabVisible(ChallengeTab.RESOURCES)).toBe(false)
-      expect(component.isTabVisible(ChallengeTab.RELATED)).toBe(false)
+      expect(component.isChallengeTabVisible(ChallengeTab.DETAILS)).toBe(false)
+      expect(component.isChallengeTabVisible(ChallengeTab.SOLUTIONS)).toBe(false)
+      expect(component.isChallengeTabVisible(ChallengeTab.RESOURCES)).toBe(false)
+      expect(component.isChallengeTabVisible(ChallengeTab.RELATED)).toBe(false)
     })
     
     it('should always display tabs for admin users regardless of challenge state', () => {
@@ -225,10 +225,10 @@ describe('ChallengeInfoComponent', () => {
       component.challengeStarted = true
       fixture.detectChanges()
       
-      // For admins, isTabVisible should ignore the challengeStarted flag
+      // For admins, isChallengeTabVisible should ignore the challengeStarted flag
       // Note: This test might fail if the current implementation doesn't have this logic
       // If it fails, it indicates a potential improvement to make tabs always visible for admins
-      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.DETAILS)).toBe(true)
     })
     
     it('should show tabs again when user sends solution (non-admin only)', fakeAsync(() => {
@@ -239,7 +239,7 @@ describe('ChallengeInfoComponent', () => {
       fixture.detectChanges()
       
       // Verify tabs are hidden
-      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(false)
+      expect(component.isChallengeTabVisible(ChallengeTab.DETAILS)).toBe(false)
       
       // Act - simulate solution sent by emitting the challenge ID
       mockChallengeCompletedSubject.next(component.idChallenge)
@@ -249,7 +249,7 @@ describe('ChallengeInfoComponent', () => {
       // Assert
       expect(component.challengeStarted).toBe(false)
       expect(component.isEditorChallengeVisible).toBe(true)
-      expect(component.isTabVisible(ChallengeTab.DETAILS)).toBe(true)
+      expect(component.isChallengeTabVisible(ChallengeTab.DETAILS)).toBe(true)
     }))
     
     it('should display side-by-side layout when showing both statement and editor', () => {
