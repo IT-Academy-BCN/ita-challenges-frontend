@@ -144,7 +144,7 @@ describe('AuthService', () => {
     expect(localStorage.getItem('authToken')).toBeNull();
     expect(localStorage.getItem('username')).toBeNull();
 
-    expect(routerSpy).toHaveBeenCalledWith([environment.REDIRECT_URL]);
+    expect(routerSpy).toHaveBeenCalledWith([environment.GITHUB_REDIRECT_URI]);
     expect(updateAuthStatusSpy).toHaveBeenCalled();
     expect(updateUserRoleAndUserNameFromTokenSpy).toHaveBeenCalled();
   }));

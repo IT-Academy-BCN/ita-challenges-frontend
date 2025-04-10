@@ -92,23 +92,25 @@ export class AuthService {
     return token ? { Authorization: `Bearer ${token}` } : { Authorization: '' };
   }
 
+  clearAuthData(): void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+  }
+
+  private handleLogoutSuccess(): void {
+    this.toastr.success(this.translate.instant("messages.success.logout"), '', { timeOut: 3000 });
+    this.clearAuthData();
+    this.router.navigate([environment.GITHUB_REDIRECT_URI]);
+    this.updateAuthStatus();
+    this.updateUserRoleAndUserNameFromToken();
+  }
 
   logout(): void {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_LOGOUT_ENDPOINT}`;
 
     this.http.post(url, {}, { headers: this.getAuthHeaders() }).subscribe({
-      next: (response) => {
-        this.toastr.success(this.translate.instant("messages.success.logout"), '', { timeOut: 3000 });
-
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('username');
-        this.router.navigate([environment.REDIRECT_URL]);
-        this.updateAuthStatus();
-        this.updateUserRoleAndUserNameFromToken();
-    },
-    error: (error) => {
-      this.toastr.error(this.translate.instant("messages.errors.logout"), '', { timeOut: 3000 });
-    },
+    next: () => this.handleLogoutSuccess(),
+    error: () => this.toastr.error(this.translate.instant("messages.errors.logout"), '', { timeOut: 3000 }),
   });
 }
 }
