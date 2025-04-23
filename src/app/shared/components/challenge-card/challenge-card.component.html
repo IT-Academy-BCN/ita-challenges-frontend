@@ -46,15 +46,16 @@
         <div class="txt">0</div>
       </div>
 
-      <div class="stat d-flex align-items-center" 
-           [ngbTooltip]="'tooltips.favorites' | translate"
-           (click)="toggleFavorite($event)" style="cursor: pointer;">
+      <button class="stat d-flex align-items-center"
+        [ngbTooltip]="'tooltips.favorites' | translate"
+        (click)="toggleFavorite($event)"
+        style="cursor: pointer; background: none; border: none; padding: 0;">
         <div>
           <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
           <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
         </div>
         <div class="txt">{{favorites_count}}</div>
-      </div>
+      </button>
 
       <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
         <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
