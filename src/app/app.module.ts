@@ -21,6 +21,8 @@ import localeCa from '@angular/common/locales/ca'
 import localeEn from '@angular/common/locales/en'
 import { registerLocaleData } from '@angular/common'
 
+import { MentorLoginComponent } from './modules/mentor/mentor-login/mentor-login.component';
+
 registerLocaleData(localeEs, 'es')
 registerLocaleData(localeCa, 'ca')
 registerLocaleData(localeEn, 'en')
@@ -29,15 +31,13 @@ export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
 }
 
-import { MentorLoginComponent } from './modules/mentor/mentor-login/mentor-login.component';
-
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
-    MentorLoginComponent,  // Add this line
+    MentorLoginComponent,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
