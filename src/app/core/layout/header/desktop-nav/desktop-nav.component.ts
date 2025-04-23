@@ -22,18 +22,15 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   ) {}
 
   ngOnInit(): void {
-    // Mantener solo la suscripción al estado de login
     this.authSubscription = this._authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
-      
-      // Solo si está logueado, obtener el username
-      if (isLoggedIn) {
-        this._authService.getUsername().subscribe((username) => {
-          this.user = username;
-        });
-      }
     });
-}
+
+    this._authService.updateUserRoleAndUserNameFromToken();
+    this._authService.getUsername().subscribe((username) => {
+      this.user = username;
+    });
+  }
 
     ngOnDestroy(): void {
       if (this.authSubscription) {
