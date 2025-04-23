@@ -85,8 +85,15 @@ export class MentorLoginComponent implements OnInit {
           
           this.authService.updateUserRoleAndUserNameFromToken()
 
+          // Primero cerrar el modal y emitir el éxito
           this.closeModal()
           this.loginSuccess.emit(true)
+          
+          // Luego limpiar el código de la URL
+          void this.router.navigate([], {
+            queryParams: { code: null },
+            queryParamsHandling: 'merge'
+          })
         } else {
           this.showError('unauthorized')
           localStorage.removeItem('username')
@@ -111,11 +118,6 @@ export class MentorLoginComponent implements OnInit {
           console.error(err)
         }
       }
-    })
-
-    void this.router.navigate([], {
-      queryParams: { code: null },
-      queryParamsHandling: 'merge'
     })
   }
 
