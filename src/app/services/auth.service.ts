@@ -42,36 +42,21 @@ export class AuthService {
     const token = localStorage.getItem('authToken');
 
     if (token) {
-      try {
-        const decodedToken = this.decodeToken(token);
-        
-        // Actualizar todos los estados en un solo batch
-        const updates = {
-          role: decodedToken?.role ?? '',
-          username: decodedToken?.sub ?? '',
-          userId: decodedToken?.uuid ?? null
-        };
-
-        // Aplicar todas las actualizaciones juntas
-        this.userRole = updates.role;
-        this.username = updates.username;
-        
-        // Emitir actualizaciones en bloque
-        this.userRoleSubject.next(updates.role);
-        this.usernameSubject.next(updates.username);
-        this.userIdSubject.next(updates.userId);
-        
-        // Una única actualización del estado de autenticación
-        this.isLoggedInSubject.next(true);
-      } catch (error) {
-        console.error('Error al decodificar el token:', error);
-        this.clearAuthData();
-      }
+      const decodedToken = this.decodeToken(token);
+      this.userRole = decodedToken?.role ?? '';
+      this.userRoleSubject.next(this.userRole);
+      this.username = decodedToken?.sub ?? '';
+      this.usernameSubject.next(this.username);
+      const userId = decodedToken?.uuid ?? null;
+      this.userIdSubject.next(userId);
     } else {
-      // Limpiar todos los estados en caso de no tener token
-      this.clearAuthData();
+      this.userRoleSubject.next('');
+      this.usernameSubject.next('');
+      this.userIdSubject.next(null);
     }
-}
+
+    this.updateAuthStatus();
+  }
 
   isUserLoggedIn(): boolean {
     return this.checkAuthToken();

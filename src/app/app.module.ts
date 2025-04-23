@@ -29,12 +29,15 @@ export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
 }
 
+import { MentorLoginComponent } from './modules/mentor/mentor-login/mentor-login.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
+    MentorLoginComponent,  // Add this line
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
