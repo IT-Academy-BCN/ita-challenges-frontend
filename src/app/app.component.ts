@@ -7,6 +7,7 @@ import { Component } from '@angular/core'
 export class AppComponent {
   title = 'ita-challenges'
 
+<<<<<<< HEAD
   isLoggedIn:boolean = false
 
   onLoginSuccess(success: boolean): void {
@@ -15,3 +16,12 @@ export class AppComponent {
     }
   }
 }
+=======
+  onLoginSuccess(success: boolean): void {
+    if (success) {
+      // El login fue exitoso, podemos actualizar el estado de la aplicación si es necesario
+      console.log('Login successful')
+    }
+  }
+}
+>>>>>>> b044dc05 (feat(auth): centralizar componente de login en app.component)

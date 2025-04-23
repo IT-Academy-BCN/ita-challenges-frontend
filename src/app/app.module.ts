@@ -31,13 +31,19 @@ export function HttpLoaderFactory (http: HttpClient): any {
   return new TranslateHttpLoader(http)
 }
 
+import { MentorLoginComponent } from './modules/mentor/mentor-login/mentor-login.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
+<<<<<<< HEAD
     MentorLoginComponent,
+=======
+    MentorLoginComponent,  // Add this line
+>>>>>>> b044dc05 (feat(auth): centralizar componente de login en app.component)
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
