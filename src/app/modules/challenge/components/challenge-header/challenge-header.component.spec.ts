@@ -7,6 +7,7 @@ import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
+import { EventEmitter } from '@angular/core';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -60,7 +61,11 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should open send solution modal', () => {
-    const mockModalRef = { componentInstance: { idChallenge: '' } };
+    const mockModalRef = {
+       componentInstance: {
+        idChallenge: '',
+        userId: '',
+        solutionAccepted: new EventEmitter<void>() } };
     jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
     component.idChallenge = 'testChallengeId';
     component.openSendSolutionModal();

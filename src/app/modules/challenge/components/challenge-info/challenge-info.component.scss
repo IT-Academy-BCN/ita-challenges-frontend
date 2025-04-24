@@ -164,6 +164,17 @@ p, ul li {
 }
 
 
+.solution-container{
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.user-solution, .official-solution{
+  width: 50%;
+}
+
+
 @media screen and (max-width: 768px) {
   .details-body {
     flex-direction: column;
@@ -285,6 +296,12 @@ p, ul li {
   }
 
   .solution-container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .user-solution, .official-solution{
     width: 100%;
   }
   
