@@ -46,10 +46,9 @@
         <div class="txt">0</div>
       </div>
 
-      <button class="stat d-flex align-items-center"
+      <button class="stat d-flex align-items-center favorite-button"
         [ngbTooltip]="'tooltips.favorites' | translate"
-        (click)="toggleFavorite($event)"
-        style="cursor: pointer; background: none; border: none; padding: 0;">
+        (click)="toggleFavorite($event)">
         <div>
           <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
           <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
