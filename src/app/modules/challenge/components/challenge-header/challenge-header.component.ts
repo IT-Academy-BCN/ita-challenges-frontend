@@ -115,10 +115,18 @@ export class ChallengeHeaderComponent implements OnInit {
   openSendSolutionModal (): void {
     const modalRef = this.modalService.open(SendSolutionModalComponent, {
       centered: true,
-      size: 'lg'
+      size: 'md'
     })
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.solutionAccepted.subscribe(() => {
+      this.onSolutionAccepted();
+    });
+  }
+
+  onSolutionAccepted(): void {
+    this.solutionSent = true; 
+    this.activeId = 2; 
   }
 
   get currentLang (): string {
