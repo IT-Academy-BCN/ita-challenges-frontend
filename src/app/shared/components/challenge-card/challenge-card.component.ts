@@ -46,4 +46,9 @@ export class ChallengeCardComponent implements OnInit {
       this.favorites_count = parseInt(storedCount, 10);
     }
   }
+
+  toggleFavorite (event: MouseEvent): void {
+    event.stopPropagation()
+    this.isFavorite = !this.isFavorite
+  }
 }
