@@ -1,5 +1,5 @@
   <div class="row w-100">
-  <div class="col-12 col-md-9">
+  <div class="col-12 col-md-8">
     <p class="breadcrumbs">
       <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
       <span id="color">{{ "modules.challenge.header.section" | translate }}</span>
@@ -51,16 +51,20 @@
     </div>
   </div>
 
-  <div class="col-md-3 button d-none d-md-flex">
-    <button *ngIf="!challengeStarted" class="btn btn-sm btn-primary" (click)="onStartChallenge()">{{'modules.challenge.header.buttonStart' | translate }}</button>
-    <button *ngIf="challengeStarted" class="btn btn-sm btn-outline-primary mt-3" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
-    <button *ngIf="challengeStarted" class="btn btn-sm btn-primary mt-3" (click)="openSendSolutionModal()">{{'modules.challenge.header.buttonSendSolution' | translate }}</button>
-  </div>
- 
-   <!-- Si ya se envió la solución -->
-  <div *ngIf="activeId == challengeTab.SOLUTIONS && solutionSent" class="col-md-3 d-none d-md-flex">
-    <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
-    <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+  <div class="col-md-4 button d-none d-md-flex">
+    <ng-container *ngIf="!solutionSent; else solutionSentMessage">
+      <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+    </ng-container>
+    
+    <!-- Si ya se envió la solución -->
+     <ng-template #solutionSentMessage>
+       <div *ngIf="activeId == challengeTab.SOLUTIONS" class="d-none d-md-flex align-items-center gap-2 solutionSent">
+         <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
+         <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+       </div>
+     </ng-template>
   </div>
   
 </div>

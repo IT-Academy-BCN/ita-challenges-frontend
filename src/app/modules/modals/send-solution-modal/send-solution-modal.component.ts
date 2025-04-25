@@ -21,6 +21,7 @@ export class SendSolutionModalComponent {
   @Input() userId!: string;
   languageId: string = ''; 
   solutionText: string = '';
+  @Output() solutionAccepted = new EventEmitter<boolean>();
   @Output() solutionSubmitted = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -61,6 +62,7 @@ export class SendSolutionModalComponent {
         
         this.solutionService.completeChallenge(this.idChallenge);
         
+        this.solutionAccepted.emit();
         this.closeModal();
       },
       error: (error) => {
