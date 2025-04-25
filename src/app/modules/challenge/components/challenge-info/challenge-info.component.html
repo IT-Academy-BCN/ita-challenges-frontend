@@ -37,24 +37,6 @@
              <p [innerHTML]="description | dynamicTranslate "></p>
 
             </div>
-
-            <!-- Examples -->
-            <div class="pb-1">
-              <h3>{{ "modules.challenge.info.examples" | translate }}</h3>
-              <ul>
-                <ng-container *ngFor="let example of examples">
-                  <li class="mb-1" *ngIf="example.example_text">
-                    {{ example.example_text | dynamicTranslate }}
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-
-            <!-- Notes -->
-            <div class="pb-1">
-              <h3>{{ "modules.challenge.info.notes" | translate }}</h3>
-              <p>{{ notes | dynamicTranslate }}</p>
-            </div>
           </div>
 
           <div class="editor-section" *ngIf="isEditorChallengeVisible">
