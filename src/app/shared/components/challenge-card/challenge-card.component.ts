@@ -67,7 +67,7 @@ export class ChallengeCardComponent implements OnInit {
         }
       })
     } else {
-      console.log('Aquí llamaremos a removeFromFavorites más adelante.')
+    // TODO: Implement removeFromFavorites functionality
     }
   }
 }
