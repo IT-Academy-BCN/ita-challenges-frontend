@@ -164,9 +164,14 @@ export class ChallengeHeaderComponent implements OnInit {
     this.isFavorite = !this.isFavorite
     this.favorites_count += this.isFavorite ? 1 : -1
     if (this.isFavorite) {
-      this.removeFromFavorites()
+      this.challengeService.addToFavorites(this.idChallenge).subscribe({
+        next: () => {
+        },
+        error: () => {
+        }
+      })
     } else {
-      this.addToFavorites()
+    // TODO: Implementar removeFromFavorites en la PR correspondiente
     }
   }
 
