@@ -161,6 +161,8 @@ export class ChallengeHeaderComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
+    this.isFavorite = !this.isFavorite
+    this.favorites_count += this.isFavorite ? 1 : -1
     if (this.isFavorite) {
       this.removeFromFavorites()
     } else {
