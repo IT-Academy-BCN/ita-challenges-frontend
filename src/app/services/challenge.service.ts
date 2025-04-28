@@ -107,19 +107,16 @@ export class ChallengeService {
       ...this.authService.getAuthHeaders()
     };
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
-    console.log('Enviando petición POST a:', url);
-    console.log('Headers:', headers);
     return this.http.post<FavoriteResponse>(
       url,
       {},
       { headers }
     ).pipe(
       map(response => {
-        console.log('Respuesta del backend (Add to favorites):', response);
         return response;
       }),
       catchError(error => {
-        console.error('Error al añadir a favoritos:', error);
+        console.error('Error adding to favorites:', error);
         return of({ isFavorite: false, timesFavorited: 0 });
       })
     );
