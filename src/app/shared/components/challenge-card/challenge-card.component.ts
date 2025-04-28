@@ -51,12 +51,9 @@ export class ChallengeCardComponent implements OnInit {
 
   toggleFavorite (event: MouseEvent): void {
     event.stopPropagation()
-    // Verificamos si el usuario está logueado
     if (!this.authService.isUserLoggedIn()) {
-      console.log('User not logged in. Favorite action is blocked.')
-      return // No hacemos nada si no está logueado
+      return
     }
-    // Cambiamos visualmente de inmediato
     this.isFavorite = !this.isFavorite
     this.favorites_count = this.isFavorite ? this.favorites_count + 1 : Math.max(0, this.favorites_count - 1)
     // Llamamos al backend según el estado
