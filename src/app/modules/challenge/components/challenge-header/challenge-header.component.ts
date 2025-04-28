@@ -150,7 +150,10 @@ export class ChallengeHeaderComponent implements OnInit {
     this.openSendSolutionModal()
   }
 
-  toggleFavorite(): void {
+  toggleFavorite (): void {
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
     if (this.isFavorite) {
       this.removeFromFavorites()
     } else {
