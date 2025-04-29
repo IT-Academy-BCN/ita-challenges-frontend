@@ -33,3 +33,6 @@
 - Raul Garcia - https://github.com/rawl0408
 - Marta Altimir - https://github.com/martaag18
 - Berta Pasamontes - https://github.com/bertapasamontes
+- Alejandro Martínez - https://github.com/AlexMafaluno
+
+
