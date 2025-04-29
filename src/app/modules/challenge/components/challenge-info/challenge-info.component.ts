@@ -68,7 +68,6 @@ implements OnInit {
 
   @Input() detail!: ChallengeDetails
   @Input() solutions: string[] = []
-  @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
   @Input() popularity!: number
@@ -83,7 +82,7 @@ implements OnInit {
 
   @Input() set description(value: string) {
     if (value) {
-      this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value);
+      this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value)
     }
   }
 
