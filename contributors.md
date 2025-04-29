@@ -32,4 +32,4 @@
 - Jhorman Cadena - https://github.com/jhor94
 - Raul Garcia - https://github.com/rawl0408
 - Marta Altimir - https://github.com/martaag18
-
+- Berta Pasamontes - https://github.com/bertapasamontes
