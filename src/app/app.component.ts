@@ -7,7 +7,6 @@ import { Component } from '@angular/core'
 export class AppComponent {
   title = 'ita-challenges'
 
-<<<<<<< HEAD
   isLoggedIn:boolean = false
 
   onLoginSuccess(success: boolean): void {
@@ -16,18 +15,3 @@ export class AppComponent {
     }
   }
 }
-=======
-  onLoginSuccess(success: boolean): void {
-    if (success) {
-      // Manejador centralizado de autenticación exitosa
-      // Aunque esté sin nada actúa como punto de entrada para operaciones post-login
-      // Se podría implementar navegación basada en roles (diferenciación mentor/usuario) y evitar así tantos booleanos en los htmls
-
-      // Casos de uso potenciales:
-      // - Actualizar estado global de autenticación
-      // - Navegar a dashboards específicos por rol
-      // - Refrescar componentes de UI
-    }
-  }
-}
->>>>>>> b044dc05 (feat(auth): centralizar componente de login en app.component)
