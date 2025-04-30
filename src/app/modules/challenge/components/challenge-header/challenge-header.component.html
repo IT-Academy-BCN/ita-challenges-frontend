@@ -42,7 +42,7 @@
       <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" style="cursor: pointer;">
         <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Add to favorites">
         <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Remove from favorites">
-        {{favorites_count}}
+        <span class="txt">{{favorites_count}}</span>
       </span>
       <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
         <img src="assets/img/icon/clock.svg" alt="Date">
