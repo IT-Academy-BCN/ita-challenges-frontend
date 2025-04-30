@@ -82,8 +82,11 @@ implements OnInit {
 
   @Input() set description(value: string) {
     if (value) {
-      // NOSONAR typescript:S6268 Make sure disabling Angular built-in sanitization is safe here because: 1. Content comes from a trusted source 2. Rich HTML is required for challenge description formatting 3. DomSanitizer is Angular's built-in security mechanism for HTML content
-      this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value)
+      // NOSONAR: typescript:S6268 - Uso seguro de bypassSecurityTrustHtml justificado:
+      // 1. Se requiere HTML enriquecido para mostrar correctamente el formato de los desafíos
+      // 2. El contenido es validado por administradores antes de ser publicado
+      // 3. La funcionalidad es esencial para la visualización de markdown y bloques de código
+      this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value);
     }
   }
 
