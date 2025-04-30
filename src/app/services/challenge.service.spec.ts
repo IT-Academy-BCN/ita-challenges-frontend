@@ -1,31 +1,35 @@
 import { ChallengeService } from './challenge.service'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import { TestBed, inject } from '@angular/core/testing'
+import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing'
 import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
-import { fakeAsync, tick } from '@angular/core/testing'
+import { AuthService } from './auth.service'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
+
+const authServiceStub = {
+  getAuthHeaders: () => ({ Authorization: 'Bearer mock-token' })
+}
+
 describe('ChallengeService', () => {
   let service: ChallengeService
-  // let httpMock: HttpTestingController
-  // let scheduler: TestScheduler
   let httpClient: HttpClient
-  let httpClientMock: HttpTestingController
+  let httpMock: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        { provide: AuthService, useValue: authServiceStub }
+      ]
     })
-
-    // Inject the http service and test controller for each test
-    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
-    httpClientMock = TestBed.inject(HttpTestingController)
     service = TestBed.inject(ChallengeService)
+    httpClient = TestBed.inject(HttpClient)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
   /*
@@ -65,7 +69,7 @@ describe('ChallengeService', () => {
       done()
     })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
+    const req = httpMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
     expect(req.request.method).toEqual('GET')
     req.flush(mockData)
   })
@@ -81,7 +85,7 @@ describe('ChallengeService', () => {
       }
     })
 
-    const req = httpClientMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
+    const req = httpMock.expectOne(environment.BACKEND_ITA_SSO_BASE_URL.concat(environment.BACKEND_SSO_ITINERARIES))
     expect(req.request.method).toEqual('GET')
 
     req.error(new ProgressEvent('error', {
@@ -90,7 +94,7 @@ describe('ChallengeService', () => {
       total: 0
     }))
 
-    httpClientMock.verify()
+    httpMock.verify()
   })
   it('should call getAllLanguages() and return data', inject([ChallengeService, HttpTestingController],
     (service: ChallengeService, httpMock: HttpTestingController) => {
@@ -130,136 +134,98 @@ describe('ChallengeService', () => {
       done()
     })
 
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
     expect(req.request.method).toBe('POST')
     expect(req.request.body).toEqual(mockChallenge)
 
     req.flush(mockResponse)
-    httpClientMock.verify()
+    httpMock.verify()
   })
 
   // Tests for mocked favorites functionality
-  describe('Favorites functionality', () => {
-    const testChallengeId = 'test-challenge-123'
-    
+  describe('removeFromFavorites (mock)', () => {
+    const testId = 'test-challenge-123'
+
     beforeEach(() => {
-      // Clear localStorage before each test
-      localStorage.removeItem(`is_favorite_${testChallengeId}`)
-      localStorage.removeItem(`favorites_count_${testChallengeId}`)
+      localStorage.removeItem(`is_favorite_${testId}`)
+      localStorage.removeItem(`favorites_count_${testId}`)
     })
-    
-    it('should add a challenge to favorites', fakeAsync(() => {
-      // Initial state should be empty
-      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBeNull()
-      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBeNull()
-      
-      let result: FavoriteResponse | undefined
-      
-      service.addToFavorites(testChallengeId).subscribe(response => {
-        result = response
-      })
-      
-      // Simulate the delay
-      tick(300)
-      
-      // Check the response
-      expect(result).toBeDefined()
-      expect(result?.isFavorite).toBe(true)
-      expect(result?.timesFavorited).toBe(1)
-      
-      // Check localStorage was updated correctly
-      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('true')
-      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('1')
-    }))
-    
-    it('should increment favorites count when adding multiple times', fakeAsync(() => {
-      // Set initial state
-      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
-      localStorage.setItem(`favorites_count_${testChallengeId}`, '5')
-      
-      let result: FavoriteResponse | undefined
-      
-      service.addToFavorites(testChallengeId).subscribe(response => {
-        result = response
-      })
-      
-      // Simulate the delay
-      tick(300)
-      
-      // Check the response
-      expect(result).toBeDefined()
-      expect(result?.isFavorite).toBe(true)
-      expect(result?.timesFavorited).toBe(6) // Should increment from 5 to 6
-      
-      // Check localStorage was updated correctly
-      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('true')
-      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('6')
-    }))
-    
+
     it('should remove a challenge from favorites', fakeAsync(() => {
-      // Set initial state
-      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
-      localStorage.setItem(`favorites_count_${testChallengeId}`, '3')
-      
+      localStorage.setItem(`is_favorite_${testId}`, 'true')
+      localStorage.setItem(`favorites_count_${testId}`, '3')
       let result: FavoriteResponse | undefined
-      
-      service.removeFromFavorites(testChallengeId).subscribe(response => {
-        result = response
+
+      service.removeFromFavorites(testId).subscribe((r) => {
+        result = r
       })
-      
-      // Simulate the delay
       tick(300)
-      
-      // Check the response
-      expect(result).toBeDefined()
-      expect(result?.isFavorite).toBe(false)
-      expect(result?.timesFavorited).toBe(2) // Should decrement from 3 to 2
-      
-      // Check localStorage was updated correctly
-      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('false')
-      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('2')
+
+      expect(result).toEqual({ isFavorite: false, timesFavorited: 2 })
+      expect(localStorage.getItem(`is_favorite_${testId}`)).toBe('false')
+      expect(localStorage.getItem(`favorites_count_${testId}`)).toBe('2')
     }))
-    
+
     it('should not decrement below zero when removing favorites', fakeAsync(() => {
-      // Set initial state with zero count
-      localStorage.setItem(`is_favorite_${testChallengeId}`, 'true')
-      localStorage.setItem(`favorites_count_${testChallengeId}`, '0')
-      
+      localStorage.setItem(`is_favorite_${testId}`, 'true')
+      localStorage.setItem(`favorites_count_${testId}`, '0')
       let result: FavoriteResponse | undefined
-      
-      service.removeFromFavorites(testChallengeId).subscribe(response => {
-        result = response
+      service.removeFromFavorites(testId).subscribe(r => {
+        result = r
       })
-      
-      // Simulate the delay
       tick(300)
-      
-      // Check the response
-      expect(result).toBeDefined()
-      expect(result?.isFavorite).toBe(false)
-      expect(result?.timesFavorited).toBe(0) // Should remain at 0
-      
-      // Check localStorage was updated correctly
-      expect(localStorage.getItem(`is_favorite_${testChallengeId}`)).toBe('false')
-      expect(localStorage.getItem(`favorites_count_${testChallengeId}`)).toBe('0')
+
+      expect(result).toEqual({ isFavorite: false, timesFavorited: 0 })
+      expect(localStorage.getItem(`favorites_count_${testId}`)).toBe('0')
     }))
-    
-    it('should handle empty localStorage when getting mock favorite count', fakeAsync(() => {
-      // Ensure localStorage is empty
-      localStorage.removeItem(`favorites_count_${testChallengeId}`)
-      
-      let result: FavoriteResponse | undefined
-      
-      service.addToFavorites(testChallengeId).subscribe(response => {
-        result = response
+  })
+  describe('addToFavorites (real HTTP)', () => {
+    const testId = 'test-challenge-123'
+
+    beforeEach(() => {
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClientTesting(),
+          { provide: AuthService, useValue: authServiceStub }
+        ]
       })
-      
-      // Simulate the delay
-      tick(300)
-      
-      // Check the response starts from 0
-      expect(result).toBeDefined()
-      expect(result?.timesFavorited).toBe(1) // Should start from 0 and increment to 1
-    }))
+      service = TestBed.inject(ChallengeService)
+      httpMock = TestBed.inject(HttpTestingController)
+    })
+
+    afterEach(() => {
+      httpMock.verify()
+    })
+
+    it('should POST and return backend response', (done) => {
+      const mockResp: FavoriteResponse = { isFavorite: true, timesFavorited: 42 }
+
+      service.addToFavorites(testId).subscribe((res) => {
+        expect(res).toEqual(mockResp)
+        done()
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
+      )
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual({})
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+      req.flush(mockResp)
+    })
+
+    it('should catch error and return default', (done) => {
+      service.addToFavorites(testId).subscribe((res) => {
+        expect(res).toEqual({ isFavorite: false, timesFavorited: 0 })
+        done()
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
+      )
+      req.flush({ message: 'Server error' }, { status: 500, statusText: 'Error' })
+    })
   })
 })
