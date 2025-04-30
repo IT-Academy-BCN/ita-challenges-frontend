@@ -82,11 +82,7 @@ implements OnInit {
 
   @Input() set description(value: string) {
     if (value) {
-      // NOSONAR typescript:S6268
-      // Make sure disabling Angular built-in sanitization is safe here because:
-      // 1. Content comes from a trusted backend API with proper validation
-      // 2. Rich HTML is required for challenge description formatting (markdown/code blocks)
-      // 3. DomSanitizer is Angular's built-in security mechanism for HTML content
+      // NOSONAR typescript:S6268 Make sure disabling Angular built-in sanitization is safe here because: 1. Content comes from a trusted source 2. Rich HTML is required for challenge description formatting 3. DomSanitizer is Angular's built-in security mechanism for HTML content
       this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value)
     }
   }
