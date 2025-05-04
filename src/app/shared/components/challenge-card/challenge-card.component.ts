@@ -13,6 +13,7 @@ export class ChallengeCardComponent implements OnInit {
   private readonly starterService = inject(StarterService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
+  private readonly authService = inject(AuthService)
 
   @Input() title: string = ''
   @Input() languages: any = []
@@ -49,7 +50,22 @@ export class ChallengeCardComponent implements OnInit {
 
   toggleFavorite (event: MouseEvent): void {
     event.stopPropagation()
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
     this.isFavorite = !this.isFavorite
-    this.favorites_count = this.isFavorite ? this.favorites_count + 1 : Math.max(0, this.favorites_count - 1)
+    this.favorites_count += this.isFavorite ? 1 : -1
+    if (this.isFavorite) {
+      this.challengeService.addToFavorites(this.id).subscribe({
+        next: response => {
+          console.log('Favorite added:', response)
+        },
+        error: error => {
+          console.error('Error adding favorite:', error)
+        }
+      })
+    } else {
+    // TODO: Implement removeFromFavorites functionality
+    }
   }
 }
