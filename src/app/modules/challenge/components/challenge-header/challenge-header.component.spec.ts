@@ -6,6 +6,8 @@ import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
+import { EventEmitter } from '@angular/core';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -50,16 +52,20 @@ describe('ChallengeHeaderComponent', () => {
     component.title = 'Test Title';
     component.creation_date = new Date();
     component.level = 'Easy';
-    component.activeId = 1;
+    component.activeId = ChallengeTab.DETAILS;
 
     expect(component.title).toEqual('Test Title');
     expect(component.creation_date).toBeDefined();
     expect(component.level).toEqual('Easy');
-    expect(component.activeId).toEqual(1);
+    expect(component.activeId).toEqual(ChallengeTab.DETAILS);
   });
 
   it('should open send solution modal', () => {
-    const mockModalRef = { componentInstance: { idChallenge: '' } };
+    const mockModalRef = {
+       componentInstance: {
+        idChallenge: '',
+        userId: '',
+        solutionAccepted: new EventEmitter<void>() } };
     jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
     component.idChallenge = 'testChallengeId';
     component.openSendSolutionModal();
@@ -72,11 +78,8 @@ describe('ChallengeHeaderComponent', () => {
     await component.onStartChallenge();
 
     expect(component.challengeStarted).toBe(true);
-    expect(component.activeId).toBe(2);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
     expect(localStorage.getItem('challengeStarted')).toContain('123');
     expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/123/start']);
   });
-
-
-  
 });

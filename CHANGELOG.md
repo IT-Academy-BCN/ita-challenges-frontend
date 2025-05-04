@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.32-RELEASE] (2025-04-10) (feature#571)
+
+- Added logout functionality
+
 ### [ita-challenges-frontend-3.1.31-RELEASE] (2024-11-20) (feature#480)
 
 - Several corrections

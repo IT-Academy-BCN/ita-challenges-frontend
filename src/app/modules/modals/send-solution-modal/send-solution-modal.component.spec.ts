@@ -8,6 +8,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { of } from 'rxjs'
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 describe('SendSolutionModalComponent', () => {
   let component: SendSolutionModalComponent
@@ -30,7 +31,8 @@ describe('SendSolutionModalComponent', () => {
     }
 
     solutionServiceMock = {
-      submitSolution: jest.fn().mockReturnValue(of({}))
+      submitSolution: jest.fn().mockReturnValue(of({})),
+      completeChallenge: jest.fn()
     };
 
     challengeServiceMock = {
@@ -97,6 +99,7 @@ describe('SendSolutionModalComponent', () => {
     component.solutionText = solutionData.solutionText;
     component.userId = solutionData.userId;
   
+    solutionServiceMock.solutionText = jest.fn();
     solutionServiceMock.submitSolution = jest.fn().mockReturnValue(of({}));
     solutionServiceMock.updateSolutionSentState = jest.fn();
     solutionServiceMock.sendSolutionText = jest.fn();
@@ -118,7 +121,8 @@ describe('SendSolutionModalComponent', () => {
   
     expect(solutionServiceMock.updateSolutionSentState).toHaveBeenCalledWith(true);
     expect(solutionServiceMock.sendSolutionText).toHaveBeenCalledWith(true);
-    expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(2);
+    expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+    expect(solutionServiceMock.completeChallenge).toHaveBeenCalledWith(solutionData.idChallenge);
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   }));
 

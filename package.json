@@ -51,6 +51,7 @@
     "jest-preset-angular": "^14.1.0",
     "jquery": "^3.6.4",
     "ngx-cookie-service": "^18.0.0",
+    "ngx-toastr": "^19.0.0",
     "playwright": "^1.33.0",
     "rxjs": "~7.8.0",
     "tinymce": "^7.6.1",

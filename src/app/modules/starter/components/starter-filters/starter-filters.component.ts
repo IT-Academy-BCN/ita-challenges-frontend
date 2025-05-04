@@ -1,16 +1,18 @@
-import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core'
+import { Component, Output, EventEmitter, DestroyRef, inject, OnInit, OnDestroy } from '@angular/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type Language } from 'src/app/models/language.model'
+import { AuthService } from 'src/app/services/auth.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-starter-filters',
   templateUrl: './starter-filters.component.html',
   styleUrls: ['./starter-filters.component.scss']
 })
-export class StarterFiltersComponent {
+export class StarterFiltersComponent implements OnInit, OnDestroy {
   @Output() filtersSelected = new EventEmitter<FilterChallenge>()
 
   filtersForm
@@ -20,8 +22,10 @@ export class StarterFiltersComponent {
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
   private readonly challengeService = inject(ChallengeService)
+  private readonly authService = inject(AuthService)
 
   public isUserLoggedIn: boolean = false
+  private userRoleSubs$!: Subscription
 
   constructor () {
     this.filtersForm = this.fb.nonNullable.group({
@@ -77,5 +81,22 @@ export class StarterFiltersComponent {
 
       this.filtersSelected.emit(filters)
     })
+  }
+
+  ngOnInit(): void {
+    this.userRoleSubs$ = this.authService.getUserRole().subscribe({
+      next: (role) => {
+        // Enable user-specific filters only for authenticated non-admin users
+        this.isUserLoggedIn = role !== '' && role !== 'ADMIN'
+      },
+      error: (error) => {
+        console.error('Error getting user role:', error)
+        this.isUserLoggedIn = false 
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
   }
 }

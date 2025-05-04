@@ -1,5 +1,8 @@
-<div class="solution-header">
-  {{ "modules.challenge.info.solution" | translate }} {{ number }}
+<div class="solution-header d-flex justify-content-between align-items-center">
+  <span>
+    {{ isUserSolution ? ("modules.challenge.info.solutionsUserHeader" | translate) : ('modules.challenge.info.solutionsOfficialHeader' | translate) }}
+  </span>
+  <img src="assets/img/icon/Shield-tick.svg" alt="shield tick icon" *ngIf="!isUserSolution">
 </div>
 <div class="solution-body">
   

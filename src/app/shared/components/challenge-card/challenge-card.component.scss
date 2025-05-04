@@ -67,6 +67,12 @@
   line-height: 16px;
   font-weight: 600;
   color: $gray-3;
+
+  .txt {
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+  }
 }
 
 .favorite-icon {
@@ -105,3 +111,9 @@
 
 }
 }
+.favorite-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }

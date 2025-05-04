@@ -4,6 +4,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { ChallengeService } from '../../../services/challenge.service';
 import { AuthService } from '../../../services/auth.service';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -20,6 +21,7 @@ export class SendSolutionModalComponent {
   @Input() userId!: string;
   languageId: string = ''; 
   solutionText: string = '';
+  @Output() solutionAccepted = new EventEmitter<boolean>();
   @Output() solutionSubmitted = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -43,7 +45,6 @@ export class SendSolutionModalComponent {
   }
 
   public acceptSolution(): void {
-
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
@@ -57,7 +58,11 @@ export class SendSolutionModalComponent {
         this.solutionSubmitted.emit(solutionText); 
         this.solutionService.updateSolutionSentState(true);
         this.solutionService.sendSolutionText(true);
-        this.solutionService.activeIdSubject.next(2);
+        this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
+        
+        this.solutionService.completeChallenge(this.idChallenge);
+        
+        this.solutionAccepted.emit();
         this.closeModal();
       },
       error: (error) => {

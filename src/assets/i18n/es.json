@@ -35,8 +35,8 @@
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar reto",
-                "buttonSaveChallenge": "Guardar reto",
-                "buttonSendSolution": "Enviar solución",
+                "buttonSaveChallenge": "Guardar",
+                "buttonSendSolution": "Finalizar",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
                 "solutionSend": "Solución enviada",
@@ -56,12 +56,14 @@
                 "resources": "Recursos encontrados en ITA-Wiki",
                 "resourcesLink": "ir a ITA-Wiki",
                 "related": "Retos similares",
-                "showStatement": "Mostrar enunciado",
+                "isChallengeStatementVisible": "Mostrar enunciado",
                 "solution": "Solución",
                 "solutionCode": "// Escribe tu código aquí",
                 "solutionsChallenge": "Respuesta de ejemplo, no se puede modificar",
                 "solutionsTitleLocked":"Las soluciones están bloqueadas",
                 "solutionsLocked": "Las soluciones permanecerán bloqueadas hasta que entregues el reto",
+                "solutionsUserHeader": "Tu solución",
+                "solutionsOfficialHeader":"Solución aportada por IT Academy",
                 "noResources": "No hay recursos disponibles para este reto."
             }
         },
@@ -127,10 +129,12 @@
         "unauthorized": "Lo sentimos, no estás autorizado para iniciar sesión. Contacta con el administrador.",
         "server_error": "Se ha producido un error interno del servidor. Inténtalo más tarde.",
         "forbidden": "Tu cuenta de GitHub no está autorizada para acceder a esta plataforma.",
-        "unknown": "Se ha producido un error desconocido. Inténtalo de nuevo."
+        "unknown": "Se ha producido un error desconocido. Inténtalo de nuevo.",
+        "logout": "Cierre de sesión incorrecto"
     },
     "success": {
-        "welcome": "¡Bienvenido! Redirigiendo..."
+        "welcome": "¡Bienvenido! Redirigiendo...",
+        "logout": "Cierre de sesión exitoso"
     }
 }
 

@@ -21,6 +21,8 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
+import { StarterService } from 'src/app/services/starter.service' 
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Component({
   selector: 'app-challenge-info',
@@ -30,7 +32,7 @@ import { AuthService } from 'src/app/services/auth.service'
 })
 export class ChallengeInfoComponent
 implements OnInit {
-  showStatement = true
+  isChallengeStatementVisible = true
   solutionSent: boolean = false
   isUserSolution: boolean = true
   resources: string = ''
@@ -42,14 +44,17 @@ implements OnInit {
   idLanguageJava = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
   isDropdownOpen: boolean = false
   isAdmin:boolean = false;
+  relatedChallenges: any[] = [];
+  relatedChallengesLoaded = false;
+  challengeTab = ChallengeTab;
 
   challengeStarted: boolean = false
-  // showEditor: boolean = false
 
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly starterService = inject(StarterService) 
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -60,13 +65,13 @@ implements OnInit {
   @Input() notes!: string
   @Input() popularity!: number
   @Input() languages: Language[] = []
-  @Input() activeId: number = 1
+  @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
   @Input() idChallenge: string = ''
 
-  @Input() showEditor: boolean = false
+  @Input() isEditorChallengeVisible: boolean = false
   @Input() startChallenge: boolean = false
 
-  @Output() activeIdChange: EventEmitter<number> = new EventEmitter<number>()
+  @Output() activeIdChange: EventEmitter<ChallengeTab> = new EventEmitter<ChallengeTab>()
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
@@ -84,7 +89,7 @@ implements OnInit {
       }
     });
 
-    this.solutionService.activeIdSubject.next(1)
+    this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((sent) => {
@@ -98,16 +103,32 @@ implements OnInit {
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
     })    
+    this.solutionService.challengeCompleted$.subscribe(challengeId => {
+      if (challengeId === this.idChallenge) {
+        this.challengeStarted = false;
+        this.isEditorChallengeVisible = true;
+        this.cdr.detectChanges();
+      }
+    });
 
+    // Check if challenge is already started from localStorage
+    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
+    if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
+      this.challengeStarted = true;
+      this.isEditorChallengeVisible = true;
+      this.isChallengeStatementVisible = false;
+    }
   }
 
   ngOnChanges (changes: SimpleChanges): void {
+    
     if (changes['startChallenge']?.currentValue === true) {
-      this.showEditor = true
-      this.onChallengeStart()
+      this.challengeStarted = true;
+      this.isEditorChallengeVisible = true;
+      this.isChallengeStatementVisible = false;
     }
 
-    if (changes['activeId']?.currentValue === 2) {
+    if (changes['activeId']?.currentValue === ChallengeTab.SOLUTIONS) {
       const idLanguage = this.languages[0].id_language;
       if (this.isAdmin && this.idChallenge && idLanguage) {
         this.loadSolutions(this.idChallenge, idLanguage);
@@ -117,16 +138,21 @@ implements OnInit {
 
   onChallengeStart (): void {
     this.challengeStarted = true
-    this.showEditor = true
+    this.isEditorChallengeVisible = true
+    this.isChallengeStatementVisible = false;
   }
 
   toggleStatement (): void {
-    this.showStatement = !this.showStatement
+    this.isChallengeStatementVisible = !this.isChallengeStatementVisible
   }
 
-  onActiveIdChange (newActiveId: number): void {
+  onActiveIdChange (newActiveId: ChallengeTab): void {
     this.activeId = newActiveId
-    this.activeIdChange.emit(this.activeId) // Emite el nuevo activeId
+    this.activeIdChange.emit(this.activeId)
+    
+    if (newActiveId === ChallengeTab.RELATED && !this.relatedChallengesLoaded) {
+      this.loadRelatedChallenges();
+    }
   }
 
   openSendSolutionModal (): void {
@@ -137,9 +163,9 @@ implements OnInit {
   }
 
   clickSendButton (): void {
-    this.solutionService.sendSolution('') // Lógica para enviar la solución al backend si es necesario
-    this.onActiveIdChange(2)
-    this.showEditor = false
+    this.solutionService.sendSolution('') 
+    this.onActiveIdChange(ChallengeTab.SOLUTIONS)
+    this.isEditorChallengeVisible = false
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
@@ -174,23 +200,70 @@ implements OnInit {
     document.removeEventListener('click', this.handleOutsideClick)
   }
 
-  selectTab (id: number): void {
+  selectTab (id: ChallengeTab): void {
     this.activeId = id
-    this.isDropdownOpen = false // Cierra el menú desplegable si es necesario
+    this.isDropdownOpen = false 
   }
 
   getTranslatedTabLabel (): string {
     switch (this.activeId) {
-      case 1:
+      case ChallengeTab.DETAILS:
         return 'modules.challenge.info.detailsTitle'
-      case 2:
+      case ChallengeTab.SOLUTIONS:
         return 'modules.challenge.info.solutionsTitle'
-      case 3:
+      case ChallengeTab.RESOURCES:
         return 'modules.challenge.info.resourcesTitle'
-      case 4:
+      case ChallengeTab.RELATED:
         return 'modules.challenge.info.relatedTitle'
       default:
         return 'modules.challenge.info.detailsTitle'
     }
+  }
+
+  //Temporary Mocked Implementation
+  loadRelatedChallenges(): void {
+    const numberOfRelated = 2;
+
+    this.starterService.getAllChallenges().subscribe(response => {
+      if (response && response.results) {
+        const filteredChallenges = response.results.filter(
+          challenge => challenge.id_challenge !== this.idChallenge
+        );
+        this.relatedChallenges = this.getRandomChallenges(filteredChallenges, numberOfRelated);
+        this.relatedChallengesLoaded = true;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  // Helper method to randomly select challenges
+  // TODO: delete when related challenges endpoint is available 
+  private getRandomChallenges(challenges: Challenge[], count: number): Challenge[] {
+    // If we don't have enough challenges, return all of them to avoid errors
+    if (challenges.length <= count) {
+      return challenges;
+    }
+    
+    const shuffled = [...challenges];
+    
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    return shuffled.slice(0, count);
+  }
+
+  isChallengeTabVisible(tabId: ChallengeTab): boolean {
+    if (this.isAdmin) {
+      return true;
+    }
+    
+    if (this.challengeStarted) {
+      return false;
+    }    
+    
+    // Default: all tabs are visible when challenge hasn't started
+    return true;
   }
 }

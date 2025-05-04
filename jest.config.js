@@ -3,7 +3,7 @@ const esModules = ['@angular', '@ngrx', 'd3'];
 
 module.exports = {
     preset: 'jest-preset-angular',
-    setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+    setupFilesAfterEnv: ['<rootDir>/setup-jest.ts', '<rootDir>/src/mocks/auth/test-setup.ts'],
     transformIgnorePatterns: [
        `<rootDir>/node_modules/.pnpm/(?!.*\\.mjs$|${esModules.join('|')}@)`,        
     ],

@@ -62,4 +62,8 @@ export class MobileNavComponent implements OnInit, OnDestroy{
   onLoginSuccess (isLogged: boolean): void {
     this.isLoggedIn = isLogged
   }
+
+  logout(): void {
+    this._authService.logout()
+  }
 }

@@ -6,4 +6,12 @@ import { Component } from '@angular/core'
 })
 export class AppComponent {
   title = 'ita-challenges'
+
+  isLoggedIn:boolean = false
+
+  onLoginSuccess(success: boolean): void {
+    if (success) {
+      this.isLoggedIn = success
+    }
+  }
 }
