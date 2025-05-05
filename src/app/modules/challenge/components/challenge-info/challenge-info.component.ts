@@ -24,8 +24,6 @@ import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-
 @Component({
   selector: 'app-challenge-info',
   templateUrl: './challenge-info.component.html',
@@ -52,22 +50,17 @@ implements OnInit {
 
   challengeStarted: boolean = false
 
-  safeDescription!: SafeHtml
-
   private readonly solutionService = inject(SolutionService)
   private readonly modalService = inject(NgbModal)
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
 
-  constructor(
-    private sanitizer: DomSanitizer
-  ) {}
-
   @ViewChild('nav') nav!: NgbNav
 
   @Input() detail!: ChallengeDetails
   @Input() solutions: string[] = []
+  @Input() description!: string
   @Input() examples: Example[] = []
   @Input() notes!: string
   @Input() popularity!: number
@@ -79,16 +72,6 @@ implements OnInit {
   @Input() startChallenge: boolean = false
 
   @Output() activeIdChange: EventEmitter<ChallengeTab> = new EventEmitter<ChallengeTab>()
-
-  @Input() set description(value: string) {
-    if (value) {
-      // NOSONAR: typescript:S6268 - Uso seguro de bypassSecurityTrustHtml justificado:
-      // 1. Se requiere HTML enriquecido para mostrar correctamente el formato de los desafíos
-      // 2. El contenido es validado por administradores antes de ser publicado
-      // 3. La funcionalidad es esencial para la visualización de markdown y bloques de código
-      this.safeDescription = this.sanitizer.bypassSecurityTrustHtml(value);
-    }
-  }
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
