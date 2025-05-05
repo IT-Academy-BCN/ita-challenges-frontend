@@ -55,7 +55,8 @@
     <ng-container *ngIf="!solutionSent; else solutionSentMessage">
       <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
-    <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
+      <button *ngIf="userRole === 'ADMIN'" class="btn btn-sm btn-primary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
     </ng-container>
     
     <!-- Si ya se envió la solución -->
@@ -65,6 +66,7 @@
          <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
        </div>
      </ng-template>
+
   </div>
   
 </div>
