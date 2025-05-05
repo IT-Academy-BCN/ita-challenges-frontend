@@ -58,7 +58,19 @@ export class ChallengeHeaderComponent implements OnInit {
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
     this.solutionSent = savedSolutions.includes(this.idChallenge)
 
-    this.checkFavoriteStatus()
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
+    this.challengeService.getFavoriteStatus(this.idChallenge).subscribe({
+      next: resp => {
+        this.isFavorite = resp.isFavorite
+        this.favorites_count = resp.timesFavorited
+      },
+      error: err => {
+        console.error('Error fetching favorite status:', err)
+        this.isFavorite = false
+      }
+    })
 
     this.solutionService.challengeCompleted$.subscribe({
       next: (challengeId: string) => {
