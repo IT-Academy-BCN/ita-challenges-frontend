@@ -55,7 +55,6 @@ export class ChallengeCardComponent implements OnInit {
       return
     }
     this.isFavorite = !this.isFavorite
-    this.favorites_count += this.isFavorite ? 1 : -1
     if (this.isFavorite) {
       this.challengeService.addToFavorites(this.id).subscribe({
         next: response => {
@@ -64,7 +63,6 @@ export class ChallengeCardComponent implements OnInit {
         },
         error: error => {
           console.error('Error adding favorite:', error)
-          this.favorites_count -= 1;
         }
       })
     } else {
