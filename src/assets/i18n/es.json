@@ -38,6 +38,7 @@
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalizar",
                 "buttonCancel": "Cancelar",
+                "buttonEditChallenge": "Editar reto",
                 "solutionSend": "Solución enviada",
                 "login": "Iniciar sesión",
                 "logout": "Cerrar sesión"
