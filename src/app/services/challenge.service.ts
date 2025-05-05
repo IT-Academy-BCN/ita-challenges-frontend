@@ -1,6 +1,8 @@
+/* eslint-disable padded-blocks */
+/* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject } from '@angular/core'
 import { Observable, catchError, BehaviorSubject, of } from 'rxjs'
-import { delay } from 'rxjs/operators'
+import { delay, map } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -9,6 +11,7 @@ import { type Language } from '../models/language.model'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { CookieService } from 'ngx-cookie-service'
+import { AuthService } from './auth.service'
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +20,7 @@ export class ChallengeService {
   private challengeStarted: boolean = false
   private readonly challengeStartedSubject = new BehaviorSubject<boolean>(this.getChallengeStartedFromStorage())
   private readonly cookieService = inject(CookieService)
+  private readonly authService = inject(AuthService)
 
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {
     this.checkChallengeStartedFromStorage()
@@ -97,21 +101,25 @@ export class ChallengeService {
     })
   }
 
-  // Mocked version for frontend testing
-  addToFavorites(challengeId: string): Observable<FavoriteResponse> {
-  
-    const currentCount = this.getMockFavoriteCount(challengeId);
-    
-    const mockResponse: FavoriteResponse = {
-      isFavorite: true,
-      timesFavorited: currentCount + 1
-    }
-    
-    localStorage.setItem(`is_favorite_${challengeId}`, 'true');
-   
-    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
-    
-    return of(mockResponse).pipe(delay(300));
+  addToFavorites (challengeId: string): Observable<FavoriteResponse> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
+    return this.http.post<FavoriteResponse>(
+      url,
+      {},
+      { headers }
+    ).pipe(
+      map(response => {
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error adding to favorites:', error);
+        return of({ isFavorite: false, timesFavorited: 0 });
+      })
+    );
   }
 
   // Mocked version for frontend testing
