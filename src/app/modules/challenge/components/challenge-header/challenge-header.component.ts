@@ -158,7 +158,8 @@ export class ChallengeHeaderComponent implements OnInit {
     this.favorites_count += this.isFavorite ? 1 : -1
     if (this.isFavorite) {
       this.challengeService.addToFavorites(this.idChallenge).subscribe({
-        next: () => {
+        next: response => {
+          console.log('Favorite added:', response)
         },
         error: () => {
         }
