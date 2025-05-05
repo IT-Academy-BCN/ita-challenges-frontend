@@ -162,6 +162,7 @@ export class ChallengeHeaderComponent implements OnInit {
           this.favorites_count = response.timesFavorited;
         },
         error: error => {
+          this.isFavorite = false
           console.error('Error adding favorite:', error)
         }
       })
