@@ -154,11 +154,11 @@ export class ChallengeHeaderComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
-    this.isFavorite = !this.isFavorite
     if (this.isFavorite) {
       this.challengeService.addToFavorites(this.idChallenge).subscribe({
         next: response => {
           console.log('Favorite added:', response)
+          this.isFavorite = response.isFavorite
           this.favorites_count = response.timesFavorited;
         },
         error: error => {
