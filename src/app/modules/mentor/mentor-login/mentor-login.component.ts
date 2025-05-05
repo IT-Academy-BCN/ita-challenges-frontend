@@ -112,7 +112,7 @@ export class MentorLoginComponent implements OnInit {
         }
       }
     })
-    
+
     void this.router.navigate([], {
       queryParams: { code: null },
       queryParamsHandling: 'merge'

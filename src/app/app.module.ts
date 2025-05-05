@@ -38,7 +38,6 @@ export function HttpLoaderFactory (http: HttpClient): any {
   bootstrap: [AppComponent],
   imports: [BrowserModule,
     MentorLoginComponent,
-    MentorLoginComponent,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
