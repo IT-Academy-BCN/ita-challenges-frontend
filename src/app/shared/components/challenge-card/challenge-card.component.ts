@@ -25,9 +25,20 @@ export class ChallengeCardComponent implements OnInit {
   @Input() favorites_count: number = 0
   isFavorite: boolean = false;
 
-  ngOnInit(): void {
-    // Check if challenge is favorited in localStorage
-    this.checkFavoriteStatus();
+  ngOnInit (): void {
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
+    this.challengeService.getFavoriteStatus(this.id).subscribe({
+      next: resp => {
+        this.isFavorite = resp.isFavorite
+        this.favorites_count = resp.timesFavorited
+      },
+      error: err => {
+        console.error('Error fetching favorite status:', err)
+        this.isFavorite = false
+      }
+    })
   }
 
   get currentLang (): string {
