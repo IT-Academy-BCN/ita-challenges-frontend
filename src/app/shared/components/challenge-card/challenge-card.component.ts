@@ -2,6 +2,7 @@ import { Component, Input, inject, OnInit } from '@angular/core'
 import { StarterService } from '../../../services/starter.service'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-challenge-card',
