@@ -37,15 +37,8 @@ export function HttpLoaderFactory (http: HttpClient): any {
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
-<<<<<<< HEAD
-<<<<<<< HEAD
     MentorLoginComponent,
-=======
-    MentorLoginComponent,  // Add this line
->>>>>>> b044dc05 (feat(auth): centralizar componente de login en app.component)
-=======
     MentorLoginComponent,
->>>>>>> 289ee697 (Remove commented code from navigation components)
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
