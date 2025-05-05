@@ -25,6 +25,8 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
+  public userRole: string | null = null;
+
   challengeTab = ChallengeTab;
 
   @Input() title = ''
@@ -80,6 +82,11 @@ export class ChallengeHeaderComponent implements OnInit {
       } 
     }); 
 
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role
+    })
+
+    // Verifica si el reto ya ha comenzado
     if (this.challengeStarted) {
       this.activeId = ChallengeTab.SOLUTIONS
     }
