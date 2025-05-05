@@ -138,6 +138,22 @@ export class ChallengeService {
     return of(mockResponse).pipe(delay(300));
   }
 
+  getFavoriteStatus (challengeId: string): Observable<FavoriteResponse> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
+    return this.http
+      .get<FavoriteResponse>(url, { headers })
+      .pipe(
+        catchError(err => {
+          console.error('Error fetching favorite status:', err);
+          return of({ isFavorite: false, timesFavorited: 0 });
+        })
+      );
+  }
+
   // Helper methods for mock implementation
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`
