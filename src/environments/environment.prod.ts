@@ -12,7 +12,7 @@ export const environment = {
   BACKEND_ITA_WIKI_RESOURCES: '/resources',
   BACKEND_ITA_WIKI_CATEGORIES: '/categories',
   BACKEND_ALL_CHALLENGES_URL: '/challenge/challenges',
-  BACKEND_ALL_LANGUAGE_URL: '/languages/language',
+  BACKEND_ALL_LANGUAGE_URL: '/languages',
   BACKEND_SSO_ITINERARIES: '/itineraries',
   BACKEND_SSO_LOGIN_URL: '/auth/login',
   BACKEND_SSO_POST_USER: '/users/me',
