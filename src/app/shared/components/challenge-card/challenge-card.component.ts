@@ -54,19 +54,8 @@ export class ChallengeCardComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
-    this.isFavorite = !this.isFavorite
-    this.favorites_count = this.isFavorite ? this.favorites_count + 1 : Math.max(0, this.favorites_count - 1)
     // Llamamos al backend según el estado
     if (this.isFavorite) {
-      this.challengeService.addToFavorites(this.id).subscribe({
-        next: response => {
-          console.log('Favorite added:', response)
-        },
-        error: error => {
-          console.error('Error adding favorite:', error)
-        }
-      })
-    } else {
       this.challengeService.removeFromFavorites(this.id).subscribe({
         next: response => {
           this.isFavorite = response.isFavorite
@@ -75,6 +64,17 @@ export class ChallengeCardComponent implements OnInit {
         },
         error: error => {
           console.error('Error removing favorite:', error)
+        }
+      })
+    } else {
+      this.challengeService.addToFavorites(this.id).subscribe({
+        next: response => {
+          this.isFavorite = response.isFavorite
+          this.favorites_count = response.timesFavorited
+          console.log('Favorite added:', response)
+        },
+        error: error => {
+          console.error('Error adding favorite:', error)
         }
       })
     }
