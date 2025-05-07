@@ -4,6 +4,7 @@
 
 .starter {
   height: 100%;
+  margin-top: 1rem;
 }
 
 h2 {
@@ -80,7 +81,7 @@ app-starter-filters p {
 .challenges-filter{
    
    h2 {
-     margin-bottom: 0;
+     margin-bottom: 1.5rem;
    }
 }
 #filters-container {
@@ -117,34 +118,4 @@ app-pagination {
   height: 2.8rem;
   padding-left: 1.3rem !important;
   padding-right: 1.3rem !important;
-}
-
-
-.starter {
-  margin-top: 1rem;
-  .challenges-filter {
-    margin-bottom: 1.5rem;
-
-    .d-flex {
-      @media (max-width: 1200px) {
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      h2 {
-        margin-bottom: 0;
-      }
-    }
-
-    .new-challenge-btn {
-      white-space: nowrap;
-      min-width: fit-content;
-    }
-
-    .btnFiltrar {
-      @media (min-width: 1200px) {
-        display: none;
-      }
-    }
-  }
 }
