@@ -67,7 +67,16 @@ export class ChallengeCardComponent implements OnInit {
         }
       })
     } else {
-    // TODO: Implement removeFromFavorites functionality
+      this.challengeService.removeFromFavorites(this.id).subscribe({
+        next: response => {
+          this.isFavorite = response.isFavorite
+          this.favorites_count = response.timesFavorited
+          console.log('Favorite removed:', response)
+        },
+        error: error => {
+          console.error('Error removing favorite:', error)
+        }
+      })
     }
   }
 }
