@@ -123,19 +123,21 @@ export class ChallengeService {
   }
 
   // Mocked version for frontend testing
-  removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-
-    const currentCount = this.getMockFavoriteCount(challengeId);
-    
-    const mockResponse: FavoriteResponse = {
-      isFavorite: false,
-      timesFavorited: currentCount > 0 ? currentCount - 1 : 0
-    }
-    
-    localStorage.setItem(`is_favorite_${challengeId}`, 'false');
-    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
-    
-    return of(mockResponse).pipe(delay(300));
+  removeFromFavorites (challengeId: string): Observable<FavoriteResponse> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
+    return this.http.delete<FavoriteResponse>(url, { headers }).pipe(
+      map(response => {
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error removing from favorites:', error);
+        return of({ isFavorite: true, timesFavorited: 0 });
+      })
+    );
   }
 
   // Helper methods for mock implementation
