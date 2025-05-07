@@ -188,22 +188,6 @@ export class ChallengeHeaderComponent implements OnInit {
     }
   }
 
-  private addToFavorites(): void {
-    this.challengeService.addToFavorites(this.idChallenge).subscribe(response => {
-      this.isFavorite = response.isFavorite
-      this.favorites_count = response.timesFavorited
-      this.favoritesUpdated.emit(this.favorites_count)
-    })
-  }
-
-  private removeFromFavorites(): void {
-    this.challengeService.removeFromFavorites(this.idChallenge).subscribe(response => {
-      this.isFavorite = response.isFavorite
-      this.favorites_count = response.timesFavorited
-      this.favoritesUpdated.emit(this.favorites_count)
-    })
-  }
-
   private checkFavoriteStatus(): void {
     const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`);
     this.isFavorite = isFavorited === 'true';
