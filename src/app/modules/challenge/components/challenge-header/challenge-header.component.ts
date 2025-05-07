@@ -164,7 +164,7 @@ export class ChallengeHeaderComponent implements OnInit {
     if (this.isFavorite) {
       this.challengeService.removeFromFavorites(this.idChallenge).subscribe({
         next: response => {
-          this.isFavorite = response.isFavorite
+          this.isFavorite = false
           this.favorites_count = response.timesFavorited
           console.log('Favorite removed:', response)
           this.favoritesUpdated.emit(this.favorites_count)
@@ -176,7 +176,7 @@ export class ChallengeHeaderComponent implements OnInit {
     } else {
       this.challengeService.addToFavorites(this.idChallenge).subscribe({
         next: response => {
-          this.isFavorite = response.isFavorite
+          this.isFavorite = true
           this.favorites_count = response.timesFavorited
           console.log('Favorite added:', response)
           this.favoritesUpdated.emit(this.favorites_count)
