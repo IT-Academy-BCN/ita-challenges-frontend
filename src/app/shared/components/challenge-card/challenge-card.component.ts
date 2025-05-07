@@ -54,7 +54,6 @@ export class ChallengeCardComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
-    // Llamamos al backend según el estado
     if (this.isFavorite) {
       this.challengeService.removeFromFavorites(this.id).subscribe({
         next: response => {
