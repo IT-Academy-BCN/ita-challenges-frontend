@@ -60,8 +60,6 @@ export class ChallengeHeaderComponent implements OnInit {
     const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
     this.solutionSent = savedSolutions.includes(this.idChallenge)
 
-    this.checkFavoriteStatus()
-
     this.solutionService.challengeCompleted$.subscribe({
       next: (challengeId: string) => {
         if (challengeId === this.idChallenge) {
@@ -185,17 +183,6 @@ export class ChallengeHeaderComponent implements OnInit {
           console.error('Error adding favorite:', error)
         }
       })
-    }
-  }
-
-  private checkFavoriteStatus(): void {
-    const isFavorited = localStorage.getItem(`is_favorite_${this.idChallenge}`);
-    this.isFavorite = isFavorited === 'true';
-    
-    const storedCount = localStorage.getItem(`favorites_count_${this.idChallenge}`);
-    if (storedCount) {
-      this.favorites_count = parseInt(storedCount, 10);
-      this.favoritesUpdated.emit(this.favorites_count);
     }
   }
 }
