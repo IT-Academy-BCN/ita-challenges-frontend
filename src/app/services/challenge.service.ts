@@ -122,7 +122,6 @@ export class ChallengeService {
     );
   }
 
-  // Mocked version for frontend testing
   removeFromFavorites (challengeId: string): Observable<FavoriteResponse> {
     const headers = {
       'Content-Type': 'application/json',
