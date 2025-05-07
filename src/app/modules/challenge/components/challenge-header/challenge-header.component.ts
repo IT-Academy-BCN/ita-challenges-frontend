@@ -161,17 +161,30 @@ export class ChallengeHeaderComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
-    this.isFavorite = !this.isFavorite
-    this.favorites_count += this.isFavorite ? 1 : -1
     if (this.isFavorite) {
-      this.challengeService.addToFavorites(this.idChallenge).subscribe({
-        next: () => {
+      this.challengeService.removeFromFavorites(this.idChallenge).subscribe({
+        next: response => {
+          this.isFavorite = response.isFavorite
+          this.favorites_count = response.timesFavorited
+          console.log('Favorite removed:', response)
+          this.favoritesUpdated.emit(this.favorites_count)
         },
-        error: () => {
+        error: error => {
+          console.error('Error removing favorite:', error)
         }
       })
     } else {
-    // TODO: Implementar removeFromFavorites en la PR correspondiente
+      this.challengeService.addToFavorites(this.idChallenge).subscribe({
+        next: response => {
+          this.isFavorite = response.isFavorite
+          this.favorites_count = response.timesFavorited
+          console.log('Favorite added:', response)
+          this.favoritesUpdated.emit(this.favorites_count)
+        },
+        error: error => {
+          console.error('Error adding favorite:', error)
+        }
+      })
     }
   }
 
