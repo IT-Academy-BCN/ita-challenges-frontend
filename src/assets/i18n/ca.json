@@ -28,6 +28,7 @@
     },
     "modules": {
         "challenge": {
+            "backTo":"Tornar a reptes",
             "header": {
                 "title": "Reptes",
                 "section":"Detall",

@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router'
 import { SharedComponentsModule } from '../../shared/components/shared-components.module'
 import { TranslateModule } from '@ngx-translate/core'
 
-
 import { ModalsModule } from '../modals/modals.module'
 
 @NgModule({

@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 
+
 @Component({
   selector: 'app-challenge-card',
   templateUrl: './challenge-card.component.html',
