@@ -43,10 +43,6 @@
         [id]="challenge.id_challenge" [favorites_count]="challenge.favorites_count || 0">
       </app-challenge-card>
     </div>
-
-    <!-- PAGINATION -->
-    <app-pagination (pageEmitter)="getChallengesByPage($event)" [totalPages]="totalPages" [pageNumber]="pageNumber">
-    </app-pagination>
   </div>
 </div>
  <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal>
