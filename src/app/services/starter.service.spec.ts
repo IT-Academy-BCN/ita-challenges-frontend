@@ -35,8 +35,9 @@ describe('StarterService', () => {
         id_solution: solution.idSolution,
         solution_text: solution.solutionText
       })),
-      favorites_count: 0, 
-      saved_count: 0 
+      favorites_count: 0,
+      saved_count: 0,
+      timesFavorite: 0
     }))
   })
 
