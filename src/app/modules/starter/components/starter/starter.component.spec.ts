@@ -20,6 +20,7 @@ describe('StarterComponent', () => {
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
     creation_date: new Date(`${challenge.creation_date}`),
+    timesFavorite: typeof challenge.timesFavorite === 'number' ? challenge.timesFavorite : 0,
     solutions: challenge.solutions.map((solution: any) => ({
       id_solution: solution.idSolution,
       solution_text: solution.solutionText
