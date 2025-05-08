@@ -37,7 +37,7 @@ export class ChallengeCardComponent {
     if (this.isFavorite) {
       this.challengeService.removeFromFavorites(this.id).subscribe({
         next: response => {
-          this.isFavorite = false
+          this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
           console.log('Favorite removed:', response)
         },
@@ -48,7 +48,7 @@ export class ChallengeCardComponent {
     } else {
       this.challengeService.addToFavorites(this.id).subscribe({
         next: response => {
-          this.isFavorite = true
+          this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
           console.log('Favorite added:', response)
         },
