@@ -41,7 +41,7 @@
         [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
         [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
         [id]="challenge.id_challenge" 
-        [favorites_count]="challenge.favorites_count || 0">
+        [favorites_count]="challenge.timesFavorite || 0">
       </app-challenge-card>
     </div>
 
