@@ -10,6 +10,7 @@ export class Challenge {
   popularity: number
   favorites_count: number
   saved_count: number
+  timesFavorite: number
   detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
@@ -22,6 +23,7 @@ export class Challenge {
     this.popularity = element.popularity
     this.favorites_count = element.favorites_count || 0
     this.saved_count = element.saved_count || 0
+    this.timesFavorite = element.timesFavorite || 0
     this.detail = element.detail
 
     element.languages.forEach((language: Language) => {
