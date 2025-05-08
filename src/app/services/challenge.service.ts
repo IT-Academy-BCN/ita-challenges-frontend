@@ -117,7 +117,7 @@ export class ChallengeService {
       }),
       catchError(error => {
         console.error('Error adding to favorites:', error);
-        return of({ isFavorite: false, timesFavorited: 0 });
+        return of({ favorite: false, timesFavorited: 0 });
       })
     );
   }
@@ -134,7 +134,7 @@ export class ChallengeService {
       }),
       catchError(error => {
         console.error('Error removing from favorites:', error);
-        return of({ isFavorite: true, timesFavorited: 0 });
+        return of({ favorite: true, timesFavorited: 0 });
       })
     );
   }

@@ -1,4 +1,4 @@
 export interface FavoriteResponse {
-  isFavorite: boolean
+  favorite: boolean
   timesFavorited: number
 }
