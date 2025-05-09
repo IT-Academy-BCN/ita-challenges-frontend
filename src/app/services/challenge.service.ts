@@ -127,7 +127,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/favorites`;
     return this.http.delete<FavoriteResponse>(url, { headers }).pipe(
       map(response => {
         return response;
