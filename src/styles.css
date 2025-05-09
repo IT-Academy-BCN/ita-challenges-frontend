@@ -26,7 +26,7 @@
   color: #B91879;
 }
 
-.btn.btnprimary:hover {
+.btn.btn-primary:hover {
   background-color: #811155;
   border-color: #811155;
 }

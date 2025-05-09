@@ -39,7 +39,7 @@
 }
 
 /* Botones */
-.btn-cancel, .btn-primary {
+/* .btn-cancel, .btn-primary {
   font-size: 0.875rem;
   padding: 0.50rem 0.80rem;
   cursor: pointer;
@@ -55,9 +55,9 @@
 .btn-cancel:hover {
   border-color: #999;
   color: #333;
-}
+} */
 
-.btn-primary {
+/* .btn-primary {
   background-color: #C13584;
   border-color: #C13584;
   font-weight: 500;
@@ -70,7 +70,7 @@
 .btn-primary:disabled {
   background-color: #dddddd;
   cursor: not-allowed;
-}
+} */
 
 /* CUERPO DEL FORMULARIO */
 .body {
