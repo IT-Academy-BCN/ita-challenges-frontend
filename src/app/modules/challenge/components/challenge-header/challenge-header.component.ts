@@ -164,7 +164,6 @@ export class ChallengeHeaderComponent implements OnInit {
         next: response => {
           this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
-          console.log('Favorite removed:', response)
           this.favoritesUpdated.emit(this.favorites_count)
         },
         error: error => {
@@ -176,7 +175,6 @@ export class ChallengeHeaderComponent implements OnInit {
         next: response => {
           this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
-          console.log('Favorite added:', response)
           this.favoritesUpdated.emit(this.favorites_count)
         },
         error: error => {
