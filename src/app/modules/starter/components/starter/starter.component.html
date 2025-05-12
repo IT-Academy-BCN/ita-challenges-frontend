@@ -22,7 +22,7 @@
     </div>
 
     <!-- SORT BY -->
-    <ul id="sortBy" class="d-xl-flex justify-content-end gap-4 d-none">
+    <ul id="sortBy" class="d-xl-flex justify-content-end d-none">
       <li class="animated"
         [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
         (click)="changeSort('popularity')">
