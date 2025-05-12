@@ -36,6 +36,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() idChallenge!: string
   @Input() isEditorChallengeVisible: boolean = false
   @Input() favorites_count: number = 0
+  @Input() isFavorite: boolean = false
 
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
@@ -46,7 +47,6 @@ export class ChallengeHeaderComponent implements OnInit {
 
   challengeStarted: boolean = false
   solutionSent: boolean = false
-  isFavorite: boolean = false
 
   ngOnInit (): void {
     this.challenge_title = this.title

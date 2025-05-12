@@ -8,6 +8,8 @@
         [favorites_count]="challenge.timesFavorite || 0"
         (startChallenge)="onStartChallenge($event)"
         (favoritesUpdated)="onFavoritesUpdated($event)"
+        [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
+
 >   </app-challenge-header>
 
     <app-challenge-info
