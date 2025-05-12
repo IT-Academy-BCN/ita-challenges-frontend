@@ -114,15 +114,12 @@ export class StarterComponent implements OnInit {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
-        this.getChallengesByPage(this.pageNumber)
         this.isAscending = !this.isAscending
       } else {
         this.isAscending = false
         this.selectedSort = newSort
-        this.getChallengesByPage(this.pageNumber)
-        this.isAscending = true
       }
+      this.getChallenges()
     }
   }
-
 }
