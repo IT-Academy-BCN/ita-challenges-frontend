@@ -197,16 +197,18 @@
   background-color: #C13584;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-47%, -52%);
 }
 
 .lightning-group {
   display: flex;
   height: 15px;
+  margin: 0px 5px;
 }
 .lightning-group img {
-  width: 15px;
-  height: 18px;
+  width: 13px;
+  height: 20px;
+  margin-top:2px;
 }
 
 /* CodeMirror */
