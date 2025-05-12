@@ -29,15 +29,14 @@ export class StarterComponent implements OnInit {
   sortBy: string = ''
   challenge = Challenge
 
-  totalPages!: number
-  pageNumber: number = 1
+  
+  
   listChallenges: Challenge[] = []
-  pageSize = environment.pageSize
-
+ 
   selectedSort: string = ''
   isAscending: boolean = false
-  startIndex: number = 0
-  paginationFilters: Challenge[] = []
+  
+  
   isMobile: boolean = window.innerWidth < 768
   isAdmin: boolean = false;
 
