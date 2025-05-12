@@ -139,6 +139,15 @@ export class ChallengeService {
     );
   }
 
+  getUserFavorites (userId: string): Observable<string[]> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/favorites`;
+    return this.http.get<string[]>(url, { headers });
+  }
+
   // Helper methods for mock implementation
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`
