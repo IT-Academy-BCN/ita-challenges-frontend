@@ -74,22 +74,15 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  getChallengesByPage (page: number): void {
-    this.pageNumber = page
-    const startIndex = (this.pageNumber - 1) * this.pageSize
-
+  getChallenges(): void {
+   
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
       if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
-        this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
-
-        this.challenges = this.isMobile
-          ? this.listChallenges
-          : this.listChallenges.slice(startIndex, startIndex + this.pageSize)
-
+      this.challenges = this.listChallenges
         if (this.sortBy !== '') {
-          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
             this.challenges = sortedResp
           })
         }
