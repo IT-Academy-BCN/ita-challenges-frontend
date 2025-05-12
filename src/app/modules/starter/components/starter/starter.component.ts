@@ -114,7 +114,7 @@ export class StarterComponent implements OnInit {
       if (this.selectedSort === newSort) {
         this.isAscending = !this.isAscending
       } else {
-        this.isAscending = false
+        this.isAscending = true
         this.selectedSort = newSort
       }
       this.refreshChallengeList()
