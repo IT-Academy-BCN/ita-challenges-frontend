@@ -61,8 +61,6 @@ implements OnInit {
   @Input() detail!: ChallengeDetails
   @Input() solutions: string[] = []
   @Input() description!: string
-  @Input() examples: Example[] = []
-  @Input() notes!: string
   @Input() popularity!: number
   @Input() languages: Language[] = []
   @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
