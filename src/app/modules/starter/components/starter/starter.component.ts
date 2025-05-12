@@ -64,9 +64,7 @@ export class StarterComponent implements OnInit {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
-        console.log('Datos recibidos:', this.listChallenges)
-
-        this.getChallengesByPage(this.pageNumber)
+        this.getChallenges()
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
