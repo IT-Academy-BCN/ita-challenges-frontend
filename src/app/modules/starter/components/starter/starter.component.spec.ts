@@ -51,19 +51,16 @@ describe('StarterComponent', () => {
     authService = TestBed.inject(AuthService)
 
     component.listChallenges = []
-    component.pageSize = 1
     component.filters = { languages: [], levels: [], progress: [] }
     component.sortBy = ''
   })
 
-  it('should assign challenges when challenges are available.', () => {
+  it('should assign all challenges when listChallenges is populated.', () => {
     component.listChallenges = mockChallenges$
-    component.pageSize = 3
     component.filters = { languages: [], levels: [], progress: [] }
-    component.getChallengesByPage(1)
-
-    expect(component.challenges.length).toBe(3) // Debe mostrar 3 desafíos
-    expect(component.challenges).toEqual(mockChallenges$.slice(0, 3)) // Verifica que los desafíos sean correctos
+    component.getChallengeFilters(component.filters)
+    expect(component.challenges.length).toBe(mockChallenges$.length) // Debe mostrar 3 desafíos
+    expect(component.challenges).toEqual(mockChallenges$) // Verifica que los desafíos sean correctos
   })
 
   it('should filter challenges and update challenges correctly', () => {
@@ -71,46 +68,34 @@ describe('StarterComponent', () => {
     component.listChallenges = mockChallenges$
 
     const filters = { languages: ['es'], levels: ['EASY'], progress: [] }
+    const filteredChallenges = mockChallenges$.slice(0, 3)
+
     // Simular el servicio para que devuelva desafíos filtrados
-    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(mockChallenges$.slice(0, 3))) // Solo retorna los primeros
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(filteredChallenges)) // Solo retorna los primeros
 
     component.getChallengeFilters(filters)
 
     expect(component.filters).toEqual(filters) // Verifica que los filtros se hayan establecido correctamente
     expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$) // Verifica que el método se haya llamado con los argumentos correctos
-    expect(component.paginationFilters.length).toBe(3) // Verifica que la longitud de los desafíos filtrados sea correcta
-
-    const expectedTotalPages = Math.ceil(component.paginationFilters.length / component.pageSize)
-    expect(component.totalPages).toBe(expectedTotalPages) // Verifica que el total de páginas se haya calculado correctamente
-
-    // Asegúrate de que los desafíos se establezcan correctamente según la ventana
-    if (window.innerWidth < 768) {
-      expect(component.challenges).toEqual(component.paginationFilters) // En móviles, debe mostrar todos los filtrados
-    } else {
-      const startIndex = (component.pageNumber - 1) * component.pageSize
-      expect(component.challenges).toEqual(component.paginationFilters.slice(startIndex, startIndex + component.pageSize)) // En escritorio, paginados
-    }
+    expect(component.challenges).toEqual(filteredChallenges)
   })
 
   it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
     component.selectedSort = 'creation_date'
     component.isAscending = true
-    component.pageNumber = 1
-
-    spyOn(component, 'getChallengesByPage')
+    spyOn(component, 'refreshChallengeList')
 
     // Cambia a un nuevo criterio de ordenación que no sea el actual
     component.changeSort('popularity')
 
     expect(component.selectedSort).toBe('popularity')
     expect(component.isAscending).toBe(true)
-    expect(component.getChallengesByPage).toHaveBeenCalledWith(1)
+    expect(component.refreshChallengeList).toHaveBeenCalled()
 
     // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
     component.changeSort('popularity')
     expect(component.isAscending).toBe(false)
-
-    expect(component.getChallengesByPage).toHaveBeenCalledTimes(2)
+    expect(component.refreshChallengeList).toHaveBeenCalledTimes(2)
   })
 
   it('should update isAdmin flag when user role changes to ADMIN', () => {
