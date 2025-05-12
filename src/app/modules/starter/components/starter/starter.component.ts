@@ -98,24 +98,13 @@ export class StarterComponent implements OnInit {
 
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
-    const respArray: Challenge[] = this.listChallenges
-
-    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
-      this.paginationFilters = filteredResp
+  
+    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
+      this.challenges = filteredResp
     })
 
-    this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
-    if (this.pageNumber > this.totalPages) {
-      this.pageNumber = this.totalPages
-    }
-    const startIndex = (this.pageNumber - 1) * this.pageSize
-
-    this.challenges = this.isMobile
-      ? this.paginationFilters
-      : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
-
     if (this.sortBy !== '') {
-      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.challenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
         this.challenges = sortedResp
       })
     }
