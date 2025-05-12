@@ -64,7 +64,7 @@ export class StarterComponent implements OnInit {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
-        this.getChallenges()
+        this.refreshChallengeList()
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
@@ -72,7 +72,7 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  getChallenges(): void {
+  refreshChallengeList(): void {
    
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
@@ -117,7 +117,7 @@ export class StarterComponent implements OnInit {
         this.isAscending = false
         this.selectedSort = newSort
       }
-      this.getChallenges()
+      this.refreshChallengeList()
     }
   }
 }
