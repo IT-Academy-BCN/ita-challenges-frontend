@@ -52,6 +52,15 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
+
+    const savedSort = localStorage.getItem('sortBy')
+
+    if (savedSort !== null) {
+      this.sortBy = savedSort
+    } else {
+      this.sortBy = 'popularity'
+    }
+    this.changeSort(this.sortBy)
   }
 
   ngOnDestroy (): void {
@@ -131,6 +140,7 @@ export class StarterComponent implements OnInit {
 
   changeSort (newSort: string): void {
     this.sortBy = newSort
+    localStorage.setItem('sortBy', newSort)
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
         this.getChallengesByPage(this.pageNumber)
