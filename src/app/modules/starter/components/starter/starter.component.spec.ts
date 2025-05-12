@@ -16,7 +16,7 @@ describe('StarterComponent', () => {
   let starterService: StarterService
   let authService: AuthService
   let authRoleSubject: BehaviorSubject<string>
-  
+
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
     creation_date: new Date(`${challenge.creation_date}`),
@@ -38,9 +38,9 @@ describe('StarterComponent', () => {
       declarations: [StarterComponent],
       imports: [TranslateModule.forRoot()],
       providers: [
-        StarterService, 
+        StarterService,
         { provide: AuthService, useValue: authServiceMock },
-        provideHttpClient(withInterceptorsFromDi()), 
+        provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     })
@@ -100,27 +100,26 @@ describe('StarterComponent', () => {
 
   it('should update isAdmin flag when user role changes to ADMIN', () => {
     expect(component.isAdmin).toBe(false)
-    
+
     authRoleSubject.next('ADMIN')
-    
-   expect(component.isAdmin).toBe(true)
+    expect(component.isAdmin).toBe(true)
   })
-  
+
   it('should update isAdmin flag when user role changes to non-ADMIN', () => {
     authRoleSubject.next('ADMIN')
     expect(component.isAdmin).toBe(true)
-    
+
     authRoleSubject.next('USER')
-    
+
     expect(component.isAdmin).toBe(false)
   })
-  
+
   it('should unsubscribe from userRoleSubs$ on component destruction', () => {
-   spyOn(component.userRoleSubs$, 'unsubscribe')
-    
+    spyOn(component.userRoleSubs$, 'unsubscribe')
+
     // Trigger the component's ngOnDestroy lifecycle hook to clean up subscriptions
     component.ngOnDestroy()
-    
+
     expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled()
   })
 })

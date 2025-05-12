@@ -3,7 +3,6 @@ import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@ang
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
-import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
@@ -18,7 +17,7 @@ import * as bootstrap from 'bootstrap'
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
-  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef;
+  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
 
   challenges: Challenge[] = []
   challengesSubs$!: Subscription
@@ -29,16 +28,13 @@ export class StarterComponent implements OnInit {
   sortBy: string = ''
   challenge = Challenge
 
-  
-  
   listChallenges: Challenge[] = []
- 
+
   selectedSort: string = ''
   isAscending: boolean = false
-  
-  
+
   isMobile: boolean = window.innerWidth < 768
-  isAdmin: boolean = false;
+  isAdmin: boolean = false
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -72,13 +68,12 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  refreshChallengeList(): void {
-   
+  refreshChallengeList (): void {
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
       if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
-      this.challenges = this.listChallenges
+        this.challenges = this.listChallenges
         if (this.sortBy !== '') {
           this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
             this.challenges = sortedResp
@@ -96,7 +91,7 @@ export class StarterComponent implements OnInit {
 
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
-  
+
     this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
       this.challenges = filteredResp
     })
