@@ -53,8 +53,8 @@ export class StarterService {
         // Si isAscending es true, queremos el más reciente primero
         comparison = isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
       } else if (sortBy === 'popularity') {
-        const scoreA = a.popularity ?? 0
-        const scoreB = b.popularity ?? 0
+        const scoreA = a.timesFavorite ?? 0
+        const scoreB = b.timesFavorite ?? 0
         // Si isAscending es true, queremos el de mayor popularidad primero
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       }
