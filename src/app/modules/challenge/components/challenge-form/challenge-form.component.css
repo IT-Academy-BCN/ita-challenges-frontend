@@ -57,9 +57,9 @@
 
 .section h4 {
   display: flex;
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 0.90rem;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 1.5rem;
   color: #333;
   align-items: center;
 }
@@ -72,10 +72,11 @@
   height: 16px;
   background-color: black;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 12.9px;
+  font-weight: 500;
   border-radius: 50%;
-  margin-right: 0.75rem;
+  margin-right: 0.60rem;
+  padding: 10px;
 }
 
 /* CAMPOS DEL FORMULARIO */
@@ -87,13 +88,13 @@
 }
 
 .form-group {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .form-control {
   border: 1px solid #ced4da;
   border-radius: 8px;
-  padding: 0.325rem 0.275rem;
+  padding: 0.325rem 0.75rem;
   font-size: 0.95rem;
   transition: border-color 0.2s;
 }
@@ -110,7 +111,7 @@
 }
 
 .btn-outline-secondary {
-  font-weight: normal;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
