@@ -14,7 +14,7 @@
           <button class="btn btn-outline-primary btnFiltrar d-xl-none" (click)="openModal()">
             <strong>Filtrar</strong>
           </button>
-          <button [routerLink]="['/ita-challenge/challenges/new-challenge']"  class="btn btn-sm btn-primary new-challenge-btn">
+          <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin" class="btn btn-sm btn-primary new-challenge-btn">
             {{ "components.mainMenu.section4.title" | translate }}
           </button>
         </div>
