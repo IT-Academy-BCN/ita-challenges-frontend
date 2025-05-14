@@ -17,6 +17,10 @@ img[alt='filter-icon'] {
   cursor: pointer;
 }
 
+#sortBy{
+  gap: 30px;
+}
+
 ul {
   list-style: none;
   
@@ -26,7 +30,7 @@ ul {
     line-height: 16px;
     font-weight: 500;
     color: $gray-3;
-    gap: 2px;
+    gap: 5px;
     cursor: pointer;
 
     &::after {
