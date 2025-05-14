@@ -222,14 +222,21 @@ describe('ChallengeService', () => {
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
       req.flush(mockResp)
     })
-    it('should catch error and return default fallback', (done) => {
-      service.removeFromFavorites(testId).subscribe((res) => {
-        expect(res).toEqual({ isFavorite: true, timesFavorited: 0 })
-        done()
+    it('should propagate error when remove fails', (done) => {
+      service.removeFromFavorites(testId).subscribe({
+        next: () => {
+          fail('Expected an error, but got a success response')
+        },
+        error: (err) => {
+          expect(err.status).toBe(500)
+          expect(err.statusText).toBe('Server Error')
+          done()
+        }
       })
       const req = httpMock.expectOne(
         `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
       )
+      expect(req.request.method).toBe('DELETE')
       req.flush({ message: 'Error' }, { status: 500, statusText: 'Server Error' })
     })
   })
