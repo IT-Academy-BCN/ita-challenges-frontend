@@ -1,7 +1,7 @@
 /* eslint-disable padded-blocks */
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject } from '@angular/core'
-import { Observable, catchError, BehaviorSubject, of } from 'rxjs'
+import { Observable, catchError, BehaviorSubject, of, throwError } from 'rxjs'
 import { delay, map } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
@@ -134,7 +134,7 @@ export class ChallengeService {
       }),
       catchError(error => {
         console.error('Error removing from favorites:', error);
-        return of({ isFavorite: true, timesFavorited: 0 });
+        return throwError(() => error);
       })
     );
   }
