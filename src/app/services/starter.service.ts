@@ -55,7 +55,9 @@ export class StarterService {
       } else if (sortBy === 'popularity') {
         const scoreA = a.timesFavorite ?? 0
         const scoreB = b.timesFavorite ?? 0
-        // Si isAscending es true, queremos el de mayor popularidad primero
+        // Si isAscending es true, queremos el de menor popularidad primero (de menos a más)
+        // Ascendente (de menos a más): scoreA - scoreB
+        // Descendente (de más a menos): scoreB - scoreA
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       }
 
