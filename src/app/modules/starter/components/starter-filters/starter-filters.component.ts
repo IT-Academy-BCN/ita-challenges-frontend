@@ -87,7 +87,7 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     this.userRoleSubs$ = this.authService.getUserRole().subscribe({
       next: (role) => {
         // Enable user-specific filters only for authenticated non-admin users
-        this.isUserLoggedIn = role !== '' && role !== 'ADMIN'
+        this.isUserLoggedIn = role !== '' 
       },
       error: (error) => {
         console.error('Error getting user role:', error)
