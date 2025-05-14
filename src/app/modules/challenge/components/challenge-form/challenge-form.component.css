@@ -1,4 +1,4 @@
-$primary-color: #C13584;
+
 
 :host {
   display: block;
@@ -101,7 +101,7 @@ $primary-color: #C13584;
   transition: border-color 0.2s;
 }
 .form-control:focus {
-  border-color: $primary-color;
+  border-color: #C13584;
   box-shadow: 0 0 0 0.2rem rgba(193, 53, 132, 0.25);
 }
 
@@ -129,11 +129,11 @@ $primary-color: #C13584;
 }
 
 .btn-outline-secondary:hover {
-  border-color: $primary-color;
+  border-color: #C13584;
 }
 
 .btn-outline-secondary.active {
-  border-color: $primary-color;
+  border-color: #C13584;
 }
 
 .btn-outline-secondary img {
@@ -184,7 +184,7 @@ $primary-color: #C13584;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1px solid $primary-color;
+  border: 1px solid #C13584;
   position: relative;
 }
 .radio-circle.selected {
@@ -196,7 +196,7 @@ $primary-color: #C13584;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: $primary-color;
+  background-color: #C13584;
   top: 50%;
   left: 50%;
   transform: translate(-52%, -47%);
@@ -308,9 +308,9 @@ $primary-color: #C13584;
 }
 
 .tag-button.active {
-  background: $primary-color;
+  background: #C13584;
   color: white;
-  border-color: $primary-color;
+  border-color: #C13584;
 }
 
 @media (max-width: 768px) {
@@ -326,7 +326,7 @@ $primary-color: #C13584;
 }
 
 .arrow-left {
-  color: $primary-color !important;
+  color: #C13584 !important;
   & :hover{
     color: white;
   }
