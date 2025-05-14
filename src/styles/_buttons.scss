@@ -1,7 +1,8 @@
-$btn-padding-y: .6rem;
-$btn-padding-x: 3rem;
-$btn-padding-y-sm: .8rem;
-$btn-padding-x-sm: 2.5rem;
+$btn-padding-y:10px;
+$btn-padding-x: 24px;
+$btn-padding-y-sm:10px;
+$btn-padding-x-sm: 24px;
+
 $btn-padding-y-lg: .7rem;
 $btn-padding-x-lg: 3.2rem;
 $btn-radius: .7rem;
@@ -10,12 +11,12 @@ $btn-radius-lg: .8rem;
 $btn-disabled-opacity: .35;
 
 .btn{
-    padding: $btn-padding-y $btn-padding-x $btn-padding-y $btn-padding-x;
+    padding: $btn-padding-y $btn-padding-x;
     border-radius: $btn-radius;
     font-weight: 500;
 }
 .btn.btn-sm{
-    padding: $btn-padding-y-sm $btn-padding-x-sm $btn-padding-y-sm $btn-padding-x-sm;
+    padding: $btn-padding-y-sm $btn-padding-x-sm !important;
     border-radius: $btn-radius-sm;
 }
 .btn.btn-lg{
@@ -26,13 +27,13 @@ $btn-disabled-opacity: .35;
     background-color: $primary;
     border-color: $primary;
 }
-.btn.btn-primary:hover,
+
 .btn.btn-primary:active{
-    background-color: $white;
-    border-color: $primary;
-    color: $primary;
+    background-color: $primary-active;
+    border-color: $primary-active;
+    color: $white;
 }
-.btn.btnprimary:hover{
+.btn.btn-primary:hover{
     background-color: $primary-hover;
     border-color: $primary-hover;
 }
@@ -50,7 +51,8 @@ $btn-disabled-opacity: .35;
 }
 .btn.btn-outline-primary, .btn.btn-outline-secondary{
     border: 1px solid $gray-7;
-    color: $gray-2;
+    color: $gray-7;
+    font-weight: 500;
 }
 .btn.btn-outline-primary[active]{
     background-color: #E399CB;
