@@ -5,11 +5,9 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-### [ita-challenges-frontend-3.1.34-RELEASE] (2025-05-14) (feature#375)
+### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
 - Cleanup pagination logic
-
-### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
 - Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
 
