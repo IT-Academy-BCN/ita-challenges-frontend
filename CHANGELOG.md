@@ -4,9 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ### [ita-challenges-frontend-3.1.34-RELEASE] (2025-05-14) (feature#375)
 
 - Cleanup pagination logic
+
+### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
+
+- Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
 
 ### [ita-challenges-frontend-3.1.33-RELEASE] (2025-04-10) (fix#261)
 
