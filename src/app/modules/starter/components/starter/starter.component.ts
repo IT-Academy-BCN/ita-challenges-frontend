@@ -3,7 +3,6 @@ import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@ang
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
-import { environment } from '../../../../../environments/environment'
 import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal/filters-modal.component'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
@@ -18,7 +17,7 @@ import * as bootstrap from 'bootstrap'
 export class StarterComponent implements OnInit {
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
-  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef;
+  @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
 
   challenges: Challenge[] = []
   challengesSubs$!: Subscription
@@ -29,17 +28,13 @@ export class StarterComponent implements OnInit {
   sortBy: string = ''
   challenge = Challenge
 
-  totalPages!: number
-  pageNumber: number = 1
   listChallenges: Challenge[] = []
-  pageSize = environment.pageSize
 
   selectedSort: string = ''
   isAscending: boolean = false
-  startIndex: number = 0
-  paginationFilters: Challenge[] = []
+
   isMobile: boolean = window.innerWidth < 768
-  isAdmin: boolean = false;
+  isAdmin: boolean = false
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -65,9 +60,7 @@ export class StarterComponent implements OnInit {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
-        console.log('Datos recibidos:', this.listChallenges)
-
-        this.getChallengesByPage(this.pageNumber)
+        this.refreshChallengeList()
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
@@ -75,22 +68,14 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  getChallengesByPage (page: number): void {
-    this.pageNumber = page
-    const startIndex = (this.pageNumber - 1) * this.pageSize
-
+  refreshChallengeList (): void {
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
       if (Array.isArray(this.listChallenges) && this.listChallenges.length > 0) {
-        this.totalPages = Math.ceil(this.listChallenges.length / this.pageSize)
-
-        this.challenges = this.isMobile
-          ? this.listChallenges
-          : this.listChallenges.slice(startIndex, startIndex + this.pageSize)
-
+        this.challenges = this.listChallenges
         if (this.sortBy !== '') {
-          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+          this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.listChallenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
             this.challenges = sortedResp
           })
         }
@@ -106,24 +91,13 @@ export class StarterComponent implements OnInit {
 
   getChallengeFilters (filters: FilterChallenge): void {
     this.filters = filters
-    const respArray: Challenge[] = this.listChallenges
 
-    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, respArray).subscribe((filteredResp: Challenge[]) => {
-      this.paginationFilters = filteredResp
+    this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
+      this.challenges = filteredResp
     })
 
-    this.totalPages = Math.ceil(this.paginationFilters.length / this.pageSize)
-    if (this.pageNumber > this.totalPages) {
-      this.pageNumber = this.totalPages
-    }
-    const startIndex = (this.pageNumber - 1) * this.pageSize
-
-    this.challenges = this.isMobile
-      ? this.paginationFilters
-      : this.paginationFilters.slice(startIndex, startIndex + this.pageSize)
-
     if (this.sortBy !== '') {
-      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.paginationFilters, startIndex, this.pageSize, this.isAscending).subscribe(sortedResp => {
+      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.challenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
         this.challenges = sortedResp
       })
     }
@@ -133,15 +107,12 @@ export class StarterComponent implements OnInit {
     this.sortBy = newSort
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
-        this.getChallengesByPage(this.pageNumber)
         this.isAscending = !this.isAscending
       } else {
-        this.isAscending = false
-        this.selectedSort = newSort
-        this.getChallengesByPage(this.pageNumber)
         this.isAscending = true
+        this.selectedSort = newSort
       }
+      this.refreshChallengeList()
     }
   }
-
 }
