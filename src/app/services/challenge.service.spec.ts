@@ -163,7 +163,7 @@ describe('ChallengeService', () => {
     })
 
     it('should POST and return backend response', (done) => {
-      const mockResp: FavoriteResponse = { isFavorite: true, timesFavorited: 42 }
+      const mockResp: FavoriteResponse = { favorite: true, timesFavorited: 42 }
 
       service.addToFavorites(testId).subscribe((res) => {
         expect(res).toEqual(mockResp)
@@ -181,7 +181,7 @@ describe('ChallengeService', () => {
 
     it('should catch error and return default', (done) => {
       service.addToFavorites(testId).subscribe((res) => {
-        expect(res).toEqual({ isFavorite: false, timesFavorited: 0 })
+        expect(res).toEqual({ favorite: false, timesFavorited: 0 })
         done()
       })
 
@@ -210,7 +210,7 @@ describe('ChallengeService', () => {
       httpMock.verify()
     })
     it('should DELETE and return backend response', (done) => {
-      const mockResp: FavoriteResponse = { isFavorite: false, timesFavorited: 41 }
+      const mockResp: FavoriteResponse = { favorite: false, timesFavorited: 41 }
       service.removeFromFavorites(testId).subscribe((res) => {
         expect(res).toEqual(mockResp)
         done()
@@ -222,6 +222,7 @@ describe('ChallengeService', () => {
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
       req.flush(mockResp)
     })
+
     it('should propagate error when remove fails', (done) => {
       service.removeFromFavorites(testId).subscribe({
         next: () => {

@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service'
   styleUrls: ['./challenge-card.component.scss'],
   providers: []
 })
-export class ChallengeCardComponent implements OnInit {
+export class ChallengeCardComponent {
   private readonly starterService = inject(StarterService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
@@ -25,28 +25,8 @@ export class ChallengeCardComponent implements OnInit {
   @Input() favorites_count: number = 0
   isFavorite: boolean = false;
 
-  ngOnInit(): void {
-    // Check if challenge is favorited in localStorage
-    this.checkFavoriteStatus();
-  }
-
   get currentLang (): string {
     return this.translate.currentLang
-  }
-
-  // Check if the challenge is in favorites
-  private checkFavoriteStatus(): void {
-    if (!this.id) return;
-    
-    // For mock purposes, we'll check localStorage
-    const isFavorited = localStorage.getItem(`is_favorite_${this.id}`);
-    this.isFavorite = isFavorited === 'true';
-    
-    // Also update the favorites count from localStorage if available
-    const storedCount = localStorage.getItem(`favorites_count_${this.id}`);
-    if (storedCount) {
-      this.favorites_count = parseInt(storedCount, 10);
-    }
   }
 
   toggleFavorite (event: MouseEvent): void {
@@ -54,20 +34,28 @@ export class ChallengeCardComponent implements OnInit {
     if (!this.authService.isUserLoggedIn()) {
       return
     }
-    this.isFavorite = !this.isFavorite
-    this.favorites_count = this.isFavorite ? this.favorites_count + 1 : Math.max(0, this.favorites_count - 1)
-    // Llamamos al backend según el estado
     if (this.isFavorite) {
+      this.challengeService.removeFromFavorites(this.id).subscribe({
+        next: response => {
+          this.isFavorite = response.favorite
+          this.favorites_count = response.timesFavorited
+          console.log('Favorite removed:', response)
+        },
+        error: error => {
+          console.error('Error removing favorite:', error)
+        }
+      })
+    } else {
       this.challengeService.addToFavorites(this.id).subscribe({
         next: response => {
+          this.isFavorite = response.favorite
+          this.favorites_count = response.timesFavorited
           console.log('Favorite added:', response)
         },
         error: error => {
           console.error('Error adding favorite:', error)
         }
       })
-    } else {
-    // TODO: Implement removeFromFavorites functionality
     }
   }
 }
