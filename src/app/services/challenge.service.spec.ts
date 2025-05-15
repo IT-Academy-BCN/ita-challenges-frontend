@@ -222,7 +222,6 @@ describe('ChallengeService', () => {
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
       req.flush(mockResp)
     })
-
     it('should propagate error when remove fails', (done) => {
       service.removeFromFavorites(testId).subscribe({
         next: () => {

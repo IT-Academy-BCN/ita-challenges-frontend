@@ -128,11 +128,12 @@ export class StarterComponent implements OnInit {
 
   changeSort (newSort: string): void {
     this.sortBy = newSort
+    localStorage.setItem('sortBy', newSort)
     if (newSort === 'popularity' || newSort === 'creation_date') {
       if (this.selectedSort === newSort) {
         this.isAscending = !this.isAscending
       } else {
-        this.isAscending = true
+        this.isAscending = false
         this.selectedSort = newSort
       }
       this.refreshChallengeList()

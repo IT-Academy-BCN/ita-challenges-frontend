@@ -54,13 +54,15 @@ describe('StarterService', () => {
       expect(result[2].id_challenge).toBe('2')
 
       const sortByPopularity = 'popularity'
-      const isAscendingPopularity = false // Descendente
+      const isAscendingPopularity = true // Ascendente (de menos a más likes)
+
+      console.log('valores', parsedChallenges)
 
       service.orderBySort(sortByPopularity, parsedChallenges, offset, limit, isAscendingPopularity).subscribe(result => {
         expect(result.length).toBe(limit)
-        expect(result[0].id_challenge).toBe('3')
+        expect(result[0].id_challenge).toBe('1')
         expect(result[1].id_challenge).toBe('2')
-        expect(result[2].id_challenge).toBe('1')
+        expect(result[2].id_challenge).toBe('3')
         done()
       })
     })
