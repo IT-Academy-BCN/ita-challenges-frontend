@@ -1,7 +1,7 @@
 /* eslint-disable padded-blocks */
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject } from '@angular/core'
-import { Observable, catchError, BehaviorSubject, of } from 'rxjs'
+import { Observable, catchError, BehaviorSubject, of, throwError } from 'rxjs'
 import { delay, map } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
@@ -122,20 +122,21 @@ export class ChallengeService {
     );
   }
 
-  // Mocked version for frontend testing
-  removeFromFavorites(challengeId: string): Observable<FavoriteResponse> {
-
-    const currentCount = this.getMockFavoriteCount(challengeId);
-    
-    const mockResponse: FavoriteResponse = {
-      isFavorite: false,
-      timesFavorited: currentCount > 0 ? currentCount - 1 : 0
-    }
-    
-    localStorage.setItem(`is_favorite_${challengeId}`, 'false');
-    localStorage.setItem(`favorites_count_${challengeId}`, mockResponse.timesFavorited.toString());
-    
-    return of(mockResponse).pipe(delay(300));
+  removeFromFavorites (challengeId: string): Observable<FavoriteResponse> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/favorites`;
+    return this.http.delete<FavoriteResponse>(url, { headers }).pipe(
+      map(response => {
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error removing from favorites:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   // Helper methods for mock implementation

@@ -142,43 +142,6 @@ describe('ChallengeService', () => {
     httpMock.verify()
   })
 
-  // Tests for mocked favorites functionality
-  describe('removeFromFavorites (mock)', () => {
-    const testId = 'test-challenge-123'
-
-    beforeEach(() => {
-      localStorage.removeItem(`is_favorite_${testId}`)
-      localStorage.removeItem(`favorites_count_${testId}`)
-    })
-
-    it('should remove a challenge from favorites', fakeAsync(() => {
-      localStorage.setItem(`is_favorite_${testId}`, 'true')
-      localStorage.setItem(`favorites_count_${testId}`, '3')
-      let result: FavoriteResponse | undefined
-
-      service.removeFromFavorites(testId).subscribe((r) => {
-        result = r
-      })
-      tick(300)
-
-      expect(result).toEqual({ isFavorite: false, timesFavorited: 2 })
-      expect(localStorage.getItem(`is_favorite_${testId}`)).toBe('false')
-      expect(localStorage.getItem(`favorites_count_${testId}`)).toBe('2')
-    }))
-
-    it('should not decrement below zero when removing favorites', fakeAsync(() => {
-      localStorage.setItem(`is_favorite_${testId}`, 'true')
-      localStorage.setItem(`favorites_count_${testId}`, '0')
-      let result: FavoriteResponse | undefined
-      service.removeFromFavorites(testId).subscribe(r => {
-        result = r
-      })
-      tick(300)
-
-      expect(result).toEqual({ isFavorite: false, timesFavorited: 0 })
-      expect(localStorage.getItem(`favorites_count_${testId}`)).toBe('0')
-    }))
-  })
   describe('addToFavorites (real HTTP)', () => {
     const testId = 'test-challenge-123'
 
@@ -226,6 +189,55 @@ describe('ChallengeService', () => {
         `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
       )
       req.flush({ message: 'Server error' }, { status: 500, statusText: 'Error' })
+    })
+  })
+
+  describe('removeFromFavorites (real HTTP)', () => {
+    const testId = 'test-challenge-123'
+    beforeEach(() => {
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClientTesting(),
+          { provide: AuthService, useValue: authServiceStub }
+        ]
+      })
+      service = TestBed.inject(ChallengeService)
+      httpMock = TestBed.inject(HttpTestingController)
+    })
+    afterEach(() => {
+      httpMock.verify()
+    })
+    it('should DELETE and return backend response', (done) => {
+      const mockResp: FavoriteResponse = { isFavorite: false, timesFavorited: 41 }
+      service.removeFromFavorites(testId).subscribe((res) => {
+        expect(res).toEqual(mockResp)
+        done()
+      })
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
+      )
+      expect(req.request.method).toBe('DELETE')
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+      req.flush(mockResp)
+    })
+    it('should propagate error when remove fails', (done) => {
+      service.removeFromFavorites(testId).subscribe({
+        next: () => {
+          fail('Expected an error, but got a success response')
+        },
+        error: (err) => {
+          expect(err.status).toBe(500)
+          expect(err.statusText).toBe('Server Error')
+          done()
+        }
+      })
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${testId}/favorites`
+      )
+      expect(req.request.method).toBe('DELETE')
+      req.flush({ message: 'Error' }, { status: 500, statusText: 'Server Error' })
     })
   })
 })
