@@ -133,7 +133,6 @@ export class ChallengeService {
         return response;
       }),
       catchError(error => {
-        console.error('Error removing from favorites:', error);
         return throwError(() => error);
       })
     );
