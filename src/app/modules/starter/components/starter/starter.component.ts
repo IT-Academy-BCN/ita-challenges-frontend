@@ -51,7 +51,6 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
-<<<<<<< HEAD
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {
         if (userId !== null && userId !== '') {
@@ -66,17 +65,6 @@ export class StarterComponent implements OnInit {
         }
       })
     }
-=======
-
-    const savedSort = localStorage.getItem('sortBy')
-
-    if (savedSort !== null) {
-      this.sortBy = savedSort
-    } else {
-      this.sortBy = 'popularity'
-    }
-    this.changeSort(this.sortBy)
->>>>>>> 379e1e60 (se selecciona el filtro de popularidad en el localhost cuando no hay otro guardado y se guarda en el momento de cargar la pagina + lógica de funcionamiento)
   }
 
   ngOnDestroy (): void {
