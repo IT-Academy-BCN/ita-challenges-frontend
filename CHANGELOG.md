@@ -11,6 +11,10 @@ and this project adheres to
 
 - Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
 
+- "Volver a retos" link added
+
+- "Popularidad" filter logic
+
 ### [ita-challenges-frontend-3.1.33-RELEASE] (2025-04-10) (fix#261)
 
 - Remove examples and notes sections from challenge info component

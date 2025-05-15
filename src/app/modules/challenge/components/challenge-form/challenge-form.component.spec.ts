@@ -9,6 +9,7 @@ import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { type ElementRef } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 // TODO: Estos mocks necesitan ser mejorados en el futuro para permitir pruebas completas de la funcionalidad de CodeMirror
 // Actualmente hay un problema con el mock de javascript que causa un error 'Cannot read properties of undefined (reading 'define')'
@@ -122,7 +123,7 @@ describe('ChallengeFormComponent', () => {
     } as unknown as jest.Mocked<Router>
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule],
+      imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
         { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: ChallengeService, useValue: mockChallengeService },

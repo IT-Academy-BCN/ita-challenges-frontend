@@ -8,6 +8,9 @@ import { type Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from '../../../../services/challenge-form.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
 
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { Inject } from '@angular/core'
+
 // Imports para CodeMirror
 import { EditorView } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
@@ -23,7 +26,7 @@ import { type TagResponse } from 'src/app/models/tag-response.interface'
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule, EditorModule]
+  imports: [FormsModule, CommonModule, EditorModule, TranslateModule]
 })
 export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
@@ -69,9 +72,14 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   private readonly challengeFormService = inject(ChallengeFormService)
   private readonly router = inject(Router)
 
-  constructor () {
+  constructor (
+    @Inject(TranslateService) readonly translate: TranslateService
+  ) {
     this.loadLanguages()
     this.loadTags()
+    translate.addLangs(['en', 'es', 'ca'])
+    translate.setDefaultLang('es')
+    translate.use('es')
   }
 
   // Método que se ejecuta cuando el componente está listo
