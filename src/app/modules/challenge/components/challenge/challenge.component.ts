@@ -9,6 +9,7 @@ import { type Resource } from 'src/app/models/resource.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-challenge',
@@ -39,10 +40,12 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   isEditorChallengeVisible = false
   startChallenge: boolean = false
   challengeStarted: boolean = false
+  favoriteChallenges: string[] = []
 
   private readonly route = inject(ActivatedRoute)
   private readonly router = inject(Router)
   private readonly challengeService = inject(ChallengeService)
+  private readonly _authService = inject(AuthService)
 
   ngOnInit (): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
@@ -55,6 +58,25 @@ export class ChallengeComponent implements OnInit, OnDestroy {
       const url = this.router.url // Obtiene la URL actual
       this.isEditorChallengeVisible = url.includes('/start') // Verifica si contiene "/start"
     })
+    if (this._authService.isUserLoggedIn()) {
+      this._authService.getUserId().subscribe(userId => {
+        if (userId !== null && userId !== '') {
+          this.challengeService.getUserFavorites(userId).subscribe({
+            next: (favorites: any[]) => {
+              this.favoriteChallenges = favorites
+            },
+            error: (err) => {
+              console.error('Error getting favorites:', err)
+            }
+          })
+        }
+      })
+    }
+  }
+
+  isFavoriteChallenge (challengeId: string): boolean {
+    const result = this.favoriteChallenges.includes(challengeId)
+    return result
   }
 
   onStartChallenge (started: boolean): void {

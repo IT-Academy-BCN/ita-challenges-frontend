@@ -106,6 +106,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
+    // TODO: change URL once the backend is ready
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
     return this.http.post<FavoriteResponse>(
       url,
@@ -127,16 +128,25 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
+    // TODO: change URL once the backend is ready
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/favorites`;
     return this.http.delete<FavoriteResponse>(url, { headers }).pipe(
       map(response => {
         return response;
       }),
       catchError(error => {
-        console.error('Error removing from favorites:', error);
         return throwError(() => error);
       })
     );
+  }
+
+  getUserFavorites (userId: string): Observable<string[]> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/favorites`;
+    return this.http.get<string[]>(url, { headers });
   }
 
   // Helper methods for mock implementation

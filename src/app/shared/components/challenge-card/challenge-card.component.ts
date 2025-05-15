@@ -23,7 +23,7 @@ export class ChallengeCardComponent {
   @Input() popularity!: number
   @Input() id = ''
   @Input() favorites_count: number = 0
-  isFavorite: boolean = false;
+  @Input() isFavorite: boolean = false
 
   get currentLang (): string {
     return this.translate.currentLang
@@ -39,7 +39,6 @@ export class ChallengeCardComponent {
         next: response => {
           this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
-          console.log('Favorite removed:', response)
         },
         error: error => {
           console.error('Error removing favorite:', error)
@@ -50,7 +49,6 @@ export class ChallengeCardComponent {
         next: response => {
           this.isFavorite = response.favorite
           this.favorites_count = response.timesFavorited
-          console.log('Favorite added:', response)
         },
         error: error => {
           console.error('Error adding favorite:', error)

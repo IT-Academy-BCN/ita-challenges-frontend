@@ -7,6 +7,7 @@ import { type FiltersModalComponent } from 'src/app/modules/modals/filters-modal
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
+import { ChallengeService } from 'src/app/services/challenge.service'
 
 @Component({
   selector: 'app-starter',
@@ -34,12 +35,15 @@ export class StarterComponent implements OnInit {
   isAscending: boolean = false
 
   isMobile: boolean = window.innerWidth < 768
+
   isAdmin: boolean = false
+  favoriteChallenges: string[] = []
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
-    private _authService: AuthService
+    private readonly _authService: AuthService,
+    private readonly challengeService: ChallengeService
   ) {}
 
   ngOnInit (): void {
@@ -47,6 +51,20 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
+    if (this._authService.isUserLoggedIn()) {
+      this._authService.getUserId().subscribe(userId => {
+        if (userId !== null && userId !== '') {
+          this.challengeService.getUserFavorites(userId).subscribe({
+            next: (favorites: any[]) => {
+              this.favoriteChallenges = favorites
+            },
+            error: (err) => {
+              console.error('Error getting favorites:', err)
+            }
+          })
+        }
+      })
+    }
   }
 
   ngOnDestroy (): void {
@@ -54,6 +72,11 @@ export class StarterComponent implements OnInit {
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
+  }
+
+  isFavoriteChallenge (challengeId: string): boolean {
+    const result = this.favoriteChallenges.includes(challengeId)
+    return result
   }
 
   getChallenge (): void {

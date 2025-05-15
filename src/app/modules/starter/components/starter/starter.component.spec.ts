@@ -32,7 +32,9 @@ describe('StarterComponent', () => {
     authRoleSubject = new BehaviorSubject<string>('')
     const authServiceMock = {
       getUserRole: () => authRoleSubject.asObservable(),
-      updateUserRoleAndUserNameFromToken: () => {}
+      updateUserRoleAndUserNameFromToken: () => {},
+      isUserLoggedIn: () => true,
+      getUserId: () => of('mock-user-id')
     }
 
     TestBed.configureTestingModule({
