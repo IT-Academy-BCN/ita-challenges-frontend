@@ -56,7 +56,6 @@ export class StarterComponent implements OnInit {
         if (userId !== null && userId !== '') {
           this.challengeService.getUserFavorites(userId).subscribe({
             next: (favorites: any[]) => {
-              console.log('User favorites from backend:', favorites)
               this.favoriteChallenges = favorites
             },
             error: (err) => {
