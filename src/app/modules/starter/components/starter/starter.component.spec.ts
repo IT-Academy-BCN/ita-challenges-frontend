@@ -85,19 +85,19 @@ describe('StarterComponent', () => {
 
   it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
     component.selectedSort = 'creation_date'
-    component.isAscending = true
+    component.isAscending = false
     spyOn(component, 'refreshChallengeList')
 
     // Cambia a un nuevo criterio de ordenación que no sea el actual
     component.changeSort('popularity')
 
     expect(component.selectedSort).toBe('popularity')
-    expect(component.isAscending).toBe(true)
+    expect(component.isAscending).toBe(false)
     expect(component.refreshChallengeList).toHaveBeenCalled()
 
     // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
     component.changeSort('popularity')
-    expect(component.isAscending).toBe(false)
+    expect(component.isAscending).toBe(true)
     expect(component.refreshChallengeList).toHaveBeenCalledTimes(2)
   })
 
