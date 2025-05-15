@@ -17,6 +17,10 @@ import { SolutionComponent } from '../../../../shared/components/solution/soluti
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { CookieService } from 'ngx-cookie-service'
+import { registerLocaleData } from '@angular/common'
+import localeCa from '@angular/common/locales/ca'
+
+registerLocaleData(localeCa)
 
 describe('ChallengeComponent', () => {
   let component: ChallengeComponent
@@ -27,7 +31,20 @@ describe('ChallengeComponent', () => {
   beforeEach(async () => {
     mockChallengeService = {
       getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({
-        solutions: []
+        challenge_title: '',
+        creation_date: new Date(),
+        level: '',
+        detail: {
+          description: '',
+          examples: [],
+          notes: ''
+        },
+        related: [],
+        resources: [],
+        solutions: [],
+        popularity: 0,
+        languages: [],
+        timesFavorite: 0
       }))
     }
 
@@ -109,7 +126,8 @@ describe('ChallengeComponent', () => {
       resources: [],
       solutions: [],
       popularity: 0,
-      languages: []
+      languages: [],
+      timesFavorite: 0
     }
 
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
@@ -133,7 +151,8 @@ describe('ChallengeComponent', () => {
       resources: [],
       solutions: [],
       popularity: 0,
-      languages: []
+      languages: [],
+      timesFavorite: 0
     }
 
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
@@ -183,7 +202,8 @@ describe('ChallengeComponent', () => {
       resources: [],
       solutions: [],
       popularity: 0,
-      languages: []
+      languages: [],
+      timesFavorite: 0
     }
 
     mockChallengeService.getChallengeById.and.returnValue(of(challenge))
