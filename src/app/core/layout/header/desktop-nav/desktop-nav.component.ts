@@ -1,7 +1,7 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavService } from 'src/app/services/nav.service';
+import { NavService } from 'src/app/services/nav.service'; 
 
 @Component({
   selector: 'app-desktop-nav',
@@ -9,11 +9,14 @@ import { NavService } from 'src/app/services/nav.service';
   styleUrl: './desktop-nav.component.scss'
 })
 
-export class DesktopNavComponent implements OnInit, OnDestroy{
+export class DesktopNavComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
+  currentRole: string = ''
   private authSubscription!: Subscription;
+  roles: string[] = ['ADMIN', 'alumno']
+  selectedRole: string = ''
 
 
   constructor(
@@ -30,6 +33,9 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
     });
+    this._authService.getUserRole().subscribe((userRole) => {
+      this.currentRole = userRole
+    })
   }
 
     ngOnDestroy(): void {

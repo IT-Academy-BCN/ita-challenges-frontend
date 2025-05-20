@@ -106,11 +106,10 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left: -6.75rem;
+    left: -8.75rem;
     border-radius: 10px;
     margin-top: 0.4rem;
-    height: 92px;
-    width: 168px;
+    // width: 178px;
     border: 1px solid #ccc;
     font-size: 14px;
   }
@@ -136,6 +135,27 @@
     border-bottom: 1px solid #ccc;
   }
   
+}
+.form-switch{
+  padding-left: 0px;
+}
+.form-check-input[type=checkbox]:not(:checked) {
+  background-color: #ddd;
+  border-color: #ccc;
+}
+.form-check .form-check-input {
+  margin-left: 0px;
+}
+.form-check-input {
+  height: 24px;
+  width: 44px;
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.form-check-input:checked {
+  background-color: $primary;
+  border-color: $primary;
 }
 
 @media screen and (max-width: 768px) {
