@@ -136,28 +136,6 @@
   }
   
 }
-.form-switch{
-  padding-left: 0px;
-}
-.form-check-input[type=checkbox]:not(:checked) {
-  background-color: #ddd;
-  border-color: #ccc;
-}
-.form-check .form-check-input {
-  margin-left: 0px;
-}
-.form-check-input {
-  height: 24px;
-  width: 44px;
-  background-color: $primary;
-  border-color: $primary;
-}
-
-.form-check-input:checked {
-  background-color: $primary;
-  border-color: $primary;
-}
-
 @media screen and (max-width: 768px) {
   .desktop-nav {
     display: none;

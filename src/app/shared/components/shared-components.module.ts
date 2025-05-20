@@ -10,14 +10,16 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
 import { FormsModule } from '@angular/forms'
-import { EditorModule } from '@tinymce/tinymce-angular'
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { ToggleComponent } from './toggle/toggle.component'
 
 @NgModule({
   declarations: [
     ChallengeCardComponent,
     ResourceCardComponent,
     SolutionComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ToggleComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { EditorModule } from '@tinymce/tinymce-angular'
     SolutionComponent,
     BreadcrumbComponent,
     DynamicTranslatePipe,
-    EscapeJavaForJsonPipe
+    EscapeJavaForJsonPipe,
+    ToggleComponent
   ]
 })
 export class SharedComponentsModule { }

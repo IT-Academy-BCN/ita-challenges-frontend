@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MobileNavComponent } from './layout/header/mobile-nav/mobile-nav.component'
 import { DesktopNavComponent } from './layout/header/desktop-nav/desktop-nav.component'
 import { MentorLoginComponent } from '../modules/mentor/mentor-login/mentor-login.component'
+import { SharedComponentsModule } from '../shared/components/shared-components.module'
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MentorLoginComponent } from '../modules/mentor/mentor-login/mentor-logi
     ModalsModule,
     I18nModule,
     TranslateModule,
-    MentorLoginComponent
+    MentorLoginComponent,
+    SharedComponentsModule
   ]
 })
 export class CoreModule { }

@@ -2,6 +2,7 @@ import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/cor
 import { from, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavService } from 'src/app/services/nav.service'; 
+import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 @Component({
   selector: 'app-desktop-nav',
@@ -13,10 +14,8 @@ export class DesktopNavComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
-  currentRole: string = ''
   private authSubscription!: Subscription;
-  roles: string[] = ['ADMIN', 'alumno']
-  selectedRole: string = ''
+  currentRole: string = ''
 
 
   constructor(
