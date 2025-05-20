@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
-import { from, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavService } from 'src/app/services/nav.service'; 
 import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
@@ -10,7 +10,7 @@ import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.compone
   styleUrl: './desktop-nav.component.scss'
 })
 
-export class DesktopNavComponent implements OnInit, OnDestroy {
+export class DesktopNavComponent implements OnInit, OnDestroy{
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
