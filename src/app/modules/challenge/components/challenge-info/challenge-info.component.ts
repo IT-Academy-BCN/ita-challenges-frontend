@@ -75,18 +75,18 @@ implements OnInit {
 
   mockSolutions = [
     {
-      uuid_user: "1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d",
-      uuid_challenge: "eced92af-3975-488b-b6e7-d3ab6edb5ff6",
-      uuid_language: "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
-      solution_text: "This is the submitted solution"
+      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
+      uuid_challenge: 'd43a1a4d-ee8f-432d-8f9c-68eda2547dae',
+      uuid_language: '409c9fe8-74de-4db3-81a1-a55280cf92ef',
+      solution_text: 'This is the submitted solution'
     },
     {
-      uuid_user: "1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d",
-      uuid_challenge: "b5c06903-f27b-4057-8220-ad9d957cdce4",
-      uuid_language: "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
-      solution_text: "This is another user's solution"
+      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
+      uuid_challenge: 'b5c06903-f27b-4057-8220-ad9d957cdce4',
+      uuid_language: '09fabe32-7362-4bfb-ac05-b7bf854c6e0f',
+      solution_text: 'This is the submitted solution'
     }
-  ];
+  ]
 
   async ngOnInit (): Promise<void> {
     this.authService.getUserRole().subscribe(role => {
@@ -133,19 +133,21 @@ implements OnInit {
     }
 
     this.authService.getUserId().subscribe((userId) => {
-      if (userId === null || userId === '') return;
+      if (userId === null || userId === '') return
 
       const found = this.mockSolutions.find(
         (sol) => sol.uuid_user === userId && sol.uuid_challenge === this.idChallenge
-      );
+      )
 
       if (found !== undefined) {
-        this.solutionSent = true;
-        this.solutionText = found.solution_text;
-        this.userSolution = { solution_text: found.solution_text };
-        this.cdr.detectChanges(); // Si necesitas forzar actualización de vista
+        this.solutionSent = true
+        this.solutionText = found.solution_text
+        this.userSolution = { solution_text: found.solution_text }
+        this.loadSolutions(this.idChallenge, found.uuid_language)
+
+        this.cdr.detectChanges() // Si necesitas forzar actualización de vista
       }
-    });
+    })
   }
 
   ngOnChanges (changes: SimpleChanges): void {
