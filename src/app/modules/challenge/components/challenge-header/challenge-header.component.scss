@@ -27,6 +27,7 @@
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .button {
@@ -95,4 +96,12 @@ h3 {
   display: inline-block;
   min-width: 24px;
   text-align: center;
+}
+
+.bookmark-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.2s ease;
 }
