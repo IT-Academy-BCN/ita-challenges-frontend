@@ -59,4 +59,34 @@ export class ChallengeCardComponent {
       })
     }
   }
+
+  toggleBookmark (event: MouseEvent): void {
+    event.stopPropagation()
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
+    if (this.isBookmarked) {
+      this.challengeService.removeBookmark(this.id).subscribe({
+        next: response => {
+          console.log('Removed bookmark response:', response)
+          this.isBookmarked = response.bookmarked
+          this.bookmarks_count = response.totalBookmarks
+        },
+        error: error => {
+          console.error('Error removing bookmark:', error)
+        }
+      })
+    } else {
+      this.challengeService.addBookmark(this.id).subscribe({
+        next: response => {
+          console.log('Added bookmark response:', response)
+          this.isBookmarked = response.bookmarked
+          this.bookmarks_count = response.totalBookmarks
+        },
+        error: error => {
+          console.error('Error adding bookmark:', error)
+        }
+      })
+    }
+  }
 }
