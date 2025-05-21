@@ -194,7 +194,6 @@ export class ChallengeHeaderComponent implements OnInit {
     if (this.isBookmarked) {
       this.challengeService.removeBookmark(this.idChallenge).subscribe({
         next: response => {
-          console.log('Removed bookmark response:', response)
           this.isBookmarked = response.bookmarked
           this.bookmarks_count = response.timesBookmarked
         },
@@ -205,7 +204,6 @@ export class ChallengeHeaderComponent implements OnInit {
     } else {
       this.challengeService.addBookmark(this.idChallenge).subscribe({
         next: response => {
-          console.log('Added bookmark response:', response)
           this.isBookmarked = response.bookmarked
           this.bookmarks_count = response.timesBookmarked
         },

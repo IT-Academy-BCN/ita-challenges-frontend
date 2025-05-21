@@ -68,7 +68,6 @@ export class ChallengeCardComponent {
     if (this.isBookmarked) {
       this.challengeService.removeBookmark(this.id).subscribe({
         next: response => {
-          console.log('Removed bookmark response:', response)
           this.isBookmarked = response.bookmarked
           this.bookmarks_count = response.timesBookmarked
         },
@@ -79,7 +78,6 @@ export class ChallengeCardComponent {
     } else {
       this.challengeService.addBookmark(this.id).subscribe({
         next: response => {
-          console.log('Added bookmark response:', response)
           this.isBookmarked = response.bookmarked
           this.bookmarks_count = response.timesBookmarked
         },

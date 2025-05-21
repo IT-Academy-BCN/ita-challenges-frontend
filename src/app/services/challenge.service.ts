@@ -163,7 +163,7 @@ export class ChallengeService {
       map(response => response),
       catchError(error => {
         console.error('Error adding bookmark:', error);
-        return of({ bookmarked: false, totalBookmarks: 0 });
+        return throwError(() => error);
       })
     );
   }
