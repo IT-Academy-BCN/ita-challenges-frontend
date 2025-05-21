@@ -25,12 +25,12 @@
       @if(isLoggedIn){
         <div class="user-container-mobile">
           @if (!userPhoto) {
-            <button class="user" (click)="toggleDropdown()">
+            <button class="user-mobile" (click)="toggleDropdown()">
               <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
             </button>
           }
           @else {
-            <button class="userWithPhoto" (click)="toggleDropdown()">
+            <button class="user-mobile userWithPhoto" (click)="toggleDropdown()">
               <img [src]="userPhoto" alt="User" class="img-fluid profilePhoto">
             </button>
           }
