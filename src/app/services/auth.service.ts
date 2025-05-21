@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core'
+import { timeStamp } from 'node:console';
 
 
 @Injectable({
@@ -64,10 +65,25 @@ export class AuthService {
     return this.checkAuthToken();
   }
 
-
   private checkAuthToken(): boolean {
-    return localStorage.getItem('authToken') !== null;
+    const tokenActual = localStorage.getItem('authToken') // recuperamos el token guardado
+    if (tokenActual == null) {
+      return false // si no hay token, el user no está autenticado
+    }
+    // const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInJvbGUiOiJ1c2VyIiwidXVpZCI6InNvbWUtdXVpZCIsImlhdCI6MTYwOTAwMDAwMCwiZXhwIjoxNjA5MDAwMDAwfQ.7_oGkp_jLTt5Vaj04LJwpx3rK55BC1C0U4pNHO2HKeA';
+    return !this.isTokenExpired(tokenActual) // si hay token, miramos si está expirado o no
+  }
 
+  checkAndHandleExpiredToken(): void {
+    const tokenActual = this.getAuthToken()
+    if (tokenActual != null && this.isTokenExpired(tokenActual)) {
+      console.log('Tu token ha expirado')
+      this.toastr.warning(this.translate.instant("Token expirado"), '', { timeOut: 3000 });
+      this.clearAuthData()
+      setTimeout(() => {
+        this.logout()
+      }, 5000)
+    }
   }
 
   private updateAuthStatus(): void {
@@ -83,6 +99,14 @@ export class AuthService {
       console.error('Error decoding token:', error);
       return null;
     }
+  }
+
+  private isTokenExpired (token: string): boolean { // MIRAMOS SI EL TOKEN HA EXPIRADO
+    const decoded = this.decodeToken(token); // decodificamos el token
+    if (!decoded || !decoded.exp) return true // si no hay token o fecha de expiración, lo consideramos expirado
+
+    const expiryTime = decoded.exp * 1000 // si hay token, convertimos la expiración a milisegundos
+    return Date.now() > expiryTime // miramos si ha expirado o no comparando con la fecha actual. si la fecha actual es mayo, ya ha expirado.
   }
 
   getAuthToken(): string | null {

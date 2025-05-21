@@ -34,7 +34,8 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     });
     this._authService.getUserRole().subscribe((userRole) => {
       this.currentRole = userRole
-    })
+    }) 
+    this._authService.checkAndHandleExpiredToken()
   }
 
     ngOnDestroy(): void {
