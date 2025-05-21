@@ -22,10 +22,29 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
+  public userPhoto: string | null = ''
+
   constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es', 'ca'])
     this.translate.setDefaultLang('ca')
     this.translate.use('ca')
+  }
+
+  getUserPhoto(): Observable<string> {
+    const url = `${environment.GITHUB_PROFILE_URL}${this.username}`
+    const subject = new BehaviorSubject<string>('')
+    this.http.get<any>(url).subscribe({
+      next: (data) => {
+        const avatarUrl = (data as { avatar_url: string }).avatar_url;
+        this.userPhoto = avatarUrl;
+        subject.next(avatarUrl);
+      },
+      error: (err) => {
+        console.error('Error fetching GitHub avatar:', err);
+        subject.next('error');
+      }
+    })
+    return subject.asObservable();
   }
 
   getUserId(): Observable<string | null> {
@@ -51,6 +70,9 @@ export class AuthService {
       this.usernameSubject.next(this.username);
       const userId = decodedToken?.uuid ?? null;
       this.userIdSubject.next(userId);
+      this.getUserPhoto().subscribe(photo => {
+        console.log('Foto del perfil dentro del subscribe:', photo);
+      });
     } else {
       this.userRoleSubject.next('');
       this.usernameSubject.next('');
