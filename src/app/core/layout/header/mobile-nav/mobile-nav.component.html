@@ -9,7 +9,7 @@
         "components.mainMenu.section2.title" | translate }}</a>
     </ul>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end align-items-center">
       <!-- languageSelect -->
       <div class="ms-2 pe-3">
         <label for="languageSelect">
@@ -24,9 +24,16 @@
       <!-- Login -->
       @if(isLoggedIn){
         <div class="user-container-mobile">
-          <button class="user-mobile" (click)="toggleDropdown()">
-            <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
-          </button>
+          @if (!userPhoto) {
+            <button class="user" (click)="toggleDropdown()">
+              <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
+            </button>
+          }
+          @else {
+            <button class="userWithPhoto" (click)="toggleDropdown()">
+              <img [src]="userPhoto" alt="User" class="img-fluid profilePhoto">
+            </button>
+          }
           <div class="dropdown-mobile" [ngClass]="{ 'show': dropdownOpen }">
               <a>{{user}}</a>
               <a>

@@ -14,7 +14,7 @@ export class MobileNavComponent implements OnInit, OnDestroy{
   user: string = '';
   currentRole: string = ''
   private authSubscription!: Subscription;
-
+  userPhoto: string = ''
 
   constructor(
     @Inject(NavService) public navService: NavService,
@@ -31,8 +31,9 @@ export class MobileNavComponent implements OnInit, OnDestroy{
       this.user = username;
     });
 
-    this._authService.getUserRole().subscribe((userRole) => {
-      this.currentRole = userRole
+    this._authService.getUserPhoto().subscribe((userPhoto) => {
+      this.userPhoto = userPhoto
+      console.log('foto perfil: ', this.userPhoto)
     })
     this._authService.checkAndHandleExpiredToken()
   }

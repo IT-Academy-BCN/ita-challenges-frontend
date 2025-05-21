@@ -20,7 +20,7 @@
       }
       @else {
         <button class="userWithPhoto" (click)="toggleDropdown()">
-          <img [src]="userPhoto" alt="User" class="img-fluid profilePhoto" style="border: none; padding: 0; background: none;">
+          <img [src]="userPhoto" alt="User" class="img-fluid profilePhoto">
         </button>
       }
       <div class="dropdown" [ngClass]="{ 'show': dropdownOpen }">

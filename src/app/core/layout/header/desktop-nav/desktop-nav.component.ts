@@ -14,7 +14,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
-  userPhoto: string = 'error'
+  userPhoto: string = ''
   private authSubscription!: Subscription;
   currentRole: string = ''
   newRole: 'ADMIN' | 'USER' = 'ADMIN'
