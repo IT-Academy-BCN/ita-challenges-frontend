@@ -240,4 +240,111 @@ describe('ChallengeService', () => {
       req.flush({ message: 'Error' }, { status: 500, statusText: 'Server Error' })
     })
   })
+
+  describe('addBookmark (real HTTP)', () => {
+    const testId = 'test-challenge-123'
+
+    beforeEach(() => {
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClientTesting(),
+          { provide: AuthService, useValue: authServiceStub }
+        ]
+      })
+      service = TestBed.inject(ChallengeService)
+      httpMock = TestBed.inject(HttpTestingController)
+    })
+
+    afterEach(() => {
+      httpMock.verify()
+    })
+
+    it('should POST and return backend response', (done) => {
+      const mockResp = { bookmarked: true, timesBookmarked: 5 }
+
+      service.addBookmark(testId).subscribe(res => {
+        expect(res).toEqual(mockResp)
+        done()
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${testId}/bookmarks`
+      )
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual({})
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+      req.flush(mockResp)
+    })
+
+    it('should propagate error when add fails', (done) => {
+      service.addBookmark(testId).subscribe({
+        next: () => done.fail('Expected an error, but got a success response'),
+        error: err => {
+          expect(err.status).toBe(500)
+          expect(err.statusText).toBe('Error')
+          done()
+        }
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${testId}/bookmarks`
+      )
+      req.flush({ message: 'Server error' }, { status: 500, statusText: 'Error' })
+    })
+  })
+
+  describe('removeBookmark (real HTTP)', () => {
+    const testId = 'test-challenge-123'
+
+    beforeEach(() => {
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideHttpClient(withInterceptorsFromDi()),
+          provideHttpClientTesting(),
+          { provide: AuthService, useValue: authServiceStub }
+        ]
+      })
+      service = TestBed.inject(ChallengeService)
+      httpMock = TestBed.inject(HttpTestingController)
+    })
+
+    afterEach(() => {
+      httpMock.verify()
+    })
+
+    it('should DELETE and return backend response', (done) => {
+      const mockResp = { bookmarked: false, timesBookmarked: 4 }
+
+      service.removeBookmark(testId).subscribe(res => {
+        expect(res).toEqual(mockResp)
+        done()
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${testId}/bookmarks`
+      )
+      expect(req.request.method).toBe('DELETE')
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+      req.flush(mockResp)
+    })
+
+    it('should propagate error when remove fails', (done) => {
+      service.removeBookmark(testId).subscribe({
+        next: () => done.fail('Expected an error, but got a success response'),
+        error: err => {
+          expect(err.status).toBe(500)
+          expect(err.statusText).toBe('Server Error')
+          done()
+        }
+      })
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${testId}/bookmarks`
+      )
+      req.flush({ message: 'Error' }, { status: 500, statusText: 'Server Error' })
+    })
+  })
 })
