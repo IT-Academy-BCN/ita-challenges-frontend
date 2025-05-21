@@ -70,7 +70,7 @@ export class ChallengeCardComponent {
         next: response => {
           console.log('Removed bookmark response:', response)
           this.isBookmarked = response.bookmarked
-          this.bookmarks_count = response.totalBookmarks
+          this.bookmarks_count = response.timesBookmarked
         },
         error: error => {
           console.error('Error removing bookmark:', error)
@@ -81,7 +81,7 @@ export class ChallengeCardComponent {
         next: response => {
           console.log('Added bookmark response:', response)
           this.isBookmarked = response.bookmarked
-          this.bookmarks_count = response.totalBookmarks
+          this.bookmarks_count = response.timesBookmarked
         },
         error: error => {
           console.error('Error adding bookmark:', error)
