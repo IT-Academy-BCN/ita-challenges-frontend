@@ -33,7 +33,6 @@ export class MobileNavComponent implements OnInit, OnDestroy{
 
     this._authService.getUserPhoto().subscribe((userPhoto) => {
       this.userPhoto = userPhoto
-      console.log('foto perfil: ', this.userPhoto)
     })
     this._authService.checkAndHandleExpiredToken()
   }
