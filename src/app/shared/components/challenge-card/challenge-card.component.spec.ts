@@ -11,6 +11,9 @@ import { LOCALE_ID, Pipe, type PipeTransform } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { formatDate } from '@angular/common'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
+import { AuthService } from 'src/app/services/auth.service'
+import { ChallengeService } from 'src/app/services/challenge.service'
+import { of } from 'rxjs'
 
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
@@ -22,8 +25,21 @@ class MockTranslatePipe implements PipeTransform {
 describe('ChallengeCardComponent', () => {
   let component: ChallengeCardComponent
   let fixture: ComponentFixture<ChallengeCardComponent>
+  let mockChallengeService: jest.Mocked<ChallengeService>
+  let mockAuthService: jest.Mocked<AuthService>
 
   beforeEach(async () => {
+    mockChallengeService = {
+      addToFavorites: jest.fn(),
+      removeFromFavorites: jest.fn(),
+      addBookmark: jest.fn(),
+      removeBookmark: jest.fn()
+    } as any
+
+    mockAuthService = {
+      isUserLoggedIn: jest.fn().mockReturnValue(true)
+    } as any
+
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
       imports: [
@@ -31,23 +47,17 @@ describe('ChallengeCardComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
+          loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
         })
       ],
       providers: [
         StarterService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        { provide: LOCALE_ID, useValue: 'ca' } // Proveer LOCALE_ID para el idioma
+        { provide: LOCALE_ID, useValue: 'ca' },
+        { provide: ChallengeService, useValue: mockChallengeService },
+        { provide: AuthService, useValue: mockAuthService }
       ]
     }).compileComponents()
-  })
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -96,5 +106,62 @@ describe('ChallengeCardComponent', () => {
     const formattedDate = formatDate(testDate, 'mediumDate', 'ca') // Formatear la fecha para comparar
 
     expect(dateElement.textContent).toContain(formattedDate)
+  })
+  it('toggleFavorite: should call addToFavorites when not favorite', done => {
+    component.id = 'C1'
+    component.isFavorite = false
+    component.favorites_count = 0
+    mockChallengeService.addToFavorites.mockReturnValue(of({ favorite: true, timesFavorited: 1 }))
+
+    component.toggleFavorite(new MouseEvent('click'))
+    setTimeout(() => {
+      expect(mockChallengeService.addToFavorites).toHaveBeenCalledWith('C1')
+      expect(component.isFavorite).toBe(true)
+      expect(component.favorites_count).toBe(1)
+      done()
+    })
+  })
+  it('toggleFavorite: should call removeFromFavorites when already favorite', done => {
+    component.id = 'C1'
+    component.isFavorite = true
+    component.favorites_count = 1
+    mockChallengeService.removeFromFavorites.mockReturnValue(of({ favorite: false, timesFavorited: 0 }))
+
+    component.toggleFavorite(new MouseEvent('click'))
+    setTimeout(() => {
+      expect(mockChallengeService.removeFromFavorites).toHaveBeenCalledWith('C1')
+      expect(component.isFavorite).toBe(false)
+      expect(component.favorites_count).toBe(0)
+      done()
+    })
+  })
+  it('toggleBookmark: should call addBookmark when not bookmarked', done => {
+    component.id = 'C2'
+    component.isBookmarked = false
+    component.bookmarks_count = 0
+    mockChallengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }))
+
+    component.toggleBookmark(new MouseEvent('click'))
+    setTimeout(() => {
+      expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C2')
+      expect(component.isBookmarked).toBe(true)
+      expect(component.bookmarks_count).toBe(1)
+      done()
+    })
+  })
+
+  it('toggleBookmark: should call removeBookmark when already bookmarked', done => {
+    component.id = 'C2'
+    component.isBookmarked = true
+    component.bookmarks_count = 1
+    mockChallengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }))
+
+    component.toggleBookmark(new MouseEvent('click'))
+    setTimeout(() => {
+      expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
+      expect(component.isBookmarked).toBe(false)
+      expect(component.bookmarks_count).toBe(0)
+      done()
+    })
   })
 })

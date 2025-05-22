@@ -8,31 +8,45 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
+import { ChallengeService } from 'src/app/services/challenge.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
   let fixture: ComponentFixture<ChallengeHeaderComponent>;
   let modalService: NgbModal;
   let router: Router;
+  let challengeService: jest.Mocked<ChallengeService>;
+  let authService: jest.Mocked<AuthService>;
+
 
   beforeEach(async () => {
-    const mockRouter = { navigate: jest.fn() };
+    const mockRouter = { navigate: jest.fn() } as any;
+    challengeService = {
+      addToFavorites: jest.fn(),
+      removeFromFavorites: jest.fn(),
+      addBookmark: jest.fn(),
+      removeBookmark: jest.fn(),
+    } as any;
+    authService = {
+      isUserLoggedIn: jest.fn().mockReturnValue(true),
+      getUserId: jest.fn().mockReturnValue(of('user1')),
+      getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
       imports: [I18nModule, DynamicTranslatePipe],
       providers: [
-        NgbModal,
         provideRouter([]),
         { provide: Router, useValue: mockRouter },
-        { provide: NgbModal, useValue: { open: jest.fn() } },
         { 
           provide: ActivatedRoute, 
-          useValue: { 
-            params: of({ idChallenge: 'testChallengeId' }), 
-            snapshot: { params: { idChallenge: 'testChallengeId' } } 
-          }
-        }
+          useValue: { params: of({ idChallenge: 'testChallengeId' }) }
+        },
+        { provide: NgbModal, useValue: { open: jest.fn() } },
+        { provide: ChallengeService, useValue: challengeService },
+        { provide: AuthService, useValue: authService },
       ],
     }).compileComponents();
 
@@ -82,4 +96,57 @@ describe('ChallengeHeaderComponent', () => {
     expect(localStorage.getItem('challengeStarted')).toContain('123');
     expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/123/start']);
   });
-});
+  it('toggleFavorite: when not favorite should call addToFavorites and emit update', done => {
+    component.idChallenge = 'ABC';
+    component.favorites_count = 1;
+    component.isFavorite = false;
+    challengeService.addToFavorites.mockReturnValue(of({ favorite: true, timesFavorited: 2 }));
+    component.favoritesUpdated.subscribe(count => {
+      expect(count).toBe(2);
+      expect(component.isFavorite).toBe(true);
+      expect(component.favorites_count).toBe(2);
+      done();
+    });
+    component.toggleFavorite();
+  });
+
+  it('toggleFavorite: when favorite should call removeFromFavorites', done => {
+    component.idChallenge = 'ABC';
+    component.favorites_count = 2;
+    component.isFavorite = true;
+    challengeService.removeFromFavorites.mockReturnValue(of({ favorite: false, timesFavorited: 1 }));
+    component.favoritesUpdated.subscribe(count => {
+      expect(count).toBe(1);
+      expect(component.isFavorite).toBe(false);
+      expect(component.favorites_count).toBe(1);
+      done();
+    });
+    component.toggleFavorite();
+  });
+
+  it('toggleBookmark: add bookmark when not bookmarked', done => {
+    component.idChallenge = 'B1';
+    component.bookmarks_count = 0;
+    component.isBookmarked = false;
+    challengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }));
+    component.toggleBookmark(new MouseEvent('click'));
+    setTimeout(() => {
+      expect(component.isBookmarked).toBe(true);
+      expect(component.bookmarks_count).toBe(1);
+      done();
+    });
+  });
+
+  it('toggleBookmark: remove bookmark when bookmarked', done => {
+    component.idChallenge = 'B1';
+    component.bookmarks_count = 1;
+    component.isBookmarked = true;
+    challengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }));
+    component.toggleBookmark(new MouseEvent('click'));
+    setTimeout(() => {
+      expect(component.isBookmarked).toBe(false);
+      expect(component.bookmarks_count).toBe(0);
+      done();
+    });
+  });
+})
