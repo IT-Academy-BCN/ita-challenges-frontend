@@ -136,7 +136,7 @@ implements OnInit {
       if (userId === null || userId === '') return
 
       const found = this.mockSolutions.find(
-        (sol) => sol.uuid_user === userId && sol.uuid_challenge === this.idChallenge
+        (sol) => sol.uuid_user === userId && sol.uuid_challenge === this.idChallenge && this.languages.some(lang => lang.id_language === sol.uuid_language)
       )
 
       if (found !== undefined) {
