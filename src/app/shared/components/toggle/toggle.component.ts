@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core'
 })
 export class ToggleComponent {
   @Input() currentRole: string = ''
-  roles: string[] = ['ADMIN', 'alumno']
+  roles: string[] = ['ADMIN', 'USER']
   selectedRole: string = ''
 }
