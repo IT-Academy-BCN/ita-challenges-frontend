@@ -186,7 +186,7 @@ export class ChallengeHeaderComponent implements OnInit {
     }
   }
 
-  toggleBookmark (event: MouseEvent): void {
+  toggleBookmark (event: Event): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return
