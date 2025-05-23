@@ -14,6 +14,8 @@ and this project adheres to
 
 - "Popularidad" filter logic
 
+- Toggle Switch role
+
 ### [ita-challenges-frontend-3.1.33-RELEASE] (2025-04-10) (fix#261)
 
 - Remove examples and notes sections from challenge info component
