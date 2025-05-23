@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/semi */
-/* eslint-disable @typescript-eslint/space-before-function-paren */
-import { HttpClient } from '@angular/common/http';
+/* eslint-disable @typescript-eslint/space-before-function-paren */import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -135,4 +134,14 @@ export class AuthService {
     error: () => this.toastr.error(this.translate.instant("messages.errors.logout"), '', { timeOut: 3000 }),
   });
 }
+
+  switchRole(newRoleName: 'ADMIN' | 'USER'): Observable <{ token: string }> {
+    const url = `${environment.AUTH_BASIC_URL}${environment.AUTH_SWITCH_ROLE}`;
+    const body = { newRole: newRoleName }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getAuthToken()}`,
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<{ token: string }>(url, body, { headers })
+  }
 }

@@ -35,5 +35,7 @@ export const environment = {
   HTTP_CODE_UNAUTHORIZED: 401,
   HTTP_CODE_FORBIDDEN: 403,
   GITHUB_CLIENT_ID: 'Ov23liMlfGdUlcA569gk',
-  AUTH_REDIRECT_URL: 'http://localhost:4200/ita-challenge/challenges'
+  AUTH_REDIRECT_URL: 'http://localhost:4200/ita-challenge/challenges',
+  AUTH_BASIC_URL: 'http://localhost:4200/ita-challenge/',
+  AUTH_SWITCH_ROLE: 'api/v1/auth/switch-role'
 }

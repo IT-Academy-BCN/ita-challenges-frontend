@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-toggle',
@@ -9,4 +9,10 @@ export class ToggleComponent {
   @Input() currentRole: string = ''
   roles: string[] = ['ADMIN', 'USER']
   selectedRole: string = ''
+
+  @Output() roleSwiched = new EventEmitter<'ADMIN' | 'USER'>()
+
+  switchUserRole (newRole: 'ADMIN' | 'USER'): void {
+    this.roleSwiched.emit(newRole)
+  }
 }
