@@ -73,21 +73,6 @@ implements OnInit {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  mockSolutions = [
-    {
-      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
-      uuid_challenge: 'd43a1a4d-ee8f-432d-8f9c-68eda2547dae',
-      uuid_language: '409c9fe8-74de-4db3-81a1-a55280cf92ef',
-      solution_text: 'This is the submitted solution'
-    },
-    {
-      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
-      uuid_challenge: 'b5c06903-f27b-4057-8220-ad9d957cdce4',
-      uuid_language: '09fabe32-7362-4bfb-ac05-b7bf854c6e0f',
-      solution_text: 'This is the submitted solution'
-    }
-  ]
-
   async ngOnInit (): Promise<void> {
     this.authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
@@ -135,18 +120,22 @@ implements OnInit {
     this.authService.getUserId().subscribe((userId) => {
       if (userId === null || userId === '') return
 
-      const found = this.mockSolutions.find(
-        (sol) => sol.uuid_user === userId && sol.uuid_challenge === this.idChallenge && this.languages.some(lang => lang.id_language === sol.uuid_language)
-      )
+      this.solutionService.fetchUserSolution().subscribe((solutions) => {
+        const match = solutions.find(
+          (sol: any) =>
+            sol.uuid_user === userId &&
+            sol.uuid_challenge === this.idChallenge &&
+            this.languages.some(lang => lang.id_language === sol.uuid_language)
+        )
 
-      if (found !== undefined) {
-        this.solutionSent = true
-        this.solutionText = found.solution_text
-        this.userSolution = { solution_text: found.solution_text }
-        this.loadSolutions(this.idChallenge, found.uuid_language)
-
-        this.cdr.detectChanges() // Si necesitas forzar actualización de vista
-      }
+        if (match !== undefined && match !== null) {
+          this.solutionSent = true
+          this.solutionText = match.solution_text
+          this.userSolution = { solution_text: match.solution_text }
+          this.loadSolutions(this.idChallenge, String(match.uuid_language))
+          this.cdr.detectChanges()
+        }
+      })
     })
   }
 
