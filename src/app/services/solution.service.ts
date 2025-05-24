@@ -102,12 +102,22 @@ export class SolutionService {
     this.submitSolutionSubject.next(solution)
   }
 
-  fetchUserSolution (): Observable<any> {
-    return this.http.get<any>(`${environment.USER_SOLUTION}`,
+  fetchUserSolution (): Observable<any[]> {
+    const mockSolutions = [
       {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+        uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
+        uuid_challenge: 'd43a1a4d-ee8f-432d-8f9c-68eda2547dae',
+        uuid_language: '409c9fe8-74de-4db3-81a1-a55280cf92ef',
+        solution_text: 'Esta es la solución del usuario para el reto FizzBuzz'
+      },
+      {
+        uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
+        uuid_challenge: 'b5c06903-f27b-4057-8220-ad9d957cdce4',
+        uuid_language: '09fabe32-7362-4bfb-ac05-b7bf854c6e0f',
+        solution_text: 'Esta es la solución del usuario para el reto Contador de vocales únicas'
+      }
+    ]
+
+    return of(mockSolutions)
   }
 }
