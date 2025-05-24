@@ -120,12 +120,11 @@ implements OnInit {
     this.authService.getUserId().subscribe((userId) => {
       if (userId === null || userId === '') return
 
-      this.solutionService.fetchUserSolution().subscribe((solutions) => {
-        const match = solutions.find(
-          (sol: any) =>
-            sol.uuid_user === userId &&
-            sol.uuid_challenge === this.idChallenge &&
-            this.languages.some(lang => lang.id_language === sol.uuid_language)
+      this.solutionService.fetchUserSolution().subscribe((response) => {
+        const match = response.find((solution: any) =>
+          solution.uuid_user === userId &&
+          solution.uuid_challenge === this.idChallenge &&
+          this.languages.some(lang => lang.id_language === solution.uuid_language)
         )
 
         if (match !== undefined && match !== null) {
