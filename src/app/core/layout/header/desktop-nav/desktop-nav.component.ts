@@ -81,6 +81,8 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this._authService.switchRole(newRole).subscribe({
       next: (data) => {
         console.log('cmabio de rol con éxito', data)
+        localStorage.setItem('authToken', data.token) // creamos un nuevo token en localstorage con la info del rol actualizada
+        this._authService.updateUserRoleAndUserNameFromToken() // llamamos a la función para que lea el nuevo token
       },
       error: (error) => {
         console.log('error al cmabiar de rol', error)

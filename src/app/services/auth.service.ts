@@ -136,7 +136,7 @@ export class AuthService {
 }
 
   switchRole(newRoleName: 'ADMIN' | 'USER'): Observable <{ token: string }> {
-    const url = `${environment.AUTH_BASIC_URL}${environment.AUTH_SWITCH_ROLE}`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.AUTH_SWITCH_ROLE}`;
     const body = { newRole: newRoleName }
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.getAuthToken()}`,

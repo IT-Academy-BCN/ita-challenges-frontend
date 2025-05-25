@@ -37,5 +37,5 @@ export const environment = {
   GITHUB_CLIENT_ID: 'Ov23liMlfGdUlcA569gk',
   AUTH_REDIRECT_URL: 'http://localhost:4200/ita-challenge/challenges',
   AUTH_BASIC_URL: 'http://localhost:4200/ita-challenge/',
-  AUTH_SWITCH_ROLE: 'api/v1/auth/switch-role'
+  AUTH_SWITCH_ROLE: '/auth/switch-role'
 }
