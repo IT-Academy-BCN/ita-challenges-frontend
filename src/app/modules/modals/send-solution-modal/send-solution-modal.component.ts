@@ -23,7 +23,7 @@ export class SendSolutionModalComponent {
   solutionText: string = '';
   @Output() solutionAccepted = new EventEmitter<boolean>();
   @Output() solutionSubmitted = new EventEmitter<string>();
-
+  @Output() timesSolvedUpdated = new EventEmitter<number>();
   ngOnInit(): void {
     this.getLanguageId(); 
     this.getSolutionText(); 
@@ -53,6 +53,9 @@ export class SendSolutionModalComponent {
       this.solutionText
     ).subscribe({
       next: (response) => {
+        if ('timesSolved' in response) {
+          this.timesSolvedUpdated.emit(response.timesSolved);
+        }
         const solutionText = response.solution_text;
         this.solutionService.solutionText(solutionText);
         this.solutionSubmitted.emit(solutionText); 
