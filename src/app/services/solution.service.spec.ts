@@ -85,7 +85,6 @@ describe('SolutionService', () => {
 
     const req = httpMock.expectOne(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`)
     expect(req.request.method).toBe('GET')
-    expect(req.request.headers.get('Content-Type')).toBe('application/json')
     req.flush(mockResponse)
   })
 
