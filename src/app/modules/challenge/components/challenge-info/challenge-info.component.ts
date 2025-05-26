@@ -13,7 +13,7 @@ import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeService } from '../../../../services/challenge.service'
-import { type Subscription } from 'rxjs'
+import { firstValueFrom, type Subscription } from 'rxjs'
 import { DataChallenge } from '../../../../models/data-challenge.model'
 import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
@@ -117,25 +117,24 @@ implements OnInit {
       this.isChallengeStatementVisible = false;
     }
 
-    this.authService.getUserId().subscribe((userId) => {
-      if (userId === null || userId === '') return
+    const userId = await firstValueFrom(this.authService.getUserId())
+    if (userId === null || userId === '') return
 
-      this.solutionService.fetchUserSolution().subscribe((response) => {
-        const match = response.find((solution: any) =>
-          solution.uuid_user === userId &&
-          solution.uuid_challenge === this.idChallenge &&
-          this.languages.some(lang => lang.id_language === solution.uuid_language)
-        )
+    const response = await firstValueFrom(this.solutionService.fetchUserSolution())
 
-        if (match !== undefined && match !== null) {
-          this.solutionSent = true
-          this.solutionText = match.solution_text
-          this.userSolution = { solution_text: match.solution_text }
-          this.loadSolutions(this.idChallenge, String(match.uuid_language))
-          this.cdr.detectChanges()
-        }
-      })
-    })
+    const match = response.find((solution: any) =>
+      solution.uuid_user === userId &&
+      solution.uuid_challenge === this.idChallenge &&
+      this.languages.some(lang => lang.id_language === solution.uuid_language)
+    )
+
+    if (match !== undefined && match !== null) {
+      this.solutionSent = true
+      this.solutionText = match.solution_text
+      this.userSolution = { solution_text: match.solution_text }
+      this.loadSolutions(this.idChallenge, String(match.uuid_language))
+      this.cdr.detectChanges()
+    }
   }
 
   ngOnChanges (changes: SimpleChanges): void {
