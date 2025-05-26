@@ -86,16 +86,16 @@ describe('SolutionService', () => {
 })
 
   it('should fetch user solutions', (done) => {
-    const userId = 'user123'
+    const expectedUrl = environment.USER_SOLUTION
 
     service.fetchUserSolution().subscribe((data) => {
-      expect(data).toEqual(mockResponse)
+      expect(data).toEqual(mockUserSolution)
       done()
     })
 
-    const req = httpMock.expectOne(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`)
+    const req = httpMock.expectOne(expectedUrl)
     expect(req.request.method).toBe('GET')
-    req.flush(mockResponse)
+    req.flush(mockUserSolution)
   })
 
   it('should send the correct data in PUT request', () => {
