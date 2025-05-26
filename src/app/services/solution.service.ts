@@ -102,7 +102,7 @@ export class SolutionService {
     this.submitSolutionSubject.next(solution)
   }
 
-  fetchUserSolution (): Observable<any[]> {
-    return this.http.get<any[]>('../assets/dummy/user-solution.mock.json')
+  fetchUserSolution (): Observable<UserSolution[]> {
+    return this.http.get<UserSolution[]>('../assets/dummy/user-solution.mock.json')
   }
 }

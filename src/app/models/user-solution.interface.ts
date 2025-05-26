@@ -1,20 +1,8 @@
 export interface UserSolution {
-  offset: number
-  limit: number
-  count: number
-  results: Result[]
-}
-
-export interface Result {
-  id_challenge: string
-  language: string
-  id_user: string
-  solutions: SolutionsUser[]
-}
-
-export interface SolutionsUser {
-  uuid: string
-  solutionText: string
+  uuid_user: string
+  uuid_challenge: string
+  uuid_language: string
+  solution_text: string
 }
 
 export interface SubmitSolutionResponse {
