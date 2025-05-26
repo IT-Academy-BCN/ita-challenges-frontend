@@ -14,7 +14,6 @@ export class Challenge {
   detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
-
   timesSolved: number
   bookmarked: boolean
 
@@ -27,11 +26,8 @@ export class Challenge {
     this.favorites_count = element.favorites_count || 0
     this.saved_count = element.saved_count || 0
     this.timesFavorite = element.timesFavorite || 0
-
     this.timesSolved = element.timesSolved || 0
-
     this.bookmarked = element.bookmarked || false
-
     this.detail = element.detail
 
     element.languages.forEach((language: Language) => {
