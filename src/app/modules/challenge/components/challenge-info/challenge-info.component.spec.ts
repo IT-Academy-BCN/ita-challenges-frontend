@@ -418,5 +418,35 @@ describe('ChallengeInfoComponent', () => {
       const uniqueIds = new Set(result.map((c: any) => c.id_challenge))
       expect(uniqueIds.size).toBe(result.length)
     })
+
+    it('should load user solution if available', async () => {
+      // Arrange
+      const mockUserId: string = 'test-user-id'
+      const mockChallengeId: string = 'test-challenge-id'
+      const mockLanguageId: string = 'test-language-id'
+      const mockSolutionText: string = 'Mock user solution'
+
+      component.idChallenge = mockChallengeId
+      component.languages = [{ id_language: mockLanguageId, language_name: 'JavaScript' }]
+
+      jest.spyOn(component['authService'], 'getUserId').mockReturnValue(of(mockUserId))
+      jest.spyOn(component['solutionService'], 'fetchUserSolution').mockReturnValue(of([
+        {
+          uuid_user: mockUserId,
+          uuid_challenge: mockChallengeId,
+          uuid_language: mockLanguageId,
+          solution_text: mockSolutionText
+        }
+      ]));
+
+      // Act
+      await component.ngOnInit()
+      fixture.detectChanges()
+
+      // Assert
+      expect(component.solutionSent).toBe(true)
+      expect(component.solutionText).toBe(mockSolutionText)
+      expect(component.userSolution).toEqual({ solution_text: mockSolutionText })
+    })
   })
 })
