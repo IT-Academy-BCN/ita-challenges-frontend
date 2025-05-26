@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, catchError, of, Subject, type Observable } from 'rxjs'
+import { BehaviorSubject, catchError, map, of, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { type UserSolution } from '../models/user-solution.interface'
@@ -79,6 +79,14 @@ export class SolutionService {
         }
       }
     ).pipe(
+      map((response) => {
+      // Aquí inyectas los datos que aún no te da el backend
+        return {
+          ...response,
+          isSolved: true,
+          timesSolved: 1 // valor hardcodeado por ahora
+        }
+      }),
       catchError(() => {
         return of({ isSolved: true, timesSolved: 10 });
       })
