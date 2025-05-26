@@ -6,14 +6,15 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
+- [Added] 
+
 - Toggle Switch role (#400)
-  - Added logic to allow user role switching (#401)
-  - Add redirection upon user role switching (#402)
-  - Automatic redirection upon token expiration (#422)
-
-- [Added] show times solved counter in the challenge list and detail (Taiga [#389], PR [#408])
-
-- [Added] Submit solution and update solved counter (Taiga [#389], PR [#409])
+- Added logic to allow user role switching (#401)
+- Add redirection upon user role switching (#402)
+- Automatic redirection upon token expiration (#422)
+- show times solved counter in the challenge list and detail (#389)
+- Submit solution and update solved counter (#389)
+- display user bookmarks on login (#432)
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
