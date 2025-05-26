@@ -15,6 +15,8 @@ and this project adheres to
 - show times solved counter in the challenge list and detail (#389)
 - Submit solution and update solved counter (#389)
 - display user bookmarks on login (#432)
+- remove bookmark count (#431)
+
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
