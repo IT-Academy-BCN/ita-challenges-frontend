@@ -38,6 +38,7 @@ export class StarterComponent implements OnInit {
 
   isAdmin: boolean = false
   favoriteChallenges: string[] = []
+  timesSolved: number = 0
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
