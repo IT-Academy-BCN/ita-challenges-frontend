@@ -31,6 +31,7 @@ export class Challenge {
     this.timesSolved = element.timesSolved || 0
 
     this.bookmarked = element.bookmarked || false
+
     this.detail = element.detail
 
     element.languages.forEach((language: Language) => {
