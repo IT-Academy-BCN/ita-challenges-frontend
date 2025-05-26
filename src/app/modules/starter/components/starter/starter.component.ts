@@ -39,7 +39,8 @@ export class StarterComponent implements OnInit {
   isAdmin: boolean = false
   favoriteChallenges: string[] = []
   timesSolved: number = 0
-
+  bookmarkedChallenges: string[] = []
+  
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -61,6 +62,19 @@ export class StarterComponent implements OnInit {
             },
             error: (err) => {
               console.error('Error getting favorites:', err)
+            }
+          })
+          this.challengeService.getUserBookmarks(userId).subscribe({
+            next: (bookmarks: string[]) => {
+              this.bookmarkedChallenges = bookmarks
+              // Marcar los retos como bookmarkeados
+              this.listChallenges.forEach(challenge => {
+                challenge.bookmarked = bookmarks.includes(challenge.id_challenge)
+              })
+              this.refreshChallengeList()
+            },
+            error: (err) => {
+              console.error('Error getting bookmarks:', err)
             }
           })
         }
