@@ -40,7 +40,7 @@ export class StarterComponent implements OnInit {
   favoriteChallenges: string[] = []
   timesSolved: number = 0
   bookmarkedChallenges: string[] = []
-  
+
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
