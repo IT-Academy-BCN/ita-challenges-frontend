@@ -67,11 +67,6 @@ export class StarterComponent implements OnInit {
           this.challengeService.getUserBookmarks(userId).subscribe({
             next: (bookmarks: string[]) => {
               this.bookmarkedChallenges = bookmarks
-              // Marcar los retos como bookmarkeados
-              this.listChallenges.forEach(challenge => {
-                challenge.bookmarked = bookmarks.includes(challenge.id_challenge)
-              })
-              this.refreshChallengeList()
             },
             error: (err) => {
               console.error('Error getting bookmarks:', err)
@@ -92,6 +87,10 @@ export class StarterComponent implements OnInit {
   isFavoriteChallenge (challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
+  }
+
+  isBookmarkedChallenge (challengeId: string): boolean {
+    return this.bookmarkedChallenges.includes(challengeId)
   }
 
   getChallenge (): void {
