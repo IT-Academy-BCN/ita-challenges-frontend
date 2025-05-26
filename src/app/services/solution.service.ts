@@ -86,9 +86,6 @@ export class SolutionService {
           isSolved: true,
           timesSolved: 1 // valor hardcodeado por ahora
         }
-      }),
-      catchError(() => {
-        return of({ isSolved: true, timesSolved: 10 });
       })
     );
   }
