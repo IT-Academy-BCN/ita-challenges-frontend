@@ -185,4 +185,20 @@ describe('ChallengeService', () => {
       })
     })
   })
+
+  it('should call getUserBookmarks() and return data', () => {
+    const userId = '123'
+    const mockBookmarks: string[] = ['challenge1', 'challenge2']
+    service.getUserBookmarks(userId).subscribe(bookmarks => {
+      expect(bookmarks).toEqual(mockBookmarks)
+    })
+
+    const req = httpMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/bookmarks`
+    )
+    expect(req.request.method).toBe('GET')
+    expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+
+    req.flush(mockBookmarks)
+  })
 })
