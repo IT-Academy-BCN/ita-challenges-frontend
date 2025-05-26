@@ -38,7 +38,6 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
   @Input() isBookmarked: boolean = false
-  @Input() bookmarks_count: number = 0
 
   @Input() timesSolved: number = 0
   @Output() startChallenge = new EventEmitter<boolean>()
@@ -200,7 +199,6 @@ export class ChallengeHeaderComponent implements OnInit {
       this.challengeService.removeBookmark(this.idChallenge).subscribe({
         next: response => {
           this.isBookmarked = response.bookmarked
-          this.bookmarks_count = response.timesBookmarked
         },
         error: error => {
           console.error('Error removing bookmark:', error)
@@ -210,7 +208,6 @@ export class ChallengeHeaderComponent implements OnInit {
       this.challengeService.addBookmark(this.idChallenge).subscribe({
         next: response => {
           this.isBookmarked = response.bookmarked
-          this.bookmarks_count = response.timesBookmarked
         },
         error: error => {
           console.error('Error adding bookmark:', error)
