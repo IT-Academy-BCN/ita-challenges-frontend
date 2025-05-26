@@ -47,7 +47,7 @@ export class ChallengeHeaderComponent implements OnInit {
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
   challenge_level: string | undefined
-  challenge_timesSolved: number = 0
+  @Input() timesSolved: number = 0
 
   challengeStarted: boolean = false
   solutionSent: boolean = false
@@ -133,7 +133,7 @@ export class ChallengeHeaderComponent implements OnInit {
     });
 
     modalRef.componentInstance.timesSolvedUpdated.subscribe((newCount: number) => {
-      this.challenge_timesSolved = newCount
+      this.timesSolved = newCount
     })
   }
 
