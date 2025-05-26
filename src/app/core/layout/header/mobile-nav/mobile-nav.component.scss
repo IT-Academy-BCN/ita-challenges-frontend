@@ -112,18 +112,16 @@ $navbar-toggler-transition: none;
   
     .dropdown-mobile {
       display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-      left: -6.75rem;
-      border-radius: 10px;
-      margin-top: 0.4rem;
-      height: 92px;
-      width: 168px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        left: -8.75rem;
+        border-radius: 10px;
+        margin-top: 0.4rem;
+        border: 1px solid #ccc;
+        font-size: 14px;
     }
     .dropdown-mobile.show {
       display: flex;
