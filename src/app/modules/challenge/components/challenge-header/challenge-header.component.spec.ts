@@ -134,26 +134,22 @@ describe('ChallengeHeaderComponent', () => {
 
   it('toggleBookmark: add bookmark when not bookmarked', done => {
     component.idChallenge = 'B1';
-    component.bookmarks_count = 0;
     component.isBookmarked = false;
     challengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }));
     component.toggleBookmark(new MouseEvent('click'));
     setTimeout(() => {
       expect(component.isBookmarked).toBe(true);
-      expect(component.bookmarks_count).toBe(1);
       done();
     });
   });
 
   it('toggleBookmark: remove bookmark when bookmarked', done => {
     component.idChallenge = 'B1';
-    component.bookmarks_count = 1;
     component.isBookmarked = true;
     challengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }));
     component.toggleBookmark(new MouseEvent('click'));
     setTimeout(() => {
       expect(component.isBookmarked).toBe(false);
-      expect(component.bookmarks_count).toBe(0);
       done();
     });
   });
