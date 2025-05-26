@@ -95,6 +95,6 @@ export class SolutionService {
   }
 
   fetchUserSolution (): Observable<UserSolution[]> {
-    return this.http.get<UserSolution[]>('../assets/dummy/user-solution.mock.json')
+    return this.http.get<UserSolution[]>(environment.USER_SOLUTION)
   }
 }
