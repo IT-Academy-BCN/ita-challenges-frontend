@@ -19,6 +19,9 @@ class MockAuthService {
   getUsername = jest.fn(() => of('test-user'));
   isLoggedIn$ = of(true); 
   logout = jest.fn();
+  getUserRole() {
+    return of('')
+  }
 }
 
 const mockActivatedRoute = {
