@@ -6,6 +6,8 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
+- Toggle Switch role
+
 - Cleanup pagination logic
 
 - Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
@@ -13,8 +15,6 @@ and this project adheres to
 - "Volver a retos" link added
 
 - "Popularidad" filter logic
-
-- Toggle Switch role
 
 ### [ita-challenges-frontend-3.1.33-RELEASE] (2025-04-10) (fix#261)
 
