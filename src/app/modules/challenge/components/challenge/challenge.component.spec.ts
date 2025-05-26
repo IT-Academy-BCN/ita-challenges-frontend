@@ -19,6 +19,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { CookieService } from 'ngx-cookie-service'
 import { registerLocaleData } from '@angular/common'
 import localeCa from '@angular/common/locales/ca'
+import { AuthService } from 'src/app/services/auth.service'
 
 registerLocaleData(localeCa)
 
@@ -27,8 +28,13 @@ describe('ChallengeComponent', () => {
   let fixture: ComponentFixture<ChallengeComponent>
   let mockChallengeService: any
   let cookieService: CookieService
+  let getUserBookmarksSpy: jasmine.Spy
+  let getUserFavoritesSpy: jasmine.Spy
 
   beforeEach(async () => {
+    getUserBookmarksSpy = jasmine.createSpy('getUserBookmarks').and.returnValue(of(['id1', 'id2']))
+    getUserFavoritesSpy = jasmine.createSpy('getUserFavorites').and.returnValue(of(['id3']))
+
     mockChallengeService = {
       getChallengeById: jasmine.createSpy('getChallengeById').and.returnValue(of({
         challenge_title: '',
@@ -45,7 +51,14 @@ describe('ChallengeComponent', () => {
         popularity: 0,
         languages: [],
         timesFavorite: 0
-      }))
+      })),
+      getUserBookmarks: getUserBookmarksSpy,
+      getUserFavorites: getUserFavoritesSpy
+    }
+    const mockAuthService = {
+      isUserLoggedIn: () => true,
+      getUserId: () => of('mock-user-id'),
+      getUserRole: () => of('ROLE_USER')
     }
 
     await TestBed.configureTestingModule({
@@ -82,6 +95,7 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
+        { provide: AuthService, useValue: mockAuthService },
         CookieService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -228,6 +242,14 @@ describe('ChallengeComponent', () => {
     expect(component.activeId).toBe(newActiveId)
   })
 
+  it('should correctly determine if a challenge is bookmarked', () => {
+    component.bookmarkedChallenges = ['id-1', 'id-2']
+    expect(component.isBookmarkedChallenge('id-1')).toBeTruthy()
+    expect(component.isBookmarkedChallenge('id-3')).toBeFalsy()
+  })
 
-  
+  it('should fetch and store bookmarked challenges on init', () => {
+    expect(mockChallengeService.getUserBookmarks).toHaveBeenCalled()
+    expect(component.bookmarkedChallenges).toEqual(['id1', 'id2'])
+  })
 })
