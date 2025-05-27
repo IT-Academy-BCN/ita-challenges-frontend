@@ -11,6 +11,7 @@ and this project adheres to
   - Automatic redirection upon token expiration (#422)
 
 - show times solved counter in the challenge list and detail (#408)
+- Submit solution and update solved counter (feature#409)
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
