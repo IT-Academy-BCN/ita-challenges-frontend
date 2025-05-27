@@ -66,23 +66,19 @@ export class AuthService {
   }
 
   private checkAuthToken(): boolean {
-    const tokenActual = localStorage.getItem('authToken') // recuperamos el token guardado
+    const tokenActual = localStorage.getItem('authToken')
     if (tokenActual == null) {
-      return false // si no hay token, el user no está autenticado
+      return false
     }
-    // const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInJvbGUiOiJ1c2VyIiwidXVpZCI6InNvbWUtdXVpZCIsImlhdCI6MTYwOTAwMDAwMCwiZXhwIjoxNjA5MDAwMDAwfQ.7_oGkp_jLTt5Vaj04LJwpx3rK55BC1C0U4pNHO2HKeA';
-    return !this.isTokenExpired(tokenActual) // si hay token, miramos si está expirado o no
+    return !this.isTokenExpired(tokenActual)
   }
 
   checkAndHandleExpiredToken(): void {
     const tokenActual = this.getAuthToken()
     if (tokenActual != null && this.isTokenExpired(tokenActual)) {
-      console.log('Tu token ha expirado')
-      this.toastr.warning(this.translate.instant("Token expirado"), '', { timeOut: 3000 });
+      this.toastr.warning(this.translate.instant("Expired token"), '', { timeOut: 3000 });
       this.clearAuthData()
-      setTimeout(() => {
-        this.logout()
-      }, 5000)
+      this.logout()
     }
   }
 
@@ -101,12 +97,12 @@ export class AuthService {
     }
   }
 
-  private isTokenExpired (token: string): boolean { // MIRAMOS SI EL TOKEN HA EXPIRADO
-    const decoded = this.decodeToken(token); // decodificamos el token
-    if (!decoded || !decoded.exp) return true // si no hay token o fecha de expiración, lo consideramos expirado
+  private isTokenExpired (token: string): boolean {
+    const decoded = this.decodeToken(token);
+    if (!decoded || !decoded.exp) return true
 
-    const expiryTime = decoded.exp * 1000 // si hay token, convertimos la expiración a milisegundos
-    return Date.now() > expiryTime // miramos si ha expirado o no comparando con la fecha actual. si la fecha actual es mayo, ya ha expirado.
+    const expiryTime = decoded.exp * 1000
+    return Date.now() > expiryTime
   }
 
   getAuthToken(): string | null {
