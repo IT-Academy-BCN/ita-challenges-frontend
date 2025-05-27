@@ -8,6 +8,8 @@ import mockResponse from '../../mocks/solution/solution-sended.json'
 import mockData from '../../mocks/solution/data-solution.json'
 import mockUserSolution from '../../mocks/solution/user-solution.json'
 import { SolutionStatus } from '../models/user-solution-status.enum'
+import { of } from 'rxjs'
+import { AuthService } from './auth.service'
 
 describe('SolutionService', () => {
   let service: SolutionService
@@ -16,7 +18,15 @@ describe('SolutionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [SolutionService]
+      providers: [
+        SolutionService,
+        {
+          provide: AuthService,
+          useValue: {
+            getUserId: jest.fn().mockReturnValue(of('mocked-user-id'))
+          }
+        }
+      ]
     })
 
     service = TestBed.inject(SolutionService)
@@ -86,7 +96,8 @@ describe('SolutionService', () => {
 })
 
   it('should fetch user solutions', (done) => {
-    const expectedUrl = environment.USER_SOLUTION
+    const mockUserId = 'mocked-user-id'
+    const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.USER_SOLUTION}${mockUserId}/solutions`
 
     service.fetchUserSolution().subscribe((data) => {
       expect(data).toEqual(mockUserSolution)
