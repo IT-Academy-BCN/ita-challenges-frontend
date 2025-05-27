@@ -8,6 +8,9 @@ and this project adheres to
 
 - Toggle Switch role
 
+
+### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
+
 - Cleanup pagination logic
 
 - Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
