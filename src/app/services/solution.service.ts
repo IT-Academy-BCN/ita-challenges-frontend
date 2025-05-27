@@ -5,12 +5,15 @@ import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
 import { SubmitSolutionResponse, type UserSolution } from '../models/user-solution.interface'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { switchMap } from 'rxjs'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolutionService {
   private readonly http = inject(HttpClient)
+  private readonly authService = inject(AuthService)
 
   activeIdSubject = new BehaviorSubject<ChallengeTab>(ChallengeTab.DETAILS)
   activeId$ = this.activeIdSubject.asObservable()
@@ -103,6 +106,16 @@ export class SolutionService {
   }
 
   fetchUserSolution (): Observable<UserSolution[]> {
-    return this.http.get<UserSolution[]>(environment.USER_SOLUTION)
+    return this.authService.getUserId().pipe(
+      switchMap(userId => {
+        if (typeof userId !== 'string' || userId.trim() === '') {
+          console.error('Error: userId inválido', userId)
+          throw new Error('User ID not found')
+        }
+        const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.USER_SOLUTION}${userId}/solutions`
+        console.log('Llamando al endpoint:', url)
+        return this.http.get<UserSolution[]>(url)
+      })
+    )
   }
 }
