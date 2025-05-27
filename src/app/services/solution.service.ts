@@ -80,11 +80,10 @@ export class SolutionService {
       }
     ).pipe(
       map((response) => {
-      // Aquí inyectas los datos que aún no te da el backend
         return {
           ...response,
           isSolved: true,
-          timesSolved: 1 // valor hardcodeado por ahora
+          timesSolved: 1 
         }
       })
     );
