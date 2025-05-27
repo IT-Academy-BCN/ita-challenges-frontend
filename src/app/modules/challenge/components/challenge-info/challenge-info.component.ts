@@ -73,7 +73,7 @@ implements OnInit {
 
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
-  async ngOnInit (): Promise<void> {
+  ngOnInit (): void {
     this.authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
