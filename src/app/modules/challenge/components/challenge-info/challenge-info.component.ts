@@ -117,6 +117,10 @@ implements OnInit {
       this.isChallengeStatementVisible = false;
     }
 
+    void this.loadUserSolutionData()
+  }
+
+  private async loadUserSolutionData (): Promise<void> {
     const userId = await firstValueFrom(this.authService.getUserId())
     if (userId === null || userId === '') return
 
@@ -126,7 +130,7 @@ implements OnInit {
       solution.uuid_user === userId &&
       solution.uuid_challenge === this.idChallenge &&
       this.languages.some(lang => lang.id_language === solution.uuid_language)
-    )
+    );
 
     if (match !== undefined && match !== null) {
       this.solutionSent = true
