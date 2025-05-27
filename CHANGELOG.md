@@ -18,6 +18,10 @@ and this project adheres to
 - remove bookmark count (#431)
 
 
+- Show user solution (mock) alongside mentor solution in completed challenges (Taiga [#424], PR [#627])
+
+- Refactor SolutionService to load user solutions from mock JSON (Taiga [#424], PR [#627])
+
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
 - Cleanup pagination logic
