@@ -420,15 +420,16 @@ describe('ChallengeInfoComponent', () => {
     })
 
     it('should load user solution if available', async () => {
-      // Arrange
       const mockUserId: string = 'test-user-id'
       const mockChallengeId: string = 'test-challenge-id'
-      const mockLanguageId: string = 'test-language-id'
+      const mockLanguageId: string = 'mock-lang-id'
       const mockSolutionText: string = 'Mock user solution'
 
+      // Prepara valores requeridos
       component.idChallenge = mockChallengeId
       component.languages = [{ id_language: mockLanguageId, language_name: 'JavaScript' }]
 
+      // Mock servicios
       jest.spyOn(component['authService'], 'getUserId').mockReturnValue(of(mockUserId))
       jest.spyOn(component['solutionService'], 'fetchUserSolution').mockReturnValue(of([
         {
@@ -437,10 +438,10 @@ describe('ChallengeInfoComponent', () => {
           uuid_language: mockLanguageId,
           solution_text: mockSolutionText
         }
-      ]));
+      ]))
 
       // Act
-      await component.ngOnInit()
+      await component['loadUserSolutionData']()
       fixture.detectChanges()
 
       // Assert
