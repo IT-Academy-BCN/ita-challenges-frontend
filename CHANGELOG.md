@@ -9,10 +9,9 @@ and this project adheres to
 - Toggle Switch role
   -  Automatic redirection upon token expiration
 
-### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
+- Show user solution (mock) alongside mentor solution in completed challenges (Taiga [#424], PR [#627])
 
-- show times solved counter in the challenge list and detail
-
+- Refactor SolutionService to load user solutions from mock JSON (Taiga [#424], PR [#627])
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
