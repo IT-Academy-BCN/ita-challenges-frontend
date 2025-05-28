@@ -51,7 +51,6 @@ describe('ChallengeService', () => {
     expect(service).toBeTruthy()
   })
 
-  // Itineraries tests
   it('should get itineraries successfully', async () => {
     const mockData: Itinerary[] = [{ id: '1', name: 'mockName', slug: 'mockSlug' }]
     const promise = service.getItineraries()
@@ -73,7 +72,6 @@ describe('ChallengeService', () => {
     await expect(promise).rejects.toBeTruthy()
   })
 
-  // Languages test
   it('should call getAllLanguages() and return data', () => {
     const mockResponse = { results: [{ language_name: 'JS', id_language: 1 }] }
     service.getAllLanguages().subscribe(data => {
@@ -86,7 +84,6 @@ describe('ChallengeService', () => {
     req.flush(mockResponse)
   })
 
-  // Create challenge test
   it('should create challenge and return response', (done) => {
     const mockChallenge: CreateChallenge = { challengeTitle: 'T', description: 'D', level: 'EASY', language: 'Java', solution: 'S', topic: 'ALL', tags: [] }
     const mockResp = { id: 1, ...mockChallenge }
