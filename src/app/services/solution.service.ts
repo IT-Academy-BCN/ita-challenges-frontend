@@ -113,7 +113,6 @@ export class SolutionService {
           throw new Error('User ID not found')
         }
         const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.USER_SOLUTION}${userId}/solutions`
-        console.log('Llamando al endpoint:', url)
         return this.http.get<UserSolution[]>(url)
       })
     )
