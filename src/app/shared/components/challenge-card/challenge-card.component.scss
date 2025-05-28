@@ -117,3 +117,11 @@
     border: none;
     padding: 0;
   }
+
+.bookmark-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: transform 0.2s ease;
+}

@@ -123,7 +123,10 @@
         "startedFinished": "Empezado y finalizado",
         "savedTimes": "Veces guardado",
         "favorites": "Veces marcado como favorito",
-        "creationDate": "Fecha creación"
+        "creationDate": "Fecha creación",
+        "bookmarks": {
+            "saved": "Reto guardado",
+            "unsaved": "Guardar este reto"
     },
     "messages": {
     "errors": {

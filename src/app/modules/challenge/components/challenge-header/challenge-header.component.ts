@@ -37,6 +37,8 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() isEditorChallengeVisible: boolean = false
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
+  @Input() isBookmarked: boolean = false
+  @Input() bookmarks_count: number = 0
 
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
@@ -179,6 +181,34 @@ export class ChallengeHeaderComponent implements OnInit {
         },
         error: error => {
           console.error('Error adding favorite:', error)
+        }
+      })
+    }
+  }
+
+  toggleBookmark (event: Event): void {
+    event.stopPropagation()
+    if (!this.authService.isUserLoggedIn()) {
+      return
+    }
+    if (this.isBookmarked) {
+      this.challengeService.removeBookmark(this.idChallenge).subscribe({
+        next: response => {
+          this.isBookmarked = response.bookmarked
+          this.bookmarks_count = response.timesBookmarked
+        },
+        error: error => {
+          console.error('Error removing bookmark:', error)
+        }
+      })
+    } else {
+      this.challengeService.addBookmark(this.idChallenge).subscribe({
+        next: response => {
+          this.isBookmarked = response.bookmarked
+          this.bookmarks_count = response.timesBookmarked
+        },
+        error: error => {
+          console.error('Error adding bookmark:', error)
         }
       })
     }

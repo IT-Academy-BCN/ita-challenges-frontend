@@ -123,7 +123,11 @@
         "startedFinished": "Començat i finalitzat",
         "savedTimes": "Vegades guardat",
         "favorites": "Vegades marcat com favorit",
-        "creationDate": "Data de creació"
+        "creationDate": "Data de creació",
+        "bookmarks": {
+            "saved": "Repte guardat",
+            "unsaved": "Guardar aquest repte"
+  }
     },
     "messages": {
     "errors": {

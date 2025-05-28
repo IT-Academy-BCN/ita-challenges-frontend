@@ -149,6 +149,43 @@ export class ChallengeService {
     return this.http.get<string[]>(url, { headers });
   }
 
+  addBookmark (challengeId: string): Observable<any> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/bookmarks`;
+    return this.http.post<any>(
+      url,
+      {},
+      { headers }
+    ).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error adding bookmark:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  removeBookmark (challengeId: string): Observable<any> {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/bookmarks`;
+    return this.http.delete<any>(
+      url,
+      { headers }
+    ).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error removing bookmark:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
   // Helper methods for mock implementation
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`
