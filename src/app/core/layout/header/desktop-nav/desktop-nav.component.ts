@@ -80,10 +80,10 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     console.log('new role: ', newRole)
     this._authService.switchRole(newRole).subscribe({
       next: (data) => {
-        console.log('cmabio de rol con éxito', data)
+        console.log('changing role successfully', data)
       },
       error: (error) => {
-        console.log('error al cmabiar de rol', error)
+        console.log('error changing your role', error)
       }
     })
   }
