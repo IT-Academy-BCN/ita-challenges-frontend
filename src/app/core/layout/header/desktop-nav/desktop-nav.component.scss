@@ -87,30 +87,6 @@
   display: inline-block;
 }
 
-  .user {
-    border: unset;
-    background: $white;
-    border-radius: 10px;
-    width: 45px;
-    height: 38px;
-    position: relative;
-    display: inline-block;
-  }
-
-   .userWithPhoto {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    position: relative;
-    display: inline-block;
-    padding: 0;
-    overflow: hidden;
-   }
-
-  .profilePhoto{
-    border-radius: 50px;
-  }
-
   .dropdown {
     display: none;
     position: absolute;
