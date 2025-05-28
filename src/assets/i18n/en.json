@@ -125,7 +125,8 @@
         "startedFinished": "Started and finished",
         "savedTimes": "Times saved",
         "favorites": "Times favorited",
-        "creationDate": "Creation date"
+        "creationDate": "Creation date",
+        "bookmarks": "Save this challenge"
     },
     "messages": {
     "errors": {
