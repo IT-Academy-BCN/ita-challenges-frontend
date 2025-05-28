@@ -126,7 +126,9 @@
         "savedTimes": "Times saved",
         "favorites": "Times favorited",
         "creationDate": "Creation date",
-        "bookmarks": "Save this challenge"
+        "bookmarks": {
+            "saved": "Challenge saved",
+            "unsaved": "Save this challenge"
     },
     "messages": {
     "errors": {

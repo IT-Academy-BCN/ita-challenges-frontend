@@ -35,9 +35,9 @@
         <img src="assets/img/icon/bullseye.svg" alt="Bullseye">
         87%
       </span>
-      <span class="stat" [ngbTooltip]="'tooltips.bookmarks' | translate" (click)="toggleBookmark($event)" (keydown.enter)="toggleBookmark($event)" [attr.aria-pressed]="isBookmarked">
-        <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks' | translate">
-        <img *ngIf=" isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks' | translate">
+      <span class="stat" [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)" (click)="toggleBookmark($event)" (keydown.enter)="toggleBookmark($event)" [attr.aria-pressed]="isBookmarked">
+        <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks.unsaved' | translate">
+        <img *ngIf=" isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks.saved' | translate">
         <span class="txt">{{ bookmarks_count }}</span>
       </span>
       <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" style="cursor: pointer;">

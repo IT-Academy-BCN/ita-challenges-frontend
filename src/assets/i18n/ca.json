@@ -124,7 +124,10 @@
         "savedTimes": "Vegades guardat",
         "favorites": "Vegades marcat com favorit",
         "creationDate": "Data de creació",
-        "bookmarks": "Guardar aquest repte"
+        "bookmarks": {
+            "saved": "Repte guardat",
+            "unsaved": "Guardar aquest repte"
+  }
     },
     "messages": {
     "errors": {

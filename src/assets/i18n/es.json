@@ -124,7 +124,9 @@
         "savedTimes": "Veces guardado",
         "favorites": "Veces marcado como favorito",
         "creationDate": "Fecha creación",
-        "bookmarks": "Guardar este reto"
+        "bookmarks": {
+            "saved": "Reto guardado",
+            "unsaved": "Guardar este reto"
     },
     "messages": {
     "errors": {
