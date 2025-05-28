@@ -35,4 +35,4 @@
 - Berta Pasamontes - https://github.com/bertapasamontes
 - Alejandro Martínez - https://github.com/AlexMafaluno
 - Alberto Basanta - https://github.com/basantades
-
+- Víctor Redondo - https://github.com/Victorreca
