@@ -47,7 +47,6 @@ export class ChallengeHeaderComponent implements OnInit {
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
   challenge_level: string | undefined
-  @Input() timesSolved: number = 0
 
   challengeStarted: boolean = false
   solutionSent: boolean = false
