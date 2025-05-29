@@ -25,6 +25,8 @@ export class ChallengeCardComponent {
   @Input() id = ''
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
+  @Input() isBookmarked: boolean = false
+  @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
 
   get currentLang (): string {
