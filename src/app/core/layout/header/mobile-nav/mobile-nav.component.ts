@@ -12,6 +12,7 @@ export class MobileNavComponent implements OnInit, OnDestroy{
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
+  currentRole: string = ''
   private authSubscription!: Subscription;
 
 
@@ -29,6 +30,10 @@ export class MobileNavComponent implements OnInit, OnDestroy{
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
     });
+
+    this._authService.getUserRole().subscribe((userRole) => {
+      this.currentRole = userRole
+    })
   }
 
     ngOnDestroy(): void {

@@ -19,6 +19,9 @@ class MockAuthService {
   getUsername = jest.fn(() => of('test-user'));
   isLoggedIn$ = of(true); 
   logout = jest.fn();
+  getUserRole() {
+    return of('')
+  }
 }
 
 const mockActivatedRoute = {
@@ -125,6 +128,12 @@ describe('DesktopNavComponent', () => {
     component.ngOnInit(); 
     expect(component.user).toBe('');
   });
+
+  it('should set currentRole to empty string if AuthService returns empty', () => {
+    jest.spyOn(authService, 'getUserRole').mockReturnValue(of(''))
+    component.ngOnInit()
+    expect(component.currentRole).toBe('')
+  })
 
   it('should call logout method from AuthService when logout is triggered', () => {
     const logoutSpy = jest.spyOn(authService, 'logout');
