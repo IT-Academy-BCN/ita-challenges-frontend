@@ -8,6 +8,7 @@ and this project adheres to
 
 - Toggle Switch role (#400)
   - Added logic to allow user role switching (#401)
+  - Add redirection upon user role switching (#402)
   - Automatic redirection upon token expiration (#422)
 
 - show times solved counter in the challenge list and detail (#408)
