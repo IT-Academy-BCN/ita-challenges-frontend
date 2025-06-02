@@ -21,7 +21,9 @@ class MockAuthService {
   logout = jest.fn();
   getUserRole() {
     return of('')
-  }
+  };
+
+  checkAndHandleExpiredToken = jest.fn()
 }
 
 const mockActivatedRoute = {

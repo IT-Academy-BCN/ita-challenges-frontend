@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core'
+import { timeStamp } from 'node:console';
 
 
 @Injectable({
@@ -41,7 +42,7 @@ export class AuthService {
   }
 
   updateUserRoleAndUserNameFromToken(): void {
-    const token = localStorage.getItem('authToken');
+    const token = this.getAuthToken();
 
     if (token) {
       const decodedToken = this.decodeToken(token);
@@ -64,10 +65,21 @@ export class AuthService {
     return this.checkAuthToken();
   }
 
-
   private checkAuthToken(): boolean {
-    return localStorage.getItem('authToken') !== null;
+    const tokenActual = this.getAuthToken()
+    if (tokenActual == null) {
+      return false
+    }
+    return !this.isTokenExpired(tokenActual)
+  }
 
+  checkAndHandleExpiredToken(): void {
+    const tokenActual = this.getAuthToken()
+    if (tokenActual != null && this.isTokenExpired(tokenActual)) {
+      this.toastr.warning(this.translate.instant("Expired token"), '', { timeOut: 3000 });
+      this.clearAuthData()
+      this.logout()
+    }
   }
 
   private updateAuthStatus(): void {
@@ -83,6 +95,14 @@ export class AuthService {
       console.error('Error decoding token:', error);
       return null;
     }
+  }
+
+  private isTokenExpired (token: string): boolean {
+    const decoded = this.decodeToken(token);
+    if (!decoded || !decoded.exp) return true
+
+    const expiryTime = decoded.exp * 1000
+    return Date.now() > expiryTime
   }
 
   getAuthToken(): string | null {

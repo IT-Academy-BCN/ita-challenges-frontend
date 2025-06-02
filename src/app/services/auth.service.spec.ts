@@ -112,9 +112,20 @@ describe('AuthService', () => {
   }));
 
   it('should return true if user is logged in (auth token exists)', () => {
-    localStorage.setItem('authToken', 'test-token');
-    expect(service.isUserLoggedIn()).toBe(true);
-  });
+    const validToken = [
+      btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' })),
+      btoa(JSON.stringify({
+        sub: 'testuser',
+        role: 'user',
+        uuid: 'some-uuid',
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + 3600
+      })),
+      'signature'
+    ].join('.')
+    localStorage.setItem('authToken', validToken)
+    expect(service.isUserLoggedIn()).toBe(true)
+  })
 
   it('should return false if user is not logged in (no auth token)', () => {
     localStorage.removeItem('authToken');
