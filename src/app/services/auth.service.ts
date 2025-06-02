@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   updateUserRoleAndUserNameFromToken(): void {
-    const token = localStorage.getItem('authToken');
+    const token = this.getAuthToken();
 
     if (token) {
       const decodedToken = this.decodeToken(token);
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   private checkAuthToken(): boolean {
-    const tokenActual = localStorage.getItem('authToken')
+    const tokenActual = this.getAuthToken()
     if (tokenActual == null) {
       return false
     }
