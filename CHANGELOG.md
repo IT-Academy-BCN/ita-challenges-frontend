@@ -7,7 +7,8 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
 - Toggle Switch role
-  -  Automatic redirection upon token expiration
+  - Added logic to allow user role switching 
+  - Automatic redirection upon token expiration
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
