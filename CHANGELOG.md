@@ -10,7 +10,7 @@ and this project adheres to
   - Added logic to allow user role switching (#401)
   - Automatic redirection upon token expiration (#422)
 
-- show times solved counter in the challenge list and detail (#408)
+- [Added] show times solved counter in the challenge list and detail (Taiga [#389], PR [#408])
 
 - [Added] Submit solution and update solved counter (Taiga [#389], PR [#409])
 
