@@ -40,6 +40,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
 
+  @Input() timesSolved: number = 0
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
 

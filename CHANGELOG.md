@@ -11,6 +11,8 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
+- show times solved counter in the challenge list and detail
+
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 

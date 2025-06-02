@@ -14,6 +14,7 @@ export class Challenge {
   detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
+  timesSolved: number
 
   constructor (element: any) {
     this.id_challenge = element.id_challenge
@@ -24,6 +25,7 @@ export class Challenge {
     this.favorites_count = element.favorites_count || 0
     this.saved_count = element.saved_count || 0
     this.timesFavorite = element.timesFavorite || 0
+    this.timesSolved = element.timesSolved || 0
     this.detail = element.detail
 
     element.languages.forEach((language: Language) => {

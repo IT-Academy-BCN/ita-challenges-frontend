@@ -36,7 +36,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   languages: Language[] = []
   activeId: ChallengeTab = ChallengeTab.DETAILS
   challengeTab = ChallengeTab;
-
+  timesSolved?: number
   isEditorChallengeVisible = false
   startChallenge: boolean = false
   challengeStarted: boolean = false
@@ -112,6 +112,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
       this.notes = this.challenge.detail.notes
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
+      this.timesSolved = this.challenge.timesSolved
     })
   }
 }
