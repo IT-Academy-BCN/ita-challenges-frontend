@@ -5,6 +5,7 @@ import { ChallengeService } from '../../../services/challenge.service';
 import { AuthService } from '../../../services/auth.service';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
+import { SubmitSolutionResponse } from 'src/app/models/user-solution.interface';
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -52,10 +53,8 @@ export class SendSolutionModalComponent {
       SolutionStatus.ENDED,
       this.solutionText
     ).subscribe({
-      next: (response) => {
-        if ('timesSolved' in response) {
-          this.timesSolvedUpdated.emit(response.timesSolved);
-        }
+      next: (response: SubmitSolutionResponse) => {
+        this.timesSolvedUpdated.emit(response.timesSolved);
         const solutionText = response.solution_text;
         this.solutionService.solutionText(solutionText);
         this.solutionSubmitted.emit(solutionText); 
