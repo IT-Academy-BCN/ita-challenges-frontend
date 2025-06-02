@@ -94,11 +94,11 @@ export class ChallengeService {
 
   createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    return this.http.post(url, challenge, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    return this.http.post(url, challenge, { headers });
   }
 
   addToFavorites (challengeId: string): Observable<FavoriteResponse> {
