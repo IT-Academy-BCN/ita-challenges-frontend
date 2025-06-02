@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, catchError, map, of, Subject, type Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { type DataSolution } from '../models/data-solution.model'
-import { type UserSolution } from '../models/user-solution.interface'
+import { SubmitSolutionResponse, type UserSolution } from '../models/user-solution.interface'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
 @Injectable({
@@ -79,11 +79,11 @@ export class SolutionService {
         }
       }
     ).pipe(
-      map((response) => {
+      map((response: SubmitSolutionResponse) => {
         return {
           ...response,
           isSolved: true,
-          timesSolved: 1 
+          timesSolved: response.timesSolved ?? 1
         }
       })
     );
