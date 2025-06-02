@@ -16,3 +16,9 @@ export interface SolutionsUser {
   uuid: string
   solutionText: string
 }
+
+export interface SubmitSolutionResponse {
+  solution_text: string
+  isSolved?: boolean
+  timesSolved?: number
+}
