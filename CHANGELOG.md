@@ -6,11 +6,11 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
-- Toggle Switch role
-  - Added logic to allow user role switching 
-  - Automatic redirection upon token expiration
+- Toggle Switch role (#400)
+  - Added logic to allow user role switching (#401)
+  - Automatic redirection upon token expiration (#422)
 
-- show times solved counter in the challenge list and detail
+- show times solved counter in the challenge list and detail (#408)
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
