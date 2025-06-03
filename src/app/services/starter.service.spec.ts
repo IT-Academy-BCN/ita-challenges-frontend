@@ -38,7 +38,9 @@ describe('StarterService', () => {
       favorites_count: 0,
       saved_count: 0,
       timesFavorite: 0,
-      timesSolved: 0
+      timesSolved: 0,
+      bookmarked: false
+
     }))
   })
 
