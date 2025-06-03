@@ -11,7 +11,6 @@ export class Challenge {
   favorites_count: number
   saved_count: number
   timesFavorite: number
-  bookmarked?: boolean
   detail: ChallengeDetails
   languages: Language[] = []
   solutions: Solution[] = []
