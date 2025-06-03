@@ -130,6 +130,10 @@ export class ChallengeHeaderComponent implements OnInit {
     modalRef.componentInstance.solutionAccepted.subscribe(() => {
       this.onSolutionAccepted();
     });
+
+    modalRef.componentInstance.timesSolvedUpdated.subscribe((newCount: number) => {
+      this.timesSolved = newCount
+    })
   }
 
   onSolutionAccepted(): void {

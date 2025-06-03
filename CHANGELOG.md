@@ -11,7 +11,9 @@ and this project adheres to
   - Add redirection upon user role switching (#402)
   - Automatic redirection upon token expiration (#422)
 
-- show times solved counter in the challenge list and detail (#408)
+- [Added] show times solved counter in the challenge list and detail (Taiga [#389], PR [#408])
+
+- [Added] Submit solution and update solved counter (Taiga [#389], PR [#409])
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 

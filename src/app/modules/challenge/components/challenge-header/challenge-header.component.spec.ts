@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
 import { provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
 import { ChallengeService } from 'src/app/services/challenge.service';
@@ -75,16 +75,24 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should open send solution modal', () => {
+
+    const timesSolvedSubject = new Subject<number>();
     const mockModalRef = {
        componentInstance: {
         idChallenge: '',
         userId: '',
-        solutionAccepted: new EventEmitter<void>() } };
+        solutionAccepted: new EventEmitter<void>(),
+        timesSolvedUpdated: timesSolvedSubject
+     } 
+    };
     jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
     component.idChallenge = 'testChallengeId';
     component.openSendSolutionModal();
 
     expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId');
+
+    timesSolvedSubject.next(5)
+    expect(component.timesSolved).toBe(5)
   });
 
   it('should start challenge and navigate', async () => {
