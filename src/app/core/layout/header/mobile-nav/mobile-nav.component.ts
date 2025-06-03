@@ -74,13 +74,13 @@ export class MobileNavComponent implements OnInit, OnDestroy{
   }
 
   onSwitchRole (newRole: 'ADMIN' | 'USER'): void {
-    console.log('new role: ', newRole)
     this._authService.switchRole(newRole).subscribe({
       next: (data) => {
-        console.log('changing role successfully', data)
+        localStorage.setItem('authToken', data.token)
+        this._authService.updateUserRoleAndUserNameFromToken()
       },
       error: (error) => {
-        console.log('error changing your role', error)
+        console.error('error changing your role', error)
       }
     })
   }
