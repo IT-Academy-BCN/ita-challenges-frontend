@@ -39,6 +39,7 @@ export class StarterComponent implements OnInit {
   isAdmin: boolean = false
   favoriteChallenges: string[] = []
   timesSolved: number = 0
+  bookmarkedChallenges: string[] = []
 
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -63,6 +64,14 @@ export class StarterComponent implements OnInit {
               console.error('Error getting favorites:', err)
             }
           })
+          this.challengeService.getUserBookmarks(userId).subscribe({
+            next: (bookmarks: string[]) => {
+              this.bookmarkedChallenges = bookmarks
+            },
+            error: (err) => {
+              console.error('Error getting bookmarks:', err)
+            }
+          })
         }
       })
     }
@@ -78,6 +87,10 @@ export class StarterComponent implements OnInit {
   isFavoriteChallenge (challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
+  }
+
+  isBookmarkedChallenge (challengeId: string): boolean {
+    return this.bookmarkedChallenges.includes(challengeId)
   }
 
   getChallenge (): void {

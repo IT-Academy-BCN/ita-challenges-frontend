@@ -41,6 +41,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   startChallenge: boolean = false
   challengeStarted: boolean = false
   favoriteChallenges: string[] = []
+  bookmarkedChallenges: string[] = []
 
   private readonly route = inject(ActivatedRoute)
   private readonly router = inject(Router)
@@ -69,6 +70,14 @@ export class ChallengeComponent implements OnInit, OnDestroy {
               console.error('Error getting favorites:', err)
             }
           })
+          this.challengeService.getUserBookmarks(userId).subscribe({
+            next: (bookmarks: string[]) => {
+              this.bookmarkedChallenges = bookmarks
+            },
+            error: (err) => {
+              console.error('Error getting bookmarks:', err)
+            }
+          })
         }
       })
     }
@@ -77,6 +86,10 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   isFavoriteChallenge (challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
+  }
+
+  isBookmarkedChallenge (challengeId: string): boolean {
+    return this.bookmarkedChallenges.includes(challengeId)
   }
 
   onStartChallenge (started: boolean): void {

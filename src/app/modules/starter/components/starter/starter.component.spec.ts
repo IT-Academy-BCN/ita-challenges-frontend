@@ -9,6 +9,7 @@ import { of, BehaviorSubject } from 'rxjs'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
 import { AuthService } from 'src/app/services/auth.service'
+import { ChallengeService } from 'src/app/services/challenge.service'
 
 describe('StarterComponent', () => {
   let component: StarterComponent
@@ -16,6 +17,8 @@ describe('StarterComponent', () => {
   let starterService: StarterService
   let authService: AuthService
   let authRoleSubject: BehaviorSubject<string>
+  let getUserBookmarksSpy: jasmine.Spy
+  let getUserFavoritesSpy: jasmine.Spy
 
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
@@ -36,6 +39,13 @@ describe('StarterComponent', () => {
       isUserLoggedIn: () => true,
       getUserId: () => of('mock-user-id')
     }
+    getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']))
+    getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]))
+
+    const challengeServiceMock = {
+      getUserBookmarks: getUserBookmarksSpy,
+      getUserFavorites: getUserFavoritesSpy
+    }
 
     TestBed.configureTestingModule({
       declarations: [StarterComponent],
@@ -43,6 +53,7 @@ describe('StarterComponent', () => {
       providers: [
         StarterService,
         { provide: AuthService, useValue: authServiceMock },
+        { provide: ChallengeService, useValue: challengeServiceMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
@@ -124,5 +135,14 @@ describe('StarterComponent', () => {
     component.ngOnDestroy()
 
     expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled()
+  })
+  it('should correctly determine if a challenge is bookmarked', () => {
+    component.bookmarkedChallenges = ['id-1', 'id-2']
+    expect(component.isBookmarkedChallenge('id-1')).toBeTruthy()
+    expect(component.isBookmarkedChallenge('id-3')).toBeFalsy()
+  })
+  it('should fetch and store bookmarks on init', () => {
+    expect(getUserBookmarksSpy).toHaveBeenCalled()
+    expect(component.bookmarkedChallenges).toEqual(['id-1', 'id-2'])
   })
 })
