@@ -106,8 +106,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
-    // TODO: change URL once the backend is ready
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/favorites`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_FAVORITES}/${challengeId}`;
     return this.http.post<FavoriteResponse>(
       url,
       {},
@@ -128,8 +127,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
-    // TODO: change URL once the backend is ready
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}/favorites`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_FAVORITES}/${challengeId}`;
     return this.http.delete<FavoriteResponse>(url, { headers }).pipe(
       map(response => {
         return response;
