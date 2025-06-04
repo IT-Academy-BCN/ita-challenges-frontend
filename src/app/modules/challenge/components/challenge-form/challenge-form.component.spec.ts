@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
@@ -103,15 +103,15 @@ describe('ChallengeFormComponent', () => {
     mockChallengeFormService = {
       getAllLangugesCreateForm: jest.fn().mockReturnValue(of({
         results: [
-          { language_name: 'Javascript', id_language: 1 },
-          { language_name: 'Java', id_language: 2 },
+          { language_name: 'Javascript', id_language: '09fabe32-7362-4bfb-ac05-b7bf854c6e0f' },
+          { language_name: 'Java', id_language: '660e1b18-0c0a-4262-a28a-85de9df6ac5f' },
           { language_name: 'Python', id_language: 3 },
           { language_name: 'PHP', id_language: 4 },
           { language_name: 'Typescript', id_language: 5 },
           { language_name: 'SQL', id_language: 6 }
         ]
       })),
-      getTags: jest.fn().mockReturnValue(of(mockJavascriptTags))
+      getTagsByLanguage: jest.fn().mockReturnValue(of(mockJavascriptTags))
     } as unknown as jest.Mocked<ChallengeFormService>
 
     mockChallengeService = {
@@ -283,9 +283,54 @@ describe('ChallengeFormComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
   })
 
+  it('should update selectedLanguageId and load tags when language changes', () => {
+    const mockLoadTags = jest.spyOn(component, 'loadTags') // Mockear la función de carga
+    component.onLanguageChange('Javascript')
+    expect(component.selectedLanguageId).toBe('09fabe32-7362-4bfb-ac05-b7bf854c6e0f')
+    expect(mockLoadTags).toHaveBeenCalled() // Verificar que carga los tags
+  })
+
+  // ✅ Test para `loadTags()`
+  it('should call getTagsByLanguage() with the correct language ID', () => {
+    component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
+    component.loadTags()
+    expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith('09fabe32-7362-4bfb-ac05-b7bf854c6e0f')
+  })
+
+  it('should not call getTagsByLanguage() if selectedLanguageId is empty', () => {
+    const spyGetTags = jest.spyOn(mockChallengeFormService, 'getTagsByLanguage')
+
+    component.selectedLanguageId = '' // Simulamos que no hay un lenguaje seleccionado
+    component.loadTags()
+
+    expect(spyGetTags).not.toHaveBeenCalled() // ✅ Verificamos que no intenta cargar tags
+  })
+
+  it('should handle errors when calling getTagsByLanguage()', () => {
+    jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(
+      throwError(() => new Error('Error de carga'))
+    )
+
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
+    component.loadTags()
+
+    expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId)
+
+    expect(component.currentTags).toEqual([])
+    expect(component.selectedTags).toEqual([])
+
+    expect(consoleSpy).toHaveBeenCalledWith('Error al obtener las etiquetas:', expect.any(Error))
+
+    consoleSpy.mockRestore()
+  })
+
   describe('Tag Management', () => {
     it('should load tags on component initialization', () => {
-      expect(mockChallengeFormService.getTags).toHaveBeenCalled()
+      component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
+      component.loadTags()
+      expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith('09fabe32-7362-4bfb-ac05-b7bf854c6e0f')
       expect(component.currentTags).toEqual(mockJavascriptTags.results)
     })
 
