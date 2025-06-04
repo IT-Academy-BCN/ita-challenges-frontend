@@ -50,7 +50,6 @@
           <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks.unsaved' | translate">
           <img *ngIf="isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks.saved' | translate">
         </div>
-        <div class="txt">{{bookmarks_count}}</div>
       </button>
 
       <button class="stat d-flex align-items-center favorite-button"

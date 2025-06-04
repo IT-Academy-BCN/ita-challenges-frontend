@@ -138,14 +138,12 @@ describe('ChallengeCardComponent', () => {
   it('toggleBookmark: should call addBookmark when not bookmarked', done => {
     component.id = 'C2'
     component.isBookmarked = false
-    component.bookmarks_count = 0
     mockChallengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }))
 
     component.toggleBookmark(new MouseEvent('click'))
     setTimeout(() => {
       expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C2')
       expect(component.isBookmarked).toBe(true)
-      expect(component.bookmarks_count).toBe(1)
       done()
     })
   })
@@ -153,14 +151,12 @@ describe('ChallengeCardComponent', () => {
   it('toggleBookmark: should call removeBookmark when already bookmarked', done => {
     component.id = 'C2'
     component.isBookmarked = true
-    component.bookmarks_count = 1
     mockChallengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }))
 
     component.toggleBookmark(new MouseEvent('click'))
     setTimeout(() => {
       expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
       expect(component.isBookmarked).toBe(false)
-      expect(component.bookmarks_count).toBe(0)
       done()
     })
   })
