@@ -183,10 +183,13 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   loadTags (): void {
+    if (this.selectedLanguageId.length === 0) {
+      console.warn('No language selected, skipping tag loading.')
+      return
+    }
     this.challengeFormService.getTagsByLanguage(this.selectedLanguageId).subscribe({
       next: (response: TagResponse) => {
         this.currentTags = response.results ?? []
-
         this.selectedTags = []
       },
       error: (error) => {
