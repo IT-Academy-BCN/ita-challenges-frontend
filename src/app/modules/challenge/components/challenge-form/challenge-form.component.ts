@@ -44,6 +44,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   languages: Language[] = []
+  selectedLanguageId: string = ''
   selectedTags: string[] = []
   currentTags: any[] = []
 
@@ -158,6 +159,10 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   onLanguageChange (language: string): void {
     this.challenge.language = language
+    const selectedLang = this.languages.find(lang => lang.language_name === language)
+    this.selectedLanguageId = (selectedLang != null) ? selectedLang.id_language : ''
+    // Cargar los tags con el nuevo ID del lenguaje
+    this.loadTags()
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
@@ -178,7 +183,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   loadTags (): void {
-    this.challengeFormService.getTags().subscribe({
+    this.challengeFormService.getTagsByLanguage(this.selectedLanguageId).subscribe({
       next: (response: TagResponse) => {
         this.currentTags = response.results ?? []
 
