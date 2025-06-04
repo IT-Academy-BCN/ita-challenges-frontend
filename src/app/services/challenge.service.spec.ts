@@ -13,6 +13,7 @@ const authServiceStub = {
 describe('ChallengeService', () => {
   let service: ChallengeService
   let httpMock: HttpTestingController
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -29,8 +30,7 @@ describe('ChallengeService', () => {
     TestBed.resetTestingModule()
   })
 
-  // Helper para endpoints POST/DELETE
-  function expectEndpoint (
+  function expectEndpoint(
     path: string,
     method: 'POST' | 'DELETE',
     response: object,
@@ -85,7 +85,15 @@ describe('ChallengeService', () => {
   })
 
   it('should create challenge and return response', (done) => {
-    const mockChallenge: CreateChallenge = { challengeTitle: 'T', description: 'D', level: 'EASY', language: 'Java', solution: 'S', topic: 'ALL', tags: [] }
+    const mockChallenge: CreateChallenge = {
+      challengeTitle: 'T',
+      description: 'D',
+      level: 'EASY',
+      language: 'Java',
+      solution: 'S',
+      topic: 'ALL',
+      tags: []
+    }
     const mockResp = { id: 1, ...mockChallenge }
     service.createChallenge(mockChallenge).subscribe(res => {
       expect(res).toEqual(mockResp)
@@ -99,7 +107,6 @@ describe('ChallengeService', () => {
     req.flush(mockResp)
   })
 
-  // Parametrized tests for Favorites and Bookmarks
   interface ApiCase {
     name: string
     addFn: keyof ChallengeService
@@ -136,14 +143,18 @@ describe('ChallengeService', () => {
   apiCases.forEach(c => {
     describe(c.name, () => {
       const id = 'test-id'
-      const path = `${c.pathBase}${id}/${c.name}`
+
+      const buildPath = () =>
+        c.name === 'favorites'
+          ? `${c.pathBase}${id}`
+          : `${c.pathBase}${id}/${c.name}`
 
       it(`should add ${c.name}`, done => {
         (service[c.addFn] as any)(id).subscribe({
           next: (res: any) => { expect(res).toEqual(c.successAdd); done() },
           error: (err: any) => done.fail(`Unexpected error: ${err}`)
         })
-        expectEndpoint(path, 'POST', c.successAdd)
+        expectEndpoint(buildPath(), 'POST', c.successAdd)
       })
 
       it(`should remove ${c.name}`, done => {
@@ -151,7 +162,7 @@ describe('ChallengeService', () => {
           next: (res: any) => { expect(res).toEqual(c.successRemove); done() },
           error: (err: any) => done.fail(`Unexpected error: ${err}`)
         })
-        expectEndpoint(path, 'DELETE', c.successRemove)
+        expectEndpoint(buildPath(), 'DELETE', c.successRemove)
       })
 
       it(`should handle error on add ${c.name}`, done => {
@@ -173,7 +184,7 @@ describe('ChallengeService', () => {
             }
           }
         })
-        expectEndpoint(path, 'POST', { message: 'Err' }, 500, 'Err')
+        expectEndpoint(buildPath(), 'POST', { message: 'Err' }, 500, 'Err')
       })
 
       it(`should propagate error on remove ${c.name}`, done => {
@@ -181,7 +192,7 @@ describe('ChallengeService', () => {
           next: () => done.fail('Expected error'),
           error: (err: any) => { expect(err.status).toBe(500); done() }
         })
-        expectEndpoint(path, 'DELETE', { message: 'Err' }, 500, 'Err')
+        expectEndpoint(buildPath(), 'DELETE', { message: 'Err' }, 500, 'Err')
       })
     })
   })
