@@ -18,9 +18,9 @@ and this project adheres to
 - remove bookmark count (#431)
 - Show user solution (mock) alongside mentor solution in completed challenges (#424)
 
-- Show user solution (mock) alongside mentor solution in completed challenges (Taiga [#424], PR [#627])
+- Show user solution alongside mentor solution in completed challenges (Taiga [#423], PR [#630])
 
-- Refactor SolutionService to load user solutions from mock JSON (Taiga [#424], PR [#627])
+- Replaced static mock data with dynamic API integration and refactored SolutionService accordingly (Taiga [#4243], PR [#630])
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
