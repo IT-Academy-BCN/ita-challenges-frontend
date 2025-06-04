@@ -116,7 +116,7 @@ describe('ChallengeService', () => {
       name: 'favorites',
       addFn: 'addToFavorites',
       removeFn: 'removeFromFavorites',
-      pathBase: `${environment.BACKEND_ALL_CHALLENGES_URL}/`,
+      pathBase: `${environment.BACKEND_ITA_FAVORITES}/`,
       successAdd: { favorite: true, timesFavorited: 42 },
       successRemove: { favorite: false, timesFavorited: 41 },
       errorStrategy: 'default',
