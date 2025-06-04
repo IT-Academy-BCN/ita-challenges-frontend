@@ -1,0 +1,17 @@
+{
+    "offset": 0,
+    "limit": 2,
+    "count": 2,
+    "results": [
+        {
+            "id_tag": "ca084f07-cd17-48b8-94ed-e06327431d91",
+            "tag_name": "Estructuras",
+            "tag_description": "Retos sobre listas, pilas, colas, árboles, grafos y otras estructuras de datos."
+        },
+        {
+            "id_tag": "0b59bfb5-4220-4202-b3bf-aa16ccee2887",
+            "tag_name": "POO",
+            "tag_description": "Desafíos enfocados en Programación Orientada a Objetos: clases, herencia, polimorfismo, etc."
+        }
+    ]
+}
