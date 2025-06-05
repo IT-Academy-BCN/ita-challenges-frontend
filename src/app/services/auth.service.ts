@@ -3,7 +3,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, switchMap, map, tap, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core'
@@ -31,20 +31,19 @@ export class AuthService {
   }
 
   getUserPhoto(): Observable<string> {
-    const url = `${environment.GITHUB_PROFILE_URL}${this.username}`
-    const subject = new BehaviorSubject<string>('')
-    this.http.get<any>(url).subscribe({
-      next: (data) => {
-        const avatarUrl = (data as { avatar_url: string }).avatar_url;
-        this.userPhoto = avatarUrl;
-        subject.next(avatarUrl);
-      },
-      error: (err) => {
-        console.error('Error fetching GitHub avatar:', err);
-        subject.next('error');
-      }
-    })
-    return subject.asObservable();
+    return this.usernameSubject.asObservable().pipe(
+      filter(username => username !== ''),
+      switchMap(username =>
+        this.http.get<{ avatar_url: string }>(`${environment.GITHUB_PROFILE_URL}${username}`).pipe(
+          map(response => response.avatar_url),
+          tap(url => { this.userPhoto = url }),
+          catchError(err => {
+            console.error('Error fetching GitHub avatar:', err);
+            return of('');
+          })
+        )
+      )
+    );
   }
 
   getUserId(): Observable<string | null> {
@@ -70,9 +69,6 @@ export class AuthService {
       this.usernameSubject.next(this.username);
       const userId = decodedToken?.uuid ?? null;
       this.userIdSubject.next(userId);
-      this.getUserPhoto().subscribe(photo => {
-        console.log('Foto del perfil dentro del subscribe:', photo);
-      });
     } else {
       this.userRoleSubject.next('');
       this.usernameSubject.next('');

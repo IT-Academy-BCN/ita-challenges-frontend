@@ -183,8 +183,6 @@ describe('AuthService', () => {
   it('should return user photo URL from GitHub', fakeAsync(() => {
     const photoUrl = 'https://github.com/avatar.jpg'
     const mockResponse = { avatar_url: photoUrl };
-
-    // Asigna un username al servicio usando spy o cambia visibilidad de la propiedad si necesario
     (service as any).username = 'test-user'
 
     let result = ''
