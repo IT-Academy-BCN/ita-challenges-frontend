@@ -1,0 +1,281 @@
+{
+  "offset": 0,
+  "limit": 200,
+  "count": 12,
+  "results": [
+    {
+      "id_challenge": "35d3dcdc-401d-4968-b734-a6868c3137c2",
+      "challenge_title": "Encuentra el número duplicado",
+      "level": "EASY",
+      "creation_date": "2025-02-07T00:00:00Z",
+      "detail": {
+        "description": "Dado un array de números enteros, encuentra el número que aparece más de una vez."
+      },
+      "languages": [
+        {
+          "id_language": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
+          "language_name": "Javascript",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_javascript.png"
+        }
+      ],
+      "solutions": [
+        "febb3c1e-a000-4042-a93c-bac5a1837c5b",
+        "77e58655-eb5c-42d3-95c3-1a0e6e15a650"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 0,
+      "tags": ["00000000-0000-0000-0000-000000000000"],
+      "timesSolved": 12
+    },
+    {
+      "id_challenge": "c122b360-d9d0-4a95-8f58-908cba28d519",
+      "challenge_title": "Validar paréntesis",
+      "level": "MEDIUM",
+      "creation_date": "2025-12-15T00:00:00Z",
+      "detail": {
+        "description": "Crea una función que determine si una cadena de paréntesis está balanceada."
+      },
+      "languages": [
+        {
+          "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
+          "language_name": "Java",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_java.png"
+        }
+      ],
+      "solutions": [
+        "153b1f63-816a-420b-9b09-276640db1747",
+        "45aafda1-fb7c-44c1-bc91-461bf2701988"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 10,
+      "tags": ["04104104-1041-0410-4104-104104104104"]
+    },
+    {
+      "id_challenge": "19cb494b-4970-44d4-8cdb-5b3156f81da8",
+      "challenge_title": "Sistema de login básico",
+      "level": "HARD",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Implementa un sistema de autenticación con nombre de usuario y contraseña."
+      },
+      "languages": [
+        {
+          "id_language": "1e047ea2-b787-49e7-acea-d79e92be3909",
+          "language_name": "PHP",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_php.png"
+        }
+      ],
+      "solutions": [
+        "55f4e1db-7a34-401a-91ee-cdbbdb69fad5",
+        "b3e1cb5e-0100-462e-8655-1bf5ee8031cd"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 20,
+      "tags": ["08208208-2082-0820-8208-208208208208"]
+    },
+    {
+      "id_challenge": "22a3e39d-a320-44d3-a118-adfc8974db1f",
+      "challenge_title": "Conversor de monedas",
+      "level": "EASY",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Escribe una aplicación que convierta entre diferentes monedas usando tasas de cambio."
+      },
+      "languages": [
+        {
+          "id_language": "409c9fe8-74de-4db3-81a1-a55280cf92ef",
+          "language_name": "Python",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_python.png"
+        }
+      ],
+      "solutions": [
+        "601c4eab-f46d-4aaa-a75d-fb9f7236f596",
+        "5af9361a-515b-42c2-b21d-0853482b8be3"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 30,
+      "tags": ["0c30c30c-30c3-0c30-c30c-30c30c30c30c"]
+    },
+    {
+      "id_challenge": "2d31039c-3dcd-44fa-bf4d-27e3b7abb209",
+      "challenge_title": "Contador de palabras",
+      "level": "MEDIUM",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Crea una función que cuente el número de palabras únicas en una cadena."
+      },
+      "languages": [
+        {
+          "id_language": "129568b8-b09a-4589-a0bb-053dd120f0bb",
+          "language_name": "SQL",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_sql.png"
+        }
+      ],
+      "solutions": [
+        "fa1d9752-c504-4011-b143-0e6f0c65c526",
+        "7235d872-06b4-4b15-a264-20db02452240"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 40,
+      "tags": ["00000000-0000-0000-0000-000000000000"]
+    },
+    {
+      "id_challenge": "ef812cb7-e9c0-43ce-b2fe-b2aa7587a275",
+      "challenge_title": "Simulador de cajero automático",
+      "level": "HARD",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Simula las operaciones básicas de un cajero automático: consultar saldo, retirar, depositar."
+      },
+      "languages": [
+        {
+          "id_language": "5caa6142-a49e-4415-a8fc-439669777d1d",
+          "language_name": "Typescript",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_typescript.png"
+        }
+      ],
+      "solutions": [
+        "6da0e15f-cf77-41be-9757-455a55df2041",
+        "a1422b6a-6620-4093-9adb-e4784ea2b622"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 50,
+      "tags": ["04104104-1041-0410-4104-104104104104"]
+    },
+    {
+      "id_challenge": "017d3b9a-4ef2-497d-8f56-6e4012aaf31f",
+      "challenge_title": "Generador de contraseñas seguras",
+      "level": "EASY",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Desarrolla un generador de contraseñas que cumpla ciertos requisitos de seguridad."
+      },
+      "languages": [
+        {
+          "id_language": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
+          "language_name": "Javascript",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_javascript.png"
+        }
+      ],
+      "solutions": [
+        "ea682211-0104-48ff-b31a-259769dceb2f",
+        "bcdfee5a-5ca9-4e01-8e6d-e06ccaf79236"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 60,
+      "tags": ["08208208-2082-0820-8208-208208208208"]
+    },
+    {
+      "id_challenge": "9977c73a-f38d-41d3-a703-fefc6c12f58f",
+      "challenge_title": "Juego del ahorcado",
+      "level": "MEDIUM",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Implementa el clásico juego del ahorcado con intentos limitados."
+      },
+      "languages": [
+        {
+          "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
+          "language_name": "Java",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_java.png"
+        }
+      ],
+      "solutions": [
+        "d8c7f156-a4d2-427f-a1f8-cb8cdcac3bc7",
+        "39147c8f-5974-4cf3-8e98-fc8de13087ad"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 70,
+      "tags": ["0c30c30c-30c3-0c30-c30c-30c30c30c30c"]
+    },
+    {
+      "id_challenge": "5ae87b0f-2117-4bdf-ae65-0e9b1241c93e",
+      "challenge_title": "Ordenador de tareas por prioridad",
+      "level": "HARD",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Dado un listado de tareas con prioridades, ordénalas de mayor a menor."
+      },
+      "languages": [
+        {
+          "id_language": "1e047ea2-b787-49e7-acea-d79e92be3909",
+          "language_name": "PHP",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_php.png"
+        }
+      ],
+      "solutions": [
+        "e24cb75a-8e81-4960-ba9e-0683558de079",
+        "7eb988d2-9ad0-46ef-8679-cbc074a85064"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 80,
+      "tags": ["00000000-0000-0000-0000-000000000000"],
+      "timesSolved": 2
+    },
+    {
+      "id_challenge": "fd755d3c-1c33-49c6-9825-231f11245180",
+      "challenge_title": "Buscador de palabras clave",
+      "level": "EASY",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Crea una herramienta que identifique palabras clave en un texto largo."
+      },
+      "languages": [
+        {
+          "id_language": "409c9fe8-74de-4db3-81a1-a55280cf92ef",
+          "language_name": "Python",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_python.png"
+        }
+      ],
+      "solutions": [
+        "bd79329c-4eec-4ca3-a044-10094c3a80f3",
+        "ca0f256f-b352-4c9e-897c-f84fe38536c6"
+      ],
+      "topic": "DEFAULT_TOPIC",
+      "timesFavorite": 90,
+      "tags": ["04104104-1041-0410-4104-104104104104"],
+      "timesSolved": 1
+    },
+    {
+      "id_challenge": "4b71cd74-6a8a-4d68-9fdd-80f56dc57023",
+      "challenge_title": "Implementar algoritmo de ordenamiento",
+      "level": "MEDIUM",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Crear un algoritmo de ordenamiento eficiente."
+      },
+      "languages": [
+        {
+          "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
+          "language_name": "Java",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_icon_Java_dakuat.svg"
+        }
+      ],
+      "solutions": ["7c571b16-9d80-4d26-961b-2cf72652ba94"],
+      "topic": "LISTS",
+      "tags": [
+        "c56a4180-65aa-42ec-a945-5fd21dec0538",
+        "9c858901-8a57-4791-81fe-4c455b099bc9"
+      ],
+      "timesSolved": 3
+    },
+    {
+      "id_challenge": "62a13619-c0b2-4c73-a2bd-ed95287816a1",
+      "challenge_title": "Test Challenge",
+      "level": "EASY",
+      "creation_date": "2025-06-05T00:00:00Z",
+      "detail": {
+        "description": "Descripción de prueba"
+      },
+      "languages": [
+        {
+          "id_language": "660e1b18-0c0a-4262-a28a-85de9df6ac5f",
+          "language_name": "Java",
+          "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_icon_Java_dakuat.svg"
+        }
+      ],
+      "solutions": ["6ef04564-2c64-4910-9c14-39766ba104c2"],
+      "topic": "COMPONENTS"
+    }
+  ]
+}
