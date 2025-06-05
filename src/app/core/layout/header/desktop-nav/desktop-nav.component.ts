@@ -29,7 +29,11 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this.authSubscription = this._authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
+    this.loadUserBasicData()
+    this._authService.checkAndHandleExpiredToken()
+  }
 
+  loadUserBasicData():void{
     this._authService.updateUserRoleAndUserNameFromToken();
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
@@ -37,7 +41,9 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this._authService.getUserRole().subscribe((userRole) => {
       this.currentRole = userRole
     }) 
-    this._authService.checkAndHandleExpiredToken()
+    this._authService.getUserPhoto().subscribe((userPhoto) => {
+      this.userPhoto = userPhoto
+    })
   }
 
     ngOnDestroy(): void {

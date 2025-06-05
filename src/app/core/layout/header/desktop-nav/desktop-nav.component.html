@@ -13,8 +13,8 @@
   <!-- Login -->
   @if(isLoggedIn){
     <div class="user-container">
-      <button [ngClass]="{'user':true, 'userWithPhoto':!userPhoto}" (click)="toggleDropdown()">
-        <img src="userPhoto ? userPhoto : assets/img/icon/user.svg" [alt]="'components.header.userPhoto' | translate" [ngClass]="{'img-fluid': !userPhoto}">
+      <button [ngClass]="{'user':true, 'userWithPhoto':userPhoto !=''}" (click)="toggleDropdown()">
+        <img [src]="userPhoto ? userPhoto : 'assets/img/icon/user.svg'" [alt]="'components.header.userPhoto' | translate" [ngClass]="{'img-fluid': userPhoto !=''}">
       </button>
       <div class="dropdown" [ngClass]="{ 'show': dropdownOpen }">
           <a>{{user}}</a>
