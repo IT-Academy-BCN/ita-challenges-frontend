@@ -62,31 +62,40 @@ describe('SolutionService', () => {
   })
 
   it('should check the user solutions', (done) => {
-    const challengeId = 'challenge123'
-    const languageId = 'language123'
+    const challengeId = 'challenge123';
+    const languageId = 'language123';
+
+    const mockUserSolution = {
+      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
+      uuid_challenge: challengeId,
+      uuid_language: languageId,
+      solution_text: 'Esta es la solución del usuario para el reto FizzBuzz'
+    }
 
     service.getUserSolution(challengeId, languageId).subscribe(data => {
-      expect(data.results[0].solutions[0].uuid).toEqual('dcacb291-b4aa-4029-8e9b-284c8ca80296')
+      expect(data.solution_text).toEqual('Esta es la solución del usuario para el reto FizzBuzz')
       done()
     })
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`)
+    const req = httpMock.expectOne(
+    `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`
+    )
+
     expect(req.request.method).toBe('GET')
     req.flush(mockUserSolution)
-  })
+})
 
   it('should fetch user solutions', (done) => {
-    const userId = 'user123'
+    const expectedUrl = environment.USER_SOLUTION
 
     service.fetchUserSolution().subscribe((data) => {
-      expect(data).toEqual(mockResponse)
+      expect(data).toEqual(mockUserSolution)
       done()
     })
 
-    const req = httpMock.expectOne(`${environment.USER_SOLUTION.replace('{idUser}', userId)}`)
+    const req = httpMock.expectOne(expectedUrl)
     expect(req.request.method).toBe('GET')
-    expect(req.request.headers.get('Content-Type')).toBe('application/json')
-    req.flush(mockResponse)
+    req.flush(mockUserSolution)
   })
 
   it('should send the correct data in PUT request', () => {

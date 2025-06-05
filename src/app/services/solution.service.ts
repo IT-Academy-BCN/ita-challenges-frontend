@@ -102,12 +102,7 @@ export class SolutionService {
     this.submitSolutionSubject.next(solution)
   }
 
-  fetchUserSolution (): Observable<any> {
-    return this.http.get<any>(`${environment.USER_SOLUTION}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+  fetchUserSolution (): Observable<UserSolution[]> {
+    return this.http.get<UserSolution[]>(environment.USER_SOLUTION)
   }
 }
