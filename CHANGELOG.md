@@ -17,6 +17,7 @@ and this project adheres to
 - display user bookmarks on login (#432)
 - remove bookmark count (#431)
 - Show user solution (mock) alongside mentor solution in completed challenges (#424)
+- load user solution from endpoint instead of mock (#423)
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
