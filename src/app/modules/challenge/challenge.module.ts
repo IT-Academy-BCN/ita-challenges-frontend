@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core'
 
 
 import { ModalsModule } from '../modals/modals.module'
+import { CustomDatePipe } from "../../pipes/custom-date.pipe";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ModalsModule } from '../modals/modals.module'
     FormsModule,
     NgbNavModule,
     NgbTooltipModule,
-    DynamicTranslatePipe
-  ]
+    DynamicTranslatePipe,
+    CustomDatePipe
+]
 })
 export class ChallengeModule {}
