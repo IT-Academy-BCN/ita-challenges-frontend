@@ -23,6 +23,8 @@ class MockAuthService {
     return of('')
   }
 
+  getUserPhoto = jest.fn(() => of('https://mock-photo-url.com/avatar.png'))
+
   checkAndHandleExpiredToken = jest.fn()
 }
 

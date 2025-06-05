@@ -183,7 +183,7 @@ describe('AuthService', () => {
   it('should return user photo URL from GitHub', fakeAsync(() => {
     const photoUrl = 'https://github.com/avatar.jpg'
     const mockResponse = { avatar_url: photoUrl };
-    (service as any).username = 'test-user'
+    (service as any).usernameSubject.next('test-user')
 
     let result = ''
     service.getUserPhoto().subscribe(photo => {
