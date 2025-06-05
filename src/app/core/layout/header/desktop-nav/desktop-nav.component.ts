@@ -34,17 +34,10 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
     });
-<<<<<<< HEAD
     this._authService.getUserRole().subscribe((userRole) => {
       this.currentRole = userRole
     }) 
     this._authService.checkAndHandleExpiredToken()
-=======
-
-    this._authService.getUserPhoto().subscribe((userPhoto) => {
-      this.userPhoto = userPhoto
-    })
->>>>>>> 3478adb1 (user's profile photo in desktop-nav)
   }
 
     ngOnDestroy(): void {
