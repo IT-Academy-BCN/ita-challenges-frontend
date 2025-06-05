@@ -1,7 +1,9 @@
 {
     "components": {
         "footer": { },
-        "header": { },
+        "header": { 
+            "userPhoto": "Foto del usuario"
+        },
         "mainMenu": {
             "section0": {
                 "title": "Inicio"
