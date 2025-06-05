@@ -52,14 +52,24 @@ export class ChallengeService {
   }
 
   getChallengeById (id: string): Observable<Challenge> {
+    // 🧪 MOCK TEMPORAL para desarrollo local del detalle
     return this.http.get<Challenge>(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
+      `assets/dummy/challenge-detail-${id}.json`,
       {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       }
-    )
+    );
+    // ✅ Endpoint real (RESTORE this when backend is ready)
+    // return this.http.get<Challenge>(
+    //   `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
   }
 
   async getItineraries (): Promise<Itinerary[]> {
