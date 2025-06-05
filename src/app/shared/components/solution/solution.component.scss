@@ -4,17 +4,17 @@
     display: block;
     border: 1px solid black;
     border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
+    height: 100%;
 }
 
 .solution-header{
     border-bottom: 1px solid black;
     font-size: $font-size-lg;
     font-weight: bold;
-    padding-bottom: .8rem;
+    padding: 5px 16px;
+    min-height: 46px;
 }
 
 .solution-body{
-    padding: 32px;
+    padding: 16px;
 }
