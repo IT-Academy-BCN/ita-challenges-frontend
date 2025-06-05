@@ -77,7 +77,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     @Inject(TranslateService) readonly translate: TranslateService
   ) {
     this.loadLanguages()
-    this.loadTags()
     translate.addLangs(['en', 'es', 'ca'])
     translate.setDefaultLang('es')
     translate.use('es')
