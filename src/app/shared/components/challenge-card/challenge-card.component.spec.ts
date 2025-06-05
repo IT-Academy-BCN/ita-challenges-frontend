@@ -49,20 +49,17 @@ describe('ChallengeCardComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient],
+          loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient],
           },
         }),
       ],
       providers: [
         StarterService,
-        { provide: LOCALE_ID, useValue: "ca" },
+        { provide: LOCALE_ID, useValue: 'ca' },
         { provide: ChallengeService, useValue: mockChallengeService },
-        { provide: AuthService, useValue: mockAuthService },
-      ],
-    }).compileComponents();
+        { provide: AuthService, useValue: mockAuthService }
+      ]
+    }).compileComponents()
 
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
