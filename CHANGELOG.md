@@ -18,10 +18,7 @@ and this project adheres to
 - remove bookmark count (#431)
 - Show user solution (mock) alongside mentor solution in completed challenges (#424)
 - load user solution from endpoint instead of mock (#423)
-
-- Show user solution (mock) alongside mentor solution in completed challenges (Taiga [#424], PR [#627])
-
-- Refactor SolutionService to load user solutions from mock JSON (Taiga [#424], PR [#627])
+- adjust solution.component.css to match Figma design (#425)
 
 ### [ita-challenges-frontend-3.1.34-RELEASE] - 2025-05-15 (feature#329)
 
