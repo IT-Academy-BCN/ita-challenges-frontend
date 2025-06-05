@@ -41,6 +41,20 @@
         <div class="txt">{{challenge_timesSolved}}</div>
       </div>
 
+      <button class="stat d-flex align-items-center favorite-button" [ngbTooltip]="'tooltips.favorites' | translate"
+        (click)="toggleFavorite($event)">
+        <div>
+            <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
+            <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
+        </div>
+        <div class="txt">{{favorites_count}}</div>
+      </button>
+
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
+        <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
+        <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>
+      </div>
+
       <button class="stat d-flex align-items-center bookmark-button"
         [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
         (click)="toggleBookmark($event)"
@@ -52,20 +66,6 @@
         </div>
       </button>
 
-      <button class="stat d-flex align-items-center favorite-button"
-        [ngbTooltip]="'tooltips.favorites' | translate"
-        (click)="toggleFavorite($event)">
-        <div>
-          <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
-          <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
-        </div>
-        <div class="txt">{{favorites_count}}</div>
-      </button>
-
-      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
-        <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
-        <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>
-      </div>
     </div>
   </div>
 </div>
