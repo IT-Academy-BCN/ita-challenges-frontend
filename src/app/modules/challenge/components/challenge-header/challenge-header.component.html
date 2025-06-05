@@ -38,7 +38,7 @@
       </span>
       <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
         <img src="assets/img/icon/clock.svg" alt="Date">
-        {{creation_date | date:'mediumDate':'':currentLang}}
+        {{ creation_date | customDate }}
       </span>
       <span class="stat" [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)" (click)="toggleBookmark($event)" (keydown.enter)="toggleBookmark($event)" [attr.aria-pressed]="isBookmarked" [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)">
         <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks.unsaved' | translate">
