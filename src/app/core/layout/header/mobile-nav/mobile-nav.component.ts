@@ -27,14 +27,20 @@ export class MobileNavComponent implements OnInit, OnDestroy{
     });
 
     this._authService.updateUserRoleAndUserNameFromToken();
+    this.loadUserBasicDataMobile()
+    this._authService.checkAndHandleExpiredToken()
+  }
+  loadUserBasicDataMobile():void{
+    this._authService.updateUserRoleAndUserNameFromToken();
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
     });
-
+    this._authService.getUserRole().subscribe((userRole) => {
+      this.currentRole = userRole
+    }) 
     this._authService.getUserPhoto().subscribe((userPhoto) => {
       this.userPhoto = userPhoto
     })
-    this._authService.checkAndHandleExpiredToken()
   }
 
     ngOnDestroy(): void {

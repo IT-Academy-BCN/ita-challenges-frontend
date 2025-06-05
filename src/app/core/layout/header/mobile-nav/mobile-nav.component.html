@@ -24,20 +24,13 @@
       <!-- Login -->
       @if(isLoggedIn){
         <div class="user-container-mobile">
-          @if (!userPhoto) {
-            <button class="user-mobile" (click)="toggleDropdown()">
-              <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
-            </button>
-          }
-          @else {
-            <button class="user-mobile userWithPhoto" (click)="toggleDropdown()">
-              <img [src]="userPhoto" alt="User" class="img-fluid">
-            </button>
-          }
+          <button [ngClass]="{'user-mobile':true, 'userWithPhoto':userPhoto !=''}" (click)="toggleDropdown()">
+            <img [src]="userPhoto ? userPhoto : 'assets/img/icon/user.svg'" [alt]="'components.header.userPhoto' | translate" [ngClass]="{'img-fluid': userPhoto !=''}">
+          </button>
           <div class="dropdown-mobile" [ngClass]="{ 'show': dropdownOpen }">
               <a>{{user}}</a>
               <a>
-                <app-toggle [currentRole]="currentRole"></app-toggle>
+                <app-toggle [currentRole]="currentRole" (roleSwiched)="onSwitchRole($event)"></app-toggle>
               </a>
               <a (click)="logout()">{{'modules.challenge.header.logout' | translate}}<img src="assets/img/icon/logout.svg" alt="logout" style="height: 17px;"></a>
           </div>
