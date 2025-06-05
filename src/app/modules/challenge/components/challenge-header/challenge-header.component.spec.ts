@@ -10,6 +10,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -36,7 +37,7 @@ describe('ChallengeHeaderComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
-      imports: [I18nModule, DynamicTranslatePipe],
+      imports: [I18nModule, DynamicTranslatePipe, CustomDatePipe],
       providers: [
         provideRouter([]),
         { provide: Router, useValue: mockRouter },
