@@ -50,8 +50,7 @@ describe('ChallengeCardComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient],
-          },
+          loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
         }),
       ],
       providers: [
