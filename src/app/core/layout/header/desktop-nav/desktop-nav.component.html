@@ -13,16 +13,6 @@
   <!-- Login -->
   @if(isLoggedIn){
     <div class="user-container">
-       <!-- @if (!userPhoto) {
-        <button class="user" (click)="toggleDropdown()">
-          <img src="assets/img/icon/user.svg" alt="User" style="border: none; padding: 0; background: none;">
-        </button>
-      }
-      @else {
-        <button class="user userWithPhoto" (click)="toggleDropdown()">
-          <img [src]="userPhoto" alt="User" class="img-fluid" aria-label="User menu">
-        </button>
-      } -->
       <button [ngClass]="{'user':true, 'userWithPhoto':!userPhoto}" (click)="toggleDropdown()">
         <img src="userPhoto ? userPhoto : assets/img/icon/user.svg" alt="User" [ngClass]="{'img-fluid': !userPhoto}">
       </button>
