@@ -13,19 +13,37 @@ export class StarterService {
   getAllChallenges (): Observable<ChallengeResponse> {
     if (this.cachedChallenges !== null) {
       // Si hay datos en caché, devolverlos como un Observable
-      console.log('Datos obtenidos de la caché')
       return of(this.cachedChallenges)
     }
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
-      headers
-    }).pipe(
-      tap((response) => {
-        this.cachedChallenges = response
-        console.log('Datos almacenados en caché:', response)
-      }))
+      'Content-Type': 'application/json',
+    });
+
+    // 🧪 MOCK TEMPORAL para desarrollo local - cambiar a endpoint real cuando se conecte backend
+    return this.http
+      .get<ChallengeResponse>("assets/dummy/challenges-mock.json", {
+        headers,
+      })
+      .pipe(
+        tap((response) => {
+          this.cachedChallenges = response;
+        })
+      );
+
+    // ✅ Endpoint real (RESTORE this when backend is ready)
+    // return this.http
+    //   .get<ChallengeResponse>(
+    //     `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`,
+    //     {
+    //       headers,
+    //     }
+    //   )
+    //   .pipe(
+    //     tap((response) => {
+    //       this.cachedChallenges = response;
+    //       console.log("Datos almacenados en caché:", response);
+    //     })
+    //   );
   }
 
   getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {
