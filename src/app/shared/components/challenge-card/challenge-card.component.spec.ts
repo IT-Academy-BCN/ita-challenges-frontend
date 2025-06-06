@@ -37,8 +37,9 @@ describe('ChallengeCardComponent', () => {
     } as any
 
     mockAuthService = {
-      isUserLoggedIn: jest.fn().mockReturnValue(true)
-    } as any
+      isUserLoggedIn: jest.fn().mockReturnValue(true),
+      getUserRole: jest.fn().mockReturnValue(of("ADMIN")),
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
