@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="stats" *ngIf="!challengeStarted">
-      <span class="stat">
+      <span class="stat" *ngIf="userRole === 'ADMIN'">
         <img src="assets/img/icon/user.svg" alt="User">
         IT-Academy
       </span>
