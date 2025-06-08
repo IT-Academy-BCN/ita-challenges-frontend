@@ -208,7 +208,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
       isLanguageValid &&
-      isLanguageValid &&
       this.challenge.solution.trim() !== ''
     )
   }
