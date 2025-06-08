@@ -3,6 +3,7 @@ import { StarterService } from '../../../services/starter.service'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
+import { take } from 'rxjs/operators'
 
 
 @Component({
@@ -31,9 +32,9 @@ export class ChallengeCardComponent implements OnInit {
   @Input() challenge_timesSolved: number = 0
 
   ngOnInit(): void {
-    this.authService.getUserRole().subscribe((role) => {
-      this.userRole = role
-    })
+    this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
+      this.userRole = role;
+    });
   }
 
   get currentLang (): string {
