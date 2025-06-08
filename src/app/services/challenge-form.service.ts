@@ -24,7 +24,7 @@ export class ChallengeFormService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    const url = `../assets/dummy/tags-${languageId}.json`
+    const url = `../assets/dummy/tags-${languageId}.json` // Temporary mock data — replace with real API endpoint when available
     return this.http.get<TagResponse>(url, { headers })
   }
 }
