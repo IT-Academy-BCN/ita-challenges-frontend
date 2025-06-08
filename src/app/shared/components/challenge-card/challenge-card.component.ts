@@ -6,91 +6,91 @@ import { AuthService } from 'src/app/services/auth.service'
 
 
 @Component({
-  selector: "app-challenge-card",
-  templateUrl: "./challenge-card.component.html",
-  styleUrls: ["./challenge-card.component.scss"],
-  providers: [],
+  selector: 'app-challenge-card',
+  templateUrl: './challenge-card.component.html',
+  styleUrls: ['./challenge-card.component.scss'],
+  providers: []
 })
 export class ChallengeCardComponent implements OnInit {
-  private readonly starterService = inject(StarterService);
-  private readonly translate = inject(TranslateService);
-  private readonly challengeService = inject(ChallengeService);
-  private readonly authService = inject(AuthService);
-  public userRole: string | null = null;
+  private readonly starterService = inject(StarterService)
+  private readonly translate = inject(TranslateService)
+  private readonly challengeService = inject(ChallengeService)
+  private readonly authService = inject(AuthService)
+  public userRole: string | null = null
 
-  @Input() title: string = "";
-  @Input() languages: any = [];
-  @Input() creation_date!: Date;
-  @Input() level = "";
-  @Input() popularity!: number;
-  @Input() id = "";
-  @Input() favorites_count: number = 0;
-  @Input() isFavorite: boolean = false;
-  @Input() isBookmarked: boolean = false;
-  @Input() bookmarks_count: number = 0;
-  @Input() challenge_timesSolved: number = 0;
+  @Input() title: string = ''
+  @Input() languages: any = []
+  @Input() creation_date!: Date
+  @Input() level = ''
+  @Input() popularity!: number
+  @Input() id = ''
+  @Input() favorites_count: number = 0
+  @Input() isFavorite: boolean = false
+  @Input() isBookmarked: boolean = false
+  @Input() bookmarks_count: number = 0
+  @Input() challenge_timesSolved: number = 0
 
   ngOnInit(): void {
     this.authService.getUserRole().subscribe((role) => {
-      this.userRole = role;
-    });
+      this.userRole = role
+    })
   }
 
-  get currentLang(): string {
-    return this.translate.currentLang;
+  get currentLang (): string {
+    return this.translate.currentLang
   }
 
-  toggleFavorite(event: MouseEvent): void {
-    event.stopPropagation();
+  toggleFavorite (event: MouseEvent): void {
+    event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
-      return;
+      return
     }
     if (this.isFavorite) {
       this.challengeService.removeFromFavorites(this.id).subscribe({
-        next: (response) => {
-          this.isFavorite = response.favorite;
-          this.favorites_count = response.timesFavorited;
+        next: response => {
+          this.isFavorite = response.favorite
+          this.favorites_count = response.timesFavorited
         },
-        error: (error) => {
-          console.error("Error removing favorite:", error);
-        },
-      });
+        error: error => {
+          console.error('Error removing favorite:', error)
+        }
+      })
     } else {
       this.challengeService.addToFavorites(this.id).subscribe({
-        next: (response) => {
-          this.isFavorite = response.favorite;
-          this.favorites_count = response.timesFavorited;
+        next: response => {
+          this.isFavorite = response.favorite
+          this.favorites_count = response.timesFavorited
         },
-        error: (error) => {
-          console.error("Error adding favorite:", error);
-        },
-      });
+        error: error => {
+          console.error('Error adding favorite:', error)
+        }
+      })
     }
   }
 
-  toggleBookmark(event: MouseEvent): void {
-    event.stopPropagation();
+  toggleBookmark (event: MouseEvent): void {
+    event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
-      return;
+      return
     }
     if (this.isBookmarked) {
       this.challengeService.removeBookmark(this.id).subscribe({
-        next: (response) => {
-          this.isBookmarked = response.bookmarked;
+        next: response => {
+          this.isBookmarked = response.bookmarked
         },
-        error: (error) => {
-          console.error("Error removing bookmark:", error);
-        },
-      });
+        error: error => {
+          console.error('Error removing bookmark:', error)
+        }
+      })
     } else {
       this.challengeService.addBookmark(this.id).subscribe({
-        next: (response) => {
-          this.isBookmarked = response.bookmarked;
+        next: response => {
+          this.isBookmarked = response.bookmarked
         },
-        error: (error) => {
-          console.error("Error adding bookmark:", error);
-        },
-      });
+        error: error => {
+          console.error('Error adding bookmark:', error)
+        }
+      })
     }
   }
 }
