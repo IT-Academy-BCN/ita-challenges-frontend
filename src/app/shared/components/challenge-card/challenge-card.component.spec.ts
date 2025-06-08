@@ -4,12 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
 import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
 import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { TranslateModule, TranslateLoader, TranslateService  } from '@ngx-translate/core'
 
 import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
 import { LOCALE_ID, Pipe, type PipeTransform } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { formatDate } from '@angular/common'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
@@ -28,6 +27,7 @@ describe('ChallengeCardComponent', () => {
   let fixture: ComponentFixture<ChallengeCardComponent>
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockAuthService: jest.Mocked<AuthService>
+  let datePipe: CustomDatePipe
 
   beforeEach(async () => {
     mockChallengeService = {
@@ -54,6 +54,7 @@ describe('ChallengeCardComponent', () => {
       ],
       providers: [
         StarterService,
+        CustomDatePipe,
         { provide: LOCALE_ID, useValue: 'ca' },
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: AuthService, useValue: mockAuthService }
@@ -62,6 +63,7 @@ describe('ChallengeCardComponent', () => {
 
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
+    datePipe = TestBed.inject(CustomDatePipe)
     fixture.detectChanges()
   })
 
@@ -105,7 +107,7 @@ describe('ChallengeCardComponent', () => {
     fixture.detectChanges()
 
     const dateElement: HTMLElement = fixture.debugElement.query(By.css('.stat:last-child div:last-child')).nativeElement
-    const formattedDate = new CustomDatePipe().transform(testDate)
+    const formattedDate = datePipe.transform(testDate)
 
     expect(dateElement.textContent).toContain(formattedDate)
   })
