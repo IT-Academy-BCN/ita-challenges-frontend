@@ -50,7 +50,7 @@ describe('ChallengeCardComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
-        }),
+        })
       ],
       providers: [
         StarterService,
@@ -105,7 +105,7 @@ describe('ChallengeCardComponent', () => {
     fixture.detectChanges()
 
     const dateElement: HTMLElement = fixture.debugElement.query(By.css('.stat:last-child div:last-child')).nativeElement
-    const formattedDate = new CustomDatePipe().transform(testDate);
+    const formattedDate = new CustomDatePipe().transform(testDate)
 
     expect(dateElement.textContent).toContain(formattedDate)
   })
