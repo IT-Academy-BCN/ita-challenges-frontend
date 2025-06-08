@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core'
 
 
 import { ModalsModule } from '../modals/modals.module'
-import { CustomDatePipe } from "../../pipes/custom-date.pipe";
+import { CustomDatePipe } from "../../pipes/custom-date.pipe"
 
 @NgModule({
   declarations: [
