@@ -56,7 +56,7 @@ export class ChallengeService {
       `assets/dummy/challenge-detail-${id}.json`, // 🧪 MOCK TEMPORAL - Endpoint real: ${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}
       {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         }
       }
     )
