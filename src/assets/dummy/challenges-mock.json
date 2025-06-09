@@ -7,7 +7,7 @@
       "id_challenge": "35d3dcdc-401d-4968-b734-a6868c3137c2",
       "challenge_title": "Encuentra el número duplicado",
       "level": "EASY",
-      "creation_date": "2025-02-07T00:00:00Z",
+      "creation_date": "2025-12-07T00:00:00Z",
       "detail": {
         "description": "Dado un array de números enteros, encuentra el número que aparece más de una vez."
       },
