@@ -7,6 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.36-RELEASE] - 2025-06-10
 
 - Configuration for SonarCloud compatibility: added sonar-project.properties with coverage paths and exclusions (#493)
+- Fixed missing braces in en.json and es.json (#492)
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
