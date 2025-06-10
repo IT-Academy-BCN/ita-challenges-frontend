@@ -36,3 +36,4 @@
 - Alejandro Martínez - https://github.com/AlexMafaluno
 - Alberto Basanta - https://github.com/basantades
 - Víctor Redondo - https://github.com/Victorreca
+- Silvia Tuiran - https://github.com/Silvitui
