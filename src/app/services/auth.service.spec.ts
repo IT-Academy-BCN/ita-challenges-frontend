@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 
 describe('AuthService', () => {
@@ -57,6 +58,8 @@ describe('AuthService', () => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
 
+    spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'));
+
     service.updateUserRoleAndUserNameFromToken();
 
     let role: string | undefined;
@@ -77,6 +80,7 @@ describe('AuthService', () => {
   });
 
   it('should emit updated role when updateUserRoleAndUserNameFromToken is called', fakeAsync(() => {
+    spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'))
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
     tick();
@@ -93,6 +97,7 @@ describe('AuthService', () => {
   }));
 
   it('should emit empty role when token is removed', fakeAsync(() => {
+    spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'))
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
     localStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleAndUserNameFromToken();
@@ -175,4 +180,20 @@ describe('AuthService', () => {
     expect(headers.Authorization).toBe('');
   });
 
+  it('should return user photo URL from GitHub', fakeAsync(() => {
+    const photoUrl = 'https://github.com/avatar.jpg'
+    const mockResponse = { avatar_url: photoUrl };
+    (service as any).usernameSubject.next('test-user')
+
+    let result = ''
+    service.getUserPhoto().subscribe(photo => {
+      result = photo
+    })
+
+    const req = httpMock.expectOne('https://api.github.com/users/test-user')
+    req.flush({ avatar_url: 'https://github.com/avatar.jpg' })
+
+    tick()
+    expect(result).toBe(photoUrl)
+  }))
 });

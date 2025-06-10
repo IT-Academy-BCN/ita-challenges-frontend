@@ -3,7 +3,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, switchMap, map, tap, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core'
@@ -22,10 +22,28 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkAuthToken());
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
+  public userPhoto: string | null = ''
+
   constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es', 'ca'])
     this.translate.setDefaultLang('ca')
     this.translate.use('ca')
+  }
+
+  getUserPhoto(): Observable<string> {
+    return this.usernameSubject.asObservable().pipe(
+      filter(username => username !== ''),
+      switchMap(username =>
+        this.http.get<{ avatar_url: string }>(`${environment.GITHUB_PROFILE_URL}${username}`).pipe(
+          map(response => response.avatar_url),
+          tap(url => { this.userPhoto = url }),
+          catchError(err => {
+            console.error('Error fetching GitHub avatar:', err);
+            return of('');
+          })
+        )
+      )
+    );
   }
 
   getUserId(): Observable<string | null> {

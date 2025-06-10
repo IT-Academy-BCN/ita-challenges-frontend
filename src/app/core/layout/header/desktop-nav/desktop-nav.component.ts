@@ -2,7 +2,6 @@ import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/cor
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavService } from 'src/app/services/nav.service'; 
-import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 @Component({
   selector: 'app-desktop-nav',
@@ -14,6 +13,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   isLoggedIn = false;
   dropdownOpen: boolean = false;
   user: string = '';
+  userPhoto: string = ''
   private authSubscription!: Subscription;
   currentRole: string = ''
   newRole: 'ADMIN' | 'USER' = 'ADMIN'
@@ -28,7 +28,11 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this.authSubscription = this._authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
+    this.loadUserBasicData()
+    this._authService.checkAndHandleExpiredToken()
+  }
 
+  loadUserBasicData():void{
     this._authService.updateUserRoleAndUserNameFromToken();
     this._authService.getUsername().subscribe((username) => {
       this.user = username;
@@ -36,7 +40,9 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     this._authService.getUserRole().subscribe((userRole) => {
       this.currentRole = userRole
     }) 
-    this._authService.checkAndHandleExpiredToken()
+    this._authService.getUserPhoto().subscribe((userPhoto) => {
+      this.userPhoto = userPhoto
+    })
   }
 
     ngOnDestroy(): void {
