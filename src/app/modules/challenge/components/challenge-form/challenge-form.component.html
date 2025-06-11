@@ -10,13 +10,13 @@
               </svg>
               <span class="backTo">{{ "modules.challenge.backTo" | translate }}</span>
           </a>
-          <div class="breadcrumb">Retos / crear reto</div>
-          <h3 class="form-title">Nuevo reto</h3>
+          <div class="breadcrumb">{{ "modules.challenge.challengeForm.breadcrumb" | translate }}</div>
+          <h3 class="form-title">{{ "modules.challenge.challengeForm.title" | translate }}</h3>
         </div>
         <div class="button-group">
-          <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">Cancelar</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">{{ "modules.challenge.challengeForm.buttonCancel" | translate }}</button>
           <button type="button" class="btn btn-sm btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
-            Publicar
+            {{ "modules.challenge.challengeForm.buttonPublish" | translate }}
           </button>
         </div>
       </div>
@@ -26,9 +26,9 @@
       <form #challengeForm="ngForm">
         <!-- INFORMACIÓN GENERAL -->
         <div class="section">
-          <h4><span class="section-number">1</span> Información general</h4>
+          <h4><span class="section-number">1</span> {{ "modules.challenge.challengeForm.generalInfo" | translate }}</h4>
           <div class="form-group">
-            <label for="title" class="form-label">Título</label>
+            <label for="title" class="form-label">{{ "modules.challenge.challengeForm.challengeTitle" | translate }}</label>
             <input 
               type="text" 
               class="form-control" 
@@ -41,7 +41,7 @@
 
           <!-- Lenguaje -->
           <div class="mb-4">
-            <label class="form-label">Lenguaje</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.language" | translate }}</label>
             <div class="language-buttons">
               @for (lang of languages; track lang.language_name) {
                 <button 
@@ -63,9 +63,9 @@
 
         <!-- CONTENIDO DEL RETO -->
         <div class="section">
-          <h4><span class="section-number">2</span> Contenido del reto</h4>
+          <h4><span class="section-number">2</span> {{ "modules.challenge.challengeForm.challengeContent" | translate }}</h4>
           <div class="form-group">
-            <label for="description" class="form-label">Enunciado</label>
+            <label for="description" class="form-label">{{ "modules.challenge.challengeForm.statement" | translate }}</label>
             <div class="editor-container">
               <editor
                 [(ngModel)]="challenge.description"
@@ -78,16 +78,16 @@
 
           <!-- Solución con CodeMirror -->
           <div class="form-group">
-            <label class="form-label">Solución</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }}</label>
             <div #codeMirrorEditor class="codemirror-container"></div>
           </div>
         </div>
 
         <!-- INFORMACIÓN ADICIONAL -->
         <div class="section">
-          <h4><span class="section-number">3</span> Información adicional</h4>
+          <h4><span class="section-number">3</span> {{ "modules.challenge.challengeForm.additionalInfo" | translate }}</h4>
           <div class="form-group mb-4">
-            <label class="form-label">Dificultad</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.difficulty" | translate }}</label>
             <div class="difficulty-group">
               <!-- Fácil -->
               <div class="difficulty-option">
@@ -101,11 +101,11 @@
                 <label class="difficulty-label" for="easy">
                   <div class="radio-circle" [class.selected]="challenge.level === 'EASY'"></div>
                   <div class="lightning-group">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Fácil">
-                    <img src="assets/img/icon/difficulty-off.svg" alt="Fácil">
-                    <img src="assets/img/icon/difficulty-off.svg" alt="Fácil">
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.easy" | translate }}'>
+                    <img src="assets/img/icon/difficulty-off.svg" alt='{{ "modules.challenge.challengeForm.easy" | translate }}'>
+                    <img src="assets/img/icon/difficulty-off.svg" alt='{{ "modules.challenge.challengeForm.easy" | translate }}'>
                   </div>
-                  <span>Fácil</span>
+                  <span>{{ "modules.challenge.challengeForm.easy" | translate }}</span>
                 </label>
               </div>
 
@@ -121,11 +121,11 @@
                 <label class="difficulty-label" for="medium">
                   <div class="radio-circle" [class.selected]="challenge.level === 'MEDIUM'"></div>
                   <div class="lightning-group">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Medio">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Medio">
-                    <img src="assets/img/icon/difficulty-off.svg" alt="Medio">
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.medium" | translate }}'>
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.medium" | translate }}'>
+                    <img src="assets/img/icon/difficulty-off.svg" alt='{{ "modules.challenge.challengeForm.medium" | translate }}'>
                   </div>
-                  <span>Media</span>
+                  <span>{{ "modules.challenge.challengeForm.medium" | translate }}</span>
                 </label>
               </div>
 
@@ -141,18 +141,18 @@
                 <label class="difficulty-label" for="hard">
                   <div class="radio-circle" [class.selected]="challenge.level === 'HARD'"></div>
                   <div class="lightning-group">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
-                    <img src="assets/img/icon/difficulty-on.svg" alt="Difícil">
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.hard" | translate }}'>
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.hard" | translate }}'>
+                    <img src="assets/img/icon/difficulty-on.svg" alt='{{ "modules.challenge.challengeForm.hard" | translate }}'>
                   </div>
-                  <span>Difícil</span>
+                  <span>{{ "modules.challenge.challengeForm.hard" | translate }}</span>
                 </label>
               </div>
             </div>
           </div>
           @if (currentTags.length > 0) {
           <div class="form-group mb-4">
-            <label class="form-label">Tags</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.tags" | translate }}</label>
             <div class="tags-group">
               @for (tag of currentTags; track tag.id_tag) {
                 <button 

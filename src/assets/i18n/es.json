@@ -68,6 +68,24 @@
                 "solutionsUserHeader": "Tu solución",
                 "solutionsOfficialHeader":"Solución aportada por IT Academy",
                 "noResources": "No hay recursos disponibles para este reto."
+            },
+            "challengeForm": {
+                "breadcrumb": "Retos / Crear reto",
+                "title": "Nuevo reto",
+                "buttonCancel": "Cancelar",
+                "buttonPublish": "Publicar",
+                "generalInfo": "Información general",
+                "challengeTitle": "Título",
+                "language": "Lenguaje",
+                "challengeContent": "Contenido del reto",
+                "statement": "Enunciado",
+                "solution": "Solución",
+                "additionalInfo": "Información adicional",
+                "difficulty": "Dificultad",
+                "easy": "Fácil",
+                "medium": "Media",
+                "hard": "Difícil",
+                "tags": "Tags"
             }
         },
         "mentor": {
@@ -84,7 +102,7 @@
             "filters": {
                 "lenguaje": "Lenguaje",
                 "dificulty": "Dificultad",
-                "easy": "Facil",
+                "easy": "Fácil",
                 "medium": "Media",
                 "hard": "Difícil",
                 "progress": "Progreso",

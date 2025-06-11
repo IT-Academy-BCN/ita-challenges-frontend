@@ -68,6 +68,24 @@
                 "solutionsUserHeader": "La teva solució",
                 "solutionsOfficialHeader":"Solució aportada per IT Academy",
                 "noResources": "No hi ha recursos disponibles per a aquest repte."
+            },
+            "challengeForm": {
+                "breadcrumb": "Reptes / Crear repte",
+                "title": "Nou repte",
+                "buttonCancel": "Cancel·lar",
+                "buttonPublish": "Publicar",
+                "generalInfo": "Informació general",
+                "challengeTitle": "Títol",
+                "language": "Llenguatge",
+                "challengeContent": "Contingut del repte",
+                "statement": "Enunciat",
+                "solution": "Solució",
+                "additionalInfo": "Informació addicional",
+                "difficulty": "Dificultat",
+                "easy": "Fàcil",
+                "medium": "Mitjana",
+                "hard": "Difícil",
+                "tags": "Etiquetes"
             }
         },
         "mentor": {
