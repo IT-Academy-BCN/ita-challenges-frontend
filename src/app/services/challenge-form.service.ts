@@ -20,11 +20,11 @@ export class ChallengeFormService {
     return this.http.get<{ results: Language[] }>(url, { headers })
   }
 
-  getTags (): Observable<TagResponse> {
+  getTagsByLanguage (languageId: string): Observable<TagResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}`
+    const url = `../assets/dummy/tags-${languageId}.json` // Temporary mock data — replace with real API endpoint when available
     return this.http.get<TagResponse>(url, { headers })
   }
 }
