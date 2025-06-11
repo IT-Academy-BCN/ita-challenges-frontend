@@ -41,4 +41,31 @@ describe('ChallengeFormService', () => {
 
     httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`).error(new ProgressEvent('error'));
   });
-});
+
+  it('should fetch tags by language', () => {
+    const mockTagsResponse = {
+      results: [{ id_tag: '1', tag_name: 'Frontend' }, { id_tag: '2', tag_name: 'Backend' }]
+    }
+
+    const languageId = 'javascript'
+
+    service.getTagsByLanguage(languageId).subscribe((res) => {
+      expect(res).toEqual(mockTagsResponse)
+    })
+
+    const req = httpMock.expectOne(`../assets/dummy/tags-${languageId}.json`)
+    expect(req.request.method).toBe('GET')
+    req.flush(mockTagsResponse)
+  })
+
+  it('should handle error when fetching tags by language', () => {
+    const languageId = 'javascript'
+
+    service.getTagsByLanguage(languageId).subscribe({
+      next: () => fail('Expected error'),
+      error: (err) => { expect(err).toBeTruthy() }
+    })
+
+    httpMock.expectOne(`../assets/dummy/tags-${languageId}.json`).error(new ProgressEvent('error'))
+  })
+})
