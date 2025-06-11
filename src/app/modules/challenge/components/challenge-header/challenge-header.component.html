@@ -27,10 +27,6 @@
       </div>
     </div>
     <div class="stats" *ngIf="!challengeStarted">
-      <span class="stat">
-        <img src="assets/img/icon/user.svg" alt="User">
-        IT-Academy
-      </span>
       <span class="stat" [ngbTooltip]="'tooltips.startedFinished' | translate">
         <img src="assets/img/icon/times-performed.svg" alt="Times performed">
         <span>{{timesSolved}}</span>
