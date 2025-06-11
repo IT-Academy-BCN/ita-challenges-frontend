@@ -160,7 +160,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     this.challenge.language = language
     const selectedLang = this.languages.find(lang => lang.language_name === language)
     this.selectedLanguageId = (selectedLang != null) ? selectedLang.id_language : ''
-    // Cargar los tags con el nuevo ID del lenguaje
     this.loadTags()
     /* istanbul ignore next */
     // Actualiza CodeMirror con el nuevo lenguaje
@@ -183,7 +182,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   loadTags (): void {
     if (this.selectedLanguageId.length === 0) {
-      console.warn('No language selected, skipping tag loading.')
       return
     }
     this.challengeFormService.getTagsByLanguage(this.selectedLanguageId).subscribe({
@@ -192,7 +190,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         this.selectedTags = []
       },
       error: (error) => {
-        console.error('Error al obtener las etiquetas:', error)
+        console.error('Error fetching tags:', error)
         this.currentTags = []
         this.selectedTags = []
       }

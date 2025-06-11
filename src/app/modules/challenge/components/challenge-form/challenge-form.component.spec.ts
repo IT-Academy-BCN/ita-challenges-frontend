@@ -284,13 +284,12 @@ describe('ChallengeFormComponent', () => {
   })
 
   it('should update selectedLanguageId and load tags when language changes', () => {
-    const mockLoadTags = jest.spyOn(component, 'loadTags') // Mockear la función de carga
+    const mockLoadTags = jest.spyOn(component, 'loadTags')
     component.onLanguageChange('Javascript')
     expect(component.selectedLanguageId).toBe('09fabe32-7362-4bfb-ac05-b7bf854c6e0f')
-    expect(mockLoadTags).toHaveBeenCalled() // Verificar que carga los tags
+    expect(mockLoadTags).toHaveBeenCalled()
   })
 
-  // ✅ Test para `loadTags()`
   it('should call getTagsByLanguage() with the correct language ID', () => {
     component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
     component.loadTags()
@@ -300,10 +299,10 @@ describe('ChallengeFormComponent', () => {
   it('should not call getTagsByLanguage() if selectedLanguageId is empty', () => {
     const spyGetTags = jest.spyOn(mockChallengeFormService, 'getTagsByLanguage')
 
-    component.selectedLanguageId = '' // Simulamos que no hay un lenguaje seleccionado
+    component.selectedLanguageId = ''
     component.loadTags()
 
-    expect(spyGetTags).not.toHaveBeenCalled() // ✅ Verificamos que no intenta cargar tags
+    expect(spyGetTags).not.toHaveBeenCalled()
   })
 
   it('should handle errors when calling getTagsByLanguage()', () => {
@@ -321,7 +320,7 @@ describe('ChallengeFormComponent', () => {
     expect(component.currentTags).toEqual([])
     expect(component.selectedTags).toEqual([])
 
-    expect(consoleSpy).toHaveBeenCalledWith('Error al obtener las etiquetas:', expect.any(Error))
+    expect(consoleSpy).toHaveBeenCalledWith('Error fetching tags:', expect.any(Error))
 
     consoleSpy.mockRestore()
   })
