@@ -53,7 +53,7 @@ describe('ChallengeFormService', () => {
       expect(res).toEqual(mockTagsResponse)
     })
 
-    const req = httpMock.expectOne(`../assets/dummy/tags-${languageId}.json`)
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${languageId}`)
     expect(req.request.method).toBe('GET')
     req.flush(mockTagsResponse)
   })
@@ -66,6 +66,6 @@ describe('ChallengeFormService', () => {
       error: (err) => { expect(err).toBeTruthy() }
     })
 
-    httpMock.expectOne(`../assets/dummy/tags-${languageId}.json`).error(new ProgressEvent('error'))
+    httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${languageId}`).error(new ProgressEvent('error'))
   })
 })
