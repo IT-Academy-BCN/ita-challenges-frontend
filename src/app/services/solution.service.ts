@@ -109,11 +109,15 @@ export class SolutionService {
     return this.authService.getUserId().pipe(
       switchMap(userId => {
         if (typeof userId !== 'string' || userId.trim() === '') {
-          console.error('Error: userId inválido', userId)
-          throw new Error('User ID not found')
+          console.warn('User ID not available, skipping request')
+          return of([])
         }
         const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.USER_SOLUTION}${userId}/solutions`
-        return this.http.get<UserSolution[]>(url)
+        return this.http.get<UserSolution[]>(url).pipe(
+          catchError(error => {
+            console.error('Error fetching user solution:', error)
+            return of([])
+          }))
       })
     )
   }
