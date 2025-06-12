@@ -16,6 +16,7 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.36-RELEASE] - 2025-06-10
 
+<<<<<<< HEAD
 ### Fixed
 - Configuration for SonarCloud compatibility: added sonar-project.properties with coverage paths and exclusions (Taiga [#493], PR [#641])
 - Fixed missing braces in en.json and es.json (Taiga [#492], PR [#642])
@@ -23,6 +24,13 @@ and this project adheres to
 ### Changed
 - Refactored challenge-form service and component to load tags based on selected language (Taiga [#470], PR [#637])
 - Visual refactor of icons in `challenge-header` (rocket icon, hover effects, tooltip, and layout reorder). (Taiga [#471], PR [#640])
+=======
+- Configuration for SonarCloud compatibility: added sonar-project.properties with coverage paths and exclusions (#493)
+- Fixed missing braces in en.json and es.json (#492)
+- Refactored challenge-form service and component to load tags based on selected language (#470)
+- Visual refactor of icons in challenge-header (rocket icon, hover effects, tooltip, and layout reorder) (#471)
+- Added translation support to challenge-form: replaced static text with translation keys and updated language JSONs (Taiga [#503], PR [#645])
+>>>>>>> caeb8428 (chore(changelog): added PR number to entry)
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
