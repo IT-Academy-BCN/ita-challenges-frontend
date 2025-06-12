@@ -10,7 +10,7 @@ and this project adheres to
 - Fixed missing braces in en.json and es.json (#492)
 - Refactored challenge-form service and component to load tags based on selected language (#470)
 - Visual refactor of icons in challenge-header (rocket icon, hover effects, tooltip, and layout reorder) (#471)
-- Visual refactor of icons in challenge-card (rocket icon, hover effects, and layout reorder) and restricted user icon to admins (#487)
+- Visual refactor of icons in challenge-card (rocket icon, hover effects, and layout reorder) (#487)
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
