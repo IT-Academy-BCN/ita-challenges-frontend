@@ -20,6 +20,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
 
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)
+  private isEditorInitialized: boolean = false
 
   ngOnInit (): void {
     if (this.isEditorChallengeVisible) {
@@ -45,14 +46,9 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   initializeCodeMirror (): void {
-    let savedContent = localStorage.getItem('editorContent')?.trim() ?? ''
+    if (this.isEditorInitialized) return
 
-    if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(220)
-    }
-
-    // Imprimir en consola el contenido antes de inicializar el editor
-    console.log('Contenido recuperado:', savedContent)
+    const savedContent = '// Escriu la teva solució aquí\n'
 
     this.editor = new EditorView({
       parent: this.editorSolution.nativeElement,
@@ -73,6 +69,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
         ]
       })
     })
+    this.isEditorInitialized = true
   }
 
   saveContent (): void {
