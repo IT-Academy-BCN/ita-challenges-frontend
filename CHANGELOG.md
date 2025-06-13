@@ -10,6 +10,8 @@ and this project adheres to
 - Fixed missing braces in en.json and es.json (#492)
 - Refactored challenge-form service and component to load tags based on selected language (#470)
 - Visual refactor of icons in challenge-header (rocket icon, hover effects, tooltip, and layout reorder) (#471)
+- Implemented CustomDatePipe to format challenge creation dates in Catalan short format (e.g., 1 Gen 2025) (#476)
+- Updated challenge-card and challenge-header components to use the new pipe. (#476)
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
