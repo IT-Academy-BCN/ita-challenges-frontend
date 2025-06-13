@@ -18,8 +18,7 @@ export class StarterService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get<ChallengeResponse>('assets/dummy/challenges-mock.json', {
-        // 🧪 MOCK TEMPORAL - Endpoint real: ${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}
+    return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
       headers
     }).pipe(
       tap((response) => {

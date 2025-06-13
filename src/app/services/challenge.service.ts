@@ -53,7 +53,7 @@ export class ChallengeService {
 
   getChallengeById (id: string): Observable<Challenge> {
     return this.http.get<Challenge>(
-      `assets/dummy/challenge-detail-${id}.json`, // 🧪 MOCK TEMPORAL - Endpoint real: ${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
       {
         headers: {
           'Content-Type': 'application/json'
