@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.37-RELEASE] - 2025-06-16
+
+### Changed
+- Visual refactor of icons in `challenge-card` (rocket icon, hover effects, and layout reorder). (Taiga [#487], PR [#638])
+
 ### [ita-challenges-frontend-3.1.36-RELEASE] - 2025-06-10
 
 ### Fixed
@@ -12,8 +17,7 @@ and this project adheres to
 
 ### Changed
 - Refactored challenge-form service and component to load tags based on selected language (Taiga [#470], PR [#637])
-- Visual refactor of icons in challenge-header (rocket icon, hover effects, tooltip, and layout reorder) (Taiga [#471], PR [#640])
-- Visual refactor of icons in challenge-card (rocket icon, hover effects, and layout reorder) (Taiga [#487], PR [#638])
+- Visual refactor of icons in `challenge-header` (rocket icon, hover effects, tooltip, and layout reorder). (Taiga [#471], PR [#640])
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
