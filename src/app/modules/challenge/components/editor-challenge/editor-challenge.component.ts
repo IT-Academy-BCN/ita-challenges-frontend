@@ -6,6 +6,7 @@ import { basicSetup } from 'codemirror'
 import { defaultKeymap } from '@codemirror/commands'
 import { lineNumbers } from '@codemirror/view'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -22,6 +23,7 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef)
   private isEditorInitialized: boolean = false
 
+  constructor (private readonly translate: TranslateService) {}
   ngOnInit (): void {
     if (this.isEditorChallengeVisible) {
       this.initializeCodeMirror()
@@ -48,28 +50,30 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   initializeCodeMirror (): void {
     if (this.isEditorInitialized) return
 
-    const savedContent = '// Escriu la teva solució aquí\n'
+    this.translate.get('modules.challenge.info.solutionCode').subscribe((translatedText: string) => {
+      const savedContent = translatedText + '\n'
 
-    this.editor = new EditorView({
-      parent: this.editorSolution.nativeElement,
-      state: EditorState.create({
-        doc: savedContent,
-        extensions: [
-          basicSetup, // Configuración básica
-          javascript(), // Soporte para JavaScript
-          keymap.of(defaultKeymap), // Atajos de teclado
-          lineNumbers(), // Habilitar números de línea
-          EditorView.updateListener.of((update: ViewUpdate) => {
-            if (update.docChanged) {
-              const content = this.editor.state.doc.toString()
-              localStorage.setItem('editorContent', content)
-            }
-          }),
-          EditorView.editable.of(true) // Habilita edición
-        ]
+      this.editor = new EditorView({
+        parent: this.editorSolution.nativeElement,
+        state: EditorState.create({
+          doc: savedContent,
+          extensions: [
+            basicSetup, // Configuración básica
+            javascript(), // Soporte para JavaScript
+            keymap.of(defaultKeymap), // Atajos de teclado
+            lineNumbers(), // Habilitar números de línea
+            EditorView.updateListener.of((update: ViewUpdate) => {
+              if (update.docChanged) {
+                const content = this.editor.state.doc.toString()
+                localStorage.setItem('editorContent', content)
+              }
+            }),
+            EditorView.editable.of(true) // Habilita edición
+          ]
+        })
       })
+      this.isEditorInitialized = true
     })
-    this.isEditorInitialized = true
   }
 
   saveContent (): void {
