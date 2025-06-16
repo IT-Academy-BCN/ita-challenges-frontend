@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.38-RELEASE] - 2025-06-16
+
+### Changed
+- Added translation support to challenge-form: replaced static text with translation keys and updated language JSONs (Taiga [#503], PR [#645])
+
 ### [ita-challenges-frontend-3.1.37-RELEASE] - 2025-06-16
 
 ### Changed

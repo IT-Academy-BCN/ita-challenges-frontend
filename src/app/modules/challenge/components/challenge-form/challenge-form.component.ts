@@ -78,8 +78,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   ) {
     this.loadLanguages()
     translate.addLangs(['en', 'es', 'ca'])
-    translate.setDefaultLang('es')
-    translate.use('es')
   }
 
   // Método que se ejecuta cuando el componente está listo

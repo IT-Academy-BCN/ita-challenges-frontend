@@ -68,7 +68,24 @@
                 "solutionsUserHeader": "Your solution",
                 "solutionsOfficialHeader":"solution provided by IT Academy",
                 "noResources": "There are no resources available for this challenge."
-               
+            },
+            "challengeForm": {
+                "breadcrumb": "Challenges / Create challenge",
+                "title": "New challenge",
+                "buttonCancel": "Cancel",
+                "buttonPublish": "Publish",
+                "generalInfo": "General information",
+                "challengeTitle": "Title",
+                "language": "Language",
+                "challengeContent": "Challenge content",
+                "statement": "Statement",
+                "solution": "Solution",
+                "additionalInfo": "Additional information",
+                "difficulty": "Difficulty",
+                "easy": "Easy",
+                "medium": "Medium",
+                "hard": "Hard",
+                "tags": "Tags"
             }
         },
         "mentor": {
