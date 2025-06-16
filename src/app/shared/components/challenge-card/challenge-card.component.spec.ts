@@ -14,6 +14,7 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { of } from 'rxjs'
+import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
@@ -44,20 +45,25 @@ describe('ChallengeCardComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
       imports: [
+        CustomDatePipe,
         NgbTooltipModule,
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
-        })
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+          },
+        }),
       ],
       providers: [
         StarterService,
-        { provide: LOCALE_ID, useValue: 'ca' },
+        { provide: LOCALE_ID, useValue: "ca" },
         { provide: ChallengeService, useValue: mockChallengeService },
-        { provide: AuthService, useValue: mockAuthService }
-      ]
-    }).compileComponents()
+        { provide: AuthService, useValue: mockAuthService },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
