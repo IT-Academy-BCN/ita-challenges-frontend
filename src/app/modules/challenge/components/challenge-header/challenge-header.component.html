@@ -36,7 +36,7 @@
         <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Remove from favorites">
         <span>{{favorites_count}}</span>
       </span>
-      <span class="stat" [ngbTooltip]="'tooltips.creationDate' | translate">
+      <span class="stat" *ngIf="creation_date" [ngbTooltip]="'tooltips.creationDate' | translate">
         <img src="assets/img/icon/date.svg" alt="Date">
         {{ creation_date | customDate }}
       </span>
