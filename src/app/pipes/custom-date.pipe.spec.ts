@@ -28,4 +28,29 @@ describe('CustomDatePipe', () => {
     const result = pipe.transform(new Date(2025, 0, 1))
     expect(result).toBe('Jan 1, 2025')
   })
+
+  it("should return empty string for null value", () => {
+    const pipe = new CustomDatePipe(translateMock as TranslateService)
+    const result = pipe.transform(null)
+    expect(result).toBe("")
+  });
+
+  it('should return empty string for undefined value', () => {
+    const pipe = new CustomDatePipe(translateMock as TranslateService)
+    const result = pipe.transform(undefined)
+    expect(result).toBe('')
+  });
+
+  it('should return empty string for invalid date string', () => {
+    const pipe = new CustomDatePipe(translateMock as TranslateService)
+    const result = pipe.transform('invalid-date')
+    expect(result).toBe('')
+  });
+
+  it('should fallback to Spanish month names if language is unknown', () => {
+    translateMock.currentLang = 'fr'
+    const pipe = new CustomDatePipe(translateMock as TranslateService)
+    const result = pipe.transform(new Date(2025, 0, 1))
+    expect(result).toBe('1 Ene 2025')
+  })
 })

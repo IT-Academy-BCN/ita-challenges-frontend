@@ -6,16 +6,16 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.41-RELEASE] - 2025-06-16
 
-### Fixed
-- Fixed multiple initializations of CodeMirror in editor-challenge and removed localStorage retrieval (Taiga [#509], PR [#646])
-
-### [ita-challenges-frontend-3.1.40-RELEASE] - 2025-06-16
-
 ### Added
 - Implemented `CustomDatePipe` to format challenge creation dates in short format for Catalan, Spanish, and English (Taiga [#497], PR [#649]).
 
 ### Changed
 - Updated challenge-card and challenge-header components to use the new pipe (Taiga [#497], PR [#649]).
+
+### [ita-challenges-frontend-3.1.40-RELEASE] - 2025-06-16
+
+### Fixed
+- Fixed multiple initializations of CodeMirror in editor-challenge and removed localStorage retrieval (Taiga [#509], PR [#646])
 
 ### [ita-challenges-frontend-3.1.39-RELEASE] - 2025-06-16
 
