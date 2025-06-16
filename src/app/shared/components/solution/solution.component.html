@@ -5,13 +5,7 @@
   <img src="assets/img/icon/Shield-tick.svg" alt="shield tick icon" *ngIf="!isUserSolution">
 </div>
 <div class="solution-body">
-  
-  <ng-container *ngIf="isUserSolution">
-    {{ "modules.challenge.info.solutionCode" | translate }}
-  </ng-container>
 
   <div #editorSolution (click)="handleClick($event)"></div>
-  <!-- <div *ngIf="!isUserSolution" class="non-editable-text">
-    <pre *ngFor="let solution of solutions">{{ solution_text }}</pre>
-  </div> -->
+
 </div>

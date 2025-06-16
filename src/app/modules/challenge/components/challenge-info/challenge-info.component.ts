@@ -117,7 +117,11 @@ implements OnInit {
       this.isChallengeStatementVisible = false;
     }
 
-    void this.loadUserSolutionData()
+    this.authService.getUserId().subscribe(userId => {
+      if (userId != null) {
+        void this.loadUserSolutionData()
+      }
+    })
   }
 
   private async loadUserSolutionData (): Promise<void> {

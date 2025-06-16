@@ -187,4 +187,30 @@ describe('SolutionService', () => {
   expect(req.request.method).toBe('PUT');
   req.flush(null, mockError);
 });
+  it('should handle missing user ID gracefully', (done) => {
+    jest.spyOn(TestBed.inject(AuthService), 'getUserId').mockReturnValue(of(''))
+
+    service.fetchUserSolution().subscribe((data) => {
+      expect(data).toEqual([])
+      done()
+    })
+  })
+
+  it('should handle error from backend when fetching user solutions', (done) => {
+    jest.spyOn(TestBed.inject(AuthService), 'getUserId').mockReturnValue(of('mocked-user-id'))
+
+    const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.USER_SOLUTION}mocked-user-id/solutions`
+    const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+    service.fetchUserSolution().subscribe(
+      (data) => {
+        expect(data).toEqual([])
+        done()
+      }
+    )
+
+    const req = httpMock.expectOne(expectedUrl)
+    expect(req.request.method).toBe('GET')
+    req.flush(null, mockError)
+  })
 })
