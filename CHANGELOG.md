@@ -10,6 +10,10 @@ and this project adheres to
 - Fixed multiple initializations of CodeMirror in editor-challenge and removed localStorage retrieval (Taiga [#509], PR [#646])
 
 ### [ita-challenges-frontend-3.1.39-RELEASE] - 2025-06-16
+- Implemented CustomDatePipe to format challenge creation dates in Catalan short format (e.g., 1 Gen 2025) (Taiga [#497], PR [#649])
+- Updated challenge-card and challenge-header components to use the new pipe. (Taiga [#497], PR [#649])
+
+### [ita-challenges-frontend-3.1.39-RELEASE] - 2025-06-16
 
 ### Fixed
 - Prevented function execution in solution-tab before userId is available, improved error handling in service, and fixed UI display issues (Taiga [#512], PR [#648])
