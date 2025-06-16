@@ -92,9 +92,7 @@ describe('StarterService', () => {
   it('Should stream all challenges', (done) => {
     const mockResponse: Record<string, unknown> = { challenge: 'challenge' }
     service.getAllChallenges().subscribe()
-    const req = httpClientMock.expectOne(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
-    );
+    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
     expect(req.request.method).toEqual('GET')
     req.flush(mockResponse)
     done()
