@@ -4,14 +4,18 @@ import { TranslateService } from '@ngx-translate/core'
 @Pipe({
   name: "customDate",
   standalone: true,
-  pure: false
+  pure: false,
 })
 export class CustomDatePipe implements PipeTransform {
-  constructor(private translate: TranslateService) {}
+  constructor(private readonly translate: TranslateService) {}
 
-  transform(value: Date | string): string {
-    const lang = this.translate.currentLang || 'es'
+  transform(value: Date | string | null | undefined): string {
+    if (!value) return ''
+
     const date = new Date(value)
+    if (isNaN(date.getTime())) return ''
+
+    const lang = this.translate.currentLang || "es"
 
     const monthNames: Record<string, string[]> = {
       es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -20,11 +24,9 @@ export class CustomDatePipe implements PipeTransform {
     }
 
     const day = date.getDate()
-    const month = monthNames[lang]?.[date.getMonth()] ?? monthNames['es'][date.getMonth()]
+    const month = monthNames[lang]?.[date.getMonth()] ?? monthNames["es"][date.getMonth()]
     const year = date.getFullYear()
 
-    return lang === 'en'
-      ? `${month} ${day}, ${year}`
-      : `${day} ${month} ${year}`
+    return lang === "en" ? `${month} ${day}, ${year}` : `${day} ${month} ${year}`
   }
 }
