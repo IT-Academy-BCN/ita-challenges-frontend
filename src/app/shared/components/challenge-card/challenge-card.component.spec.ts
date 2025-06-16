@@ -51,7 +51,7 @@ describe('ChallengeCardComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
-        }),
+        })
       ],
       providers: [
         StarterService,
