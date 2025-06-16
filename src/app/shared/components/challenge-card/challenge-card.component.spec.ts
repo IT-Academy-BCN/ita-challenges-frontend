@@ -37,8 +37,9 @@ describe('ChallengeCardComponent', () => {
     } as any
 
     mockAuthService = {
-      isUserLoggedIn: jest.fn().mockReturnValue(true)
-    } as any
+      isUserLoggedIn: jest.fn().mockReturnValue(true),
+      getUserRole: jest.fn().mockReturnValue(of("ADMIN")),
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
@@ -102,7 +103,7 @@ describe('ChallengeCardComponent', () => {
     component.creation_date = testDate
     fixture.detectChanges()
 
-    const dateElement: HTMLElement = fixture.debugElement.query(By.css('.stat:last-child div:last-child')).nativeElement
+    const dateElement: HTMLElement = fixture.debugElement.queryAll(By.css('.stat .txt')).find(el => el.nativeElement.textContent?.includes(formatDate(testDate, 'mediumDate', 'ca')))?.nativeElement
     const formattedDate = formatDate(testDate, 'mediumDate', 'ca') // Formatear la fecha para comparar
 
     expect(dateElement.textContent).toContain(formattedDate)

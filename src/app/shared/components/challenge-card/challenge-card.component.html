@@ -31,14 +31,23 @@
     </div>
 
     <div class="stats d-flex">
-      <div class="stat d-flex align-items-center">
-        <div><img src="assets/img/icon/user.svg" alt="User"></div>
-        <div class="txt">IT-Academy</div>
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.startedFinished' | translate">
+        <div><img src="assets/img/icon/times-performed.svg" alt="Times performed"></div>
+        <div class="txt">{{challenge_timesSolved}}</div>
       </div>
 
-      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.startedFinished' | translate">
-        <div><img src="assets/img/icon/bullseye.svg" alt="Bullseye"></div>
-        <div class="txt">{{challenge_timesSolved}}</div>
+      <button class="stat d-flex align-items-center favorite-button" [ngbTooltip]="'tooltips.favorites' | translate"
+        (click)="toggleFavorite($event)">
+        <div>
+            <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
+            <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
+        </div>
+        <div class="txt">{{favorites_count}}</div>
+      </button>
+
+      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
+        <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
+        <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>
       </div>
 
       <button class="stat d-flex align-items-center bookmark-button"
@@ -52,20 +61,6 @@
         </div>
       </button>
 
-      <button class="stat d-flex align-items-center favorite-button"
-        [ngbTooltip]="'tooltips.favorites' | translate"
-        (click)="toggleFavorite($event)">
-        <div>
-          <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
-          <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
-        </div>
-        <div class="txt">{{favorites_count}}</div>
-      </button>
-
-      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.creationDate' | translate">
-        <div><img src="assets/img/icon/clock.svg" alt="Date"></div>
-        <div class="txt">{{creation_date | date:'mediumDate':'':currentLang}}</div>
-      </div>
     </div>
   </div>
 </div>

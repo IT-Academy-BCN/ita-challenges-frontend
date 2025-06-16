@@ -3,6 +3,7 @@ import { StarterService } from '../../../services/starter.service'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
+import { take } from 'rxjs/operators'
 
 
 @Component({
@@ -11,11 +12,12 @@ import { AuthService } from 'src/app/services/auth.service'
   styleUrls: ['./challenge-card.component.scss'],
   providers: []
 })
-export class ChallengeCardComponent {
+export class ChallengeCardComponent implements OnInit {
   private readonly starterService = inject(StarterService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
+  public userRole: string | null = null
 
   @Input() title: string = ''
   @Input() languages: any = []
@@ -28,6 +30,12 @@ export class ChallengeCardComponent {
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
+
+  ngOnInit(): void {
+    this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
+      this.userRole = role;
+    });
+  }
 
   get currentLang (): string {
     return this.translate.currentLang
