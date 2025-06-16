@@ -7,6 +7,7 @@ import { defaultKeymap } from '@codemirror/commands'
 import { lineNumbers } from '@codemirror/view'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { TranslateService } from '@ngx-translate/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -22,16 +23,31 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)
   private isEditorInitialized: boolean = false
+  private langChangeSub?: Subscription
 
   constructor (private readonly translate: TranslateService) {}
   ngOnInit (): void {
+    this.langChangeSub = this.translate.onLangChange.subscribe(() => {
+      this.updateEditorContent()
+    })
+
     if (this.isEditorChallengeVisible) {
       this.initializeCodeMirror()
     }
   }
 
+  updateEditorContent (): void {
+    this.translate.get('modules.challenge.info.solutionCode').subscribe(translatedText => {
+      const content = translatedText + '\n'
+      this.editor.dispatch({
+        changes: { from: 0, to: this.editor.state.doc.length, insert: content }
+      })
+    })
+  }
+
   ngOnDestroy (): void {
     this.editor?.destroy()
+    this.langChangeSub?.unsubscribe()
   }
 
   ngOnChanges (changes: SimpleChanges): void {
