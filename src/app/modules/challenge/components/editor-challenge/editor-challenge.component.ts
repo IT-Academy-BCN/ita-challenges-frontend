@@ -6,6 +6,8 @@ import { basicSetup } from 'codemirror'
 import { defaultKeymap } from '@codemirror/commands'
 import { lineNumbers } from '@codemirror/view'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { TranslateService } from '@ngx-translate/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-editor-challenge',
@@ -20,15 +22,32 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
 
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)
+  private isEditorInitialized: boolean = false
+  private langChangeSub?: Subscription
 
+  constructor (private readonly translate: TranslateService) {}
   ngOnInit (): void {
+    this.langChangeSub = this.translate.onLangChange.subscribe(() => {
+      this.updateEditorContent()
+    })
+
     if (this.isEditorChallengeVisible) {
       this.initializeCodeMirror()
     }
   }
 
+  updateEditorContent (): void {
+    this.translate.get('modules.challenge.info.solutionCode').subscribe(translatedText => {
+      const content = translatedText + '\n'
+      this.editor.dispatch({
+        changes: { from: 0, to: this.editor.state.doc.length, insert: content }
+      })
+    })
+  }
+
   ngOnDestroy (): void {
     this.editor?.destroy()
+    this.langChangeSub?.unsubscribe()
   }
 
   ngOnChanges (changes: SimpleChanges): void {
@@ -45,33 +64,31 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   initializeCodeMirror (): void {
-    let savedContent = localStorage.getItem('editorContent')?.trim() ?? ''
+    if (this.isEditorInitialized) return
 
-    if (savedContent.trim() === '') {
-      savedContent = '// Escriu la teva solució aquí\n' + '\n'.repeat(220)
-    }
+    this.translate.get('modules.challenge.info.solutionCode').subscribe((translatedText: string) => {
+      const savedContent = translatedText + '\n'
 
-    // Imprimir en consola el contenido antes de inicializar el editor
-    console.log('Contenido recuperado:', savedContent)
-
-    this.editor = new EditorView({
-      parent: this.editorSolution.nativeElement,
-      state: EditorState.create({
-        doc: savedContent,
-        extensions: [
-          basicSetup, // Configuración básica
-          javascript(), // Soporte para JavaScript
-          keymap.of(defaultKeymap), // Atajos de teclado
-          lineNumbers(), // Habilitar números de línea
-          EditorView.updateListener.of((update: ViewUpdate) => {
-            if (update.docChanged) {
-              const content = this.editor.state.doc.toString()
-              localStorage.setItem('editorContent', content)
-            }
-          }),
-          EditorView.editable.of(true) // Habilita edición
-        ]
+      this.editor = new EditorView({
+        parent: this.editorSolution.nativeElement,
+        state: EditorState.create({
+          doc: savedContent,
+          extensions: [
+            basicSetup, // Configuración básica
+            javascript(), // Soporte para JavaScript
+            keymap.of(defaultKeymap), // Atajos de teclado
+            lineNumbers(), // Habilitar números de línea
+            EditorView.updateListener.of((update: ViewUpdate) => {
+              if (update.docChanged) {
+                const content = this.editor.state.doc.toString()
+                localStorage.setItem('editorContent', content)
+              }
+            }),
+            EditorView.editable.of(true) // Habilita edición
+          ]
+        })
       })
+      this.isEditorInitialized = true
     })
   }
 
