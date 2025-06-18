@@ -224,16 +224,12 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
   
-it('should show "Start Challenge" button for USER role', () => {
-  authService.getUserRole.mockReturnValue(of('USER'));
-  component.challengeStarted = false;
-
-  component.ngOnInit();
-  fixture.detectChanges();
-
-  const startBtn = fixture.debugElement.query(By.css('button.btn-primary'));
-  expect(startBtn).not.toBeNull();
-});
-
-
+  it('should show "Start Challenge" button for USER role', () => {
+    authService.getUserRole.mockReturnValue(of('USER'));
+    component.challengeStarted = false;
+    component.ngOnInit();
+    fixture.detectChanges();
+    const startBtn = fixture.debugElement.query(By.css('button.btn-primary'));
+    expect(startBtn).not.toBeNull();
+  });
 })
