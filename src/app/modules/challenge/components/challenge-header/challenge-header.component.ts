@@ -38,7 +38,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
   @Input() isBookmarked: boolean = false
-
+  @Input() languageId!: string
   @Input() timesSolved: number = 0
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
@@ -59,8 +59,19 @@ export class ChallengeHeaderComponent implements OnInit {
       this.idChallenge = params['idChallenge']
     })
 
-    const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
-    this.solutionSent = savedSolutions.includes(this.idChallenge)
+    if (this.idChallenge && this.languageId) {
+      this.solutionService.getUserSolution(this.idChallenge, this.languageId)
+        .subscribe({
+          next: (solution) => {
+            if ((solution as any)?.status === "ENDED") {
+              this.solutionSent = true
+            }
+          },
+          error: (err) => {
+            console.warn("No solution found or error fetching:", err)
+          },
+        })
+    }    
 
     this.solutionService.challengeCompleted$.subscribe({
       next: (challengeId: string) => {
