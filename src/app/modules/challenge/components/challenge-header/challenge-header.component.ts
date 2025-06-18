@@ -63,12 +63,12 @@ export class ChallengeHeaderComponent implements OnInit {
       this.solutionService.getUserSolution(this.idChallenge, this.languageId)
         .subscribe({
           next: (solution) => {
-            if ((solution as any)?.status === "ENDED") {
+            if ((solution as any)?.status === 'ENDED') {
               this.solutionSent = true
             }
           },
           error: (err) => {
-            console.warn("No solution found or error fetching:", err)
+            console.warn('No solution found or error fetching:', err)
           },
         })
     }    

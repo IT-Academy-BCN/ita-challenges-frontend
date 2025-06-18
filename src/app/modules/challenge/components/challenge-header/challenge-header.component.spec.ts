@@ -46,9 +46,9 @@ describe('ChallengeHeaderComponent', () => {
       providers: [
         provideRouter([]),
         { provide: Router, useValue: mockRouter },
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ idChallenge: "testChallengeId" }) },
+        { 
+          provide: ActivatedRoute, 
+          useValue: { params: of({ idChallenge: 'testChallengeId' }) }
         },
         { provide: NgbModal, useValue: { open: jest.fn() } },
         { provide: ChallengeService, useValue: challengeService },
@@ -190,5 +190,32 @@ describe('ChallengeHeaderComponent', () => {
       expect(component.isBookmarked).toBe(false);
       done();
     });
+  });
+
+  it('should log warning if getUserSolution fails', () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    solutionService.getUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('Test error')));
+    component.idChallenge = 'testChallengeId';
+    component.languageId = 'ts';
+    component.ngOnInit();
+    expect(consoleWarnSpy).toHaveBeenCalledWith('No solution found or error fetching:', expect.any(Error));
+    consoleWarnSpy.mockRestore();
+  });
+
+  it("should set activeId to SOLUTIONS if challengeStarted is true", () => {
+    component.challengeStarted = true;
+    component.ngOnInit();
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+  });
+
+  it("should read challengeStarted from localStorage and update state", () => {
+    localStorage.setItem(
+      "challengeStarted",
+      JSON.stringify({ id: "testChallengeId", started: true })
+    );
+    component.idChallenge = "testChallengeId";
+    component.ngOnInit();
+    expect(component.challengeStarted).toBe(true);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 })
