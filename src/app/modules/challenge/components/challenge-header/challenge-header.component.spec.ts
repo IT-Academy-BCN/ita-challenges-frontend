@@ -12,6 +12,7 @@ import { ChallengeService } from 'src/app/services/challenge.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
+import { By } from '@angular/platform-browser';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -222,4 +223,17 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.challengeStarted).toBe(true);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
+  
+it('should show "Start Challenge" button for USER role', () => {
+  authService.getUserRole.mockReturnValue(of('USER'));
+  component.challengeStarted = false;
+
+  component.ngOnInit();
+  fixture.detectChanges();
+
+  const startBtn = fixture.debugElement.query(By.css('button.btn-primary'));
+  expect(startBtn).not.toBeNull();
+});
+
+
 })
