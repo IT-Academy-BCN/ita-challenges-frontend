@@ -227,7 +227,7 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.challengeStarted).toBe(true);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
-
+  
   it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   authService.getUserRole.mockReturnValue(of('ADMIN'));
   component.userRole = 'ADMIN';
