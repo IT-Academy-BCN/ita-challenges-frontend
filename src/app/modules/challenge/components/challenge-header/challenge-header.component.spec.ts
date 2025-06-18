@@ -13,6 +13,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4130e43c (chore: resolve merge conflicts while rebasing)
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -223,8 +227,8 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.challengeStarted).toBe(true);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
-  
-it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
+
+  it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   authService.getUserRole.mockReturnValue(of('ADMIN'));
   component.userRole = 'ADMIN';
   component.challengeStarted = false;
@@ -235,7 +239,6 @@ it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   const startButton = buttons.find(btn =>
     btn.nativeElement.textContent.includes('Start')
   );
-
   expect(startButton).toBeUndefined();
 }));
 })
