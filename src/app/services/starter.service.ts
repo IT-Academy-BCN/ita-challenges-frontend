@@ -13,7 +13,6 @@ export class StarterService {
   getAllChallenges (): Observable<ChallengeResponse> {
     if (this.cachedChallenges !== null) {
       // Si hay datos en caché, devolverlos como un Observable
-      console.log('Datos obtenidos de la caché')
       return of(this.cachedChallenges)
     }
     const headers = new HttpHeaders({
@@ -24,7 +23,6 @@ export class StarterService {
     }).pipe(
       tap((response) => {
         this.cachedChallenges = response
-        console.log('Datos almacenados en caché:', response)
       }))
   }
 

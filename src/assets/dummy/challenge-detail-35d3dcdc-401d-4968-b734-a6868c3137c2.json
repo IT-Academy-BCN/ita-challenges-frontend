@@ -1,0 +1,24 @@
+{
+  "id_challenge": "35d3dcdc-401d-4968-b734-a6868c3137c2",
+  "challenge_title": "TestEncuentra el número duplicado",
+  "level": "EASY",
+  "creation_date": "2025-12-07T00:00:00Z",
+  "detail": {
+    "description": "Dado un array de números enteros, encuentra el número que aparece más de una vez."
+  },
+  "languages": [
+    {
+      "id_language": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f",
+      "language_name": "Javascript",
+      "language_image": "https://res.cloudinary.com/itachallenge/image/upload/v1739361249/language_javascript.png"
+    }
+  ],
+  "solutions": [
+    "febb3c1e-a000-4042-a93c-bac5a1837c5b",
+    "77e58655-eb5c-42d3-95c3-1a0e6e15a650"
+  ],
+  "topic": "DEFAULT_TOPIC",
+  "timesFavorite": 0,
+  "tags": ["00000000-0000-0000-0000-000000000000"],
+  "timesSolved": 12
+}

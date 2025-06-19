@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.41-RELEASE] - 2025-06-16
+
+### Added
+- Implemented `CustomDatePipe` to format challenge creation dates in short format for Catalan, Spanish, and English (Taiga [#497], PR [#649]).
+
+### Changed
+- Updated challenge-card and challenge-header components to use the new pipe (Taiga [#497], PR [#649]).
+
 ### [ita-challenges-frontend-3.1.40-RELEASE] - 2025-06-16
 
 ### Fixed

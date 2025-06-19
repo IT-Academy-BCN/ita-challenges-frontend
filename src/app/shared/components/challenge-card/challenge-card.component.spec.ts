@@ -2,18 +2,18 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeCardComponent } from './challenge-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { StarterService } from '../../../services/starter.service'
-import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/common/http'
-import { provideHttpClientTesting, HttpClientTestingModule } from '@angular/common/http/testing'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { TranslateModule, TranslateLoader  } from '@ngx-translate/core'
 
 import { HttpLoaderFactory } from '../../../app.module' // Asegúrate de que la ruta es correcta
 import { LOCALE_ID, Pipe, type PipeTransform } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { formatDate } from '@angular/common'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { of } from 'rxjs'
+import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
@@ -27,6 +27,7 @@ describe('ChallengeCardComponent', () => {
   let fixture: ComponentFixture<ChallengeCardComponent>
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockAuthService: jest.Mocked<AuthService>
+  let datePipe: CustomDatePipe
 
   beforeEach(async () => {
     mockChallengeService = {
@@ -44,6 +45,7 @@ describe('ChallengeCardComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
       imports: [
+        CustomDatePipe,
         NgbTooltipModule,
         RouterTestingModule,
         HttpClientTestingModule,
@@ -53,6 +55,7 @@ describe('ChallengeCardComponent', () => {
       ],
       providers: [
         StarterService,
+        CustomDatePipe,
         { provide: LOCALE_ID, useValue: 'ca' },
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: AuthService, useValue: mockAuthService }
@@ -61,6 +64,7 @@ describe('ChallengeCardComponent', () => {
 
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
+    datePipe = TestBed.inject(CustomDatePipe)
     fixture.detectChanges()
   })
 
@@ -103,11 +107,14 @@ describe('ChallengeCardComponent', () => {
     component.creation_date = testDate
     fixture.detectChanges()
 
-    const dateElement: HTMLElement = fixture.debugElement.queryAll(By.css('.stat .txt')).find(el => el.nativeElement.textContent?.includes(formatDate(testDate, 'mediumDate', 'ca')))?.nativeElement
-    const formattedDate = formatDate(testDate, 'mediumDate', 'ca') // Formatear la fecha para comparar
+    const formattedDate = datePipe.transform(testDate)
+    const dateElements = fixture.debugElement.queryAll(By.css('.stat .txt'))
+    const dateElement = dateElements.find(el => el.nativeElement.textContent.includes(formattedDate))
 
-    expect(dateElement.textContent).toContain(formattedDate)
+    expect(dateElement).toBeTruthy()
+    expect(dateElement?.nativeElement.textContent).toContain(formattedDate)
   })
+
   it('toggleFavorite: should call addToFavorites when not favorite', done => {
     component.id = 'C1'
     component.isFavorite = false

@@ -20,6 +20,7 @@ import { CookieService } from 'ngx-cookie-service'
 import { registerLocaleData } from '@angular/common'
 import localeCa from '@angular/common/locales/ca'
 import { AuthService } from 'src/app/services/auth.service'
+import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 
 registerLocaleData(localeCa)
 
@@ -74,7 +75,8 @@ describe('ChallengeComponent', () => {
         I18nModule,
         NgbNavModule,
         FormsModule,
-        DynamicTranslatePipe
+        DynamicTranslatePipe,
+        CustomDatePipe
       ],
       providers: [
         {

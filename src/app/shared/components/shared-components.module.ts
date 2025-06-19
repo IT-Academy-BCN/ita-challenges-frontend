@@ -12,6 +12,7 @@ import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
 import { FormsModule } from '@angular/forms'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { ToggleComponent } from './toggle/toggle.component'
+import { CustomDatePipe } from "../../pipes/custom-date.pipe"
 
 @NgModule({
   declarations: [
@@ -29,8 +30,9 @@ import { ToggleComponent } from './toggle/toggle.component'
     DynamicTranslatePipe,
     EscapeJavaForJsonPipe,
     FormsModule,
-    EditorModule
-  ],
+    EditorModule,
+    CustomDatePipe
+],
   exports: [
     ChallengeCardComponent,
     ResourceCardComponent,
