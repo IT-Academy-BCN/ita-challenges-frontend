@@ -1,28 +1,29 @@
-<div class="challenge-component">
-    <app-challenge-header
-        [title]="title"
-        [creation_date]="creation_date"
-        [level]="level"
-        [activeId]="activeId"
-        [idChallenge]="idChallenge"
-        [favorites_count]="challenge.timesFavorite || 0"
-        [timesSolved]="challenge.timesSolved"
-        (startChallenge)="onStartChallenge($event)"
-        (favoritesUpdated)="onFavoritesUpdated($event)"
-        [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
-        [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
->   </app-challenge-header>
+<div class="challenge-component" *ngIf="challenge">
+  <app-challenge-header
+    [title]="title"
+    [creation_date]="creation_date"
+    [level]="level"
+    [activeId]="activeId"
+    [idChallenge]="idChallenge"
+    [favorites_count]="challenge.timesFavorite || 0"
+    [timesSolved]="challenge.timesSolved"
+    (startChallenge)="onStartChallenge($event)"
+    (favoritesUpdated)="onFavoritesUpdated($event)"
+    [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
+    [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
+  >
+  </app-challenge-header>
 
-    <app-challenge-info
-        [detail]="detail"
-        [description]="description"
-        [popularity]="popularity"
-        [languages]="languages"
-        [activeId]="activeId"
-        (activeIdChange)="onActiveIdChange($event)"
-        [idChallenge]="idChallenge"
-        [startChallenge]="challengeStarted"
-        [isEditorChallengeVisible]="isEditorChallengeVisible"
->   </app-challenge-info>
-
+  <app-challenge-info
+    [detail]="detail"
+    [description]="description"
+    [popularity]="popularity"
+    [languages]="languages"
+    [activeId]="activeId"
+    (activeIdChange)="onActiveIdChange($event)"
+    [idChallenge]="idChallenge"
+    [startChallenge]="challengeStarted"
+    [isEditorChallengeVisible]="isEditorChallengeVisible"
+  >
+  </app-challenge-info>
 </div>
