@@ -36,8 +36,8 @@ describe('ChallengeHeaderComponent', () => {
       getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
     } as any;
     solutionService = {
-      getUserSolution: jest.fn().mockReturnValue(of({ status: "ENDED" })),
-      challengeCompleted$: of("testChallengeId"),
+      getUserSolution: jest.fn().mockReturnValue(of({ status: 'ENDED' })),
+      challengeCompleted$: of('testChallengeId'),
     } as any;
 
     await TestBed.configureTestingModule({
@@ -68,35 +68,35 @@ describe('ChallengeHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should set solutionSent to true if userSolution status is ENDED", () => {
-    component.idChallenge = "testChallengeId";
-    component.languageId = "testLang";
+  it('should set solutionSent to true if userSolution status is ENDED', () => {
+    component.idChallenge = 'testChallengeId';
+    component.languageId = 'testLang';
     component.ngOnInit();
     expect(component.solutionSent).toBe(true);
   });
 
-  it("should handle getUserSolution error", () => {
+  it('should handle getUserSolution error', () => {
     solutionService.getUserSolution = jest.fn()
-    .mockReturnValue(throwError(() => new Error("API Error")));
+    .mockReturnValue(throwError(() => new Error('API Error')));
     component.ngOnInit();
     expect(component.solutionSent).toBe(false);
   });
 
-  it("should handle challengeCompleted$", () => {
-    component.idChallenge = "testChallengeId";
+  it('should handle challengeCompleted$', () => {
+    component.idChallenge = 'testChallengeId';
     component.challengeStarted = true;
     component.ngOnInit();
     expect(component.challengeStarted).toBe(false);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
-  it("should log error when userId is null", () => {
+  it('should log error when userId is null', () => {
     const consoleSpy = jest
-      .spyOn(console, "error")
+      .spyOn(console, 'error')
       .mockImplementation(() => {});
     authService.getUserId = jest.fn().mockReturnValue(of(null));
     component.ngOnInit();
-    expect(consoleSpy).toHaveBeenCalledWith("Could not get User ID");
+    expect(consoleSpy).toHaveBeenCalledWith('Could not get User ID');
     consoleSpy.mockRestore();
   });
 
@@ -202,18 +202,18 @@ describe('ChallengeHeaderComponent', () => {
     consoleWarnSpy.mockRestore();
   });
 
-  it("should set activeId to SOLUTIONS if challengeStarted is true", () => {
+  it('should set activeId to SOLUTIONS if challengeStarted is true', () => {
     component.challengeStarted = true;
     component.ngOnInit();
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
-  it("should read challengeStarted from localStorage and update state", () => {
+  it('should read challengeStarted from localStorage and update state', () => {
     localStorage.setItem(
-      "challengeStarted",
-      JSON.stringify({ id: "testChallengeId", started: true })
+      'challengeStarted',
+      JSON.stringify({ id: 'testChallengeId', started: true })
     );
-    component.idChallenge = "testChallengeId";
+    component.idChallenge = 'testChallengeId';
     component.ngOnInit();
     expect(component.challengeStarted).toBe(true);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
