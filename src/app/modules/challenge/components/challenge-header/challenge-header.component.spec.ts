@@ -5,12 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
 import { provideRouter } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from "rxjs";
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
+import { SolutionService } from 'src/app/services/solution.service';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -19,7 +20,7 @@ describe('ChallengeHeaderComponent', () => {
   let router: Router;
   let challengeService: jest.Mocked<ChallengeService>;
   let authService: jest.Mocked<AuthService>;
-
+  let solutionService: jest.Mocked<SolutionService>;
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
@@ -34,6 +35,10 @@ describe('ChallengeHeaderComponent', () => {
       getUserId: jest.fn().mockReturnValue(of('user1')),
       getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
     } as any;
+    solutionService = {
+      getUserSolution: jest.fn().mockReturnValue(of({ status: "ENDED" })),
+      challengeCompleted$: of("testChallengeId"),
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
@@ -41,13 +46,14 @@ describe('ChallengeHeaderComponent', () => {
       providers: [
         provideRouter([]),
         { provide: Router, useValue: mockRouter },
-        { 
-          provide: ActivatedRoute, 
-          useValue: { params: of({ idChallenge: 'testChallengeId' }) }
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ idChallenge: "testChallengeId" }) },
         },
         { provide: NgbModal, useValue: { open: jest.fn() } },
         { provide: ChallengeService, useValue: challengeService },
         { provide: AuthService, useValue: authService },
+        { provide: SolutionService, useValue: solutionService },
       ],
     }).compileComponents();
 
@@ -58,9 +64,40 @@ describe('ChallengeHeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    fixture.detectChanges(); 
+  it('should create', () => { 
     expect(component).toBeTruthy();
+  });
+
+  it("should set solutionSent to true if userSolution status is ENDED", () => {
+    component.idChallenge = "testChallengeId";
+    component.languageId = "testLang";
+    component.ngOnInit();
+    expect(component.solutionSent).toBe(true);
+  });
+
+  it("should handle getUserSolution error", () => {
+    solutionService.getUserSolution = jest.fn()
+    .mockReturnValue(throwError(() => new Error("API Error")));
+    component.ngOnInit();
+    expect(component.solutionSent).toBe(false);
+  });
+
+  it("should handle challengeCompleted$", () => {
+    component.idChallenge = "testChallengeId";
+    component.challengeStarted = true;
+    component.ngOnInit();
+    expect(component.challengeStarted).toBe(false);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+  });
+
+  it("should log error when userId is null", () => {
+    const consoleSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    authService.getUserId = jest.fn().mockReturnValue(of(null));
+    component.ngOnInit();
+    expect(consoleSpy).toHaveBeenCalledWith("Could not get User ID");
+    consoleSpy.mockRestore();
   });
 
   it('should initialize input correctly', () => {
