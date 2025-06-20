@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.42-RELEASE] - 2025-06-20
+
+### 🆕 Added
+- Integrated real endpoint to fetch tags by languageId in challenge form (Taiga [#477], PR [#647]).
+
 ### [ita-challenges-frontend-3.1.41-RELEASE] - 2025-06-16
 
 ### Added
