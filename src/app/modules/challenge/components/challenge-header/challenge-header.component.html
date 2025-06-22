@@ -52,12 +52,14 @@
       <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
-      <button *ngIf="userRole === 'ADMIN'" class="btn btn-sm btn-primary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
+    </ng-container>
+    <ng-container *ngIf="userRole === 'ADMIN'">
+        <button class="btn btn-sm btn-primary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
     </ng-container>
     
     <!-- Si ya se envió la solución -->
      <ng-template #solutionSentMessage>
-       <div *ngIf="activeId == challengeTab.SOLUTIONS" class="d-none d-md-flex align-items-center gap-2 solutionSent">
+       <div *ngIf="userRole === 'USER'" class="d-none d-md-flex align-items-center gap-2 solutionSent">
          <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
          <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
        </div>
