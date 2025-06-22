@@ -36,9 +36,16 @@ describe('ChallengeHeaderComponent', () => {
       getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
     } as any;
     solutionService = {
-      getUserSolution: jest.fn().mockReturnValue(of({ status: 'ENDED' })),
-      challengeCompleted$: of('testChallengeId'),
-    } as any;
+      fetchUserSolution: jest.fn().mockReturnValue(
+        of([
+          {
+            uuid_challenge: "testChallengeId",
+            solution_text: "some solution",
+          },
+        ])
+      ),
+      challengeCompleted$: of("testChallengeId"),
+    } as any
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
@@ -61,7 +68,6 @@ describe('ChallengeHeaderComponent', () => {
     component = fixture.componentInstance;
     modalService = TestBed.inject(NgbModal);
     router = TestBed.inject(Router);
-    fixture.detectChanges();
   });
 
   it('should create', () => { 
@@ -75,18 +81,18 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.solutionSent).toBe(true);
   });
 
-  it('should handle getUserSolution error', () => {
-    solutionService.getUserSolution = jest.fn()
+  it('should handle fetchUserSolution error', () => {
+    solutionService.fetchUserSolution = jest.fn()
     .mockReturnValue(throwError(() => new Error('API Error')));
     component.ngOnInit();
     expect(component.solutionSent).toBe(false);
   });
 
-  it('should handle challengeCompleted$', () => {
-    component.idChallenge = 'testChallengeId';
+  it("should set activeId to SOLUTIONS if challengeStarted is true", () => {
+    component.idChallenge = "testChallengeId";
     component.challengeStarted = true;
     component.ngOnInit();
-    expect(component.challengeStarted).toBe(false);
+    expect(component.challengeStarted).toBe(true);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
@@ -192,14 +198,12 @@ describe('ChallengeHeaderComponent', () => {
     });
   });
 
-  it('should log warning if getUserSolution fails', () => {
-    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    solutionService.getUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('Test error')));
-    component.idChallenge = 'testChallengeId';
-    component.languageId = 'ts';
-    component.ngOnInit();
-    expect(consoleWarnSpy).toHaveBeenCalledWith('No solution found or error fetching:', expect.any(Error));
-    consoleWarnSpy.mockRestore();
+  it('should log warning if fetchUserSolution fails', () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    solutionService.fetchUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('Test error')))
+    component.ngOnInit()
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', expect.any(Error))
+    consoleErrorSpy.mockRestore()
   });
 
   it('should set activeId to SOLUTIONS if challengeStarted is true', () => {
