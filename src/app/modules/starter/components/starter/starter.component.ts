@@ -52,7 +52,7 @@ export class StarterComponent implements OnInit {
   ngOnInit (): void {
     this.getChallenge()
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
-      this.isAdmin = role === 'ADMIN';
+      this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
     })
     if (this._authService.isUserLoggedIn()) {
