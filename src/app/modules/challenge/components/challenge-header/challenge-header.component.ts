@@ -95,8 +95,6 @@ export class ChallengeHeaderComponent implements OnInit {
     // Recuperar el estado del reto desde localStorage
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
 
-    console.log(localStorage.getItem('challengeStarted'))
-
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true
       this.activeId = ChallengeTab.SOLUTIONS // Mostrar botones de guardar y enviar solución
@@ -111,7 +109,6 @@ export class ChallengeHeaderComponent implements OnInit {
     localStorage.setItem('currentChallengeId', this.idChallenge)
 
     this.startChallenge.emit(true)
-    console.log(localStorage.getItem('challengeStarted'))
 
     try {
       await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
@@ -138,7 +135,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
   onSolutionAccepted(): void {
     this.solutionSent = true; 
-    this.activeId = 2; 
+    this.activeId = ChallengeTab.SOLUTIONS;
   }
 
   get currentLang (): string {
