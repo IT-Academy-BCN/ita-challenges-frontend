@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
 
 ### Fixed
-- Hide "Start challenge" button when the user role is ADMIN (Taiga [#527], PR [#516])
+- Hide "Start challenge" button when the user role is ADMIN (Taiga [#527], PR [#651])
 
 ### [ita-challenges-frontend-3.1.44-RELEASE] - 2025-06-25
 
