@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-### [ita-challenges-frontend-3.1.42-RELEASE] - 2025-06-21
+### [ita-challenges-frontend-3.1.43-RELEASE] - 2025-06-21
 
 ### Changed
 - Refactored `ChallengeHeaderComponent` to remove localStorage usage for user solutions and use backend status instead (Taiga [#518], PR [#650]).
