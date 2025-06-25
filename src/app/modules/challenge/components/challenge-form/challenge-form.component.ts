@@ -55,7 +55,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     menubar: false,
     branding: false,
     elementpath: false,
-    statusbar: false,
+    statusbar: true,
     license_key: 'gpl',
     plugins: [
       'advlist', 'autolink', 'lists', 'link', 'charmap',
