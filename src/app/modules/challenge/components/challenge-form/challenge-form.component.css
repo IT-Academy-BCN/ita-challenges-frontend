@@ -331,3 +331,17 @@
     color: white;
   }
 }
+.link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.75rem; 
+}
+
+.breadcrumb {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.form-title {
+  margin-top: 0;
+}

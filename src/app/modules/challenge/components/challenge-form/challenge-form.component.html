@@ -2,7 +2,7 @@
 <div>
     <!-- Header con título y botones -->
     <div class="header">
-      <div class="header-content">
+      <div class="header-content mt-4 mb-4">
         <div>
           <a class="link" (click)="onCancel()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +25,7 @@
     <div class="body">
       <form #challengeForm="ngForm">
         <!-- INFORMACIÓN GENERAL -->
-        <div class="section">
+        <div class="section mb-5">
           <h4><span class="section-number">1</span> {{ "modules.challenge.challengeForm.generalInfo" | translate }}</h4>
           <div class="form-group">
             <label for="title" class="form-label">{{ "modules.challenge.challengeForm.challengeTitle" | translate }}</label>
@@ -42,7 +42,7 @@
           <!-- Lenguaje -->
           <div class="mb-4">
             <label class="form-label">{{ "modules.challenge.challengeForm.language" | translate }}</label>
-            <div class="language-buttons">
+            <div class="d-flex flex-wrap gap-2 mb-4">
               @for (lang of languages; track lang.language_name) {
                 <button 
                   type="button" 
