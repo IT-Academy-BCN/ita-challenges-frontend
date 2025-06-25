@@ -14,6 +14,7 @@ import { ChallengeService } from "../../../../services/challenge.service";
 import { SolutionService } from "src/app/services/solution.service";
 import { AuthService } from "src/app/services/auth.service";
 import { ChallengeTab } from "src/app/shared/enums/challenge-tab.enum";
+import { UserRole } from "src/app/shared/enums/user-role.enum";
 
 @Component({
   selector: "app-challenge-header",
@@ -35,6 +36,7 @@ export class ChallengeHeaderComponent implements OnInit {
   public userRole: string | null = null;
 
   challengeTab = ChallengeTab;
+  USER_ROLE = UserRole;
 
   @Input() title = "";
   @Input() creation_date!: Date;
