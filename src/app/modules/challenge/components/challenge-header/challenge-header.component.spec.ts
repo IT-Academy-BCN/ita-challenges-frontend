@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ChallengeHeaderComponent } from './challenge-header.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -224,12 +224,17 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
   
-  it('should show "Start Challenge" button for USER role', () => {
-    authService.getUserRole.mockReturnValue(of('USER'));
-    component.challengeStarted = false;
-    component.ngOnInit();
-    fixture.detectChanges();
-    const startBtn = fixture.debugElement.query(By.css('button.btn-primary'));
-    expect(startBtn).not.toBeNull();
-  });
+it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
+  authService.getUserRole.mockReturnValue(of('ADMIN'));
+  component.userRole = 'ADMIN';
+  component.challengeStarted = false;
+  component.ngOnInit();
+
+  tick();
+  fixture.detectChanges();
+
+  const buttons = fixture.debugElement.queryAll(By.css('button.btn-primary'));
+  const startButton = buttons.find(btn => btn.nativeElement.textContent.includes('Start'));
+  expect(startButton).toBeUndefined();
+}));
 })
