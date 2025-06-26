@@ -229,12 +229,14 @@ it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   component.userRole = 'ADMIN';
   component.challengeStarted = false;
   component.ngOnInit();
-
   tick();
   fixture.detectChanges();
-
   const buttons = fixture.debugElement.queryAll(By.css('button.btn-primary'));
-  const startButton = buttons.find(btn => btn.nativeElement.textContent.includes('Start'));
+  const startButton = buttons.find(btn =>
+    btn.nativeElement.textContent.includes('Start')
+  );
+
   expect(startButton).toBeUndefined();
 }));
 })
+ 
