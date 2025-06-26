@@ -7,6 +7,7 @@ import { ChallengeService } from '../../../../services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { UserRole } from 'src/app/shared/enums/user-role.enum'
 
 @Component({
   selector: 'app-challenge-header',
@@ -28,6 +29,7 @@ export class ChallengeHeaderComponent implements OnInit {
   public userRole: string | null = null;
 
   challengeTab = ChallengeTab;
+  USER_ROLE = UserRole;
 
   @Input() title = ''
   @Input() creation_date!: Date
@@ -38,7 +40,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
   @Input() isBookmarked: boolean = false
-
+  @Input() languageId!: string
   @Input() timesSolved: number = 0
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
@@ -59,24 +61,23 @@ export class ChallengeHeaderComponent implements OnInit {
       this.idChallenge = params['idChallenge']
     })
 
-    const savedSolutions = JSON.parse(localStorage.getItem('solutions') ?? '[]') as string[]
-    this.solutionSent = savedSolutions.includes(this.idChallenge)
-
-    this.solutionService.challengeCompleted$.subscribe({
-      next: (challengeId: string) => {
-        if (challengeId === this.idChallenge) {
-          this.challengeStarted = false;
-          this.activeId = ChallengeTab.SOLUTIONS; 
-        }
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (userSolutions) => {
+        const hasSolution = userSolutions.some(
+          (sol) =>
+            sol.uuid_challenge === this.idChallenge &&
+            sol.solution_text?.trim() !== ''
+        );
+        this.solutionSent = hasSolution;
       },
-      error: (error) => {
-        console.error('Error in challengeCompleted$ subscription:', error);
-      }
+      error: (err) => {
+        console.error('Error fetching user solutions:', err);
+      },
     });
 
     this.authService.getUserId().subscribe(userId => {
       this.userId = userId;
-  
+
       if (!userId) {
         console.error("Could not get User ID");
       } 
@@ -94,8 +95,6 @@ export class ChallengeHeaderComponent implements OnInit {
     // Recuperar el estado del reto desde localStorage
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
 
-    console.log(localStorage.getItem('challengeStarted'))
-
     if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
       this.challengeStarted = true
       this.activeId = ChallengeTab.SOLUTIONS // Mostrar botones de guardar y enviar solución
@@ -110,7 +109,6 @@ export class ChallengeHeaderComponent implements OnInit {
     localStorage.setItem('currentChallengeId', this.idChallenge)
 
     this.startChallenge.emit(true)
-    console.log(localStorage.getItem('challengeStarted'))
 
     try {
       await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
@@ -137,7 +135,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
   onSolutionAccepted(): void {
     this.solutionSent = true; 
-    this.activeId = 2; 
+    this.activeId = ChallengeTab.SOLUTIONS;
   }
 
   get currentLang (): string {
