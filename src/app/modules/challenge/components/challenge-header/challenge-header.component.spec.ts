@@ -13,10 +13,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
-<<<<<<< HEAD
-=======
-
->>>>>>> 4130e43c (chore: resolve merge conflicts while rebasing)
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
