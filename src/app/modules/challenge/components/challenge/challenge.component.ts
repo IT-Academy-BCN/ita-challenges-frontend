@@ -19,7 +19,7 @@ import { AuthService } from 'src/app/services/auth.service'
 export class ChallengeComponent implements OnInit, OnDestroy {
   idChallenge: string = ''
   params$!: Subscription
-  challenge!: Challenge
+  challenge: Challenge | null = null
   challengeSubs$!: Subscription
   dataChallenge!: Challenge
   title: string = ''

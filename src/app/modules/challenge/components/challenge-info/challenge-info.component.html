@@ -34,7 +34,8 @@
               <h3 class="mt-0">
                 {{ "modules.challenge.info.description" | translate }}
               </h3>
-             <p [innerHTML]="description"></p>
+             <p>{{ description }}</p>
+
 
             </div>
           </div>
@@ -128,7 +129,7 @@
       </div>
 
       <!-- Si la solución no ha sido enviada, mostrar las opciones de cancelación y aceptación -->
-      <div class="w-100 button d-md-none" *ngIf="solutionSent">
+      <div class="w-100 button d-md-none" *ngIf="!solutionSent">
         <button class="w-100 btn btn-sm btn-outline-primary">
           {{ "modules.challenge.header.buttonCancel" | translate }}
         </button>
