@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
+
+### Fixed
+- Hide "Start challenge" button when the user role is ADMIN (Taiga [#527], PR [#651])
+
 ### [ita-challenges-frontend-3.1.44-RELEASE] - 2025-06-25
 
 ### Fixed
