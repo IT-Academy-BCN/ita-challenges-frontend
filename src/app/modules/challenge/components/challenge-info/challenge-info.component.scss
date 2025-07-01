@@ -260,6 +260,9 @@ p, ul li {
     border-radius: 5px;
     margin-top: 5px;
     padding: 0;
+    display: none;
+  }
+    .dropdown-menu-mobile .dropdown-menu.show {
     display: block;
   }
   .dropdown-menu-mobile .dropdown-menu .dropdown-item {

@@ -74,6 +74,7 @@ implements OnInit {
   solutionsDummy = [{ solutionName: 'dummy1' }, { solutionName: 'dummy2' }]
 
   ngOnInit (): void {
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })

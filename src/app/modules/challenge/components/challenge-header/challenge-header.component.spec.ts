@@ -224,7 +224,7 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
   
-it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
+  it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   authService.getUserRole.mockReturnValue(of('ADMIN'));
   component.userRole = 'ADMIN';
   component.challengeStarted = false;
@@ -235,7 +235,6 @@ it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   const startButton = buttons.find(btn =>
     btn.nativeElement.textContent.includes('Start')
   );
-
   expect(startButton).toBeUndefined();
 }));
 })
