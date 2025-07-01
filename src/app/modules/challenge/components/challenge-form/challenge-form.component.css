@@ -17,7 +17,8 @@
 .breadcrumb {
   font-size: 14px;
   color: #666;
-  margin-bottom: 0rem;
+  display: block;
+  margin-bottom: 0.75rem;
 }
 
 .header-content {
@@ -330,4 +331,9 @@
   & :hover{
     color: white;
   }
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.75rem; 
 }

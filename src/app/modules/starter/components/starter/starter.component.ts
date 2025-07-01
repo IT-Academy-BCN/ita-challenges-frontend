@@ -1,5 +1,5 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild, type ElementRef } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -45,13 +45,15 @@ export class StarterComponent implements OnInit {
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
     private readonly _authService: AuthService,
-    private readonly challengeService: ChallengeService
+    private readonly challengeService: ChallengeService,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit (): void {
     this.getChallenge()
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
+      this.cd.detectChanges()
     })
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {

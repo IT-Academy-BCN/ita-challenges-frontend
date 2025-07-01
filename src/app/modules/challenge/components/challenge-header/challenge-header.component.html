@@ -49,7 +49,9 @@
 
   <div class="col-md-4 button d-none d-md-flex">
     <ng-container *ngIf="!solutionSent; else solutionSentMessage">
-      <button *ngIf="!challengeStarted"  class="btn btn-sm btn-primary" (click)="onStartChallenge()"> {{'modules.challenge.header.buttonStart' | translate }}</button>
+  <button
+  *ngIf="!challengeStarted && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
+  {{ 'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
     </ng-container>

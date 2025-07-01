@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
+
+### Changed
+- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#529], PR [#653])
+
+### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
+
+### Fixed
+- Hide "Start challenge" button when the user role is ADMIN (Taiga [#527], PR [#651])
+
+### [ita-challenges-frontend-3.1.44-RELEASE] - 2025-06-25
+
+### Fixed
+- Removed console errors in challenge views (Taiga [#528], PR [#652])
+
 ### [ita-challenges-frontend-3.1.43-RELEASE] - 2025-06-21
 
 ### Changed
@@ -22,6 +37,7 @@ and this project adheres to
 
 ### Changed
 - Updated challenge-card and challenge-header components to use the new pipe (Taiga [#497], PR [#649]).
+
 
 ### [ita-challenges-frontend-3.1.40-RELEASE] - 2025-06-16
 
