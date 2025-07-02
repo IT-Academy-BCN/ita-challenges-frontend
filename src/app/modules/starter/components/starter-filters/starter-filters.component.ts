@@ -83,18 +83,33 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     })
   }
 
+  // ngOnInit(): void {
+  //   this.userRoleSubs$ = this.authService.getUserRole().subscribe({
+      
+  //     next: (role) => {
+  //       // Enable user-specific filters only for authenticated non-admin users
+  //       this.isUserLoggedIn = role !== '' 
+  //       // this.isUserLoggedIn = !!role
+  //       console.log('User role received:', role);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error getting user role:', error)
+  //       this.isUserLoggedIn = false 
+        
+  //     }
+      
+  //   })
+  // }
+
   ngOnInit(): void {
-    this.userRoleSubs$ = this.authService.getUserRole().subscribe({
-      next: (role) => {
-        // Enable user-specific filters only for authenticated non-admin users
-        this.isUserLoggedIn = role !== '' 
-      },
-      error: (error) => {
-        console.error('Error getting user role:', error)
-        this.isUserLoggedIn = false 
-      }
-    })
-  }
+  this.isUserLoggedIn = this.authService.isUserLoggedIn();
+}
+
+//   ngOnInit(): void {
+//   const user = this.authService.getUserId(); 
+//   console.log('User object received:', user);
+//   this.isUserLoggedIn = !!user;
+// }
 
   ngOnDestroy(): void {
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
