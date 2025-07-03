@@ -35,7 +35,6 @@ export function HttpLoaderFactory (http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterUsersModalComponent
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
