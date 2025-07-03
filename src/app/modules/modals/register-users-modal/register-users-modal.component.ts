@@ -23,4 +23,9 @@ export class RegisterUsersModalComponent {
       this.username = '';
     }
   }
+
+  isDuplicateUsername(username: string): boolean {
+    const trimmed = username.trim();
+    return trimmed.length > 0 && this.usernames.includes(trimmed);
+  }
 }

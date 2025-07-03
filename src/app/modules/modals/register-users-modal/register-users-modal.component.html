@@ -13,11 +13,14 @@
                 <input type="text" class="form-control" [(ngModel)]="username" name="username"
                     placeholder="Usuario de GitHub" required pattern="^(?!-)(?!.*--)[a-zA-Z0-9-]{1,39}(?<!-)$"
                     #usernameInput="ngModel">
-                <button type="submit" class="btn btn-primary">Añadir</button>
+                <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">Añadir</button>
             </div>
             <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)"
                 class="text-danger small my-2">
-                <div *ngIf="usernameInput.errors?.['pattern']">Usuario no válido.</div>
+                <div *ngIf="usernameInput.errors?.['pattern']">Nombre de suario no válido.</div>
+            </div>
+            <div *ngIf="isDuplicateUsername(username) && usernameInput.valid" class="text-danger small my-2">
+                Este usuario ya ha sido añadido.
             </div>
         </form>
         <div *ngIf="usernames.length > 0" class="mt-3">
