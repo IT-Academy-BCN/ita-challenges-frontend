@@ -10,6 +10,13 @@
     </ul>
 
     <div class="d-flex justify-content-end align-items-center">
+      <!-- registerUsers -->
+        @if(isLoggedIn && currentRole==='ADMIN'){
+          <button class="login" (click)="openRegisterUsersModal()">
+            Añadir alumnos/as
+          </button>
+        }
+
       <!-- languageSelect -->
       <div class="ms-2 pe-3">
         <label for="languageSelect">
