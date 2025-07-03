@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register-users-modal',
@@ -8,9 +10,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 })
 export class RegisterUsersModalComponent {
   private readonly modalService = inject(NgbModal)
-
+  username: string = '';
+  usernames: string[] = [];
 
   public closeModal (): void {
     this.modalService.dismissAll()
+  }
+
+  addUsername() {
+    const trimmed = this.username.trim();
+    if (trimmed && !this.usernames.includes(trimmed)) {
+      this.usernames.push(trimmed);
+      this.username = '';
+    }
   }
 }
