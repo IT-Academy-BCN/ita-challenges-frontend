@@ -1,4 +1,11 @@
 <div class="desktop-nav">
+  <!-- registerUsers -->
+  @if(isLoggedIn && currentRole==='ADMIN'){
+    <button class="login" (click)="openRegisterUsersModal()">
+      Añadir alumnos/as
+    </button>
+  }
+
   <!-- languageSelect -->
   <div>
     <label for="languageSelect">
