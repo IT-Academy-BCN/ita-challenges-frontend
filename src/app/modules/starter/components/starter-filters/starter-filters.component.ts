@@ -101,15 +101,16 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
   //   })
   // }
 
-  ngOnInit(): void {
-  this.isUserLoggedIn = this.authService.isUserLoggedIn();
+
+ngOnInit(): void {
+  this.authService.isLoggedIn$// isLoggedIn$ este observable es la clave para que funcione 
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(isLoggedIn => {
+      this.isUserLoggedIn = isLoggedIn;
+    });
 }
 
-//   ngOnInit(): void {
-//   const user = this.authService.getUserId(); 
-//   console.log('User object received:', user);
-//   this.isUserLoggedIn = !!user;
-// }
+
 
   ngOnDestroy(): void {
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
