@@ -45,7 +45,6 @@
                 "buttonSendSolution": "Finalitzar",
                 "buttonCancel": "Cancel.lar",
                 "buttonEditChallenge": "Editar repte",
-                "buttonRegisterUsers": "Afegir alumnes",
                 "solutionSend": "Solució enviada",
                 "login": "Iniciar sessió",
                 "logout": "Tancar sessió"
@@ -128,14 +127,6 @@
                 "description":"Un cop enviat el codi no es pot editar" ,
                 "btn-accept": "Acceptar",
                 "btn-cancel": "Cancel.lar"
-            },
-            "register":{
-                "title":"Afegir alumnes",
-                "description":"Inserta els usuaris de github",
-                "btn-add":"Afegir",
-                "btn-confirm":"Confirmar",
-                "msg-invalid":"Nom d'usuari no vàlid.",
-                "msg-duplicate":"Aquest usuari ja ha sigut afegit"
             }
         }
     },
