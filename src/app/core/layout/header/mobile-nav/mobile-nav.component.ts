@@ -2,8 +2,6 @@ import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/cor
 import { Subscription } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 import { NavService } from 'src/app/services/nav.service'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { RegisterUsersModalComponent } from 'src/app/modules/modals/register-users-modal/register-users-modal.component'
 
 @Component({
   selector: 'app-mobile-nav',
@@ -20,8 +18,7 @@ export class MobileNavComponent implements OnInit, OnDestroy{
 
   constructor(
     @Inject(NavService) public navService: NavService,
-    @Inject(AuthService) private _authService: AuthService,
-    private modalService: NgbModal
+    @Inject(AuthService) private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -93,8 +90,4 @@ export class MobileNavComponent implements OnInit, OnDestroy{
       }
     })
   }
-
-  openRegisterUsersModal() {
-  this.modalService.open(RegisterUsersModalComponent, { centered: true });
-}
 }
