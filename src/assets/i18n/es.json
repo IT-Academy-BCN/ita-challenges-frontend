@@ -43,6 +43,7 @@
                 "buttonStart": "Iniciar reto",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalizar",
+                "buttonRegisterUsers": "Añadir alumnos/as",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
                 "solutionSend": "Solución enviada",
@@ -127,6 +128,14 @@
                 "description":"Una vez enviado el código no se puede editar" ,
                 "btn-accept": "Aceptar",
                 "btn-cancel": "Cancelar"
+            },
+            "register":{
+                "title":"Añadir alumnos/as",
+                "description":"Inserta los usuarios de github",
+                "btn-add":"Añadir",
+                "btn-confirm":"Confirmar",
+                "msg-invalid":"Nombre de usuario no válido.",
+                "msg-duplicate":"Este usuario ya ha sido añadido."
             }
         }
     },

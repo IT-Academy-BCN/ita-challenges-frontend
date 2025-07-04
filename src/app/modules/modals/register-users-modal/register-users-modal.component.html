@@ -6,22 +6,22 @@
 </div>
 <div class="d-flex flex-column justify-content-center">
     <div class="modal-body d-flex flex-column gap-2 pt-0 col-10 mx-auto text-center">
-        <h2 class="modal-title">Añadir alumnos/as</h2>
-        <p class="d-flex align-items-start">Inserta los usuarios de github</p>
+        <h2 class="modal-title">{{ 'modules.modals.register.title' | translate }}</h2>
+        <p class="d-flex align-items-start">{{ 'modules.modals.register.description' | translate }}</p>
         <form (ngSubmit)="addUsername()" class="d-flex flex-column gap-2 justify-content-center">
             <div class="d-flex gap-2 align-items-center">
                 <input type="text" class="form-control" [(ngModel)]="username" name="username"
                     placeholder="Usuario de GitHub" required pattern="^(?!-)(?!.*--)[a-zA-Z0-9-]{1,39}(?<!-)$"
                     #usernameInput="ngModel">
-                <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">Añadir</button>
+                <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">{{ 'modules.modals.register.btn-add' | translate }}</button>
             </div>
             <div class="d-flex align-items-start">
                 <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched) && username"
                     class="text-danger small my-2">
-                    <div *ngIf="usernameInput.errors?.['pattern']">Nombre de suario no válido.</div>
+                    <div *ngIf="usernameInput.errors?.['pattern']">{{ 'modules.modals.register.msg-invalid' | translate }}</div>
                 </div>
                 <div *ngIf="isDuplicateUsername(username) && usernameInput.valid" class="text-danger small my-2">
-                    Este usuario ya ha sido añadido.
+                    {{ 'modules.modals.register.msg-duplicate' | translate }}
                 </div>
             </div>
         </form>
@@ -34,6 +34,6 @@
         </div>
     </div>
     <div class="col-12 modal-footer gap-2 mb-3 text-center d-flex flex-column">
-        <button type="button" class="btn btn-primary col-4" data-bs-dismiss="modal">Confirmar</button>
+        <button type="button" class="btn btn-primary col-4" data-bs-dismiss="modal">{{ 'modules.modals.register.btn-confirm' | translate }}</button>
     </div>
 </div>
