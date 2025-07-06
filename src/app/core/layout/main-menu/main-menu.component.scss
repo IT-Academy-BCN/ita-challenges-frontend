@@ -94,7 +94,8 @@
 
 @media (max-width: 1150px) {
   .main-menu {
-    a {
+    a,
+    .userOptions a {
       max-width: 120px;
       white-space: normal;
       word-wrap: break-word;
@@ -103,4 +104,13 @@
       margin-bottom: 30px;
     }
   }
+  .main-menu a {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.main-menu a img {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
 }
