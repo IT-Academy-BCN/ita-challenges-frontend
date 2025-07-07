@@ -3,3 +3,5 @@ export enum SolutionStatus {
   ENDED = "ENDED",
   NOT_STARTED = "NOT_STARTED",
 }
+
+
