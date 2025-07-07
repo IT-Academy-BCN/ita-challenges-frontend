@@ -97,6 +97,7 @@ export class ChallengeHeaderComponent implements OnInit {
           this.solutionState = 'IN_PROGRESS';
           this.savedSolutionText = solution.solution_text;
           this.challengeStarted = false; 
+          this.solutionText = '';
         } else if (solution.status === 'ENDED') {
           this.solutionState = 'ENDED';
           this.solutionSent = true;
@@ -117,6 +118,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
+    this.solutionState = 'IN_PROGRESS';
     this.activeId = ChallengeTab.SOLUTIONS
     localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
 
@@ -276,5 +278,4 @@ loadSolutionFromBackend(): void {
     }
   });
 }
-
 }
