@@ -41,6 +41,7 @@
                 "toolTip": "Inicia sessió per enviar la solució.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar repte",
+                "buttonContinueChallenge": "Continua el repte",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalitzar",
                 "buttonCancel": "Cancel.lar",

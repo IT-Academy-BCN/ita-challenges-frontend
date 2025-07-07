@@ -41,6 +41,7 @@
                 "toolTip": "Log in to submit the solution.",
                 "buttonAccept": "Send",
                 "buttonStart": "Start challenge",
+                 "buttonContinueChallenge": "Continue Challenge",
                 "buttonSaveChallenge": "Save",
                 "buttonSendSolution": "Finish",
                 "buttonCancel": "Cancel",

@@ -32,7 +32,10 @@ export class ChallengeHeaderComponent implements OnInit {
   public userId: string | null = null;
   public userRole: string | null = null;
   public currentSolutionText: string = '';
+<<<<<<< HEAD
   
+=======
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
   challengeTab = ChallengeTab;
   USER_ROLE = UserRole;
@@ -52,7 +55,15 @@ export class ChallengeHeaderComponent implements OnInit {
   @Output() favoritesUpdated = new EventEmitter<number>()
   @Input() solutionText: string = '';
   @Input() status: string = '';
+<<<<<<< HEAD
   @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
+=======
+<<<<<<< HEAD
+  @Input() solutionState: SolutionState = 'NOT_STARTED';
+=======
+  @Input() solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED';
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
+>>>>>>> 568266be (fix: show/hide challenge action buttons based on user role and state)
   @Input() savedSolutionText: string = '';
 
   challenge_title: string | undefined = ''
@@ -73,6 +84,7 @@ export class ChallengeHeaderComponent implements OnInit {
   });
 
   this.authService.getUserId().subscribe(userId => {
+<<<<<<< HEAD
     if (!userId) {
       console.error("Could not get User ID");
       return;
@@ -80,6 +92,15 @@ export class ChallengeHeaderComponent implements OnInit {
     this.userId = userId;
     this.loadUserSolutionStatus();
     
+=======
+    this.userId = userId;
+
+    if (!userId) {
+      console.error(" No se pudo obtener el ID del usuario");
+    } else {
+      this.loadUserSolutionStatus();
+    }
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
   });
 
   this.authService.getUserRole().subscribe(role => {
@@ -91,6 +112,7 @@ export class ChallengeHeaderComponent implements OnInit {
     next: (userSolutions) => {
       const solution = userSolutions.find(
         (sol) =>
+<<<<<<< HEAD
           sol.uuid_challenge === this.idChallenge
       );
 
@@ -124,6 +146,32 @@ export class ChallengeHeaderComponent implements OnInit {
     },
     error: (err) => {
       console.error('Error fetching user solutions:', err);
+=======
+          sol.uuid_challenge === this.idChallenge &&
+          sol.solution_text?.trim() !== ''
+      );
+
+      if (solution) {
+        this.status = solution.status;
+
+        if (solution.status === 'IN_PROGRESS') {
+          this.solutionState = 'IN_PROGRESS';
+          this.savedSolutionText = solution.solution_text;
+          this.challengeStarted = false; 
+        } else if (solution.status === 'ENDED') {
+          this.solutionState = 'ENDED';
+          this.solutionSent = true;
+          this.challengeStarted = true;
+          this.activeId = ChallengeTab.SOLUTIONS;
+        }
+      } else {
+        this.solutionState = 'NOT_STARTED';
+        this.challengeStarted = false;
+      }
+    },
+    error: (err) => {
+      console.error(' Error al cargar soluciones del usuario:', err);
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
     }
   });
 }
@@ -143,7 +191,11 @@ export class ChallengeHeaderComponent implements OnInit {
     })
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
+<<<<<<< HEAD
     modalRef.componentInstance.status = this.SolutionStatus.ENDED;
+=======
+    modalRef.componentInstance.status = 'ENDED';
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
     modalRef.componentInstance.solutionText = this.solutionText; 
 
     modalRef.componentInstance.solutionAccepted.subscribe(() => {
@@ -175,11 +227,19 @@ export class ChallengeHeaderComponent implements OnInit {
 
 saveChallenge(): void {
   if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
+<<<<<<< HEAD
     console.error(' Missing data to save the solution');
     return;
   }
 
   this.status = SolutionStatus.IN_PROGRESS;
+=======
+    console.error(' Faltan datos para guardar la solución');
+    return;
+  }
+
+  this.status = 'IN_PROGRESS';
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
   this.solutionService.submitSolution(
     this.idChallenge,
     this.languageId,
@@ -188,10 +248,17 @@ saveChallenge(): void {
     this.solutionText
   ).subscribe({
     next: () => {
+<<<<<<< HEAD
       this.solutionState = SolutionStatus.IN_PROGRESS;
     },
     error: (err) => {
       console.error(' Error saving solution', err);
+=======
+      this.solutionState = 'IN_PROGRESS';
+    },
+    error: (err) => {
+      console.error(' Error al guardar solución', err);
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
     }
   });
 }
@@ -253,6 +320,7 @@ saveChallenge(): void {
       })
     }
   }
+<<<<<<< HEAD
     onCancel (): void {
     void this.router.navigate(['/ita-challenge/challenges'])
   }
@@ -260,7 +328,17 @@ saveChallenge(): void {
   onContinueChallenge(): void {
   this.challengeStarted = true;
   this.isEditorChallengeVisible = true;
+<<<<<<< HEAD
   this.solutionState = SolutionStatus.IN_PROGRESS;
+=======
+  this.status = SolutionStatus.IN_PROGRESS;
+=======
+  onContinueChallenge(): void {
+  this.challengeStarted = true;
+  this.isEditorChallengeVisible = true;
+  this.status = 'IN_PROGRESS';
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
+>>>>>>> 568266be (fix: show/hide challenge action buttons based on user role and state)
   this.startChallenge.emit(true);
   this.loadSolutionFromBackend();
 }
@@ -281,4 +359,12 @@ loadSolutionFromBackend(): void {
     }
   });
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 }
