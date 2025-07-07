@@ -37,4 +37,5 @@
 - Alberto Basanta - https://github.com/basantades
 - Víctor Redondo - https://github.com/Victorreca
 - Silvia Tuiran - https://github.com/Silvitui
+- Oscar Reguera - https://github.com/oscarrep
 - Ronnie Vélez - https://github.com/RonniedeTal
