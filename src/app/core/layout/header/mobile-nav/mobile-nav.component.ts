@@ -2,6 +2,9 @@ import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/cor
 import { Subscription } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 import { NavService } from 'src/app/services/nav.service'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterUsersModalComponent } from 'src/app/modules/modals/register-users-modal/register-users-modal.component';
+
 
 @Component({
   selector: 'app-mobile-nav',
@@ -18,7 +21,8 @@ export class MobileNavComponent implements OnInit, OnDestroy{
 
   constructor(
     @Inject(NavService) public navService: NavService,
-    @Inject(AuthService) private _authService: AuthService
+    @Inject(AuthService) private _authService: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -89,5 +93,9 @@ export class MobileNavComponent implements OnInit, OnDestroy{
         console.error('error changing your role', error)
       }
     })
+  }
+
+  openRegisterUsersModal() {
+    this.modalService.open(RegisterUsersModalComponent, { centered: true });
   }
 }
