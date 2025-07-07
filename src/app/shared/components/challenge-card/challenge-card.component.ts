@@ -30,6 +30,8 @@ export class ChallengeCardComponent implements OnInit {
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
+  @Input() solutionStatus?: 'IN_PROGRESS' | 'ENDED';
+
 
   ngOnInit(): void {
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
@@ -94,4 +96,10 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+  getStatusTooltip(): string {
+  return this.solutionStatus === 'ENDED'
+    ? 'Has completado este reto'
+    : 'Tienes una solución guardada';
+}
+
 }
