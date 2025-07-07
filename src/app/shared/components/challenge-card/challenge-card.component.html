@@ -29,7 +29,7 @@
     }"
     [ngbTooltip]="getStatusTooltip()"
   >
-    {{ solutionStatus === 'ENDED' ? 'Completado' : 'En progreso' }}
+    {{ 'status.' + solutionStatus | translate }}
   </span>
         </div>
       </div>

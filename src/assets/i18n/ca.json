@@ -165,6 +165,10 @@
         "welcome": "Benvingut! Redirigint...",
         "logout": "Tancament de sessió correcte"
     }
-}
+},
+    "status": {
+        "IN_PROGRESS": "En progrés",
+        "ENDED": "Completat"
+    }
 
 }   
