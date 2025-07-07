@@ -2,7 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterUsersModalComponent } from './register-users-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { Pipe, PipeTransform } from '@angular/core';
 
+@Pipe({name: 'translate'})
+class MockTranslatePipe implements PipeTransform {
+  transform(value: string) { return value; }
+}
 
 describe('RegisterUsersModalComponent', () => {
   let component: RegisterUsersModalComponent;
@@ -15,7 +20,7 @@ describe('RegisterUsersModalComponent', () => {
     } as unknown as jest.Mocked<NgbModal>;
 
     await TestBed.configureTestingModule({
-      declarations: [RegisterUsersModalComponent],
+      declarations: [RegisterUsersModalComponent, MockTranslatePipe],
       imports: [FormsModule],
       providers: [{ provide: NgbModal, useValue: mockModalService }],
     }).compileComponents();
