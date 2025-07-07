@@ -278,5 +278,4 @@ loadSolutionFromBackend(): void {
     }
   });
 }
-
 }
