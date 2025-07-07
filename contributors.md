@@ -37,4 +37,4 @@
 - Alberto Basanta - https://github.com/basantades
 - Víctor Redondo - https://github.com/Victorreca
 - Silvia Tuiran - https://github.com/Silvitui
--Ronnie Vélez - https://github.com/RonniedeTal
+- Ronnie Vélez - https://github.com/RonniedeTal
