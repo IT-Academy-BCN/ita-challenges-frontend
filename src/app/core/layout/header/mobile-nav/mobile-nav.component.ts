@@ -95,7 +95,5 @@ export class MobileNavComponent implements OnInit, OnDestroy{
     })
   }
 
-  openRegisterUsersModal() {
-    this.modalService.open(RegisterUsersModalComponent, { centered: true });
-  }
+  openRegisterUsersModal() { this.navService.openRegisterUsersModal(); }
 }

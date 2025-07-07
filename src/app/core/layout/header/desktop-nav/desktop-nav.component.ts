@@ -98,7 +98,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
     })
   }
 
-  openRegisterUsersModal() {
-    this.modalService.open(RegisterUsersModalComponent, { centered: true });
+  openRegisterUsersModal() { 
+    this.navService.openRegisterUsersModal();
   }
 }

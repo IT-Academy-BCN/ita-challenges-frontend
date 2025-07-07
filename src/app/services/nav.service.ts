@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateService } from '@ngx-translate/core'
+import { RegisterUsersModalComponent } from '../modules/modals/register-users-modal/register-users-modal.component'
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,6 @@ export class NavService {
     this.translate.use(language)
     this.selectWidth = language === 'ca' ? '45px' : '45px'
   }
+
+  openRegisterUsersModal() { this.modalService.open(RegisterUsersModalComponent, { centered: true });}
 }
