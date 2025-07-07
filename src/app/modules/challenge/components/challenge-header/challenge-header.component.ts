@@ -27,6 +27,7 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
   public userRole: string | null = null;
+  public currentSolutionText: string = '';
 
   challengeTab = ChallengeTab;
   USER_ROLE = UserRole;
@@ -40,10 +41,14 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
   @Input() isBookmarked: boolean = false
-  @Input() languageId!: string
+  @Input() languageId: string = '';
   @Input() timesSolved: number = 0
   @Output() startChallenge = new EventEmitter<boolean>()
   @Output() favoritesUpdated = new EventEmitter<number>()
+  @Input() solutionText: string = '';
+  @Input() status: string = '';
+  @Input() solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED';
+  @Input() savedSolutionText: string = '';
 
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
@@ -51,55 +56,64 @@ export class ChallengeHeaderComponent implements OnInit {
 
   challengeStarted: boolean = false
   solutionSent: boolean = false
+  
 
-  ngOnInit (): void {
-    this.challenge_title = this.title
-    this.challenge_date = this.creation_date
-    this.challenge_level = this.level
+  ngOnInit(): void {
+  this.challenge_title = this.title;
+  this.challenge_date = this.creation_date;
+  this.challenge_level = this.level;
 
-    this.route.params.subscribe(params => {
-      this.idChallenge = params['idChallenge']
-    })
+  this.route.params.subscribe(params => {
+    this.idChallenge = params['idChallenge'];
+  });
 
-    this.solutionService.fetchUserSolution().subscribe({
-      next: (userSolutions) => {
-        const hasSolution = userSolutions.some(
-          (sol) =>
-            sol.uuid_challenge === this.idChallenge &&
-            sol.solution_text?.trim() !== ''
-        );
-        this.solutionSent = hasSolution;
-      },
-      error: (err) => {
-        console.error('Error fetching user solutions:', err);
-      },
-    });
+  this.authService.getUserId().subscribe(userId => {
+    this.userId = userId;
 
-    this.authService.getUserId().subscribe(userId => {
-      this.userId = userId;
-
-      if (!userId) {
-        console.error("Could not get User ID");
-      } 
-    }); 
-
-    this.authService.getUserRole().subscribe(role => {
-      this.userRole = role
-    })
-
-    // Verifica si el reto ya ha comenzado
-    if (this.challengeStarted) {
-      this.activeId = ChallengeTab.SOLUTIONS
+    if (!userId) {
+      console.error(" No se pudo obtener el ID del usuario");
+    } else {
+      this.loadUserSolutionStatus();
     }
+  });
 
-    // Recuperar el estado del reto desde localStorage
-    const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}') as { id?: string, started?: boolean }
+  this.authService.getUserRole().subscribe(role => {
+    this.userRole = role;
+  });
+}
+ loadUserSolutionStatus(): void {
+  this.solutionService.fetchUserSolution().subscribe({
+    next: (userSolutions) => {
+      const solution = userSolutions.find(
+        (sol) =>
+          sol.uuid_challenge === this.idChallenge &&
+          sol.solution_text?.trim() !== ''
+      );
 
-    if (savedChallenge.id === this.idChallenge && savedChallenge?.started === true) {
-      this.challengeStarted = true
-      this.activeId = ChallengeTab.SOLUTIONS // Mostrar botones de guardar y enviar solución
+      if (solution) {
+        this.status = solution.status;
+
+        if (solution.status === 'IN_PROGRESS') {
+          this.solutionState = 'IN_PROGRESS';
+          this.savedSolutionText = solution.solution_text;
+          this.challengeStarted = false; 
+        } else if (solution.status === 'ENDED') {
+          this.solutionState = 'ENDED';
+          this.solutionSent = true;
+          this.challengeStarted = true;
+          this.activeId = ChallengeTab.SOLUTIONS;
+        }
+      } else {
+        this.solutionState = 'NOT_STARTED';
+        this.challengeStarted = false;
+      }
+    },
+    error: (err) => {
+      console.error(' Error al cargar soluciones del usuario:', err);
     }
-  }
+  });
+}
+
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
@@ -124,6 +138,9 @@ export class ChallengeHeaderComponent implements OnInit {
     })
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.status = 'ENDED';
+    modalRef.componentInstance.solutionText = this.solutionText; 
+
     modalRef.componentInstance.solutionAccepted.subscribe(() => {
       this.onSolutionAccepted();
     });
@@ -151,10 +168,28 @@ export class ChallengeHeaderComponent implements OnInit {
     this.startChallenge.emit(true)
   }
 
-  saveChallenge (): void {
-    console.log('Guardando reto...')
+saveChallenge(): void {
+  if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
+    console.error(' Faltan datos para guardar la solución');
+    return;
   }
 
+  this.status = 'IN_PROGRESS';
+  this.solutionService.submitSolution(
+    this.idChallenge,
+    this.languageId,
+    this.userId,
+    this.status,
+    this.solutionText
+  ).subscribe({
+    next: () => {
+      this.solutionState = 'IN_PROGRESS';
+    },
+    error: (err) => {
+      console.error(' Error al guardar solución', err);
+    }
+  });
+}
   sendSolution (): void {
     this.openSendSolutionModal()
   }
@@ -216,4 +251,30 @@ export class ChallengeHeaderComponent implements OnInit {
     onCancel (): void {
     void this.router.navigate(['/ita-challenge/challenges'])
   }
+
+  onContinueChallenge(): void {
+  this.challengeStarted = true;
+  this.isEditorChallengeVisible = true;
+  this.status = 'IN_PROGRESS';
+  this.startChallenge.emit(true);
+  this.loadSolutionFromBackend();
+}
+loadSolutionFromBackend(): void {
+  this.solutionService.fetchUserSolution().subscribe({
+    next: (solutions) => {
+      const matchingSolution = solutions.find(sol =>
+        sol.uuid_challenge === this.idChallenge &&
+        sol.uuid_language === this.languageId
+      );
+
+      if (matchingSolution) {
+        this.currentSolutionText = matchingSolution.solution_text || '';
+      }
+    },
+    error: (err) => {
+      console.error('Error loading saved solutions:', err);
+    }
+  });
+}
+
 }

@@ -50,8 +50,11 @@
 
   <div class="col-md-4 button d-none d-md-flex">
     <ng-container *ngIf="!solutionSent; else solutionSentMessage">
+       <button
+      *ngIf="solutionState === 'IN_PROGRESS' && !challengeStarted && userRole !== USER_ROLE.ADMIN"
+class="btn btn-sm btn-primary"(click)="onContinueChallenge()">{{ 'modules.challenge.header.buttonContinueChallenge' | translate }}</button>
   <button
-  *ngIf="!challengeStarted && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
+  *ngIf="solutionState === 'NOT_STARTED' && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
   {{ 'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>

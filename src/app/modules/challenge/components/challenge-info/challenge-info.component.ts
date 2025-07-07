@@ -47,6 +47,8 @@ implements OnInit {
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
+  
+  
 
   challengeStarted: boolean = false
 
@@ -55,6 +57,8 @@ implements OnInit {
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
+  public currentSolutionText: string = '';
+
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -68,6 +72,12 @@ implements OnInit {
 
   @Input() isEditorChallengeVisible: boolean = false
   @Input() startChallenge: boolean = false
+  @Output() solutionChanged = new EventEmitter<string>();
+  @Input() languageId: string = '';
+ @Input() initialSolutionText: string = '';
+@Output() solutionChange = new EventEmitter<string>();
+
+
 
   @Output() activeIdChange: EventEmitter<ChallengeTab> = new EventEmitter<ChallengeTab>()
 
@@ -292,4 +302,9 @@ implements OnInit {
     // Default: all tabs are visible when challenge hasn't started
     return true;
   }
+  onEditorSolutionChanged(newText: string): void {
+  this.currentSolutionText = newText;
+  this.solutionChanged.emit(newText); 
+}
+
 }

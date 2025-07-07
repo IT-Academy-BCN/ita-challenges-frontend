@@ -21,13 +21,13 @@ export class SendSolutionModalComponent {
   @Input() idChallenge!: string
   @Input() userId!: string;
   languageId: string = ''; 
-  solutionText: string = '';
+  @Input() solutionText: string = '';
   @Output() solutionAccepted = new EventEmitter<boolean>();
   @Output() solutionSubmitted = new EventEmitter<string>();
   @Output() timesSolvedUpdated = new EventEmitter<number>();
   ngOnInit(): void {
     this.getLanguageId(); 
-    this.getSolutionText(); 
+    
   }
 
   public getLanguageId(): void {
@@ -39,10 +39,6 @@ export class SendSolutionModalComponent {
         console.error("Error obtaining Language ID:", error);
       }
     });
-  }
-
-  public getSolutionText(): void {
-    this.solutionText = localStorage.getItem('editorContent') || '';
   }
 
   public acceptSolution(): void {

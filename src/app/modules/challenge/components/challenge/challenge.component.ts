@@ -1,4 +1,4 @@
-import { Component, inject, type OnInit, type OnDestroy } from '@angular/core'
+import { Component, inject, type OnInit, type OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core'
 import { ActivatedRoute, Router, type ParamMap } from '@angular/router'
 import { type Subscription } from 'rxjs'
 import { Challenge } from '../../../../models/challenge.model'
@@ -10,6 +10,8 @@ import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { AuthService } from 'src/app/services/auth.service'
+import { SolutionService } from 'src/app/services/solution.service'
+import { UserSolution } from 'src/app/models/user-solution.interface'
 
 @Component({
   selector: 'app-challenge',
@@ -38,15 +40,27 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   challengeTab = ChallengeTab;
   timesSolved?: number
   isEditorChallengeVisible = false
-  startChallenge: boolean = false
   challengeStarted: boolean = false
   favoriteChallenges: string[] = []
   bookmarkedChallenges: string[] = []
+  isChallengeStatementVisible = true;
+  isFavorite: boolean = false
+  userSolution: UserSolution | null = null;
+  solutionText: string = '';
+  status: string = 'IN_PROGRESS'; 
+  languageId: string = '';
 
   private readonly route = inject(ActivatedRoute)
   private readonly router = inject(Router)
   private readonly challengeService = inject(ChallengeService)
   private readonly _authService = inject(AuthService)
+  private readonly solutionService = inject(SolutionService)
+  private userId: string = ''
+  public solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED'
+  public savedSolutionText: string = ''
+  public cdr = inject(ChangeDetectorRef)
+  @Output() startChallenge = new EventEmitter<boolean>()
+
 
   ngOnInit (): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
@@ -55,33 +69,29 @@ export class ChallengeComponent implements OnInit, OnDestroy {
       this.activeId = ChallengeTab.DETAILS
     })
 
-    this.route.url.subscribe(() => {
-      const url = this.router.url // Obtiene la URL actual
-      this.isEditorChallengeVisible = url.includes('/start') // Verifica si contiene "/start"
-    })
-    if (this._authService.isUserLoggedIn()) {
-      this._authService.getUserId().subscribe(userId => {
-        if (userId !== null && userId !== '') {
-          this.challengeService.getUserFavorites(userId).subscribe({
-            next: (favorites: any[]) => {
-              this.favoriteChallenges = favorites
-            },
-            error: (err) => {
-              console.error('Error getting favorites:', err)
-            }
-          })
-          this.challengeService.getUserBookmarks(userId).subscribe({
-            next: (bookmarks: string[]) => {
-              this.bookmarkedChallenges = bookmarks
-            },
-            error: (err) => {
-              console.error('Error getting bookmarks:', err)
-            }
-          })
+   this._authService.getUserId().subscribe(userId => {
+    if (!userId) return
+    this.userId = userId
+
+    this.solutionService.fetchUserSolution().subscribe(solutions => {
+      const match = solutions.find(
+        sol =>
+          sol.uuid_challenge === this.idChallenge &&
+          sol.uuid_user === this.userId
+      )
+      if (match) {
+        this.savedSolutionText = match.solution_text
+        if (match.status === 'IN_PROGRESS') {
+          this.solutionState = 'IN_PROGRESS'
+        } else if (match.status === 'ENDED') {
+          this.solutionState = 'ENDED'
         }
-      })
-    }
-  }
+      } else {
+        this.solutionState = 'NOT_STARTED'
+      }
+    })
+  })
+}
 
   isFavoriteChallenge (challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
@@ -92,11 +102,15 @@ export class ChallengeComponent implements OnInit, OnDestroy {
     return this.bookmarkedChallenges.includes(challengeId)
   }
 
-  onStartChallenge (started: boolean): void {
-    this.challengeStarted = started
-    this.startChallenge = started
-    this.isEditorChallengeVisible = started
-  }
+onStartChallenge(started: boolean): void {
+  this.challengeStarted = started;
+  this.isEditorChallengeVisible = started;
+
+  this.status = started ? 'IN_PROGRESS' : 'NOT_STARTED';
+
+  this.startChallenge.emit(started); 
+}
+
 
   ngOnDestroy (): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
@@ -126,6 +140,28 @@ export class ChallengeComponent implements OnInit, OnDestroy {
       this.popularity = this.challenge.popularity
       this.languages = this.challenge.languages
       this.timesSolved = this.challenge.timesSolved
+      this.languageId = this.languages[0]?.id_language ?? ''
     })
   }
+onChallengeStart(): void {
+  this.challengeStarted = true;
+  this.isEditorChallengeVisible = true;
+  this.isChallengeStatementVisible = false;
+}
+onContinueChallenge(): void {
+  this.challengeStarted = true;
+  this.isEditorChallengeVisible = true;
+  this.isChallengeStatementVisible = false;
+
+  if (this.userSolution?.solution_text) {
+    this.solutionText = this.userSolution.solution_text;
+    this.solutionService.solutionText(this.solutionText);
+    this.cdr.detectChanges();
+  }
+}
+onEditorSolutionChanged(newText: string): void {
+  this.solutionText = newText;
+   
+}
+
 }

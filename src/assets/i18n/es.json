@@ -41,6 +41,7 @@
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar reto",
+                "buttonContinueChallenge": "Continuar reto",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalizar",
                 "buttonCancel": "Cancelar",
