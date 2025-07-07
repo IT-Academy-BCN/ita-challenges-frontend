@@ -158,6 +158,7 @@ export class ChallengeHeaderComponent implements OnInit {
           this.solutionState = 'IN_PROGRESS';
           this.savedSolutionText = solution.solution_text;
           this.challengeStarted = false; 
+          this.solutionText = '';
         } else if (solution.status === 'ENDED') {
           this.solutionState = 'ENDED';
           this.solutionSent = true;
@@ -179,7 +180,11 @@ export class ChallengeHeaderComponent implements OnInit {
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
+<<<<<<< HEAD
     this.solutionState = SolutionStatus.IN_PROGRESS;
+=======
+    this.solutionState = 'IN_PROGRESS';
+>>>>>>> b2a7320c (fix(challenge): reset solutionText when switching challenges without a saved solution to avoid showing previous answer)
     this.activeId = ChallengeTab.SOLUTIONS
     this.startChallenge.emit(true)
   }
@@ -360,6 +365,7 @@ loadSolutionFromBackend(): void {
   });
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
@@ -367,4 +373,6 @@ loadSolutionFromBackend(): void {
 
 
 >>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
+=======
+>>>>>>> b2a7320c (fix(challenge): reset solutionText when switching challenges without a saved solution to avoid showing previous answer)
 }

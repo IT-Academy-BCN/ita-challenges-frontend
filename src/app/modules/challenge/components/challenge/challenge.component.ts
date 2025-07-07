@@ -12,11 +12,8 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
-<<<<<<< HEAD
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
-=======
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
 @Component({
   selector: 'app-challenge',
@@ -52,10 +49,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   isFavorite: boolean = false
   userSolution: UserSolution | null = null;
   solutionText: string = '';
-<<<<<<< HEAD
-=======
-  status: string = 'IN_PROGRESS'; 
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
   languageId: string = '';
   solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
 
@@ -65,16 +58,8 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   private readonly _authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private userId: string = ''
-<<<<<<< HEAD
   public savedSolutionText: string = ''
   public cdr = inject(ChangeDetectorRef)
-=======
-  public solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED'
-  public savedSolutionText: string = ''
-  public cdr = inject(ChangeDetectorRef)
-  @Output() startChallenge = new EventEmitter<boolean>()
-
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
   @Output() startChallenge = new EventEmitter<boolean>()
 
@@ -116,7 +101,6 @@ loadUserSolutionStatus(userId: string): void {
           (sol) => sol.uuid_challenge === this.idChallenge && sol.uuid_user === userId
         );
 
-<<<<<<< HEAD
         if (match?.status === SolutionStatus.IN_PROGRESS) {
           this.solutionState = SolutionStatus.IN_PROGRESS;
         } else if (match?.status === SolutionStatus.ENDED) {
@@ -133,31 +117,6 @@ loadUserSolutionStatus(userId: string): void {
       }
     });
   }
-=======
-   this._authService.getUserId().subscribe(userId => {
-    if (!userId) return
-    this.userId = userId
-
-    this.solutionService.fetchUserSolution().subscribe(solutions => {
-      const match = solutions.find(
-        sol =>
-          sol.uuid_challenge === this.idChallenge &&
-          sol.uuid_user === this.userId
-      )
-      if (match) {
-        this.savedSolutionText = match.solution_text
-        if (match.status === 'IN_PROGRESS') {
-          this.solutionState = 'IN_PROGRESS'
-        } else if (match.status === 'ENDED') {
-          this.solutionState = 'ENDED'
-        }
-      } else {
-        this.solutionState = 'NOT_STARTED'
-      }
-    })
-  })
-}
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
 
   isFavoriteChallenge(challengeId: string): boolean {
@@ -169,7 +128,6 @@ loadUserSolutionStatus(userId: string): void {
     return this.bookmarkedChallenges.includes(challengeId)
   }
 
-<<<<<<< HEAD
   onStartChallenge(started: boolean): void {
     this.challengeStarted = started;
     this.isEditorChallengeVisible = started;
@@ -177,17 +135,6 @@ loadUserSolutionStatus(userId: string): void {
     this.solutionState = SolutionStatus.IN_PROGRESS;
     this.startChallenge.emit(started);
   }
-=======
-onStartChallenge(started: boolean): void {
-  this.challengeStarted = started;
-  this.isEditorChallengeVisible = started;
-
-  this.status = started ? 'IN_PROGRESS' : 'NOT_STARTED';
-
-  this.startChallenge.emit(started); 
-}
-
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
 
   ngOnDestroy(): void {
@@ -221,7 +168,6 @@ onStartChallenge(started: boolean): void {
       this.languageId = this.languages[0]?.id_language ?? ''
     })
   }
-<<<<<<< HEAD
   onChallengeStart(): void {
     this.challengeStarted = true;
     this.isEditorChallengeVisible = true;
@@ -242,27 +188,5 @@ onStartChallenge(started: boolean): void {
     this.solutionText = newText;
 
   }
-=======
-onChallengeStart(): void {
-  this.challengeStarted = true;
-  this.isEditorChallengeVisible = true;
-  this.isChallengeStatementVisible = false;
-}
-onContinueChallenge(): void {
-  this.challengeStarted = true;
-  this.isEditorChallengeVisible = true;
-  this.isChallengeStatementVisible = false;
-
-  if (this.userSolution?.solution_text) {
-    this.solutionText = this.userSolution.solution_text;
-    this.solutionService.solutionText(this.solutionText);
-    this.cdr.detectChanges();
-  }
-}
-onEditorSolutionChanged(newText: string): void {
-  this.solutionText = newText;
-   
-}
->>>>>>> d350ee4e (fix: show/hide challenge action buttons based on user role and state)
 
 }
