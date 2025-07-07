@@ -132,7 +132,8 @@
             },
             "register":{
                 "title":"Afegir alumnes",
-                "description":"Inserta els usuaris de github",
+                "description":"Inserta els usuaris de GitHub",
+                "placeholder":"Usuari de GitHub",
                 "btn-add":"Afegir",
                 "btn-confirm":"Confirmar",
                 "msg-invalid":"Nom d'usuari no vàlid.",

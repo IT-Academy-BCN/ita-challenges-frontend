@@ -13,7 +13,7 @@
       <!-- registerUsers -->
         @if(isLoggedIn && currentRole==='ADMIN'){
           <button class="login" (click)="openRegisterUsersModal()">
-            Añadir alumnos/as
+            {{'modules.modals.register.title' | translate}}
           </button>
         }
 

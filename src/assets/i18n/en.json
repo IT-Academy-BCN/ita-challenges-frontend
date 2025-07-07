@@ -134,6 +134,7 @@
             "register":{
                 "title":"Add students",
                 "description":"Insert GitHub usernames",
+                "placeholder":"GitHub username",
                 "btn-add":"Add",
                 "btn-confirm":"Confirm",
                 "msg-invalid":"Invalid username.",
