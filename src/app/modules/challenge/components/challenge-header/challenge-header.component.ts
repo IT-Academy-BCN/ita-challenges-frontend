@@ -213,4 +213,8 @@ export class ChallengeHeaderComponent implements OnInit {
       })
     }
   }
+    onCancel (): void {
+    // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
+    void this.router.navigate(['/ita-challenge/challenges'])
+  }
 }
