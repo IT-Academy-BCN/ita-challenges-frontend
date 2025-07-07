@@ -1,5 +1,5 @@
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef, inject } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
 
 @Component({
   selector: 'app-starter',
@@ -40,7 +41,8 @@ export class StarterComponent implements OnInit {
   favoriteChallenges: string[] = []
   timesSolved: number = 0
   bookmarkedChallenges: string[] = []
-
+  solutionStatusMap: Record<string, 'IN_PROGRESS' | 'ENDED'> = {};
+  private readonly solutionService = inject(SolutionService)
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -54,6 +56,9 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
+      if (!this.isAdmin) {
+    this.fetchUserSolutionsStatus();
+  }
     })
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {
@@ -155,4 +160,18 @@ export class StarterComponent implements OnInit {
       this.refreshChallengeList()
     }
   }
+  fetchUserSolutionsStatus(): void {
+  this.solutionService.fetchUserSolution().subscribe({
+    next: (solutions) => {
+      this.solutionStatusMap = solutions.reduce((acc, sol) => {
+        acc[sol.uuid_challenge] = sol.status;
+        return acc;
+      }, {} as Record<string, 'IN_PROGRESS' | 'ENDED'>);
+    },
+    error: (err) => {
+      console.error('Error fetching user solutions:', err);
+    }
+  });
+}
+
 }
