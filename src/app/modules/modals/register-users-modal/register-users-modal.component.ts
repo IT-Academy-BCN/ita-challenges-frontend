@@ -35,7 +35,7 @@ export class RegisterUsersModalComponent {
 
  confirmRegistration():void {
   this.usernames.forEach(username =>{
-    this.registerUsersService.registerUser(username).subscribe({
+    this.registerUsersService.registerUserMock(username).subscribe({
       next: (res) => {
         console.log(`User ${username} registered successfully`, res);
       },
