@@ -4,42 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-16
-=======
-=======
->>>>>>> b1b51a55 (updating changelog)
-<<<<<<< HEAD
-### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-09
-=======
-=======
->>>>>>> d362caa4 (updating changelog)
-<<<<<<< HEAD
-### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
-
-### Added
-- Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
-
-### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-09
-=======
-### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-09
->>>>>>> 1d97fe6b (add CHANGELOG)
-<<<<<<< HEAD
->>>>>>> fc3118ed (add CHANGELOG)
-<<<<<<< HEAD
->>>>>>> d3f481ca (add CHANGELOG)
-=======
-=======
-=======
-### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-09
-=======
-### [itachallenge-frontend-3.1.47-RELEASE] - 2025-07-08
->>>>>>> ae008cc0 (updating changelog)
->>>>>>> f57b5cd0 (updating changelog)
->>>>>>> d362caa4 (updating changelog)
->>>>>>> b1b51a55 (updating changelog)
-
 ### Added
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
 
@@ -48,19 +13,17 @@ and this project adheres to
 ### Added
 - Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
   
-### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-09
+### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
+
 ### Added
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
 
-<<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
 
 ### Added
 - Added the interface for the user regeister modal (Taiga [#554], PR [#658])
 
-=======
-<<<<<<< HEAD
->>>>>>> fc3118ed (add CHANGELOG)
+
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
 ### Changed
@@ -75,8 +38,6 @@ and this project adheres to
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
 
-=======
->>>>>>> 1d97fe6b (add CHANGELOG)
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
