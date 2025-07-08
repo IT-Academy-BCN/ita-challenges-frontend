@@ -7,7 +7,12 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.53-RELEASE] - 2025-06-27
 
 ### Changed
-- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#552], PR [#653])
+- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#552], PR [#668])
+
+### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
+
+### Changed
+- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#529], PR [#653])
 
 ### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
 
