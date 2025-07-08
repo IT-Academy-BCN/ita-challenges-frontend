@@ -164,17 +164,10 @@ export class StarterComponent implements OnInit {
   }
   fetchUserSolutionsStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({
-<<<<<<< HEAD
     next: (solutions = []) => {
       this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
         statusMap[userSolution.uuid_challenge] = userSolution.status;
         return statusMap;
-=======
-    next: (solutions) => {
-      this.solutionStatusMap = solutions.reduce((acc, sol) => {
-        acc[sol.uuid_challenge] = sol.status;
-        return acc;
->>>>>>> b0e728ec (chore: remove unnecessary type assertion in solution status map and fix changelog entry)
       }, {} as Record<string, SolutionStatus>);
     },
     error: (err) => {
