@@ -1,16 +1,63 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RegisterUsersService } from './register-users.service';
 
 describe('RegisterUsersService', () => {
   let service: RegisterUsersService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [RegisterUsersService],
+    });
     service = TestBed.inject(RegisterUsersService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should register a user and return the response', () => {
+    const mockUser = { username: 'testuser' };
+    const mockResponse = { message: 'User registered successfully' };
+
+    service.registerUser(mockUser.username).subscribe(response => {
+      expect(response).toEqual(mockResponse);
+    });
+
+    const req = httpMock.expectOne('{BACKEND_ITA_CHALLENGE_BASE_URL}/{CREATE_USER}');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(mockUser);
+    req.flush(mockResponse);
+  });
+
+  it('should handle an error when registering a user', () => {
+    const mockUser = { username: 'testuser' };
+    const mockError = { status: 500, statusText: 'Internal Server Error' };
+
+    service.registerUser(mockUser.username).subscribe(
+      () => fail('should have failed with a 500 error'),
+      error => {
+        expect(error.status).toEqual(500);
+      }
+    );
+
+    const req = httpMock.expectOne('{BACKEND_ITA_CHALLENGE_BASE_URL}/{CREATE_USER}');
+    expect(req.request.method).toBe('POST');
+    req.flush(null, mockError);
+  });
+
+  it('should register a user with the mock service and return a success message', (done) => {
+    const username = 'testuser';
+    service.registerUserMock(username).subscribe(response => {
+      expect(response).toEqual({ message: `User ${username} registered successfully` });
+      done();
+    });
   });
 });

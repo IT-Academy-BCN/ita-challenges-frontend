@@ -1,8 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterUsersModalComponent } from './register-users-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
+import { RegisterUsersService } from '../../../services/register-users.service';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({name: 'translate'})
 class MockTranslatePipe implements PipeTransform {
@@ -13,6 +17,7 @@ describe('RegisterUsersModalComponent', () => {
   let component: RegisterUsersModalComponent;
   let fixture: ComponentFixture<RegisterUsersModalComponent>;
   let mockModalService: jest.Mocked<NgbModal>;
+  let registerUsersService: RegisterUsersService;
 
   beforeEach(async () => {
     mockModalService = {
@@ -21,14 +26,24 @@ describe('RegisterUsersModalComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [RegisterUsersModalComponent, MockTranslatePipe],
-      imports: [FormsModule],
-      providers: [{ provide: NgbModal, useValue: mockModalService }],
+      imports: [FormsModule, HttpClientTestingModule],
+      providers: [
+        { provide: NgbModal, useValue: mockModalService },
+        {
+          provide: TranslateService,
+          useValue: {
+            instant: jest.fn().mockReturnValue(''),
+          },
+        },
+        RegisterUsersService,
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterUsersModalComponent);
     component = fixture.componentInstance;
+    registerUsersService = TestBed.inject(RegisterUsersService);
     fixture.detectChanges();
   });
 
@@ -81,5 +96,16 @@ describe('RegisterUsersModalComponent', () => {
   it('should normalize a username by trimming and converting to lowercase', () => {
     const normalized = component['normalizeUsername']('  UserNAME  ');
     expect(normalized).toBe('username');
+  });
+
+  it('should register users and set success flag', () => {
+    component.usernames = ['user1', 'user2'];
+    jest.spyOn(registerUsersService, 'registerUserMock').mockReturnValue(of({}));
+
+    component.confirmRegistration();
+
+    expect(registerUsersService.registerUserMock).toHaveBeenCalledTimes(2);
+    expect(component.registrationSuccess).toBe(true);
+    expect(component.registrationError).toBe(false);
   });
 });

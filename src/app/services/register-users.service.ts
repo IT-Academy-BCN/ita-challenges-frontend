@@ -12,9 +12,9 @@ export class RegisterUsersService {
 
   registerUserMock(username: string): Observable<any> {
     // simulaed successful registration
-    // return of({ message: `User ${username} registered successfully` }).pipe(delay(500));
+    return of({ message: `User ${username} registered successfully` }).pipe(delay(500));
 
     // simulated failure
-    return throwError(() => new Error(`Failed to register user ${username}`)).pipe(delay(500));
+    // return throwError(() => new Error(`Failed to register user ${username}`)).pipe(delay(500));
   }
 }
