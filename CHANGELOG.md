@@ -4,10 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
+### [ita-challenges-frontend-3.1.53-RELEASE] - 2025-06-27
 
 ### Changed
-- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#529], PR [#653])
+- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#552], PR [#653])
 
 ### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
 
