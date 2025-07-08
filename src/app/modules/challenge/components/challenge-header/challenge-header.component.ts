@@ -71,7 +71,7 @@ export class ChallengeHeaderComponent implements OnInit {
     this.userId = userId;
 
     if (!userId) {
-      console.error(" No se pudo obtener el ID del usuario");
+      console.error("Could not get User ID");
     } else {
       this.loadUserSolutionStatus();
     }
@@ -110,7 +110,7 @@ export class ChallengeHeaderComponent implements OnInit {
       }
     },
     error: (err) => {
-      console.error(' Error al cargar soluciones del usuario:', err);
+      console.error('Error fetching user solutions:', err);
     }
   });
 }

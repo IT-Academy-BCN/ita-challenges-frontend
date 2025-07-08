@@ -72,7 +72,13 @@ export class ChallengeComponent implements OnInit, OnDestroy {
    this._authService.getUserId().subscribe(userId => {
     if (!userId) return
     this.userId = userId
+    this.challengeService.getUserBookmarks(userId).subscribe((bookmarks: string[]) => {
+    this.bookmarkedChallenges = bookmarks;
+    });
 
+    this.challengeService.getUserFavorites(userId).subscribe((favorites: string[]) => {
+    this.favoriteChallenges = favorites;
+    });
     this.solutionService.fetchUserSolution().subscribe(solutions => {
       const match = solutions.find(
         sol =>

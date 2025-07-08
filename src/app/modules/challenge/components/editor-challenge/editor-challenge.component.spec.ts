@@ -1,31 +1,37 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { editorChallengeComponent } from './editor-challenge.component'
+import { EditorChallengeComponent } from './editor-challenge.component'
 import { ChangeDetectorRef } from '@angular/core'
 import { of, Subject } from 'rxjs'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('EditorChallengeComponent', () => {
-  let component: editorChallengeComponent
-  let fixture: ComponentFixture<editorChallengeComponent>
+  let component: EditorChallengeComponent
+  let fixture: ComponentFixture<EditorChallengeComponent>
   let translateService: jest.Mocked<TranslateService>
   const mockCdr = { detectChanges: jest.fn() }
-
+  const mockSolutionService = {
+    solutionText: jest.fn()
+  }
   beforeEach(async () => {
     translateService = {
       get: jest.fn().mockReturnValue(of('// Escribe tu solución aquí')),
-      onLangChange: new Subject()
+      onLangChange: new Subject(),
+      addLangs: jest.fn(),
+      setDefaultLang: jest.fn(),
+      use: jest.fn()
     } as any
 
     await TestBed.configureTestingModule({
-      declarations: [editorChallengeComponent],
-      imports: [TranslateModule.forRoot()],
+      declarations: [EditorChallengeComponent],
+      imports: [TranslateModule.forRoot(),HttpClientTestingModule],
       providers: [
         { provide: TranslateService, useValue: translateService },
         { provide: ChangeDetectorRef, useValue: mockCdr }
       ]
     }).compileComponents()
 
-    fixture = TestBed.createComponent(editorChallengeComponent)
+    fixture = TestBed.createComponent(EditorChallengeComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

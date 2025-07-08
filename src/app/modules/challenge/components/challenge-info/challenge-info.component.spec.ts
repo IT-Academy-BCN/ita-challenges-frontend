@@ -23,6 +23,9 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 })
 class MockEditorChallengeComponent {
   @Input() isEditorChallengeVisible: boolean = false;
+  @Input() solutionText: string = '';
+  @Input() idChallenge: string = '';
+  @Input() languageId: string = '';
 }
 
 describe('ChallengeInfoComponent', () => {
@@ -436,7 +439,8 @@ describe('ChallengeInfoComponent', () => {
           uuid_user: mockUserId,
           uuid_challenge: mockChallengeId,
           uuid_language: mockLanguageId,
-          solution_text: mockSolutionText
+          solution_text: mockSolutionText,
+          status: 'ENDED'
         }
       ]))
 
@@ -447,7 +451,9 @@ describe('ChallengeInfoComponent', () => {
       // Assert
       expect(component.solutionSent).toBe(true)
       expect(component.solutionText).toBe(mockSolutionText)
-      expect(component.userSolution).toEqual({ solution_text: mockSolutionText })
+      expect(component.userSolution).toEqual({
+        solution_text: mockSolutionText
+      })
     })
   })
 })

@@ -115,6 +115,7 @@ describe('ChallengeComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     component.loadMasterData('123')
+    component.ngOnInit()
   })
 
   it('should create the component', () => {

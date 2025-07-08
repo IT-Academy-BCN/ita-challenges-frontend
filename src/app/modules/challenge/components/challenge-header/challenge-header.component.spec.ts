@@ -40,8 +40,11 @@ describe('ChallengeHeaderComponent', () => {
       fetchUserSolution: jest.fn().mockReturnValue(
         of([
           {
+            uuid_user: "user1",
             uuid_challenge: "testChallengeId",
+            uuid_language: "testLang",
             solution_text: "some solution",
+            status: "ENDED",
           },
         ])
       ),

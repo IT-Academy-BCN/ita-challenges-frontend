@@ -64,7 +64,7 @@ export class SendSolutionModalComponent {
         this.closeModal();
       },
       error: (error) => {
-        console.error('Error sending solution:', error);
+        console.error('Error submitting solution:', error);
       }
     });
   }
