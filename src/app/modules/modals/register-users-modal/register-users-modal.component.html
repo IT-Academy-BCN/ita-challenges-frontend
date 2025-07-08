@@ -21,7 +21,7 @@
                     class="text-danger small my-2">
                     <div *ngIf="usernameInput.errors?.['pattern']">{{'modules.modals.register.msg-invalid' | translate}}</div>
                 </div>
-                <div *ngIf="isDuplicateUsername(username) && !usernameInput.errors?.['required']">
+                <div *ngIf="isDuplicateUsername(username) && usernameInput.valid" class="text-danger small my-2">
                     {{'modules.modals.register.msg-duplicate' | translate}}
                 </div>
             </div>
