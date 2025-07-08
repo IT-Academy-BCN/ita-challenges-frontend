@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterUsersService } from 'src/app/services/register-users.service';
 
 @Component({
   selector: 'app-register-users-modal',
@@ -7,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RegisterUsersModalComponent {
   private readonly modalService = inject(NgbModal)
+  private readonly registerUsersService = inject(RegisterUsersService);
   username: string = '';
   usernames: string[] = [];
 
@@ -30,4 +32,19 @@ export class RegisterUsersModalComponent {
     const normalized = this.normalizeUsername(username);
     return this.usernames.some(u => this.normalizeUsername(u) === normalized);
   }
+
+ confirmRegistration():void {
+  this.usernames.forEach(username =>{
+    this.registerUsersService.registerUser(username).subscribe({
+      next: (res) => {
+        console.log(`User ${username} registered successfully`, res);
+      },
+      error: (err) => {
+        console.error(`Error registering user ${username}`, err);
+      }
+    });
+  })
+  this.usernames = [];
+  this.closeModal();
+ }
 }
