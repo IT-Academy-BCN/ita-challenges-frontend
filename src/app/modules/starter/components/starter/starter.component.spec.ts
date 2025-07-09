@@ -5,20 +5,24 @@ import { StarterService } from 'src/app/services/starter.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { type Challenge } from 'src/app/models/challenge.model'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { of, BehaviorSubject } from 'rxjs'
+import { of, BehaviorSubject, throwError } from 'rxjs'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
-import { AuthService } from 'src/app/services/auth.service'
-import { ChallengeService } from 'src/app/services/challenge.service'
+import { AuthService } from 'src/app/services/auth.service';
+import { ChallengeService } from 'src/app/services/challenge.service';
+import { SolutionService } from 'src/app/services/solution.service';
+import { type UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('StarterComponent', () => {
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService
-  let authService: AuthService
-  let authRoleSubject: BehaviorSubject<string>
-  let getUserBookmarksSpy: jasmine.Spy
-  let getUserFavoritesSpy: jasmine.Spy
+  let authService: AuthService;
+  let solutionService: SolutionService;
+  let authRoleSubject: BehaviorSubject<string>;
+  let getUserBookmarksSpy: jasmine.Spy;
+  let getUserFavoritesSpy: jasmine.Spy;
+  let fetchUserSolutionSpy: jasmine.Spy;
 
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
@@ -45,7 +49,12 @@ describe('StarterComponent', () => {
     const challengeServiceMock = {
       getUserBookmarks: getUserBookmarksSpy,
       getUserFavorites: getUserFavoritesSpy
-    }
+    };
+
+    fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
+    const solutionServiceMock = {
+      fetchUserSolution: fetchUserSolutionSpy
+    };
 
     TestBed.configureTestingModule({
       declarations: [StarterComponent],
@@ -54,17 +63,19 @@ describe('StarterComponent', () => {
         StarterService,
         { provide: AuthService, useValue: authServiceMock },
         { provide: ChallengeService, useValue: challengeServiceMock },
+        { provide: SolutionService, useValue: solutionServiceMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
-    })
-    fixture = TestBed.createComponent(StarterComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-    starterService = TestBed.inject(StarterService)
-    authService = TestBed.inject(AuthService)
+    });
+    fixture = TestBed.createComponent(StarterComponent);
+    component = fixture.componentInstance;
+    starterService = TestBed.inject(StarterService);
+    authService = TestBed.inject(AuthService);
+    solutionService = TestBed.inject(SolutionService);
+    fixture.detectChanges();
 
-    component.listChallenges = []
+    component.listChallenges = [];
     component.filters = { languages: [], levels: [], progress: [] }
     component.sortBy = ''
   })
@@ -142,7 +153,42 @@ describe('StarterComponent', () => {
     expect(component.isBookmarkedChallenge('id-3')).toBeFalsy()
   })
   it('should fetch and store bookmarks on init', () => {
-    expect(getUserBookmarksSpy).toHaveBeenCalled()
-    expect(component.bookmarkedChallenges).toEqual(['id-1', 'id-2'])
-  })
-})
+    expect(getUserBookmarksSpy).toHaveBeenCalled();
+    expect(component.bookmarkedChallenges).toEqual(['id-1', 'id-2']);
+  });
+
+  it('should call fetchUserSolutionsStatus on init if user is not admin', () => {
+    authRoleSubject.next('USER');
+    fixture.detectChanges();
+    expect(fetchUserSolutionSpy).toHaveBeenCalled();
+  });
+
+  it('should not call fetchUserSolutionsStatus on init if user is admin', () => {
+    fetchUserSolutionSpy.calls.reset();
+    authRoleSubject.next('ADMIN');
+    fixture.detectChanges();
+    expect(fetchUserSolutionSpy).not.toHaveBeenCalled();
+  });
+
+  it('should correctly map user solutions to solutionStatusMap', () => {
+    const mockSolutions: UserSolution[] = [
+      { uuid_user: 'user-1', uuid_challenge: 'challenge-1', uuid_language: 'lang-1', solution_text: 'sol-1', status: 'IN_PROGRESS' },
+      { uuid_user: 'user-1', uuid_challenge: 'challenge-2', uuid_language: 'lang-1', solution_text: 'sol-2', status: 'ENDED' }
+    ];
+    fetchUserSolutionSpy.and.returnValue(of(mockSolutions));
+
+    component.fetchUserSolutionsStatus();
+
+    expect(component.solutionStatusMap['challenge-1']).toBe('IN_PROGRESS');
+    expect(component.solutionStatusMap['challenge-2']).toBe('ENDED');
+  });
+
+  it('should handle error when fetching user solutions', () => {
+    const consoleErrorSpy = spyOn(console, 'error');
+    fetchUserSolutionSpy.and.returnValue(throwError(() => new Error('Error fetching solutions')));
+
+    component.fetchUserSolutionsStatus();
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', jasmine.any(Error));
+  });
+});
