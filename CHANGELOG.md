@@ -5,11 +5,16 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-16
 =======
+=======
+>>>>>>> b1b51a55 (updating changelog)
 <<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-09
 =======
+=======
+>>>>>>> d362caa4 (updating changelog)
 <<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
 
@@ -20,8 +25,20 @@ and this project adheres to
 =======
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-09
 >>>>>>> 1d97fe6b (add CHANGELOG)
+<<<<<<< HEAD
 >>>>>>> fc3118ed (add CHANGELOG)
+<<<<<<< HEAD
 >>>>>>> d3f481ca (add CHANGELOG)
+=======
+=======
+=======
+### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-09
+=======
+### [itachallenge-frontend-3.1.47-RELEASE] - 2025-07-08
+>>>>>>> ae008cc0 (updating changelog)
+>>>>>>> f57b5cd0 (updating changelog)
+>>>>>>> d362caa4 (updating changelog)
+>>>>>>> b1b51a55 (updating changelog)
 
 ### Added
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
