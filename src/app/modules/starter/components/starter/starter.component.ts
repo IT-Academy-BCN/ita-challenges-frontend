@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 @Component({
   selector: 'app-starter',
@@ -164,9 +165,9 @@ export class StarterComponent implements OnInit {
   this.solutionService.fetchUserSolution().subscribe({
     next: (solutions) => {
       this.solutionStatusMap = solutions.reduce((acc, sol) => {
-        acc[sol.uuid_challenge] = sol.status;
+        acc[sol.uuid_challenge] = sol.status as SolutionStatus;
         return acc;
-      }, {} as Record<string, 'IN_PROGRESS' | 'ENDED'>);
+      }, {} as Record<string, SolutionStatus>);
     },
     error: (err) => {
       console.error('Error fetching user solutions:', err);
