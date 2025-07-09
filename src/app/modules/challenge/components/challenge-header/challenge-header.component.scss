@@ -9,7 +9,12 @@
 .title h3 {
   line-height: 2rem;
 }
-
+.arrow-left {
+  filter: invert(17%) sepia(51%) saturate(4948%) hue-rotate(308deg) brightness(94%) contrast(96%);
+}
+span:hover .arrow-left{
+  filter:invert(0%) sepia(97%) saturate(7416%) hue-rotate(131deg) brightness(90%) contrast(97%);
+}
 .difficulty img {
   margin-top: 4px;
   margin-right: 2px;
