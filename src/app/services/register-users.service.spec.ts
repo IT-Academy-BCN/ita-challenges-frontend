@@ -45,12 +45,12 @@ describe('RegisterUsersService', () => {
     const mockUser = { username: 'testuser' };
     const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-    service.registerUser(mockUser.username).subscribe(
-      () => fail('should have failed with a 500 error'),
-      error => {
+    service.registerUser(mockUser.username).subscribe({
+      next: () => fail('should have failed with a 500 error'),
+      error: error => {
         expect(error.status).toEqual(500);
       }
-    );
+    });
 
     const req = httpMock.expectOne('{BACKEND_ITA_CHALLENGE_BASE_URL}/{CREATE_USER}');
     expect(req.request.method).toBe('POST');
