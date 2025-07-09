@@ -23,7 +23,7 @@ export class RegisterUsersModalComponent {
   }
 
   isDuplicateUsername(username: string): boolean {
-    const trimmed = username.trim();
+    const trimmed = username.trim().toLowerCase();
     return trimmed.length > 0 && this.usernames.includes(trimmed);
   }
 }
