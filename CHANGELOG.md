@@ -4,12 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
+### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
-- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#576], PR [#667])
+- Icons correction according figma's document: at the list of challenges and the description of challenges(Taiga [#576], PR [#667])
 
-### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
+### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
 - Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#529], PR [#653])
