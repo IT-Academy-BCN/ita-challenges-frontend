@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { RegisterUsersService } from './register-users.service';
 import { provideHttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 describe('RegisterUsersService', () => {
   let service: RegisterUsersService;
@@ -35,7 +36,7 @@ describe('RegisterUsersService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('{BACKEND_ITA_CHALLENGE_BASE_URL}/{CREATE_USER}');
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/${environment.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockUser);
     req.flush(mockResponse);
@@ -52,7 +53,7 @@ describe('RegisterUsersService', () => {
       }
     });
 
-    const req = httpMock.expectOne('{BACKEND_ITA_CHALLENGE_BASE_URL}/{CREATE_USER}');
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/${environment.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     req.flush(null, mockError);
   });
