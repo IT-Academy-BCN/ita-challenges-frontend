@@ -27,6 +27,7 @@ and this project adheres to
 
 ### Changed
 - Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
+- 
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
