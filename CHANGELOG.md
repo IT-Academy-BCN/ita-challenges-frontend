@@ -25,6 +25,7 @@ and this project adheres to
 
 ### Changed
 - I changed the breadcrumb for a link that redirects to challenges list. imported an existing svg instead of using the whole svg code in html file  (Taiga [#574], PR [#665])
+  
 ### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-06-27
 
 ### Changed
