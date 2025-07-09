@@ -5,8 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
 import { RegisterUsersService } from '../../../services/register-users.service';
 import { of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateService } from '@ngx-translate/core';
+import { provideHttpClient } from '@angular/common/http';
 
 @Pipe({name: 'translate'})
 class MockTranslatePipe implements PipeTransform {
@@ -26,8 +27,10 @@ describe('RegisterUsersModalComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [RegisterUsersModalComponent, MockTranslatePipe],
-      imports: [FormsModule, HttpClientTestingModule],
+      imports: [FormsModule],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: NgbModal, useValue: mockModalService },
         {
           provide: TranslateService,
