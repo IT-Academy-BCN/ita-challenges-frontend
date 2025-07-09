@@ -49,6 +49,7 @@ describe('ChallengeHeaderComponent', () => {
         ])
       ),
       challengeCompleted$: of("testChallengeId"),
+      submitSolution: jest.fn(),
     } as any
 
     await TestBed.configureTestingModule({
@@ -240,5 +241,57 @@ describe('ChallengeHeaderComponent', () => {
   );
   expect(startButton).toBeUndefined();
 }));
+
+  it('should handle solution accepted', () => {
+    component.onSolutionAccepted();
+    expect(component.solutionSent).toBe(true);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+  });
+
+  it('should call openSendSolutionModal on sendSolution', () => {
+    const spy = jest.spyOn(modalService, 'open').mockReturnValue({
+        componentInstance: {
+            solutionAccepted: new EventEmitter<void>(),
+            timesSolvedUpdated: new EventEmitter<number>()
+        }
+    } as any);
+    component.sendSolution();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should handle continue challenge', () => {
+    const spy = jest.spyOn(component, 'loadSolutionFromBackend');
+    component.onContinueChallenge();
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.status).toBe('IN_PROGRESS');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should load solution from backend', () => {
+    solutionService.fetchUserSolution.mockReturnValue(of([
+      { uuid_challenge: 'testChallengeId', uuid_language: 'testLang', solution_text: 'test solution' }
+    ] as any));
+    component.idChallenge = 'testChallengeId';
+    component.languageId = 'testLang';
+    component.loadSolutionFromBackend();
+    expect(component.currentSolutionText).toBe('test solution');
+  });
+
+  it('should handle error when loading solution from backend', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    solutionService.fetchUserSolution.mockReturnValue(throwError(() => new Error('error')));
+    component.loadSolutionFromBackend();
+    expect(consoleSpy).toHaveBeenCalled();
+  });
+
+  it('should save challenge solution', () => {
+    const spy = jest.spyOn(solutionService, 'submitSolution').mockReturnValue(of({} as any));
+    component.idChallenge = 'challenge1';
+    component.languageId = 'lang1';
+    component.solutionText = 'solution';
+    component.userId = 'user1';
+    component.saveChallenge();
+    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', 'IN_PROGRESS', 'solution');
+  });
 })
- 

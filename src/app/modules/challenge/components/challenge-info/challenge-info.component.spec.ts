@@ -508,6 +508,41 @@ describe('ChallengeInfoComponent', () => {
     expect(component.isEditorChallengeVisible).toBe(false);
   });
 
+  it('should not load solutions when activeId input changes to SOLUTIONS and user is not admin', () => {
+    component.isAdmin = false;
+    component.languages = [{ id_language: 'test-language-id', language_name: 'JavaScript' }];
+    const loadSolutionsSpy = jest.spyOn(component, 'loadSolutions');
+    const changes = {
+      activeId: {
+        currentValue: ChallengeTab.SOLUTIONS,
+        previousValue: ChallengeTab.DETAILS,
+        firstChange: false,
+        isFirstChange: () => false
+      }
+    };
+    component.ngOnChanges(changes);
+    expect(loadSolutionsSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not start challenge when startChallenge input is false', () => {
+    const changes = {
+      startChallenge: {
+        currentValue: false,
+        previousValue: true,
+        firstChange: false,
+        isFirstChange: () => false
+      }
+    };
+    component.ngOnChanges(changes);
+    expect(component.challengeStarted).toBe(false);
+  });
+
+  it('should handle outside click to close dropdown', () => {
+    component.isDropdownOpen = true;
+    component.handleOutsideClick(new MouseEvent('click'));
+    expect(component.isDropdownOpen).toBe(false);
+  });
+
   it('should load solutions from the service', () => {
     const mockSolutions = { results: [{ solution_text: 'test solution' }] } as any;
     const solutionServiceSpy = jest.spyOn(component['solutionService'], 'getAllChallengeSolutions').mockReturnValue(of(mockSolutions));

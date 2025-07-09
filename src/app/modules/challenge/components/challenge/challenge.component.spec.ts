@@ -255,4 +255,48 @@ describe('ChallengeComponent', () => {
     expect(mockChallengeService.getUserBookmarks).toHaveBeenCalled()
     expect(component.bookmarkedChallenges).toEqual(['id1', 'id2'])
   })
+
+  it('should correctly determine if a challenge is a favorite', () => {
+    component.favoriteChallenges = ['id1', 'id2'];
+    expect(component.isFavoriteChallenge('id1')).toBe(true);
+    expect(component.isFavoriteChallenge('id3')).toBe(false);
+  });
+
+  it('should update properties on starting a challenge', () => {
+    const started = true;
+    component.onStartChallenge(started);
+    expect(component.challengeStarted).toBe(started);
+    expect(component.isEditorChallengeVisible).toBe(started);
+    expect(component.status).toBe('IN_PROGRESS');
+  });
+
+  it('should update favorites count', () => {
+    component.challenge = { favorites_count: 5 } as any;
+    component.onFavoritesUpdated(10);
+    if(component.challenge) {
+      expect(component.challenge.favorites_count).toBe(10);
+    }
+  });
+
+  it('should handle starting a challenge', () => {
+    component.onChallengeStart();
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.isChallengeStatementVisible).toBe(false);
+  });
+
+  it('should handle continuing a challenge', () => {
+    component.userSolution = { solution_text: 'some solution' } as any;
+    component.onContinueChallenge();
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.isChallengeStatementVisible).toBe(false);
+    expect(component.solutionText).toBe('some solution');
+  });
+
+  it('should update solution text on editor change', () => {
+    const newSolution = 'new solution text';
+    component.onEditorSolutionChanged(newSolution);
+    expect(component.solutionText).toBe(newSolution);
+  });
 })
