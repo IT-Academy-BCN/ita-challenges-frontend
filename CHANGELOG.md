@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
 
 ### Added
-- Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#661])
+- Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#659])
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
 
@@ -27,7 +27,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
 
 ### Added
-- Added the interface for the user regeister modal (Taiga [#554], PR [#658])
+- Added the interface for the user register modal (Taiga [#554], PR [#658])
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
