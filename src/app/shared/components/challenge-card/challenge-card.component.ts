@@ -19,6 +19,8 @@ export class ChallengeCardComponent implements OnInit {
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   public userRole: string | null = null
+  public SolutionStatus = SolutionStatus;
+
 
   @Input() title: string = ''
   @Input() languages: any = []

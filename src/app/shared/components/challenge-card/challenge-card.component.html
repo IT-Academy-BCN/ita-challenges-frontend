@@ -24,8 +24,8 @@
     *ngIf="solutionStatus"
     class="ms-2 badge"
     [ngClass]="{
-      'bg-success text-white': solutionStatus === 'ENDED',
-      'bg-warning text-dark': solutionStatus === 'IN_PROGRESS'
+      'bg-success text-white': solutionStatus === SolutionStatus.ENDED,
+      'bg-warning text-dark': solutionStatus === SolutionStatus.IN_PROGRESS,
     }"
     [ngbTooltip]="getStatusTooltip()"
   >
