@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterUsersModalComponent } from './register-users-modal.component';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
 import { RegisterUsersService } from '../../../services/register-users.service';
@@ -100,12 +100,56 @@ describe('RegisterUsersModalComponent', () => {
 
   it('should register users and set success flag', () => {
     component.usernames = ['user1', 'user2'];
-    jest.spyOn(registerUsersService, 'registerUserMock').mockReturnValue(of({}));
+    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
 
     component.confirmRegistration();
 
-    expect(registerUsersService.registerUserMock).toHaveBeenCalledTimes(2);
+    expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(true);
     expect(component.registrationError).toBe(false);
+  });
+  it('should set registrationError to true if any registration fails', () => {
+    component.usernames = ['user1', 'user2'];
+    const successSpy = jest.spyOn(registerUsersService, 'registerUserMockSuccess');
+    // First call succeeds, second call fails
+    successSpy
+      .mockReturnValueOnce(of({}))
+      .mockReturnValueOnce({
+        subscribe: ({ next, error }: any) => error(new Error('fail'))
+      } as any);
+
+    component.confirmRegistration();
+
+    expect(successSpy).toHaveBeenCalledTimes(2);
+    expect(component.registrationError).toBe(true);
+    expect(component.registrationSuccess).toBe(false);
+  });
+
+  it('should clear usernames and set registrationSuccess to true if all succeed', () => {
+    component.usernames = ['user1', 'user2'];
+    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+
+    component.confirmRegistration();
+
+    expect(component.registrationSuccess).toBe(true);
+    expect(component.usernames).toEqual([]);
+  });
+
+  it('isDuplicateUsername should return true for duplicates', () => {
+    component.usernames = ['user1'];
+    expect(component.isDuplicateUsername('user1')).toBe(true);
+    expect(component.isDuplicateUsername(' user1 ')).toBe(true);
+    expect(component.isDuplicateUsername('user2')).toBe(false);
+  });
+
+  it('should decrement pendingResponses and call checkIfRegistrationCompleted', () => {
+    component.pendingResponses = 2;
+    component.registrationError = false;
+    component.usernames = ['user1', 'user2'];
+    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+
+    const checkSpy = jest.spyOn(component, 'checkIfRegistrationCompleted');
+    component.confirmRegistration();
+    expect(checkSpy).toHaveBeenCalled();
   });
 });

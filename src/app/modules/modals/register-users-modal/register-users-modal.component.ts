@@ -42,7 +42,7 @@ export class RegisterUsersModalComponent {
     this.pendingResponses = this.usernames.length;
 
     this.usernames.forEach(username => {
-      this.registerUsersService.registerUserMock(username).subscribe({
+      this.registerUsersService.registerUserMockSuccess(username).subscribe({
         next: (res) => {
           console.log(`User ${username} registered successfully`, res);
           this.checkIfRegistrationCompleted();

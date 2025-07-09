@@ -55,9 +55,19 @@ describe('RegisterUsersService', () => {
 
   it('should register a user with the mock service and return a success message', (done) => {
     const username = 'testuser';
-    service.registerUserMock(username).subscribe(response => {
+    service.registerUserMockSuccess(username).subscribe(response => {
       expect(response).toEqual({ message: `User ${username} registered successfully` });
       done();
+    });
+  });
+
+  it('should register a user with the mock service and return an error', (done) => {
+    const username = 'testuser';
+    service.registerUserMockFailure(username).subscribe({
+      error: err => {
+        expect(err.message).toEqual(`Failed to register user ${username}`);
+        done();
+      }
     });
   });
 });
