@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 
 ### Changed
-- Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#575], PR [#666])
+- Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
 
 
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
