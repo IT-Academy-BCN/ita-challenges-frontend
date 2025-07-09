@@ -1,6 +1,7 @@
 {
   "name": "ita-challenges-frontend",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "3.1.53-RELEASE",
 =======
 <<<<<<< HEAD
@@ -9,6 +10,9 @@
   "version": "3.1.48-RELEASE",
 >>>>>>> 1d97fe6b (add CHANGELOG)
 >>>>>>> d3f481ca (add CHANGELOG)
+=======
+  "version": "3.1.52-RELEASE",
+>>>>>>> 0596aec2 (Save local changes in package-lock.json before merge)
    "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
