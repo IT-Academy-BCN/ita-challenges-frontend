@@ -12,6 +12,25 @@
           <div class="breadcrumb">{{ "modules.challenge.challengeForm.breadcrumb" | translate }}</div>
           <h3 class="form-title">{{ "modules.challenge.challengeForm.title" | translate }}</h3>
         </div>
+         <div class="stepper">
+        <div class="stepper-line"></div>
+        <div class="stepper-progress"></div>
+        <div class="step completed">
+          <div class="step-label">Información</div>
+            <div class="step-circle"></div>
+            
+        </div>
+        <div class="step active">
+           <div class="step-label">Contenido</div>
+            <div class="step-circle"></div>
+           
+        </div>
+        <div class="step">
+          <div class="step-label">Recursos</div>
+            <div class="step-circle"></div>
+            
+        </div>
+    </div>
         <div class="button-group">
           <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">{{ "modules.challenge.challengeForm.buttonCancel" | translate }}</button>
           <button type="button" class="btn btn-sm btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">

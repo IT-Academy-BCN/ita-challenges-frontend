@@ -244,4 +244,27 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   isTagSelected (idTag: string): boolean {
     return this.selectedTags.includes(idTag)
   }
+  currentStep: number = 0;
+
+get stepLabels(): string[] {
+  return ['Información', 'Contenido', 'Recursos'];
+}
+
+goToNextStep(): void {
+  if (this.currentStep < this.stepLabels.length - 1) {
+    this.currentStep++;
+  }
+}
+
+goToPreviousStep(): void {
+  if (this.currentStep > 0) {
+    this.currentStep--;
+  }
+}
+
+setStep(step: number): void {
+  if (step >= 0 && step < this.stepLabels.length) {
+    this.currentStep = step;
+  }
+}
 }
