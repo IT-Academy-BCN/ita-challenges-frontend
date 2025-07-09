@@ -15,14 +15,12 @@ and this project adheres to
   
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
 
-### Added
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
 
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
 
 ### Added
 - Added the interface for the user regeister modal (Taiga [#554], PR [#658])
-
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 

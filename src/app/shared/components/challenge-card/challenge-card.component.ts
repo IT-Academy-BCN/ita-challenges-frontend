@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { take } from 'rxjs/operators'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 
 @Component({
@@ -30,7 +31,7 @@ export class ChallengeCardComponent implements OnInit {
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
-  @Input() solutionStatus?: 'IN_PROGRESS' | 'ENDED';
+  @Input() solutionStatus?: SolutionStatus;
 
 
   ngOnInit(): void {
