@@ -26,7 +26,6 @@ and this project adheres to
 
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
-
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 
 ### Changed
