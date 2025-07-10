@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
+
+### Changed
+- Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 
 ### Changed
