@@ -9,9 +9,10 @@
 
 /* CABECERA */
 .header {
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.5rem 0.01rem;
   background: white;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 0;
 }
 
 .breadcrumb {
@@ -31,7 +32,8 @@
 .form-title {
   font-size: 1.50rem;
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: -5px;
+  margin-bottom: 20px;
   color: #333;
 }
 
@@ -43,6 +45,7 @@
 
 /* CUERPO DEL FORMULARIO */
 .body {
+  margin-top: 25px;
   padding: 1.5rem;
 }
 
@@ -343,7 +346,7 @@
             justify-content: space-between;
             width: 100%;
             max-width: 480px;
-            margin: -25px auto 25px;
+            margin: -43px auto -30px;
             position: relative;
             padding: 0 28px;
         }
@@ -406,3 +409,36 @@
             z-index: 2;
             width: 35%;
         }
+
+    @media (max-width: 768px) {
+  .stepper {
+    margin: -20px auto -15px; /* Ajuste menos agresivo para móvil */
+    max-width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 0 15px; /* Reducir padding lateral */
+  }
+
+  .step-label {
+    font-size: 12px; /* Texto más pequeño en móviles */
+    white-space: normal; /* Permite saltos de línea */
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .stepper-line,
+  .stepper-progress {
+    top: 28px; /* Ajuste de posición para pantallas pequeñas */
+    left: 50px;
+    right: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepper {
+    margin: -15px auto -10px; /* Margen más ajustado para móviles muy pequeños */
+  }
+  
+  .step-label {
+    font-size: 11px; /* Texto aún más pequeño */
+    padding: 0 5px; /* Pequeño padding para evitar cortes */
+  }
+}

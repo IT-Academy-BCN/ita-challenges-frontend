@@ -9,7 +9,7 @@
               </svg>
               <span class="backTo">{{ "modules.challenge.backTo" | translate }}</span>
           </a>
-          <div class="breadcrumb">{{ "modules.challenge.challengeForm.breadcrumb" | translate }}</div>
+          
           <h3 class="form-title">{{ "modules.challenge.challengeForm.title" | translate }}</h3>
         </div>
          <div class="stepper">
@@ -44,9 +44,9 @@
       <form #challengeForm="ngForm">
         <!-- INFORMACIÓN GENERAL -->
         <div class="section">
-          <h4><span class="section-number">1</span> {{ "modules.challenge.challengeForm.generalInfo" | translate }}</h4>
+          <h4 class="title-font fw-bold"> {{ "modules.challenge.challengeForm.generalInfo" | translate }}</h4>
           <div class="form-group">
-            <label for="title" class="form-label">{{ "modules.challenge.challengeForm.challengeTitle" | translate }}</label>
+            <label for="title" class="form-label">{{ "modules.challenge.challengeForm.challengeTitle" | translate }} *</label>
             <input 
               type="text" 
               class="form-control" 
@@ -59,7 +59,7 @@
 
           <!-- Lenguaje -->
           <div class="mb-4">
-            <label class="form-label">{{ "modules.challenge.challengeForm.language" | translate }}</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.language" | translate }} *</label>
             <div class="language-buttons">
               @for (lang of languages; track lang.language_name) {
                 <button 
@@ -77,35 +77,8 @@
               }
             </div>
           </div>
-        </div>
-
-        <!-- CONTENIDO DEL RETO -->
-        <div class="section">
-          <h4><span class="section-number">2</span> {{ "modules.challenge.challengeForm.challengeContent" | translate }}</h4>
-          <div class="form-group">
-            <label for="description" class="form-label">{{ "modules.challenge.challengeForm.statement" | translate }}</label>
-            <div class="editor-container">
-              <editor
-                [(ngModel)]="challenge.description"
-                name="description"
-                [init]="editorConfig"
-                required
-              ></editor>
-            </div>
-          </div>
-
-          <!-- Solución con CodeMirror -->
-          <div class="form-group">
-            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }}</label>
-            <div #codeMirrorEditor class="codemirror-container"></div>
-          </div>
-        </div>
-
-        <!-- INFORMACIÓN ADICIONAL -->
-        <div class="section">
-          <h4><span class="section-number">3</span> {{ "modules.challenge.challengeForm.additionalInfo" | translate }}</h4>
           <div class="form-group mb-4">
-            <label class="form-label">{{ "modules.challenge.challengeForm.difficulty" | translate }}</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.difficulty" | translate }} *</label>
             <div class="difficulty-group">
               <!-- Fácil -->
               <div class="difficulty-option">
@@ -185,6 +158,35 @@
             </div>
           </div>
           }
+        </div>
+        
+
+        <!-- CONTENIDO DEL RETO -->
+        <div class="section">
+          <h4> {{ "modules.challenge.challengeForm.challengeContent" | translate }}</h4>
+          <div class="form-group">
+            <label for="description" class="form-label">{{ "modules.challenge.challengeForm.statement" | translate }}</label>
+            <div class="editor-container">
+              <editor
+                [(ngModel)]="challenge.description"
+                name="description"
+                [init]="editorConfig"
+                required
+              ></editor>
+            </div>
+          </div>
+
+          <!-- Solución con CodeMirror -->
+          <div class="form-group">
+            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }}</label>
+            <div #codeMirrorEditor class="codemirror-container"></div>
+          </div>
+        </div>
+
+        <!-- INFORMACIÓN ADICIONAL -->
+        <div class="section">
+          <h4> {{ "modules.challenge.challengeForm.additionalInfo" | translate }}</h4>
+          
         </div>
       </form>
     </div>
