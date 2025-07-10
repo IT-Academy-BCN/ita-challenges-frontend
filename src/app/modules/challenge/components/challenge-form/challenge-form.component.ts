@@ -99,17 +99,26 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private initCodeMirror () {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (!this.codeMirrorEditor?.nativeElement) return
-
+    if (!this.codeMirrorEditor?.nativeElement){
+      console.error('CodeMirror container not found')
+      return
+    }
+     // Destruye el editor anterior si existe
+  if (this.editor) {
+    this.editor.destroy();
+  }
     const languageExtension = this.getLanguageExtension(this.challenge.language)
 
     this.editor = new EditorView({
       parent: this.codeMirrorEditor.nativeElement,
       state: EditorState.create({
-        doc: this.challenge.solution,
+        doc: this.challenge.solution || "",
         extensions: [
           basicSetup,
           languageExtension(),
+          EditorView.lineWrapping,
+          EditorState.readOnly.of(false),
+        
           EditorView.updateListener.of((update) => {
             if (update.docChanged) {
               this.challenge.solution = update.state.doc.toString()
@@ -117,8 +126,14 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
           }),
           EditorView.theme({
             '&': {
-              height: '300px'
-            }
+              height: '300px',
+              border: '1px solid #ddd',
+            borderRadius: '4px'
+            },
+            '.cm-content': {
+            fontFamily: 'monospace',
+            fontSize: '14px'
+          }
           })
         ]
       })
@@ -168,9 +183,15 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         extensions: [
           basicSetup,
           languageExtension(),
+          EditorView.editable.of(true),
           EditorView.updateListener.of((update) => {
             if (update.docChanged) {
               this.challenge.solution = update.state.doc.toString()
+            }
+          }),
+           EditorView.theme({ 
+            '&': {
+              height: '300px'
             }
           })
         ]
@@ -253,12 +274,18 @@ get stepLabels(): string[] {
 goToNextStep(): void {
   if (this.currentStep < this.stepLabels.length - 1) {
     this.currentStep++;
+    if (this.currentStep === 1) {
+      setTimeout(() => this.initCodeMirror(), 0);
+    } 
   }
 }
 
 goToPreviousStep(): void {
   if (this.currentStep > 0) {
     this.currentStep--;
+    if (this.currentStep === 1) {
+      setTimeout(() => this.initCodeMirror(), 0); // Reinicia si vuelves al paso 1
+    }
   }
 }
 
@@ -269,10 +296,8 @@ setStep(step: number): void {
 }
 getProgressWidth(): number {
    if (this.currentStep === 1) {
-    return 40; // 50% del progreso (entre círculo 1 y 2)
+    return 40; 
   }
-  
-
   return (this.currentStep / (this.stepLabels.length - 1)) * 100;
 }
 }

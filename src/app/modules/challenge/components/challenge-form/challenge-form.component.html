@@ -34,11 +34,11 @@
     <!--botones de navegacion-->
      <div class="stepper-buttons button-group">
     <button *ngIf="currentStep > 0" type="button" class="btn btn-outline-primary" (click)="goToPreviousStep()">
-      Anterior
+    &lt; Anterior
     </button>
     
     <button *ngIf="currentStep < stepLabels.length - 1" type="button" class="btn btn-primary" (click)="goToNextStep()">
-      Siguiente
+      Siguiente >
     </button>
     
     <button *ngIf="currentStep === stepLabels.length - 1" type="button" class="btn btn-primary" 
@@ -47,12 +47,7 @@
     </button>
   </div>
 </div>
-        <!-- <div class="button-group">
-          <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">{{ "modules.challenge.challengeForm.buttonCancel" | translate }}</button>
-          <button type="button" class="btn btn-sm btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
-            {{ "modules.challenge.challengeForm.buttonPublish" | translate }}
-          </button>
-        </div> -->
+    
       </div>
     </div>
 
@@ -196,8 +191,8 @@
 
           <!-- Solución con CodeMirror -->
           <div class="form-group">
-            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }} *</label>
-            <div #codeMirrorEditor class="codemirror-container"></div>
+            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }} </label>
+            <div #codeMirrorEditor class="codemirror-container" ></div>
           </div>
         </div>
         </div>

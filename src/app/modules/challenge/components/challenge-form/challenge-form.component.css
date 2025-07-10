@@ -482,4 +482,9 @@
     gap: 1rem;
 }
 
-
+.codemirror-container {
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
