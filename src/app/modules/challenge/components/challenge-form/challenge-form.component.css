@@ -54,6 +54,7 @@
   margin-bottom: 2rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
+   transition: opacity 0.3s ease;
 }
 .section:last-child {
   margin-bottom: 0;
@@ -441,4 +442,14 @@
     font-size: 11px; /* Texto aún más pequeño */
     padding: 0 5px; /* Pequeño padding para evitar cortes */
   }
+}
+.stepper-container {
+  margin-bottom: 2rem;
+}
+
+.stepper-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
 }

@@ -31,17 +31,34 @@
             
         </div>
     </div>
-        <div class="button-group">
+    <!--botones de navegacion-->
+     <div class="stepper-buttons button-group">
+    <button *ngIf="currentStep > 0" type="button" class="btn btn-outline-primary" (click)="goToPreviousStep()">
+      Anterior
+    </button>
+    
+    <button *ngIf="currentStep < stepLabels.length - 1" type="button" class="btn btn-primary" (click)="goToNextStep()">
+      Siguiente
+    </button>
+    
+    <button *ngIf="currentStep === stepLabels.length - 1" type="button" class="btn btn-primary" 
+            [disabled]="!isFormValid()" (click)="onSubmit()">
+      Publicar
+    </button>
+  </div>
+</div>
+        <!-- <div class="button-group">
           <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">{{ "modules.challenge.challengeForm.buttonCancel" | translate }}</button>
           <button type="button" class="btn btn-sm btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
             {{ "modules.challenge.challengeForm.buttonPublish" | translate }}
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
 
     <div class="body">
       <form #challengeForm="ngForm">
+        <div *ngIf="currentStep===0" class="section">
         <!-- INFORMACIÓN GENERAL -->
         <div class="section">
           <h4 class="title-font fw-bold"> {{ "modules.challenge.challengeForm.generalInfo" | translate }}</h4>
@@ -159,11 +176,12 @@
           </div>
           }
         </div>
-        
+        </div>
 
         <!-- CONTENIDO DEL RETO -->
+         <div *ngIf="currentStep === 1" class="section">
         <div class="section">
-          <h4> {{ "modules.challenge.challengeForm.challengeContent" | translate }}</h4>
+          <h4 class="title-font fw-bold"> {{ "modules.challenge.challengeForm.challengeContent" | translate }} *</h4>
           <div class="form-group">
             <label for="description" class="form-label">{{ "modules.challenge.challengeForm.statement" | translate }}</label>
             <div class="editor-container">
@@ -178,16 +196,18 @@
 
           <!-- Solución con CodeMirror -->
           <div class="form-group">
-            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }}</label>
+            <label class="form-label">{{ "modules.challenge.challengeForm.solution" | translate }} *</label>
             <div #codeMirrorEditor class="codemirror-container"></div>
           </div>
         </div>
-
+        </div>
         <!-- INFORMACIÓN ADICIONAL -->
+         <div *ngIf="currentStep === 2" class="section">
         <div class="section">
           <h4> {{ "modules.challenge.challengeForm.additionalInfo" | translate }}</h4>
           
         </div>
+        </div>
       </form>
     </div>
-  </div>
+  
