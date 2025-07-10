@@ -342,114 +342,144 @@
   margin-bottom: 0.75rem; 
 }
 
- .stepper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 480px;
-            margin: -43px auto -30px;
-            position: relative;
-            padding: 0 28px;
-        }
-        
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .step-circle {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: white;
-            margin-bottom: 6px;
-            border: 3px solid white;
-            box-shadow: 0 0 0 1px #e0e0e0;
-            box-sizing: content-box;
-        }
-        
-        .step.active .step-circle,
-        .step.completed .step-circle {
-            background-color: white;
-            box-shadow: 0 0 0 2px #b91879;
-        }
-        
-        .step-label {
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #666;
-            white-space: nowrap;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-        }
-        
-        .step.active .step-label {
-            color: #0c0c0c;
-            font-weight: 600;
-        }
-        
-        .stepper-line {
-            position:absolute;
-            top: 36px;
-            left: 65px;
-            right: 50px;
-            height: 8px;
-            background-color: #eee;
-            z-index: 1;
-        }
-        
-        .stepper-progress {
-            position: absolute;
-            top: 36px;
-            left: 72px;
-            height: 8px;
-            background-color: #b91879;
-            z-index: 2;
-            width: 35%;
-        }
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 480px;
+    margin: -43px auto -30px;
+    position: relative;
+    padding: 0 28px;
+}
 
-    @media (max-width: 768px) {
-  .stepper {
-    margin: -20px auto -15px; /* Ajuste menos agresivo para móvil */
-    max-width: 100%; /* Ocupa todo el ancho disponible */
-    padding: 0 15px; /* Reducir padding lateral */
-  }
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
 
-  .step-label {
-    font-size: 12px; /* Texto más pequeño en móviles */
-    white-space: normal; /* Permite saltos de línea */
-    text-align: center;
-    line-height: 1.2;
-  }
+.step-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: white;
+    margin-bottom: 6px;
+    border: 3px solid white;
+    box-shadow: 0 0 0 1px #e0e0e0;
+    box-sizing: content-box;
+}
 
-  .stepper-line,
-  .stepper-progress {
-    top: 28px; /* Ajuste de posición para pantallas pequeñas */
-    left: 50px;
-    right: 40px;
-  }
+.step.active .step-circle,
+.step.completed .step-circle {
+    background-color: white;
+    box-shadow: 0 0 0 2px #b91879;
+}
+
+.step-label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+.step.active .step-label {
+    color: #0c0c0c;
+    font-weight: 600;
+}
+
+.stepper-line {
+    position: absolute;
+    top: 36px;
+    left: 65px;
+    right: 50px;
+    height: 8px;
+    background-color: #eee;
+    z-index: 1;
+}
+
+.stepper-progress {
+    position: absolute;
+    top: 36px;
+    left: 62px;
+    height: 8px;
+    background-color: #b91879;
+    z-index: 2;
+    transition: width 0.3s ease;
+    max-width: calc(100% - 120px)
+}
+
+/* Media Queries para responsive */
+@media (max-width: 768px) {
+    .stepper {
+        margin: -20px auto -15px;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .step-label {
+        font-size: 12px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 4px;
+    }
+
+    .stepper-line,
+    .stepper-progress {
+        top: 28px;
+        left: 40px;
+        right: 40px;
+    }
+
+    .stepper-progress {
+        left: 20px;
+    }
 }
 
 @media (max-width: 480px) {
-  .stepper {
-    margin: -15px auto -10px; /* Margen más ajustado para móviles muy pequeños */
-  }
-  
-  .step-label {
-    font-size: 11px; /* Texto aún más pequeño */
-    padding: 0 5px; /* Pequeño padding para evitar cortes */
-  }
+    .stepper {
+        margin: -15px auto -10px;
+        padding: 0 10px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        padding: 0 2px;
+    }
+
+    .stepper-line,
+    .stepper-progress {
+        top: 24px;
+        left: 38px;
+        right: 30px;
+    }
+
+    .stepper-progress {
+        left: 38px;
+        max-width:calc(100% - 75px);
+    }
+
+    .step-circle {
+        width: 12px;
+        height: 12px;
+        margin-bottom: 4px;
+    }
 }
+
 .stepper-container {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .stepper-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-  gap: 1rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    gap: 1rem;
 }
+
+

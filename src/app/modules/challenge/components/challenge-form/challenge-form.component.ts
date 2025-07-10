@@ -267,4 +267,12 @@ setStep(step: number): void {
     this.currentStep = step;
   }
 }
+getProgressWidth(): number {
+   if (this.currentStep === 1) {
+    return 40; // 50% del progreso (entre círculo 1 y 2)
+  }
+  
+
+  return (this.currentStep / (this.stepLabels.length - 1)) * 100;
+}
 }
