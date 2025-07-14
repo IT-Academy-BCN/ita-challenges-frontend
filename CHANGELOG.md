@@ -6,6 +6,7 @@ and this project adheres to
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-09
 =======
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-09
@@ -16,6 +17,9 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-09
 >>>>>>> 1d2b4e00 (add CHANGELOG)
 >>>>>>> c40dfc7b (add CHANGELOG)
+=======
+### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-09
+>>>>>>> d8c85ee0 (updating and fixing test and changelog)
 
 ### Added
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
