@@ -302,7 +302,7 @@ private initializeCodeMirrorWithDelay(): void {
       console.error('Error initializing CodeMirror:', error);
     }
   }, 0);
-}
+} 
 
 goToPreviousStep(): void {
   if (this.currentStep > 0) {
