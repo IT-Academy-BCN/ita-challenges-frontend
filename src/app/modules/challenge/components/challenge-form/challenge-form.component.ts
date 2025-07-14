@@ -271,13 +271,37 @@ get stepLabels(): string[] {
   return ['Información', 'Contenido', 'Recursos'];
 }
 
+// goToNextStep(): void {
+//   if (this.currentStep < this.stepLabels.length - 1) {
+//     this.currentStep++;
+//     if (this.currentStep === 1) {
+//       setTimeout(() => this.initCodeMirror(), 0);
+//     } 
+//   }
+// }
+
 goToNextStep(): void {
-  if (this.currentStep < this.stepLabels.length - 1) {
-    this.currentStep++;
-    if (this.currentStep === 1) {
-      setTimeout(() => this.initCodeMirror(), 0);
-    } 
+  // Verificar que no estamos en el último paso
+  if (this.currentStep >= this.stepLabels.length - 1) {
+    return;
   }
+  
+  this.currentStep++;
+  
+  // Inicializar CodeMirror solo cuando avanzamos al paso 1 (contenido)
+  if (this.currentStep === 1) {
+    this.initializeCodeMirrorWithDelay();
+  }
+}
+
+private initializeCodeMirrorWithDelay(): void {
+  setTimeout(() => {
+    try {
+      this.initCodeMirror();
+    } catch (error) {
+      console.error('Error initializing CodeMirror:', error);
+    }
+  }, 0);
 }
 
 goToPreviousStep(): void {

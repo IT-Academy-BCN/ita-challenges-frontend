@@ -405,4 +405,48 @@ describe('ChallengeFormComponent', () => {
       expect(component.isTagSelected(testTagId)).toBeFalsy()
     })
   })
+  describe('Multi-step Form Navigation', () => {
+  beforeEach(() => {
+    // Mockear initCodeMirror para evitar problemas en las pruebas
+    jest.spyOn(component as any, 'initCodeMirror').mockImplementation(() => {});
+  });
+
+  it('should advance to next step when not on last step', () => {
+    component.currentStep = 0;
+    component.goToNextStep();
+    expect(component.currentStep).toBe(1);
+  });
+
+  it('should not advance beyond last step', () => {
+    component.currentStep = component.stepLabels.length - 1;
+    component.goToNextStep();
+    expect(component.currentStep).toBe(component.stepLabels.length - 1);
+  });
+
+  it('should initialize CodeMirror when moving to step 1', () => {
+    component.currentStep = 0;
+    component.goToNextStep();
+    expect((component as any).initCodeMirror).toHaveBeenCalled();
+  });
+
+  it('should not initialize CodeMirror when moving to other steps', () => {
+    component.currentStep = 1;
+    (component as any).initCodeMirror.mockClear();
+    component.goToNextStep();
+    expect((component as any).initCodeMirror).not.toHaveBeenCalled();
+  });
+
+  it('should handle error when initializing CodeMirror', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    (component as any).initCodeMirror.mockImplementation(() => {
+      throw new Error('Initialization error');
+    });
+    
+    component.currentStep = 0;
+    component.goToNextStep();
+    
+    expect(consoleSpy).toHaveBeenCalledWith('Error initializing CodeMirror:', expect.any(Error));
+    consoleSpy.mockRestore();
+  });
+});
 })
