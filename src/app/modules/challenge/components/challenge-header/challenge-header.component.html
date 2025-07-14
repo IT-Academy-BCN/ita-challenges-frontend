@@ -53,7 +53,7 @@
   <button
   *ngIf="!challengeStarted && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
   {{ 'modules.challenge.header.buttonStart' | translate }}</button>
-      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
     </ng-container>
     <ng-container *ngIf="userRole === USER_ROLE.ADMIN">

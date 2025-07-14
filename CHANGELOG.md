@@ -8,6 +8,18 @@ and this project adheres to
 
 ### Changed
 - I changed the breadcrumb for a link that redirects to challenges list. imported an existing svg instead of using the whole svg code in html file  (Taiga [#574], PR [#665])
+### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-06-27
+
+### Changed
+- Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
+### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
+
+### Changed
+- Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
+### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
+
+### Changed
+- Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
 
 
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27

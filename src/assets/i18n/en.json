@@ -25,7 +25,10 @@
             },
             "section7": {
                 "title": "My space"
-            }
+            },
+            "section3": {
+                "title": "Hackatons"
+        }
         }
     },
     "modules": {

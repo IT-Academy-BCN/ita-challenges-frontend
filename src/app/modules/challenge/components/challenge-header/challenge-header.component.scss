@@ -16,14 +16,15 @@ span:hover .arrow-left{
   filter:invert(0%) sepia(97%) saturate(7416%) hue-rotate(131deg) brightness(90%) contrast(97%);
 }
 .difficulty img {
-  margin-top: 4px;
+  margin-top: 7px;
   margin-right: 2px;
+  width: 15px;
 }
 
 .stats {
   display: flex;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 50px;
   font-weight: 600;
   color: #808080;
 }
@@ -94,6 +95,7 @@ h3 {
   img {
     vertical-align: middle;
     margin-right: 4px;
+    margin-top: -4px;
   }
 }
 
