@@ -180,7 +180,7 @@ saveChallenge(): void {
     return;
   }
 
-  this.status = 'IN_PROGRESS';
+  this.status = SolutionStatus.IN_PROGRESS;
   this.solutionService.submitSolution(
     this.idChallenge,
     this.languageId,
