@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-06-27
+
+### Changed
+- Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed

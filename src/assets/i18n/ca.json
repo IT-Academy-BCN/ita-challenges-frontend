@@ -25,7 +25,10 @@
             },
             "section7": {
                 "title": "El meu espai"
-            }
+            },
+            "section3": {
+                "title": "Hackatons"
+        }
         }
     },
     "modules": {
