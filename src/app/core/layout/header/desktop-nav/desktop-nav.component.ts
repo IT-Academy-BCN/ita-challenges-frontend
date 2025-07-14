@@ -1,9 +1,10 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavService } from 'src/app/services/nav.service'; 
+import { NavService } from 'src/app/services/nav.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterUsersModalComponent } from 'src/app/modules/modals/register-users-modal/register-users-modal.component';
+import { UserRole } from 'src/app/shared/enums/user-role.enum';
 
 @Component({
   selector: 'app-desktop-nav',
@@ -19,6 +20,7 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   private authSubscription!: Subscription;
   currentRole: string = ''
   newRole: 'ADMIN' | 'USER' = 'ADMIN'
+  public UserRole = UserRole;
 
 
   constructor(
@@ -97,6 +99,6 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   }
 
   openRegisterUsersModal() {
-  this.modalService.open(RegisterUsersModalComponent, { centered: true });
-}
+    this.modalService.open(RegisterUsersModalComponent, { centered: true });
+  }
 }

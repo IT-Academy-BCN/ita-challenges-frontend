@@ -14,16 +14,20 @@ export class RegisterUsersModalComponent {
     this.modalService.dismissAll()
   }
 
+  private normalizeUsername(username: string): string {
+    return username.trim().toLowerCase();
+  }
+
   addUsername() {
-    const trimmed = this.username.trim();
-    if (trimmed && !this.usernames.includes(trimmed)) {
-      this.usernames.push(trimmed);
+    const normalized = this.normalizeUsername(this.username);
+    if (normalized && !this.isDuplicateUsername(normalized)) {
+      this.usernames.push(this.username.trim());
       this.username = '';
     }
   }
 
   isDuplicateUsername(username: string): boolean {
-    const trimmed = username.trim().toLowerCase();
-    return trimmed.length > 0 && this.usernames.includes(trimmed);
+    const normalized = this.normalizeUsername(username);
+    return this.usernames.some(u => this.normalizeUsername(u) === normalized);
   }
 }

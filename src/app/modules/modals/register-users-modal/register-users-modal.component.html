@@ -16,12 +16,11 @@
                     #usernameInput="ngModel">
                 <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">Añadir</button>
             </div>
-            <div class="d-flex align-items-start">
-                <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched) && username"
-                    class="text-danger small my-2">
-                    <div *ngIf="usernameInput.errors?.['pattern']">Nombre de suario no válido.</div>
+            <div class="d-flex align-items-start text-danger small my-2">
+                <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+                    <div *ngIf="usernameInput.errors?.['pattern']">Nombre de usuario no válido.</div>
                 </div>
-                <div *ngIf="isDuplicateUsername(username) && usernameInput.valid" class="text-danger small my-2">
+                <div *ngIf="isDuplicateUsername(username) && !usernameInput.errors?.['required']">
                     Este usuario ya ha sido añadido.
                 </div>
             </div>

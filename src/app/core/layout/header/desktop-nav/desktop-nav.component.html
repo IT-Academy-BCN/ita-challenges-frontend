@@ -1,6 +1,6 @@
 <div class="desktop-nav">
   <!-- registerUsers -->
-  @if(isLoggedIn && currentRole==='ADMIN'){
+  @if(isLoggedIn && currentRole===UserRole.ADMIN){
     <button class="login" (click)="openRegisterUsersModal()">
       Añadir alumnos/as
     </button>
