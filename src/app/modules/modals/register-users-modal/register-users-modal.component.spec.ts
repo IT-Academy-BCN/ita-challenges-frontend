@@ -55,4 +55,26 @@ describe('RegisterUsersModalComponent', () => {
     component.closeModal();
     expect(mockModalService.dismissAll).toHaveBeenCalled();
   });
+
+  it('should be case-insensitive when checking for duplicate usernames', () => {
+    component.usernames = ['user123'];
+    component.username = 'User123';
+    component.addUsername();
+    expect(component.usernames).toHaveLength(1);
+  });
+
+  it('should initialize with default values', () => {
+    expect(component.username).toBe('');
+    expect(component.usernames).toEqual([]);
+  });
+
+  it('should detect duplicate usernames with different whitespace', () => {
+    component.usernames = ['user123'];
+    expect(component.isDuplicateUsername('  user123  ')).toBe(true);
+  });
+
+  it('should normalize a username by trimming and converting to lowercase', () => {
+    const normalized = component['normalizeUsername']('  UserNAME  ');
+    expect(normalized).toBe('username');
+  });
 });
