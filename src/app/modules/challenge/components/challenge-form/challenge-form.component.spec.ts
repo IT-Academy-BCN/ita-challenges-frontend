@@ -233,21 +233,35 @@ describe('ChallengeFormComponent', () => {
     expect(() => { component.ngAfterViewInit() }).not.toThrow()
   })
 
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para el editor
-  it.skip('should destroy CodeMirror on ngOnDestroy', () => {
-    // Crear un mock para el editor
+  it('should destroy CodeMirror editor on ngOnDestroy when editor exists', () => {
+    // Crear un mock para el editor con el método destroy
     const mockDestroy = jest.fn()
-    component.editor = { destroy: mockDestroy } as any
+    component.editor = { 
+      destroy: mockDestroy,
+      state: {
+        doc: {
+          toString: jest.fn().mockReturnValue('test')
+        }
+      },
+      setState: jest.fn()
+    } as any
 
     component.ngOnDestroy()
 
     expect(mockDestroy).toHaveBeenCalled()
   })
 
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para editor
-  it.skip('should handle null editor on ngOnDestroy gracefully', () => {
-    // Establecer editor como null manualmente
+  it('should handle null editor on ngOnDestroy gracefully', () => {
+    // Establecer editor como null
     component.editor = null
+
+    // No debería lanzar un error
+    expect(() => { component.ngOnDestroy() }).not.toThrow()
+  })
+
+  it('should handle undefined editor on ngOnDestroy gracefully', () => {
+    // Establecer editor como undefined
+    component.editor = undefined as any
 
     // No debería lanzar un error
     expect(() => { component.ngOnDestroy() }).not.toThrow()
