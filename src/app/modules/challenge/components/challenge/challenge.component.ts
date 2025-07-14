@@ -12,6 +12,10 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+type SolutionState = SolutionStatus | 'NOT_STARTED';
+
+
 
 @Component({
   selector: 'app-challenge',
@@ -47,7 +51,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   isFavorite: boolean = false
   userSolution: UserSolution | null = null;
   solutionText: string = '';
-  status: string = 'IN_PROGRESS'; 
   languageId: string = '';
 
   private readonly route = inject(ActivatedRoute)
@@ -56,74 +59,95 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   private readonly _authService = inject(AuthService)
   private readonly solutionService = inject(SolutionService)
   private userId: string = ''
-  public solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED'
   public savedSolutionText: string = ''
   public cdr = inject(ChangeDetectorRef)
+
   @Output() startChallenge = new EventEmitter<boolean>()
 
+  status : SolutionState = 'NOT_STARTED';
+  solutionState: SolutionState = 'NOT_STARTED';
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
       this.idChallenge = params.get('idChallenge') ?? ''
       this.loadMasterData(this.idChallenge)
       this.activeId = ChallengeTab.DETAILS
     })
-
-   this._authService.getUserId().subscribe(userId => {
-    if (!userId) return
-    this.userId = userId
-    this.challengeService.getUserBookmarks(userId).subscribe((bookmarks: string[]) => {
-    this.bookmarkedChallenges = bookmarks;
-    });
-
-    this.challengeService.getUserFavorites(userId).subscribe((favorites: string[]) => {
-    this.favoriteChallenges = favorites;
-    });
-    this.solutionService.fetchUserSolution().subscribe(solutions => {
-      const match = solutions.find(
-        sol =>
-          sol.uuid_challenge === this.idChallenge &&
-          sol.uuid_user === this.userId
-      )
-      if (match) {
-        this.savedSolutionText = match.solution_text
-        if (match.status === 'IN_PROGRESS') {
-          this.solutionState = 'IN_PROGRESS'
-        } else if (match.status === 'ENDED') {
-          this.solutionState = 'ENDED'
-        }
-      } else {
-        this.solutionState = 'NOT_STARTED'
+     this._authService.getUserId().subscribe({
+      next: (userId) => {
+        if (!userId) return;
+        this.userId = userId;
+        this.loadUserBookmarks(userId);
+        this.loadUserFavorites(userId);
+        this.loadUserSolutionStatus(userId);
+      },
+      error: (err) => {
+        console.error('[ChallengeComponent] Error fetching user ID:', err);
       }
-    })
-  })
-}
+    });
+  }
+loadUserBookmarks(userId: string): void {
+    this.challengeService.getUserBookmarks(userId).subscribe({
+      next: (bookmarks) => (this.bookmarkedChallenges = bookmarks),
+      error: (err) => console.error('[ChallengeComponent] Error loading bookmarks:', err)
+    });
+  }
+  loadUserFavorites(userId: string): void {
+    this.challengeService.getUserFavorites(userId).subscribe({
+      next: (favorites) => (this.favoriteChallenges = favorites),
+      error: (err) => console.error('[ChallengeComponent] Error loading favorites:', err)
+    });
+  }
+loadUserSolutionStatus(userId: string): void {
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (solutions) => {
+        const match = solutions.find(
+          (sol) => sol.uuid_challenge === this.idChallenge && sol.uuid_user === userId
+        );
 
-  isFavoriteChallenge (challengeId: string): boolean {
+        if (match?.status === SolutionStatus.IN_PROGRESS) {
+          this.solutionState = SolutionStatus.IN_PROGRESS;
+        } else if (match?.status === SolutionStatus.ENDED) {
+          this.solutionState = SolutionStatus.ENDED;
+        } else {
+          this.solutionState = 'NOT_STARTED';
+        }
+
+        this.savedSolutionText = match?.solution_text ?? '';
+        this.userSolution = match ?? null;
+      },
+      error: (err) => {
+        console.error(' Error loading user solution status:', err);
+      }
+    });
+  }
+
+
+  isFavoriteChallenge(challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
   }
 
-  isBookmarkedChallenge (challengeId: string): boolean {
+  isBookmarkedChallenge(challengeId: string): boolean {
     return this.bookmarkedChallenges.includes(challengeId)
   }
 
-onStartChallenge(started: boolean): void {
-  this.challengeStarted = started;
-  this.isEditorChallengeVisible = started;
+  onStartChallenge(started: boolean): void {
+    this.challengeStarted = started;
+    this.isEditorChallengeVisible = started;
 
-  this.status = started ? 'IN_PROGRESS' : 'NOT_STARTED';
+    this.status = started ? SolutionStatus.IN_PROGRESS : 'NOT_STARTED';
 
-  this.startChallenge.emit(started); 
-}
+    this.startChallenge.emit(started);
+  }
 
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.params$ !== undefined) this.params$.unsubscribe()
     if (this.challengeSubs$ !== undefined) this.challengeSubs$.unsubscribe()
   }
 
-  onActiveIdChange (newActiveId: ChallengeTab): void {
+  onActiveIdChange(newActiveId: ChallengeTab): void {
     this.activeId = newActiveId
   }
 
@@ -133,7 +157,7 @@ onStartChallenge(started: boolean): void {
     }
   }
 
-  loadMasterData (id: string): void {
+  loadMasterData(id: string): void {
     this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
       this.challenge = new Challenge(challenge)
       this.title = this.challenge.challenge_title
@@ -149,25 +173,25 @@ onStartChallenge(started: boolean): void {
       this.languageId = this.languages[0]?.id_language ?? ''
     })
   }
-onChallengeStart(): void {
-  this.challengeStarted = true;
-  this.isEditorChallengeVisible = true;
-  this.isChallengeStatementVisible = false;
-}
-onContinueChallenge(): void {
-  this.challengeStarted = true;
-  this.isEditorChallengeVisible = true;
-  this.isChallengeStatementVisible = false;
-
-  if (this.userSolution?.solution_text) {
-    this.solutionText = this.userSolution.solution_text;
-    this.solutionService.solutionText(this.solutionText);
-    this.cdr.detectChanges();
+  onChallengeStart(): void {
+    this.challengeStarted = true;
+    this.isEditorChallengeVisible = true;
+    this.isChallengeStatementVisible = false;
   }
-}
-onEditorSolutionChanged(newText: string): void {
-  this.solutionText = newText;
-   
-}
+  onContinueChallenge(): void {
+    this.challengeStarted = true;
+    this.isEditorChallengeVisible = true;
+    this.isChallengeStatementVisible = false;
+
+    if (this.userSolution?.solution_text) {
+      this.solutionText = this.userSolution.solution_text;
+      this.solutionService.solutionText(this.solutionText);
+      this.cdr.detectChanges();
+    }
+  }
+  onEditorSolutionChanged(newText: string): void {
+    this.solutionText = newText;
+
+  }
 
 }

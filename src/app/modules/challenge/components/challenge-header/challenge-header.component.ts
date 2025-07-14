@@ -8,6 +8,9 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { UserRole } from 'src/app/shared/enums/user-role.enum'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+type SolutionState = SolutionStatus | 'NOT_STARTED';
+
 
 @Component({
   selector: 'app-challenge-header',
@@ -20,14 +23,17 @@ export class ChallengeHeaderComponent implements OnInit {
     private readonly modalService: NgbModal,
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute
+    
   ) {}
-
+  public SolutionStatus = SolutionStatus;
+  public NOT_STARTED = 'NOT_STARTED';
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService);
   public userId: string | null = null;
   public userRole: string | null = null;
   public currentSolutionText: string = '';
+  
 
   challengeTab = ChallengeTab;
   USER_ROLE = UserRole;
@@ -47,7 +53,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Output() favoritesUpdated = new EventEmitter<number>()
   @Input() solutionText: string = '';
   @Input() status: string = '';
-  @Input() solutionState: 'NOT_STARTED' | 'IN_PROGRESS' | 'ENDED' = 'NOT_STARTED';
+  @Input() solutionState: SolutionState = 'NOT_STARTED';
   @Input() savedSolutionText: string = '';
 
   challenge_title: string | undefined = ''
@@ -68,13 +74,13 @@ export class ChallengeHeaderComponent implements OnInit {
   });
 
   this.authService.getUserId().subscribe(userId => {
-    this.userId = userId;
-
     if (!userId) {
       console.error("Could not get User ID");
-    } else {
-      this.loadUserSolutionStatus();
+      return;
     }
+    this.userId = userId;
+    this.loadUserSolutionStatus();
+    
   });
 
   this.authService.getUserRole().subscribe(role => {
@@ -90,23 +96,33 @@ export class ChallengeHeaderComponent implements OnInit {
           sol.solution_text?.trim() !== ''
       );
 
-      if (solution) {
-        this.status = solution.status;
+      if (!solution) {
+        this.solutionState = 'NOT_STARTED';
+        this.challengeStarted = false;
+        return;
+      }
+      this.status = solution.status;
+      this.solutionText = solution.solution_text;
 
-        if (solution.status === 'IN_PROGRESS') {
-          this.solutionState = 'IN_PROGRESS';
-          this.savedSolutionText = solution.solution_text;
-          this.challengeStarted = false; 
+        switch (solution.status) {
+        case SolutionStatus.IN_PROGRESS:
+          this.solutionState = SolutionStatus.IN_PROGRESS;
+          this.challengeStarted = false;
           this.solutionText = '';
-        } else if (solution.status === 'ENDED') {
-          this.solutionState = 'ENDED';
+          break;
+
+        case SolutionStatus.ENDED:
+          this.solutionState = SolutionStatus.ENDED;
           this.solutionSent = true;
           this.challengeStarted = true;
           this.activeId = ChallengeTab.SOLUTIONS;
-        }
-      } else {
-        this.solutionState = 'NOT_STARTED';
-        this.challengeStarted = false;
+          break;
+
+        default:
+          console.warn(`Unhandled solution status: ${solution.status}`);
+          this.solutionState = 'NOT_STARTED';
+          this.challengeStarted = false;
+          break;
       }
     },
     error: (err) => {
@@ -118,7 +134,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
-    this.solutionState = 'IN_PROGRESS';
+    this.solutionState = SolutionStatus.IN_PROGRESS;
     this.activeId = ChallengeTab.SOLUTIONS
     localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
 
@@ -140,7 +156,7 @@ export class ChallengeHeaderComponent implements OnInit {
     })
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
-    modalRef.componentInstance.status = 'ENDED';
+    modalRef.componentInstance.status = this.SolutionStatus.ENDED;
     modalRef.componentInstance.solutionText = this.solutionText; 
 
     modalRef.componentInstance.solutionAccepted.subscribe(() => {
@@ -172,7 +188,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
 saveChallenge(): void {
   if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
-    console.error(' Faltan datos para guardar la solución');
+    console.error(' Missing data to save the solution');
     return;
   }
 
@@ -185,10 +201,10 @@ saveChallenge(): void {
     this.solutionText
   ).subscribe({
     next: () => {
-      this.solutionState = 'IN_PROGRESS';
+      this.solutionState = SolutionStatus.IN_PROGRESS;
     },
     error: (err) => {
-      console.error(' Error al guardar solución', err);
+      console.error(' Error saving solution', err);
     }
   });
 }
@@ -257,7 +273,7 @@ saveChallenge(): void {
   onContinueChallenge(): void {
   this.challengeStarted = true;
   this.isEditorChallengeVisible = true;
-  this.status = 'IN_PROGRESS';
+  this.status = SolutionStatus.IN_PROGRESS;
   this.startChallenge.emit(true);
   this.loadSolutionFromBackend();
 }

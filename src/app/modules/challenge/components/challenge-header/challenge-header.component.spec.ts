@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -44,7 +45,7 @@ describe('ChallengeHeaderComponent', () => {
             uuid_challenge: "testChallengeId",
             uuid_language: "testLang",
             solution_text: "some solution",
-            status: "ENDED",
+            status: SolutionStatus.ENDED,
           },
         ])
       ),
