@@ -141,12 +141,6 @@ export class ChallengeHeaderComponent implements OnInit {
     localStorage.setItem('currentChallengeId', this.idChallenge)
 
     this.startChallenge.emit(true)
-
-    try {
-      await this.router.navigate([`/ita-challenge/challenges/${this.idChallenge}/start`])
-    } catch (error) {
-      console.error('Error en la navegación:', error)
-    }
   }
 
   openSendSolutionModal (): void {
