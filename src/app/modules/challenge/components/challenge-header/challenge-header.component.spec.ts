@@ -284,4 +284,105 @@ describe('ChallengeHeaderComponent', () => {
     component.saveChallenge();
     expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', 'IN_PROGRESS', 'solution');
   });
+
+  it('should not save challenge if data is missing', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    component.idChallenge = '';
+    component.saveChallenge();
+    expect(consoleSpy).toHaveBeenCalledWith(' Missing data to save the solution');
+  });
+
+  it('should handle error on save challenge', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    solutionService.submitSolution.mockReturnValue(throwError(() => new Error('error')));
+    component.idChallenge = 'challenge1';
+    component.languageId = 'lang1';
+    component.solutionText = 'solution';
+    component.userId = 'user1';
+    component.saveChallenge();
+    expect(consoleSpy).toHaveBeenCalledWith(' Error saving solution', expect.any(Error));
+  });
+
+  it('should handle error on toggle favorite', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.addToFavorites.mockReturnValue(throwError(() => new Error('error')));
+    component.isFavorite = false;
+    component.toggleFavorite();
+    expect(consoleSpy).toHaveBeenCalledWith('Error adding favorite:', expect.any(Error));
+  });
+
+  it('should handle error on toggle unfavorite', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.removeFromFavorites.mockReturnValue(throwError(() => new Error('error')));
+    component.isFavorite = true;
+    component.toggleFavorite();
+    expect(consoleSpy).toHaveBeenCalledWith('Error removing favorite:', expect.any(Error));
+  });
+
+  it('should handle error on toggle bookmark', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')));
+    component.isBookmarked = false;
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(consoleSpy).toHaveBeenCalledWith('Error adding bookmark:', expect.any(Error));
+  });
+
+  it('should handle error on toggle unbookmark', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')));
+    component.isBookmarked = true;
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(consoleSpy).toHaveBeenCalledWith('Error removing bookmark:', expect.any(Error));
+  });
+
+  it('should not toggle favorite if not logged in', () => {
+    authService.isUserLoggedIn.mockReturnValue(false);
+    const spy = jest.spyOn(challengeService, 'addToFavorites');
+    component.toggleFavorite();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should not toggle bookmark if not logged in', () => {
+    authService.isUserLoggedIn.mockReturnValue(false);
+    const spy = jest.spyOn(challengeService, 'addBookmark');
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should navigate to challenges on cancel', () => {
+    component.onCancel();
+    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  });
+  
+  it('should set solutionState to NOT_STARTED if no matching solution is found', () => {
+    solutionService.fetchUserSolution.mockReturnValue(of([]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe('NOT_STARTED');
+  });
+  
+  it('should handle different solution statuses', () => {
+    const solutions = [
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.IN_PROGRESS, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.ENDED, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }
+    ];
+  
+    component.idChallenge = 'testChallengeId';
+    solutionService.fetchUserSolution.mockReturnValue(of([solutions[0]]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
+  
+    solutionService.fetchUserSolution.mockReturnValue(of([solutions[1]]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.ENDED);
+  });
+  
+  it('should warn for unhandled solution status', () => {
+    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const solutions = [{ uuid_challenge: 'testChallengeId', status: 'unknown', solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }];
+    solutionService.fetchUserSolution.mockReturnValue(of(solutions as any));
+    component.idChallenge = 'testChallengeId';
+    component.loadUserSolutionStatus();
+    expect(consoleSpy).toHaveBeenCalledWith('Unhandled solution status: unknown');
+  });
+
 })

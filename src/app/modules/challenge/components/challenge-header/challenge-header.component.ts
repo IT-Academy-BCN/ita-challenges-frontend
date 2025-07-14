@@ -92,8 +92,7 @@ export class ChallengeHeaderComponent implements OnInit {
     next: (userSolutions) => {
       const solution = userSolutions.find(
         (sol) =>
-          sol.uuid_challenge === this.idChallenge &&
-          sol.solution_text?.trim() !== ''
+          sol.uuid_challenge === this.idChallenge
       );
 
       if (!solution) {
@@ -107,8 +106,7 @@ export class ChallengeHeaderComponent implements OnInit {
         switch (solution.status) {
         case SolutionStatus.IN_PROGRESS:
           this.solutionState = SolutionStatus.IN_PROGRESS;
-          this.challengeStarted = false;
-          this.solutionText = '';
+          this.challengeStarted = true;
           break;
 
         case SolutionStatus.ENDED:
