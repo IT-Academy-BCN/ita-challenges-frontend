@@ -449,4 +449,42 @@ describe('ChallengeFormComponent', () => {
     consoleSpy.mockRestore();
   });
 });
+describe('Form Navigation Methods', () => {
+  it('should go to previous step when not on first step', () => {
+    component.currentStep = 1;
+    component.goToPreviousStep();
+    expect(component.currentStep).toBe(0);
+  });
+
+  it('should not go before first step', () => {
+    component.currentStep = 0;
+    component.goToPreviousStep();
+    expect(component.currentStep).toBe(0);
+  });
+
+  it('should set step to valid value', () => {
+    component.setStep(1);
+    expect(component.currentStep).toBe(1);
+  });
+
+  it('should not set step to invalid value', () => {
+    component.currentStep = 0;
+    component.setStep(-1);
+    expect(component.currentStep).toBe(0);
+    
+    component.setStep(component.stepLabels.length + 1);
+    expect(component.currentStep).toBe(0);
+  });
+
+  it('should calculate progress width correctly', () => {
+    component.currentStep = 0;
+    expect(component.getProgressWidth()).toBe(0);
+    
+    component.currentStep = 1;
+    expect(component.getProgressWidth()).toBe(40);
+    
+    component.currentStep = 2;
+    expect(component.getProgressWidth()).toBe(100);
+  });
+});
 })
