@@ -136,10 +136,6 @@ export class ChallengeHeaderComponent implements OnInit {
     this.challengeStarted = true
     this.solutionState = SolutionStatus.IN_PROGRESS;
     this.activeId = ChallengeTab.SOLUTIONS
-    localStorage.setItem('challengeStarted', JSON.stringify({ id: this.idChallenge, started: true }))
-
-    localStorage.setItem('currentChallengeId', this.idChallenge)
-
     this.startChallenge.emit(true)
   }
 

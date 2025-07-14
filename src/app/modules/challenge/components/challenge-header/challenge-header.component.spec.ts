@@ -145,14 +145,13 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.timesSolved).toBe(5)
   });
 
-  it('should start challenge and navigate', async () => {
-    component.idChallenge = '123';
-    await component.onStartChallenge();
-
+  it('should start challenge', () => {
+    const startChallengeSpy = jest.spyOn(component.startChallenge, 'emit');
+    component.onStartChallenge();
     expect(component.challengeStarted).toBe(true);
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
-    expect(localStorage.getItem('challengeStarted')).toContain('123');
-    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/123/start']);
+    expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
   it('toggleFavorite: when not favorite should call addToFavorites and emit update', done => {
     component.idChallenge = 'ABC';
@@ -218,16 +217,6 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
-  it('should read challengeStarted from localStorage and update state', () => {
-    localStorage.setItem(
-      'challengeStarted',
-      JSON.stringify({ id: 'testChallengeId', started: true })
-    );
-    component.idChallenge = 'testChallengeId';
-    component.ngOnInit();
-    expect(component.challengeStarted).toBe(true);
-    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
-  });
   
   it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   authService.getUserRole.mockReturnValue(of('ADMIN'));

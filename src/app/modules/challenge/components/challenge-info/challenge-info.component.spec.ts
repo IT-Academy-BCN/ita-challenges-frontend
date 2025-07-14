@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser'
 import { of, Subject } from 'rxjs'
 import { Component, Input } from '@angular/core'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 // Mock EditorChallengeComponent
 @Component({
@@ -440,7 +441,7 @@ describe('ChallengeInfoComponent', () => {
           uuid_challenge: mockChallengeId,
           uuid_language: mockLanguageId,
           solution_text: mockSolutionText,
-          status: 'ENDED'
+          status: SolutionStatus.ENDED
         }
       ]))
 
