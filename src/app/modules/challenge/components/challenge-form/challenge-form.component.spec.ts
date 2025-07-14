@@ -163,6 +163,41 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
   })
 
+  it('should handle null results when loading languages', () => {
+    mockChallengeFormService.getAllLangugesCreateForm.mockReturnValue(of({ results: null as any }))
+    
+    component.loadLanguages()
+    
+    expect(component.languages).toEqual([])
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
+  })
+
+  it('should handle undefined results when loading languages', () => {
+    mockChallengeFormService.getAllLangugesCreateForm.mockReturnValue(of({ results: undefined as any }))
+    
+    component.loadLanguages()
+    
+    expect(component.languages).toEqual([])
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
+  })
+
+  it('should handle error when loading languages', () => {
+    const errorMessage = 'Network error'
+    mockChallengeFormService.getAllLangugesCreateForm.mockReturnValue(
+      throwError(() => new Error(errorMessage))
+    )
+    
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    
+    component.loadLanguages()
+    
+    expect(component.languages).toEqual([])
+    expect(consoleSpy).toHaveBeenCalledWith('Error al obtener los idiomas:', expect.any(Error))
+    expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
+    
+    consoleSpy.mockRestore()
+  })
+
   it('should return true if the form is valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title'
     component.challenge.description = 'Valid description for the challenge'
