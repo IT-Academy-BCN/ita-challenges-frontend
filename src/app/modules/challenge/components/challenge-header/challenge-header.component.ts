@@ -213,4 +213,7 @@ export class ChallengeHeaderComponent implements OnInit {
       })
     }
   }
+    onCancel (): void {
+    void this.router.navigate(['/ita-challenge/challenges'])
+  }
 }

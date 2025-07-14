@@ -1,8 +1,9 @@
   <div class="row w-100">
   <div class="col-12 col-md-8">
-    <p class="breadcrumbs">
-      <a routerLink="/ita-challenge/challenges">{{ "modules.starter.main.section2.title" | translate }}</a> &gt;
-      <span id="color">{{ "modules.challenge.header.section" | translate }}</span>
+    <p>
+       <a class="link" (click)="onCancel()">
+              <span class="backTo"><img class="arrow-left" src="assets\img\icon\arrow_left.svg" alt="arrow-left" fill="currentColor">{{ "modules.challenge.backTo" | translate }}</span>
+          </a>
     </p>
     <div class="d-flex align-items-start">
       <div class="difficulty">
