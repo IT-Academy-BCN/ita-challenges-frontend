@@ -42,7 +42,7 @@ export class StarterComponent implements OnInit {
   favoriteChallenges: string[] = []
   timesSolved: number = 0
   bookmarkedChallenges: string[] = []
-  solutionStatusMap: Record<string, 'IN_PROGRESS' | 'ENDED'> = {};
+  solutionStatusMap: Record<string, SolutionStatus> = {};
   private readonly solutionService = inject(SolutionService)
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
@@ -163,7 +163,7 @@ export class StarterComponent implements OnInit {
   }
   fetchUserSolutionsStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({
-    next: (solutions) => {
+    next: (solutions = []) => {
       this.solutionStatusMap = solutions.reduce((acc, sol) => {
         acc[sol.uuid_challenge] = sol.status;
         return acc;
