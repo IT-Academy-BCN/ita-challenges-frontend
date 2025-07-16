@@ -1,3 +1,4 @@
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { TestBed, type ComponentFixture } from '@angular/core/testing'
 
 import { StarterComponent } from './starter.component'
@@ -172,15 +173,15 @@ describe('StarterComponent', () => {
 
   it('should correctly map user solutions to solutionStatusMap', () => {
     const mockSolutions: UserSolution[] = [
-      { uuid_user: 'user-1', uuid_challenge: 'challenge-1', uuid_language: 'lang-1', solution_text: 'sol-1', status: 'IN_PROGRESS' },
-      { uuid_user: 'user-1', uuid_challenge: 'challenge-2', uuid_language: 'lang-1', solution_text: 'sol-2', status: 'ENDED' }
+      { uuid_user: 'user-1', uuid_challenge: 'challenge-1', uuid_language: 'lang-1', solution_text: 'sol-1', status: SolutionStatus.IN_PROGRESS },
+      { uuid_user: 'user-1', uuid_challenge: 'challenge-2', uuid_language: 'lang-1', solution_text: 'sol-2', status: SolutionStatus.ENDED }
     ];
     fetchUserSolutionSpy.and.returnValue(of(mockSolutions));
 
     component.fetchUserSolutionsStatus();
 
-    expect(component.solutionStatusMap['challenge-1']).toBe('IN_PROGRESS');
-    expect(component.solutionStatusMap['challenge-2']).toBe('ENDED');
+    expect(component.solutionStatusMap['challenge-1']).toBe(SolutionStatus.IN_PROGRESS);
+    expect(component.solutionStatusMap['challenge-2']).toBe(SolutionStatus.ENDED);
   });
 
   it('should handle error when fetching user solutions', () => {
