@@ -12,23 +12,17 @@
                 "title": "Challenges"
             },
             "section2": {
-                "title": "Technical tests"
-            },
-            "section4": {
-                "title": "Create challenge"
-            },
-            "section5": {
-                "title": "Useful guides"
-            },
-            "section6": {
-                "title": "Settings"
-            },
-            "section7": {
-                "title": "My space"
+                "title": "CodeConnect"
             },
             "section3": {
-                "title": "Hackatons"
-        }
+                "title": "My resources"
+            },
+            "section4": {
+                "title": "Bookmarks"
+            },
+            "section5": {
+                "title": "Favorites"
+            }
         }
     },
     "modules": {
