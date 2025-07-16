@@ -74,8 +74,8 @@ implements OnInit {
   @Input() startChallenge: boolean = false
   @Output() solutionChanged = new EventEmitter<string>();
   @Input() languageId: string = '';
- @Input() initialSolutionText: string = '';
-@Output() solutionChange = new EventEmitter<string>();
+  @Input() initialSolutionText: string = '';
+  @Output() solutionChange = new EventEmitter<string>();
 
 
 
