@@ -41,10 +41,10 @@ and this project adheres to
 
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
-
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
+
 
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
 
