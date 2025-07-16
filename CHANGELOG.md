@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.57-RELEASE] - 2025-07-23
 
 ### Changed
-- Updated sidebar layout. Simplified top section to 'Start', 'Challenges', 'CodeConnect'. And changed bottom section fore logged-in users to 'Bookmarks' and 'Favorites'   (Taiga [#587], PR [#673])
+- Updated sidebar layout. Simplified top section to 'Start', 'Challenges', 'CodeConnect'. And changed bottom section fore logged-in users to 'Bookmarks' and 'Favorites'   (Taiga [#607], PR [#673])
 
 ### [ita-challenges-frontend-3.1.56-RELEASE] - 2025-07-21
 
