@@ -165,7 +165,7 @@ export class StarterComponent implements OnInit {
   this.solutionService.fetchUserSolution().subscribe({
     next: (solutions) => {
       this.solutionStatusMap = solutions.reduce((acc, sol) => {
-        acc[sol.uuid_challenge] = sol.status as SolutionStatus;
+        acc[sol.uuid_challenge] = sol.status;
         return acc;
       }, {} as Record<string, SolutionStatus>);
     },

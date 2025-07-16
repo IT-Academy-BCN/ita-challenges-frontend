@@ -1,6 +1,10 @@
 {
   "name": "ita-challenges-frontend",
+<<<<<<< HEAD
   "version": "3.1.53-RELEASE",
+=======
+  "version": "3.1.52-RELEASE",
+>>>>>>> e77da623 (chore: remove unnecessary type assertion in solution status map and fix changelog entry)
    "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
