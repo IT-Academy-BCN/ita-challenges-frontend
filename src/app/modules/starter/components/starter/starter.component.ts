@@ -173,7 +173,7 @@ export class StarterComponent implements OnInit {
     next: (solutions) => {
       this.solutionStatusMap = solutions.reduce((acc, sol) => {
         acc[sol.uuid_challenge] =
-          sol.status === 'IN_PROGRESS' ? SolutionStatus.IN_PROGRESS : SolutionStatus.ENDED;
+          sol.status === SolutionStatus.IN_PROGRESS ? SolutionStatus.IN_PROGRESS : SolutionStatus.ENDED;
         return acc;
 >>>>>>> b76655cf (chore: update changelog, bump version and fix badge styles)
       }, {} as Record<string, SolutionStatus>);
