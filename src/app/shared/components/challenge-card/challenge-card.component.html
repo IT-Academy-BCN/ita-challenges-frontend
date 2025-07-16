@@ -21,16 +21,17 @@
         <div class="title">
           {{title}}
           <span
-    *ngIf="solutionStatus"
-    class="ms-2 badge"
-    [ngClass]="{
+            *ngIf="solutionStatus"
+            class="ms-2 badge"
+            [ngClass]="{
       'bg-success text-white': solutionStatus === SolutionStatus.ENDED,
       'bg-warning text-dark': solutionStatus === SolutionStatus.IN_PROGRESS,
     }"
-    [ngbTooltip]="getStatusTooltip()"
-  >
-    {{ 'status.' + solutionStatus | translate }}
-  </span>
+            [ngbTooltip]="getStatusTooltip()"
+          >
+            {{ "status." + solutionStatus | translate }}
+          </span>
+        
         </div>
       </div>
       
