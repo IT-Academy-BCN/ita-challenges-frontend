@@ -106,7 +106,7 @@ export class ChallengeHeaderComponent implements OnInit {
         switch (solution.status) {
         case SolutionStatus.IN_PROGRESS:
           this.solutionState = SolutionStatus.IN_PROGRESS;
-          this.challengeStarted = true;
+          this.challengeStarted = false;
           break;
 
         case SolutionStatus.ENDED:
