@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-17
+
+### Added
+- Implemented `bookmarks` view (http://localhost:4200/ita-challenge/bookmark) this is just the page there is no funcionality extra (Taiga [#597], PR [#649]).
+
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
 ### Changed
