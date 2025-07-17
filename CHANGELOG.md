@@ -4,16 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
+### [ita-challenges-frontend-3.1.53-RELEASE] - 2025-07-16
 
 ### Added
 - Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
 
-<<<<<<< HEAD
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-09
-=======
-### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-09
->>>>>>> e77da623 (chore: remove unnecessary type assertion in solution status map and fix changelog entry)
 
 ### Added
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
@@ -27,17 +23,14 @@ and this project adheres to
 
 ### Changed
 - I changed the breadcrumb for a link that redirects to challenges list. imported an existing svg instead of using the whole svg code in html file  (Taiga [#574], PR [#665])
-  
 ### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-06-27
 
 ### Changed
 - Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
-- 
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
-
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
