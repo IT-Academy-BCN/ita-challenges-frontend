@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -40,12 +41,16 @@ describe('ChallengeHeaderComponent', () => {
       fetchUserSolution: jest.fn().mockReturnValue(
         of([
           {
+            uuid_user: "user1",
             uuid_challenge: "testChallengeId",
+            uuid_language: "testLang",
             solution_text: "some solution",
+            status: SolutionStatus.ENDED,
           },
         ])
       ),
       challengeCompleted$: of("testChallengeId"),
+      submitSolution: jest.fn(),
     } as any
 
     await TestBed.configureTestingModule({
@@ -140,14 +145,13 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.timesSolved).toBe(5)
   });
 
-  it('should start challenge and navigate', async () => {
-    component.idChallenge = '123';
-    await component.onStartChallenge();
-
+  it('should start challenge', () => {
+    const startChallengeSpy = jest.spyOn(component.startChallenge, 'emit');
+    component.onStartChallenge();
     expect(component.challengeStarted).toBe(true);
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
-    expect(localStorage.getItem('challengeStarted')).toContain('123');
-    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges/123/start']);
+    expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
   it('toggleFavorite: when not favorite should call addToFavorites and emit update', done => {
     component.idChallenge = 'ABC';
@@ -213,16 +217,6 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
-  it('should read challengeStarted from localStorage and update state', () => {
-    localStorage.setItem(
-      'challengeStarted',
-      JSON.stringify({ id: 'testChallengeId', started: true })
-    );
-    component.idChallenge = 'testChallengeId';
-    component.ngOnInit();
-    expect(component.challengeStarted).toBe(true);
-    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
-  });
   
   it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
   authService.getUserRole.mockReturnValue(of('ADMIN'));
@@ -237,5 +231,150 @@ describe('ChallengeHeaderComponent', () => {
   );
   expect(startButton).toBeUndefined();
 }));
+
+  it('should handle solution accepted', () => {
+    component.onSolutionAccepted();
+    expect(component.solutionSent).toBe(true);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+  });
+
+  it('should call openSendSolutionModal on sendSolution', () => {
+    const spy = jest.spyOn(modalService, 'open').mockReturnValue({
+        componentInstance: {
+            solutionAccepted: new EventEmitter<void>(),
+            timesSolvedUpdated: new EventEmitter<number>()
+        }
+    } as any);
+    component.sendSolution();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should handle continue challenge', () => {
+    const spy = jest.spyOn(component, 'loadSolutionFromBackend');
+    component.onContinueChallenge();
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should load solution from backend', () => {
+    solutionService.fetchUserSolution.mockReturnValue(of([
+      { uuid_challenge: 'testChallengeId', uuid_language: 'testLang', solution_text: 'test solution' }
+    ] as any));
+    component.idChallenge = 'testChallengeId';
+    component.languageId = 'testLang';
+    component.loadSolutionFromBackend();
+    expect(component.currentSolutionText).toBe('test solution');
+  });
+
+  it('should handle error when loading solution from backend', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    solutionService.fetchUserSolution.mockReturnValue(throwError(() => new Error('error')));
+    component.loadSolutionFromBackend();
+    expect(consoleSpy).toHaveBeenCalled();
+  });
+
+  it('should save challenge solution', () => {
+    const spy = jest.spyOn(solutionService, 'submitSolution').mockReturnValue(of({} as any));
+    component.idChallenge = 'challenge1';
+    component.languageId = 'lang1';
+    component.solutionText = 'solution';
+    component.userId = 'user1';
+    component.saveChallenge();
+    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionStatus.IN_PROGRESS, 'solution');
+  });
+
+  it('should not save challenge if data is missing', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    component.idChallenge = '';
+    component.saveChallenge();
+    expect(consoleSpy).toHaveBeenCalledWith(' Missing data to save the solution');
+  });
+
+  it('should handle error on save challenge', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    solutionService.submitSolution.mockReturnValue(throwError(() => new Error('error')));
+    component.idChallenge = 'challenge1';
+    component.languageId = 'lang1';
+    component.solutionText = 'solution';
+    component.userId = 'user1';
+    component.saveChallenge();
+    expect(consoleSpy).toHaveBeenCalledWith(' Error saving solution', expect.any(Error));
+  });
+
+  it('should handle error on toggle favorite', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.addToFavorites.mockReturnValue(throwError(() => new Error('error')));
+    component.isFavorite = false;
+    component.toggleFavorite();
+    expect(consoleSpy).toHaveBeenCalledWith('Error adding favorite:', expect.any(Error));
+  });
+
+  it('should handle error on toggle unfavorite', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.removeFromFavorites.mockReturnValue(throwError(() => new Error('error')));
+    component.isFavorite = true;
+    component.toggleFavorite();
+    expect(consoleSpy).toHaveBeenCalledWith('Error removing favorite:', expect.any(Error));
+  });
+
+  it('should handle error on toggle bookmark', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')));
+    component.isBookmarked = false;
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(consoleSpy).toHaveBeenCalledWith('Error adding bookmark:', expect.any(Error));
+  });
+
+  it('should handle error on toggle unbookmark', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    challengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')));
+    component.isBookmarked = true;
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(consoleSpy).toHaveBeenCalledWith('Error removing bookmark:', expect.any(Error));
+  });
+
+  it('should not toggle favorite if not logged in', () => {
+    authService.isUserLoggedIn.mockReturnValue(false);
+    const spy = jest.spyOn(challengeService, 'addToFavorites');
+    component.toggleFavorite();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should not toggle bookmark if not logged in', () => {
+    authService.isUserLoggedIn.mockReturnValue(false);
+    const spy = jest.spyOn(challengeService, 'addBookmark');
+    component.toggleBookmark(new MouseEvent('click'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should navigate to challenges on cancel', () => {
+    component.onCancel();
+    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  });
+  
+  it('should set solutionState to NOT_STARTED if no matching solution is found', () => {
+    solutionService.fetchUserSolution.mockReturnValue(of([]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED);
+  });
+  
+  it('should handle different solution statuses', () => {
+    const solutions = [
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.IN_PROGRESS, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.ENDED, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }
+    ];
+  
+    component.idChallenge = 'testChallengeId';
+    solutionService.fetchUserSolution.mockReturnValue(of([solutions[0]]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
+  
+    solutionService.fetchUserSolution.mockReturnValue(of([solutions[1]]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.ENDED);
+  });
+  
+
 })
- 

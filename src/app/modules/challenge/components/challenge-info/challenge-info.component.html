@@ -39,7 +39,9 @@
           </div>
 
           <div class="editor-section" *ngIf="isEditorChallengeVisible">
-            <app-editor-challenge [isEditorChallengeVisible]="isEditorChallengeVisible"></app-editor-challenge>
+          <app-editor-challenge [isEditorChallengeVisible]="isEditorChallengeVisible" [languageId]="languageId" [idChallenge]="idChallenge" [solutionText]="solutionText"(solutionChanged)="onEditorSolutionChanged($event)"
+></app-editor-challenge>
+
           </div>
         </div>
       </div>
