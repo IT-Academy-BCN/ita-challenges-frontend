@@ -164,18 +164,10 @@ export class StarterComponent implements OnInit {
   }
   fetchUserSolutionsStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({
-<<<<<<< HEAD
     next: (solutions = []) => {
       this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
         statusMap[userSolution.uuid_challenge] = userSolution.status;
         return statusMap;
-=======
-    next: (solutions) => {
-      this.solutionStatusMap = solutions.reduce((acc, sol) => {
-        acc[sol.uuid_challenge] =
-          sol.status === SolutionStatus.IN_PROGRESS ? SolutionStatus.IN_PROGRESS : SolutionStatus.ENDED;
-        return acc;
->>>>>>> b76655cf (chore: update changelog, bump version and fix badge styles)
       }, {} as Record<string, SolutionStatus>);
     },
     error: (err) => {
