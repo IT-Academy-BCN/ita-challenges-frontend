@@ -4,17 +4,8 @@ import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
-import { of } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { Component, Input } from '@angular/core';
-
-@Component({
-  selector: 'app-toggle',
-  template: ''
-})
-class MockToggleComponent {
-  @Input() currentRole: string = '';
-}
+import { of, throwError } from 'rxjs';
+import { By } from '@angular/platform-browser'
 
 class MockNavService {
   public selectWidth = '69px'
@@ -22,12 +13,14 @@ class MockNavService {
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
+  openRegisterUsersModal = jest.fn();
 }
 class MockAuthService {
   updateUserRoleAndUserNameFromToken = jest.fn();
   getUsername = jest.fn(() => of('test-user'));
-  isLoggedIn$ = of(true); 
+  isLoggedIn$ = of(true);
   logout = jest.fn();
+  switchRole = jest.fn(() => of({ token: 'newToken' }));
   getUserRole() {
     return of('')
   };
@@ -154,5 +147,35 @@ describe('DesktopNavComponent', () => {
     component.logout();
   
     expect(logoutSpy).toHaveBeenCalled();
+  });
+
+  it('should switch role and update token on success', () => {
+    const newRole = 'ADMIN';
+    const switchRoleSpy = jest.spyOn(authService, 'switchRole').mockReturnValue(of({ token: 'newToken' }));
+    const updateTokenSpy = jest.spyOn(authService, 'updateUserRoleAndUserNameFromToken');
+    
+    component.onSwitchRole(newRole);
+    
+    expect(switchRoleSpy).toHaveBeenCalledWith(newRole);
+    expect(localStorage.getItem('authToken')).toBe('newToken');
+    expect(updateTokenSpy).toHaveBeenCalled();
+  });
+
+  it('should log an error when switch role fails', () => {
+    const newRole = 'ADMIN';
+    const errorResponse = { message: 'Error switching role' };
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(authService, 'switchRole').mockReturnValue(throwError(errorResponse));
+    
+    component.onSwitchRole(newRole);
+    
+    expect(consoleErrorSpy).toHaveBeenCalledWith('error changing your role', errorResponse);
+    consoleErrorSpy.mockRestore();
+  });
+
+  it('should call openRegisterUsersModal on navService', () => {
+    const openModalSpy = jest.spyOn(navService, 'openRegisterUsersModal');
+    component.openRegisterUsersModal();
+    expect(openModalSpy).toHaveBeenCalled();
   });
 })
