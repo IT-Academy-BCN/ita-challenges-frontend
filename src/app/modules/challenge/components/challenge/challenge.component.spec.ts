@@ -21,6 +21,7 @@ import { registerLocaleData } from '@angular/common'
 import localeCa from '@angular/common/locales/ca'
 import { AuthService } from 'src/app/services/auth.service'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
 registerLocaleData(localeCa)
 
@@ -267,7 +268,7 @@ describe('ChallengeComponent', () => {
     component.onStartChallenge(started);
     expect(component.challengeStarted).toBe(started);
     expect(component.isEditorChallengeVisible).toBe(started);
-    expect(component.status).toBe('IN_PROGRESS');
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
   });
 
   it('should update favorites count', () => {

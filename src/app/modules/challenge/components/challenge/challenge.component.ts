@@ -13,8 +13,6 @@ import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
-type SolutionState = SolutionStatus | 'NOT_STARTED';
-
 
 
 @Component({
@@ -52,6 +50,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   userSolution: UserSolution | null = null;
   solutionText: string = '';
   languageId: string = '';
+  solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
 
   private readonly route = inject(ActivatedRoute)
   private readonly router = inject(Router)
@@ -63,9 +62,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
   public cdr = inject(ChangeDetectorRef)
 
   @Output() startChallenge = new EventEmitter<boolean>()
-
-  status : SolutionState = 'NOT_STARTED';
-  solutionState: SolutionState = 'NOT_STARTED';
 
   ngOnInit(): void {
     this.params$ = this.route.paramMap.subscribe((params: ParamMap) => {
@@ -110,7 +106,7 @@ loadUserSolutionStatus(userId: string): void {
         } else if (match?.status === SolutionStatus.ENDED) {
           this.solutionState = SolutionStatus.ENDED;
         } else {
-          this.solutionState = 'NOT_STARTED';
+          this.solutionState = SolutionStatus.NOT_STARTED;
         }
 
         this.savedSolutionText = match?.solution_text ?? '';
@@ -136,8 +132,7 @@ loadUserSolutionStatus(userId: string): void {
     this.challengeStarted = started;
     this.isEditorChallengeVisible = started;
 
-    this.status = started ? SolutionStatus.IN_PROGRESS : 'NOT_STARTED';
-
+    this.solutionState = SolutionStatus.IN_PROGRESS;
     this.startChallenge.emit(started);
   }
 

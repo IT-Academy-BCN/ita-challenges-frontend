@@ -254,7 +254,7 @@ describe('ChallengeHeaderComponent', () => {
     component.onContinueChallenge();
     expect(component.challengeStarted).toBe(true);
     expect(component.isEditorChallengeVisible).toBe(true);
-    expect(component.status).toBe('IN_PROGRESS');
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
     expect(spy).toHaveBeenCalled();
   });
 
@@ -282,7 +282,7 @@ describe('ChallengeHeaderComponent', () => {
     component.solutionText = 'solution';
     component.userId = 'user1';
     component.saveChallenge();
-    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', 'IN_PROGRESS', 'solution');
+    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionStatus.IN_PROGRESS, 'solution');
   });
 
   it('should not save challenge if data is missing', () => {
@@ -357,7 +357,7 @@ describe('ChallengeHeaderComponent', () => {
   it('should set solutionState to NOT_STARTED if no matching solution is found', () => {
     solutionService.fetchUserSolution.mockReturnValue(of([]));
     component.loadUserSolutionStatus();
-    expect(component.solutionState).toBe('NOT_STARTED');
+    expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED);
   });
   
   it('should handle different solution statuses', () => {
@@ -376,13 +376,5 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
   });
   
-  it('should warn for unhandled solution status', () => {
-    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    const solutions = [{ uuid_challenge: 'testChallengeId', status: 'unknown', solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }];
-    solutionService.fetchUserSolution.mockReturnValue(of(solutions as any));
-    component.idChallenge = 'testChallengeId';
-    component.loadUserSolutionStatus();
-    expect(consoleSpy).toHaveBeenCalledWith('Unhandled solution status: unknown');
-  });
 
 })

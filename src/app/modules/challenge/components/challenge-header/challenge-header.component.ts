@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { UserRole } from 'src/app/shared/enums/user-role.enum'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
-type SolutionState = SolutionStatus | 'NOT_STARTED';
+
 
 
 @Component({
@@ -26,7 +26,6 @@ export class ChallengeHeaderComponent implements OnInit {
     
   ) {}
   public SolutionStatus = SolutionStatus;
-  public NOT_STARTED = 'NOT_STARTED';
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService);
@@ -53,7 +52,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Output() favoritesUpdated = new EventEmitter<number>()
   @Input() solutionText: string = '';
   @Input() status: string = '';
-  @Input() solutionState: SolutionState = 'NOT_STARTED';
+  @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
   @Input() savedSolutionText: string = '';
 
   challenge_title: string | undefined = ''
@@ -96,7 +95,7 @@ export class ChallengeHeaderComponent implements OnInit {
       );
 
       if (!solution) {
-        this.solutionState = 'NOT_STARTED';
+        this.solutionState = SolutionStatus.NOT_STARTED;
         this.challengeStarted = false;
         return;
       }
@@ -118,7 +117,7 @@ export class ChallengeHeaderComponent implements OnInit {
 
         default:
           console.warn(`Unhandled solution status: ${solution.status}`);
-          this.solutionState = 'NOT_STARTED';
+          this.solutionState = SolutionStatus.NOT_STARTED;
           this.challengeStarted = false;
           break;
       }
@@ -261,7 +260,7 @@ saveChallenge(): void {
   onContinueChallenge(): void {
   this.challengeStarted = true;
   this.isEditorChallengeVisible = true;
-  this.status = SolutionStatus.IN_PROGRESS;
+  this.solutionState = SolutionStatus.IN_PROGRESS;
   this.startChallenge.emit(true);
   this.loadSolutionFromBackend();
 }

@@ -54,7 +54,7 @@
       *ngIf="solutionState === SolutionStatus.IN_PROGRESS && !challengeStarted && userRole !== USER_ROLE.ADMIN"
 class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</button>
   <button
-  *ngIf="solutionState === NOT_STARTED && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
+  *ngIf="solutionState === SolutionStatus.NOT_STARTED && userRole !== USER_ROLE.ADMIN" class="btn btn-sm btn-primary" (click)="onStartChallenge()" >
   {{ 'modules.challenge.header.buttonStart' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
