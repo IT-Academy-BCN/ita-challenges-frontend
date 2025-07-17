@@ -47,9 +47,6 @@ implements OnInit {
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
-  
-  
-
   challengeStarted: boolean = false
 
   private readonly solutionService = inject(SolutionService)
@@ -58,7 +55,6 @@ implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
   public currentSolutionText: string = '';
-
 
   @ViewChild('nav') nav!: NgbNav
 
