@@ -6,6 +6,16 @@ import { RouterModule, ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser'
+import { Component, Input } from '@angular/core';
+
+
+@Component({
+  selector: 'app-toggle',
+  template: ''
+})
+class MockToggleComponent {
+  @Input() currentRole: string = '';
+}
 
 class MockNavService {
   public selectWidth = '69px'
