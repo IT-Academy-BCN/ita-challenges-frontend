@@ -5,8 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
 import { of, throwError } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { sharedSwitchRoleFailureTest } from '../desktop-nav/desktop-nav.component.spec';
+import { By } from '@angular/platform-browser'
 
 class MockNavService {
   public selectWidth = '69px'
@@ -156,7 +155,17 @@ describe('MobileNavComponent', () => {
     expect(updateTokenSpy).toHaveBeenCalled();
   });
 
-  sharedSwitchRoleFailureTest(() => component, () => authService);
+  it('should log an error when switch role fails', () => {
+    const newRole = 'ADMIN';
+    const errorResponse = { message: 'Error switching role' };
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(authService, 'switchRole').mockReturnValue(throwError(errorResponse));
+    
+    component.onSwitchRole(newRole);
+    
+    expect(consoleErrorSpy).toHaveBeenCalledWith('error changing your role', errorResponse);
+    consoleErrorSpy.mockRestore();
+  });
 
   it('should call openRegisterUsersModal on navService', () => {
     const openModalSpy = jest.spyOn(navService, 'openRegisterUsersModal');
