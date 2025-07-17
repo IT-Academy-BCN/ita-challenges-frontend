@@ -4,9 +4,31 @@ import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { MockAuthService, MockNavService, sharedSwitchRoleFailureTest } from '../desktop-nav/desktop-nav.component.spec';
+import { sharedSwitchRoleFailureTest } from '../desktop-nav/desktop-nav.component.spec';
+
+class MockNavService {
+  public selectWidth = '69px'
+  openRegisterUsersModal = jest.fn();
+  changeLanguage = jest.fn((language: string) => {
+    this.selectWidth = language === 'ca' ? '69px' : '57px'
+  })
+}
+class MockAuthService {
+  updateUserRoleAndUserNameFromToken = jest.fn();
+  getUsername = jest.fn(() => of('test-user'));
+  isLoggedIn$ = of(true); 
+  logout = jest.fn();
+  switchRole = jest.fn(() => of({ token: 'newToken' }));
+  getUserRole() {
+    return of('')
+  }
+
+  getUserPhoto = jest.fn(() => of('https://mock-photo-url.com/avatar.png'))
+
+  checkAndHandleExpiredToken = jest.fn()
+}
 
 const mockActivatedRoute = {
   snapshot: {
