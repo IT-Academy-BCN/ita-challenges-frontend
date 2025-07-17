@@ -1,7 +1,10 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavService } from 'src/app/services/nav.service'; 
+import { NavService } from 'src/app/services/nav.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterUsersModalComponent } from 'src/app/modules/modals/register-users-modal/register-users-modal.component';
+import { UserRole } from 'src/app/shared/enums/user-role.enum';
 
 @Component({
   selector: 'app-desktop-nav',
@@ -17,11 +20,13 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
   private authSubscription!: Subscription;
   currentRole: string = ''
   newRole: 'ADMIN' | 'USER' = 'ADMIN'
+  public UserRole = UserRole;
 
 
   constructor(
     @Inject(NavService) public navService: NavService,
-    @Inject(AuthService) private _authService: AuthService
+    @Inject(AuthService) private _authService: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -91,5 +96,9 @@ export class DesktopNavComponent implements OnInit, OnDestroy{
         console.error('error changing your role', error)
       }
     })
+  }
+
+  openRegisterUsersModal() {
+    this.modalService.open(RegisterUsersModalComponent, { centered: true });
   }
 }
