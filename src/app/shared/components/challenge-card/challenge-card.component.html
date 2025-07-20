@@ -2,7 +2,8 @@
   [routerLink]="['/ita-challenge/challenges/', id]">
   <div>
     <div class="info d-flex align-items-start justify-content-between">
-      <div class="d-flex align-items-start w-100">
+      <div class="d-flex flex-column align-items-start w-100">
+        <div class="d-flex align-items-start">
         <div class="difficulty d-flex" *ngIf="level == 'EASY'">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
@@ -18,22 +19,20 @@
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
           <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
         </div>
-        <div class="title">
-          {{title}}
-          <span
-            *ngIf="solutionStatus"
-            class="ms-2 badge"
-            [ngClass]="{
-      'bg-success text-white': solutionStatus === SolutionStatus.ENDED,
-      'bg-warning text-dark': solutionStatus === SolutionStatus.IN_PROGRESS,
-    }"
-            [ngbTooltip]="getStatusTooltip()"
-          >
-            {{ "status." + solutionStatus | translate }}
-          </span>
-        
-        </div>
+        <div class="title">{{title}}</div>
       </div>
+      <span
+        *ngIf="solutionStatus"
+        class="status-text"
+        [ngClass]="{
+          'status-ended': solutionStatus === SolutionStatus.ENDED,
+          'status-progress': solutionStatus === SolutionStatus.IN_PROGRESS,
+        }"
+        [ngbTooltip]="getStatusTooltip()"
+          >
+        {{ "status." + solutionStatus | translate }}
+      </span>
+    </div>
       
       <ul class="code-languages d-none d-xl-flex" *ngFor="let language of languages">
         <li class="code-icon js">
@@ -72,7 +71,6 @@
           <img *ngIf="isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks.saved' | translate">
         </div>
       </button>
-
+      </div>
     </div>
   </div>
-</div>
