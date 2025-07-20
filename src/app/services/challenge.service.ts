@@ -200,4 +200,23 @@ export class ChallengeService {
     return storedCount ? parseInt(storedCount, 10) : 0
   }
 
+
+  getRelatedChallenges(challengeId: string): Observable<Challenge[]> {
+  const headers = {
+    'Content-Type': 'application/json',
+    ...this.authService.getAuthHeaders()
+  };
+
+  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/related`;
+
+  return this.http.get<{results: Challenge[] }>(url, { headers }).pipe(
+    map(response => response.results),
+    catchError((error: HttpErrorResponse) => {
+      console.error('Error fetching related challenges:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
+
 }

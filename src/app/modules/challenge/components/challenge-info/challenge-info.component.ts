@@ -55,6 +55,7 @@ implements OnInit {
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
+   private readonly challengeService=inject (ChallengeService)
 
   @ViewChild('nav') nav!: NgbNav
 
@@ -246,40 +247,26 @@ implements OnInit {
     }
   }
 
-  //Temporary Mocked Implementation
+
   loadRelatedChallenges(): void {
-    const numberOfRelated = 2;
+    this.relatedChallengesLoaded = false;
 
-    this.starterService.getAllChallenges().subscribe(response => {
-      if (response && response.results) {
-        const filteredChallenges = response.results.filter(
-          challenge => challenge.id_challenge !== this.idChallenge
-        );
-        this.relatedChallenges = this.getRandomChallenges(filteredChallenges, numberOfRelated);
-        this.relatedChallengesLoaded = true;
-        this.cdr.detectChanges();
-      }
-    });
+  this.challengeService.getRelatedChallenges(this.idChallenge).subscribe({
+    next: (related) => {
+      this.relatedChallenges = related;
+      this.relatedChallengesLoaded = true;
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Error loading related challenges:', err);
+      this.relatedChallenges = [];
+      this.relatedChallengesLoaded = true;
+      this.cdr.detectChanges();
+    }
+  });
   }
 
-  // Helper method to randomly select challenges
-  // TODO: delete when related challenges endpoint is available 
-  private getRandomChallenges(challenges: Challenge[], count: number): Challenge[] {
-    // If we don't have enough challenges, return all of them to avoid errors
-    if (challenges.length <= count) {
-      return challenges;
-    }
-    
-    const shuffled = [...challenges];
-    
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    
-    return shuffled.slice(0, count);
-  }
-
+ 
   isChallengeTabVisible(tabId: ChallengeTab): boolean {
     if (this.isAdmin) {
       return true;
