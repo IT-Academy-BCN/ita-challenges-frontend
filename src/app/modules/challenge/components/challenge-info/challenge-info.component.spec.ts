@@ -12,7 +12,7 @@ import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { By } from '@angular/platform-browser'
-import { of, Subject } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 import { Component, Input } from '@angular/core'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 
@@ -449,5 +449,97 @@ describe('ChallengeInfoComponent', () => {
       expect(component.solutionText).toBe(mockSolutionText)
       expect(component.userSolution).toEqual({ solution_text: mockSolutionText })
     })
+    
   })
+  
 })
+
+describe('loadRelatedChallenges', () => {
+  let component: ChallengeInfoComponent;
+  let fixture: ComponentFixture<ChallengeInfoComponent>;
+  let challengeServiceMock: any;
+  let cdrMock: any;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ChallengeInfoComponent);
+    component = fixture.componentInstance;
+    challengeServiceMock = (component as any).challengeService;
+    cdrMock = (component as any).cdr;
+    
+    // Mock ChangeDetectorRef
+    cdrMock.detectChanges = jest.fn();
+    
+    // Set required input
+    component.idChallenge = 'test-challenge-id';
+    
+    fixture.detectChanges();
+  });
+
+  it('should set relatedChallengesLoaded to false initially', () => {
+    // Act
+    component.loadRelatedChallenges();
+    
+    // Assert
+    expect(component.relatedChallengesLoaded).toBe(false);
+  });
+
+  it('should load related challenges successfully', () => {
+    // Arrange
+    const mockRelatedChallenges = [
+      { id_challenge: '1', title: 'Related Challenge 1' },
+      { id_challenge: '2', title: 'Related Challenge 2' }
+    ];
+    
+    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(
+      of(mockRelatedChallenges)
+    );
+    
+    // Act
+    component.loadRelatedChallenges();
+    
+    // Assert
+    expect(challengeServiceMock.getRelatedChallenges).toHaveBeenCalledWith('test-challenge-id');
+    expect(component.relatedChallenges).toEqual(mockRelatedChallenges);
+    expect(component.relatedChallengesLoaded).toBe(true);
+    expect(cdrMock.detectChanges).toHaveBeenCalled();
+  });
+
+  it('should handle error when loading related challenges', () => {
+    // Arrange
+    const errorMessage = 'Test error';
+    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(
+      throwError(() => new Error(errorMessage))
+    );
+    
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    
+    // Act
+    component.loadRelatedChallenges();
+    
+    // Assert
+    expect(challengeServiceMock.getRelatedChallenges).toHaveBeenCalledWith('test-challenge-id');
+    expect(component.relatedChallenges).toEqual([]);
+    expect(component.relatedChallengesLoaded).toBe(true);
+    expect(cdrMock.detectChanges).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith('Error loading related challenges:', expect.any(Error));
+    
+    // Clean up
+    consoleSpy.mockRestore();
+  });
+
+  it('should complete the subscription when component is destroyed', () => {
+    // Arrange
+    const mockSubscription = new Subject();
+    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(mockSubscription);
+
+    // Spy on subscription.unsubscribe
+    const subscriptionSpy = jest.spyOn(mockSubscription, 'unsubscribe');
+    
+    // Act
+    component.loadRelatedChallenges();
+  
+    
+    // Assert
+    expect(subscriptionSpy).toHaveBeenCalled();
+  });
+});
