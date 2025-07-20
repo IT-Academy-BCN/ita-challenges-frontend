@@ -5,7 +5,7 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-16
-<<<<<<< HEAD
+
 ### Added
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
 
@@ -13,15 +13,11 @@ and this project adheres to
 
 ### Added
 - Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
-  
-=======
 
 ### Added
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
-
->>>>>>> a095701e (chore: update changelog and rebase with latest develop)
+- 
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
-
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
 
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
@@ -37,12 +33,10 @@ and this project adheres to
 
 ### Changed
 - Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
-- 
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
-
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
