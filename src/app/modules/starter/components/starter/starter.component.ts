@@ -1,5 +1,6 @@
+import { UserSolution } from './../../../../models/user-solution.interface';
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef, inject } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -8,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 @Component({
   selector: 'app-starter',
@@ -40,7 +43,8 @@ export class StarterComponent implements OnInit {
   favoriteChallenges: string[] = []
   timesSolved: number = 0
   bookmarkedChallenges: string[] = []
-
+  solutionStatusMap: Record<string, SolutionStatus> = {};
+  private readonly solutionService = inject(SolutionService)
   constructor (
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -54,6 +58,9 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
+      if (!this.isAdmin) {
+    this.fetchUserSolutionsStatus();
+  }
     })
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {
@@ -155,4 +162,18 @@ export class StarterComponent implements OnInit {
       this.refreshChallengeList()
     }
   }
+  fetchUserSolutionsStatus(): void {
+  this.solutionService.fetchUserSolution().subscribe({
+    next: (solutions = []) => {
+      this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
+        statusMap[userSolution.uuid_challenge] = userSolution.status;
+        return statusMap;
+      }, {} as Record<string, SolutionStatus>);
+    },
+    error: (err) => {
+      console.error('Error fetching user solutions:', err);
+    }
+  });
+}
+
 }
