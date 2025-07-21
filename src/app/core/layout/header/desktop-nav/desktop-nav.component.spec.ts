@@ -8,7 +8,6 @@ import { of } from 'rxjs';
 import { By } from '@angular/platform-browser'
 import { Component, Input } from '@angular/core';
 
-
 @Component({
   selector: 'app-toggle',
   template: ''
