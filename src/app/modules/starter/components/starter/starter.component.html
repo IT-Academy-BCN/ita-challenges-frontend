@@ -44,7 +44,9 @@
         [favorites_count]="challenge.timesFavorite || 0"
         [challenge_timesSolved]="challenge.timesSolved || timesSolved"
         [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
-        [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)">
+        [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
+        [solutionStatus]="solutionStatusMap[challenge.id_challenge]">
+        
       </app-challenge-card>
     </div>
   </div>

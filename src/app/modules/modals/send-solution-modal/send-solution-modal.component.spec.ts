@@ -32,7 +32,8 @@ describe('SendSolutionModalComponent', () => {
 
     solutionServiceMock = {
       submitSolution: jest.fn().mockReturnValue(of({})),
-      completeChallenge: jest.fn()
+      completeChallenge: jest.fn(),
+      updateSolutionSentState: jest.fn()
     };
 
     challengeServiceMock = {
@@ -77,14 +78,7 @@ describe('SendSolutionModalComponent', () => {
     expect(challengeServiceMock.getChallengeById).toHaveBeenCalled();
     expect(component.languageId).toBe('testLanguageId');
   }));
-
-  it('should call getSolutionText and set solutionText from localStorage', fakeAsync(() => {
-    localStorage.setItem('editorContent', 'test solution text');
-    component.getSolutionText();
-    tick();
-    expect(component.solutionText).toBe('test solution text');
-  }));
-
+  
   it('should call submitSolution method when acceptSolution is called', fakeAsync(() => {
     const solutionData = {
       idChallenge: 'test-challenge-id',
@@ -130,4 +124,35 @@ describe('SendSolutionModalComponent', () => {
     component.closeModal();
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();
   });
+  it('should handle error when submitSolution fails', fakeAsync(() => {
+  const solutionData = {
+    idChallenge: 'test-challenge-id',
+    languageId: 'test-language-id',
+    solutionText: 'Test solution text',
+    userId: 'test-user-id',
+    status: 'ENDED'
+  };
+
+  component.idChallenge = solutionData.idChallenge;
+  component.languageId = solutionData.languageId;
+  component.solutionText = solutionData.solutionText;
+  component.userId = solutionData.userId;
+
+  const error = new Error('Failed to submit solution');
+  solutionServiceMock.submitSolution = jest.fn().mockReturnValue(
+    require('rxjs').throwError(() => error)
+  );
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  component.acceptSolution();
+  tick();
+
+  expect(solutionServiceMock.submitSolution).toHaveBeenCalled();
+  expect(consoleSpy).toHaveBeenCalledWith('Error submitting solution:', error);
+  expect(solutionServiceMock.updateSolutionSentState).not.toHaveBeenCalled();
+  expect(modalServiceMock.dismissAll).not.toHaveBeenCalled();
+
+  consoleSpy.mockRestore();
+}));
+
 })

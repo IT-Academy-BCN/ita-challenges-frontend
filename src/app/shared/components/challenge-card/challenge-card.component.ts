@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { take } from 'rxjs/operators'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 
 @Component({
@@ -18,6 +19,8 @@ export class ChallengeCardComponent implements OnInit {
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   public userRole: string | null = null
+  public SolutionStatus = SolutionStatus;
+
 
   @Input() title: string = ''
   @Input() languages: any = []
@@ -30,6 +33,8 @@ export class ChallengeCardComponent implements OnInit {
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
+  @Input() solutionStatus?: SolutionStatus;
+
 
   ngOnInit(): void {
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
@@ -37,11 +42,11 @@ export class ChallengeCardComponent implements OnInit {
     });
   }
 
-  get currentLang (): string {
+  get currentLang(): string {
     return this.translate.currentLang
   }
 
-  toggleFavorite (event: MouseEvent): void {
+  toggleFavorite(event: MouseEvent): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return
@@ -69,7 +74,7 @@ export class ChallengeCardComponent implements OnInit {
     }
   }
 
-  toggleBookmark (event: MouseEvent): void {
+  toggleBookmark(event: MouseEvent): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return
@@ -94,4 +99,15 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+  getStatusTooltip(): string {
+    switch (this.solutionStatus) {
+      case SolutionStatus.ENDED:
+        return 'You have completed this challenge';
+      case SolutionStatus.IN_PROGRESS:
+        return 'You have a saved solution in progress';
+      default:
+        return '';
+    }
+  }
+
 }

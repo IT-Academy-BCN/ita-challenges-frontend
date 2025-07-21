@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser'
 import { of, Subject } from 'rxjs'
 import { Component, Input } from '@angular/core'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 // Mock EditorChallengeComponent
 @Component({
@@ -23,6 +24,9 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 })
 class MockEditorChallengeComponent {
   @Input() isEditorChallengeVisible: boolean = false;
+  @Input() solutionText: string = '';
+  @Input() idChallenge: string = '';
+  @Input() languageId: string = '';
 }
 
 describe('ChallengeInfoComponent', () => {
@@ -436,7 +440,8 @@ describe('ChallengeInfoComponent', () => {
           uuid_user: mockUserId,
           uuid_challenge: mockChallengeId,
           uuid_language: mockLanguageId,
-          solution_text: mockSolutionText
+          solution_text: mockSolutionText,
+          status: SolutionStatus.ENDED
         }
       ]))
 
@@ -447,7 +452,147 @@ describe('ChallengeInfoComponent', () => {
       // Assert
       expect(component.solutionSent).toBe(true)
       expect(component.solutionText).toBe(mockSolutionText)
-      expect(component.userSolution).toEqual({ solution_text: mockSolutionText })
+      expect(component.userSolution).toEqual({
+        solution_text: mockSolutionText
+      })
     })
   })
+
+  describe('ngOnChanges', () => {
+    it('should start challenge when startChallenge input changes to true', () => {
+      const changes = {
+        startChallenge: {
+          currentValue: true,
+          previousValue: false,
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      };
+      component.ngOnChanges(changes);
+      expect(component.challengeStarted).toBe(true);
+      expect(component.isEditorChallengeVisible).toBe(true);
+      expect(component.isChallengeStatementVisible).toBe(false);
+    });
+
+    it('should load solutions when activeId input changes to SOLUTIONS and user is admin', () => {
+      component.isAdmin = true;
+      component.idChallenge = 'test-challenge-id';
+      component.languages = [{ id_language: 'test-language-id', language_name: 'JavaScript' }];
+      const loadSolutionsSpy = jest.spyOn(component, 'loadSolutions');
+      const changes = {
+        activeId: {
+          currentValue: ChallengeTab.SOLUTIONS,
+          previousValue: ChallengeTab.DETAILS,
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      };
+      component.ngOnChanges(changes);
+      expect(loadSolutionsSpy).toHaveBeenCalledWith('test-challenge-id', 'test-language-id');
+    });
+  });
+
+  it('should toggle statement visibility', () => {
+    component.isChallengeStatementVisible = true;
+    component.toggleStatement();
+    expect(component.isChallengeStatementVisible).toBe(false);
+    component.toggleStatement();
+    expect(component.isChallengeStatementVisible).toBe(true);
+  });
+
+  it('should send solution and change active tab on clickSendButton', () => {
+    const solutionServiceSpy = jest.spyOn(component['solutionService'], 'sendSolution');
+    const onActiveIdChangeSpy = jest.spyOn(component, 'onActiveIdChange');
+    component.clickSendButton();
+    expect(solutionServiceSpy).toHaveBeenCalledWith('');
+    expect(onActiveIdChangeSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+    expect(component.isEditorChallengeVisible).toBe(false);
+  });
+
+  it('should not load solutions when activeId input changes to SOLUTIONS and user is not admin', () => {
+    component.isAdmin = false;
+    component.languages = [{ id_language: 'test-language-id', language_name: 'JavaScript' }];
+    const loadSolutionsSpy = jest.spyOn(component, 'loadSolutions');
+    const changes = {
+      activeId: {
+        currentValue: ChallengeTab.SOLUTIONS,
+        previousValue: ChallengeTab.DETAILS,
+        firstChange: false,
+        isFirstChange: () => false
+      }
+    };
+    component.ngOnChanges(changes);
+    expect(loadSolutionsSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not start challenge when startChallenge input is false', () => {
+    const changes = {
+      startChallenge: {
+        currentValue: false,
+        previousValue: true,
+        firstChange: false,
+        isFirstChange: () => false
+      }
+    };
+    component.ngOnChanges(changes);
+    expect(component.challengeStarted).toBe(false);
+  });
+
+  it('should handle outside click to close dropdown', () => {
+    component.isDropdownOpen = true;
+    component.handleOutsideClick(new MouseEvent('click'));
+    expect(component.isDropdownOpen).toBe(false);
+  });
+
+  it('should load solutions from the service', () => {
+    const mockSolutions = { results: [{ solution_text: 'test solution' }] } as any;
+    const solutionServiceSpy = jest.spyOn(component['solutionService'], 'getAllChallengeSolutions').mockReturnValue(of(mockSolutions));
+    component.loadSolutions('test-challenge-id', 'test-language-id');
+    expect(solutionServiceSpy).toHaveBeenCalledWith('test-challenge-id', 'test-language-id');
+    expect(component.challengeSolutions).toEqual(mockSolutions.results);
+  });
+
+  describe('Dropdown functionality', () => {
+    it('should toggle dropdown', () => {
+      component.isDropdownOpen = false;
+      component.toggleDropdown();
+      expect(component.isDropdownOpen).toBe(true);
+      component.toggleDropdown();
+      expect(component.isDropdownOpen).toBe(false);
+    });
+
+    it('should close dropdown', () => {
+      component.isDropdownOpen = true;
+      component.closeDropdown();
+      expect(component.isDropdownOpen).toBe(false);
+    });
+
+    it('should select tab and close dropdown', () => {
+      component.isDropdownOpen = true;
+      component.selectTab(ChallengeTab.SOLUTIONS);
+      expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+      expect(component.isDropdownOpen).toBe(false);
+    });
+  });
+
+  it('should return the correct translated tab label', () => {
+    component.activeId = ChallengeTab.DETAILS;
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.detailsTitle');
+    component.activeId = ChallengeTab.SOLUTIONS;
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.solutionsTitle');
+    component.activeId = ChallengeTab.RESOURCES;
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.resourcesTitle');
+    component.activeId = ChallengeTab.RELATED;
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.relatedTitle');
+    component.activeId = 'invalid-tab' as any;
+    expect(component.getTranslatedTabLabel()).toBe('modules.challenge.info.detailsTitle');
+  });
+
+  it('should emit solution changed event', () => {
+    const solutionChangedSpy = jest.spyOn(component.solutionChanged, 'emit');
+    const newSolution = 'new solution text';
+    component.onEditorSolutionChanged(newSolution);
+    expect(component.currentSolutionText).toBe(newSolution);
+    expect(solutionChangedSpy).toHaveBeenCalledWith(newSolution);
+  });
 })

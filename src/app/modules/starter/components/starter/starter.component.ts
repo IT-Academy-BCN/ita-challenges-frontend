@@ -1,5 +1,6 @@
+import { UserSolution } from './../../../../models/user-solution.interface';
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
-import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef } from '@angular/core'
+import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef, inject } from '@angular/core'
 import { type Subscription } from 'rxjs'
 import { StarterService } from '../../../../services/starter.service'
 import { Challenge } from '../../../../models/challenge.model'
@@ -8,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { AuthService } from 'src/app/services/auth.service'
 import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 @Component({
   selector: 'app-starter',
@@ -40,20 +43,24 @@ export class StarterComponent implements OnInit {
   favoriteChallenges: string[] = []
   timesSolved: number = 0
   bookmarkedChallenges: string[] = []
-
-  constructor (
+  solutionStatusMap: Record<string, SolutionStatus> = {};
+  private readonly solutionService = inject(SolutionService)
+  constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
     private readonly _authService: AuthService,
     private readonly challengeService: ChallengeService,
     private readonly cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getChallenge()
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
+      if (!this.isAdmin) {
+        this.fetchUserSolutionsStatus();
+      }
     })
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {
@@ -79,23 +86,23 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
   }
 
-  isFavoriteChallenge (challengeId: string): boolean {
+  isFavoriteChallenge(challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
   }
 
-  isBookmarkedChallenge (challengeId: string): boolean {
+  isBookmarkedChallenge(challengeId: string): boolean {
     return this.bookmarkedChallenges.includes(challengeId)
   }
 
-  getChallenge (): void {
+  getChallenge(): void {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
@@ -107,7 +114,7 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  refreshChallengeList (): void {
+  refreshChallengeList(): void {
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
@@ -124,11 +131,11 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  openModal (): void {
+  openModal(): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters (filters: FilterChallenge): void {
+  getChallengeFilters(filters: FilterChallenge): void {
     this.filters = filters
 
     this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
@@ -142,7 +149,7 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  changeSort (newSort: string): void {
+  changeSort(newSort: string): void {
     this.sortBy = newSort
     localStorage.setItem('sortBy', newSort)
     if (newSort === 'popularity' || newSort === 'creation_date') {
@@ -155,4 +162,17 @@ export class StarterComponent implements OnInit {
       this.refreshChallengeList()
     }
   }
+  fetchUserSolutionsStatus(): void {
+  this.solutionService.fetchUserSolution().subscribe({
+    next: (solutions = []) => {
+      this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
+        statusMap[userSolution.uuid_challenge] = userSolution.status;
+        return statusMap;
+      }, {} as Record<string, SolutionStatus>);
+    },
+    error: (err) => {
+      console.error('Error fetching user solutions:', err);
+    }
+  });
+}
 }

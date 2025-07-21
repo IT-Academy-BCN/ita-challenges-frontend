@@ -24,9 +24,9 @@ export class CustomDatePipe implements PipeTransform {
     }
 
     const day = date.getDate()
-    const month = monthNames[lang]?.[date.getMonth()] ?? monthNames["es"][date.getMonth()]
+    const month = monthNames[lang]?.[date.getMonth()] ?? monthNames["en"][date.getMonth()]
     const year = date.getFullYear()
 
-    return lang === "en" ? `${month} ${day}, ${year}` : `${day} ${month} ${year}`
+    return `${day} ${month} ${year}`
   }
-}
+}   

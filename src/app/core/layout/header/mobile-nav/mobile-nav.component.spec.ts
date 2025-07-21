@@ -9,10 +9,10 @@ import { By } from '@angular/platform-browser'
 
 class MockNavService {
   public selectWidth = '69px'
-
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
+  openRegisterUsersModal = jest.fn();
 }
 class MockAuthService {
   updateUserRoleAndUserNameFromToken = jest.fn();
@@ -140,5 +140,11 @@ describe('MobileNavComponent', () => {
     component.logout();
   
     expect(logoutSpy).toHaveBeenCalled();
+  });
+
+  it('should call openRegisterUsersModal on navService when openRegisterUsersModal is called', () => {
+    const openRegisterUsersModalSpy = jest.spyOn(navService, 'openRegisterUsersModal');
+    component.openRegisterUsersModal();
+    expect(openRegisterUsersModalSpy).toHaveBeenCalled();
   });
 })
