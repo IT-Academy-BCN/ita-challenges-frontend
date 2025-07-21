@@ -39,14 +39,6 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchBookmarks(userId: string): void {
-    this.challengeService.getUserBookmarks(userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: bookmarks => this.loadChallenges(bookmarks),
-        error: err => console.error('Failed to retrieve user bookmarks', err)
-      });
-  }
 
   private loadChallenges(bookmarkIds: string[]): void {
     const uniqueIds = [...new Set(bookmarkIds)];
