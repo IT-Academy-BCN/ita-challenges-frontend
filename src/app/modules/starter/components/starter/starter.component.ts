@@ -45,22 +45,22 @@ export class StarterComponent implements OnInit {
   bookmarkedChallenges: string[] = []
   solutionStatusMap: Record<string, SolutionStatus> = {};
   private readonly solutionService = inject(SolutionService)
-  constructor (
+  constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
     private readonly _authService: AuthService,
     private readonly challengeService: ChallengeService,
     private readonly cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getChallenge()
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
       if (!this.isAdmin) {
-    this.fetchUserSolutionsStatus();
-  }
+        this.fetchUserSolutionsStatus();
+      }
     })
     if (this._authService.isUserLoggedIn()) {
       this._authService.getUserId().subscribe(userId => {
@@ -86,23 +86,23 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.challengesSubs$ !== undefined) this.challengesSubs$.unsubscribe()
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
   }
 
-  isFavoriteChallenge (challengeId: string): boolean {
+  isFavoriteChallenge(challengeId: string): boolean {
     const result = this.favoriteChallenges.includes(challengeId)
     return result
   }
 
-  isBookmarkedChallenge (challengeId: string): boolean {
+  isBookmarkedChallenge(challengeId: string): boolean {
     return this.bookmarkedChallenges.includes(challengeId)
   }
 
-  getChallenge (): void {
+  getChallenge(): void {
     this.challengesSubs$ = this.starterService.getAllChallenges().subscribe({
       next: (resp) => {
         this.listChallenges = resp.results
@@ -114,7 +114,7 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  refreshChallengeList (): void {
+  refreshChallengeList(): void {
     if (this.filters.languages.length > 0 || this.filters.levels.length > 0 || this.filters.progress.length > 0) {
       this.getChallengeFilters(this.filters)
     } else {
@@ -131,11 +131,11 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  openModal (): void {
+  openModal(): void {
     this.modalContent.open()
   }
 
-  getChallengeFilters (filters: FilterChallenge): void {
+  getChallengeFilters(filters: FilterChallenge): void {
     this.filters = filters
 
     this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
@@ -149,7 +149,7 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  changeSort (newSort: string): void {
+  changeSort(newSort: string): void {
     this.sortBy = newSort
     localStorage.setItem('sortBy', newSort)
     if (newSort === 'popularity' || newSort === 'creation_date') {
@@ -175,5 +175,4 @@ export class StarterComponent implements OnInit {
     }
   });
 }
-
 }

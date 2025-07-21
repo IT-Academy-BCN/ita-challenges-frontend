@@ -41,6 +41,7 @@
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar reto",
+                "buttonContinueChallenge": "Continuar reto",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalizar",
                 "buttonCancel": "Cancelar",
@@ -164,6 +165,10 @@
         "welcome": "¡Bienvenido! Redirigiendo...",
         "logout": "Cierre de sesión exitoso"
     }
-}
+},
+    "status": {
+        "IN_PROGRESS": "En progreso",
+        "ENDED": "Completado"
+    }
 
 }

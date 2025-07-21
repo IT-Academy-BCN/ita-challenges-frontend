@@ -41,6 +41,7 @@
                 "toolTip": "Inicia sessió per enviar la solució.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar repte",
+                "buttonContinueChallenge": "Continua el repte",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalitzar",
                 "buttonCancel": "Cancel.lar",
@@ -164,6 +165,10 @@
         "welcome": "Benvingut! Redirigint...",
         "logout": "Tancament de sessió correcte"
     }
-}
+},
+    "status": {
+        "IN_PROGRESS": "En progrés",
+        "ENDED": "Completat"
+    }
 
 }   

@@ -261,6 +261,7 @@ saveChallenge(): void {
   this.challengeStarted = true;
   this.isEditorChallengeVisible = true;
   this.solutionState = SolutionStatus.IN_PROGRESS;
+  this.status = SolutionStatus.IN_PROGRESS;
   this.startChallenge.emit(true);
   this.loadSolutionFromBackend();
 }
