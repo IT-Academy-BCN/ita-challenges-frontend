@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
 import { of } from 'rxjs';
-import { By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser'
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -22,11 +22,12 @@ class MockNavService {
   changeLanguage = jest.fn((language: string) => {
     this.selectWidth = language === 'ca' ? '69px' : '57px'
   })
+  openRegisterUsersModal = jest.fn();
 }
 class MockAuthService {
   updateUserRoleAndUserNameFromToken = jest.fn();
   getUsername = jest.fn(() => of('test-user'));
-  isLoggedIn$ = of(true); 
+  isLoggedIn$ = of(true);
   logout = jest.fn();
   getUserRole() {
     return of('')
@@ -154,5 +155,11 @@ describe('DesktopNavComponent', () => {
     component.logout();
   
     expect(logoutSpy).toHaveBeenCalled();
+  });
+
+  it('should call openRegisterUsersModal on navService when openRegisterUsersModal is called', () => {
+    const openRegisterUsersModalSpy = jest.spyOn(navService, 'openRegisterUsersModal');
+    component.openRegisterUsersModal();
+    expect(openRegisterUsersModalSpy).toHaveBeenCalled();
   });
 })
