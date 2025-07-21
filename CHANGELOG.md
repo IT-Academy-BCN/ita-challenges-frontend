@@ -12,7 +12,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
 
 ### Added
-- Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#659])
+- Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#661])
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
 
