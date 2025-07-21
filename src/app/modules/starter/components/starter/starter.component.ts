@@ -1,3 +1,4 @@
+import { UserSolution } from './../../../../models/user-solution.interface';
 import { type FilterChallenge } from './../../../../models/filter-challenge.model'
 import { Component, Inject, type OnInit, ViewChild, type ElementRef, ChangeDetectorRef, inject } from '@angular/core'
 import { type Subscription } from 'rxjs'
@@ -164,9 +165,9 @@ export class StarterComponent implements OnInit {
   fetchUserSolutionsStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({
     next: (solutions = []) => {
-      this.solutionStatusMap = solutions.reduce((acc, sol) => {
-        acc[sol.uuid_challenge] = sol.status;
-        return acc;
+      this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
+        statusMap[userSolution.uuid_challenge] = userSolution.status;
+        return statusMap;
       }, {} as Record<string, SolutionStatus>);
     },
     error: (err) => {
