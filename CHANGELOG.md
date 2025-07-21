@@ -6,7 +6,7 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-21
 
-### 🆕 Added
+### Added
 - Integrated real endpoint to fetch a related challenge from other one using a service (Taiga [#600], PR [#676]).
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
