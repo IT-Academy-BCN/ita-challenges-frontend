@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { Subject, takeUntil, forkJoin, map, of, catchError } from 'rxjs';
+import { Subject, takeUntil, forkJoin, map, of, catchError, filter, switchMap } from 'rxjs';
 
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Challenge } from 'src/app/models/challenge.model';
+import { error } from 'console';
 
 @Component({
   selector: 'app-bookmark',
@@ -22,17 +23,19 @@ export class BookmarkComponent implements OnInit, OnDestroy {
   }
 
   private loadBookmarkedChallenges(): void {
-    this.authService.getUserId()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: userId => {
-          if (!userId) {
-            console.warn('User ID is null or undefined.');
-            return;
-          }
-          this.fetchBookmarks(userId);
-        },
-        error: err => console.error('Failed to retrieve user ID', err)
+    this.authService.getUserId().pipe(
+      takeUntil(this.destroy$),
+      filter((userId): userId is string => !!userId),
+      switchMap(userId =>
+        this.challengeService.getUserBookmarks(userId).pipe(
+          catchError(err => {
+            console.error("failed to retrieve user bookmarks", err);
+            return of([])
+          })
+        )
+      )).subscribe({
+        next: bookmarks => this.loadChallenges(bookmarks),
+        error: err =>console.error("failed to retrieve user ID", err)
       });
   }
 

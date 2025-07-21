@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-18
 
 ### Added
-- Implemented `CustomDatePipe` to format challenge creation dates in short format for Catalan, Spanish, and English (Taiga [#600], PR [#675]).
+- Rendering bookmarked challenges at the Bookmark's view (Taiga [#598], PR [#675]).
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
