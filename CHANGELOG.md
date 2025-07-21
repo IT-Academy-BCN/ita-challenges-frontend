@@ -4,15 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-07-07
+### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
 
 ### Added
 - Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#661])
-
-### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-07-04
-
-### Added
-- Added the interface for the user regeister modal (Taiga [#554], PR [#658])
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
 
