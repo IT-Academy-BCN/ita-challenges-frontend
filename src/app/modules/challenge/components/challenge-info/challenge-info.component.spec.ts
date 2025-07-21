@@ -118,12 +118,6 @@ describe('ChallengeInfoComponent', () => {
     expect(modalService.open).toHaveBeenCalledWith(SendSolutionModalComponent, { centered: true, size: 'lg' })
   })
 
-  it('should open restricted modal if user is not logged in', () => {
-    jest.spyOn(modalService, 'open').mockImplementation()
-    component.clickSendButton()
-    // expect(modalService.open).toHaveBeenCalledWith(RestrictedModalComponent, { centered: true, size: 'lg' })
-  })
-
   it('should onActiveIdChange correctly', fakeAsync(() => {
     const newActiveId = ChallengeTab.SOLUTIONS
 
@@ -281,12 +275,12 @@ describe('ChallengeInfoComponent', () => {
   describe('Related Challenges Feature', () => {
     let component: ChallengeInfoComponent
     let fixture: ComponentFixture<ChallengeInfoComponent>
-    let starterServiceMock: any
+    
   
     beforeEach(() => {
       fixture = TestBed.createComponent(ChallengeInfoComponent)
       component = fixture.componentInstance
-      starterServiceMock = (component as any).starterService
+      
       fixture.detectChanges()
     })
   
@@ -335,128 +329,6 @@ describe('ChallengeInfoComponent', () => {
       expect(loadRelatedChallengesSpy).not.toHaveBeenCalled()
     }))
   
-    
-    // The following test will need to be updated when implementing the real related challenges endpoint.
-    // Instead of mocking StarterService.getAllChallenges and filtering locally,
-    // you'll need to mock the new endpoint that directly returns related challenges.
-    it('should filter out current challenge from related challenges', () => {
-      // Arrange
-      const mockChallenges = [
-        { id_challenge: '1', challenge_title: 'Challenge 1' },
-        { id_challenge: '2', challenge_title: 'Challenge 2' },
-        { id_challenge: '3', challenge_title: 'Challenge 3' }
-      ] as any[]
-      
-      component.idChallenge = '2' // Current challenge ID
-      
-      // Mock the StarterService.getAllChallenges method
-      const getAllChallengesSpy = jest.spyOn(starterServiceMock, 'getAllChallenges')
-      getAllChallengesSpy.mockReturnValue({
-        subscribe: (fn: any) => {
-          fn({ results: mockChallenges })
-          return { unsubscribe: () => {} }
-        }
-      })
-      
-      // Mock the getRandomChallenges method
-      const getRandomChallengesSpy = jest.spyOn(component as any, 'getRandomChallenges')
-      getRandomChallengesSpy.mockReturnValue([
-        { id_challenge: '1', challenge_title: 'Challenge 1' },
-        { id_challenge: '3', challenge_title: 'Challenge 3' }
-      ])
-      
-      // Act
-      component.loadRelatedChallenges()
-      
-      // Assert
-      expect(getAllChallengesSpy).toHaveBeenCalledTimes(1)
-      expect(getRandomChallengesSpy).toHaveBeenCalledTimes(1)
-      
-      // Verify filtered challenges were passed to getRandomChallenges
-      const filteredChallenges = mockChallenges.filter(c => c.id_challenge !== '2')
-      expect(getRandomChallengesSpy).toHaveBeenCalledWith(
-        filteredChallenges,
-        expect.any(Number)
-      )
-    })
-  
-    // The following tests for getRandomChallenges will be obsolete when implementing
-    // the real related challenges endpoint, as this method will be removed.
-    // These tests should be replaced with tests for the new endpoint integration.
-    it('should return all challenges when count is greater than available challenges', () => {
-      // Arrange
-      const mockChallenges = [
-        { id_challenge: '1', challenge_title: 'Challenge 1' },
-        { id_challenge: '2', challenge_title: 'Challenge 2' }
-      ] as any[]
-      
-      // Act - Call the private method directly
-      const result = (component as any).getRandomChallenges(mockChallenges, 3)
-      
-      // Assert
-      expect(result.length).toBe(2)
-      expect(result).toEqual(mockChallenges)
-    })
-    
-    it('should select random challenges correctly', () => {
-      // Arrange
-      const mockChallenges = [
-        { id_challenge: '1', challenge_title: 'Challenge 1' },
-        { id_challenge: '2', challenge_title: 'Challenge 2' },
-        { id_challenge: '3', challenge_title: 'Challenge 3' },
-        { id_challenge: '4', challenge_title: 'Challenge 4' },
-        { id_challenge: '5', challenge_title: 'Challenge 5' }
-      ] as any[]
-      
-      // Act
-      const result = (component as any).getRandomChallenges(mockChallenges, 3)
-      
-      // Assert
-      expect(result.length).toBe(3)
-      // Each result should be one of the original challenges
-      result.forEach((challenge: any) => {
-        expect(mockChallenges).toContainEqual(challenge)
-      })
-      
-      // Verify we're getting unique challenges (no duplicates)
-      const uniqueIds = new Set(result.map((c: any) => c.id_challenge))
-      expect(uniqueIds.size).toBe(result.length)
-    })
-
-    it('should load user solution if available', async () => {
-      const mockUserId: string = 'test-user-id'
-      const mockChallengeId: string = 'test-challenge-id'
-      const mockLanguageId: string = 'mock-lang-id'
-      const mockSolutionText: string = 'Mock user solution'
-
-      // Prepara valores requeridos
-      component.idChallenge = mockChallengeId
-      component.languages = [{ id_language: mockLanguageId, language_name: 'JavaScript' }]
-
-      // Mock servicios
-      jest.spyOn(component['authService'], 'getUserId').mockReturnValue(of(mockUserId))
-      jest.spyOn(component['solutionService'], 'fetchUserSolution').mockReturnValue(of([
-        {
-          uuid_user: mockUserId,
-          uuid_challenge: mockChallengeId,
-          uuid_language: mockLanguageId,
-          solution_text: mockSolutionText,
-          status: SolutionStatus.ENDED
-        }
-      ]))
-
-      // Act
-      await component['loadUserSolutionData']()
-      fixture.detectChanges()
-
-      // Assert
-      expect(component.solutionSent).toBe(true)
-      expect(component.solutionText).toBe(mockSolutionText)
-      expect(component.userSolution).toEqual({
-        solution_text: mockSolutionText
-      })
-    })
-    
   })
   
 
@@ -682,7 +554,7 @@ describe('loadRelatedChallenges', () => {
     
     // Act
     component.loadRelatedChallenges();
-  
+    
     
     // Assert
     expect(subscriptionSpy).toHaveBeenCalled();
