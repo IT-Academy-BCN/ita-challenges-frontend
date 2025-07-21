@@ -14,9 +14,6 @@ and this project adheres to
 ### Added
 - Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
 
-### Added
-- Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
-- 
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
 
