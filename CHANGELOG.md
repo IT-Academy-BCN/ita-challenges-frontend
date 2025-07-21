@@ -45,7 +45,6 @@ and this project adheres to
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
 
-
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
 
 ### Changed
