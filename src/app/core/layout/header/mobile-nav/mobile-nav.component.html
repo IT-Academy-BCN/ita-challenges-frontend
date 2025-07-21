@@ -10,6 +10,13 @@
     </ul>
 
     <div class="d-flex justify-content-end align-items-center">
+      <!-- registerUsers -->
+        @if(isLoggedIn && currentRole===UserRole.ADMIN){
+          <button class="login" (click)="openRegisterUsersModal()">
+            {{'modules.modals.register.title' | translate}}
+          </button>
+        }
+
       <!-- languageSelect -->
       <div class="ms-2 pe-3">
         <label for="languageSelect">

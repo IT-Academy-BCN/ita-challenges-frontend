@@ -41,10 +41,12 @@
                 "toolTip": "Log in to submit the solution.",
                 "buttonAccept": "Send",
                 "buttonStart": "Start challenge",
+                 "buttonContinueChallenge": "Continue Challenge",
                 "buttonSaveChallenge": "Save",
                 "buttonSendSolution": "Finish",
                 "buttonCancel": "Cancel",
                 "buttonEditChallenge": "Edit challenge",
+                "buttonRegisterUsers": "Add students",
                 "solutionSend": "Solution sent",
                 "login": "Log In",
                 "logout": "Log Out"
@@ -128,6 +130,15 @@
                 "description":"Once the code is sent it cannot be edited" ,
                 "btn-accept": "Accept",
                 "btn-cancel": "Cancel"
+            },
+            "register":{
+                "title":"Add students",
+                "description":"Insert GitHub usernames",
+                "placeholder":"GitHub username",
+                "btn-add":"Add",
+                "btn-confirm":"Confirm",
+                "msg-invalid":"Invalid username.",
+                "msg-duplicate":"This user has already been added."
             }
         }
     },
@@ -165,6 +176,10 @@
         "welcome": "Welcome! Redirecting...",
         "logout": "Logout successful"
     }
-}
+},
+    "status": {
+        "IN_PROGRESS": "In progress",
+        "ENDED": "Completed"
+    }
 
 }    

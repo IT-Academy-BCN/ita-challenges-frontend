@@ -1,3 +1,5 @@
 export enum SolutionStatus {
-    ENDED = "ENDED"
-  }
+  IN_PROGRESS = "IN_PROGRESS",
+  ENDED = "ENDED",
+  NOT_STARTED = "NOT_STARTED",
+}

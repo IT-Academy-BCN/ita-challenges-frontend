@@ -22,11 +22,11 @@ describe('CustomDatePipe', () => {
     expect(result).toBe("1 Ene 2025")
   })
 
-  it('should format the date as "Jan 1, 2025" in English', () => {
+  it('should format the date as "1 Jan 2025" in English', () => {
     translateMock.currentLang = 'en'
     const pipe = new CustomDatePipe(translateMock as TranslateService)
     const result = pipe.transform(new Date(2025, 0, 1))
-    expect(result).toBe('Jan 1, 2025')
+    expect(result).toBe('1 Jan 2025')
   })
 
   it("should return empty string for null value", () => {
@@ -47,10 +47,10 @@ describe('CustomDatePipe', () => {
     expect(result).toBe('')
   });
 
-  it('should fallback to Spanish month names if language is unknown', () => {
+  it('should fallback to English month names if language is unknown', () => {
     translateMock.currentLang = 'fr'
     const pipe = new CustomDatePipe(translateMock as TranslateService)
     const result = pipe.transform(new Date(2025, 0, 1))
-    expect(result).toBe('1 Ene 2025')
+    expect(result).toBe('1 Jan 2025')
   })
 })
