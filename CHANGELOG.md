@@ -8,6 +8,30 @@ and this project adheres to
 
 ### Added
 - Implemented `bookmarks` view (http://localhost:4200/ita-challenge/bookmark) this is just the page there is no funcionality extra (Taiga [#597], PR [#674]).
+### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
+
+### Added
+- Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#661])
+
+### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
+
+### Added
+- Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
+
+### [ita-challenges-frontend-3.1.53-RELEASE] - 2025-07-16
+
+### Added
+- Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
+
+### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
+
+### Changed
+- Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
+
+### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
+
+### Added
+- Added the interface for the user regeister modal (Taiga [#554], PR [#658])
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
@@ -22,10 +46,8 @@ and this project adheres to
 ### Changed
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
-
 ### Changed
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
-
 
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
 

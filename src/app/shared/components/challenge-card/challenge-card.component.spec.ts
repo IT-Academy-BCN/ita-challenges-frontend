@@ -12,8 +12,9 @@ import { By } from '@angular/platform-browser'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
@@ -39,8 +40,8 @@ describe('ChallengeCardComponent', () => {
 
     mockAuthService = {
       isUserLoggedIn: jest.fn().mockReturnValue(true),
-      getUserRole: jest.fn().mockReturnValue(of("ADMIN")),
-    } as any;
+      getUserRole: jest.fn().mockReturnValue(of('ADMIN'))
+    } as any
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeCardComponent, MockTranslatePipe],
@@ -96,8 +97,6 @@ describe('ChallengeCardComponent', () => {
     const hasId = anchorElement.innerText !== ''
     anchorElement.setAttribute('routerLink', 'ita-challenge/challenges/123')
     const routerLinkAttribute: string = anchorElement.getAttribute('routerLink')?.toLowerCase() ?? ''
-
-    console.log('Component is giving a string value on the router link:', hasId)
 
     expect(routerLinkAttribute).toBe('ita-challenge/challenges/123')
   })
@@ -166,6 +165,70 @@ describe('ChallengeCardComponent', () => {
       expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
       expect(component.isBookmarked).toBe(false)
       done()
+    })
+  })
+
+  it('should not call favorite or bookmark services if user is not logged in', () => {
+    mockAuthService.isUserLoggedIn.mockReturnValue(false)
+    const event = new MouseEvent('click')
+
+    component.toggleFavorite(event)
+    expect(mockChallengeService.addToFavorites).not.toHaveBeenCalled()
+
+    component.toggleBookmark(event)
+    expect(mockChallengeService.addBookmark).not.toHaveBeenCalled()
+  })
+
+  it('should handle error on addToFavorites', () => {
+    component.isFavorite = false
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.addToFavorites.mockReturnValue(throwError(() => new Error('error')))
+    component.toggleFavorite(new MouseEvent('click'))
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('should handle error on removeFromFavorites', () => {
+    component.isFavorite = true
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.removeFromFavorites.mockReturnValue(throwError(() => new Error('error')))
+    component.toggleFavorite(new MouseEvent('click'))
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('should handle error on addBookmark', () => {
+    component.isBookmarked = false
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')))
+    component.toggleBookmark(new MouseEvent('click'))
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('should handle error on removeBookmark', () => {
+    component.isBookmarked = true
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')))
+    component.toggleBookmark(new MouseEvent('click'))
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  describe('getStatusTooltip', () => {
+    it('should return the correct tooltip for ENDED status', () => {
+      component.solutionStatus = SolutionStatus.ENDED
+      expect(component.getStatusTooltip()).toBe('You have completed this challenge')
+    })
+
+    it('should return the correct tooltip for IN_PROGRESS status', () => {
+      component.solutionStatus = SolutionStatus.IN_PROGRESS
+      expect(component.getStatusTooltip()).toBe('You have a saved solution in progress')
+    })
+
+    it('should return an empty string for other statuses', () => {
+      component.solutionStatus = undefined
+      expect(component.getStatusTooltip()).toBe('')
     })
   })
 })

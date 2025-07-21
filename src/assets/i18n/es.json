@@ -41,8 +41,10 @@
                 "toolTip": "Inicia sesión para enviar la solución.",
                 "buttonAccept": "Enviar",
                 "buttonStart": "Iniciar reto",
+                "buttonContinueChallenge": "Continuar reto",
                 "buttonSaveChallenge": "Guardar",
                 "buttonSendSolution": "Finalizar",
+                "buttonRegisterUsers": "Añadir alumnos/as",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
                 "solutionSend": "Solución enviada",
@@ -127,6 +129,15 @@
                 "description":"Una vez enviado el código no se puede editar" ,
                 "btn-accept": "Aceptar",
                 "btn-cancel": "Cancelar"
+            },
+            "register":{
+                "title":"Añadir alumnos/as",
+                "description":"Inserta los usuarios de GitHub",
+                "placeholder":"Usuario de GitHub",
+                "btn-add":"Añadir",
+                "btn-confirm":"Confirmar",
+                "msg-invalid":"Nombre de usuario no válido.",
+                "msg-duplicate":"Este usuario ya ha sido añadido."
             }
         }
     },
@@ -164,6 +175,10 @@
         "welcome": "¡Bienvenido! Redirigiendo...",
         "logout": "Cierre de sesión exitoso"
     }
-}
+},
+    "status": {
+        "IN_PROGRESS": "En progreso",
+        "ENDED": "Completado"
+    }
 
 }

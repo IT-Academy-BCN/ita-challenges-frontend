@@ -1,4 +1,4 @@
-import { Component, OnInit, type OnDestroy, type OnChanges, type SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef, inject, Input } from '@angular/core'
+import { Component, OnInit, type OnDestroy, type OnChanges, type SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef, inject, Input, EventEmitter, Output } from '@angular/core'
 import { EditorView, keymap, type ViewUpdate } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
 import { javascript } from '@codemirror/lang-javascript'
@@ -8,22 +8,29 @@ import { lineNumbers } from '@codemirror/view'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
+import { SolutionService } from 'src/app/services/solution.service'
 
 @Component({
   selector: 'app-editor-challenge',
   templateUrl: './editor-challenge.component.html',
   styleUrls: ['./editor-challenge.component.scss']
 })
-export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
+export class EditorChallengeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('editorSolution', { static: false }) editorSolution!: ElementRef
   @Input() isEditorChallengeVisible: boolean = false
   @Input() initialContent: string = '// Escribe tu solución aquí'
   @Input() activeId: ChallengeTab = ChallengeTab.DETAILS
+  @Input() idChallenge!: string;
+  @Input() languageId!: string;
+  @Input() solutionText: string = '';
+  @Output() solutionChanged = new EventEmitter<string>();
+
 
   private editor!: EditorView
   private readonly cdr = inject(ChangeDetectorRef)
   private isEditorInitialized: boolean = false
   private langChangeSub?: Subscription
+  private readonly solutionService = inject(SolutionService);
 
   constructor (private readonly translate: TranslateService) {}
   ngOnInit (): void {
@@ -36,26 +43,30 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  updateEditorContent (): void {
-    this.translate.get('modules.challenge.info.solutionCode').subscribe(translatedText => {
-      const content = translatedText + '\n'
-      this.editor.dispatch({
-        changes: { from: 0, to: this.editor.state.doc.length, insert: content }
-      })
-    })
-  }
-
   ngOnDestroy (): void {
     this.editor?.destroy()
     this.langChangeSub?.unsubscribe()
   }
 
-  ngOnChanges (changes: SimpleChanges): void {
-    if (changes['isEditorChallengeVisible']?.currentValue === true && this.editor == null) {
-      this.cdr.detectChanges() 
-      this.initializeCodeMirror()
-    }
+ngOnChanges(changes: SimpleChanges): void {
+  if (changes['isEditorChallengeVisible']?.currentValue === true && !this.editor) {
+    this.cdr.detectChanges();
+    this.initializeCodeMirror();
   }
+  if (changes['solutionText'] && this.editor) {
+    const newText = changes['solutionText'].currentValue || '';
+    this.editor.dispatch({
+      changes: { from: 0, to: this.editor.state.doc.length, insert: newText }
+    });
+  }
+  if (changes['initialContent'] && this.editor) {
+    const newText = changes['initialContent'].currentValue || '';
+    this.editor.dispatch({
+      changes: { from: 0, to: this.editor.state.doc.length, insert: newText }
+    });
+  }
+}
+
 
   ngAfterViewInit (): void {
     if (this.isEditorChallengeVisible && this.editorSolution !== null && this.editorSolution !== undefined) {
@@ -81,7 +92,8 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
             EditorView.updateListener.of((update: ViewUpdate) => {
               if (update.docChanged) {
                 const content = this.editor.state.doc.toString()
-                localStorage.setItem('editorContent', content)
+                 this.solutionChanged.emit(content); 
+                this.solutionService.solutionText(content); 
               }
             }),
             EditorView.editable.of(true) // Habilita edición
@@ -91,9 +103,16 @@ export class editorChallengeComponent implements OnInit, OnChanges, OnDestroy {
       this.isEditorInitialized = true
     })
   }
-
-  saveContent (): void {
-    const content = this.editor.state.doc.toString()
-    localStorage.setItem('editorContent', content)
-  }
+  updateEditorContent (): void {
+    this.translate.get('modules.challenge.info.solutionCode').subscribe(translatedText => {
+      const content = translatedText + '\n'
+      this.editor.dispatch({
+        changes: { from: 0, to: this.editor.state.doc.length, insert: content }
+      })
+    })
+ 
+ }
+ onEditorContentChange(content: string): void {
+  this.solutionChanged.emit(content);
+}
 }

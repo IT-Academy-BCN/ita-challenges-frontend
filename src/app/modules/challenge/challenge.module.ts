@@ -5,7 +5,7 @@ import { ChallengeRoutingModule } from './challenge-routing.module'
 import { CommonModule } from '@angular/common'
 import { CoreModule } from 'src/app/core/core.module'
 import { DynamicTranslatePipe } from '../../pipes/dynamic-translate.pipe'
-import { editorChallengeComponent } from './components/editor-challenge/editor-challenge.component'
+import { EditorChallengeComponent} from './components/editor-challenge/editor-challenge.component'
 import { FormsModule } from '@angular/forms'
 import { NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgModule } from '@angular/core'
@@ -22,7 +22,7 @@ import { CustomDatePipe } from '../../pipes/custom-date.pipe'
     ChallengeHeaderComponent,
     ChallengeInfoComponent,
     ChallengeComponent,
-    editorChallengeComponent
+    EditorChallengeComponent
   ],
   providers: [],
   imports: [

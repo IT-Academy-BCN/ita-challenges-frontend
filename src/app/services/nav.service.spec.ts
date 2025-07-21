@@ -38,7 +38,7 @@ class MockTranslateService {
 
 describe('NavService', () => {
   let service: NavService
-  // let modalService: NgbModal
+  let modalService: MockNgbModal
   let translateService: MockTranslateService
 
   beforeEach(() => {
@@ -50,7 +50,7 @@ describe('NavService', () => {
       ]
     })
     service = TestBed.inject(NavService)
-    // modalService = TestBed.inject(NgbModal)
+    modalService = TestBed.inject(NgbModal) as unknown as MockNgbModal
     translateService = TestBed.inject(TranslateService) as unknown as MockTranslateService
   })
 
@@ -72,4 +72,10 @@ describe('NavService', () => {
     expect(translateService.getLangs()).toEqual(['en', 'es', 'ca'])
     expect(translateService.getCurrentLang()).toBe('ca')
   })
+
+  it('should open the register users modal', () => {
+    const openSpy = jest.spyOn(modalService, 'open');
+    service.openRegisterUsersModal();
+    expect(openSpy).toHaveBeenCalled();
+  });
 })
