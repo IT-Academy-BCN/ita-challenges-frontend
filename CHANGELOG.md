@@ -5,7 +5,6 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
-
 ### Added
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
 
