@@ -45,11 +45,9 @@ export class RegisterUsersModalComponent {
         catchError(error => of({ success: false, username, error }))
       )
     );
-  
+
     forkJoin(registrationObservables).subscribe(results => {
-      const anyFailed = results.some(result => !result.success);
-      this.registrationSuccess = !anyFailed;
-  
+      this.registrationSuccess = results.every(result => result.success);
       if (this.registrationSuccess) {
         this.usernames = [];
       }
