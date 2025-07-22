@@ -132,12 +132,14 @@
             },
             "register":{
                 "title":"Añadir alumnos/as",
+                "success":"Usuarios registrados!",
                 "description":"Inserta los usuarios de GitHub",
                 "placeholder":"Usuario de GitHub",
                 "btn-add":"Añadir",
                 "btn-confirm":"Confirmar",
                 "msg-invalid":"Nombre de usuario no válido.",
-                "msg-duplicate":"Este usuario ya ha sido añadido."
+                "msg-duplicate":"Este usuario ya ha sido añadido.",
+                "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo."
             }
         }
     },

@@ -133,12 +133,15 @@
             },
             "register":{
                 "title":"Add students",
+                "success":"Users registered successfully!",
                 "description":"Insert GitHub usernames",
                 "placeholder":"GitHub username",
                 "btn-add":"Add",
                 "btn-confirm":"Confirm",
                 "msg-invalid":"Invalid username.",
-                "msg-duplicate":"This user has already been added."
+                "msg-duplicate":"This user has already been added.",
+                "msg-error":"Something went wrong. Please try again."
+
             }
         }
     },
