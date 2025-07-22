@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RegisterUsersModalComponent } from './register-users-modal.component';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -101,16 +101,17 @@ describe('RegisterUsersModalComponent', () => {
     expect(normalized).toBe('username');
   });
 
-  it('should register users and set success flag', () => {
+  it('should register users and set success flag', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
     jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
 
     component.confirmRegistration();
+    tick();
 
     expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(true);
-  });
-  it('should set registrationSuccess to false if any registration fails', () => {
+  }));
+  it('should set registrationSuccess to false if any registration fails', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
     const successSpy = jest.spyOn(registerUsersService, 'registerUserMockSuccess');
     successSpy
@@ -118,20 +119,22 @@ describe('RegisterUsersModalComponent', () => {
       .mockReturnValueOnce(throwError(() => new Error('fail')));
 
     component.confirmRegistration();
+    tick();
 
     expect(successSpy).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(false);
-  });
+  }));
 
-  it('should clear usernames and set registrationSuccess to true if all succeed', () => {
+  it('should clear usernames and set registrationSuccess to true if all succeed', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
     jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
 
     component.confirmRegistration();
+    tick();
 
     expect(component.registrationSuccess).toBe(true);
     expect(component.usernames).toEqual([]);
-  });
+  }));
 
   it('isDuplicateUsername should return true for duplicates', () => {
     component.usernames = ['user1'];
