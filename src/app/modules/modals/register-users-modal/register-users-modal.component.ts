@@ -11,8 +11,7 @@ export class RegisterUsersModalComponent {
   private readonly registerUsersService = inject(RegisterUsersService);
   username: string = '';
   usernames: string[] = [];
-  registrationError = false;
-  registrationSuccess = false;
+  registrationSuccess: boolean | null = null;
   pendingResponses = 0;
 
   public closeModal(): void {
@@ -37,32 +36,25 @@ export class RegisterUsersModalComponent {
   }
 
   confirmRegistration(): void {
-    this.registrationError = false;
-    this.registrationSuccess = false;
+    this.registrationSuccess = null;
     this.pendingResponses = this.usernames.length;
 
     this.usernames.forEach(username => {
       this.registerUsersService.registerUserMockSuccess(username).subscribe({
-        next: (res) => {
-          console.log(`User ${username} registered successfully`, res);
-          this.checkIfRegistrationCompleted();
-        },
-        error: (err) => {
-          console.error(`Error registering user ${username}`, err);
-          this.registrationError = true;
-          this.checkIfRegistrationCompleted();
-        }
+        next: (res) => this.checkIfRegistrationCompleted(false),
+        error: (err) => this.checkIfRegistrationCompleted(true)
       });
     })
   }
 
-  checkIfRegistrationCompleted(): void {
+  checkIfRegistrationCompleted(errorOccurred: boolean): void {
+    if (errorOccurred) this.registrationSuccess = false;
+    
     this.pendingResponses--;
 
-    if (this.pendingResponses === 0) {
-      if (!this.registrationError) {
-        this.registrationSuccess = true;
-        this.usernames = [];
-      }    }
+    if (this.pendingResponses === 0 && this.registrationSuccess !== false) {
+      this.registrationSuccess = true;
+      this.usernames = [];
+    }
   }
 }

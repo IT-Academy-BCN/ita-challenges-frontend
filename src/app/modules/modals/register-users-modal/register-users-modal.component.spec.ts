@@ -109,7 +109,6 @@ describe('RegisterUsersModalComponent', () => {
 
     expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(true);
-    expect(component.registrationError).toBe(false);
   });
   it('should set registrationError to true if any registration fails', () => {
     component.usernames = ['user1', 'user2'];
@@ -124,7 +123,6 @@ describe('RegisterUsersModalComponent', () => {
     component.confirmRegistration();
 
     expect(successSpy).toHaveBeenCalledTimes(2);
-    expect(component.registrationError).toBe(true);
     expect(component.registrationSuccess).toBe(false);
   });
 
@@ -147,7 +145,6 @@ describe('RegisterUsersModalComponent', () => {
 
   it('should decrement pendingResponses and call checkIfRegistrationCompleted', () => {
     component.pendingResponses = 2;
-    component.registrationError = false;
     component.usernames = ['user1', 'user2'];
     jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
 

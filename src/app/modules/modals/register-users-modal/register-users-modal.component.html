@@ -21,7 +21,7 @@
             <form (ngSubmit)="addUsername()" class="d-flex flex-column gap-2 justify-content-center">
                 <div class="d-flex gap-2 align-items-center">
                     <input type="text" class="form-control" [(ngModel)]="username" name="username"
-                        placeholder="{{'modules.modals.register.placeholder' | translate}}" required pattern="^(?!-)(?!.*--)[a-zA-Z0-9-]*[a-zA-Z0-9]$"
+                        placeholder="{{'modules.modals.register.placeholder' | translate}}" required maxlength='39' pattern="^(?!-)(?!.*--)[a-zA-Z0-9-]*[a-zA-Z0-9]$"
                         #usernameInput="ngModel">
                     <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">{{'modules.modals.register.btn-add' | translate}}</button>
                 </div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="registrationError" class="text-danger small my-2 d-flex justify-content-center">
+        <div *ngIf="registrationSuccess === false" class="text-danger small my-2 d-flex justify-content-center">
             {{ 'modules.modals.register.msg-error' | translate }}
         </div>
         <div class="col-12 modal-footer gap-2 my-3 text-center d-flex flex-column">
