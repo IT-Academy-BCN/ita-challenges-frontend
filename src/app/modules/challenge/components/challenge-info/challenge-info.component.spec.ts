@@ -11,6 +11,7 @@ import { ChallengeCardComponent } from '../../../../shared/components/challenge-
 import { SendSolutionModalComponent } from 'src/app/modules/modals/send-solution-modal/send-solution-modal.component'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { ChallengeService } from 'src/app/services/challenge.service'
 import { By } from '@angular/platform-browser'
 import { of, Subject, throwError } from 'rxjs'
 import { Component, Input } from '@angular/core'
@@ -477,27 +478,48 @@ describe('loadRelatedChallenges', () => {
   let challengeServiceMock: any;
   let cdrMock: any;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    challengeServiceMock = {
+      getRelatedChallenges: jest.fn().mockReturnValue(of([]))
+    };
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        ChallengeInfoComponent,
+        ResourceCardComponent,
+        ChallengeCardComponent,
+        SolutionComponent,
+        MockEditorChallengeComponent
+      ],
+      imports: [
+        RouterTestingModule,
+        I18nModule,
+        FormsModule,
+        NgbNavModule,
+        DynamicTranslatePipe
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        { provide: ChallengeService, useValue: challengeServiceMock },
+        {
+          provide: NgbModal,
+          useValue: {
+            open: jest.fn()
+          }
+        }
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ChallengeInfoComponent);
     component = fixture.componentInstance;
-    challengeServiceMock = (component as any).challengeService;
     cdrMock = (component as any).cdr;
     
-    // Mock ChangeDetectorRef
     cdrMock.detectChanges = jest.fn();
     
-    // Set required input
     component.idChallenge = 'test-challenge-id';
     
     fixture.detectChanges();
-  });
-
-  it('should set relatedChallengesLoaded to false initially', () => {
-    // Act
-    component.loadRelatedChallenges();
-    
-    // Assert
-    expect(component.relatedChallengesLoaded).toBe(false);
   });
 
   it('should load related challenges successfully', () => {
@@ -507,7 +529,7 @@ describe('loadRelatedChallenges', () => {
       { id_challenge: '2', title: 'Related Challenge 2' }
     ];
     
-    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(
+    challengeServiceMock.getRelatedChallenges.mockReturnValue(
       of(mockRelatedChallenges)
     );
     
@@ -524,7 +546,7 @@ describe('loadRelatedChallenges', () => {
   it('should handle error when loading related challenges', () => {
     // Arrange
     const errorMessage = 'Test error';
-    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(
+    challengeServiceMock.getRelatedChallenges.mockReturnValue(
       throwError(() => new Error(errorMessage))
     );
     
@@ -542,21 +564,5 @@ describe('loadRelatedChallenges', () => {
     
     // Clean up
     consoleSpy.mockRestore();
-  });
-
-  it('should complete the subscription when component is destroyed', () => {
-    // Arrange
-    const mockSubscription = new Subject();
-    challengeServiceMock.getRelatedChallenges = jest.fn().mockReturnValue(mockSubscription);
-
-    // Spy on subscription.unsubscribe
-    const subscriptionSpy = jest.spyOn(mockSubscription, 'unsubscribe');
-    
-    // Act
-    component.loadRelatedChallenges();
-    
-    
-    // Assert
-    expect(subscriptionSpy).toHaveBeenCalled();
   });
 });

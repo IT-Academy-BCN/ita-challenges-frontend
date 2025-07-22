@@ -7,13 +7,14 @@ import {
   Output,
   ViewChild,
   inject,
+  type OnDestroy,
   type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeService } from '../../../../services/challenge.service'
-import { firstValueFrom, type Subscription } from 'rxjs'
+import { firstValueFrom, Subject, takeUntil, type Subscription } from 'rxjs'
 import { DataChallenge } from '../../../../models/data-challenge.model'
 import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
@@ -27,11 +28,11 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 @Component({
   selector: 'app-challenge-info',
   templateUrl: './challenge-info.component.html',
-  styleUrls: ['./challenge-info.component.scss'],
-  providers: [ChallengeService]
+  styleUrls: ['./challenge-info.component.scss']
 })
 export class ChallengeInfoComponent
-implements OnInit {
+implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   isChallengeStatementVisible = true
   solutionSent: boolean = false
   isUserSolution: boolean = true
@@ -261,7 +262,9 @@ implements OnInit {
   loadRelatedChallenges(): void {
     this.relatedChallengesLoaded = false;
 
-  this.challengeService.getRelatedChallenges(this.idChallenge).subscribe({
+  this.challengeService.getRelatedChallenges(this.idChallenge)
+  .pipe(takeUntil(this.destroy$))
+  .subscribe({
     next: (related) => {
       this.relatedChallenges = related;
       this.relatedChallengesLoaded = true;
@@ -292,6 +295,11 @@ implements OnInit {
   onEditorSolutionChanged(newText: string): void {
   this.currentSolutionText = newText;
   this.solutionChanged.emit(newText); 
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
 }
 
 }
