@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { RegisterUsersService } from 'src/app/services/register-users.service';
 
 @Component({
@@ -37,24 +39,20 @@ export class RegisterUsersModalComponent {
 
   confirmRegistration(): void {
     this.registrationSuccess = null;
-    this.pendingResponses = this.usernames.length;
-
-    this.usernames.forEach(username => {
-      this.registerUsersService.registerUserMockSuccess(username).subscribe({
-        next: (res) => this.checkIfRegistrationCompleted(false),
-        error: (err) => this.checkIfRegistrationCompleted(true)
-      });
+    const registrationObservables = this.usernames.map(username =>
+      this.registerUsersService.registerUserMockFailure(username).pipe(
+        map(response => ({ success: true, username, response })),
+        catchError(error => of({ success: false, username, error }))
+      )
+    );
+  
+    forkJoin(registrationObservables).subscribe(results => {
+      const anyFailed = results.some(result => !result.success);
+      this.registrationSuccess = !anyFailed;
+  
+      if (this.registrationSuccess) {
+        this.usernames = [];
+      }
     })
-  }
-
-  checkIfRegistrationCompleted(errorOccurred: boolean): void {
-    if (errorOccurred) this.registrationSuccess = false;
-    
-    this.pendingResponses--;
-
-    if (this.pendingResponses === 0 && this.registrationSuccess !== false) {
-      this.registrationSuccess = true;
-      this.usernames = [];
-    }
   }
 }

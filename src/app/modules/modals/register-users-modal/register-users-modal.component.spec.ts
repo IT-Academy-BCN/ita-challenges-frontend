@@ -4,7 +4,7 @@ import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
 import { RegisterUsersService } from '../../../services/register-users.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { provideHttpClient } from '@angular/common/http';
@@ -110,15 +110,12 @@ describe('RegisterUsersModalComponent', () => {
     expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(true);
   });
-  it('should set registrationError to true if any registration fails', () => {
+  it('should set registrationSuccess to false if any registration fails', () => {
     component.usernames = ['user1', 'user2'];
     const successSpy = jest.spyOn(registerUsersService, 'registerUserMockSuccess');
-    // First call succeeds, second call fails
     successSpy
       .mockReturnValueOnce(of({}))
-      .mockReturnValueOnce({
-        subscribe: ({ next, error }: any) => error(new Error('fail'))
-      } as any);
+      .mockReturnValueOnce(throwError(() => new Error('fail')));
 
     component.confirmRegistration();
 
@@ -143,13 +140,4 @@ describe('RegisterUsersModalComponent', () => {
     expect(component.isDuplicateUsername('user2')).toBe(false);
   });
 
-  it('should decrement pendingResponses and call checkIfRegistrationCompleted', () => {
-    component.pendingResponses = 2;
-    component.usernames = ['user1', 'user2'];
-    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
-
-    const checkSpy = jest.spyOn(component, 'checkIfRegistrationCompleted');
-    component.confirmRegistration();
-    expect(checkSpy).toHaveBeenCalled();
-  });
 });
