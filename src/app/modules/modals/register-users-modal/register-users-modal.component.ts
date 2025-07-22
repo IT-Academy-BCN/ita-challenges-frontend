@@ -40,7 +40,7 @@ export class RegisterUsersModalComponent {
   confirmRegistration(): void {
     this.registrationSuccess = null;
     const registrationObservables = this.usernames.map(username =>
-      this.registerUsersService.registerUserMockFailure(username).pipe(
+      this.registerUsersService.registerUserMockSuccess(username).pipe(
         map(response => ({ success: true, username, response })),
         catchError(error => of({ success: false, username, error }))
       )
