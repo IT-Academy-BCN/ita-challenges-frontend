@@ -4,15 +4,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.1.57-RELEASE] - 2025-07-18
+### [ita-challenges-frontend-3.1.59-RELEASE] - 2025-07-18
 
 ### Added
 - Rendering bookmarked challenges at the Bookmark's view (Taiga [#598], PR [#675]).
 
-### [ita-challenges-frontend-3.1.56-RELEASE] - 2025-07-17
+
+### [ita-challenges-frontend-3.1.58-RELEASE] - 2025-07-17
 
 ### Added
 - Implemented `bookmarks` view (http://localhost:4200/ita-challenge/bookmark) this is just the page there is no funcionality extra (Taiga [#597], PR [#674]).
+### [ita-challenges-frontend-3.1.57-RELEASE] - 2025-07-23
+
+### Changed
+- Updated sidebar layout. Simplified top section to 'Start', 'Challenges', 'CodeConnect'. And changed bottom section fore logged-in users to 'Bookmarks' and 'Favorites'   (Taiga [#607], PR [#673])
+
+### [ita-challenges-frontend-3.1.56-RELEASE] - 2025-07-21
+
+### Added
+- Mocking the logic for user registration through the modal (Taiga [#558], PR [#669])
 
 ### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
 
@@ -37,7 +47,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
 
 ### Added
-- Added the interface for the user regeister modal (Taiga [#554], PR [#658])
+- Added the interface for the user register modal (Taiga [#554], PR [#658])
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
