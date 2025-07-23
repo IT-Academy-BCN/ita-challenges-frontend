@@ -156,4 +156,10 @@ describe('DesktopNavComponent', () => {
   
     expect(logoutSpy).toHaveBeenCalled();
   });
+
+  it('should call openRegisterUsersModal on navService when openRegisterUsersModal is called', () => {
+    const openRegisterUsersModalSpy = jest.spyOn(navService, 'openRegisterUsersModal');
+    component.openRegisterUsersModal();
+    expect(openRegisterUsersModalSpy).toHaveBeenCalled();
+  });
 })
