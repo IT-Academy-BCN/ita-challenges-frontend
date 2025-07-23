@@ -33,6 +33,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       tap(userId => {
         if (!userId) {
+          this.isLoading = false;
           this.showError('messages.errors.userNotAuthenticated');
           console.warn('User ID is null or undefined.');
         }
