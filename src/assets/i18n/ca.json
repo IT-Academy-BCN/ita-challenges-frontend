@@ -12,23 +12,17 @@
                 "title": "Reptes"
             },
             "section2": {
-                "title": "Proves tècniques"
-            },
-            "section4": {
-                "title": "Crear repte"
-            },
-            "section5": {
-                "title": "Guies útils"
-            },
-            "section6": {
-                "title": "Configuració"
-            },
-            "section7": {
-                "title": "El meu espai"
+                "title": "CodeConnect"
             },
             "section3": {
-                "title": "Hackatons"
-        }
+                "title": "Els meus recursos"
+            },
+            "section4": {
+                "title": "Guardats"
+            },
+            "section5": {
+                "title": "Favorits"
+            }
         }
     },
     "modules": {
