@@ -22,6 +22,7 @@ import localeEn from '@angular/common/locales/en'
 import { registerLocaleData } from '@angular/common'
 
 import { MentorLoginComponent } from './modules/mentor/mentor-login/mentor-login.component';
+import { BookmarkComponent } from './modules/bookmark/components/bookmark/bookmark.component';
 
 registerLocaleData(localeEs, 'es')
 registerLocaleData(localeCa, 'ca')
@@ -33,7 +34,8 @@ export function HttpLoaderFactory (http: HttpClient): any {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BookmarkComponent
   ],
   bootstrap: [AppComponent],
   imports: [BrowserModule,
