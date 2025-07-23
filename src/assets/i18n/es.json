@@ -85,6 +85,10 @@
                 "medium": "Media",
                 "hard": "Difícil",
                 "tags": "Tags"
+            },
+             "bookmarksView":{
+                "bookmarksSaved": "Retos guardados",
+                "noBookmarksSaved": "No hay retos guardados aún."
             }
         },
         "mentor": {

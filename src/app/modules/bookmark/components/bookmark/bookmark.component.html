@@ -1,4 +1,4 @@
-<h2>BookMarks</h2>
+<h2>{{ 'modules.challenge.bookmarksView.bookmarksSaved' | translate }}</h2>
 
 <div *ngIf="bookmarkedChallenges.length > 0; else noBookmarks">
   <ul>
@@ -10,5 +10,6 @@
 </div>
 
 <ng-template #noBookmarks>
-  <p>No bookmarks yet.</p>
+  <p>{{ 'modules.challenge.bookmarksView.noBookmarksSaved' | translate }}</p>
 </ng-template>
+

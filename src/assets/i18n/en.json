@@ -85,6 +85,10 @@
                 "medium": "Medium",
                 "hard": "Hard",
                 "tags": "Tags"
+            },
+             "bookmarksView":{
+                "bookmarksSaved": "Saved challenges",
+                "noBookmarksSaved": "No challenges saved yet."
             }
         },
         "mentor": {

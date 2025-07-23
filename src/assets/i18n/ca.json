@@ -85,6 +85,10 @@
                 "medium": "Mitjana",
                 "hard": "Difícil",
                 "tags": "Etiquetes"
+            },
+             "bookmarksView":{
+                "bookmarksSaved": "Reptes desats",
+                "noBookmarksSaved": "No hi ha reptes desats encara."
             }
         },
         "mentor": {
