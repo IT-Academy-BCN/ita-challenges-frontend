@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.2.0-RELEASE] - 2025-07-23
 
 ### Added
-- Implemented `bookmarks` view this is just the page there is no funcionality extra (Taiga [#597], PR [#674]).
+- Implemented `bookmarks` view this is just the page there is no funcionality extras (Taiga [#597], PR [#674]).
 ### [ita-challenges-frontend-3.1.57-RELEASE] - 2025-07-23
 
 ### Changed
