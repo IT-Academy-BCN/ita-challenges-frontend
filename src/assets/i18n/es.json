@@ -12,23 +12,17 @@
                 "title": "Retos"
             },
             "section2": {
-                "title": "Pruebas técnicas"
-            },
-            "section4": {
-                "title": "Crear reto"
-            },
-            "section5": {
-                "title": "Guías útiles"
-            },
-            "section6": {
-                "title": "Ajustes"
-            },
-            "section7": {
-                "title": "Mi espacio"
+                "title": "CodeConnect"
             },
             "section3": {
-                "title": "Hackatons"
-        }
+                "title": "Mis recursos"
+            },
+            "section4": {
+                "title": "Guardados"
+            },
+            "section5": {
+                "title": "Favoritos"
+            }
         }
     },
     "modules": {
@@ -132,12 +126,14 @@
             },
             "register":{
                 "title":"Añadir alumnos/as",
+                "success":"Usuarios registrados!",
                 "description":"Inserta los usuarios de GitHub",
                 "placeholder":"Usuario de GitHub",
                 "btn-add":"Añadir",
                 "btn-confirm":"Confirmar",
                 "msg-invalid":"Nombre de usuario no válido.",
-                "msg-duplicate":"Este usuario ya ha sido añadido."
+                "msg-duplicate":"Este usuario ya ha sido añadido.",
+                "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo."
             }
         }
     },
