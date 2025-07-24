@@ -11,10 +11,4 @@ export class RegisterUsersService {
     return this.http.post(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/${environment.CREATE_USER}`, { username });
   }
 
-  registerUserMockSuccess(username: string): Observable<any> {
-    return of({ message: `User ${username} registered successfully` }).pipe(delay(500));
-  }
-  registerUserMockFailure(username: string): Observable<any> {
-    return throwError(() => new Error(`Failed to register user ${username}`)).pipe(delay(500));
-  }
 }

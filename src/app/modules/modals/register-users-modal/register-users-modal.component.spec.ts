@@ -103,17 +103,17 @@ describe('RegisterUsersModalComponent', () => {
 
   it('should register users and set success flag', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
-    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+    jest.spyOn(registerUsersService, 'registerUser').mockReturnValue(of({}));
 
     component.confirmRegistration();
     tick();
 
-    expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
+    expect(registerUsersService.registerUser).toHaveBeenCalledTimes(2);
     expect(component.registrationSuccess).toBe(true);
   }));
   it('should set registrationSuccess to false if any registration fails', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
-    const successSpy = jest.spyOn(registerUsersService, 'registerUserMockSuccess');
+    const successSpy = jest.spyOn(registerUsersService, 'registerUser');
     successSpy
       .mockReturnValueOnce(of({}))
       .mockReturnValueOnce(throwError(() => new Error('fail')));
@@ -127,7 +127,7 @@ describe('RegisterUsersModalComponent', () => {
 
   it('should clear usernames and set registrationSuccess to true if all succeed', fakeAsync(() => {
     component.usernames = ['user1', 'user2'];
-    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+    jest.spyOn(registerUsersService, 'registerUser').mockReturnValue(of({}));
 
     component.confirmRegistration();
     tick();
