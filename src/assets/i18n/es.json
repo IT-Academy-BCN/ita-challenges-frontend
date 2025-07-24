@@ -85,6 +85,18 @@
                 "medium": "Media",
                 "hard": "Difícil",
                 "tags": "Tags"
+            },
+             "bookmarksView":{
+                "bookmarksSaved": "Retos guardados",
+                "noBookmarksSaved": "No hay retos guardados aún.",
+                "notAuthenticatedUser": "Usuario no autenticado",
+                "failedToLoadBookmarks": "Fallo al cargar retos guardados",
+                "failedToLoadUser": "Fallo al cargar usuario",
+                "noBookmarksSavedViews": "No hay retos guardados",
+                "failedToLoadChallenge": "Fallo al cargar reto",
+                "noValidBookmarks": "Reto guardado no válidos",
+                "showInfo": "Información",
+                "showError": "Error"
             }
         },
         "mentor": {
