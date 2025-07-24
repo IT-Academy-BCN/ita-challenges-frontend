@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment'
 import { type Itinerary } from '../models/itinerary.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { AuthService } from './auth.service'
+import { HttpErrorResponse } from '@angular/common/http'
 
 const authServiceStub = {
   getAuthHeaders: () => ({ Authorization: 'Bearer mock-token' })
@@ -212,4 +213,78 @@ describe('ChallengeService', () => {
 
     req.flush(mockBookmarks)
   })
+
+  describe('getRelatedChallenges', () => {
+    const mockChallengeId = '12345';
+    const mockChallenges = [
+      { id: '1', title: 'Challenge 1' },
+      { id: '2', title: 'Challenge 2' }
+    ];
+
+    it('should fetch related challenges successfully', () => {
+      // Act
+      service.getRelatedChallenges(mockChallengeId).subscribe(challenges => {
+        // Assert
+        expect(challenges).toEqual(mockChallenges);
+      });
+
+      // Arrange
+      const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${mockChallengeId}/related`;
+      const req = httpMock.expectOne(expectedUrl);
+      
+      // Assert request
+      expect(req.request.method).toBe('GET');
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+
+      // Respond with mock data
+      req.flush({ results: mockChallenges });
+    });
+
+    it('should handle empty response', () => {
+      service.getRelatedChallenges(mockChallengeId).subscribe(challenges => {
+        expect(challenges).toEqual([]);
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${mockChallengeId}/related`
+      );
+      req.flush({ results: [] });
+    });
+
+    it('should handle HTTP errors', () => {
+      const mockError = new HttpErrorResponse({
+        status: 404,
+        statusText: 'Not Found'
+      });
+
+      // Spy on console.error to verify it's called
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      service.getRelatedChallenges(mockChallengeId).subscribe({
+        next: () => fail('should have failed with 404 error'),
+        error: (error) => {
+          expect(error.status).toEqual(404);
+          expect(console.error).toHaveBeenCalledWith('Error fetching related challenges:', mockError);
+        }
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${mockChallengeId}/related`
+      );
+      req.flush(null, mockError);
+    });
+
+    it('should pass with invalid challenge ID', () => {
+      const invalidId = 'invalid-id';
+      service.getRelatedChallenges(invalidId).subscribe(challenges => {
+        expect(challenges).toEqual(mockChallenges);
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${invalidId}/related`
+      );
+      req.flush({ results: mockChallenges });
+    });
+  });
 })

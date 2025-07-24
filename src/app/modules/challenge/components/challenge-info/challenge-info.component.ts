@@ -7,13 +7,14 @@ import {
   Output,
   ViewChild,
   inject,
+  type OnDestroy,
   type SimpleChanges
 } from '@angular/core'
 import { type ChallengeDetails } from 'src/app/models/challenge-details.model'
 import { type Example } from 'src/app/models/challenge-example.model'
 import { type Language } from 'src/app/models/language.model'
 import { ChallengeService } from '../../../../services/challenge.service'
-import { firstValueFrom, type Subscription } from 'rxjs'
+import { firstValueFrom, Subject, takeUntil, type Subscription } from 'rxjs'
 import { DataChallenge } from '../../../../models/data-challenge.model'
 import { type Challenge } from '../../../../models/challenge.model'
 import { NgbModal, type NgbNav } from '@ng-bootstrap/ng-bootstrap'
@@ -27,11 +28,11 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 @Component({
   selector: 'app-challenge-info',
   templateUrl: './challenge-info.component.html',
-  styleUrls: ['./challenge-info.component.scss'],
-  providers: [ChallengeService]
+  styleUrls: ['./challenge-info.component.scss']
 })
 export class ChallengeInfoComponent
-implements OnInit {
+implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   isChallengeStatementVisible = true
   solutionSent: boolean = false
   isUserSolution: boolean = true
@@ -57,6 +58,7 @@ implements OnInit {
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
+   private readonly challengeService=inject (ChallengeService)
   public currentSolutionText: string = '';
 
 
@@ -256,40 +258,28 @@ implements OnInit {
     }
   }
 
-  //Temporary Mocked Implementation
+
   loadRelatedChallenges(): void {
-    const numberOfRelated = 2;
+    this.relatedChallengesLoaded = false;
 
-    this.starterService.getAllChallenges().subscribe(response => {
-      if (response && response.results) {
-        const filteredChallenges = response.results.filter(
-          challenge => challenge.id_challenge !== this.idChallenge
-        );
-        this.relatedChallenges = this.getRandomChallenges(filteredChallenges, numberOfRelated);
-        this.relatedChallengesLoaded = true;
-        this.cdr.detectChanges();
-      }
-    });
+  this.challengeService.getRelatedChallenges(this.idChallenge)
+  .pipe(takeUntil(this.destroy$))
+  .subscribe({
+    next: (related) => {
+      this.relatedChallenges = related;
+      this.relatedChallengesLoaded = true;
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Error loading related challenges:', err);
+      this.relatedChallenges = [];
+      this.relatedChallengesLoaded = true;
+      this.cdr.detectChanges();
+    }
+  });
   }
 
-  // Helper method to randomly select challenges
-  // TODO: delete when related challenges endpoint is available 
-  private getRandomChallenges(challenges: Challenge[], count: number): Challenge[] {
-    // If we don't have enough challenges, return all of them to avoid errors
-    if (challenges.length <= count) {
-      return challenges;
-    }
-    
-    const shuffled = [...challenges];
-    
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    
-    return shuffled.slice(0, count);
-  }
-
+ 
   isChallengeTabVisible(tabId: ChallengeTab): boolean {
     if (this.isAdmin) {
       return true;
@@ -305,6 +295,11 @@ implements OnInit {
   onEditorSolutionChanged(newText: string): void {
   this.currentSolutionText = newText;
   this.solutionChanged.emit(newText); 
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
 }
 
 }
