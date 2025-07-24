@@ -131,7 +131,7 @@ loadUserSolutionStatus(userId: string): void {
   onStartChallenge(started: boolean): void {
     this.challengeStarted = started;
     this.isEditorChallengeVisible = started;
-
+    this.activeId = ChallengeTab.DETAILS;
     this.solutionState = SolutionStatus.IN_PROGRESS;
     this.startChallenge.emit(started);
   }
