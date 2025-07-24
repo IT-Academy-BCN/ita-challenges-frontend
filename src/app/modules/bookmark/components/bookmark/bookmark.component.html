@@ -1,0 +1,15 @@
+<h2>{{ 'modules.challenge.bookmarksView.bookmarksSaved' | translate }}</h2>
+
+<div *ngIf="bookmarkedChallenges.length > 0; else noBookmarks">
+  <ul>
+    <li *ngFor="let challenge of bookmarkedChallenges">
+      <h3>{{ challenge.challenge_title }}</h3>
+     
+    </li>
+  </ul>
+</div>
+
+<ng-template #noBookmarks>
+  <p>{{ 'modules.challenge.bookmarksView.noBookmarksSaved' | translate }}</p>
+</ng-template>
+

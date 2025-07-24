@@ -1,8 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RegisterUsersModalComponent } from './register-users-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
+import { RegisterUsersService } from '../../../services/register-users.service';
+import { of, throwError } from 'rxjs';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TranslateService } from '@ngx-translate/core';
+import { provideHttpClient } from '@angular/common/http';
 
 @Pipe({name: 'translate'})
 class MockTranslatePipe implements PipeTransform {
@@ -13,6 +18,7 @@ describe('RegisterUsersModalComponent', () => {
   let component: RegisterUsersModalComponent;
   let fixture: ComponentFixture<RegisterUsersModalComponent>;
   let mockModalService: jest.Mocked<NgbModal>;
+  let registerUsersService: RegisterUsersService;
 
   beforeEach(async () => {
     mockModalService = {
@@ -22,13 +28,25 @@ describe('RegisterUsersModalComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterUsersModalComponent, MockTranslatePipe],
       imports: [FormsModule],
-      providers: [{ provide: NgbModal, useValue: mockModalService }],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: NgbModal, useValue: mockModalService },
+        {
+          provide: TranslateService,
+          useValue: {
+            instant: jest.fn().mockReturnValue(''),
+          },
+        },
+        RegisterUsersService,
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterUsersModalComponent);
     component = fixture.componentInstance;
+    registerUsersService = TestBed.inject(RegisterUsersService);
     fixture.detectChanges();
   });
 
@@ -82,4 +100,47 @@ describe('RegisterUsersModalComponent', () => {
     const normalized = component['normalizeUsername']('  UserNAME  ');
     expect(normalized).toBe('username');
   });
+
+  it('should register users and set success flag', fakeAsync(() => {
+    component.usernames = ['user1', 'user2'];
+    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+
+    component.confirmRegistration();
+    tick();
+
+    expect(registerUsersService.registerUserMockSuccess).toHaveBeenCalledTimes(2);
+    expect(component.registrationSuccess).toBe(true);
+  }));
+  it('should set registrationSuccess to false if any registration fails', fakeAsync(() => {
+    component.usernames = ['user1', 'user2'];
+    const successSpy = jest.spyOn(registerUsersService, 'registerUserMockSuccess');
+    successSpy
+      .mockReturnValueOnce(of({}))
+      .mockReturnValueOnce(throwError(() => new Error('fail')));
+
+    component.confirmRegistration();
+    tick();
+
+    expect(successSpy).toHaveBeenCalledTimes(2);
+    expect(component.registrationSuccess).toBe(false);
+  }));
+
+  it('should clear usernames and set registrationSuccess to true if all succeed', fakeAsync(() => {
+    component.usernames = ['user1', 'user2'];
+    jest.spyOn(registerUsersService, 'registerUserMockSuccess').mockReturnValue(of({}));
+
+    component.confirmRegistration();
+    tick();
+
+    expect(component.registrationSuccess).toBe(true);
+    expect(component.usernames).toEqual([]);
+  }));
+
+  it('isDuplicateUsername should return true for duplicates', () => {
+    component.usernames = ['user1'];
+    expect(component.isDuplicateUsername('user1')).toBe(true);
+    expect(component.isDuplicateUsername(' user1 ')).toBe(true);
+    expect(component.isDuplicateUsername('user2')).toBe(false);
+  });
+
 });
