@@ -88,7 +88,13 @@
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",
-                "noBookmarksSaved": "No hi ha reptes desats encara."
+                "noBookmarksSaved": "No hi ha reptes desats encara.",
+                "notAuthenticatedUser": "Usuari no autenticat",
+                "failedToLoadBookmarks": "Fallada en carregar reptes desats",
+                "failedToLoadUser": "Fallada en carregar usuari",
+                "noBookmarksSavedViews": "No hi ha reptes desats",
+                "failedToLoadChallenge": "Fallada en carregar repte",
+                "noValidBookmarks": "Repte desat no vàlids"
             }
         },
         "mentor": {
