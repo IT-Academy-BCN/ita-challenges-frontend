@@ -34,7 +34,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       tap(userId => {
         if (!userId) {
           this.isLoading = false;
-          this.showError('messages.errors.userNotAuthenticated');
+          this.showError('modules.challenge.bookmarksView.notAuthenticatedUser');
           console.warn('User ID is null or undefined.');
         }
       }),
@@ -42,7 +42,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       switchMap(userId =>
         this.challengeService.getUserBookmarks(userId).pipe(
           catchError(err => {
-            this.showError('messages.errors.failedToLoadBookmarks');
+            this.showError('modules.challenge.bookmarksView.failedToLoadBookmarks');
             console.error("Failed to retrieve user bookmarks", err);
             return of([]);
           })
@@ -55,7 +55,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       },
       error: err => {
         this.isLoading = false;
-        this.showError('messages.errors.failedToLoadUser');
+        this.showError('modules.challenge.bookmarksView.failedToLoadUser');
         console.error("Failed to retrieve user ID", err);
       }
     });
@@ -74,7 +74,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       this.challengeService.getChallengeById(id).pipe(
         map(challenge => new Challenge(challenge)),
         catchError(err => {
-          this.showError('messages.errors.failedToLoadChallenge', { id });
+          this.showError('modules.challenge.bookmarksView.failedToLoadChallenge', { id });
           console.error(`Failed to load challenge with ID ${id}`, err);
           return of(null);
         })
@@ -89,12 +89,12 @@ export class BookmarkComponent implements OnInit, OnDestroy {
           this.bookmarkedChallenges = this.getValidUniqueChallenges(results);
           
           if (this.bookmarkedChallenges.length === 0) {
-            this.showInfo('messages.info.noValidBookmarks');
+            this.showInfo('modules.challenge.bookmarksView.noValidBookmarks');
           }
         },
         error: () => {
           this.isLoading = false;
-          this.showError('messages.errors.failedToLoadChallenges');
+          this.showError('modules.challenge.bookmarksView.failedToLoadChallenge');
         }
       });
   }
@@ -117,7 +117,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
 
   private showError(messageKey: string, interpolateParams?: any): void {
     this.translate.get(messageKey, interpolateParams).subscribe(message => {
-      this.toastr.error(message, this.translate.instant('common.close'), {
+      this.toastr.error(message, this.translate.instant('modules.challenge.bookmarksView.showError'), {
         timeOut: 5000,
         progressBar: true
       });
@@ -127,7 +127,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
   
   private showInfo(messageKey: string, interpolateParams?: any): void {
     this.translate.get(messageKey, interpolateParams).subscribe(message => {
-      this.toastr.info(message, this.translate.instant('common.close'), {
+      this.toastr.info(message, this.translate.instant('modules.challenge.bookmarksView.showInfo'), {
         timeOut: 3000,
         progressBar: true
       });

@@ -94,9 +94,9 @@
                 "failedToLoadUser": "Fallo al cargar usuario",
                 "noBookmarksSavedViews": "No hay retos guardados",
                 "failedToLoadChallenge": "Fallo al cargar reto",
-                "noValidBookmarks": "Reto guardado no válidos"
-
-
+                "noValidBookmarks": "Reto guardado no válidos",
+                "showInfo": "Información",
+                "showError": "Error"
             }
         },
         "mentor": {

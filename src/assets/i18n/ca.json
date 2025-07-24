@@ -94,7 +94,9 @@
                 "failedToLoadUser": "Fallada en carregar usuari",
                 "noBookmarksSavedViews": "No hi ha reptes desats",
                 "failedToLoadChallenge": "Fallada en carregar repte",
-                "noValidBookmarks": "Repte desat no vàlids"
+                "noValidBookmarks": "Repte desat no vàlids",
+                "showInfo": "Informació",
+                "showError": "Error"
             }
         },
         "mentor": {

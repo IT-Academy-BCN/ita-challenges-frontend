@@ -94,7 +94,9 @@
                 "failedToLoadUser": "Failed to load user",
                 "noBookmarksSavedViews": "No saved challenges",
                 "failedToLoadChallenge": "Failed to load challenge",
-                "noValidBookmarks": "Invalid saved challenges"
+                "noValidBookmarks": "Invalid saved challenges",
+                "showInfo": "Information",
+                "showError": "Error"
             }
         },
         "mentor": {
