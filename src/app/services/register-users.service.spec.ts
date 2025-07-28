@@ -36,7 +36,7 @@ describe('RegisterUsersService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockUser);
     req.flush(mockResponse);
@@ -53,26 +53,39 @@ describe('RegisterUsersService', () => {
       }
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     req.flush(null, mockError);
   });
 
-  it('should register a user with the mock service and return a success message', (done) => {
+  it('should register a user with the mock service and return a success message', () => {
     const username = 'testuser';
+    const mockResponse = { message: `User ${username} registered successfully` };
+
     service.registerUser(username).subscribe(response => {
-      expect(response).toEqual({ message: `User ${username} registered successfully` });
-      done();
+      expect(response).toEqual(mockResponse);
     });
+
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ username });
+    req.flush(mockResponse);
   });
 
-  it('should register a user with the mock service and return an error', (done) => {
+  it('should register a user with the mock service and return an error', () => {
     const username = 'testuser';
+    const mockError = { status: 400, statusText: 'Bad Request' };
+
     service.registerUser(username).subscribe({
-      error: err => {
-        expect(err.message).toEqual(`Failed to register user ${username}`);
-        done();
+      next: () => fail('should have failed with a 400 error'),
+      error: error => {
+        expect(error.status).toEqual(400);
       }
     });
+
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ username });
+    req.flush(null, mockError);
   });
 });
