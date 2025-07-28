@@ -8,7 +8,7 @@ export class RegisterUsersService {
   constructor(private readonly http: HttpClient) { }
 
   registerUser(username: string): Observable<any> {
-    return this.http.post(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ADMIN_CREATE_USER}`, { username });
+    return this.http.post(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/admin/users/create`, { username });
   }
 
 }
