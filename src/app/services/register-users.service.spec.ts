@@ -36,7 +36,7 @@ describe('RegisterUsersService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.ADMIN.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockUser);
     req.flush(mockResponse);
@@ -53,7 +53,7 @@ describe('RegisterUsersService', () => {
       }
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.ADMIN.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     req.flush(null, mockError);
   });
@@ -66,7 +66,7 @@ describe('RegisterUsersService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.ADMIN.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ username });
     req.flush(mockResponse);
@@ -83,7 +83,7 @@ describe('RegisterUsersService', () => {
       }
     });
 
-    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.CREATE_USER}`);
+    const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.ADMIN.CREATE_USER}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ username });
     req.flush(null, mockError);
