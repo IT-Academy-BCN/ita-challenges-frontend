@@ -1,5 +1,5 @@
 import { version } from '../../package.json';
-import { ADMIN_CREATE_USER_PATH } from '../app/constants/endpoints';
+import { BACKEND_ADMIN_CREATE_USER } from './environment';
 
 export const environment = {
   production: true,
@@ -24,7 +24,7 @@ export const environment = {
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/authenticate',
   BACKEND_LOGOUT_ENDPOINT: '/auth/logout',
-  BACKEND_ADMIN_CREATE_USER: ADMIN_CREATE_USER_PATH,
+  BACKEND_ADMIN_CREATE_USER: BACKEND_ADMIN_CREATE_USER,
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '/user/users/',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
