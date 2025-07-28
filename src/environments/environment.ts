@@ -1,7 +1,5 @@
 import { version } from '../../package.json'
 
-export const BACKEND_ADMIN_CREATE_USER = '/admin/users/create';
-
 export const environment = {
   production: false,
   appVersion: version,
@@ -25,7 +23,7 @@ export const environment = {
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/authenticate',
   BACKEND_LOGOUT_ENDPOINT: '/auth/logout',
-  BACKEND_ADMIN_CREATE_USER: BACKEND_ADMIN_CREATE_USER,
+  BACKEND_ADMIN_CREATE_USER: '/admin/users/create',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '/user/users/',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
@@ -43,5 +41,4 @@ export const environment = {
   AUTH_BASIC_URL: 'http://localhost:4200/ita-challenge/',
   AUTH_SWITCH_ROLE: '/auth/switch-role',
   GITHUB_PROFILE_URL: 'https://api.github.com/users/',
-  
 }
