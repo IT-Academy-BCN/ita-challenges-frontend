@@ -40,5 +40,7 @@ export const environment = {
   AUTH_BASIC_URL: 'http://localhost:4200/ita-challenge/',
   AUTH_SWITCH_ROLE: '/auth/switch-role',
   GITHUB_PROFILE_URL: 'https://api.github.com/users/',
-  CREATE_USER: '/admin/users/create',
+  ADMIN: {
+    CREATE_USER: '/admin/users/create',
+  },
 }
