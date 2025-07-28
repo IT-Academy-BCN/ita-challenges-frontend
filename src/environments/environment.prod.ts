@@ -1,6 +1,5 @@
-import { version } from '../../package.json'
-
-const ADMIN_CREATE_USER_PATH = '/admin/users/create';
+import { version } from '../../package.json';
+import { ADMIN_CREATE_USER_PATH } from '../app/constants/endpoints';
 
 export const environment = {
   production: true,
