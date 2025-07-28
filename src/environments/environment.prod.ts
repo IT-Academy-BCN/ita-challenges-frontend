@@ -1,5 +1,7 @@
 import { version } from '../../package.json'
 
+const ADMIN_USER_CREATE_PATH = '/admin/users/create';
+
 export const environment = {
   production: true,
   appVersion: version,
@@ -40,7 +42,5 @@ export const environment = {
   AUTH_BASIC_URL: 'http://dev.ita-challenges.eurecatacademy.org/ita-challenge/',
   AUTH_SWITCH_ROLE: '/auth/switch-role',
   GITHUB_PROFILE_URL: 'https://api.github.com/users/',
-  ADMIN: {
-    CREATE_USER: '/admin/users/create',
-  },
+  CREATE_USER: ADMIN_USER_CREATE_PATH,
 }
