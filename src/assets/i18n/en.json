@@ -18,10 +18,13 @@
                 "title": "My resources"
             },
             "section4": {
-                "title": "Bookmarks"
+                "title": "Create challenge"
             },
             "section5": {
                 "title": "Favorites"
+            },
+            "section6": {
+                "title": "Bookmarks"
             }
         }
     },
