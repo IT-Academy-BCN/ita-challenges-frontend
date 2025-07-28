@@ -1,5 +1,7 @@
 import { version } from '../../package.json'
 
+const ADMIN_CREATE_USER_PATH = '/admin/users/create';
+
 export const environment = {
   production: false,
   appVersion: version,
@@ -23,7 +25,7 @@ export const environment = {
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/authenticate',
   BACKEND_LOGOUT_ENDPOINT: '/auth/logout',
-  BACKEND_ADMIN_CREATE_USER: '/admin/users/create',
+  BACKEND_ADMIN_CREATE_USER: ADMIN_CREATE_USER_PATH,
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '/user/users/',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
