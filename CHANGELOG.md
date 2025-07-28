@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.2.3-RELEASE] - 2025-07-28
+
+### Added
+- Remode mocked logic and connected register users modal to backend (Taiga [#606], PR [#678]).
+
 ### [ita-challenges-frontend-3.2.2-RELEASE] - 2025-07-24
 
 ### Added
