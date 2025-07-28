@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.2.4-RELEASE] - 2025-07-28
 
 ### Added
-- Remove mocked logic and connected register users modal to backend (Taiga [#606], PR [#678]).
+- Remove mocked logic and connected register users modal to backend (Taiga [#606], PR [#679]).
 
 ### [ita-challenges-frontend-3.2.3-RELEASE] - 2025-07-24
 
