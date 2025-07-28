@@ -18,3 +18,5 @@ export class RegisterUsersService {
     return throwError(() => new Error(`Failed to register user ${username}`)).pipe(delay(500));
   }
 }
+
+//free try
