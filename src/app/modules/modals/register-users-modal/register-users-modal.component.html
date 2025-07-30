@@ -43,8 +43,11 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="registrationSuccess === false" class="text-danger small my-2 d-flex justify-content-center">
+        <div *ngIf="registrationSuccess === false && !errorUsername" class="text-danger small my-2 d-flex justify-content-center">
             {{ 'modules.modals.register.msg-error' | translate }}
+        </div>
+        <div *ngIf="registrationSuccess === false && errorUsername" class="text-danger small my-2 d-flex justify-content-center">
+            El proceso ha parado en el usuario {{ errorUsername }}. Usuario ya existente.
         </div>
         <div class="col-12 modal-footer gap-2 my-3 text-center d-flex flex-column">
             <button type="button" class="btn btn-primary" (click)="confirmRegistration()" [disabled]="usernames.length === 0">{{'modules.modals.register.btn-confirm' | translate}}</button>

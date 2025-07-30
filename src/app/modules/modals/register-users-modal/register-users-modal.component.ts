@@ -15,6 +15,7 @@ export class RegisterUsersModalComponent {
   usernames: string[] = [];
   registrationSuccess: boolean | null = null;
   pendingResponses = 0;
+  errorUsername: string | null = null;
 
   public closeModal(): void {
     this.modalService.dismissAll()
@@ -39,18 +40,27 @@ export class RegisterUsersModalComponent {
 
   confirmRegistration(): void {
     this.registrationSuccess = null;
-    const registrationObservables = this.usernames.map(username =>
-      this.registerUsersService.registerUser(username).pipe(
-        map(response => ({ success: true, username, response })),
-        catchError(error => of({ success: false, username, error }))
-      )
-    );
+    this.errorUsername = null;
 
-    forkJoin(registrationObservables).subscribe(results => {
-      this.registrationSuccess = results.every(result => result.success);
-      if (this.registrationSuccess) {
-        this.usernames = [];
+    const usernamesQueue = [...this.usernames];
+    this.usernames = [];
+
+    const processNext = () => {
+      if (usernamesQueue.length === 0) {
+        this.registrationSuccess = true;
+        return;
       }
-    })
+
+      const username = usernamesQueue.shift()!;
+      this.registerUsersService.registerUser(username).subscribe({
+        next: () => { processNext(); },
+        error: (err) => {
+          this.registrationSuccess = false;
+          this.errorUsername = username;
+        }
+      });
+    };
+
+    processNext();
   }
 }
