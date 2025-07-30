@@ -64,7 +64,9 @@ export class RegisterUsersModalComponent {
           this.registrationSuccess = false;
           this.errorUsername = username;
 
-          this.usernames = this.usernames.filter(u => !this.registeredSuccessfully.includes(u));
+          this.usernames = this.usernames.filter(
+            u => !this.registeredSuccessfully.includes(u) && this.normalizeUsername(u) !== this.normalizeUsername(username)
+          );
         }
       });
     };
