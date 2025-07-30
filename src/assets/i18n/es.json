@@ -150,7 +150,7 @@
                 "msg-duplicate":"Este usuario ya ha sido añadido.",
                 "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo.",
                 "msg-username":"El proceso ha parado en el usuario '",
-                "msg-username2":"Usuario ya existente."
+                "msg-username2":"Usuario ya existente. Eliminado de la lista"
             }
         }
     },
