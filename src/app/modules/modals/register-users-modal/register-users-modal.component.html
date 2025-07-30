@@ -21,7 +21,7 @@
             <form (ngSubmit)="addUsername()" class="d-flex flex-column gap-2 justify-content-center">
                 <div class="d-flex gap-2 align-items-center">
                     <input type="text" class="form-control" [(ngModel)]="username" name="username"
-                        placeholder="{{'modules.modals.register.placeholder' | translate}}" required maxlength='39' pattern="[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}"
+                        placeholder="{{'modules.modals.register.placeholder' | translate}}" required maxlength='39' pattern="^(?!.*(--|__))(?![-_])[A-Za-z0-9](?:[A-Za-z0-9_-]{0,37}[A-Za-z0-9])?$"
                         #usernameInput="ngModel">
                     <button type="submit" class="btn btn-primary" [disabled]="usernameInput.invalid || isDuplicateUsername(username)">{{'modules.modals.register.btn-add' | translate}}</button>
                 </div>
