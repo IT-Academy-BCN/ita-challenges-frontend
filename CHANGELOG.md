@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.3.1-RELEASE] - 2025-07-30
 
 ### Fixed
-- Fixed errors where 'Create challenge' button's text got changed to 'Bookmarks' and register modal wouldn't allow capital letters and `_` (Taiga [#607], PR [#678]).
+- Fixed errors where 'Create challenge' button's text got changed to 'Bookmarks' and register modal wouldn't allow capital letters and `_` (Taiga [#607], PR [#681]).
 
 ### [ita-challenges-frontend-3.3.0-RELEASE] - 2025-07-28
 
