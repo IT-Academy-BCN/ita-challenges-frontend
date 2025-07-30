@@ -16,6 +16,7 @@ export class RegisterUsersModalComponent {
   registrationSuccess: boolean | null = null;
   pendingResponses = 0;
   errorUsername: string | null = null;
+  private registeredSuccessfully: string[] = [];
 
   public closeModal(): void {
     this.modalService.dismissAll()
@@ -41,22 +42,29 @@ export class RegisterUsersModalComponent {
   confirmRegistration(): void {
     this.registrationSuccess = null;
     this.errorUsername = null;
+    this.registeredSuccessfully = [];
 
     const usernamesQueue = [...this.usernames];
-    this.usernames = [];
 
     const processNext = () => {
       if (usernamesQueue.length === 0) {
         this.registrationSuccess = true;
+        this.usernames = [];
         return;
       }
 
-      const username = usernamesQueue.shift()!;
+      const username = usernamesQueue[0];
       this.registerUsersService.registerUser(username).subscribe({
-        next: () => { processNext(); },
-        error: (err) => {
+        next: () => {
+          this.registeredSuccessfully.push(username);
+          usernamesQueue.shift();
+          processNext();
+        },
+        error: () => {
           this.registrationSuccess = false;
           this.errorUsername = username;
+
+          this.usernames = this.usernames.filter(u => !this.registeredSuccessfully.includes(u));
         }
       });
     };

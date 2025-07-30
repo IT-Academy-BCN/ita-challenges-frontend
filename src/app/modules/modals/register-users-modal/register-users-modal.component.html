@@ -47,7 +47,7 @@
             {{ 'modules.modals.register.msg-error' | translate }}
         </div>
         <div *ngIf="registrationSuccess === false && errorUsername" class="text-danger small my-2 d-flex justify-content-center">
-            El proceso ha parado en el usuario {{ errorUsername }}. Usuario ya existente.
+            {{ 'modules.modals.register.msg-username' | translate }} <b> {{ errorUsername }}</b>'. {{ 'modules.modals.register.msg-username2' | translate }}
         </div>
         <div class="col-12 modal-footer gap-2 my-3 text-center d-flex flex-column">
             <button type="button" class="btn btn-primary" (click)="confirmRegistration()" [disabled]="usernames.length === 0">{{'modules.modals.register.btn-confirm' | translate}}</button>
