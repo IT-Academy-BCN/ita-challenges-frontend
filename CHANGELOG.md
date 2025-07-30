@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.3.1-RELEASE] - 2025-07-24
 
 ### Fixed
-- Fixed an error where user couldn't access the challenge editor trom a tab other than `Details` (Taiga [#632], PR [#677]).
+- Fixed errors where 'Create challenge' button's text got changed to 'Bookmarks' and register modal wouldn't allow capital letters and `_` (Taiga [#607], PR [#678]).
 
 ### [ita-challenges-frontend-3.3.0-RELEASE] - 2025-07-28
 
@@ -17,7 +17,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.2.3-RELEASE] - 2025-07-28
 
 ### Fixed
-- Fixed error where 'Create challenge' button's text got changed to 'Bookmarks' (Taiga [#607], PR [#678]).
+- Fixed an error where user couldn't access the challenge editor trom a tab other than `Details` (Taiga [#632], PR [#677]).
 
 ### [ita-challenges-frontend-3.2.2-RELEASE] - 2025-07-24
 
