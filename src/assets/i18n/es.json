@@ -148,7 +148,9 @@
                 "btn-confirm":"Confirmar",
                 "msg-invalid":"Nombre de usuario no válido.",
                 "msg-duplicate":"Este usuario ya ha sido añadido.",
-                "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo."
+                "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo.",
+                "msg-username":"El proceso ha parado en el usuario '",
+                "msg-username2":"Usuario ya existente."
             }
         }
     },

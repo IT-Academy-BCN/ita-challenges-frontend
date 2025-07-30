@@ -148,8 +148,9 @@
                 "btn-confirm":"Confirmar",
                 "msg-invalid":"Nom d'usuari no vàlid.",
                 "msg-duplicate":"Aquest usuari ja ha sigut afegit",
-                "msg-error":"Alguna cosa ha anat malament. Si us plau, torna-ho a intentar."
-
+                "msg-error":"Alguna cosa ha anat malament. Si us plau, torna-ho a intentar.",
+                "msg-username":"El procés ha parat a l'usuari '",
+                "msg-username2":"Usuari ja existent."
             }
         }
     },
