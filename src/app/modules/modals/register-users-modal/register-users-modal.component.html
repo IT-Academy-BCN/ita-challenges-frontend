@@ -43,8 +43,14 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="registrationSuccess === false" class="text-danger small my-2 d-flex justify-content-center">
+        <div *ngIf="registrationSuccess === false && !errorUsername" class="text-danger small my-2 d-flex justify-content-center">
             {{ 'modules.modals.register.msg-error' | translate }}
+        </div>
+        <div *ngIf="registrationSuccess === false && errorUsername" class="text-danger small mt-2 d-flex justify-content-center">
+            {{ 'modules.modals.register.msg-username' | translate }} <b> {{ errorUsername }}</b>'.
+        </div>
+        <div *ngIf="registrationSuccess === false && errorUsername" class="text-danger small mb-2 d-flex justify-content-center">
+            {{ 'modules.modals.register.msg-username2' | translate }}
         </div>
         <div class="col-12 modal-footer gap-2 my-3 text-center d-flex flex-column">
             <button type="button" class="btn btn-primary" (click)="confirmRegistration()" [disabled]="usernames.length === 0">{{'modules.modals.register.btn-confirm' | translate}}</button>

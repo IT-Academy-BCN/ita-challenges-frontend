@@ -149,8 +149,9 @@
                 "btn-confirm":"Confirm",
                 "msg-invalid":"Invalid username.",
                 "msg-duplicate":"This user has already been added.",
-                "msg-error":"Something went wrong. Please try again."
-
+                "msg-error":"Something went wrong. Please try again.",
+                "msg-username":"The process has stopped at user '",
+                "msg-username2":"User already exists. Removed from the list"
             }
         }
     },
