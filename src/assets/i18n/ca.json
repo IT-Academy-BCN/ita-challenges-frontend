@@ -18,10 +18,13 @@
                 "title": "Els meus recursos"
             },
             "section4": {
-                "title": "Guardats"
+                "title": "Crear repte"
             },
             "section5": {
                 "title": "Favorits"
+            },
+            "section6": {
+                "title": "Guardats"
             }
         }
     },

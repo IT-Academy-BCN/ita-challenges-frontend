@@ -18,10 +18,13 @@
                 "title": "Mis recursos"
             },
             "section4": {
-                "title": "Guardados"
+                "title": "Crear reto"
             },
             "section5": {
                 "title": "Favoritos"
+            },
+            "section6": {
+                "title": "Guardados"
             }
         }
     },
