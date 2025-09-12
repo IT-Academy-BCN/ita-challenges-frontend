@@ -218,5 +218,21 @@ export class ChallengeService {
   );
 }
 
+editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<any> {
+  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${challengeId}/update`;
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...this.authService.getAuthHeaders() 
+  };
+
+  return this.http.put<any>(url, challenge, { headers }).pipe(
+    map(response => response),
+    catchError((error: HttpErrorResponse) => {
+      console.error('Error updating challenge:', error);
+      return throwError(() => error);
+    })
+  );
+}
 
 }
