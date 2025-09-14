@@ -186,6 +186,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.description = 'Valid description for the challenge'
     component.challenge.language = 'Javascript'
     component.challenge.solution = 'Valid solution content'
+    component.selectedTags = ['1']
 
     component.onSubmit()
 
@@ -198,6 +199,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.description = 'Some description'
     component.challenge.language = ''
     component.challenge.solution = 'Some solution content'
+    component.selectedTags = ['1']
 
     const consoleSpy = jest.spyOn(console, 'error')
     component.onSubmit()
@@ -355,5 +357,32 @@ describe('ChallengeFormComponent', () => {
       expect(component.selectedTags).not.toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeFalsy()
     })
+  })
+
+  it('should set tagError to true and not submit if no tags are selected', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title'
+    component.challenge.description = 'Valid description for the challenge'
+    component.challenge.language = 'Javascript'
+    component.challenge.solution = 'Valid solution content'
+    component.selectedTags = []
+
+    component.onSubmit()
+
+    expect(component.tagError).toBe(true)
+    expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()
+  })
+
+  it('should set tagError to false and submit if tags are selected and form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title'
+    component.challenge.description = 'Valid description for the challenge'
+    component.challenge.language = 'Javascript'
+    component.challenge.solution = 'Valid solution content'
+    component.selectedTags = ['1']
+
+    component.onSubmit()
+
+    expect(component.tagError).toBe(false)
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
   })
 })
