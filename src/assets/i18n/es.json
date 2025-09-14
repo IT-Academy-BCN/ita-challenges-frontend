@@ -87,8 +87,7 @@
                 "easy": "Fácil",
                 "medium": "Media",
                 "hard": "Difícil",
-                "tags": "Tags",
-                "tagsRequired": "Selecciona al menos una etiqueta"
+                "tags": "Tags"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Retos guardados",
