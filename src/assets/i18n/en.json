@@ -87,7 +87,8 @@
                 "easy": "Easy",
                 "medium": "Medium",
                 "hard": "Hard",
-                "tags": "Tags"
+                "tags": "Tags",
+                "tagsRequired": "You must select at least one tag"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Saved challenges",
