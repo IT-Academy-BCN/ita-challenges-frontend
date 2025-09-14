@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.3.3-RELEASE] - 2025-09-14
 
 ### Changed
-- Added error message when submiting new challenge without any selected tags (Taiga [#653], PR [NUM]).
+- Added provisional error message when submiting new challenge without any selected tags (Taiga [#653], PR [686]).
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
