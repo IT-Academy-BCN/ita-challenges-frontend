@@ -32,6 +32,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
 
   public editor: EditorView | null = null
+  tagError:boolean = false;
 
   challenge: CreateChallenge = {
     challengeTitle: '',
@@ -215,6 +216,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   // Envío del formulario (código original)
   onSubmit (): void {
+    if (this.selectedTags.length === 0) {
+    this.tagError = true;
+    return;
+  } else {
+    this.tagError = false;
+  }
     if (!this.isFormValid()) {
       console.error('El formulario no es válido')
       return

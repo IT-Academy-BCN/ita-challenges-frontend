@@ -164,6 +164,11 @@
                 </button>
               }
             </div>
+            @if(tagError) {
+              <div class="text-danger small my-3">
+                {{ "modules.challenge.challengeForm.tagsRequired" | translate }} 
+              </div>
+            }
           </div>
           }
         </div>
