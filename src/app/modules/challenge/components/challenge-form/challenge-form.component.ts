@@ -9,6 +9,7 @@ import { ChallengeFormService } from '../../../../services/challenge-form.servic
 import { EditorModule } from '@tinymce/tinymce-angular'
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ToastrService } from 'ngx-toastr';
 import { Inject } from '@angular/core'
 
 // Imports para CodeMirror
@@ -75,7 +76,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   private readonly router = inject(Router)
 
   constructor (
-    @Inject(TranslateService) readonly translate: TranslateService
+    @Inject(TranslateService) readonly translate: TranslateService,
+    private toastr: ToastrService
   ) {
     this.loadLanguages()
     translate.addLangs(['en', 'es', 'ca'])
@@ -218,6 +220,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   onSubmit (): void {
     if (this.selectedTags.length === 0) {
       this.tagError = true;
+      this.toastr.error('You must select at least one tag.', 'Error');
       return;
     } else {
       this.tagError = false;
@@ -236,6 +239,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       error: (err) => {
         if (err.status === 400) {
           this.tagError = true;
+          this.toastr.error('You must select at least one tag.', 'Error');
           console.error('Error creating challenge, at least one tag required', err)
         }
         console.error('Error al crear el reto:', err)
