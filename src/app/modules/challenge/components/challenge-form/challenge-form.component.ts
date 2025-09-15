@@ -234,6 +234,10 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
         void this.router.navigate(['/ita-challenge/challenges'])
       },
       error: (err) => {
+        if (err.status === 400) {
+        this.tagError = true;
+        console.error('Error creating challenge, at least one tag required', err)
+      }
         console.error('Error al crear el reto:', err)
       }
     })
