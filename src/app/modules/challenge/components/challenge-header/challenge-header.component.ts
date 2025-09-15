@@ -128,6 +128,10 @@ export class ChallengeHeaderComponent implements OnInit {
   });
 }
 
+ editChallenge(): void {
+     this.router.navigate([`/ita-challenge/challenges/edit/${this.idChallenge}`]);
+  }
+
 
   async onStartChallenge (): Promise<void> {
     this.challengeStarted = true
