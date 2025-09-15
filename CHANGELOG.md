@@ -7,7 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-4.0.0-RELEASE] - 2025-09-15
 
 ### Added
-- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#a modificar]).
+- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#689]).
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
