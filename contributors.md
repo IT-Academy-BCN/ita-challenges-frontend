@@ -39,4 +39,5 @@
 - Silvia Tuiran - https://github.com/Silvitui
 - Oscar Reguera - https://github.com/oscarrep
 - Ronnie Vélez - https://github.com/RonniedeTal
+- Víctor González - https://github.com/VictorGonPe
 - Sofia Ayala - https://github.com/sofrayala
