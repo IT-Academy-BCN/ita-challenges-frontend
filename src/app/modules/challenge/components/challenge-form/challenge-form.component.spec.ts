@@ -385,4 +385,22 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
   })
+
+  it('should handle 400 error on createChallenge and set tagError to true', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title'
+    component.challenge.description = 'Valid description for the challenge'
+    component.challenge.language = 'Javascript'
+    component.challenge.solution = 'Valid solution content'
+    component.selectedTags = ['1']
+
+    const errorResponse = { status: 400, message: 'Bad Request' }
+    mockChallengeService.createChallenge.mockReturnValue(throwError(() => errorResponse))
+    const consoleSpy = jest.spyOn(console, 'error')
+
+    component.onSubmit()
+
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
+    expect(component.tagError).toBe(true)
+    expect(consoleSpy).toHaveBeenCalledWith('Error creating challenge, at least one tag required', errorResponse)
+  })
 })

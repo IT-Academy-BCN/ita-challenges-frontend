@@ -217,11 +217,11 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   // Envío del formulario (código original)
   onSubmit (): void {
     if (this.selectedTags.length === 0) {
-    this.tagError = true;
-    return;
-  } else {
-    this.tagError = false;
-  }
+      this.tagError = true;
+      return;
+    } else {
+      this.tagError = false;
+    }
     if (!this.isFormValid()) {
       console.error('El formulario no es válido')
       return
@@ -235,9 +235,9 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       },
       error: (err) => {
         if (err.status === 400) {
-        this.tagError = true;
-        console.error('Error creating challenge, at least one tag required', err)
-      }
+          this.tagError = true;
+          console.error('Error creating challenge, at least one tag required', err)
+        }
         console.error('Error al crear el reto:', err)
       }
     })
