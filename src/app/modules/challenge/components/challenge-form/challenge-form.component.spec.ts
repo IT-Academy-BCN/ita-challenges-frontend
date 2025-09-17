@@ -416,6 +416,34 @@ describe('ChallengeFormComponent', () => {
       expect(loadTagsSpy).toHaveBeenCalled();
     });
 
+    it('should not load challenge data if challengeIdToEdit is not set', () => {
+      component.isEditMode = true;
+      component.challengeIdToEdit = '';
+      const getChallengeByIdSpy = jest.spyOn(mockChallengeService, 'getChallengeById');
+
+      component.loadChallengeForEditing();
+
+      expect(getChallengeByIdSpy).not.toHaveBeenCalled();
+    });
+
+    it('should use fallback values when challenge data is incomplete', () => {
+      const incompleteChallenge = {
+        ...mockChallenge,
+        challenge_title: {},
+        detail: { description: {} },
+        languages: []
+      };
+      component.isEditMode = true;
+      component.challengeIdToEdit = '1';
+      jest.spyOn(mockChallengeService, 'getChallengeById').mockReturnValue(of(incompleteChallenge as any));
+
+      component.loadChallengeForEditing();
+
+      expect(component.challenge.challengeTitle).toBe('');
+      expect(component.challenge.description).toBe('');
+      expect(component.selectedLanguageId).toBe('');
+    });
+
     it('should handle error when loading challenge for editing', () => {
       component.isEditMode = true;
       component.challengeIdToEdit = '1';
@@ -473,4 +501,17 @@ describe('ChallengeFormComponent', () => {
     consoleSpy.mockRestore();
   });
 
+  it('should handle language change with an invalid language', () => {
+    component.onLanguageChange('NonExistentLanguage');
+    expect(component.selectedLanguageId).toBe('');
+  });
+
+  it('should handle nullish results when loading tags', () => {
+    component.selectedLanguageId = '1';
+    jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(of({ results: null } as any));
+    
+    component.loadTags();
+
+    expect(component.currentTags).toEqual([]);
+  });
 })
