@@ -20,6 +20,11 @@ const routes: Routes = [
               (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
           },
           {
+            path: ':idChallenge/edit',
+            loadComponent: async () =>
+              (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
+          },
+          {
             path: '',
             component: StarterComponent
           },
