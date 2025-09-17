@@ -218,24 +218,24 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   // Envío del formulario (código original)
   onSubmit(): void {
-  if (!this.isFormValid()) {
-    this.tagsControl.markAsTouched();
-    return;
-  }
-
-  this.challenge.tags = this.tagsControl.value || [];
-
-  this.challengeService.createChallenge(this.challenge).subscribe({
-    next: () => this.router.navigate(['/ita-challenge/challenges']),
-    error: (err) => {
-      if (err.status === 400 && err.error?.fieldErrors?.tags) {
-        this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
-      } else {
-        this.toastr.error('Unexpected error occurred', 'Error');
-      }
+    if (!this.isFormValid()) {
+      this.tagsControl.markAsTouched();
+      return;
     }
-  });
-}
+  
+    this.challenge.tags = this.tagsControl.value || [];
+  
+    this.challengeService.createChallenge(this.challenge).subscribe({
+      next: () => void this.router.navigate(['/ita-challenge/challenges']),
+      error: (err) => {
+        if (err.status === 400 && err.error?.fieldErrors?.tags) {
+          this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
+        } else {
+          this.toastr.error('Unexpected error occurred', 'Error');
+        }
+      }
+    });
+  }
 
 
   onTagSelect (idTag: string): void {
