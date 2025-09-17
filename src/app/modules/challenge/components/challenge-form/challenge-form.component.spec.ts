@@ -163,14 +163,14 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
   })
 
-  it('should return true if the form is valid', () => {
+  it('should return true if the form and tags are valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title'
     component.challenge.description = 'Valid description for the challenge'
     component.challenge.language = 'Javascript'
     component.challenge.solution = 'Valid solution content'
     component.tagsControl.setValue(['1']);
 
-    expect(component.isFormValid()).toBe(true)
+    expect(component.isFormAndTagsValid()).toBe(true)
   })
 
   it('should return false if the form is invalid', () => {
@@ -179,7 +179,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.language = ''
     component.challenge.solution = 'Some solution content'
 
-    expect(component.isFormValid()).toBe(false)
+    expect(component.isFormAndTagsValid()).toBe(false)
   })
 
   it('should call createChallenge when the form is valid', () => {
@@ -195,14 +195,13 @@ describe('ChallengeFormComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
   })
 
-  it('should not call createChallenge and log error when the form is invalid', () => {
+  it('should not call createChallenge when the form is invalid', () => {
     component.challenge.challengeTitle = ''
     component.challenge.description = 'Some description'
     component.challenge.language = ''
     component.challenge.solution = 'Some solution content'
     component.tagsControl.setValue(['1']);
 
-    const consoleSpy = jest.spyOn(console, 'error')
     component.onSubmit()
 
     expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()

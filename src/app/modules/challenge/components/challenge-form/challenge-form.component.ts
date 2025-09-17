@@ -206,9 +206,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
       isLanguageValid &&
-      this.challenge.solution.trim() !== '' &&
-      this.tagsControl.valid
+      this.challenge.solution.trim() !== ''
     )
+  }
+
+  public isFormAndTagsValid (): boolean {
+    return this.isFormValid() && this.tagsControl.valid;
   }
 
   onCancel (): void {
@@ -218,7 +221,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   // Envío del formulario (código original)
   onSubmit(): void {
-    if (!this.isFormValid()) {
+    if (!this.isFormAndTagsValid()) {
       this.tagsControl.markAsTouched();
       return;
     }
@@ -236,7 +239,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       }
     });
   }
-
 
   onTagSelect (idTag: string): void {
   const value = this.tagsControl.value || [];
