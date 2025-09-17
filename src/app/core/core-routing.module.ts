@@ -19,8 +19,8 @@ const routes: Routes = [
             loadComponent: async () =>
               (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
           },
-          {
-            path: ':idChallenge/edit',
+           {
+            path: 'edit/:id',
             loadComponent: async () =>
               (await import('../modules/challenge/components/challenge-form/challenge-form.component')).ChallengeFormComponent
           },

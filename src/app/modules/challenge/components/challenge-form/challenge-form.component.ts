@@ -1,5 +1,5 @@
-import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type OnDestroy } from '@angular/core'
-import { Router } from '@angular/router'
+import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type OnDestroy, Input, OnInit } from '@angular/core'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
 import { FormsModule } from '@angular/forms'
@@ -20,6 +20,7 @@ import { python } from '@codemirror/lang-python'
 import { basicSetup } from 'codemirror'
 
 import { type TagResponse } from 'src/app/models/tag-response.interface'
+import { type Challenge } from 'src/app/models/challenge.model'
 
 @Component({
   standalone: true,
@@ -28,8 +29,10 @@ import { type TagResponse } from 'src/app/models/tag-response.interface'
   styleUrls: ['./challenge-form.component.scss'],
   imports: [FormsModule, CommonModule, EditorModule, TranslateModule]
 })
-export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
+export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit {
+  @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef;
+  @Input() isEditMode: boolean = false;
+  @Input() challengeIdToEdit: string = '';
 
   public editor: EditorView | null = null
 
@@ -72,6 +75,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   private readonly challengeService = inject(ChallengeService)
   private readonly challengeFormService = inject(ChallengeFormService)
   private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
 
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService
@@ -79,7 +83,15 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     this.loadLanguages()
     translate.addLangs(['en', 'es', 'ca'])
   }
-
+ngOnInit(): void {
+  this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.challengeIdToEdit = params['id'];
+        this.loadChallengeForEditing();
+      }
+    });
+}
   // Método que se ejecuta cuando el componente está listo
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ngAfterViewInit (): void {
@@ -154,6 +166,64 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     })
   }
 
+  loadChallengeForEditing(): void {
+    if (!this.challengeIdToEdit) return;
+
+    this.challengeService.getChallengeById(this.challengeIdToEdit).subscribe({
+      next: (challenge: any) => {
+        const currentLang = this.translate.currentLang;
+        
+        this.challenge = {
+          challengeTitle: challenge.challenge_title?.[currentLang] || 
+                         Object.values(challenge.challenge_title || {})[0] || 
+                         '',
+          description: challenge.detail?.description?.[currentLang] ||
+                      Object.values(challenge.detail?.description || {})[0] ||
+                      '',
+          level: challenge.level || 'EASY',
+          language: challenge.languages?.[0]?.language_name || '',
+          solution: challenge.solutions || '',
+          topic: 'ALL',
+          tags: []
+        };
+
+        this.selectedLanguageId = challenge.languages?.[0]?.id_language || '';
+        this.selectedTags = [];
+
+        if (this.selectedLanguageId) {
+          this.loadTags();
+        }
+
+        this.updateCodeMirror();
+      },
+      error: (err) => {
+        console.error('Error loading challenge for editing:', err);
+      }
+    });
+  }
+  private updateCodeMirror(): void {
+    if (this.editor) {
+      const languageExtension = this.getLanguageExtension(this.challenge.language);
+      this.editor.setState(EditorState.create({
+        doc: this.challenge.solution,
+        extensions: [
+          basicSetup,
+          languageExtension(),
+          EditorView.updateListener.of((update) => {
+            if (update.docChanged) {
+              this.challenge.solution = update.state.doc.toString();
+            }
+          }),
+          EditorView.theme({
+            '&': {
+              height: '300px'
+            }
+          })
+        ]
+      }));
+    }
+  }
+
   onLanguageChange (language: string): void {
     this.challenge.language = language
     const selectedLang = this.languages.find(lang => lang.language_name === language)
@@ -220,6 +290,18 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       return
     }
     this.challenge.tags = [...this.selectedTags]
+
+    if (this.isEditMode && this.challengeIdToEdit) {
+      this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({
+        next: (response) => {
+          console.log('Reto actualizado:', response)
+          void this.router.navigate(['/ita-challenge/challenges'])
+        },
+        error: (err) => {
+          console.error('Error al actualizar el reto:', err)
+        }
+      })
+    } else{
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: (response) => {
         console.log('Reto creado:', response)
@@ -231,7 +313,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       }
     })
   }
-
+  }
   onTagSelect (idTag: string): void {
     const index = this.selectedTags.indexOf(idTag)
     if (index === -1) {
