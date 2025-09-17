@@ -2,7 +2,7 @@ import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type
 import { Router } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { type Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from '../../../../services/challenge-form.service'
@@ -27,13 +27,13 @@ import { type TagResponse } from 'src/app/models/tag-response.interface'
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule, EditorModule, TranslateModule]
+  imports: [FormsModule, CommonModule, EditorModule, TranslateModule, ReactiveFormsModule]
 })
 export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
 
   public editor: EditorView | null = null
-  tagError:boolean = false;
+  tagsControl = new FormControl<string[]>([], {validators: Validators.required, nonNullable: true});
 
   challenge: CreateChallenge = {
     challengeTitle: '',
@@ -47,7 +47,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
 
   languages: Language[] = []
   selectedLanguageId: string = ''
-  selectedTags: string[] = []
   currentTags: any[] = []
 
   editorConfig = {
@@ -188,12 +187,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     this.challengeFormService.getTagsByLanguage(this.selectedLanguageId).subscribe({
       next: (response: TagResponse) => {
         this.currentTags = response.results ?? []
-        this.selectedTags = []
+        this.tagsControl.setValue([]);
       },
       error: (error) => {
         console.error('Error fetching tags:', error)
         this.currentTags = []
-        this.selectedTags = []
+        this.tagsControl.setValue([]);
       }
     })
   }
@@ -207,7 +206,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
       this.challenge.challengeTitle.trim() !== '' &&
       this.challenge.description.trim() !== '' &&
       isLanguageValid &&
-      this.challenge.solution.trim() !== ''
+      this.challenge.solution.trim() !== '' &&
+      this.tagsControl.valid
     )
   }
 
@@ -217,46 +217,40 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   // Envío del formulario (código original)
-  onSubmit (): void {
-    if (this.selectedTags.length === 0) {
-      this.tagError = true;
-      this.toastr.error('You must select at least one tag.', 'Error');
-      return;
-    } else {
-      this.tagError = false;
-    }
-    if (!this.isFormValid()) {
-      console.error('El formulario no es válido')
-      return
-    }
-    this.challenge.tags = [...this.selectedTags]
-    this.challengeService.createChallenge(this.challenge).subscribe({
-      next: (response) => {
-        console.log('Reto creado:', response)
-        // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
-        void this.router.navigate(['/ita-challenge/challenges'])
-      },
-      error: (err) => {
-        if (err.status === 400) {
-          this.tagError = true;
-          this.toastr.error('You must select at least one tag.', 'Error');
-          console.error('Error creating challenge, at least one tag required', err)
-        }
-        console.error('Error al crear el reto:', err)
-      }
-    })
+  onSubmit(): void {
+  if (!this.isFormValid()) {
+    this.tagsControl.markAsTouched();
+    return;
   }
+
+  this.challenge.tags = this.tagsControl.value || [];
+
+  this.challengeService.createChallenge(this.challenge).subscribe({
+    next: () => this.router.navigate(['/ita-challenge/challenges']),
+    error: (err) => {
+      if (err.status === 400 && err.error?.fieldErrors?.tags) {
+        this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
+      } else {
+        this.toastr.error('Unexpected error occurred', 'Error');
+      }
+    }
+  });
+}
+
 
   onTagSelect (idTag: string): void {
-    const index = this.selectedTags.indexOf(idTag)
-    if (index === -1) {
-      this.selectedTags.push(idTag)
-    } else {
-      this.selectedTags.splice(index, 1)
-    }
+  const value = this.tagsControl.value || [];
+
+  if (value.includes(idTag)) {
+    this.tagsControl.setValue(value.filter((id: string) => id !== idTag));
+  } else {
+    this.tagsControl.setValue([...value, idTag]);
   }
 
+  this.tagsControl.markAsTouched();
+}
+
   isTagSelected (idTag: string): boolean {
-    return this.selectedTags.includes(idTag)
+    return this.tagsControl.value.includes(idTag);
   }
 }
