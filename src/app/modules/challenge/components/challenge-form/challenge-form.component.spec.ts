@@ -400,9 +400,12 @@ describe('ChallengeFormComponent', () => {
       bookmarked: false
     };
 
-    it('should load challenge data when in edit mode', () => {
+    beforeEach(() => {
       component.isEditMode = true;
       component.challengeIdToEdit = '1';
+    });
+
+    it('should load challenge data when in edit mode', () => {
       jest.spyOn(mockChallengeService, 'getChallengeById').mockReturnValue(of(mockChallenge as any));
       const loadTagsSpy = jest.spyOn(component, 'loadTags');
 
@@ -416,7 +419,6 @@ describe('ChallengeFormComponent', () => {
     });
 
     it('should not load challenge data if challengeIdToEdit is not set', () => {
-      component.isEditMode = true;
       component.challengeIdToEdit = '';
       const getChallengeByIdSpy = jest.spyOn(mockChallengeService, 'getChallengeById');
 
@@ -434,8 +436,6 @@ describe('ChallengeFormComponent', () => {
         level: null,
         solutions: null
       };
-      component.isEditMode = true;
-      component.challengeIdToEdit = '1';
       jest.spyOn(mockChallengeService, 'getChallengeById').mockReturnValue(of(incompleteChallenge as any));
 
       component.loadChallengeForEditing();
@@ -448,8 +448,6 @@ describe('ChallengeFormComponent', () => {
     });
 
     it('should handle error when loading challenge for editing', () => {
-      component.isEditMode = true;
-      component.challengeIdToEdit = '1';
       jest.spyOn(mockChallengeService, 'getChallengeById').mockReturnValue(throwError(() => new Error('Error')));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -460,8 +458,6 @@ describe('ChallengeFormComponent', () => {
     });
 
     it('should call editChallenge when in edit mode and form is valid', () => {
-      component.isEditMode = true;
-      component.challengeIdToEdit = '1';
       component.challenge.challengeTitle = 'Title';
       component.challenge.description = 'Description';
       component.challenge.language = 'Java';
@@ -474,8 +470,6 @@ describe('ChallengeFormComponent', () => {
     });
 
     it('should handle error when editing a challenge', () => {
-      component.isEditMode = true;
-      component.challengeIdToEdit = '1';
       component.challenge.challengeTitle = 'Title';
       component.challenge.description = 'Description';
       component.challenge.language = 'Java';
