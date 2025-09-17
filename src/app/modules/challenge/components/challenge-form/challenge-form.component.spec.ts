@@ -189,17 +189,28 @@ describe('ChallengeFormComponent', () => {
     expect(component.isFormValid()).toBe(false)
   })
 
-  it('should call createChallenge when the form is valid', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title'
-    component.challenge.description = 'Valid description for the challenge'
-    component.challenge.language = 'Javascript'
-    component.challenge.solution = 'Valid solution content'
+  describe('onSubmit in Create Mode', () => {
+    beforeEach(() => {
+      component.challenge.challengeTitle = 'Valid Challenge Title';
+      component.challenge.description = 'Valid description for the challenge';
+      component.challenge.language = 'Javascript';
+      component.challenge.solution = 'Valid solution content';
+    });
 
-    component.onSubmit()
+    it('should call createChallenge when the form is valid', () => {
+      component.onSubmit();
+      expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+    });
 
-    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
-  })
+    it('should handle error when creating a challenge', () => {
+      jest.spyOn(mockChallengeService, 'createChallenge').mockReturnValue(throwError(() => new Error('Error')));
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      component.onSubmit();
+      expect(consoleSpy).toHaveBeenCalledWith('Error al crear el reto:', expect.any(Error));
+      consoleSpy.mockRestore();
+    });
+  });
 
   it('should not call createChallenge and log error when the form is invalid', () => {
     component.challenge.challengeTitle = ''
@@ -457,30 +468,30 @@ describe('ChallengeFormComponent', () => {
       consoleSpy.mockRestore();
     });
 
-    it('should call editChallenge when in edit mode and form is valid', () => {
-      component.challenge.challengeTitle = 'Title';
-      component.challenge.description = 'Description';
-      component.challenge.language = 'Java';
-      component.challenge.solution = 'Solution';
-      
-      component.onSubmit();
+    describe('onSubmit', () => {
+      beforeEach(() => {
+        component.challenge.challengeTitle = 'Title';
+        component.challenge.description = 'Description';
+        component.challenge.language = 'Java';
+        component.challenge.solution = 'Solution';
+      });
 
-      expect(mockChallengeService.editChallenge).toHaveBeenCalledWith('1', component.challenge);
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
-    });
-
-    it('should handle error when editing a challenge', () => {
-      component.challenge.challengeTitle = 'Title';
-      component.challenge.description = 'Description';
-      component.challenge.language = 'Java';
-      component.challenge.solution = 'Solution';
-      jest.spyOn(mockChallengeService, 'editChallenge').mockReturnValue(throwError(() => new Error('Error')));
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-      component.onSubmit();
-
-      expect(consoleSpy).toHaveBeenCalledWith('Error al actualizar el reto:', expect.any(Error));
-      consoleSpy.mockRestore();
+      it('should call editChallenge when form is valid', () => {
+        component.onSubmit();
+  
+        expect(mockChallengeService.editChallenge).toHaveBeenCalledWith('1', component.challenge);
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+      });
+  
+      it('should handle error when editing a challenge', () => {
+        jest.spyOn(mockChallengeService, 'editChallenge').mockReturnValue(throwError(() => new Error('Error')));
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+        component.onSubmit();
+  
+        expect(consoleSpy).toHaveBeenCalledWith('Error al actualizar el reto:', expect.any(Error));
+        consoleSpy.mockRestore();
+      });
     });
   });
 
