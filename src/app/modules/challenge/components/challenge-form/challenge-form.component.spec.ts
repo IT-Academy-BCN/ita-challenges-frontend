@@ -241,8 +241,7 @@ describe('ChallengeFormComponent', () => {
     expect(() => { component.ngAfterViewInit() }).not.toThrow()
   })
 
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para el editor
-  it.skip('should destroy CodeMirror on ngOnDestroy', () => {
+  it('should destroy CodeMirror on ngOnDestroy', () => {
     // Crear un mock para el editor
     const mockDestroy = jest.fn()
     component.editor = { destroy: mockDestroy } as any
@@ -429,9 +428,11 @@ describe('ChallengeFormComponent', () => {
     it('should use fallback values when challenge data is incomplete', () => {
       const incompleteChallenge = {
         ...mockChallenge,
-        challenge_title: {},
-        detail: { description: {} },
-        languages: []
+        challenge_title: null,
+        detail: { description: null },
+        languages: null,
+        level: null,
+        solutions: null
       };
       component.isEditMode = true;
       component.challengeIdToEdit = '1';
@@ -442,6 +443,8 @@ describe('ChallengeFormComponent', () => {
       expect(component.challenge.challengeTitle).toBe('');
       expect(component.challenge.description).toBe('');
       expect(component.selectedLanguageId).toBe('');
+      expect(component.challenge.level).toBe('EASY');
+      expect(component.challenge.solution).toBe('');
     });
 
     it('should handle error when loading challenge for editing', () => {
@@ -513,5 +516,23 @@ describe('ChallengeFormComponent', () => {
     component.loadTags();
 
     expect(component.currentTags).toEqual([]);
+  });
+
+  it('should handle nullish results when loading languages', () => {
+    jest.spyOn(mockChallengeFormService, 'getAllLangugesCreateForm').mockReturnValue(of({ results: null } as any));
+
+    component.loadLanguages();
+
+    expect(component.languages).toEqual([]);
+  });
+
+  it('should call loadChallengeForEditing when route params have an id', () => {
+    const activatedRoute = TestBed.inject(ActivatedRoute);
+    (activatedRoute as any).params = of({ id: '1' });
+    const loadChallengeForEditingSpy = jest.spyOn(component, 'loadChallengeForEditing');
+
+    component.ngOnInit();
+
+    expect(loadChallengeForEditingSpy).toHaveBeenCalled();
   });
 })
