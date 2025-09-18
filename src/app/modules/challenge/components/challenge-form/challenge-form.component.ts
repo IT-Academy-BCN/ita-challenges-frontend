@@ -231,7 +231,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy {
     this.challengeService.createChallenge(this.challenge).subscribe({
       next: () => void this.router.navigate(['/ita-challenge/challenges']),
       error: (err) => {
-        if (err.status === 400 && err.error?.fieldErrors?.tags) {
+        if (err.error?.fieldErrors?.tags) {
           this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
         } else {
           this.toastr.error('Unexpected error occurred', 'Error');
