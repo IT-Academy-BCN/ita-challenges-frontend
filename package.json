@@ -1,7 +1,7 @@
 {
   "name": "ita-challenges-frontend",
   "version": "3.3.2-RELEASE",
-   "scripts": {
+  "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
     "build": "ng build --configuration production && cp -r node_modules/tinymce dist/ita-challenges-frontend/browser/assets/tinymce",
@@ -54,6 +54,7 @@
     "ngx-toastr": "^19.0.0",
     "playwright": "^1.33.0",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.23.0",
     "tinymce": "^7.6.1",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.2"
