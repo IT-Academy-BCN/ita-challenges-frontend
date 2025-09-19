@@ -3,6 +3,7 @@ import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { FormBuilder } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { type Language } from 'src/app/models/language.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { Subscription } from 'rxjs'
@@ -18,6 +19,8 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
   filtersForm
 
   public languages: Record<string, string> = {}
+  public languageKeys: string[] = []
+  public tagsByLanguage: Record<string, Array<{ id_tag: string; tag_name: string }>> = {}
 
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
