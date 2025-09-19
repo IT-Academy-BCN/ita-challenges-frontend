@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter, DestroyRef, inject, OnInit, OnDestroy } from '@angular/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
-import { FormBuilder } from '@angular/forms'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { ChallengeService } from 'src/app/services/challenge.service'
+//import { ChallengeService } from 'src/app/services/challenge.service'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { type Language } from 'src/app/models/language.model'
 import { AuthService } from 'src/app/services/auth.service'
@@ -16,21 +16,22 @@ import { Subscription } from 'rxjs'
 export class StarterFiltersComponent implements OnInit, OnDestroy {
   @Output() filtersSelected = new EventEmitter<FilterChallenge>()
 
-  filtersForm
-
   public languages: Record<string, string> = {}
   public languageKeys: string[] = []
   public tagsByLanguage: Record<string, Array<{ id_tag: string; tag_name: string }>> = {}
 
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
-  private readonly challengeService = inject(ChallengeService)
+  //private readonly challengeService = inject(ChallengeService)
+  private readonly challengeFormService = inject(ChallengeFormService)
   private readonly authService = inject(AuthService)
 
   public isUserLoggedIn: boolean = false
   private userRoleSubs$!: Subscription
 
-  constructor () {
+  filtersForm: FormGroup
+
+  constructor() {
     this.filtersForm = this.fb.nonNullable.group({
       languages: this.fb.nonNullable.group({
         javascript: false,
@@ -38,6 +39,7 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
         php: false,
         python: false
       }),
+      tags: this.fb.group({}),
       levels: this.fb.nonNullable.group({
         easy: false,
         medium: false,
@@ -49,6 +51,9 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
         finished: false
       })
     })
+
+    const langGroup = this.filtersForm.get('languages') as FormGroup
+    this.languageKeys = Object.keys(langGroup.controls) // ➕
 
     this.challengeService.getAllLanguages().subscribe((res: any) => {
       if (res.results !== undefined) {
@@ -90,11 +95,11 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     this.userRoleSubs$ = this.authService.getUserRole().subscribe({
       next: (role) => {
         // Enable user-specific filters only for authenticated non-admin users
-        this.isUserLoggedIn = role !== '' 
+        this.isUserLoggedIn = role !== ''
       },
       error: (error) => {
         console.error('Error getting user role:', error)
-        this.isUserLoggedIn = false 
+        this.isUserLoggedIn = false
       }
     })
   }
