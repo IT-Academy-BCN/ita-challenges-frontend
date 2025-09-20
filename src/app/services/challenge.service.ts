@@ -227,12 +227,15 @@ editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Ch
   };
 
   return this.http.put<Challenge>(url, challenge, { headers }).pipe(
-    map(response => response),
     catchError((error: HttpErrorResponse) => {
-      console.error('Error updating challenge:', error);
+      
+      if (!environment.production) {
+        console.error('Error updating challenge:', error);
+      }
       return throwError(() => error);
     })
   );
 }
+
 
 }
