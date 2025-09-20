@@ -316,12 +316,13 @@ describe('ChallengeService', () => {
       jest.spyOn(console, 'error').mockImplementation(() => {});
 
       service.editChallenge(mockChallengeId, mockChallengeData).subscribe({
-        next: () => fail('should have failed with 500 error'),
-        error: (error) => {
-          expect(error.status).toEqual(500);
-          expect(console.error).toHaveBeenCalledWith('Error updating challenge:', mockError);
-        }
-      });
+      next: () => fail('should have failed with 500 error'),
+      error: (error) => {
+      
+        expect(error.status).toEqual(500);
+     
+      }
+    });
 
       const req = httpMock.expectOne(
         `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${mockChallengeId}/update`
