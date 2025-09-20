@@ -4,10 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
 ### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-17
 
 ### Added
 - Using the edit service Mentor can edit a current challenge by clicking on edit button (Taiga [#658], PR [#691]).
+=======
+### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-15
+
+### Added
+- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#690]).
+>>>>>>> feature/659/1-edit-challenge-service
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
