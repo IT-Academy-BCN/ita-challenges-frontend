@@ -91,7 +91,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
       if (params['id']) {
         this.isEditMode = true;
         this.challengeIdToEdit = params['id'];
-        console.log('Modo edición activado, ID:', this.challengeIdToEdit)
         this.loadChallengeForEditing();
       }
       else{
@@ -172,6 +171,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
         this.languages = []
+        throw err
       }
     })
   }
@@ -204,6 +204,7 @@ loadChallengeForEditing(): void {
       },
       error: (err) => {
         console.error('Error loading challenge for editing:', err);
+        throw err;
       }
     });
   }
@@ -233,6 +234,7 @@ loadChallengeForEditing(): void {
             this.initCodeMirror();
           }
           this.cdr.detectChanges();
+          throw err;
         }
       });
     } else {
@@ -309,6 +311,7 @@ loadChallengeForEditing(): void {
       error: (error) => {
         console.error('Error fetching tags:', error)
         this.currentTags = []
+        throw error
       }
     })
   }
@@ -347,6 +350,7 @@ loadChallengeForEditing(): void {
         },
         error: (err) => {
           console.error('Error al actualizar el reto:', err)
+          throw err
         }
       })
     } else {
@@ -358,6 +362,7 @@ loadChallengeForEditing(): void {
       },
       error: (err) => {
         console.error('Error al crear el reto:', err)
+        throw err
       }
     })
   }
