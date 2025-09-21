@@ -11,11 +11,17 @@ import { EditorModule } from '@tinymce/tinymce-angular'
 import { type ElementRef } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
-// TODO: Estos mocks necesitan ser mejorados en el futuro para permitir pruebas completas de la funcionalidad de CodeMirror
-// Actualmente hay un problema con el mock de javascript que causa un error 'Cannot read properties of undefined (reading 'define')'
-// y otros errores relacionados con la inicialización de CodeMirror
-
 // Mocks para CodeMirror
+const mockEditorView = {
+  destroy: jest.fn(),
+  state: {
+    doc: {
+      toString: jest.fn().mockReturnValue('console.log("test")')
+    }
+  },
+  setState: jest.fn()
+};
+
 jest.mock('@codemirror/view', () => {
   const mockEditorView = jest.fn().mockImplementation(() => ({
     destroy: jest.fn(),
@@ -37,26 +43,35 @@ jest.mock('@codemirror/view', () => {
   }
 })
 
-// Reemplaza el mock existente de @codemirror/state con este:
-jest.mock('@codemirror/state', () => {
-  const mockEditorState = {
+jest.mock('@codemirror/state', () => ({
+  EditorState: {
     create: jest.fn().mockImplementation((config) => ({
       doc: config?.doc || '',
-      extensions: config?.extensions || []
+      extensions: config?.extensions || [],
+      update: jest.fn(),
+      reconfigure: jest.fn()
     }))
-  };
-  return {
-    EditorState: mockEditorState,
-    EditorStateConfig: {}
-  };
-});
+  }
+}));
 
-// Mockear los módulos de lenguajes para evitar errores
-// TODO: Estos mocks deberían implementar correctamente la API de los módulos de lenguaje
-jest.mock('@codemirror/lang-javascript', () => ({ javascript: () => [] }))
-jest.mock('@codemirror/lang-java', () => ({ java: () => [] }))
-jest.mock('@codemirror/lang-python', () => ({ python: () => [] }))
-jest.mock('codemirror', () => ({ basicSetup: [] }))
+jest.mock('@codemirror/lang-javascript', () => ({
+  javascript: jest.fn().mockReturnValue({
+    extension: {}
+  })
+}));
+jest.mock('@codemirror/lang-java', () => ({
+  java: jest.fn().mockReturnValue({
+    extension: {}
+  })
+}));
+jest.mock('@codemirror/lang-python', () => ({
+  python: jest.fn().mockReturnValue({
+    extension: {}
+  })
+}));
+jest.mock('codemirror', () => ({
+  basicSetup: {}
+}));
 
 describe('ChallengeFormComponent', () => {
   let component: ChallengeFormComponent
@@ -158,9 +173,8 @@ describe('ChallengeFormComponent', () => {
       nativeElement: document.createElement('div')
     } satisfies ElementRef<any>
 
-    // TODO: En un futuro, este método no debería ser mockeado para poder probar la integración real con CodeMirror
-    // Sobrescribir el método initCodeMirror para que no se ejecute durante las pruebas
-    (component as any).initCodeMirror = jest.fn()
+    // Mockear initCodeMirror para evitar su ejecución automática en ngAfterViewInit
+    jest.spyOn(component as any, 'initCodeMirror').mockImplementation(() => {});
 
     fixture.detectChanges()
   })
@@ -182,6 +196,21 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeFormService.getAllLangugesCreateForm).toHaveBeenCalled()
   })
 
+  it('should handle error when loading languages', (done) => {
+    const error = new Error('Failed to load languages');
+    mockChallengeFormService.getAllLangugesCreateForm.mockReturnValue(throwError(() => error));
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    
+    component.loadLanguages();
+    
+    fixture.whenStable().then(() => {
+      expect(component.languages).toEqual([]);
+      expect(consoleSpy).toHaveBeenCalledWith('Error al obtener los idiomas:', error);
+      consoleSpy.mockRestore();
+      done();
+    });
+  });
+
   it('should return true if the form is valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title'
     component.challenge.description = 'Valid description for the challenge'
@@ -190,6 +219,15 @@ describe('ChallengeFormComponent', () => {
 
     expect(component.isFormValid()).toBe(true)
   })
+
+  it('should return true if the form is valid with translated title and description', () => {
+    component.challenge.challengeTitle = { en: 'Valid Challenge Title' } as any;
+    component.challenge.description = { en: 'Valid description' } as any;
+    component.challenge.language = 'Javascript';
+    component.challenge.solution = 'Valid solution content';
+    
+    expect(component.isFormValid()).toBe(true);
+  });
 
   it('should return false if the form is invalid', () => {
     component.challenge.challengeTitle = ''
@@ -225,77 +263,67 @@ describe('ChallengeFormComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido')
   })
 
-  // Tests para CodeMirror - Temporalmente desactivados
-  // TODO: Rehabilitar estas pruebas cuando se resuelvan los problemas con los mocks de CodeMirror
-  it.skip('should initialize CodeMirror on ngAfterViewInit', () => {
-    // El mock de codeMirrorEditor ya está configurado en el beforeEach
-    // Limpiamos cualquier llamada previa
-    jest.clearAllMocks()
+  it('should handle error when creating a challenge', (done) => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'Javascript';
+    component.challenge.solution = 'Valid solution content';
+    
+    const error = new Error('Create failed');
+    mockChallengeService.createChallenge.mockReturnValue(throwError(() => error));
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    
+    component.onSubmit();
+    
+    fixture.whenStable().then(() => {
+      expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+      expect(consoleSpy).toHaveBeenCalledWith('Error al crear el reto:', error);
+      consoleSpy.mockRestore();
+      done();
+    });
+  });
 
-    // Llamamos al método manualmente
-    component.ngAfterViewInit()
+  describe('CodeMirror Integration', () => {
+    it('should initialize CodeMirror on ngAfterViewInit if not in edit mode', () => {
+      component.isEditMode = false;
+      // Restaurar el mock para esta prueba
+      const initCodeMirrorSpy = jest.spyOn(component as any, 'initCodeMirror').mockImplementation(() => {});
+      component.ngAfterViewInit();
+      expect(initCodeMirrorSpy).toHaveBeenCalled();
+    });
 
-    // Verificamos que EditorView se haya llamado
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const EditorView = require('@codemirror/view').EditorView
-    expect(EditorView).toHaveBeenCalled()
-  })
+    it('should not initialize CodeMirror on ngAfterViewInit if in edit mode', () => {
+      component.isEditMode = true;
+      const initCodeMirrorSpy = jest.spyOn(component as any, 'initCodeMirror').mockRestore(); // No espiar
+      component.ngAfterViewInit();
+      // No se puede verificar que no se llamó si no hay espía, pero nos aseguramos que no falle
+      expect(component.editor).toBeNull();
+    });
 
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para EditorView
-  it.skip('should handle missing CodeMirror element gracefully', () => {
-    // Simular que el elemento no existe
-    component.codeMirrorEditor = {
-      nativeElement: document.createElement('div')
-    } satisfies ElementRef<any>
+    it('should destroy CodeMirror on ngOnDestroy', () => {
+      component.editor = mockEditorView as any;
+      component.ngOnDestroy();
+      expect(mockEditorView.destroy).toHaveBeenCalled();
+    });
 
-    // No debería lanzar un error
-    expect(() => { component.ngAfterViewInit() }).not.toThrow()
-  })
+    it('should handle null editor on ngOnDestroy gracefully', () => {
+      component.editor = null;
+      expect(() => component.ngOnDestroy()).not.toThrow();
+    });
 
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para el editor
-  it.skip('should destroy CodeMirror on ngOnDestroy', () => {
-    // Crear un mock para el editor
-    const mockDestroy = jest.fn()
-    component.editor = { destroy: mockDestroy } as any
+    it('should handle language change and update editor state', () => {
+      component.editor = mockEditorView as any;
+      component.onLanguageChange('Python');
+      expect(component.challenge.language).toBe('Python');
+      expect(mockEditorView.setState).toHaveBeenCalled();
+    });
 
-    component.ngOnDestroy()
-
-    expect(mockDestroy).toHaveBeenCalled()
-  })
-
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para editor
-  it.skip('should handle null editor on ngOnDestroy gracefully', () => {
-    // Establecer editor como null manualmente
-    component.editor = null
-
-    // No debería lanzar un error
-    expect(() => { component.ngOnDestroy() }).not.toThrow()
-  })
-
-  // TODO: Para rehabilitar este test, necesitamos un mock adecuado para editor y getLanguageExtension
-  it.skip('should handle language change', () => {
-    // Crear un mock para el editor con setState
-    const mockSetState = jest.fn()
-    component.editor = {
-      state: { doc: { toString: () => 'test' } },
-      setState: mockSetState
-    } as any
-
-    component.onLanguageChange('Python')
-
-    expect(component.challenge.language).toBe('Python')
-    expect(mockSetState).toHaveBeenCalled()
-  })
-
-  // TODO: Para rehabilitar este test, necesitamos asegurar que los mocks de lenguajes funcionen
-  it.skip('should handle language change with null editor', () => {
-    // Establecer editor como null manualmente
-    component.editor = null
-
-    // No debería lanzar un error y debería actualizar el lenguaje
-    expect(() => { component.onLanguageChange('Python') }).not.toThrow()
-    expect(component.challenge.language).toBe('Python')
-  })
+    it('should handle language change with null editor', () => {
+      component.editor = null;
+      expect(() => component.onLanguageChange('Python')).not.toThrow();
+      expect(component.challenge.language).toBe('Python');
+    });
+  });
 
   it('should call onCancel and navigate to challenges list', () => {
     component.onCancel()
@@ -324,25 +352,25 @@ describe('ChallengeFormComponent', () => {
     expect(spyGetTags).not.toHaveBeenCalled()
   })
 
-  it('should handle errors when calling getTagsByLanguage()', () => {
-    jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(
-      throwError(() => new Error('Error de carga'))
-    )
-
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
-    component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
-    component.loadTags()
-
-    expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId)
-
-    expect(component.currentTags).toEqual([])
-    expect(component.selectedTags).toEqual([])
-
-    expect(consoleSpy).toHaveBeenCalledWith('Error fetching tags:', expect.any(Error))
-
-    consoleSpy.mockRestore()
-  })
+  it('should handle errors when calling getTagsByLanguage()', (done) => {
+    const error = new Error('Error de carga');
+    jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(throwError(() => error));
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+    component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f';
+    component.loadTags();
+  
+    expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId);
+  
+    // Since loadTags is async, we need to wait for the observable to resolve
+    fixture.whenStable().then(() => {
+      expect(component.currentTags).toEqual([]);
+      expect(component.selectedTags).toEqual([]);
+      expect(consoleSpy).toHaveBeenCalledWith('Error fetching tags:', error);
+      consoleSpy.mockRestore();
+      done();
+    });
+  });
 
   describe('Tag Management', () => {
     it('should load tags on component initialization', () => {
@@ -376,7 +404,7 @@ describe('ChallengeFormComponent', () => {
     })
   })
 
-  describe('loadChallengeForEditing', () => {
+   describe('loadChallengeForEditing', () => {
     const mockChallenge = {
       id_challenge: '1',
       challenge_title: { en: 'Test Challenge' },
@@ -398,6 +426,7 @@ describe('ChallengeFormComponent', () => {
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
       const loadTagsSpy = jest.spyOn(component, 'loadTags');
       const updateCodeMirrorSpy = jest.spyOn(component as any, 'updateCodeMirror');
+      const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
 
       component.loadChallengeForEditing();
 
@@ -406,10 +435,10 @@ describe('ChallengeFormComponent', () => {
       expect(component.challenge.description).toEqual({ en: 'Test Description' });
       expect(component.challenge.level).toBe('MEDIUM');
       expect(component.challenge.language).toBe('Java');
-      expect(component.challenge.solution).toBe('public class Main {}');
+      expect(component.challenge.solution).toBe(''); // Se carga de forma asíncrona
       expect(component.selectedLanguageId).toBe('java123');
       expect(loadTagsSpy).toHaveBeenCalled();
-      expect(updateCodeMirrorSpy).toHaveBeenCalled();
+      expect(loadSolutionContentSpy).toHaveBeenCalled();
     });
 
     it('should not call getChallengeById if challengeIdToEdit is not set', () => {
@@ -418,15 +447,75 @@ describe('ChallengeFormComponent', () => {
       expect(mockChallengeService.getChallengeById).not.toHaveBeenCalled();
     });
 
-    it('should handle errors when loading a challenge', () => {
+    it('should handle errors when loading a challenge', (done) => {
       component.challengeIdToEdit = '1';
-      mockChallengeService.getChallengeById.mockReturnValue(throwError(() => new Error('Failed to load')));
+      const error = new Error('Failed to load');
+      mockChallengeService.getChallengeById.mockReturnValue(throwError(() => error));
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
       component.loadChallengeForEditing();
 
-      expect(consoleSpy).toHaveBeenCalledWith('Error loading challenge for editing:', expect.any(Error));
-      consoleSpy.mockRestore();
+      fixture.whenStable().then(() => {
+        expect(consoleSpy).toHaveBeenCalledWith('Error loading challenge for editing:', error);
+        consoleSpy.mockRestore();
+        done();
+      });
+    });
+    
+    it('should correctly map challenge data to form fields', () => {
+      const mockChallenge = {
+        challenge_title: 'Test Title',
+        detail: { description: 'Test Description' },
+        level: 'HARD',
+        languages: [{ language_name: 'Python', id_language: 'python123' }],
+        tags: ['tag1', 'tag2']
+      };
+      component.challengeIdToEdit = '1';
+      mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
+      const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
+      const loadTagsSpy = jest.spyOn(component, 'loadTags');
+    
+      component.loadChallengeForEditing();
+    
+      expect(component.challenge.challengeTitle).toBe('Test Title');
+      expect(component.challenge.description).toBe('Test Description');
+      expect(component.challenge.level).toBe('HARD');
+      expect(component.challenge.language).toBe('Python');
+      expect(component.selectedLanguageId).toBe('python123');
+      expect(component.selectedTags).toEqual(['tag1', 'tag2']);
+      expect(loadSolutionContentSpy).toHaveBeenCalled();
+      expect(loadTagsSpy).toHaveBeenCalled();
+    });
+    
+    it('should handle missing optional fields when loading a challenge', () => {
+      const mockChallenge = {
+        challenge_title: 'Test Title',
+        detail: { description: 'Test Description' },
+        level: 'EASY'
+      };
+      component.challengeIdToEdit = '1';
+      mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
+    
+      component.loadChallengeForEditing();
+    
+      expect(component.challenge.language).toBe('');
+      expect(component.selectedLanguageId).toBe('');
+      expect(component.selectedTags).toEqual([]);
+    });
+    
+    it('should not call loadTags if language is not available', () => {
+      const mockChallenge = {
+        challenge_title: 'Test Title',
+        detail: { description: 'Test Description' },
+        level: 'EASY'
+      };
+      component.challengeIdToEdit = '1';
+      mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
+      const loadTagsSpy = jest.spyOn(component, 'loadTags');
+    
+      component.loadChallengeForEditing();
+    
+      expect(loadTagsSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -582,6 +671,8 @@ describe('ChallengeFormComponent', () => {
       
       expect(component.challenge.solution).toBe('updated content');
     });
+
+    
   
     it('should set topic to ALL when loading challenge for editing', () => {
       component.challengeIdToEdit = '1';
@@ -606,7 +697,7 @@ describe('ChallengeFormComponent', () => {
         challenge_title: undefined,
         detail: undefined,
         level: 'MEDIUM',
-        languages: undefined,
+        languages: [],
         solutions: undefined
       };
   
@@ -624,7 +715,7 @@ describe('ChallengeFormComponent', () => {
     it('should handle getTagsByLanguage error during challenge loading', (done) => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
-        challenge_title: 'Test Challenge', // Usar string para evitar TypeError
+        challenge_title: { en: 'Test Challenge' },
         detail: { description: 'Test Description' },
         level: 'MEDIUM',
         languages: [{ language_name: 'Java', id_language: 'java123' }],

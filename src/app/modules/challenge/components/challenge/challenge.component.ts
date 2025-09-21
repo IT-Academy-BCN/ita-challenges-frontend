@@ -178,6 +178,9 @@ loadUserSolutionStatus(userId: string): void {
     this.challengeStarted = true;
     this.isEditorChallengeVisible = true;
     this.isChallengeStatementVisible = false;
+    if (this.userSolution) {
+      this.solutionText = this.userSolution.solution_text;
+    }
     this.loadSolutionContent();
   }
   onEditorSolutionChanged(newText: string): void {

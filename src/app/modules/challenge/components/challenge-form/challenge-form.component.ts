@@ -152,7 +152,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
       error: (err) => {
         console.error('Error al obtener los idiomas:', err)
         this.languages = []
-        throw err
       }
     })
   }
@@ -185,7 +184,6 @@ loadChallengeForEditing(): void {
       },
       error: (err) => {
         console.error('Error loading challenge for editing:', err);
-        throw err;
       }
     });
   }
@@ -261,7 +259,6 @@ loadChallengeForEditing(): void {
       error: (error) => {
         console.error('Error fetching tags:', error)
         this.currentTags = []
-        throw error
       }
     })
   }
@@ -271,9 +268,21 @@ loadChallengeForEditing(): void {
     const isLanguageValid = this.languages.some(lang =>
       lang.language_name === this.challenge.language
     )
+
+    const title = this.challenge.challengeTitle
+    const description = this.challenge.description
+
+    const isTitleValid = typeof title === 'string'
+      ? title.trim() !== ''
+      : title && Object.values(title).some((v: any) => v.trim() !== '')
+
+    const isDescriptionValid = typeof description === 'string'
+      ? description.trim() !== ''
+      : description && Object.values(description).some((v: any) => v.trim() !== '')
+
     return (
-      this.challenge.challengeTitle.trim() !== '' &&
-      this.challenge.description.trim() !== '' &&
+      isTitleValid &&
+      isDescriptionValid &&
       isLanguageValid &&
       this.challenge.solution.trim() !== ''
     )
@@ -300,7 +309,6 @@ loadChallengeForEditing(): void {
         },
         error: (err) => {
           console.error('Error al actualizar el reto:', err)
-          throw err
         }
       })
     } else {
@@ -312,7 +320,6 @@ loadChallengeForEditing(): void {
       },
       error: (err) => {
         console.error('Error al crear el reto:', err)
-        throw err
       }
     })
   }
