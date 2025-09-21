@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter, DestroyRef, inject, OnInit, OnDestroy 
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-//import { ChallengeService } from 'src/app/services/challenge.service'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { TagResponse } from 'src/app/models/tag-response.interface'
 import { type Language } from 'src/app/models/language.model'
@@ -23,7 +22,6 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
 
   private readonly destroyRef = inject(DestroyRef)
   private readonly fb = inject(FormBuilder)
-  //private readonly challengeService = inject(ChallengeService)
   private readonly challengeFormService = inject(ChallengeFormService)
   private readonly authService = inject(AuthService)
 
@@ -59,6 +57,7 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
 
     const langGroup = this.filtersForm.get('languages') as FormGroup
     this.languageKeys = Object.keys(langGroup.controls)
+    this.languageKeys.forEach(k => { this.tagsByLanguage[k] = [] })
 
     this.challengeFormService.getAllLangugesCreateForm()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -98,41 +97,60 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     })
   }
 
-  private buildTagsControls(): void {
-    const tagsRoot = this.filtersForm.get('tags') as FormGroup
-    const languagesGroup = this.filtersForm.get('languages') as FormGroup
+ private buildTagsControls(): void {
+  const tagsRootGroup = this.filtersForm.get('tags') as FormGroup
+  const languagesGroup = this.filtersForm.get('languages') as FormGroup
 
-    this.languageKeys.forEach((langKey) => {
-      const langId = this.languages[langKey]
-      if (!langId) return
+  this.languageKeys.forEach((languageKey) => {
+    const languageId = this.languages[languageKey]
+    if (!languageId) return
 
-      this.challengeFormService.getTagsByLanguage(langId)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((resp: TagResponse) => {
-          const tags = resp?.results ?? []
-          this.tagsByLanguage[langKey] = tags
+    this.challengeFormService.getTagsByLanguage(languageId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((resp: TagResponse) => {
+        const tags = resp?.results ?? []
+        this.tagsByLanguage[languageKey] = tags
 
-          // Un control booleano por id_tag
-          const tagGroup = this.fb.group({})
-          tags.forEach(t => {
-            tagGroup.addControl(t.id_tag, this.fb.nonNullable.control(false))
-          })
-          tagsRoot.addControl(langKey, tagGroup)
+        const tagGroupForLanguage = this.fb.group({})
+        tags.forEach(tag => {
+          const tagControl = this.fb.nonNullable.control(false)
 
-          // Opcional: si desmarcas el lenguaje, desmarca sus tags
-          const langCtrl = languagesGroup.get(langKey)
-          langCtrl?.valueChanges
+          // 🔹 Log a consola cuando cambia un tag
+          tagControl.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((checked: boolean) => {
-              if (!checked) {
-                Object.keys(tagGroup.controls).forEach(tagId => {
-                  tagGroup.get(tagId)?.setValue(false, { emitEvent: false })
-                })
+            .subscribe((isChecked: boolean) => {
+              if (isChecked) {
+                console.log(`✅ Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+              } else {
+                console.log(`❌ Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
               }
             })
+
+          tagGroupForLanguage.addControl(tag.id_tag, tagControl)
         })
-    })
-  }
+
+        // Añade el grupo de tags al root si no existe todavía
+        if (!tagsRootGroup.get(languageKey)) {
+          tagsRootGroup.addControl(languageKey, tagGroupForLanguage)
+        }
+
+        // 🔹 Control que representa el checkbox del lenguaje (JS, Java, etc.)
+        const languageControl = languagesGroup.get(languageKey)
+        languageControl?.valueChanges
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((isChecked: boolean) => {
+            if (!isChecked) {
+              // si desmarcamos el lenguaje, se desmarcan todos sus tags
+              const currentTagGroup = tagsRootGroup.get(languageKey) as FormGroup
+              Object.keys(currentTagGroup.controls).forEach(tagId => {
+                currentTagGroup.get(tagId)?.setValue(false, { emitEvent: false })
+              })
+            }
+          })
+      })
+  })
+}
+
 
   ngOnInit(): void {
     this.userRoleSubs$ = this.authService.getUserRole().subscribe({
