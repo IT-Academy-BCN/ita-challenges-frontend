@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
+import { SolutionService } from 'src/app/services/solution.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { type ElementRef } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
@@ -156,6 +157,7 @@ describe('ChallengeFormComponent', () => {
         { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: Router, useValue: mockRouter },
+        { provide: SolutionService, useValue: { getAllChallengeSolutions: jest.fn().mockReturnValue(of({ count: 0, offset: 0, limit: 0, results: [] })) } },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -429,13 +431,14 @@ describe('ChallengeFormComponent', () => {
       const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
 
       component.loadChallengeForEditing();
+      fixture.detectChanges();
 
       expect(mockChallengeService.getChallengeById).toHaveBeenCalledWith('1');
       expect(component.challenge.challengeTitle).toEqual({ en: 'Test Challenge' });
       expect(component.challenge.description).toEqual({ en: 'Test Description' });
       expect(component.challenge.level).toBe('MEDIUM');
       expect(component.challenge.language).toBe('Java');
-      expect(component.challenge.solution).toBe(''); // Se carga de forma asíncrona
+      expect(component.challenge.solution).toContain('// Tu código aquí');
       expect(component.selectedLanguageId).toBe('java123');
       expect(loadTagsSpy).toHaveBeenCalled();
       expect(loadSolutionContentSpy).toHaveBeenCalled();
@@ -476,6 +479,7 @@ describe('ChallengeFormComponent', () => {
       const loadTagsSpy = jest.spyOn(component, 'loadTags');
     
       component.loadChallengeForEditing();
+      fixture.detectChanges();
     
       expect(component.challenge.challengeTitle).toBe('Test Title');
       expect(component.challenge.description).toBe('Test Description');
@@ -691,6 +695,19 @@ describe('ChallengeFormComponent', () => {
       expect(component.challenge.topic).toBe('ALL');
     });
   
+    it('should enter edit mode and call loadChallengeForEditing when route has id', () => {
+      const activatedRoute = TestBed.inject(ActivatedRoute);
+      activatedRoute.params = of({ id: '123' });
+  
+      const loadChallengeSpy = jest.spyOn(component, 'loadChallengeForEditing');
+  
+      component.ngOnInit();
+  
+      expect(component.isEditMode).toBe(true);
+      expect(component.challengeIdToEdit).toBe('123');
+      expect(loadChallengeSpy).toHaveBeenCalled();
+    });
+  
     it('should handle challenge with undefined properties', () => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -737,6 +754,74 @@ describe('ChallengeFormComponent', () => {
         consoleSpy.mockRestore();
         done();
       }, 0);
+    });
+  });
+
+  describe('loadSolutionContent', () => {
+    let solutionService: jest.Mocked<SolutionService>;
+
+    beforeEach(() => {
+      solutionService = TestBed.inject(SolutionService) as jest.Mocked<SolutionService>;
+      solutionService.getAllChallengeSolutions = jest.fn().mockReturnValue(of({
+        count: 1,
+        offset: 0,
+        limit: 1,
+        results: [{ solution_text: 'console.log("solution")' }]
+      } as any));
+    });
+
+    it('should load solution content and update editor', () => {
+      component.challengeIdToEdit = '1';
+      component.selectedLanguageId = 'lang1';
+      component.editor = mockEditorView as any; // Mock editor to test update path
+      const updateCodeMirrorSpy = jest.spyOn(component as any, 'updateCodeMirror');
+      
+      (component as any).loadSolutionContent();
+
+      expect(solutionService.getAllChallengeSolutions).toHaveBeenCalledWith('1', 'lang1');
+      expect(component.challenge.solution).toBe('console.log("solution")');
+      expect(updateCodeMirrorSpy).toHaveBeenCalled();
+    });
+
+    it('should set default solution when no solutions are found', () => {
+      solutionService.getAllChallengeSolutions.mockReturnValue(of({ count: 0, offset: 0, limit: 1, results: [] }));
+      component.challengeIdToEdit = '1';
+      component.selectedLanguageId = 'lang1';
+      const initCodeMirrorSpy = jest.spyOn(component as any, 'initCodeMirror');
+
+      (component as any).loadSolutionContent();
+
+      expect(component.challenge.solution).toContain('// Tu código aquí');
+      expect(initCodeMirrorSpy).toHaveBeenCalled();
+    });
+
+    it('should handle error when loading solutions', () => {
+      const error = new Error('Solution load failed');
+      solutionService.getAllChallengeSolutions.mockReturnValue(throwError(() => error));
+      component.challengeIdToEdit = '1';
+      component.selectedLanguageId = 'lang1';
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      try {
+        (component as any).loadSolutionContent();
+      } catch (e) {
+        // The component re-throws the error, which we catch here to allow the test to continue.
+      }
+
+      expect(consoleSpy).toHaveBeenCalledWith('Error loading challenge solution for editing:', error);
+      expect(component.challenge.solution).toContain('// Tu código aquí');
+      consoleSpy.mockRestore();
+    });
+
+    it('should set default solution if challengeId or languageId is missing', () => {
+      component.challengeIdToEdit = '';
+      component.selectedLanguageId = '';
+      const initCodeMirrorSpy = jest.spyOn(component as any, 'initCodeMirror');
+
+      (component as any).loadSolutionContent();
+
+      expect(component.challenge.solution).toContain('// Tu código aquí');
+      expect(initCodeMirrorSpy).toHaveBeenCalled();
     });
   });
 })
