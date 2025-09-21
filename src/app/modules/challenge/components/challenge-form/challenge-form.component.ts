@@ -119,31 +119,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   /* istanbul ignore next */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private initCodeMirror () {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (!this.codeMirrorEditor?.nativeElement) return
-
-    const languageExtension = this.getLanguageExtension(this.challenge.language)
+    if (!this.codeMirrorEditor?.nativeElement) return;
 
     this.editor = new EditorView({
       parent: this.codeMirrorEditor.nativeElement,
-      state: EditorState.create({
-        doc: this.challenge.solution,
-        extensions: [
-          basicSetup,
-          languageExtension(),
-          EditorView.updateListener.of((update) => {
-            if (update.docChanged) {
-              this.challenge.solution = update.state.doc.toString()
-            }
-          }),
-          EditorView.theme({
-            '&': {
-              height: '300px'
-            }
-          })
-        ]
-      })
-    })
+      state: this.createEditorState()
+    });
   }
 
   // Obtiene la extensión de lenguaje para CodeMirror
@@ -250,24 +231,7 @@ loadChallengeForEditing(): void {
 
    private updateCodeMirror(): void {
     if (this.editor) {
-      const languageExtension = this.getLanguageExtension(this.challenge.language);
-      this.editor.setState(EditorState.create({
-        doc: this.challenge.solution,
-        extensions: [
-          basicSetup,
-          languageExtension(),
-          EditorView.updateListener.of((update) => {
-            if (update.docChanged) {
-              this.challenge.solution = update.state.doc.toString();
-            }
-          }),
-          EditorView.theme({
-            '&': {
-              height: '300px'
-            }
-          })
-        ]
-      }));
+      this.editor.setState(this.createEditorState());
     }
   }
 
@@ -276,22 +240,8 @@ loadChallengeForEditing(): void {
     const selectedLang = this.languages.find(lang => lang.language_name === language)
     this.selectedLanguageId = (selectedLang != null) ? selectedLang.id_language : ''
     this.loadTags()
-    /* istanbul ignore next */
-    // Actualiza CodeMirror con el nuevo lenguaje
     if (this.editor != null) {
-      const languageExtension = this.getLanguageExtension(language)
-      this.editor.setState(EditorState.create({
-        doc: this.editor.state.doc,
-        extensions: [
-          basicSetup,
-          languageExtension(),
-          EditorView.updateListener.of((update) => {
-            if (update.docChanged) {
-              this.challenge.solution = update.state.doc.toString()
-            }
-          })
-        ]
-      }))
+      this.editor.setState(this.createEditorState(this.editor.state.doc.toString()));
     }
   }
 
@@ -379,5 +329,26 @@ loadChallengeForEditing(): void {
 
   isTagSelected (idTag: string): boolean {
     return this.selectedTags.includes(idTag)
+  }
+
+  private createEditorState(doc: string = this.challenge.solution): EditorState {
+    const languageExtension = this.getLanguageExtension(this.challenge.language);
+    return EditorState.create({
+      doc: doc,
+      extensions: [
+        basicSetup,
+        languageExtension(),
+        EditorView.updateListener.of((update) => {
+          if (update.docChanged) {
+            this.challenge.solution = update.state.doc.toString();
+          }
+        }),
+        EditorView.theme({
+          '&': {
+            height: '300px'
+          }
+        })
+      ]
+    });
   }
 }
