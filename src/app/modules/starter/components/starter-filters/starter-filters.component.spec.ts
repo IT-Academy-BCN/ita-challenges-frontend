@@ -47,7 +47,7 @@ describe('StarterFiltersComponent', () => {
 
     const emitSpy = jest.spyOn(component.filtersSelected, 'emit')
 
-    const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkJs')).nativeElement
+    const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#check-javascript')).nativeElement
     languageInput.click()
     fixture.detectChanges()
 

@@ -120,9 +120,9 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((isChecked: boolean) => {
               if (isChecked) {
-                console.log(`✅ Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+                console.log(`Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
               } else {
-                console.log(`❌ Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+                console.log(`Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
               }
             })
 
