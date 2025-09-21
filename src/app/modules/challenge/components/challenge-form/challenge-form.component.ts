@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type OnDestroy,Input, OnInit } from '@angular/core'
+import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type OnDestroy,Input, OnInit, ChangeDetectorRef } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common'
 import { type Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from '../../../../services/challenge-form.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
+import { SolutionService } from 'src/app/services/solution.service'
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { Inject } from '@angular/core'
@@ -74,8 +75,10 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
 
   private readonly challengeService = inject(ChallengeService)
   private readonly challengeFormService = inject(ChallengeFormService)
+  private readonly solutionService = inject(SolutionService)
   private readonly router = inject(Router)
   private readonly route = inject(ActivatedRoute)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService
@@ -88,7 +91,12 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
       if (params['id']) {
         this.isEditMode = true;
         this.challengeIdToEdit = params['id'];
+        console.log('Modo edición activado, ID:', this.challengeIdToEdit)
         this.loadChallengeForEditing();
+      }
+      else{
+        console.log("modo creacion");
+        
       }
     });
   }
@@ -96,9 +104,10 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   // Método que se ejecuta cuando el componente está listo
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ngAfterViewInit (): void {
-    this.initCodeMirror()
+     if (!this.isEditMode) {
+      this.initCodeMirror()
+    }
   }
-
   // Método que se ejecuta cuando el componente se destruye
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ngOnDestroy (): void {
@@ -167,40 +176,74 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
     })
   }
 
-   loadChallengeForEditing(): void {
+loadChallengeForEditing(): void {
     if (!this.challengeIdToEdit) return;
 
     this.challengeService.getChallengeById(this.challengeIdToEdit).subscribe({
-      next: (challenge: any) => {
-        const currentLang = this.translate.currentLang;
-        
+      next: (challenge: Challenge) => {
+        const editableChallenge = challenge as Challenge & { topic?: string, tags?: string[] };
+
         this.challenge = {
-          challengeTitle: challenge.challenge_title?.[currentLang] || 
-                         Object.values(challenge.challenge_title || {})[0] || 
-                         '',
-          description: challenge.detail?.description?.[currentLang] ||
-                      Object.values(challenge.detail?.description || {})[0] ||
-                      '',
-          level: challenge.level || 'EASY',
-          language: challenge.languages?.[0]?.language_name || '',
-          solution: challenge.solutions || '',
-          topic: 'ALL',
-          tags: []
+          challengeTitle: editableChallenge.challenge_title || '',
+          description: editableChallenge.detail?.description || '',
+          level: (editableChallenge.level || 'EASY') as 'EASY' | 'MEDIUM' | 'HARD',
+          language: editableChallenge.languages?.[0]?.language_name || '',
+          solution: '',
+          topic: editableChallenge.topic || 'ALL',
+          tags: editableChallenge.tags || []
         };
 
-        this.selectedLanguageId = challenge.languages?.[0]?.id_language || '';
-        this.selectedTags = [];
+        this.selectedLanguageId = editableChallenge.languages?.[0]?.id_language || '';
+        this.selectedTags = editableChallenge.tags || [];
+
+        this.loadSolutionContent();
 
         if (this.selectedLanguageId) {
           this.loadTags();
         }
-
-        this.updateCodeMirror();
       },
       error: (err) => {
         console.error('Error loading challenge for editing:', err);
       }
     });
+  }
+
+  private loadSolutionContent(): void {
+    if (this.challengeIdToEdit && this.selectedLanguageId) {
+      this.solutionService.getAllChallengeSolutions(this.challengeIdToEdit, this.selectedLanguageId).subscribe({
+        next: (dataSolution) => {
+          if (dataSolution.results.length > 0) {
+            this.challenge.solution = dataSolution.results[0].solution_text;
+          } else {
+            this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+          }
+          if (this.editor) {
+            this.updateCodeMirror();
+          } else {
+            this.initCodeMirror();
+          }
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading challenge solution for editing:', err);
+          this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+          if (this.editor) {
+            this.updateCodeMirror();
+          } else {
+            this.initCodeMirror();
+          }
+          this.cdr.detectChanges();
+        }
+      });
+    } else {
+      this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+      if (!this.editor) {
+        this.initCodeMirror();
+      } else {
+        this.updateCodeMirror();
+      }
+      this.cdr.detectChanges();
+    }
   }
 
    private updateCodeMirror(): void {
@@ -257,12 +300,15 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
     this.challengeFormService.getTagsByLanguage(this.selectedLanguageId).subscribe({
       next: (response: TagResponse) => {
         this.currentTags = response.results ?? []
-        this.selectedTags = []
+            if (this.isEditMode && this.selectedTags.length > 0) {
+        this.selectedTags = this.selectedTags.filter(tagId => 
+          this.currentTags.some(tag => tag.id_tag === tagId)
+        );
+      }
       },
       error: (error) => {
         console.error('Error fetching tags:', error)
         this.currentTags = []
-        this.selectedTags = []
       }
     })
   }
