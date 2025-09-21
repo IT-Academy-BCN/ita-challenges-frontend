@@ -97,59 +97,59 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     })
   }
 
- private buildTagsControls(): void {
-  const tagsRootGroup = this.filtersForm.get('tags') as FormGroup
-  const languagesGroup = this.filtersForm.get('languages') as FormGroup
+  private buildTagsControls(): void {
+    const tagsRootGroup = this.filtersForm.get('tags') as FormGroup
+    const languagesGroup = this.filtersForm.get('languages') as FormGroup
 
-  this.languageKeys.forEach((languageKey) => {
-    const languageId = this.languages[languageKey]
-    if (!languageId) return
+    this.languageKeys.forEach((languageKey) => {
+      const languageId = this.languages[languageKey]
+      if (!languageId) return
 
-    this.challengeFormService.getTagsByLanguage(languageId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((resp: TagResponse) => {
-        const tags = resp?.results ?? []
-        this.tagsByLanguage[languageKey] = tags
+      this.challengeFormService.getTagsByLanguage(languageId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((resp: TagResponse) => {
+          const tags = resp?.results ?? []
+          this.tagsByLanguage[languageKey] = tags
 
-        const tagGroupForLanguage = this.fb.group({})
-        tags.forEach(tag => {
-          const tagControl = this.fb.nonNullable.control(false)
+          const tagGroupForLanguage = this.fb.group({})
+          tags.forEach(tag => {
+            const tagControl = this.fb.nonNullable.control(false)
 
-          // 🔹 Log a consola cuando cambia un tag
-          tagControl.valueChanges
+            // 🔹 Log a consola cuando cambia un tag
+            tagControl.valueChanges
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe((isChecked: boolean) => {
+                if (isChecked) {
+                  console.log(`Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+                } else {
+                  console.log(`Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+                }
+              })
+
+            tagGroupForLanguage.addControl(tag.id_tag, tagControl)
+          })
+
+          // Añade el grupo de tags al root si no existe todavía
+          if (!tagsRootGroup.get(languageKey)) {
+            tagsRootGroup.addControl(languageKey, tagGroupForLanguage)
+          }
+
+          // 🔹 Control que representa el checkbox del lenguaje (JS, Java, etc.)
+          const languageControl = languagesGroup.get(languageKey)
+          languageControl?.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((isChecked: boolean) => {
-              if (isChecked) {
-                console.log(`Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
-              } else {
-                console.log(`Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
+              if (!isChecked) {
+                // si desmarcamos el lenguaje, se desmarcan todos sus tags
+                const currentTagGroup = tagsRootGroup.get(languageKey) as FormGroup
+                Object.keys(currentTagGroup.controls).forEach(tagId => {
+                  currentTagGroup.get(tagId)?.setValue(false, { emitEvent: false })
+                })
               }
             })
-
-          tagGroupForLanguage.addControl(tag.id_tag, tagControl)
         })
-
-        // Añade el grupo de tags al root si no existe todavía
-        if (!tagsRootGroup.get(languageKey)) {
-          tagsRootGroup.addControl(languageKey, tagGroupForLanguage)
-        }
-
-        // 🔹 Control que representa el checkbox del lenguaje (JS, Java, etc.)
-        const languageControl = languagesGroup.get(languageKey)
-        languageControl?.valueChanges
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((isChecked: boolean) => {
-            if (!isChecked) {
-              // si desmarcamos el lenguaje, se desmarcan todos sus tags
-              const currentTagGroup = tagsRootGroup.get(languageKey) as FormGroup
-              Object.keys(currentTagGroup.controls).forEach(tagId => {
-                currentTagGroup.get(tagId)?.setValue(false, { emitEvent: false })
-              })
-            }
-          })
-      })
-  })
-}
+    })
+  }
 
 
   ngOnInit(): void {
