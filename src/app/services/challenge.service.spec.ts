@@ -318,7 +318,7 @@ describe('ChallengeService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${mockChallengeId}/update`
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
       );
       expect(req.request.method).toBe('PUT');
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
@@ -344,7 +344,7 @@ describe('ChallengeService', () => {
     });
 
       const req = httpMock.expectOne(
-        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${mockChallengeId}/update`
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
       );
       req.flush(null, mockError);
     });

@@ -219,7 +219,7 @@ export class ChallengeService {
 }
 
 editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Challenge> {
-  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${challengeId}/update`;
+  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${challengeId}/update`;
 
   const headers = {
     'Content-Type': 'application/json',
