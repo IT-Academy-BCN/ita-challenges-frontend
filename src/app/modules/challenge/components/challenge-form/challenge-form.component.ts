@@ -188,44 +188,38 @@ loadChallengeForEditing(): void {
     });
   }
 
-  private loadSolutionContent(): void {
-    if (this.challengeIdToEdit && this.selectedLanguageId) {
-      this.solutionService.getAllChallengeSolutions(this.challengeIdToEdit, this.selectedLanguageId).subscribe({
-        next: (dataSolution) => {
-          if (dataSolution.results.length > 0) {
-            this.challenge.solution = dataSolution.results[0].solution_text;
-          } else {
-            this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
-          }
-          if (this.editor) {
-            this.updateCodeMirror();
-          } else {
-            this.initCodeMirror();
-          }
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error loading challenge solution for editing:', err);
-          this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
-          if (this.editor) {
-            this.updateCodeMirror();
-          } else {
-            this.initCodeMirror();
-          }
-          this.cdr.detectChanges();
-          throw err;
-        }
-      });
-    } else {
-      this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
-      if (!this.editor) {
-        this.initCodeMirror();
-      } else {
-        this.updateCodeMirror();
-      }
-      this.cdr.detectChanges();
-    }
+  private handleEditorUpdate(): void {
+  if (this.editor) {
+    this.updateCodeMirror();
+  } else {
+    this.initCodeMirror();
   }
+  this.cdr.detectChanges();
+}
+
+  private loadSolutionContent(): void {
+  if (this.challengeIdToEdit && this.selectedLanguageId) {
+    this.solutionService.getAllChallengeSolutions(this.challengeIdToEdit, this.selectedLanguageId).subscribe({
+      next: (dataSolution) => {
+        if (dataSolution.results.length > 0) {
+          this.challenge.solution = dataSolution.results[0].solution_text;
+        } else {
+          this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+        }
+        this.handleEditorUpdate();
+      },
+      error: (err) => {
+        console.error('Error loading challenge solution for editing:', err);
+        this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+        this.handleEditorUpdate();
+        throw err;
+      }
+    });
+  } else {
+    this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
+    this.handleEditorUpdate();
+  }
+}
 
    private updateCodeMirror(): void {
     if (this.editor) {
