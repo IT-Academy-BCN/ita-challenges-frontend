@@ -115,7 +115,7 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
           tags.forEach(tag => {
             const tagControl = this.fb.nonNullable.control(false)
 
-            // 🔹 Log a consola cuando cambia un tag
+
             tagControl.valueChanges
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe((isChecked: boolean) => {
@@ -134,13 +134,13 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
             tagsRootGroup.addControl(languageKey, tagGroupForLanguage)
           }
 
-          // 🔹 Control que representa el checkbox del lenguaje (JS, Java, etc.)
+
           const languageControl = languagesGroup.get(languageKey)
           languageControl?.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((isChecked: boolean) => {
+
               if (!isChecked) {
-                // si desmarcamos el lenguaje, se desmarcan todos sus tags
                 const currentTagGroup = tagsRootGroup.get(languageKey) as FormGroup
                 Object.keys(currentTagGroup.controls).forEach(tagId => {
                   currentTagGroup.get(tagId)?.setValue(false, { emitEvent: false })
