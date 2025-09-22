@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-07-30
+### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-22
 
 ### Added
 - FeedbackModalService with SweetAlert2 integration for reusable feedback modals (loading, success, saved states) (Taiga [#667], PR [#694])
