@@ -87,7 +87,8 @@
                 "easy": "Fàcil",
                 "medium": "Mitjana",
                 "hard": "Difícil",
-                "tags": "Etiquetes"
+                "tags": "Etiquetes",
+                "tagsRequired": "Selecciona almenys una etiqueta"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",
