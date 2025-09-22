@@ -34,7 +34,6 @@
     }
   </div>
 
-  <!-- NIVELES -->
   <div class="form" formGroupName="levels">
     <p class="mb-2"><span>{{'modules.starter.filters.dificulty' | translate}}</span></p>
     <div class="form-check">
@@ -44,33 +43,27 @@
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkMedium" formControlName="medium">
-      <label class="form-check-label" for="checkMedium"><span>{{'modules.starter.filters.medium' |
-          translate}}</span></label>
+      <label class="form-check-label" for="checkMedium"><span>{{'modules.starter.filters.medium' |  translate}}</span></label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkHard" formControlName="hard">
-      <label class="form-check-label" for="checkHard"><span>{{'modules.starter.filters.hard' |
-          translate}}</span></label>
+      <label class="form-check-label" for="checkHard"><span>{{'modules.starter.filters.hard' |  translate}}</span></label>
     </div>
   </div>
 
-  <!-- PROGRESO -->
   <div class="form" formGroupName="progress" *ngIf="isUserLoggedIn">
     <p class="mb-2"><span>{{'modules.starter.filters.progress' | translate}}</span></p>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
-      <label class="form-check-label" for="checkNoStarted"><span>{{'modules.starter.filters.noStarted' |
-          translate}}</span></label>
+      <label class="form-check-label" for="checkNoStarted"><span>{{'modules.starter.filters.noStarted' |  translate}}</span></label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkStarted" formControlName="started">
-      <label class="form-check-label" for="checkStarted"><span>{{'modules.starter.filters.started' |
-          translate}}</span></label>
+      <label class="form-check-label" for="checkStarted"><span>{{'modules.starter.filters.started' |  translate}}</span></label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="checkFinished" formControlName="finished">
-      <label class="form-check-label" for="checkFinished"><span>{{'modules.starter.filters.finished' |
-          translate}}</span></label>
+      <label class="form-check-label" for="checkFinished"><span>{{'modules.starter.filters.finished' |  translate}}</span></label>
     </div>
   </div>
 </form>

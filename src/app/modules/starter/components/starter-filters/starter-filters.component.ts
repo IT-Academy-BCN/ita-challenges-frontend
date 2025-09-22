@@ -114,16 +114,11 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
           const tagGroupForLanguage = this.fb.group({})
           tags.forEach(tag => {
             const tagControl = this.fb.nonNullable.control(false)
-
-
             tagControl.valueChanges
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe((isChecked: boolean) => {
-                if (isChecked) {
-                  console.log(`Tag seleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
-                } else {
-                  console.log(`Tag deseleccionado: ${tag.tag_name}, lenguaje: ${languageKey})`)
-                }
+                // TO DO: filters by tags
+                // Logic will be added in task 670 (apply filters).
               })
 
             tagGroupForLanguage.addControl(tag.id_tag, tagControl)
