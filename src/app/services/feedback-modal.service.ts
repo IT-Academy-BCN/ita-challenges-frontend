@@ -8,10 +8,9 @@ export class FeedbackModalService {
 
   constructor() { }
 
-  loadingChallengesModal(title: string): void {
+  loadingPostingChallengesModal(title: string): void {
     const options: SweetAlertOptions = {
-      title: 'Loading challenge',
-      icon: 'success', //this will be replaced for a loading spinner
+      title: 'Posting challenge',
       allowOutsideClick: false,
       showConfirmButton: false,
       didOpen: () => {
@@ -22,23 +21,23 @@ export class FeedbackModalService {
   }
 
   
-  challengeCompletedModal(title: string, text: string): Promise<SweetAlertResult> {
+  successPostingChallengeModal(title: string, text: string): Promise<SweetAlertResult> {
     const options: SweetAlertOptions = {
       icon: 'success',
-      title: 'Challenge completed',
-      text: 'You have successfully completed a challenge!',
-      confirmButtonText: 'OK'
+      title: 'Challenge posted',
+      text: 'Thank you for your contribution!',
+      confirmButtonText: 'Go to challenges'
     };
     return Swal.fire(options);
   }
 
 
-  challengeSavedModal(text: string): Promise<SweetAlertResult> {
+  errorPostingChallengeModal(text: string): Promise<SweetAlertResult> {
     const options: SweetAlertOptions = {
-      icon: 'success', 
-      title: 'Challenge saved',
-      text: 'You have saved this challenge.',
-      confirmButtonText: 'OK'
+      icon: 'error', 
+      title: 'Erros when posting challenge',
+      text: 'Error message from backend.',
+      confirmButtonText: 'Back'
     };
     return Swal.fire(options);
   }

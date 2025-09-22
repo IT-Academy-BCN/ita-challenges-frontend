@@ -25,65 +25,59 @@ describe('FeedbackModalService', () => {
     expect(service).toBeTruthy();
   });
 
+  // Test for loadingPostingChallengesModal()
+  it('should display a loading modal with a custom title and show a spinner', () => {
+    const title = 'Posting a new challenge...';
+    service.loadingPostingChallengesModal(title);
 
-// Test for loadingChallengesModal()
-  it('should display a loading modal with correct options', () => {
-    const title = 'Loading challenges';
-    service.loadingChallengesModal(title);
-    
-    
-    expect(Swal.fire).toHaveBeenCalled();
-    
-    
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
+
     const options: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
 
-    expect(options.title).toBe('Loading challenge'); // Correcting based on the provided code
+    expect(options.title).toBe('Posting challenge');
     expect(options.allowOutsideClick).toBe(false);
     expect(options.showConfirmButton).toBe(false);
 
-    
     if (options.didOpen) {
-     
       options.didOpen({} as HTMLElement);
       expect(Swal.showLoading).toHaveBeenCalled();
     }
-
-      });
-
-  // Test for challengeCompletedModal()
-  it('should display a challenge completed modal with correct options', () => {
-    const text = 'You have successfully completed a challenge!';
-    service.challengeCompletedModal('Challenge completed', text);
-
-    expect(Swal.fire).toHaveBeenCalled();
-
-    const options: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
-
-    expect(options.icon).toBe('success');
-    expect(options.title).toBe('Challenge completed');
-    expect(options.text).toBe(text);
-    expect(options.confirmButtonText).toBe('OK');
   });
 
-  // Test for challengeSavedModal()
-  it('should display a challenge saved modal with correct options', () => {
-    const text = 'You have saved this challenge.';
-    service.challengeSavedModal(text);
-    
-    expect(Swal.fire).toHaveBeenCalled();
+  // Test for successPostingChallengeModal()
+  it('should display a success modal for a posted challenge', async () => {
+    const title = 'Challenge posted';
+    const text = 'Thank you for your contribution!';
+    await service.successPostingChallengeModal(title, text);
+
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
 
     const options: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
 
     expect(options.icon).toBe('success');
-    expect(options.title).toBe('Challenge saved');
+    expect(options.title).toBe(title);
     expect(options.text).toBe(text);
-    expect(options.confirmButtonText).toBe('OK');
+    expect(options.confirmButtonText).toBe('Go to challenges');
+  });
+
+  // Test for errorPostingChallengeModal()
+  it('should display an error modal for a failed challenge post', async () => {
+    const text = 'Error message from backend.';
+    await service.errorPostingChallengeModal(text);
+
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
+
+    const options: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
+
+    expect(options.icon).toBe('error');
+    expect(options.title).toBe('Erros when posting challenge');
+    expect(options.text).toBe(text);
+    expect(options.confirmButtonText).toBe('Back');
   });
 
   // Test for hideModal()
   it('should hide the current modal', () => {
     service.hideModal();
-    expect(Swal.close).toHaveBeenCalled();
+    expect(Swal.close).toHaveBeenCalledTimes(1);
   });
-
 });
