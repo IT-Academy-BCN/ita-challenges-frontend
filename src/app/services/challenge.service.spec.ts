@@ -6,6 +6,7 @@ import { type Itinerary } from '../models/itinerary.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { AuthService } from './auth.service'
 import { HttpErrorResponse } from '@angular/common/http'
+import { type Challenge } from '../models/challenge.model'
 
 const authServiceStub = {
   getAuthHeaders: () => ({ Authorization: 'Bearer mock-token' })
@@ -222,22 +223,22 @@ describe('ChallengeService', () => {
     ];
 
     it('should fetch related challenges successfully', () => {
-      // Act
+      
       service.getRelatedChallenges(mockChallengeId).subscribe(challenges => {
-        // Assert
+       
         expect(challenges).toEqual(mockChallenges);
       });
 
-      // Arrange
+  
       const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${mockChallengeId}/related`;
       const req = httpMock.expectOne(expectedUrl);
       
-      // Assert request
+      
       expect(req.request.method).toBe('GET');
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
       expect(req.request.headers.get('Content-Type')).toBe('application/json');
 
-      // Respond with mock data
+      
       req.flush({ results: mockChallenges });
     });
 
@@ -258,7 +259,7 @@ describe('ChallengeService', () => {
         statusText: 'Not Found'
       });
 
-      // Spy on console.error to verify it's called
+      
       jest.spyOn(console, 'error').mockImplementation(() => {});
 
       service.getRelatedChallenges(mockChallengeId).subscribe({
@@ -285,6 +286,63 @@ describe('ChallengeService', () => {
         `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${invalidId}/related`
       );
       req.flush({ results: mockChallenges });
+    });
+  });
+
+  describe('editChallenge', () => {
+    const mockChallengeId = '12345';
+    const mockChallengeData: Partial<Challenge> = { challenge_title: 'Updated Challenge Title' };
+    const mockSuccessResponse: Challenge = {
+      id_challenge: '12345',
+      challenge_title: 'Updated Challenge Title',
+      level: 'easy',
+      creation_date: new Date(),
+      popularity: 10,
+      favorites_count: 5,
+      saved_count: 2,
+      timesFavorite: 5,
+      detail: {
+        description: 'description',
+        examples: [],
+        notes: 'notes'
+      },
+      languages: [],
+      solutions: [],
+      timesSolved: 1,
+      bookmarked: false
+    };
+
+    it('should update a challenge successfully', () => {
+      service.editChallenge(mockChallengeId, mockChallengeData).subscribe(response => {
+        expect(response).toEqual(mockSuccessResponse);
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
+      );
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
+      expect(req.request.body).toEqual(mockChallengeData);
+      req.flush(mockSuccessResponse);
+    });
+
+    it('should handle HTTP errors on update', () => {
+      const mockError = new HttpErrorResponse({
+        status: 500,
+        statusText: 'Internal Server Error'
+      });
+
+      service.editChallenge(mockChallengeId, mockChallengeData).subscribe({
+        next: () => fail('should have failed with 500 error'),
+        error: (error) => {
+          expect(error.status).toEqual(500);
+        }
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
+      );
+      req.flush(null, mockError);
     });
   });
 })
