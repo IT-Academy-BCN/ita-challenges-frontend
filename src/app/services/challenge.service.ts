@@ -226,11 +226,7 @@ editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Ch
     ...this.authService.getAuthHeaders() 
   };
 
-  return this.http.put<Challenge>(url, challenge, { headers }).pipe(
-    catchError((error: HttpErrorResponse) => {
-      return throwError(() => error);
-    })
-  );
+  return this.http.put<Challenge>(url, challenge, { headers });
 }
 
 
