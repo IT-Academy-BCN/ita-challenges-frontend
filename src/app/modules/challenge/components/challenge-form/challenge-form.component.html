@@ -164,6 +164,11 @@
                 </button>
               }
             </div>
+            @if(tagsControl.hasError('required') && tagsControl.touched) {
+              <div class="text-danger small my-3">
+                 You must select at least one tag.
+              </div>
+            }
           </div>
           }
         </div>

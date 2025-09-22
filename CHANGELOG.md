@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-14
+
+### Changed
+- Added provisional error message when submiting new challenge without any selected tags (Taiga [#653], PR [686]).
+
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
 ### Changed
