@@ -4,10 +4,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-22
+
+### [ita-challenges-frontend-3.6.0-RELEASE] - 2025-09-22
 
 ### Added
 - FeedbackModalService with SweetAlert2 integration for reusable feedback modals (loading, success, saved states) (Taiga [#667], PR [#694])
+
+### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-15
+
+### Added
+- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#690]).
+### [ita-challenges-frontend-3.4.1-RELEASE] - 2025-09-14
+
+### Added
+- Added languages for the error message when submiting new challenge without any selected tags (Taiga [#662], PR [695]).
+
+### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-14
+
+### Changed
+- Added provisional error message when submiting new challenge without any selected tags (Taiga [#653], PR [686]).
+
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
