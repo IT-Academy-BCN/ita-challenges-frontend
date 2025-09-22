@@ -219,18 +219,14 @@ export class ChallengeService {
 }
 
 editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Challenge> {
-  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${challengeId}/update`;
+  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${challengeId}/update`;
 
   const headers = {
     'Content-Type': 'application/json',
     ...this.authService.getAuthHeaders() 
   };
 
-  return this.http.put<Challenge>(url, challenge, { headers }).pipe(
-    catchError((error: HttpErrorResponse) => {
-      return throwError(() => error);
-    })
-  );
+  return this.http.put<Challenge>(url, challenge, { headers });
 }
 
 

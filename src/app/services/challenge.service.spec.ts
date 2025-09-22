@@ -318,7 +318,7 @@ describe('ChallengeService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${mockChallengeId}/update`
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
       );
       expect(req.request.method).toBe('PUT');
       expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
@@ -332,19 +332,15 @@ describe('ChallengeService', () => {
         statusText: 'Internal Server Error'
       });
 
-      jest.spyOn(console, 'error').mockImplementation(() => {});
-
       service.editChallenge(mockChallengeId, mockChallengeData).subscribe({
-      next: () => fail('should have failed with 500 error'),
-      error: (error) => {
-      
-        expect(error.status).toEqual(500);
-     
-      }
-    });
+        next: () => fail('should have failed with 500 error'),
+        error: (error) => {
+          expect(error.status).toEqual(500);
+        }
+      });
 
       const req = httpMock.expectOne(
-        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenge/${mockChallengeId}/update`
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
       );
       req.flush(null, mockError);
     });
