@@ -14,6 +14,14 @@ and this project adheres to
 
 ### Added
 
+=======
+### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-15
+
+### Added
+- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#690]).
+### [ita-challenges-frontend-3.4.1-RELEASE] - 2025-09-14
+
+### Added
 - Added languages for the error message when submiting new challenge without any selected tags (Taiga [#662], PR [695]).
 
 ### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-14
