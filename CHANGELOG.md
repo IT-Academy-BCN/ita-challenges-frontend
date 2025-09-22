@@ -4,12 +4,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend--2.4.0-RELEASE] - 2025-07-30
+### [ita-challenges-frontend-2.5.0-RELEASE] - 2025-09-22
 
 ### Added
 
-- Implemented `LoginRequestService` with SweetAlert2 modal for guest users  
-  (Taiga [#672], PR [#693])
+- Implemented `LoginRequestService` with SweetAlert2 modal for guest users (Taiga [#672], PR [#693])
+
+### [ita-challenges-frontend-3.4.1-RELEASE] - 2025-09-14
+
+### Added
+
+- Added languages for the error message when submiting new challenge without any selected tags (Taiga [#662], PR [695]).
+
+### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-14
+
+### Changed
+
+- Added provisional error message when submiting new challenge without any selected tags (Taiga [#653], PR [686]).
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
