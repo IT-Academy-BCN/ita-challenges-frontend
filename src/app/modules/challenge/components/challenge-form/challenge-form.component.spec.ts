@@ -1,7 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ChallengeFormComponent } from './challenge-form.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { Router, ActivatedRoute } from '@angular/router'
 import { of, throwError } from 'rxjs'
@@ -11,6 +11,7 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { type ElementRef } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { ToastrService } from 'ngx-toastr'
 
 // Mocks para CodeMirror
 const mockEditorView = {
@@ -80,6 +81,7 @@ describe('ChallengeFormComponent', () => {
   let mockChallengeFormService: jest.Mocked<ChallengeFormService>
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockRouter: jest.Mocked<Router>
+  let mockToastrService: jest.Mocked<ToastrService>
 
   const mockJavascriptTags = {
     results: [
@@ -151,8 +153,12 @@ describe('ChallengeFormComponent', () => {
       navigate: jest.fn()
     } as unknown as jest.Mocked<Router>
 
+    mockToastrService = {
+      error: jest.fn()
+    } as unknown as jest.Mocked<ToastrService>
+
     await TestBed.configureTestingModule({
-      imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule, TranslateModule.forRoot()],
+      imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule, TranslateModule.forRoot(), ReactiveFormsModule],
       providers: [
         { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: ChallengeService, useValue: mockChallengeService },
@@ -163,7 +169,8 @@ describe('ChallengeFormComponent', () => {
           useValue: {
             params: of({})
           }
-        }
+        },
+        { provide: ToastrService, useValue: mockToastrService }
       ]
     }).compileComponents()
 
@@ -213,13 +220,14 @@ describe('ChallengeFormComponent', () => {
     });
   });
 
-  it('should return true if the form is valid', () => {
+  it('should return true if the form and tags are valid', () => {
     component.challenge.challengeTitle = 'Valid Challenge Title'
     component.challenge.description = 'Valid description for the challenge'
     component.challenge.language = 'Javascript'
     component.challenge.solution = 'Valid solution content'
+    component.tagsControl.setValue(['1']);
 
-    expect(component.isFormValid()).toBe(true)
+    expect(component.isFormAndTagsValid()).toBe(true)
   })
 
   it('should return true if the form is valid with translated title and description', () => {
@@ -237,7 +245,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.language = ''
     component.challenge.solution = 'Some solution content'
 
-    expect(component.isFormValid()).toBe(false)
+    expect(component.isFormAndTagsValid()).toBe(false)
   })
 
   it('should call createChallenge when the form is valid', () => {
@@ -245,6 +253,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.description = 'Valid description for the challenge'
     component.challenge.language = 'Javascript'
     component.challenge.solution = 'Valid solution content'
+    component.tagsControl.setValue(['1']);
 
     component.onSubmit()
 
@@ -252,38 +261,33 @@ describe('ChallengeFormComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
   })
 
-  it('should not call createChallenge and log error when the form is invalid', () => {
+  it('should not call createChallenge when the form is invalid', () => {
     component.challenge.challengeTitle = ''
     component.challenge.description = 'Some description'
     component.challenge.language = ''
     component.challenge.solution = 'Some solution content'
+    component.tagsControl.setValue(['1']);
 
-    const consoleSpy = jest.spyOn(console, 'error')
     component.onSubmit()
 
     expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()
-    expect(consoleSpy).toHaveBeenCalledWith('El formulario no es válido')
   })
 
-  it('should handle error when creating a challenge', (done) => {
-    component.challenge.challengeTitle = 'Valid Challenge Title';
-    component.challenge.description = 'Valid description for the challenge';
-    component.challenge.language = 'Javascript';
-    component.challenge.solution = 'Valid solution content';
-    
-    const error = new Error('Create failed');
-    mockChallengeService.createChallenge.mockReturnValue(throwError(() => error));
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    
-    component.onSubmit();
-    
-    fixture.whenStable().then(() => {
-      expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
-      expect(consoleSpy).toHaveBeenCalledWith('Error al crear el reto:', error);
-      consoleSpy.mockRestore();
-      done();
-    });
-  });
+  it('should handle generic error when creating a challenge', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title'
+    component.challenge.description = 'Valid description for the challenge'
+    component.challenge.language = 'Javascript'
+    component.challenge.solution = 'Valid solution content'
+    component.tagsControl.setValue(['1'])
+
+    const error = { error: 'Generic error' }
+    mockChallengeService.createChallenge.mockReturnValue(throwError(() => error))
+
+    component.onSubmit()
+
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
+    expect(mockToastrService.error).toHaveBeenCalledWith('Unexpected error occurred', 'Error')
+  })
 
   describe('CodeMirror Integration', () => {
     it('should initialize CodeMirror on ngAfterViewInit if not in edit mode', () => {
@@ -386,23 +390,33 @@ describe('ChallengeFormComponent', () => {
       const testTagId = '1'
       // Selecting a tag
       component.onTagSelect(testTagId)
-      expect(component.selectedTags).toContain(testTagId)
+      expect(component.tagsControl.value).toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeTruthy()
       // Deselecting the same tag
       component.onTagSelect(testTagId)
-      expect(component.selectedTags).not.toContain(testTagId)
+      expect(component.tagsControl.value).not.toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeFalsy()
     })
 
     it('should handle tag selection correctly', () => {
       const testTagId = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
       component.onTagSelect(testTagId)
-      expect(component.selectedTags).toContain(testTagId)
+      expect(component.tagsControl.value).toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeTruthy()
 
       component.onTagSelect(testTagId)
-      expect(component.selectedTags).not.toContain(testTagId)
+      expect(component.tagsControl.value).not.toContain(testTagId)
       expect(component.isTagSelected(testTagId)).toBeFalsy()
+    })
+
+    it('should filter selected tags in edit mode when loading tags', () => {
+      component.isEditMode = true
+      component.selectedTags = ['00000000-0000-0000-0000-000000000000', 'non-existent-tag']
+      component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f'
+
+      component.loadTags()
+
+      expect(component.selectedTags).toEqual(['00000000-0000-0000-0000-000000000000'])
     })
   })
 
@@ -628,6 +642,7 @@ describe('ChallengeFormComponent', () => {
       component.challenge.description = 'Test Description';
       component.challenge.language = 'Javascript';
       component.challenge.solution = 'console.log("test")';
+      component.tagsControl.setValue(['1']);
       
       const error = new Error('Edit failed');
       mockChallengeService.editChallenge.mockReturnValue(throwError(() => error));
@@ -650,6 +665,7 @@ describe('ChallengeFormComponent', () => {
       component.challenge.description = 'Test Description';
       component.challenge.language = 'Javascript';
       component.challenge.solution = 'console.log("test")';
+      component.tagsControl.setValue(['1']);
       
      
       
@@ -823,5 +839,53 @@ describe('ChallengeFormComponent', () => {
       expect(component.challenge.solution).toContain('// Tu código aquí');
       expect(initCodeMirrorSpy).toHaveBeenCalled();
     });
+  });
+  it('should not submit if no tags are selected', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'Javascript';
+    component.challenge.solution = 'Valid solution content';
+    component.tagsControl.setValue([]);
+  
+    component.onSubmit();
+  
+    expect(mockChallengeService.createChallenge).not.toHaveBeenCalled();
+    expect(component.tagsControl.touched).toBe(true);
+  });
+
+  it('should submit if tags are selected and form is valid', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'Javascript';
+    component.challenge.solution = 'Valid solution content';
+    component.tagsControl.setValue(['1']);
+  
+    component.onSubmit();
+  
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  });
+
+  it('should handle 400 error on createChallenge and set serverError', () => {
+    component.challenge.challengeTitle = 'Valid Challenge Title';
+    component.challenge.description = 'Valid description for the challenge';
+    component.challenge.language = 'Javascript';
+    component.challenge.solution = 'Valid solution content';
+    component.tagsControl.setValue(['1']);
+  
+    const errorResponse = {
+      status: 400,
+      error: {
+        fieldErrors: {
+          tags: 'Tags error'
+        }
+      }
+    };
+    mockChallengeService.createChallenge.mockReturnValue(throwError(() => errorResponse));
+  
+    component.onSubmit();
+  
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+    expect(component.tagsControl.hasError('serverError')).toBe(true);
   });
 })

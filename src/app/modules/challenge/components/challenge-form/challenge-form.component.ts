@@ -2,7 +2,7 @@ import { Component, inject, ViewChild, type ElementRef, type AfterViewInit, type
 import { Router, ActivatedRoute } from '@angular/router'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type CreateChallenge } from '../../../../models/create-challenge.interface'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { type Language } from 'src/app/models/challenges.interface'
 import { ChallengeFormService } from '../../../../services/challenge-form.service'
@@ -10,6 +10,7 @@ import { EditorModule } from '@tinymce/tinymce-angular'
 import { SolutionService } from 'src/app/services/solution.service'
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ToastrService } from 'ngx-toastr';
 import { Inject } from '@angular/core'
 
 // Imports para CodeMirror
@@ -28,7 +29,7 @@ import { type Challenge } from 'src/app/models/challenge.model'
   selector: 'app-challenge-form',
   templateUrl: './challenge-form.component.html',
   styleUrls: ['./challenge-form.component.scss'],
-  imports: [FormsModule, CommonModule, EditorModule, TranslateModule]
+  imports: [FormsModule, CommonModule, EditorModule, TranslateModule, ReactiveFormsModule]
 })
 export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('codeMirrorEditor') codeMirrorEditor!: ElementRef
@@ -36,6 +37,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   @Input() challengeIdToEdit: string = '';
 
   public editor: EditorView | null = null
+  tagsControl = new FormControl<string[]>([], {validators: Validators.required, nonNullable: true});
 
   challenge: CreateChallenge = {
     challengeTitle: '',
@@ -49,8 +51,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
 
   languages: Language[] = []
   selectedLanguageId: string = ''
-  selectedTags: string[] = []
   currentTags: any[] = []
+  selectedTags: string[] = []
 
   editorConfig = {
     base_url: '/assets/tinymce',
@@ -81,7 +83,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   private readonly cdr = inject(ChangeDetectorRef)
 
   constructor (
-    @Inject(TranslateService) readonly translate: TranslateService
+    @Inject(TranslateService) readonly translate: TranslateService,
+    private toastr: ToastrService
   ) {
     this.loadLanguages()
     translate.addLangs(['en', 'es', 'ca'])
@@ -249,10 +252,12 @@ loadChallengeForEditing(): void {
           this.currentTags.some(tag => tag.id_tag === tagId)
         );
       }
+       this.tagsControl.setValue([]);
       },
       error: (error) => {
         console.error('Error fetching tags:', error)
         this.currentTags = []
+        this.tagsControl.setValue([]);
       }
     })
   }
@@ -282,18 +287,26 @@ loadChallengeForEditing(): void {
     )
   }
 
+  public isFormAndTagsValid (): boolean {
+    return this.isFormValid() && this.tagsControl.valid;
+  }
+
   onCancel (): void {
     // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
     void this.router.navigate(['/ita-challenge/challenges'])
   }
 
   // Envío del formulario (código original)
-  onSubmit (): void {
-    if (!this.isFormValid()) {
-      console.error('El formulario no es válido')
-      return
+  onSubmit(): void {
+    if (!this.isFormAndTagsValid()) {
+      this.tagsControl.markAsTouched();
+      return;
     }
-    this.challenge.tags = [...this.selectedTags]
+    this.challenge.tags = [
+      ...(this.selectedTags || []),
+      ...(this.tagsControl.value || [])
+
+    ]
 
     if (this.isEditMode && this.challengeIdToEdit) {
       this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({
@@ -307,29 +320,32 @@ loadChallengeForEditing(): void {
       })
     } else {
     this.challengeService.createChallenge(this.challenge).subscribe({
-      next: (response) => {
-        console.log('Reto creado:', response)
-        // 🚀 TODO: En el futuro, cambiar esta redirección al dashboard del mentor
-        void this.router.navigate(['/ita-challenge/challenges'])
-      },
+      next: () => void this.router.navigate(['/ita-challenge/challenges']),
       error: (err) => {
-        console.error('Error al crear el reto:', err)
+        if (err.error?.fieldErrors?.tags) {
+          this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
+        } else {
+          this.toastr.error('Unexpected error occurred', 'Error');
+        }
       }
-    })
+    });
   }
 }
 
   onTagSelect (idTag: string): void {
-    const index = this.selectedTags.indexOf(idTag)
-    if (index === -1) {
-      this.selectedTags.push(idTag)
-    } else {
-      this.selectedTags.splice(index, 1)
-    }
+  const value = this.tagsControl.value || [];
+
+  if (value.includes(idTag)) {
+    this.tagsControl.setValue(value.filter((id: string) => id !== idTag));
+  } else {
+    this.tagsControl.setValue([...value, idTag]);
   }
 
+  this.tagsControl.markAsTouched();
+}
+
   isTagSelected (idTag: string): boolean {
-    return this.selectedTags.includes(idTag)
+    return this.tagsControl.value.includes(idTag);
   }
 
   private createEditorState(doc: string = this.challenge.solution): EditorState {
