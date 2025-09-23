@@ -9,6 +9,11 @@ and this project adheres to
 ### Added
 - Rendered tags by language in the filter panel (Taiga [#669], PR [#696]).
 
+### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-15
+
+### Added
+- Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#690]).
+
 ### [ita-challenges-frontend-3.4.1-RELEASE] - 2025-09-14
 
 ### Added
