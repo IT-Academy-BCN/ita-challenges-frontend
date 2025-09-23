@@ -26,7 +26,9 @@ export class FeedbackModalService {
       icon: 'success',
       title: 'Challenge posted',
       text: 'Thank you for your contribution!',
-      confirmButtonText: 'Go to challenges'
+      confirmButtonText: 'Go to challenges',
+      showCloseButton: true,
+      allowOutsideClick: true,
     };
     return Swal.fire(options);
   }
@@ -37,7 +39,9 @@ export class FeedbackModalService {
       icon: 'error', 
       title: 'Erros when posting challenge',
       text: 'Error message from backend.',
-      confirmButtonText: 'Back'
+      confirmButtonText: 'Back',
+      showCloseButton: true,
+      allowOutsideClick: true,
     };
     return Swal.fire(options);
   }
