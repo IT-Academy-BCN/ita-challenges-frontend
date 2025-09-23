@@ -6,7 +6,9 @@ import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { TagResponse } from 'src/app/models/tag-response.interface'
 import { type Language } from 'src/app/models/language.model'
 import { AuthService } from 'src/app/services/auth.service'
-import { Subscription } from 'rxjs'
+import { Subscription, forkJoin } from 'rxjs'
+import { map, pairwise, startWith } from 'rxjs/operators'
+
 
 @Component({
   selector: 'app-starter-filters',
@@ -55,9 +57,37 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
       })
     })
 
-    const langGroup = this.filtersForm.get('languages') as FormGroup
-    this.languageKeys = Object.keys(langGroup.controls)
+    const languagesGroup = this.filtersForm.get('languages') as FormGroup
+    this.languageKeys = Object.keys(languagesGroup.controls)
     this.languageKeys.forEach(k => { this.tagsByLanguage[k] = [] })
+
+    languagesGroup.valueChanges
+      .pipe(
+        startWith(languagesGroup.value),
+        pairwise(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(([prev, curr]: [Record<string, boolean>, Record<string, boolean>]) => {
+        const tagsRoot = this.filtersForm.get('tags') as FormGroup
+        if (!tagsRoot) return
+
+        Object.keys(curr).forEach(langKey => {
+          const wasOn = !!prev?.[langKey]
+          const isOn = !!curr?.[langKey]
+          if (wasOn && !isOn) {
+            const group = tagsRoot.get(langKey) as FormGroup
+            if (group) {
+              Object.keys(group.controls).forEach(tagId => {
+                const ctrl = group.get(tagId)
+                if (ctrl?.value === true) {
+                  ctrl.setValue(false, { emitEvent: false })
+                }
+              })
+            }
+          }
+        })
+      })
+
 
     this.challengeFormService.getAllLangugesCreateForm()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -66,7 +96,7 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
           this.languages[result.language_name.toLowerCase()] = result.id_language
         })
 
-        this.buildTagsControls()
+        this.buildTagsControlsForkJoin()
       })
 
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(formValue => {
@@ -75,9 +105,9 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
         Object.entries(formValue.languages).forEach(([key, val]) => {
           if (val) {
             const idLanguage = this.languages[key]
-            if (idLanguage !== '') {
-              filters.languages.push(idLanguage)
-            }
+          if (idLanguage) {
+            filters.languages.push(idLanguage)
+          }
           }
         })
       }
@@ -97,53 +127,39 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     })
   }
 
-  private buildTagsControls(): void {
+  private buildTagsControlsForkJoin(): void {
     const tagsRootGroup = this.filtersForm.get('tags') as FormGroup
-    const languagesGroup = this.filtersForm.get('languages') as FormGroup
 
-    this.languageKeys.forEach((languageKey) => {
-      const languageId = this.languages[languageKey]
-      if (!languageId) return
+    const requests = this.languageKeys
+      .map(langKey => ({ langKey, id: this.languages[langKey] }))
+      .filter(({ id }) => !!id)
+      .map(({ langKey, id }) =>
+        this.challengeFormService.getTagsByLanguage(id as string).pipe(
+          map((resp: TagResponse) => ({
+            langKey,
+            tags: resp?.results ?? []
+          }))
+        )
+      )
 
-      this.challengeFormService.getTagsByLanguage(languageId)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((resp: TagResponse) => {
-          const tags = resp?.results ?? []
-          this.tagsByLanguage[languageKey] = tags
+    if (!requests.length) return
+
+    forkJoin(requests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((langTags: Array<{ langKey: string; tags: Array<{ id_tag: string; tag_name: string }> }>) => {
+        langTags.forEach(({ langKey, tags }) => {
+          this.tagsByLanguage[langKey] = tags
 
           const tagGroupForLanguage = this.fb.group({})
           tags.forEach(tag => {
-            const tagControl = this.fb.nonNullable.control(false)
-            tagControl.valueChanges
-              .pipe(takeUntilDestroyed(this.destroyRef))
-              .subscribe((isChecked: boolean) => {
-                // TO DO: filters by tags
-                // Logic will be added in task 670 (apply filters).
-              })
-
-            tagGroupForLanguage.addControl(tag.id_tag, tagControl)
+            tagGroupForLanguage.addControl(tag.id_tag, this.fb.nonNullable.control(false))
           })
 
-          // Añade el grupo de tags al root si no existe todavía
-          if (!tagsRootGroup.get(languageKey)) {
-            tagsRootGroup.addControl(languageKey, tagGroupForLanguage)
+          if (!tagsRootGroup.get(langKey)) {
+            tagsRootGroup.addControl(langKey, tagGroupForLanguage)
           }
-
-
-          const languageControl = languagesGroup.get(languageKey)
-          languageControl?.valueChanges
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((isChecked: boolean) => {
-
-              if (!isChecked) {
-                const currentTagGroup = tagsRootGroup.get(languageKey) as FormGroup
-                Object.keys(currentTagGroup.controls).forEach(tagId => {
-                  currentTagGroup.get(tagId)?.setValue(false, { emitEvent: false })
-                })
-              }
-            })
         })
-    })
+      })
   }
 
 
