@@ -96,10 +96,6 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
         this.challengeIdToEdit = params['id'];
         this.loadChallengeForEditing();
       }
-      else{
-        console.log("modo creacion");
-        
-      }
     });
   }
 
