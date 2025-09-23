@@ -208,11 +208,13 @@ loadChallengeForEditing(): void {
         this.handleEditorUpdate();
       },
       error: (err) => {
+        this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
         this.handleEditorUpdate();
         throw err;
       }
     });
   } else {
+    this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
     this.handleEditorUpdate();
   }
 }
