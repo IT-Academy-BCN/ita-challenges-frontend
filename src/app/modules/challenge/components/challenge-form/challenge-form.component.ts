@@ -97,8 +97,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
         this.loadChallengeForEditing();
       }
       else{
-        console.log("modo creacion");
-        
+         this.isEditMode = false;
+         this.challengeIdToEdit = '';
       }
     });
   }
@@ -153,8 +153,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
         this.languages = results || []
       },
       error: (err) => {
-        console.error('Error al obtener los idiomas:', err)
-        this.languages = []
+       this.languages = []
+       throw err;
       }
     })
   }
@@ -186,7 +186,7 @@ loadChallengeForEditing(): void {
         }
       },
       error: (err) => {
-        console.error('Error loading challenge for editing:', err);
+        throw err;
       }
     });
   }
@@ -212,14 +212,11 @@ loadChallengeForEditing(): void {
         this.handleEditorUpdate();
       },
       error: (err) => {
-        console.error('Error loading challenge solution for editing:', err);
-        this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
         this.handleEditorUpdate();
         throw err;
       }
     });
   } else {
-    this.challenge.solution = 'function solution() {\n  // Tu código aquí\n  return resultado;\n}';
     this.handleEditorUpdate();
   }
 }
@@ -255,9 +252,9 @@ loadChallengeForEditing(): void {
        this.tagsControl.setValue([]);
       },
       error: (error) => {
-        console.error('Error fetching tags:', error)
         this.currentTags = []
         this.tagsControl.setValue([]);
+        throw error;
       }
     })
   }
@@ -311,11 +308,10 @@ loadChallengeForEditing(): void {
     if (this.isEditMode && this.challengeIdToEdit) {
       this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({
         next: (response) => {
-          console.log('Reto actualizado:', response)
           void this.router.navigate(['/ita-challenge/challenges'])
         },
         error: (err) => {
-          console.error('Error al actualizar el reto:', err)
+          throw err;
         }
       })
     } else {
