@@ -105,9 +105,9 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
         Object.entries(formValue.languages).forEach(([key, val]) => {
           if (val) {
             const idLanguage = this.languages[key]
-          if (idLanguage) {
-            filters.languages.push(idLanguage)
-          }
+            if (idLanguage) {
+              filters.languages.push(idLanguage)
+            }
           }
         })
       }
@@ -167,11 +167,11 @@ export class StarterFiltersComponent implements OnInit, OnDestroy {
     this.userRoleSubs$ = this.authService.getUserRole().subscribe({
       next: (role) => {
         // Enable user-specific filters only for authenticated non-admin users
-        this.isUserLoggedIn = role !== ''
+        this.isUserLoggedIn = role !== '' 
       },
       error: (error) => {
         console.error('Error getting user role:', error)
-        this.isUserLoggedIn = false
+        this.isUserLoggedIn = false 
       }
     })
   }
