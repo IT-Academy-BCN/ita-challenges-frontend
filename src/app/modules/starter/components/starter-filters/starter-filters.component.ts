@@ -91,7 +91,7 @@ export class StarterFiltersComponent implements OnInit {
         this.filtersForm.setControl('languages', this.fb.group(langControls))
 
         this.wireLanguageUncheckWatcher()
-        this.buildTagsControlsForkJoin()
+        this.initTagControl()
       })
   }
 
@@ -160,7 +160,7 @@ export class StarterFiltersComponent implements OnInit {
       })
   }
 
-  private buildTagsControlsForkJoin(): void {
+  private initTagControl(): void {
     const tagsRootGroup = this.filtersForm.get('tags') as FormGroup
     const languagesMap = this.languagesMapCtrl.value || {}
 
@@ -188,9 +188,8 @@ export class StarterFiltersComponent implements OnInit {
         this.tagsByLanguageCtrl.setValue(current, { emitEvent: false })
 
         Object.entries(current).forEach(([langKey, tags]) => {
-          const tagGroupForLanguage = this.fb.group(
-            Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
-          )
+          
+          const tagGroupForLanguage = this.createTagGroup(tags)
 
           if (!tagsRootGroup.get(langKey)) {
             tagsRootGroup.addControl(langKey, tagGroupForLanguage)
@@ -200,4 +199,10 @@ export class StarterFiltersComponent implements OnInit {
         })
       })
   }
+
+  private createTagGroup(tags: Array<{ id_tag: string; tag_name: string }>): FormGroup {
+  return this.fb.group(
+    Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
+  )
+}
 }
