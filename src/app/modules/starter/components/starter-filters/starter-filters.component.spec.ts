@@ -126,8 +126,6 @@ describe('StarterFiltersComponent', () => {
   })
 
 
-  //New test
-
   it('should render JavaScript tag checkboxes once tags are loaded', () => {
     fixture.detectChanges()
 
@@ -146,7 +144,6 @@ describe('StarterFiltersComponent', () => {
     const jsTagReduceInput: HTMLInputElement =
       fixture.debugElement.query(By.css('#javascript-tag-t-reduce')).nativeElement
 
-    // Check both tags
     jsTagMapInput.click()
     jsTagReduceInput.click()
     fixture.detectChanges()
@@ -154,12 +151,10 @@ describe('StarterFiltersComponent', () => {
     expect(jsTagMapInput.checked).toBe(true)
     expect(jsTagReduceInput.checked).toBe(true)
 
-    // Verify form values
     const jsTagsGroup = component.tagsForm.get('javascript')
     expect(jsTagsGroup?.get('t-map')?.value).toBe(true)
     expect(jsTagsGroup?.get('t-reduce')?.value).toBe(true)
 
-    // Uncheck one tag
     jsTagMapInput.click()
     fixture.detectChanges()
 
@@ -170,13 +165,11 @@ describe('StarterFiltersComponent', () => {
   it('should uncheck all JS tags when JavaScript language is unchecked', () => {
     fixture.detectChanges()
 
-    // Select language first
     const jsLangInput: HTMLInputElement =
       fixture.debugElement.query(By.css('#check-javascript')).nativeElement
     jsLangInput.click()
     fixture.detectChanges()
 
-    // Then check both tags
     const jsTagMapInput: HTMLInputElement =
       fixture.debugElement.query(By.css('#javascript-tag-t-map')).nativeElement
     const jsTagReduceInput: HTMLInputElement =
@@ -189,7 +182,6 @@ describe('StarterFiltersComponent', () => {
     expect(jsTagMapInput.checked).toBe(true)
     expect(jsTagReduceInput.checked).toBe(true)
 
-    // Now uncheck the language → all tags should be cleared
     jsLangInput.click()
     fixture.detectChanges()
 
