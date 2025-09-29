@@ -149,12 +149,11 @@ export class StarterFiltersComponent implements OnInit {
           if (wasOn && !isOn) {
             const group = tagsRoot.get(langKey) as FormGroup
             if (group) {
-              Object.keys(group.controls).forEach(tagId => {
-                const ctrl = group.get(tagId)
-                if (ctrl?.value === true) {
-                  ctrl.setValue(false, { emitEvent: false })
-                }
-              })
+              const allFalse = Object.keys(group.controls).reduce((acc, key) => {
+                acc[key] = false
+                return acc
+              }, {} as Record<string, boolean>)
+              group.patchValue(allFalse, { emitEvent: false })
             }
           }
         })
