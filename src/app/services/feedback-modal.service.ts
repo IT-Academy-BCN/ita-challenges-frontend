@@ -8,6 +8,20 @@ export class FeedbackModalService {
 
   constructor() { }
 
+  //EXAMPLE:Creating a "Challenge Saved" Modal
+  challengeSavedModal(text: string): Promise<SweetAlertResult> {
+    const options: SweetAlertOptions = {
+      icon: 'success',
+      title: 'Challenge saved!',
+      text: text,
+      confirmButtonText: 'OK',
+      showCloseButton: true,
+      allowOutsideClick: true
+    };
+    return Swal.fire(options);
+  }
+////////////
+
   loadingPostingChallengesModal(title: string): void {
     const options: SweetAlertOptions = {
       title: 'Posting challenge',
