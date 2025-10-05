@@ -71,18 +71,37 @@ export class StarterService {
     })
   }
 
-  getAllChallengesFiltered (filters: FilterChallenge, respArray: Challenge[]): Observable<any[]> {
-    return of(respArray).pipe(
-      map(challenges => {
-        return challenges.filter(challenge => {
-          const languageMatch = filters.languages.length === 0 || challenge.languages.every(lang => filters.languages.includes(lang.id_language))
+  getAllChallengesFiltered (filters: FilterChallenge, respArray: Challenge[]): Observable<Challenge[]> {
+  return of(respArray).pipe(
+    map(challenges => {
+      return challenges.filter(challenge => {
+        
+        const challengeLanguageIds = (challenge.languages ?? [])
+          .map((l: any) => l.id_language)
+          .filter(Boolean);
 
-          const levelMatch = filters.levels.length === 0 || filters.levels.includes(challenge.level.toUpperCase())
+        const languageMatch =
+          (filters.languages?.length ?? 0) === 0 ||
+          challengeLanguageIds.some(id => filters.languages.includes(id));
 
-          // todo: need to implement progress filter
-          return languageMatch && levelMatch // Usar '&&' en lugar de '||' para que ambos criterios se cumplan
-        })
-      })
-    )
-  }
+        const challengeTagIds: string[] = Array.isArray((challenge as any).tagIds)
+          ? (challenge as any).tagIds
+          : Array.isArray((challenge as any).tags)
+            ? (challenge as any).tags.map((t: any) => t.id_tag).filter(Boolean)
+            : [];
+
+        const tagMatch =
+          (filters.tags?.length ?? 0) === 0 ||
+          challengeTagIds.some(id => (filters.tags as string[]).includes(id));
+
+        const levelMatch =
+          (filters.levels?.length ?? 0) === 0 ||
+          filters.levels.includes(challenge.level.toUpperCase());
+
+        return languageMatch && tagMatch && levelMatch;
+      });
+    })
+  );
+}
+
 }
