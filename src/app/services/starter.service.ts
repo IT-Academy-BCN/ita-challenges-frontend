@@ -23,6 +23,7 @@ export class StarterService {
     }).pipe(
       tap((response) => {
         this.cachedChallenges = response
+        console.log('Backend response:', response);
       }))
   }
 
@@ -75,7 +76,6 @@ export class StarterService {
   return of(respArray).pipe(
     map(challenges => {
       return challenges.filter(challenge => {
-        
         const challengeLanguageIds = (challenge.languages ?? [])
           .map((l: any) => l.id_language)
           .filter(Boolean);
@@ -84,11 +84,9 @@ export class StarterService {
           (filters.languages?.length ?? 0) === 0 ||
           challengeLanguageIds.some(id => filters.languages.includes(id));
 
-        const challengeTagIds: string[] = Array.isArray((challenge as any).tagIds)
-          ? (challenge as any).tagIds
-          : Array.isArray((challenge as any).tags)
-            ? (challenge as any).tags.map((t: any) => t.id_tag).filter(Boolean)
-            : [];
+        const challengeTagIds: string[] = Array.isArray((challenge as any).tags)
+          ? (challenge as any).tags as string[]
+          : [];
 
         const tagMatch =
           (filters.tags?.length ?? 0) === 0 ||
@@ -96,7 +94,7 @@ export class StarterService {
 
         const levelMatch =
           (filters.levels?.length ?? 0) === 0 ||
-          filters.levels.includes(challenge.level.toUpperCase());
+          filters.levels.includes(String(challenge.level).toUpperCase());
 
         return languageMatch && tagMatch && levelMatch;
       });
