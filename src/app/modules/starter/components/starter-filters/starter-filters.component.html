@@ -1,22 +1,50 @@
 <form [formGroup]="filtersForm">
   <div class="form" formGroupName="languages">
-    <p class="font-weight-bold mb-2"><span>{{'modules.starter.filters.lenguaje' | translate}}</span></p>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkJs" formControlName="javascript">
-      <label class="form-check-label" for="checkJs"><span>Javascript</span></label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkJava" formControlName="java">
-      <label class="form-check-label" for="checkJava"><span>Java</span></label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkPhp" formControlName="php">
-      <label class="form-check-label" for="checkPhp"><span>PHP</span></label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkPython" formControlName="python">
-      <label class="form-check-label" for="checkPython"><span>Python</span></label>
-    </div>
+    <h3 class="font-weight-bold mb-2">
+      <span>{{ 'modules.starter.filters.lenguaje' | translate }}</span>
+    </h3>
+
+    <fieldset class="form">
+      <legend class="visually-hidden">
+        {{ 'modules.starter.filters.lenguaje' | translate }}
+      </legend>
+
+      @for (langKey of languageKeys; track langKey) {
+      <fieldset class="mb-2">
+
+        <legend class="visually-hidden" [id]="'heading-' + langKey">
+          {{ langKey | titlecase }}
+        </legend>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [id]="'check-' + langKey" [formControlName]="langKey" />
+          <label class="form-check-label" [for]="'check-' + langKey">
+            <span>{{ langKey | titlecase }}</span>
+          </label>
+        </div>
+
+        <ng-container [formGroup]="tagsForm">
+          @if (tagsForm.get(langKey)) {
+          <fieldset class="ms-4" [formGroupName]="langKey">
+            <legend class="visually-hidden">
+              {{ 'modules.starter.filters.tags' | translate }}
+            </legend>
+
+            @for (tag of tagsByLanguage[langKey]; track tag.id_tag) {
+            <div class="form-check form-check-inline mb-2">
+              <input class="form-check-input" type="checkbox" [id]="langKey + '-tag-' + tag.id_tag"
+                [formControlName]="tag.id_tag" />
+              <label class="form-check-label" [for]="langKey + '-tag-' + tag.id_tag">
+                {{ tag.tag_name }}
+              </label>
+            </div>
+            }
+          </fieldset>
+          }
+        </ng-container>
+      </fieldset>
+      }
+    </fieldset>
   </div>
 
   <div class="form" formGroupName="levels">
