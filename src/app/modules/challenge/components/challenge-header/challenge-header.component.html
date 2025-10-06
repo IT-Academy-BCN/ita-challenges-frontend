@@ -60,7 +60,7 @@ class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</b
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
     </ng-container>
     <ng-container *ngIf="userRole === USER_ROLE.ADMIN">
-        <button class="btn btn-sm btn-primary"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
+        <button class="btn btn-sm btn-primary" (click)="editChallenge()"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
     </ng-container>
     
     <!-- Si ya se envió la solución -->
@@ -70,6 +70,7 @@ class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</b
          <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
        </div>
      </ng-template>
+     
 
   </div>
   

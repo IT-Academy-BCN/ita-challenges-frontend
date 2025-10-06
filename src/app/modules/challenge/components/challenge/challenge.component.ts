@@ -76,6 +76,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
         this.loadUserBookmarks(userId);
         this.loadUserFavorites(userId);
         this.loadUserSolutionStatus(userId);
+        this.loadSolutionContent();
       },
       error: (err) => {
         console.error('[ChallengeComponent] Error fetching user ID:', err);
@@ -177,16 +178,28 @@ loadUserSolutionStatus(userId: string): void {
     this.challengeStarted = true;
     this.isEditorChallengeVisible = true;
     this.isChallengeStatementVisible = false;
-
-    if (this.userSolution?.solution_text) {
+    if (this.userSolution) {
       this.solutionText = this.userSolution.solution_text;
-      this.solutionService.solutionText(this.solutionText);
-      this.cdr.detectChanges();
     }
+    this.loadSolutionContent();
   }
   onEditorSolutionChanged(newText: string): void {
     this.solutionText = newText;
 
   }
 
+  loadSolutionContent(): void {
+    if (this.idChallenge && this.languageId) {
+      this.solutionService.getUserSolution(this.idChallenge, this.languageId).subscribe({
+        next: (solution) => {
+          this.solutionText = solution.solution_text;
+          this.solutionService.solutionText(this.solutionText);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading user solution:', err);
+        }
+      });
+    }
+  }
 }
