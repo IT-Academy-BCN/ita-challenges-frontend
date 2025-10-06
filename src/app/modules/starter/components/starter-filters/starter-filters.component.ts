@@ -124,6 +124,18 @@ export class StarterFiltersComponent implements OnInit {
           })
         }
 
+      const tagsGroup = this.filtersForm.get('tags') as FormGroup;
+      if (tagsGroup) {
+        const selectedTagIds: string[] = [];
+        Object.keys(tagsGroup.controls).forEach(langKey => {
+          const langTagGroup = tagsGroup.get(langKey) as FormGroup;
+          if (!langTagGroup) return;
+          Object.entries(langTagGroup.value as Record<string, boolean>)
+            .forEach(([tagId, checked]) => { if (checked) selectedTagIds.push(tagId); });
+        });
+        filters.tags = selectedTagIds;
+      }
+
         this.filtersSelected.emit(filters)
       })
   }
