@@ -15,14 +15,19 @@
         <legend class="visually-hidden" [id]="'heading-' + langKey">
           {{ langKey | titlecase }}
         </legend>
-
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" [id]="'check-' + langKey" [formControlName]="langKey" />
-          <label class="form-check-label" [for]="'check-' + langKey">
-            <span>{{ langKey | titlecase }}</span>
-          </label>
+        
+        <div class="language-row" [class.active]="hasSelectedTags(langKey)">
+          <span class="lang-dot" *ngIf="hasSelectedTags(langKey)" aria-hidden="true"></span>
+          <span class="lang-name">
+            {{ langKey | titlecase }}
+            <ng-container *ngIf="hasSelectedTags(langKey)">
+              <span class="lang-meta">
+                ({{ selectedTagCount(langKey) }} {{ 'modules.starter.filters.selected' | translate }})
+              </span>
+            </ng-container>
+          </span>
         </div>
-
+        
         <ng-container [formGroup]="tagsForm">
           @if (tagsForm.get(langKey)) {
           <fieldset class="ms-4" [formGroupName]="langKey">
