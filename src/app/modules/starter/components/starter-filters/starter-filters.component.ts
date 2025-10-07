@@ -95,49 +95,67 @@ export class StarterFiltersComponent implements OnInit {
       })
   }
 
-  private setupFormValueChanges(): void {
+  hasSelectedTags(langKey: string): boolean {
+    const group = this.tagsForm.get(langKey) as FormGroup | null;
+    if (!group) return false;
+    const values = group.getRawValue();
+    return Object.values(values).some(v => !!v);
+  }
+
+  selectedTagCount(langKey: string): number {
+    const group = this.tagsForm.get(langKey) as FormGroup | null;
+    if (!group) return 0;
+    const values = group.getRawValue();
+    return Object.values(values).filter(v => !!v).length;
+  }
+
+ private setAllTags(langKey: string, checked: boolean): void {
+    const group = this.tagsForm.get(langKey) as FormGroup | null;
+    if (!group) return;
+    Object.keys(group.controls).forEach(tagId => {
+      group.get(tagId)?.setValue(checked, { emitEvent: false });
+    });
+  }
+
+ private syncLanguageFromTags(langKey: string): void {
+    const group = this.tagsForm.get(langKey) as FormGroup | null;
+    const langCtrl = (this.filtersForm.get('languages') as FormGroup)?.get(langKey);
+    if (!group || !langCtrl) return;
+    const anySelected = Object.values(group.getRawValue()).some(Boolean);
+    langCtrl.setValue(anySelected, { emitEvent: false });
+  }
+
+ private buildAndEmitFilters(): void {
+    const fv = this.filtersForm.getRawValue();
+    const filters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] };
+
+    const languagesMap = this.languagesMapCtrl.value || {};
+    Object.entries(fv.languages as Record<string, boolean>)
+      .forEach(([key, on]) => on && languagesMap[key] && filters.languages.push(languagesMap[key]));
+
+    const tagsGroup = this.filtersForm.get('tags') as FormGroup;
+    if (tagsGroup) {
+      Object.keys(tagsGroup.controls).forEach(langKey => {
+        const langTagGroup = tagsGroup.get(langKey) as FormGroup;
+        Object.entries(langTagGroup.value as Record<string, boolean>)
+          .forEach(([tagId, checked]) => { if (checked) filters.tags?.push(tagId); });
+      });
+    }
+
+    Object.entries(fv.levels as Record<string, boolean>)
+      .forEach(([k, v]) => v && filters.levels.push(k.toUpperCase()));
+
+    const progressMap: Record<string, number> = { noStarted: 1, started: 2, finished: 3 };
+    Object.entries(fv.progress as Record<string, boolean>)
+      .forEach(([k, v]) => v && progressMap[k] && filters.progress.push(progressMap[k]));
+
+    this.filtersSelected.emit(filters);
+  }
+
+ private setupFormValueChanges(): void {
     this.filtersForm.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(formValue => {
-        const filters: FilterChallenge = { languages: [], levels: [], progress: [] }
-        const languagesMap = this.languagesMapCtrl.value || {}
-
-        if (formValue?.languages) {
-          Object.entries(formValue.languages as Record<string, boolean>).forEach(([key, val]) => {
-            if (val) {
-              const idLanguage = languagesMap[key]
-              if (idLanguage) filters.languages.push(idLanguage)
-            }
-          })
-        }
-
-        if (formValue?.levels) {
-          Object.entries(formValue.levels as Record<string, boolean>).forEach(([key, val]) => {
-            if (val) filters.levels.push(key.toUpperCase())
-          })
-        }
-
-        if (formValue?.progress) {
-          const progressMap: Record<string, number> = { noStarted: 1, started: 2, finished: 3 }
-          Object.entries(formValue.progress as Record<string, boolean>).forEach(([k, v]) => {
-            if (v && progressMap[k]) filters.progress.push(progressMap[k])
-          })
-        }
-
-      const tagsGroup = this.filtersForm.get('tags') as FormGroup;
-      if (tagsGroup) {
-        const selectedTagIds: string[] = [];
-        Object.keys(tagsGroup.controls).forEach(langKey => {
-          const langTagGroup = tagsGroup.get(langKey) as FormGroup;
-          if (!langTagGroup) return;
-          Object.entries(langTagGroup.value as Record<string, boolean>)
-            .forEach(([tagId, checked]) => { if (checked) selectedTagIds.push(tagId); });
-        });
-        filters.tags = selectedTagIds;
-      }
-
-        this.filtersSelected.emit(filters)
-      })
+      .subscribe(() => this.buildAndEmitFilters());
   }
 
   private wireLanguageUncheckWatcher(): void {
@@ -200,21 +218,28 @@ export class StarterFiltersComponent implements OnInit {
         this.tagsByLanguageCtrl.setValue(current, { emitEvent: false })
 
         Object.entries(current).forEach(([langKey, tags]) => {
-          
           const tagGroupForLanguage = this.createTagGroup(tags)
-
           if (!tagsRootGroup.get(langKey)) {
             tagsRootGroup.addControl(langKey, tagGroupForLanguage)
           } else {
             tagsRootGroup.setControl(langKey, tagGroupForLanguage)
           }
         })
+
+        Object.keys(current).forEach(langKey => this.syncLanguageFromTags(langKey));
+        Object.keys(current).forEach(langKey => {
+          const grp = (this.filtersForm.get('tags') as FormGroup).get(langKey) as FormGroup;
+          grp.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.syncLanguageFromTags(langKey));
+        });
+        this.buildAndEmitFilters();
       })
   }
 
   private createTagGroup(tags: Array<{ id_tag: string; tag_name: string }>): FormGroup {
-  return this.fb.group(
-    Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
-  )
-}
+    return this.fb.group(
+      Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
+    )
+  }
 }
