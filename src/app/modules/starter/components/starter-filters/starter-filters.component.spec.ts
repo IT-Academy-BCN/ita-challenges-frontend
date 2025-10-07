@@ -11,8 +11,8 @@ import { TranslateLoader, TranslateModule, TranslateFakeLoader } from '@ngx-tran
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent
   let fixture: ComponentFixture<StarterFiltersComponent>
-  let authServiceMock: any
-  let challengeFormServiceMock: any
+  let authServiceMock: any;
+  let challengeFormServiceMock: any;
 
   beforeEach(async () => {
     authServiceMock = {
@@ -48,7 +48,6 @@ describe('StarterFiltersComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        // Mock de i18n para que no haga XHR en los tests
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
@@ -58,7 +57,8 @@ describe('StarterFiltersComponent', () => {
         { provide: AuthService, useValue: authServiceMock },
         { provide: ChallengeFormService, useValue: challengeFormServiceMock }
       ]
-    }).compileComponents()
+    })
+    .compileComponents()
   })
 
   beforeEach(() => {
@@ -96,7 +96,6 @@ describe('StarterFiltersComponent', () => {
     levelInput.click()
     fixture.detectChanges()
 
-    // Click progreso (si visible)
     const progressEl = fixture.debugElement.query(By.css('#checkNoStarted'))
     if (progressEl) {
       (progressEl.nativeElement as HTMLInputElement).click()

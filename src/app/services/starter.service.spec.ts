@@ -12,6 +12,7 @@ import mockChallenges from '../../../src/mocks/challenge/challenge.mock.json'
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
   let service: StarterService
+  // let httpClientSpy: any;
   let testScheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
@@ -114,7 +115,7 @@ describe('StarterService', () => {
 
   it('should filter challenges correctly', () => {
     const mockFilters = {
-      languages: [],
+      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
       levels: ['EASY'],
       progress: []
     }
@@ -126,7 +127,7 @@ describe('StarterService', () => {
 
     service.getAllChallengesFiltered(mockFilters as any, mockChallengesMinimal).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
-      expect(filteredChallenges[0].id_challenge).toBe('1') // 🟢 comparar como string
+      expect(filteredChallenges[0].id_challenge).toBe('1')
     })
   })
 })

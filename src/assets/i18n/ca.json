@@ -136,8 +136,7 @@
             "empty": {
                 "noResults": "No s'han trobat reptes amb els filtres seleccionats."
             }
-        },
-        "modals": {
+        },"modals": {
             "solution": {
                 "title": "Estàs segur?",
                 "description":"Un cop enviat el codi no es pot editar" ,

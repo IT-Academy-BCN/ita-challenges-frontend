@@ -218,7 +218,9 @@ export class StarterFiltersComponent implements OnInit {
         this.tagsByLanguageCtrl.setValue(current, { emitEvent: false })
 
         Object.entries(current).forEach(([langKey, tags]) => {
+
           const tagGroupForLanguage = this.createTagGroup(tags)
+
           if (!tagsRootGroup.get(langKey)) {
             tagsRootGroup.addControl(langKey, tagGroupForLanguage)
           } else {
@@ -238,8 +240,8 @@ export class StarterFiltersComponent implements OnInit {
   }
 
   private createTagGroup(tags: Array<{ id_tag: string; tag_name: string }>): FormGroup {
-    return this.fb.group(
-      Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
-    )
-  }
+  return this.fb.group(
+    Object.fromEntries(tags.map(t => [t.id_tag, this.fb.nonNullable.control(false)]))
+  )
+}
 }
