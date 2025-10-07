@@ -132,6 +132,9 @@
                     "popularity": "Popularity",
                     "date": "Date"
                 }
+            },
+            "empty": {
+                "noResults": "No challenges found with the selected filters."
             }
         },
         "modals": {

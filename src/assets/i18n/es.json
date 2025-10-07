@@ -132,8 +132,12 @@
                     "popularity": "Popularidad",
                     "date": "Fecha"
                 }
+            },
+            "empty": {
+                "noResults": "No se han encontrado retos con los filtros seleccionados."
             }
-        },"modals": {
+        },
+        "modals": {
             "solution": {
                 "title": "¿Estás segur@?",
                 "description":"Una vez enviado el código no se puede editar" ,
