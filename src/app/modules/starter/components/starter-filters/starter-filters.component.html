@@ -22,7 +22,7 @@
             {{ langKey | titlecase }}
             <ng-container *ngIf="hasSelectedTags(langKey)">
               <span class="lang-meta">
-                ({{ selectedTagCount(langKey) }} {{ 'modules.starter.filters.selected' | translate }})
+                ({{ selectedTagCount(langKey) }})
               </span>
             </ng-container>
           </span>
