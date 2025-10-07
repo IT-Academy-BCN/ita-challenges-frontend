@@ -130,4 +130,32 @@ describe('StarterService', () => {
       expect(filteredChallenges[0].id_challenge).toBe('1')
     })
   })
+
+  it('should filter by language id', (done) => {
+    const fake: any[] = [
+      { id_challenge: 'a', level: 'EASY', languages: [{ id_language: 'lang-js' }] },
+      { id_challenge: 'b', level: 'EASY', languages: [{ id_language: 'lang-java' }] },
+    ];
+    const filters: any = { languages: ['lang-js'], levels: [], progress: [] };
+
+    service.getAllChallengesFiltered(filters, fake as any).subscribe(res => {
+      expect(res.length).toBe(1);
+      expect(res[0].id_challenge).toBe('a');
+      done();
+    });
+  });
+
+  it('should propagate error on getAllChallengesOffset HTTP failure', (done) => {
+    const offset = 0, limit = 8;
+    const sub = service.getAllChallengesOffset(offset, limit).subscribe({
+      next: () => fail('should not emit next on error'),
+      error: (e) => { expect(e.status).toBe(500); done(); }
+    });
+
+    const req = httpClientMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${offset}&limit=${limit}`
+    );
+    req.flush({ message: 'boom' }, { status: 500, statusText: 'Server Error' });
+  });
+
 })

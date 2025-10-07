@@ -218,7 +218,6 @@ export class StarterFiltersComponent implements OnInit {
         this.tagsByLanguageCtrl.setValue(current, { emitEvent: false })
 
         Object.entries(current).forEach(([langKey, tags]) => {
-
           const tagGroupForLanguage = this.createTagGroup(tags)
 
           if (!tagsRootGroup.get(langKey)) {

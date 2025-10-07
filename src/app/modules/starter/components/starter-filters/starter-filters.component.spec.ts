@@ -209,5 +209,4 @@ describe('StarterFiltersComponent', () => {
     expect(meta.textContent?.trim()).toBe('(1)');
   });
 
-
 })
