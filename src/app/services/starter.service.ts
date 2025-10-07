@@ -23,7 +23,6 @@ export class StarterService {
     }).pipe(
       tap((response) => {
         this.cachedChallenges = response
-        console.log('Backend response:', response);
       }))
   }
 

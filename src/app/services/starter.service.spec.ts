@@ -12,7 +12,6 @@ import mockChallenges from '../../../src/mocks/challenge/challenge.mock.json'
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
   let service: StarterService
-  // let httpClientSpy: any;
   let testScheduler: TestScheduler
   let httpClient: HttpClient
   let httpClientMock: HttpTestingController
@@ -23,14 +22,14 @@ describe('StarterService', () => {
       imports: [],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
-    httpClient = TestBed.inject(HttpClient) // TestBed.inject is used to inject into the test suite
+    httpClient = TestBed.inject(HttpClient)
     httpClientMock = TestBed.inject(HttpTestingController)
     service = new StarterService(httpClient)
-    testScheduler = new TestScheduler((actual, expected) => {
-    })
+    testScheduler = new TestScheduler(() => {})
+
     parsedChallenges = mockChallenges.map(challenge => ({
       ...challenge,
-      creation_date: new Date(challenge.creation_date), // Convert string to Date
+      creation_date: new Date(challenge.creation_date),
       solutions: challenge.solutions.map(solution => ({
         id_solution: solution.idSolution,
         solution_text: solution.solutionText
@@ -40,9 +39,12 @@ describe('StarterService', () => {
       timesFavorite: 0,
       timesSolved: 0,
       bookmarked: false
-
-    }))
+    })) as unknown as Challenge[];
   })
+
+  afterEach(() => { // 🟢 verificar no queden requests pendientes
+    httpClientMock.verify();
+  });
 
   it('should sort challenges by creation_date and popularity', (done) => {
     // Test para creation_date
@@ -71,28 +73,12 @@ describe('StarterService', () => {
     })
   })
 
-  /*
-  Some explanations:
-  RxJs introduced the following syntax when writing marble tests in our code
-      - ' ' the whitespace is a unique character that will not be interpreted; it can be used to align your marble string.
-      - '-' represents a frame of virtual time passing
-      - '|' This sign illustrates the completion of an observable.
-      - '#' Signifies an error
-      - [a-z] an alphanumeric character represents a value which is emitted by the Observable.
-      - '()' used to group events in the same frame. This can be used to group values, errors, and completion.
-      - '^' this sign illustrates the subscription point and will only be used when we are dealing with hot observables.
-
-  That’s the basic syntax. Let’s look at some examples to make ourself more familiar with the syntax.
-      - --: equivalent to NEVER. An observable that never emits
-      - a--b--c| : an Observable that emits a on the first frame, b on the fourth and c on the seventh. After emitting c the observable completes.
-      - ab--# : An Observable that emits a on frame two, b on frame three and an error on frame six.
-      - a^(bc)--|: A hot Observable that emits a before the subscription.
-   */
-
   it('Should stream all challenges', (done) => {
     const mockResponse: Record<string, unknown> = { challenge: 'challenge' }
     service.getAllChallenges().subscribe()
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`)
+    const req = httpClientMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
+    )
     expect(req.request.method).toEqual('GET')
     req.flush(mockResponse)
     done()
@@ -107,48 +93,40 @@ describe('StarterService', () => {
       expect(response).toEqual(mockResponse)
     })
 
-    const req = httpClientMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`)
+    const req = httpClientMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}?offset=${pageOffset}&limit=${pageLimit}`
+    )
     expect(req.request.method).toEqual('GET')
     req.flush(mockResponse)
   })
 
-  /*
-  Some explanations:
-  RxJs introduced the following syntax when writing marble tests in our code
-      - ' ' the whitespace is a unique character that will not be interpreted; it can be used to align your marble string.
-      - '-' represents a frame of virtual time passing
-      - '|' This sign illustrates the completion of an observable.
-      - '#' Signifies an error
-      - [a-z] an alphanumeric character represents a value which is emitted by the Observable.
-      - '()' used to group events in the same frame. This can be used to group values, errors, and completion.
-      - '^' this sign illustrates the subscription point and will only be used when we are dealing with hot observables.
-
-  That’s the basic syntax. Let’s look at some examples to make ourself more familiar with the syntax.
-      - --: equivalent to NEVER. An observable that never emits
-      - a--b--c| : an Observable that emits a on the first frame, b on the fourth and c on the seventh. After emitting c the observable completes.
-      - ab--# : An Observable that emits a on frame two, b on frame three and an error on frame six.
-      - a^(bc)--|: A hot Observable that emits a before the subscription.
-   */
-  it('Should stream all challenges', () => {
+  it('Should stream all challenges (RxJS marble test)', () => { // 🟢 nombre diferenciado
     testScheduler.run(({ expectObservable }) => {
-      const expectedMarble = '---(a|)'
-      const expectedValues = { a: data }
-      const obs$ = service.getAllChallenges().pipe(delay(3))
+      const expectedMarble = '---(a|)';
+      const expectedValues = { a: data as any };
 
-      expectObservable(obs$).toBe(expectedMarble, expectedValues)
-    })
-  })
+      (service as any).cachedChallenges = data as any; // 🟢 forzamos cache para no depender de HTTP
+      const obs$ = service.getAllChallenges().pipe(delay(3));
+
+      expectObservable(obs$).toBe(expectedMarble, expectedValues);
+    });
+  });
 
   it('should filter challenges correctly', () => {
     const mockFilters = {
-      languages: [], // Suponiendo que 1 y 2 son IDs de lenguaje válidos
+      languages: [],
       levels: ['EASY'],
       progress: []
     }
-    const mockChallenges: Challenge[] = []
-    service.getAllChallengesFiltered(mockFilters, mockChallenges).subscribe(filteredChallenges => {
+
+    const mockChallengesMinimal: Challenge[] = [
+      ({ id_challenge: '1', level: 'EASY' } as unknown) as Challenge,
+      ({ id_challenge: '2', level: 'MEDIUM' } as unknown) as Challenge
+    ];
+
+    service.getAllChallengesFiltered(mockFilters as any, mockChallengesMinimal).subscribe(filteredChallenges => {
       expect(filteredChallenges.length).toBe(1)
-      expect(filteredChallenges[0].id_challenge).toBe(1)
+      expect(filteredChallenges[0].id_challenge).toBe('1') // 🟢 comparar como string
     })
   })
 })

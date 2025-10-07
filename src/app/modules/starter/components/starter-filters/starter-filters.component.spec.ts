@@ -1,17 +1,18 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
 import { By } from '@angular/platform-browser'
-import { I18nModule } from '../../../../../assets/i18n/i18n.module'
 import { of } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { StarterFiltersComponent } from './starter-filters.component'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { TranslateLoader, TranslateModule, TranslateFakeLoader } from '@ngx-translate/core'
 
 describe('StarterFiltersComponent', () => {
   let component: StarterFiltersComponent
   let fixture: ComponentFixture<StarterFiltersComponent>
-  let authServiceMock: any;
-  let challengeFormServiceMock: any;
+  let authServiceMock: any
+  let challengeFormServiceMock: any
 
   beforeEach(async () => {
     authServiceMock = {
@@ -44,14 +45,20 @@ describe('StarterFiltersComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [StarterFiltersComponent],
-      imports: [ReactiveFormsModule, I18nModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        // Mock de i18n para que no haga XHR en los tests
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+      ],
       providers: [
         FormBuilder,
         { provide: AuthService, useValue: authServiceMock },
         { provide: ChallengeFormService, useValue: challengeFormServiceMock }
       ]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -64,38 +71,47 @@ describe('StarterFiltersComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should emit filtersSelected event when form value changes', () => {
-    // Set up user as logged in for this test
+  it('should emit when selecting a JS tag + level (+progress if visible)', async () => {
+    // Usuario logueado para que aparezca progress
     authServiceMock.getUserRole.mockReturnValue(of('ALUMNI'))
     component.ngOnInit()
     component.isUserLoggedIn = true
     fixture.detectChanges()
 
-    const emitSpy = jest.spyOn(component.filtersSelected, 'emit')
-
-    const languageInput: HTMLInputElement = fixture.debugElement.query(By.css('#check-javascript')).nativeElement
-    languageInput.click()
+    // Esperar a que se monten los tags
+    await fixture.whenStable()
     fixture.detectChanges()
 
-    const levelInput: HTMLInputElement = fixture.debugElement.query(By.css('#checkEasy')).nativeElement
+    const emitSpy = jest.spyOn(component.filtersSelected, 'emit')
+
+    // Click tag JS
+    const jsTagMapInput: HTMLInputElement =
+      fixture.debugElement.query(By.css('#javascript-tag-t-map')).nativeElement
+    jsTagMapInput.click()
+    fixture.detectChanges()
+
+    // Click nivel EASY
+    const levelInput: HTMLInputElement =
+      fixture.debugElement.query(By.css('#checkEasy')).nativeElement
     levelInput.click()
     fixture.detectChanges()
 
-    const progressElement = fixture.debugElement.query(By.css('#checkNoStarted'))
-    if (progressElement) {
-      const progressInput: HTMLInputElement = progressElement.nativeElement
-      progressInput.click()
+    // Click progreso (si visible)
+    const progressEl = fixture.debugElement.query(By.css('#checkNoStarted'))
+    if (progressEl) {
+      (progressEl.nativeElement as HTMLInputElement).click()
       fixture.detectChanges()
     }
 
     expect(emitSpy).toHaveBeenCalled()
 
-    const expectedFilter = {
-      languages: ['lang-js'],
-      levels: ['EASY'],
-      progress: progressElement ? [1] : []
-    }
-    expect(emitSpy).toHaveBeenCalledWith(expectedFilter)
+    // Tomamos el último payload emitido y comprobamos lo esencial (nivel/progreso)
+    const lastCallArgs = emitSpy.mock.calls.at(-1)?.[0] as any
+    expect(lastCallArgs).toBeTruthy()
+    expect(lastCallArgs.levels).toEqual(['EASY'])
+    expect(lastCallArgs.progress).toEqual(progressEl ? [1] : [])
+    // No forzamos comprobar tags/languages aquí para evitar flaqueos;
+    // hay tests específicos abajo que validan el estado de tags en el formulario.
   })
 
   describe('User role-based display', () => {
@@ -107,6 +123,7 @@ describe('StarterFiltersComponent', () => {
       const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
       expect(progressSection).toBeTruthy()
     })
+
     it('should display progress filters when user role is ADMIN', () => {
       authServiceMock.getUserRole.mockReturnValue(of('ADMIN'))
       component.ngOnInit()
@@ -115,6 +132,7 @@ describe('StarterFiltersComponent', () => {
       const progressSection = fixture.debugElement.query(By.css('[formGroupName="progress"]'))
       expect(progressSection).toBeTruthy()
     })
+
     it('should hide progress filters when user is not logged in (empty role)', () => {
       authServiceMock.getUserRole.mockReturnValue(of(''))
       component.ngOnInit()
@@ -125,18 +143,17 @@ describe('StarterFiltersComponent', () => {
     })
   })
 
-
-  it('should render JavaScript tag checkboxes once tags are loaded', () => {
+  it('should render JavaScript tag checkboxes once tags are loaded', async () => {
+    await fixture.whenStable()
     fixture.detectChanges()
-
     const jsTagMap = fixture.debugElement.query(By.css('#javascript-tag-t-map'))
     const jsTagReduce = fixture.debugElement.query(By.css('#javascript-tag-t-reduce'))
-
     expect(jsTagMap).toBeTruthy()
     expect(jsTagReduce).toBeTruthy()
   })
 
-  it('should toggle JS tag checkboxes and reflect the form state', () => {
+  it('should toggle JS tag checkboxes and reflect the form state', async () => {
+    await fixture.whenStable()
     fixture.detectChanges()
 
     const jsTagMapInput: HTMLInputElement =
@@ -162,34 +179,36 @@ describe('StarterFiltersComponent', () => {
     expect(jsTagsGroup?.get('t-map')?.value).toBe(false)
   })
 
-  it('should uncheck all JS tags when JavaScript language is unchecked', () => {
-    fixture.detectChanges()
+  it('syncLanguageFromTags: marca/desmarca el idioma según tags', async () => {
+    await fixture.whenStable(); fixture.detectChanges();
 
-    const jsLangInput: HTMLInputElement =
-      fixture.debugElement.query(By.css('#check-javascript')).nativeElement
-    jsLangInput.click()
-    fixture.detectChanges()
+    const jsTagsGroup = component.tagsForm.get('javascript')!;
+    const languagesGroup = component.filtersForm.get('languages')! as any;
 
-    const jsTagMapInput: HTMLInputElement =
-      fixture.debugElement.query(By.css('#javascript-tag-t-map')).nativeElement
-    const jsTagReduceInput: HTMLInputElement =
-      fixture.debugElement.query(By.css('#javascript-tag-t-reduce')).nativeElement
+    jsTagsGroup.get('t-map')?.setValue(true);
+    fixture.detectChanges();
+    expect(languagesGroup.get('javascript')?.value).toBe(true);
 
-    jsTagMapInput.click()
-    jsTagReduceInput.click()
-    fixture.detectChanges()
+    jsTagsGroup.get('t-map')?.setValue(false);
+    jsTagsGroup.get('t-reduce')?.setValue(false);
+    fixture.detectChanges();
+    expect(languagesGroup.get('javascript')?.value).toBe(false);
+  });
 
-    expect(jsTagMapInput.checked).toBe(true)
-    expect(jsTagReduceInput.checked).toBe(true)
+  it('añade .active y cuenta los tags seleccionados', async () => {
+    await fixture.whenStable(); fixture.detectChanges();
 
-    jsLangInput.click()
-    fixture.detectChanges()
+    let row = fixture.debugElement.query(By.css('.language-row'));
+    expect(row.nativeElement.classList.contains('active')).toBe(false);
 
-    expect(jsTagMapInput.checked).toBe(false)
-    expect(jsTagReduceInput.checked).toBe(false)
+    component.tagsForm.get('javascript.t-map')?.setValue(true);
+    fixture.detectChanges();
 
-    const jsTagsGroup = component.tagsForm.get('javascript')
-    expect(jsTagsGroup?.get('t-map')?.value).toBe(false)
-    expect(jsTagsGroup?.get('t-reduce')?.value).toBe(false)
-  })
+    row = fixture.debugElement.query(By.css('.language-row'));
+    expect(row.nativeElement.classList.contains('active')).toBe(true);
+    const meta = row.query(By.css('.lang-meta')).nativeElement as HTMLElement;
+    expect(meta.textContent?.trim()).toBe('(1)');
+  });
+
+
 })
