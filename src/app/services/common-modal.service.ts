@@ -8,20 +8,23 @@ export class CommonModalService {
   constructor() {}
 
   loginRequestModal() {
-    const options: SweetAlertOptions = {
-      title: "Inicio de sesión requerido",
-      text: "En caso de que no estés dado de alta, contacta con tu mentor",
-      showCloseButton: true,
-      showConfirmButton: false, 
-      showCancelButton: false,  
-      allowOutsideClick: true,
-      customClass: {
-        popup: "custom-modal",
-        title: "custom-title",
-        htmlContainer: "custom-html-container",
-      },
-    };
-
+  const options: SweetAlertOptions = {
+    title: "Inicio de sesión requerido",
+    text: "En caso de que no estés dado de alta, contacta con tu mentor",
+    showCloseButton: true,      
+    showConfirmButton: true,    
+    showCancelButton: false,
+    confirmButtonText: "De acuerdo", 
+    allowOutsideClick: true,
+    customClass: {
+      popup: "custom-modal",
+      title: "custom-title",
+      htmlContainer: "custom-html-container",
+      confirmButton: "custom-confirm-button",
+    },
+  };
+  return Swal.fire(options);
+}
   loadingPostingChallengeModal(): Promise<SweetAlertResult> {
     const options: SweetAlertOptions = {
       title: "Publicando reto",
