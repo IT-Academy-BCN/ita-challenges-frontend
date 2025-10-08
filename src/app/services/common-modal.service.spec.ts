@@ -26,21 +26,23 @@ describe("CommonModalService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("loginRequestModal should call Swal.fire with correct options", async () => {
-    await service.loginRequestModal();
+ it("loginRequestModal should show modal with 'De acuerdo' button", async () => {
+  await service.loginRequestModal();
 
-    expect(Swal.fire).toHaveBeenCalledTimes(1);
-    const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
+  expect(Swal.fire).toHaveBeenCalledTimes(1);
+  const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
 
-    expect(opts.title).toBe("Inicio de sesión requerido");
-    expect(opts.text).toBe("En caso de que no estés dado de alta, contacta con tu mentor");
-    expect(opts.showConfirmButton).toBe(false); 
-    expect(opts.showCancelButton).toBe(false);  
-    expect(opts.showCloseButton).toBe(true);    
-    expect(opts.customClass?.popup).toBe("custom-modal");
-    expect(opts.customClass?.title).toBe("custom-title");
-    expect(opts.customClass?.htmlContainer).toBe("custom-html-container");
-  });
+  expect(opts.title).toBe("Inicio de sesión requerido");
+  expect(opts.text).toBe("En caso de que no estés dado de alta, contacta con tu mentor");
+  expect(opts.showConfirmButton).toBe(true);       
+  expect(opts.confirmButtonText).toBe("De acuerdo"); 
+  expect(opts.showCancelButton).toBe(false);       
+  expect(opts.showCloseButton).toBe(true);        
+  expect(opts.customClass?.popup).toBe("custom-modal");
+  expect(opts.customClass?.title).toBe("custom-title");
+  expect(opts.customClass?.htmlContainer).toBe("custom-html-container");
+  expect(opts.customClass?.confirmButton).toBe("custom-confirm-button");
+});
 
   it("loadingPostingChallengeModal should call Swal.fire and show loading", () => {
     service.loadingPostingChallengeModal();
