@@ -33,8 +33,10 @@ describe("CommonModalService", () => {
     const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
 
     expect(opts.title).toBe("Inicio de sesión requerido");
-    expect(opts.confirmButtonText).toBe("Ir a login");
-    expect(opts.cancelButtonText).toBe("Cancelar");
+    expect(opts.text).toBe("En caso de que no estés dado de alta, contacta con tu mentor");
+    expect(opts.showConfirmButton).toBe(false); 
+    expect(opts.showCancelButton).toBe(false);  
+    expect(opts.showCloseButton).toBe(true);    
     expect(opts.customClass?.popup).toBe("custom-modal");
     expect(opts.customClass?.title).toBe("custom-title");
     expect(opts.customClass?.htmlContainer).toBe("custom-html-container");
