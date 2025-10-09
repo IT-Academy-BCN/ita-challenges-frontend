@@ -12,7 +12,7 @@ export class StarterService {
   cachedChallenges: ChallengeResponse | null = null
   getAllChallenges (): Observable<ChallengeResponse> {
     if (this.cachedChallenges !== null) {
-      // Si hay datos en caché, devolverlos como un Observable
+
       return of(this.cachedChallenges)
     }
     const headers = new HttpHeaders({
@@ -41,28 +41,24 @@ export class StarterService {
   orderBySort (sortBy: string, resp: Challenge[], offset: number, limit: number, isAscending: boolean): Observable<Challenge[]> {
     const sortedChallenges: Challenge[] = [...resp]
 
-    // Ordenar según el criterio seleccionado
     sortedChallenges.sort((a: Challenge, b: Challenge) => {
       let comparison = 0
 
       if (sortBy === 'creation_date') {
         const dateA = new Date(a.creation_date)
         const dateB = new Date(b.creation_date)
-        // Si isAscending es true, queremos el más reciente primero
+
         comparison = isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
       } else if (sortBy === 'popularity') {
         const scoreA = a.timesFavorite ?? 0
         const scoreB = b.timesFavorite ?? 0
-        // Si isAscending es true, queremos el de menor popularidad primero (de menos a más)
-        // Ascendente (de menos a más): scoreA - scoreB
-        // Descendente (de más a menos): scoreB - scoreA
+
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       }
 
-      return comparison // Devolvemos el resultado de comparación
+      return comparison 
     })
 
-    // Aplicar paginación
     const paginatedChallenges = sortedChallenges.slice(offset, offset + limit)
 
     return new Observable<Challenge[]>(observer => {
