@@ -10,16 +10,17 @@
       </legend>
 
       @for (langKey of languageKeys; track langKey) {
+      @let displayLanguage = (langKey | titlecase);
       <fieldset class="mb-2">
 
         <legend class="visually-hidden" [id]="'heading-' + langKey">
-          {{ langKey | titlecase }}
+          {{ displayLanguage }}
         </legend>
         
         <div class="language-row" [class.active]="hasSelectedTags(langKey)">
           <span class="lang-dot" *ngIf="hasSelectedTags(langKey)" aria-hidden="true"></span>
           <span class="lang-name">
-            {{ langKey | titlecase }}
+            {{ displayLanguage }}
             <ng-container *ngIf="hasSelectedTags(langKey)">
               <span class="lang-meta">
                 ({{ selectedTagCount(langKey) }})
