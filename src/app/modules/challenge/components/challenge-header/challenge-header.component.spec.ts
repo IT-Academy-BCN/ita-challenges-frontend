@@ -14,6 +14,7 @@ import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+import { CommonModalService } from 'src/app/services/common-modal.service';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -23,6 +24,7 @@ describe('ChallengeHeaderComponent', () => {
   let challengeService: jest.Mocked<ChallengeService>;
   let authService: jest.Mocked<AuthService>;
   let solutionService: jest.Mocked<SolutionService>;
+  let mockCommonModalService: jest.Mocked<CommonModalService>;
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
@@ -37,6 +39,9 @@ describe('ChallengeHeaderComponent', () => {
       getUserId: jest.fn().mockReturnValue(of('user1')),
       getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
     } as any;
+    mockCommonModalService = {
+      loginRequestModal: jest.fn().mockResolvedValue({} as any)
+    } as unknown as jest.Mocked<CommonModalService>;
     solutionService = {
       fetchUserSolution: jest.fn().mockReturnValue(
         of([
@@ -67,6 +72,7 @@ describe('ChallengeHeaderComponent', () => {
         { provide: ChallengeService, useValue: challengeService },
         { provide: AuthService, useValue: authService },
         { provide: SolutionService, useValue: solutionService },
+        { provide: CommonModalService, useValue: mockCommonModalService },
       ],
     }).compileComponents();
 
@@ -375,6 +381,39 @@ describe('ChallengeHeaderComponent', () => {
     component.loadUserSolutionStatus();
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
   });
-  
 
+ it("should call loginRequestModal when user is not logged in", async () => {
+    mockCommonModalService.loginRequestModal = jest
+      .fn()
+      .mockResolvedValue({ isConfirmed: true });
+
+    authService.isUserLoggedIn.mockReturnValue(false);
+     await component.onStartChallenge();
+
+    expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
+  })
+
+  it("should call loginRequestModal when user is not logged in", async () => {
+    mockCommonModalService.loginRequestModal = jest
+      .fn()
+      .mockResolvedValue({ isConfirmed: true });
+
+    authService.isUserLoggedIn.mockReturnValue(false);
+
+    await component.onStartChallenge();
+
+    expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
+  })
+
+  it("should start challenge when user is logged in", () => {
+    authService.isUserLoggedIn.mockReturnValue(true);
+    const startChallengeSpy = jest.spyOn(component.startChallenge, 'emit');
+
+    component.onStartChallenge();
+
+    expect(component.challengeStarted).toBe(true);
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
+    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
+    expect(startChallengeSpy).toHaveBeenCalledWith(true);
+  });
 })
