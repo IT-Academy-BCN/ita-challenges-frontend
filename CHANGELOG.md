@@ -7,7 +7,6 @@ and this project adheres to
 ### [ita-challenges-frontend-3.9.0-RELEASE] - 2025-10-01
 
 ### Added
-
 - Created a centralized CommonModalService that encapsulates SweetAlert2 and provides reusable modal methods (login, loading, success, error) (Taiga[#729], PR [#697]).
 
 ### [ita-challenges-frontend-3.8.0-RELEASE] - 2025-10-07
