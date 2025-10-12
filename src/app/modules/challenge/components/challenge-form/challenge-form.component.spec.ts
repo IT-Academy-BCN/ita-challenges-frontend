@@ -206,7 +206,7 @@ describe('ChallengeFormComponent', () => {
     fixture.detectChanges()
   })
 
-it('should create the component', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy()
   })
 
@@ -268,11 +268,7 @@ it('should create the component', () => {
   })
 
 it("should call createChallenge when the form is valid", async () => {
-    component.challenge.challengeTitle = "Valid Challenge Title";
-    component.challenge.description = "Valid description for the challenge";
-    component.challenge.language = "Javascript";
-    component.challenge.solution = "Valid solution content";
-    component.tagsControl.setValue(["1"]);
+    fillValidChallengeForm(component, [], ["1"]);
 
     jest
       .spyOn(mockCommonModalService, "loadingPostingChallengeModal")
@@ -308,11 +304,7 @@ it("should call createChallenge when the form is valid", async () => {
   })
 
   it("should handle generic error when creating a challenge", async () => {
-    component.challenge.challengeTitle = "Valid Challenge Title";
-    component.challenge.description = "Valid description for the challenge";
-    component.challenge.language = "Javascript";
-    component.challenge.solution = "Valid solution content";
-    component.tagsControl.setValue(["1"]);
+   fillValidChallengeForm(component, [], ["1"]);
 
     const error = { error: { message: "Generic error" } };
     mockChallengeService.createChallenge.mockReturnValue(
