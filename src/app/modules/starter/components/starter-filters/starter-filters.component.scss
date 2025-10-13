@@ -46,3 +46,40 @@
 .form + .form p {
     margin-top: 17px;
 }
+
+.language-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.language-row .lang-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $primary;
+    flex: 0 0 10px;
+}
+
+.language-row .lang-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: $black-3;
+}
+
+.language-row.active .lang-name {
+    color: $primary; 
+}
+
+.language-row .lang-meta {
+    font-size: 13px;
+    color: $black-3;
+    opacity: 0.8;
+    margin-left: 4px;
+}
+
+.form-check {
+    display: block;
+}

@@ -10,19 +10,25 @@
       </legend>
 
       @for (langKey of languageKeys; track langKey) {
+      @let displayLanguage = (langKey | titlecase);
       <fieldset class="mb-2">
 
         <legend class="visually-hidden" [id]="'heading-' + langKey">
-          {{ langKey | titlecase }}
+          {{ displayLanguage }}
         </legend>
-
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" [id]="'check-' + langKey" [formControlName]="langKey" />
-          <label class="form-check-label" [for]="'check-' + langKey">
-            <span>{{ langKey | titlecase }}</span>
-          </label>
+        
+        <div class="language-row" [class.active]="hasSelectedTags(langKey)">
+          <span class="lang-dot" *ngIf="hasSelectedTags(langKey)" aria-hidden="true"></span>
+          <span class="lang-name">
+            {{ displayLanguage }}
+            <ng-container *ngIf="hasSelectedTags(langKey)">
+              <span class="lang-meta">
+                ({{ selectedTagCount(langKey) }})
+              </span>
+            </ng-container>
+          </span>
         </div>
-
+        
         <ng-container [formGroup]="tagsForm">
           @if (tagsForm.get(langKey)) {
           <fieldset class="ms-4" [formGroupName]="langKey">
@@ -31,7 +37,7 @@
             </legend>
 
             @for (tag of tagsByLanguage[langKey]; track tag.id_tag) {
-            <div class="form-check form-check-inline mb-2">
+            <div class="form-check mb-2">
               <input class="form-check-input" type="checkbox" [id]="langKey + '-tag-' + tag.id_tag"
                 [formControlName]="tag.id_tag" />
               <label class="form-check-label" [for]="langKey + '-tag-' + tag.id_tag">

@@ -132,6 +132,9 @@
                     "popularity": "Popularitat",
                     "date": "Data"
                 }
+            },
+            "empty": {
+                "noResults": "No s'han trobat reptes amb els filtres seleccionats."
             }
         },"modals": {
             "solution": {
