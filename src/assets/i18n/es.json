@@ -132,6 +132,9 @@
                     "popularity": "Popularidad",
                     "date": "Fecha"
                 }
+            },
+            "empty": {
+                "noResults": "No se han encontrado retos con los filtros seleccionados."
             }
         },"modals": {
             "solution": {
