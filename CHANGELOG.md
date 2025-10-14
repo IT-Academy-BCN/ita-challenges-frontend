@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.9.0-RELEASE] - 2025-10-01
+
+### Added
+- Created a centralized CommonModalService that encapsulates SweetAlert2 and provides reusable modal methods (login, loading, success, error) (Taiga[#729], PR [#697]).
+
 ### [ita-challenges-frontend-3.8.0-RELEASE] - 2025-10-07
 
 ### Added
