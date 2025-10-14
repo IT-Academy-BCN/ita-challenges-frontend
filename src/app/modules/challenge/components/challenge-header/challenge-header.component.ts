@@ -9,8 +9,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { UserRole } from 'src/app/shared/enums/user-role.enum'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
-
-
+import { CommonModalService } from "src/app/services/common-modal.service";
 
 @Component({
   selector: 'app-challenge-header',
@@ -28,7 +27,9 @@ export class ChallengeHeaderComponent implements OnInit {
   public SolutionStatus = SolutionStatus;
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(AuthService)
+  private readonly commonModalService = inject(CommonModalService)
+
   public userId: string | null = null;
   public userRole: string | null = null;
   public currentSolutionText: string = '';
@@ -133,11 +134,15 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
 
-  async onStartChallenge (): Promise<void> {
-    this.challengeStarted = true
-    this.solutionState = SolutionStatus.IN_PROGRESS;
-    this.activeId = ChallengeTab.SOLUTIONS
-    this.startChallenge.emit(true)
+  onStartChallenge(): void {
+    if (this.authService.isUserLoggedIn()) {
+      this.challengeStarted = true;
+      this.solutionState = SolutionStatus.IN_PROGRESS;
+      this.activeId = ChallengeTab.SOLUTIONS;
+      this.startChallenge.emit(true);
+    } else {
+      void this.commonModalService.loginRequestModal()
+    }
   }
 
   openSendSolutionModal (): void {
