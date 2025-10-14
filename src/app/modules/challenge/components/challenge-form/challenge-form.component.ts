@@ -24,6 +24,8 @@ import { basicSetup } from 'codemirror'
 import { type TagResponse } from 'src/app/models/tag-response.interface'
 import { type Challenge } from 'src/app/models/challenge.model'
 
+import { CommonModalService } from "src/app/services/common-modal.service"; 
+
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -81,6 +83,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   private readonly router = inject(Router)
   private readonly route = inject(ActivatedRoute)
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly commonModalService = inject(CommonModalService)
 
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -313,18 +316,29 @@ loadChallengeForEditing(): void {
         }
       })
     } else {
-    this.challengeService.createChallenge(this.challenge).subscribe({
-      next: () => void this.router.navigate(['/ita-challenge/challenges']),
-      error: (err) => {
-        if (err.error?.fieldErrors?.tags) {
-          this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
-        } else {
-          this.toastr.error('Unexpected error occurred', 'Error');
+      this.commonModalService.loadingPostingChallengeModal();
+
+      this.challengeService.createChallenge(this.challenge).subscribe({
+        next: () => {
+        this.commonModalService.successPostingChallengeModal().then(() => {
+            void this.router.navigate(['/ita-challenge/challenges']);
+          });
+        },
+        error: (err) => {
+          const errorMessage =
+            err.error?.fieldErrors?.tags ||
+            err.error?.message ||
+            'Unexpected error occurred';
+
+          if (err.error?.fieldErrors?.tags) {
+            this.tagsControl.setErrors({ serverError: err.error.fieldErrors.tags });
+          } else {
+            this.commonModalService.errorPostingChallengeModal(errorMessage);
+          }
         }
-      }
-    });
+      });
+    }
   }
-}
 
   onTagSelect (idTag: string): void {
   const value = this.tagsControl.value || [];

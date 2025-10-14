@@ -12,6 +12,7 @@ import { EditorModule } from '@tinymce/tinymce-angular'
 import { type ElementRef } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr'
+import { CommonModalService } from 'src/app/services/common-modal.service'
 
 // Mocks para CodeMirror
 const mockEditorView = {
@@ -75,6 +76,15 @@ jest.mock('codemirror', () => ({
   basicSetup: {}
 }));
 
+function fillValidChallengeForm(component: ChallengeFormComponent, selectedTags: string[] = [], tagsControlValues: string[] = ["1"]) {
+  component.challenge.challengeTitle = "Valid Challenge Title";
+  component.challenge.description = "Valid description";
+  component.challenge.language = "Javascript";
+  component.challenge.solution = "console.log('test')";
+  component.selectedTags = selectedTags;
+  component.tagsControl.setValue(tagsControlValues);
+}
+
 describe('ChallengeFormComponent', () => {
   let component: ChallengeFormComponent
   let fixture: ComponentFixture<ChallengeFormComponent>
@@ -82,6 +92,7 @@ describe('ChallengeFormComponent', () => {
   let mockChallengeService: jest.Mocked<ChallengeService>
   let mockRouter: jest.Mocked<Router>
   let mockToastrService: jest.Mocked<ToastrService>
+  let mockCommonModalService: jest.Mocked<CommonModalService>
 
   const mockJavascriptTags = {
     results: [
@@ -157,12 +168,19 @@ describe('ChallengeFormComponent', () => {
       error: jest.fn()
     } as unknown as jest.Mocked<ToastrService>
 
+    mockCommonModalService = {
+      successPostingChallengeModal: jest.fn().mockResolvedValue({} as any),
+      errorPostingChallengeModal: jest.fn().mockResolvedValue({} as any),
+      loadingPostingChallengeModal: jest.fn().mockResolvedValue({} as any)
+    } as unknown as jest.Mocked<CommonModalService>
+
     await TestBed.configureTestingModule({
       imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule, TranslateModule.forRoot(), ReactiveFormsModule],
       providers: [
         { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: Router, useValue: mockRouter },
+        { provide: CommonModalService, useValue: mockCommonModalService },
         { provide: SolutionService, useValue: { getAllChallengeSolutions: jest.fn().mockReturnValue(of({ count: 0, offset: 0, limit: 0, results: [] })) } },
         {
           provide: ActivatedRoute,
@@ -249,18 +267,29 @@ describe('ChallengeFormComponent', () => {
     expect(component.isFormAndTagsValid()).toBe(false)
   })
 
-  it('should call createChallenge when the form is valid', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title'
-    component.challenge.description = 'Valid description for the challenge'
-    component.challenge.language = 'Javascript'
-    component.challenge.solution = 'Valid solution content'
-    component.tagsControl.setValue(['1']);
+it("should call createChallenge when the form is valid", async () => {
+    fillValidChallengeForm(component, [], ["1"]);
 
-    component.onSubmit()
+    jest
+      .spyOn(mockCommonModalService, "loadingPostingChallengeModal")
+      .mockResolvedValue({} as any);
+    jest
+      .spyOn(mockCommonModalService, "successPostingChallengeModal")
+      .mockResolvedValue({} as any);
 
-    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges'])
-  })
+    component.onSubmit();
+
+    await Promise.resolve();
+
+    expect(mockCommonModalService.loadingPostingChallengeModal).toHaveBeenCalled();
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(
+      component.challenge
+    );
+    expect(mockCommonModalService.successPostingChallengeModal).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith([
+      "/ita-challenge/challenges",
+    ])
+  });
 
   it('should not call createChallenge when the form is invalid', () => {
     component.challenge.challengeTitle = ''
@@ -274,20 +303,27 @@ describe('ChallengeFormComponent', () => {
     expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()
   })
 
-  it('should handle generic error when creating a challenge', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title'
-    component.challenge.description = 'Valid description for the challenge'
-    component.challenge.language = 'Javascript'
-    component.challenge.solution = 'Valid solution content'
-    component.tagsControl.setValue(['1'])
+  it("should handle generic error when creating a challenge", async () => {
+   fillValidChallengeForm(component, [], ["1"]);
 
-    const error = { error: 'Generic error' }
-    mockChallengeService.createChallenge.mockReturnValue(throwError(() => error))
+    const error = { error: { message: "Generic error" } };
+    mockChallengeService.createChallenge.mockReturnValue(
+      throwError(() => error)
+    );
 
-    component.onSubmit()
+    jest
+      .spyOn(mockCommonModalService, "errorPostingChallengeModal")
+      .mockResolvedValue({} as any);
 
-    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge)
-    expect(mockToastrService.error).toHaveBeenCalledWith('Unexpected error occurred', 'Error')
+    component.onSubmit();
+    await Promise.resolve();
+
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(
+      component.challenge
+    );
+    expect(
+      mockCommonModalService.errorPostingChallengeModal
+    ).toHaveBeenCalledWith("Generic error");
   })
 
   describe('CodeMirror Integration', () => {
@@ -842,52 +878,102 @@ describe('ChallengeFormComponent', () => {
       expect(handleEditorUpdateSpy).toHaveBeenCalled();
     });
   });
+  
   it('should not submit if no tags are selected', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title';
-    component.challenge.description = 'Valid description for the challenge';
-    component.challenge.language = 'Javascript';
-    component.challenge.solution = 'Valid solution content';
-    component.tagsControl.setValue([]);
-  
+    fillValidChallengeForm(component, [], []);
     component.onSubmit();
-  
     expect(mockChallengeService.createChallenge).not.toHaveBeenCalled();
     expect(component.tagsControl.touched).toBe(true);
   });
 
-  it('should submit if tags are selected and form is valid', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title';
-    component.challenge.description = 'Valid description for the challenge';
-    component.challenge.language = 'Javascript';
-    component.challenge.solution = 'Valid solution content';
-    component.tagsControl.setValue(['1']);
-  
-    component.onSubmit();
-  
-    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
-  });
+  it("should submit if tags are selected and form is valid", async () => {
+    fillValidChallengeForm(component, [], ["1"]);
+    jest.spyOn(mockCommonModalService, "loadingPostingChallengeModal").mockResolvedValue({} as any);
+    jest.spyOn(mockCommonModalService, "successPostingChallengeModal").mockResolvedValue({} as any);
 
-  it('should handle 400 error on createChallenge and set serverError', () => {
-    component.challenge.challengeTitle = 'Valid Challenge Title';
-    component.challenge.description = 'Valid description for the challenge';
-    component.challenge.language = 'Javascript';
-    component.challenge.solution = 'Valid solution content';
-    component.tagsControl.setValue(['1']);
-  
+    component.onSubmit();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(mockCommonModalService.loadingPostingChallengeModal).toHaveBeenCalled();
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+    expect(mockCommonModalService.successPostingChallengeModal).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+})
+
+  it("should handle 400 error on createChallenge and set serverError", () => {
+    fillValidChallengeForm(component, [], ["1"]);
     const errorResponse = {
       status: 400,
-      error: {
-        fieldErrors: {
-          tags: 'Tags error'
-        }
-      }
+      error: { fieldErrors: { tags: "Tags error" } },
     };
     mockChallengeService.createChallenge.mockReturnValue(throwError(() => errorResponse));
-  
+
     component.onSubmit();
-  
+
     expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
-    expect(component.tagsControl.hasError('serverError')).toBe(true);
+    expect(component.tagsControl.hasError("serverError")).toBe(true);
+});
+
+  it("should call loadingPostingChallengeModal before createChallenge when the form is valid", async () => {
+    fillValidChallengeForm(component, ["2"], ["1"]);
+    jest.spyOn(mockCommonModalService, "loadingPostingChallengeModal").mockResolvedValue({} as any);
+    jest.spyOn(mockCommonModalService, "successPostingChallengeModal").mockResolvedValue({} as any);
+
+    component.onSubmit();
+    await Promise.resolve();
+
+    expect(mockCommonModalService.loadingPostingChallengeModal).toHaveBeenCalled();
+    expect(mockChallengeService.createChallenge).toHaveBeenCalledWith({
+      ...component.challenge,
+      tags: ["2", "1"],
   });
+  expect(mockCommonModalService.successPostingChallengeModal).toHaveBeenCalled();
+  expect(mockRouter.navigate).toHaveBeenCalledWith(["/ita-challenge/challenges"]);
+});
+
+it("should handle generic error with errorPostingChallengeModal", async () => {
+  fillValidChallengeForm(component, [], ["1"]);
+  const error = { error: { message: "Generic error" } };
+  mockChallengeService.createChallenge.mockReturnValue(throwError(() => error));
+  jest.spyOn(mockCommonModalService, "errorPostingChallengeModal").mockResolvedValue({} as any);
+
+  component.onSubmit();
+  await Promise.resolve();
+
+  expect(mockCommonModalService.errorPostingChallengeModal).toHaveBeenCalledWith("Generic error");
+  expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+});
+
+it("should set serverError on tagsControl when 400 error with fieldErrors.tags occurs", () => {
+  fillValidChallengeForm(component, [], ["1"]);
+  const errorResponse = { status: 400, error: { fieldErrors: { tags: "Tags error" } } };
+  mockChallengeService.createChallenge.mockReturnValue(throwError(() => errorResponse));
+
+  component.onSubmit();
+
+  expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(component.challenge);
+  expect(component.tagsControl.hasError("serverError")).toBe(true);
+});
+
+it("should not call createChallenge if form or tags are invalid", () => {
+  fillValidChallengeForm(component, [], []);
+  component.challenge.challengeTitle = ""; 
+  component.onSubmit();
+
+  expect(mockChallengeService.createChallenge).not.toHaveBeenCalled();
+  expect(mockCommonModalService.loadingPostingChallengeModal).not.toHaveBeenCalled();
+  expect(component.tagsControl.touched).toBe(true);
+});
+
+it("should correctly merge selectedTags and tagsControl values into challenge.tags", async () => {
+  fillValidChallengeForm(component, ["2"], ["1"]);
+  jest.spyOn(mockCommonModalService, "loadingPostingChallengeModal").mockResolvedValue({} as any);
+  jest.spyOn(mockCommonModalService, "successPostingChallengeModal").mockResolvedValue({} as any);
+
+  component.onSubmit();
+  await Promise.resolve();
+
+  expect(component.challenge.tags).toEqual(["2", "1"]);
+});
 })

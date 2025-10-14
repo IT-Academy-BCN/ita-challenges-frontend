@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.11.0-RELEASE] - 2025-10-14
+
+### Added
+- Integrated CommonModalService into ChallengeFormComponent to show loading/success/error modals when creating a new challenge (Taiga[#737], PR [#702]).
+
 ### [ita-challenges-frontend-3.10.0-RELEASE] - 2025-10-14
 
 ### Added
@@ -23,7 +28,7 @@ and this project adheres to
 
 ### Added
 - Using the edit service Mentor can edit a current challenge by clicking on edit button (Taiga [#658], PR [#691]).
-- 
+
 ### [ita-challenges-frontend-3.6.0-RELEASE] - 2025-09-23
 
 ### Added
