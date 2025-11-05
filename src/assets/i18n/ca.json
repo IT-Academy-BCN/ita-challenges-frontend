@@ -72,10 +72,10 @@
                 "noResources": "No hi ha recursos disponibles per a aquest repte."
             },
             "challengeForm": {
-            "breadcrumb": "Reptes / Crear repte",
-            "title": "Nou repte",
-            "editTitle": "Editar repte",
-            "buttonCancel": "Cancel·lar",
+                "breadcrumb": "Reptes / Crear repte",
+                "title": "Nou repte",
+                "editTitle": "Editar repte",
+                "buttonCancel": "Cancel·lar",
                 "buttonPublish": "Publicar",
                 "generalInfo": "Informació general",
                 "challengeTitle": "Títol",

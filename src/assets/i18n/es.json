@@ -72,10 +72,10 @@
                 "noResources": "No hay recursos disponibles para este reto."
             },
             "challengeForm": {
-            "breadcrumb": "Retos / Crear reto",
-            "title": "Nuevo reto",
-            "editTitle": "Editar reto",
-            "buttonCancel": "Cancelar",
+                "breadcrumb": "Retos / Crear reto",
+                "title": "Nuevo reto",
+                "editTitle": "Editar reto",
+                "buttonCancel": "Cancelar",
                 "buttonPublish": "Publicar",
                 "generalInfo": "Información general",
                 "challengeTitle": "Título",
