@@ -72,10 +72,10 @@
                 "noResources": "There are no resources available for this challenge."
             },
             "challengeForm": {
-            "breadcrumb": "Challenges / Create challenge",
-            "title": "New challenge",
-            "editTitle": "Edit challenge",
-            "buttonCancel": "Cancel",
+                "breadcrumb": "Challenges / Create challenge",
+                "title": "New challenge",
+                "editTitle": "Edit challenge",
+                "buttonCancel": "Cancel",
                 "buttonPublish": "Publish",
                 "generalInfo": "General information",
                 "challengeTitle": "Title",
