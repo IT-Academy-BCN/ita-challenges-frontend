@@ -9,7 +9,7 @@
               </svg>
               <span class="backTo">{{ "modules.challenge.backTo" | translate }}</span>
           </a>
-          <h3 class="form-title">{{ "modules.challenge.challengeForm.title" | translate }}</h3>
+          <h3 class="form-title">{{ (isEditMode ? 'modules.challenge.challengeForm.editTitle' : 'modules.challenge.challengeForm.title') | translate }}</h3>
         </div>
         <div class="button-group">
           <button type="button" class="btn btn-sm btn-outline-primary" (click)="onCancel()">{{ "modules.challenge.challengeForm.buttonCancel" | translate }}</button>
