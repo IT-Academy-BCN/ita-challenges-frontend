@@ -976,4 +976,11 @@ it("should correctly merge selectedTags and tagsControl values into challenge.ta
 
   expect(component.challenge.tags).toEqual(["2", "1"]);
 });
+
+it('should not render breadcrumb in the header', () => {
+  component.isEditMode = false; // either mode should not render it
+  fixture.detectChanges();
+  const breadcrumbEl: HTMLElement | null = fixture.nativeElement.querySelector('.breadcrumb');
+  expect(breadcrumbEl).toBeNull();
+});
 })
