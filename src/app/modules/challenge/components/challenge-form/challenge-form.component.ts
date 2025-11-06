@@ -25,6 +25,7 @@ import { type TagResponse } from 'src/app/models/tag-response.interface'
 import { type Challenge } from 'src/app/models/challenge.model'
 
 import { CommonModalService } from "src/app/services/common-modal.service"; 
+import { StarterService } from 'src/app/services/starter.service'
 
 @Component({
   standalone: true,
@@ -84,6 +85,7 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   private readonly route = inject(ActivatedRoute)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly commonModalService = inject(CommonModalService)
+  private readonly starterService = inject(StarterService)
 
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -320,7 +322,9 @@ loadChallengeForEditing(): void {
 
       this.challengeService.createChallenge(this.challenge).subscribe({
         next: () => {
-        this.commonModalService.successPostingChallengeModal().then(() => {
+          // Invalidate cached list and notify listeners to refresh
+          this.starterService.invalidateCacheAndRefresh()
+          this.commonModalService.successPostingChallengeModal().then(() => {
             void this.router.navigate(['/ita-challenge/challenges']);
           });
         },
