@@ -444,6 +444,40 @@ it("should call createChallenge when the form is valid", async () => {
       expect(component.currentTags).toEqual(mockJavascriptTags.results)
     })
 
+  describe('Tag Management - loadTags', () => {
+    it('should keep only selectedTags that exist in currentTags', () => {
+          const mockService = {
+        getTagsByLanguage: jest.fn().mockReturnValue(of({
+          results: [{ id_tag: '1' }, { id_tag: '3' }]
+        }))
+      } as any;
+
+      (component as any).challengeFormService = mockService;
+      component.isEditMode = true;
+      component.selectedLanguageId = 'typescript';
+      component.selectedTags = ['1', '2', '3'];
+      component.loadTags();
+      expect(component.currentTags).toEqual([{ id_tag: '1' }, { id_tag: '3' }]);
+      expect(component.selectedTags).toEqual(['1', '3']);
+      expect(component.tagsControl.value).toEqual(['1', '3']);
+    });
+
+    it('should reset tagsControl when no tags selected', () => {
+      const mockService = {
+        getTagsByLanguage: jest.fn().mockReturnValue(of({
+          results: [{ id_tag: '1' }, { id_tag: '2' }]
+        }))
+      } as any;
+
+      (component as any).challengeFormService = mockService;
+      component.isEditMode = true;
+      component.selectedLanguageId = 'typescript';
+      component.selectedTags = [];
+      component.loadTags();
+      expect(component.tagsControl.value).toEqual([]);
+    });
+  });
+
     it('should toggle tag selection correctly', () => {
       const testTagId = '1'
       // Selecting a tag
@@ -684,6 +718,40 @@ it("should call createChallenge when the form is valid", async () => {
       
       expect(mockSetState).toHaveBeenCalled();
     });
+
+  describe('Tag Management - onSubmit', () => {
+    it('should call createChallenge with unique tags', () => {
+      const mockChallengeService = {
+        createChallenge: jest.fn().mockReturnValue(of({}))
+      } as any;
+
+      const mockModalService = {
+        successPostingChallengeModal: jest.fn().mockReturnValue(Promise.resolve()),
+        loadingPostingChallengeModal: jest.fn(),
+        errorPostingChallengeModal: jest.fn()
+      } as any;
+
+      (component as any).challengeService = mockChallengeService;
+      (component as any).commonModalService = mockModalService;
+      component.isEditMode = false;
+      component.selectedTags = ['1', '2'];
+      component.tagsControl.setValue(['2', '3']);
+      jest.spyOn(component as any, 'isFormAndTagsValid').mockReturnValue(true);
+      component.onSubmit();
+      expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(
+        expect.objectContaining({
+          tags: ['1', '2', '3']
+        })
+      );
+    });
+
+    it('should not submit when form or tags are invalid', () => {
+      jest.spyOn(component as any, 'isFormAndTagsValid').mockReturnValue(false);
+      const markSpy = jest.spyOn(component.tagsControl, 'markAsTouched');
+      component.onSubmit();
+      expect(markSpy).toHaveBeenCalled();
+    });
+  });
   
     it('should handle null editor gracefully in updateCodeMirror', () => {
       component.editor = null;

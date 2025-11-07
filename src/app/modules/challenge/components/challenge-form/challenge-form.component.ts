@@ -251,16 +251,19 @@ loadChallengeForEditing(): void {
         this.selectedTags = this.selectedTags.filter(tagId => 
           this.currentTags.some(tag => tag.id_tag === tagId)
         );
-      }
-       this.tagsControl.setValue([]);
-      },
-      error: (error) => {
-        this.currentTags = []
-        this.tagsControl.setValue([]);
-        throw error;
-      }
-    })
-  }
+        
+      this.tagsControl.setValue(this.selectedTags);
+          } else {
+            this.tagsControl.setValue([]);
+          }
+        },
+        error: (error) => {
+          this.currentTags = [];
+          this.tagsControl.setValue([]);
+          throw error;
+        }
+      });
+    }
 
   // Validación del formulario (código original)
   public isFormValid (): boolean {
@@ -302,11 +305,10 @@ loadChallengeForEditing(): void {
       this.tagsControl.markAsTouched();
       return;
     }
-    this.challenge.tags = [
+   this.challenge.tags = Array.from(new Set([
       ...(this.selectedTags || []),
       ...(this.tagsControl.value || [])
-
-    ]
+    ]));
 
     if (this.isEditMode && this.challengeIdToEdit) {
       this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({
