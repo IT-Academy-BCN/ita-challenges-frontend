@@ -8,7 +8,7 @@ and this project adheres to
 
 ### Fixed
 - Fix edit challenge. Tags have to be preselected and required. Now when you edit the challenge
-original tags appear and the endpoint accepts the challenge, no duplicated challenge (Taiga[#845],)
+original tags appear and the endpoint accepts the challenge, no duplicated challenge (Taiga[#845],PR [#709]).
 
 ### [ita-challenges-frontend-3.11.3-RELEASE] - 2025-11-13
 
