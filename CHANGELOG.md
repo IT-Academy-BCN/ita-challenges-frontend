@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.11.3-RELEASE] - 2025-11-06
+
+### Fixed
+- Fixed the title for Edit Challenge form to display accordingly(was displaying create challenge insted of edit challenge) (Taiga[#830], PR [#710]).
+
 ### [ita-challenges-frontend-3.11.1-RELEASE] - 2025-11-06
 
 ### Fixed
