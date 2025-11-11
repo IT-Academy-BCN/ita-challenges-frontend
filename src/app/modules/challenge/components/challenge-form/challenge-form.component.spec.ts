@@ -585,7 +585,6 @@ it("should call createChallenge when the form is valid", async () => {
       const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
       const loadTagsSpy = jest.spyOn(component, 'loadTags').mockImplementation(() => {});
       
-      //añadi
       component.isEditMode = true;
       component.loadChallengeForEditing();
       fixture.detectChanges();
@@ -740,7 +739,6 @@ it("should call createChallenge when the form is valid", async () => {
       (component as any).commonModalService = mockModalService;
       component.isEditMode = false;
       component.selectedTags = ['1', '2','3'];
-      // Modificado
       component.tagsControl.setValue(['1','2', '3']);
       jest.spyOn(component as any, 'isFormAndTagsValid').mockReturnValue(true);
       component.onSubmit();
@@ -1021,7 +1019,6 @@ it("should call createChallenge when the form is valid", async () => {
     expect(mockCommonModalService.loadingPostingChallengeModal).toHaveBeenCalled();
     expect(mockChallengeService.createChallenge).toHaveBeenCalledWith({
       ...component.challenge,
-    //  tags: ["2", "1"], cambio
       tags: component.tagsControl.value,
   });
   expect(mockCommonModalService.successPostingChallengeModal).toHaveBeenCalled();
@@ -1070,7 +1067,6 @@ it("should correctly merge selectedTags and tagsControl values into challenge.ta
   component.onSubmit();
   await Promise.resolve();
 
-  //expect(component.challenge.tags).toEqual(["2", "1"]);
   expect(component.challenge.tags).toEqual(component.tagsControl.value);
 });
 it('should display New challenge title in create mode (default)', () => {
