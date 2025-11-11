@@ -978,7 +978,7 @@ it("should correctly merge selectedTags and tagsControl values into challenge.ta
 });
 
 it('should display New challenge title in create mode (default)', () => {
-    component.isEditMode = false;git
+    component.isEditMode = false;
     fixture.detectChanges();
     const titleEl: HTMLElement | null = fixture.nativeElement.querySelector('h3.form-title');
     expect(titleEl).not.toBeNull();
