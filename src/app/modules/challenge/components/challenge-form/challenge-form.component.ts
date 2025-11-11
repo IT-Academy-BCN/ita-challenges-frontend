@@ -95,6 +95,11 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
     translate.addLangs(['en', 'es', 'ca'])
   }
   ngOnInit(): void {
+    // NUEVO: Sincronización automática entre estados
+  this.tagsControl.valueChanges.subscribe(value => {
+    this.selectedTags = value || [];
+  });
+
      this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEditMode = true;
@@ -178,7 +183,7 @@ loadChallengeForEditing(): void {
         };
 
         this.selectedLanguageId = editableChallenge.languages?.[0]?.id_language || '';
-        this.selectedTags = editableChallenge.tags || [];
+        this.tagsControl.setValue(editableChallenge.tags || []);
 
         this.loadSolutionContent();
 
@@ -305,10 +310,14 @@ loadChallengeForEditing(): void {
       this.tagsControl.markAsTouched();
       return;
     }
+    /*
    this.challenge.tags = Array.from(new Set([
       ...(this.selectedTags || []),
       ...(this.tagsControl.value || [])
     ]));
+*/
+
+    this.challenge.tags = [...this.selectedTags];
 
     if (this.isEditMode && this.challengeIdToEdit) {
       this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({
