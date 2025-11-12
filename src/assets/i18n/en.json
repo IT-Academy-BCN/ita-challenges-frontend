@@ -74,6 +74,7 @@
             "challengeForm": {
                 "breadcrumb": "Challenges / Create challenge",
                 "title": "New challenge",
+                "editTitle": "Edit challenge",
                 "buttonCancel": "Cancel",
                 "buttonPublish": "Publish",
                 "generalInfo": "General information",

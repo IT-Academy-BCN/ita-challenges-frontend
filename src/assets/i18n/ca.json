@@ -74,6 +74,7 @@
             "challengeForm": {
                 "breadcrumb": "Reptes / Crear repte",
                 "title": "Nou repte",
+                "editTitle": "Editar repte",
                 "buttonCancel": "Cancel·lar",
                 "buttonPublish": "Publicar",
                 "generalInfo": "Informació general",
