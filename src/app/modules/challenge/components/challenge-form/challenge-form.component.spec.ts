@@ -982,7 +982,6 @@ it('should display New challenge title in create mode (default)', () => {
     fixture.detectChanges();
     const titleEl: HTMLElement | null = fixture.nativeElement.querySelector('h3.form-title');
     expect(titleEl).not.toBeNull();
-    // With TranslateModule.forRoot without loader, untranslated keys are shown
     expect(titleEl!.textContent?.trim()).toBe('modules.challenge.challengeForm.title');
 });
 
