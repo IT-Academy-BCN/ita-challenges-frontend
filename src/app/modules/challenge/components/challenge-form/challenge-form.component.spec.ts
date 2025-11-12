@@ -226,15 +226,15 @@ describe('ChallengeFormComponent', () => {
   it('should handle error when loading languages', fakeAsync(() => {
     const error = new Error('Failed to load languages');
     mockChallengeFormService.getAllLangugesCreateForm.mockReturnValue(throwError(() => error));
-
+  
     let caughtError;
     try {
       component.loadLanguages();
-      tick();
+      tick(); 
     } catch (e) {
       caughtError = e;
     }
-
+  
     expect(component.languages).toEqual([]);
     expect(caughtError).toBe(error);
   }));
@@ -254,7 +254,7 @@ describe('ChallengeFormComponent', () => {
     component.challenge.description = { en: 'Valid description' } as any;
     component.challenge.language = 'Javascript';
     component.challenge.solution = 'Valid solution content';
-
+    
     expect(component.isFormValid()).toBe(true);
   });
 
@@ -398,9 +398,9 @@ it("should call createChallenge when the form is valid", async () => {
   it('should handle errors when calling getTagsByLanguage()', fakeAsync(() => {
     const error = new Error('Error de carga');
     jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(throwError(() => error));
-
+  
     component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f';
-
+    
     let caughtError;
     try {
       component.loadTags();
@@ -408,7 +408,7 @@ it("should call createChallenge when the form is valid", async () => {
     } catch (e) {
       caughtError = e;
     }
-
+  
     expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId);
     expect(component.currentTags).toEqual([]);
     expect(component.tagsControl.value).toEqual([]);
@@ -503,7 +503,7 @@ it("should call createChallenge when the form is valid", async () => {
       component.challengeIdToEdit = '1';
       const error = new Error('Failed to load');
       mockChallengeService.getChallengeById.mockReturnValue(throwError(() => error));
-
+    
       let caughtError;
       try {
         component.loadChallengeForEditing();
@@ -511,10 +511,10 @@ it("should call createChallenge when the form is valid", async () => {
       } catch (e) {
         caughtError = e;
       }
-
+    
       expect(caughtError).toBe(error);
     }));
-
+    
     it('should correctly map challenge data to form fields', () => {
       const mockChallenge = {
         challenge_title: 'Test Title',
@@ -527,10 +527,10 @@ it("should call createChallenge when the form is valid", async () => {
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
       const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
       const loadTagsSpy = jest.spyOn(component, 'loadTags');
-
+    
       component.loadChallengeForEditing();
       fixture.detectChanges();
-
+    
       expect(component.challenge.challengeTitle).toBe('Test Title');
       expect(component.challenge.description).toBe('Test Description');
       expect(component.challenge.level).toBe('HARD');
@@ -540,7 +540,7 @@ it("should call createChallenge when the form is valid", async () => {
       expect(loadSolutionContentSpy).toHaveBeenCalled();
       expect(loadTagsSpy).toHaveBeenCalled();
     });
-
+    
     it('should handle missing optional fields when loading a challenge', () => {
       const mockChallenge = {
         challenge_title: 'Test Title',
@@ -549,14 +549,14 @@ it("should call createChallenge when the form is valid", async () => {
       };
       component.challengeIdToEdit = '1';
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+    
       component.loadChallengeForEditing();
-
+    
       expect(component.challenge.language).toBe('');
       expect(component.selectedLanguageId).toBe('');
       expect(component.selectedTags).toEqual([]);
     });
-
+    
     it('should not call loadTags if language is not available', () => {
       const mockChallenge = {
         challenge_title: 'Test Title',
@@ -566,9 +566,9 @@ it("should call createChallenge when the form is valid", async () => {
       component.challengeIdToEdit = '1';
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
       const loadTagsSpy = jest.spyOn(component, 'loadTags');
-
+    
       component.loadChallengeForEditing();
-
+    
       expect(loadTagsSpy).not.toHaveBeenCalled();
     });
   });
@@ -581,7 +581,7 @@ it("should call createChallenge when the form is valid", async () => {
         destroy: jest.fn()
       } as any;
       component.challenge.solution = 'new solution';
-
+      
       (component as any).updateCodeMirror();
 
       if (component.editor) {
@@ -604,16 +604,16 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [{ language_name: 'Java', id_language: 'java123' }],
         solutions: 'public class Main {}'
       };
-
+  
       jest.spyOn(component.translate, 'currentLang', 'get').mockReturnValue('en');
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+      
       component.loadChallengeForEditing();
-
+      
       expect(component.challenge.challengeTitle).toEqual({ es: 'Título en español' });
       expect(component.challenge.description).toEqual({ es: 'Descripción en español' });
     });
-
+  
     it('should handle challenge with completely missing title and description', () => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -623,15 +623,15 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [{ language_name: 'Java', id_language: 'java123' }],
         solutions: 'public class Main {}'
       };
-
+  
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+      
       component.loadChallengeForEditing();
-
+      
       expect(component.challenge.challengeTitle).toBe('');
       expect(component.challenge.description).toBe('');
     });
-
+  
     it('should handle challenge with empty languages array', () => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -641,36 +641,36 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [],
         solutions: 'public class Main {}'
       };
-
+  
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+      
       component.loadChallengeForEditing();
-
+      
       expect(component.challenge.language).toBe('');
       expect(component.selectedLanguageId).toBe('');
     });
-
+  
     it('should update editor state with new solution content', () => {
       const mockSetState = jest.fn();
       component.editor = {
         setState: mockSetState,
         destroy: jest.fn()
       } as any;
-
+      
       component.challenge.solution = 'new solution content';
-
+      
       (component as any).updateCodeMirror();
-
+      
       expect(mockSetState).toHaveBeenCalled();
     });
-
+  
     it('should handle null editor gracefully in updateCodeMirror', () => {
       component.editor = null;
       component.challenge.solution = 'some content';
-
+      
       expect(() => (component as any).updateCodeMirror()).not.toThrow();
     });
-
+  
     it('should handle error when editing challenge fails', fakeAsync(() => {
       component.isEditMode = true;
       component.challengeIdToEdit = '1';
@@ -679,10 +679,10 @@ it("should call createChallenge when the form is valid", async () => {
       component.challenge.language = 'Javascript';
       component.challenge.solution = 'console.log("test")';
       component.tagsControl.setValue(['1']);
-
+      
       const error = new Error('Edit failed');
       mockChallengeService.editChallenge.mockReturnValue(throwError(() => error));
-
+      
       let caughtError;
       try {
         component.onSubmit();
@@ -690,12 +690,12 @@ it("should call createChallenge when the form is valid", async () => {
       } catch (e) {
         caughtError = e;
       }
-
+      
       expect(mockChallengeService.editChallenge).toHaveBeenCalledWith('1', component.challenge);
       expect(mockRouter.navigate).not.toHaveBeenCalled();
       expect(caughtError).toBe(error);
     }));
-
+  
     it('should navigate to challenges on successful edit', () => {
       component.isEditMode = true;
       component.challengeIdToEdit = '1';
@@ -704,15 +704,15 @@ it("should call createChallenge when the form is valid", async () => {
       component.challenge.language = 'Javascript';
       component.challenge.solution = 'console.log("test")';
       component.tagsControl.setValue(['1']);
-
-
-
+      
+     
+      
       component.onSubmit();
-
+      
       expect(mockChallengeService.editChallenge).toHaveBeenCalledWith('1', component.challenge);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
     });
-
+  
     it('should update challenge solution when CodeMirror content changes', () => {
       // Mock manual del listener
       const mockUpdate = {
@@ -723,15 +723,15 @@ it("should call createChallenge when the form is valid", async () => {
           }
         }
       };
-
+  
       // Simular el cambio llamando al callback manualmente
       component.challenge.solution = mockUpdate.state.doc.toString();
-
+      
       expect(component.challenge.solution).toBe('updated content');
     });
 
-
-
+    
+  
     it('should set topic to ALL when loading challenge for editing', () => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -741,27 +741,27 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [{ language_name: 'Java', id_language: 'java123' }],
         solutions: 'public class Main {}'
       };
-
+  
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+      
       component.loadChallengeForEditing();
-
+      
       expect(component.challenge.topic).toBe('ALL');
     });
-
+  
     it('should enter edit mode and call loadChallengeForEditing when route has id', () => {
       const activatedRoute = TestBed.inject(ActivatedRoute);
       activatedRoute.params = of({ id: '123' });
-
+  
       const loadChallengeSpy = jest.spyOn(component, 'loadChallengeForEditing');
-
+  
       component.ngOnInit();
-
+  
       expect(component.isEditMode).toBe(true);
       expect(component.challengeIdToEdit).toBe('123');
       expect(loadChallengeSpy).toHaveBeenCalled();
     });
-
+  
     it('should handle challenge with undefined properties', () => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -771,17 +771,17 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [],
         solutions: undefined
       };
-
+  
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
-
+      
       component.loadChallengeForEditing();
-
+      
       expect(component.challenge.challengeTitle).toBe('');
       expect(component.challenge.description).toBe('');
       expect(component.challenge.language).toBe('');
       expect(component.selectedLanguageId).toBe('');
     });
-
+  
     it('should handle getTagsByLanguage error during challenge loading', fakeAsync(() => {
       component.challengeIdToEdit = '1';
       const mockChallenge = {
@@ -791,13 +791,13 @@ it("should call createChallenge when the form is valid", async () => {
         languages: [{ language_name: 'Java', id_language: 'java123' }],
         solutions: 'public class Main {}'
       };
-
+    
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
       const tagsError = new Error('Tags error');
       jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(
         throwError(() => tagsError)
       );
-
+      
       let caughtError;
       try {
         component.loadChallengeForEditing();
@@ -805,7 +805,7 @@ it("should call createChallenge when the form is valid", async () => {
       } catch (e) {
         caughtError = e;
       }
-
+      
       expect(caughtError).toBe(tagsError);
     }));
   });
@@ -828,7 +828,7 @@ it("should call createChallenge when the form is valid", async () => {
       component.selectedLanguageId = 'lang1';
       component.editor = mockEditorView as any; // Mock editor to test update path
       const handleEditorUpdateSpy = jest.spyOn(component as any, 'handleEditorUpdate');
-
+      
       (component as any).loadSolutionContent();
 
       expect(solutionService.getAllChallengeSolutions).toHaveBeenCalledWith('1', 'lang1');
@@ -854,7 +854,7 @@ it("should call createChallenge when the form is valid", async () => {
       component.challengeIdToEdit = '1';
       component.selectedLanguageId = 'lang1';
       const handleEditorUpdateSpy = jest.spyOn(component as any, 'handleEditorUpdate');
-
+    
       let caughtError;
       try {
         (component as any).loadSolutionContent();
@@ -862,7 +862,7 @@ it("should call createChallenge when the form is valid", async () => {
       } catch (e) {
         caughtError = e;
       }
-
+    
       expect(handleEditorUpdateSpy).toHaveBeenCalled();
       expect(caughtError).toBe(error);
     }));
@@ -878,7 +878,7 @@ it("should call createChallenge when the form is valid", async () => {
       expect(handleEditorUpdateSpy).toHaveBeenCalled();
     });
   });
-
+  
   it('should not submit if no tags are selected', () => {
     fillValidChallengeForm(component, [], []);
     component.onSubmit();
@@ -958,7 +958,7 @@ it("should set serverError on tagsControl when 400 error with fieldErrors.tags o
 
 it("should not call createChallenge if form or tags are invalid", () => {
   fillValidChallengeForm(component, [], []);
-  component.challenge.challengeTitle = "";
+  component.challenge.challengeTitle = ""; 
   component.onSubmit();
 
   expect(mockChallengeService.createChallenge).not.toHaveBeenCalled();
@@ -976,13 +976,11 @@ it("should correctly merge selectedTags and tagsControl values into challenge.ta
 
   expect(component.challenge.tags).toEqual(["2", "1"]);
 });
-
 it('should display New challenge title in create mode (default)', () => {
-    component.isEditMode = false;git
+    component.isEditMode = false;
     fixture.detectChanges();
     const titleEl: HTMLElement | null = fixture.nativeElement.querySelector('h3.form-title');
     expect(titleEl).not.toBeNull();
-    // With TranslateModule.forRoot without loader, untranslated keys are shown
     expect(titleEl!.textContent?.trim()).toBe('modules.challenge.challengeForm.title');
 });
 
@@ -995,9 +993,9 @@ it('should display Edit challenge title in edit mode', () => {
 });
 
 it('should not render breadcrumb in the header', () => {
-component.isEditMode = false; // either mode should not render it
-fixture.detectChanges();
-const breadcrumbEl: HTMLElement | null = fixture.nativeElement.querySelector('.breadcrumb');
-expect(breadcrumbEl).toBeNull();
+  component.isEditMode = false; // either mode should not render it
+  fixture.detectChanges();
+  const breadcrumbEl: HTMLElement | null = fixture.nativeElement.querySelector('.breadcrumb');
+  expect(breadcrumbEl).toBeNull();
 });
 })
