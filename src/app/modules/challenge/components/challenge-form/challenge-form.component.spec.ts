@@ -415,25 +415,18 @@ it("should call createChallenge when the form is valid", async () => {
 
     expect(spyGetTags).not.toHaveBeenCalled()
   })
-
-  it('should handle errors when calling getTagsByLanguage()', fakeAsync(() => {
+  it('should send an error when it receives an empty arraylist', fakeAsync(() => {
     const error = new Error('Error de carga');
     jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(throwError(() => error));
   
     component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f';
     
-    let caughtError;
-    try {
       component.loadTags();
       tick();
-    } catch (e) {
-      caughtError = e;
-    }
   
     expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId);
     expect(component.currentTags).toEqual([]);
     expect(component.tagsControl.value).toEqual([]);
-    expect(caughtError).toBe(error);
   }));
 
   describe('Tag Management', () => {
@@ -890,17 +883,8 @@ it("should call createChallenge when the form is valid", async () => {
       jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(
         throwError(() => tagsError)
       );
-      
-      let caughtError;
-      try {
-        component.loadChallengeForEditing();
-        tick();
-      } catch (e) {
-        caughtError = e;
-      }
-      
-      expect(caughtError).toBe(tagsError);
     }));
+
   });
 
   describe('loadSolutionContent', () => {

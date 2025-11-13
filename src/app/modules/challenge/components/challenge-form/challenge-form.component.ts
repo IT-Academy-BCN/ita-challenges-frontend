@@ -264,7 +264,8 @@ loadChallengeForEditing(): void {
         error: (error) => {
           this.currentTags = [];
           this.tagsControl.setValue([]);
-          throw error;
+          //throw error;
+          console.error('Error loading tags:', error);
         }
       });
     }
