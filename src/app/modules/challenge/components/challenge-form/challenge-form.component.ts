@@ -95,6 +95,10 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
     translate.addLangs(['en', 'es', 'ca'])
   }
   ngOnInit(): void {
+  this.tagsControl.valueChanges.subscribe(value => {
+    this.selectedTags = value || [];
+  });
+
      this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEditMode = true;
@@ -178,7 +182,7 @@ loadChallengeForEditing(): void {
         };
 
         this.selectedLanguageId = editableChallenge.languages?.[0]?.id_language || '';
-        this.selectedTags = editableChallenge.tags || [];
+        this.tagsControl.setValue(editableChallenge.tags || []);
 
         this.loadSolutionContent();
 
@@ -251,16 +255,20 @@ loadChallengeForEditing(): void {
         this.selectedTags = this.selectedTags.filter(tagId => 
           this.currentTags.some(tag => tag.id_tag === tagId)
         );
-      }
-       this.tagsControl.setValue([]);
-      },
-      error: (error) => {
-        this.currentTags = []
-        this.tagsControl.setValue([]);
-        throw error;
-      }
-    })
-  }
+        
+      this.tagsControl.setValue(this.selectedTags);
+          } else {
+            this.tagsControl.setValue([]);
+          }
+        },
+        error: (error) => {
+          this.currentTags = [];
+          this.tagsControl.setValue([]);
+          //throw error;
+          console.error('Error loading tags:', error);
+        }
+      });
+    }
 
   // Validación del formulario (código original)
   public isFormValid (): boolean {
@@ -302,11 +310,7 @@ loadChallengeForEditing(): void {
       this.tagsControl.markAsTouched();
       return;
     }
-    this.challenge.tags = [
-      ...(this.selectedTags || []),
-      ...(this.tagsControl.value || [])
-
-    ]
+    this.challenge.tags = [...this.selectedTags];
 
     if (this.isEditMode && this.challengeIdToEdit) {
       this.challengeService.editChallenge(this.challengeIdToEdit, this.challenge).subscribe({

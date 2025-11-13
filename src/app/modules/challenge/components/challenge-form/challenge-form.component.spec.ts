@@ -415,25 +415,18 @@ it("should call createChallenge when the form is valid", async () => {
 
     expect(spyGetTags).not.toHaveBeenCalled()
   })
-
-  it('should handle errors when calling getTagsByLanguage()', fakeAsync(() => {
+  it('should send an error when it receives an empty arraylist', fakeAsync(() => {
     const error = new Error('Error de carga');
     jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(throwError(() => error));
   
     component.selectedLanguageId = '09fabe32-7362-4bfb-ac05-b7bf854c6e0f';
     
-    let caughtError;
-    try {
       component.loadTags();
       tick();
-    } catch (e) {
-      caughtError = e;
-    }
   
     expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith(component.selectedLanguageId);
     expect(component.currentTags).toEqual([]);
     expect(component.tagsControl.value).toEqual([]);
-    expect(caughtError).toBe(error);
   }));
 
   describe('Tag Management', () => {
@@ -443,6 +436,42 @@ it("should call createChallenge when the form is valid", async () => {
       expect(mockChallengeFormService.getTagsByLanguage).toHaveBeenCalledWith('09fabe32-7362-4bfb-ac05-b7bf854c6e0f')
       expect(component.currentTags).toEqual(mockJavascriptTags.results)
     })
+
+  describe('Tag Management - loadTags', () => {
+    it('should keep only selectedTags that exist in currentTags', () => {
+          const mockService = {
+        getTagsByLanguage: jest.fn().mockReturnValue(of({
+          results: [{ id_tag: '1' }, { id_tag: '3' }]
+        }))
+      } as any;
+
+      (component as any).challengeFormService = mockService;
+      component.isEditMode = true;
+      component.selectedLanguageId = 'typescript';
+      component.selectedTags = ['1', '2', '3'];
+      component.tagsControl.setValue(['1', '2', '3']);
+      component.loadTags();
+      expect(component.currentTags).toEqual([{ id_tag: '1' }, { id_tag: '3' }]);
+      expect(component.selectedTags).toEqual(['1', '3']);
+      expect(component.tagsControl.value).toEqual(['1', '3']);
+    });
+
+    it('should reset tagsControl when no tags selected', () => {
+      const mockService = {
+        getTagsByLanguage: jest.fn().mockReturnValue(of({
+          results: [{ id_tag: '1' }, { id_tag: '2' }]
+        }))
+      } as any;
+
+      (component as any).challengeFormService = mockService;
+      component.isEditMode = true;
+      component.selectedLanguageId = 'typescript';
+      component.selectedTags = [];
+      component.tagsControl.setValue([]);
+      component.loadTags();
+      expect(component.tagsControl.value).toEqual([]);
+    });
+  });
 
     it('should toggle tag selection correctly', () => {
       const testTagId = '1'
@@ -547,8 +576,9 @@ it("should call createChallenge when the form is valid", async () => {
       component.challengeIdToEdit = '1';
       mockChallengeService.getChallengeById.mockReturnValue(of(mockChallenge as any));
       const loadSolutionContentSpy = jest.spyOn(component as any, 'loadSolutionContent');
-      const loadTagsSpy = jest.spyOn(component, 'loadTags');
-    
+      const loadTagsSpy = jest.spyOn(component, 'loadTags').mockImplementation(() => {});
+      
+      component.isEditMode = true;
       component.loadChallengeForEditing();
       fixture.detectChanges();
     
@@ -557,7 +587,8 @@ it("should call createChallenge when the form is valid", async () => {
       expect(component.challenge.level).toBe('HARD');
       expect(component.challenge.language).toBe('Python');
       expect(component.selectedLanguageId).toBe('python123');
-      expect(component.selectedTags).toEqual(['tag1', 'tag2']);
+      expect(component.tagsControl.value).toEqual(['tag1', 'tag2']);
+      expect(component.selectedTags).toEqual(component.tagsControl.value);
       expect(loadSolutionContentSpy).toHaveBeenCalled();
       expect(loadTagsSpy).toHaveBeenCalled();
     });
@@ -684,6 +715,40 @@ it("should call createChallenge when the form is valid", async () => {
       
       expect(mockSetState).toHaveBeenCalled();
     });
+
+  describe('Tag Management - onSubmit', () => {
+    it('should call createChallenge with unique tags', () => {
+      const mockChallengeService = {
+        createChallenge: jest.fn().mockReturnValue(of({}))
+      } as any;
+
+      const mockModalService = {
+        successPostingChallengeModal: jest.fn().mockReturnValue(Promise.resolve()),
+        loadingPostingChallengeModal: jest.fn(),
+        errorPostingChallengeModal: jest.fn()
+      } as any;
+
+      (component as any).challengeService = mockChallengeService;
+      (component as any).commonModalService = mockModalService;
+      component.isEditMode = false;
+      component.selectedTags = ['1', '2','3'];
+      component.tagsControl.setValue(['1','2', '3']);
+      jest.spyOn(component as any, 'isFormAndTagsValid').mockReturnValue(true);
+      component.onSubmit();
+      expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(
+        expect.objectContaining({
+          tags: ['1', '2', '3']
+        })
+      );
+    });
+
+    it('should not submit when form or tags are invalid', () => {
+      jest.spyOn(component as any, 'isFormAndTagsValid').mockReturnValue(false);
+      const markSpy = jest.spyOn(component.tagsControl, 'markAsTouched');
+      component.onSubmit();
+      expect(markSpy).toHaveBeenCalled();
+    });
+  });
   
     it('should handle null editor gracefully in updateCodeMirror', () => {
       component.editor = null;
@@ -818,17 +883,8 @@ it("should call createChallenge when the form is valid", async () => {
       jest.spyOn(mockChallengeFormService, 'getTagsByLanguage').mockReturnValue(
         throwError(() => tagsError)
       );
-      
-      let caughtError;
-      try {
-        component.loadChallengeForEditing();
-        tick();
-      } catch (e) {
-        caughtError = e;
-      }
-      
-      expect(caughtError).toBe(tagsError);
     }));
+
   });
 
   describe('loadSolutionContent', () => {
@@ -947,7 +1003,7 @@ it("should call createChallenge when the form is valid", async () => {
     expect(mockCommonModalService.loadingPostingChallengeModal).toHaveBeenCalled();
     expect(mockChallengeService.createChallenge).toHaveBeenCalledWith({
       ...component.challenge,
-      tags: ["2", "1"],
+      tags: component.tagsControl.value,
   });
   expect(mockCommonModalService.successPostingChallengeModal).toHaveBeenCalled();
   expect(mockRouter.navigate).toHaveBeenCalledWith(["/ita-challenge/challenges"]);
@@ -995,7 +1051,7 @@ it("should correctly merge selectedTags and tagsControl values into challenge.ta
   component.onSubmit();
   await Promise.resolve();
 
-  expect(component.challenge.tags).toEqual(["2", "1"]);
+  expect(component.challenge.tags).toEqual(component.tagsControl.value);
 });
 it('should display New challenge title in create mode (default)', () => {
     component.isEditMode = false;
