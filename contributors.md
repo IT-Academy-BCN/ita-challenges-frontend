@@ -42,3 +42,4 @@
 - Víctor González - https://github.com/VictorGonPe
 - Sofia Ayala - https://github.com/sofrayala
 - Leonid Mozheliuk - https://github.com/Leoyalta
+- Ilmira Dozhdikova - https://github.com/Ilmira83
