@@ -28,6 +28,7 @@ export class StarterComponent implements OnInit {
   sortedChallengesSubs$!: Subscription
   filteredChallengesSubs$!: Subscription
   userRoleSubs$!: Subscription
+  refreshSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = ''
   challenge = Challenge
@@ -55,6 +56,12 @@ export class StarterComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChallenge()
+
+    // Listen for refresh notifications (e.g., after create)
+    this.refreshSubs$ = this.starterService.refresh$.subscribe(() => {
+      this.getChallenge()
+    })
+
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
@@ -91,6 +98,7 @@ export class StarterComponent implements OnInit {
     if (this.filteredChallengesSubs$ !== undefined) this.filteredChallengesSubs$.unsubscribe()
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
+    if (this.refreshSubs$ !== undefined) this.refreshSubs$.unsubscribe()
   }
 
   isFavoriteChallenge(challengeId: string): boolean {

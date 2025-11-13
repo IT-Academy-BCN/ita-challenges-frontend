@@ -11,6 +11,21 @@ import mockChallenges from '../../../src/mocks/challenge/challenge.mock.json'
 
 /* Observable Test, see https://docs.angular.lat/guide/testing-components-scenarios */
 describe('StarterService', () => {
+  it('should emit on refresh$ and clear cache when invalidateCacheAndRefresh is called', (done) => {
+    const http = TestBed.inject(HttpClient)
+    const service = new StarterService(http)
+    // seed cache
+    ;(service as any).cachedChallenges = { count: 0, limit: 0, offset: 0, results: [] } as any
+
+    expect(service.cachedChallenges).not.toBeNull()
+
+    service.refresh$.subscribe(() => {
+      expect(service.cachedChallenges).toBeNull()
+      done()
+    })
+
+    service.invalidateCacheAndRefresh()
+  })
   let service: StarterService
   // let httpClientSpy: any;
   let testScheduler: TestScheduler

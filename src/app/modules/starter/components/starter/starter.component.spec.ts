@@ -15,6 +15,17 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { type UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('StarterComponent', () => {
+  it('should re-fetch challenges when refresh$ emits', () => {
+    const fixture = TestBed.createComponent(StarterComponent);
+    const component = fixture.componentInstance;
+    const starterService = TestBed.inject(StarterService);
+    fixture.detectChanges();
+
+    spyOn(component, 'getChallenge');
+    starterService.invalidateCacheAndRefresh();
+
+    expect(component.getChallenge).toHaveBeenCalled();
+  });
   let component: StarterComponent
   let fixture: ComponentFixture<StarterComponent>
   let starterService: StarterService

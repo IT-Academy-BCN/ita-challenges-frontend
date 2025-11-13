@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core'
-import { Observable, map, of, tap } from 'rxjs'
+import { Observable, Subject, map, of, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { type FilterChallenge } from '../models/filter-challenge.model'
@@ -10,9 +10,21 @@ import { type Challenge, type ChallengeResponse } from '../models/challenge.mode
 export class StarterService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
   cachedChallenges: ChallengeResponse | null = null
+
+  private readonly refreshSubject = new Subject<void>()
+  readonly refresh$ = this.refreshSubject.asObservable()
+
+  invalidateCache(): void {
+    this.cachedChallenges = null
+  }
+
+  invalidateCacheAndRefresh(): void {
+    this.invalidateCache()
+    this.refreshSubject.next()
+  }
+
   getAllChallenges (): Observable<ChallengeResponse> {
     if (this.cachedChallenges !== null) {
-
       return of(this.cachedChallenges)
     }
     const headers = new HttpHeaders({

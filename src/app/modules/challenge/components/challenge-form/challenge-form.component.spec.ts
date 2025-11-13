@@ -13,6 +13,7 @@ import { type ElementRef } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr'
 import { CommonModalService } from 'src/app/services/common-modal.service'
+import { StarterService } from 'src/app/services/starter.service'
 
 // Mocks para CodeMirror
 const mockEditorView = {
@@ -188,7 +189,8 @@ describe('ChallengeFormComponent', () => {
             params: of({})
           }
         },
-        { provide: ToastrService, useValue: mockToastrService }
+        { provide: ToastrService, useValue: mockToastrService },
+        { provide: StarterService, useValue: { invalidateCacheAndRefresh: jest.fn() } }
       ]
     }).compileComponents()
 
@@ -211,6 +213,9 @@ describe('ChallengeFormComponent', () => {
   })
 
   it('should initialize TinyMCE configuration', () => {
+    const starter = TestBed.inject(StarterService) as any;
+    // sanity: service is provided
+    expect(starter).toBeTruthy();
     expect(component.editorConfig).toBeTruthy()
     expect(component.editorConfig.plugins).toContain('code')
     expect(component.editorConfig.toolbar).toContain('bold')
@@ -291,6 +296,25 @@ it("should call createChallenge when the form is valid", async () => {
     ])
   });
 
+  it("should refresh the list cache on successful creation", async () => {
+    fillValidChallengeForm(component, [], ["1"]);
+
+    jest
+      .spyOn(mockCommonModalService, "loadingPostingChallengeModal")
+      .mockResolvedValue({} as any);
+    jest
+      .spyOn(mockCommonModalService, "successPostingChallengeModal")
+      .mockResolvedValue({} as any);
+
+    const starter = TestBed.inject(StarterService) as any;
+    const invalidateSpy = jest.spyOn(starter, 'invalidateCacheAndRefresh');
+
+    component.onSubmit();
+    await Promise.resolve();
+
+    expect(invalidateSpy).toHaveBeenCalled();
+  });
+
   it('should not call createChallenge when the form is invalid', () => {
     component.challenge.challengeTitle = ''
     component.challenge.description = 'Some description'
@@ -303,7 +327,7 @@ it("should call createChallenge when the form is valid", async () => {
     expect(mockChallengeService.createChallenge).not.toHaveBeenCalled()
   })
 
-  it("should handle generic error when creating a challenge", async () => {
+  it("should not refresh the list cache on generic error", async () => {
    fillValidChallengeForm(component, [], ["1"]);
 
     const error = { error: { message: "Generic error" } };
@@ -311,9 +335,8 @@ it("should call createChallenge when the form is valid", async () => {
       throwError(() => error)
     );
 
-    jest
-      .spyOn(mockCommonModalService, "errorPostingChallengeModal")
-      .mockResolvedValue({} as any);
+    const starter = TestBed.inject(StarterService) as any;
+    const invalidateSpy = jest.spyOn(starter, 'invalidateCacheAndRefresh');
 
     component.onSubmit();
     await Promise.resolve();
@@ -321,9 +344,7 @@ it("should call createChallenge when the form is valid", async () => {
     expect(mockChallengeService.createChallenge).toHaveBeenCalledWith(
       component.challenge
     );
-    expect(
-      mockCommonModalService.errorPostingChallengeModal
-    ).toHaveBeenCalledWith("Generic error");
+    expect(invalidateSpy).not.toHaveBeenCalled();
   })
 
   describe('CodeMirror Integration', () => {
