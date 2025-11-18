@@ -47,12 +47,12 @@ describe('MainComponent', () => {
     const wrapper = fixture.debugElement.query(By.css('#main-wrapper.container-fluid'))
     const mainContainer = fixture.debugElement.query(By.css('main#main-container'))
 
-    expect(wrapper).withContext('Expected #main-wrapper.container-fluid to exist').not.toBeNull()
-    expect(mainContainer).withContext('Expected <main id="main-container"> to exist').not.toBeNull()
+    expect(wrapper).not.toBeNull()
+    expect(mainContainer).not.toBeNull()
 
     // Also ensure layout structure: main-container is inside the w-100 column
     const parent = mainContainer?.nativeElement?.parentElement
-    expect(parent?.classList.contains('w-100')).withContext('Expected main container to be inside a .w-100 column').toBeTrue()
+    expect(parent?.classList.contains('w-100')).toBe(true)
   })
 
   it('should define full-height styles for the main container and wrapper in the stylesheet (regression test)', () => {
