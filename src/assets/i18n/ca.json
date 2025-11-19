@@ -43,6 +43,8 @@
                 "buttonSendSolution": "Finalitzar",
                 "buttonCancel": "Cancel.lar",
                 "buttonEditChallenge": "Editar repte",
+                "buttonDeleteChallenge": "Eliminar repte",
+                "confirmDelete": "Estàs segur que vols eliminar aquest repte?",
                 "buttonRegisterUsers": "Afegir alumnes",
                 "solutionSend": "Solució enviada",
                 "login": "Iniciar sessió",

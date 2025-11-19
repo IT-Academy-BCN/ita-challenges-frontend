@@ -43,6 +43,8 @@
                 "buttonSendSolution": "Finish",
                 "buttonCancel": "Cancel",
                 "buttonEditChallenge": "Edit challenge",
+                "buttonDeleteChallenge": "Delete challenge",
+                "confirmDelete": "Are you sure you want to delete this challenge?",
                 "buttonRegisterUsers": "Add students",
                 "solutionSend": "Solution sent",
                 "login": "Log In",

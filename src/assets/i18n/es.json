@@ -44,6 +44,8 @@
                 "buttonRegisterUsers": "Añadir alumnos/as",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
+                "buttonDeleteChallenge": "Eliminar reto",
+                "confirmDelete": "¿Estás seguro de que quieres eliminar este reto?",
                 "solutionSend": "Solución enviada",
                 "login": "Iniciar sesión",
                 "logout": "Cerrar sesión"
