@@ -290,6 +290,9 @@ describe('Progress filtering behavior', () => {
     expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3']);
 
     component.getChallengeFilters({ languages: [], levels: [], progress: [1, 3] });
-    expect(component.challenges.map((c: any) => c.id_challenge).sort()).toEqual(['c1', 'c3']);
+    expect(component.challenges
+      .map((c: any) => c.id_challenge)
+      .sort((a: string, b: string) => a.localeCompare(b))
+    ).toEqual(['c1', 'c3']);
   });
 });

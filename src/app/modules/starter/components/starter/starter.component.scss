@@ -88,12 +88,6 @@ app-starter-filters p {
      margin-bottom: 1.5rem;
    }
 }
-#filters-container {
-  position: static;
-  top: 40px;
-  height: 100%;
-  padding-left: 20px;
-}
 
 /* On desktop, let the filters column shrink to content instead of fixed grid width */
 @media (min-width: 1200px) {

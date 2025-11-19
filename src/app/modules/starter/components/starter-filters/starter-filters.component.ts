@@ -248,7 +248,7 @@ export class StarterFiltersComponent implements OnInit {
     if (keys.length === 0) {
       return !!langCtrl?.value;
     }
-    return keys.every(k => !!(values as any)[k]);
+    return Object.values(values).every(v => !!v);
   }
 
   // UI helper: are some (but not all) tags selected? Useful for indeterminate state
