@@ -71,7 +71,7 @@ describe('StarterFiltersComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should have groups collapsed by default and toggle correctly', async () => {
+  it('should have languages collapsed by default; levels/progress are not foldable', async () => {
     // Wait for async language/tags init
     await fixture.whenStable();
     fixture.detectChanges();
@@ -88,28 +88,14 @@ describe('StarterFiltersComponent', () => {
     fixture.detectChanges();
     expect(langToggle?.getAttribute('aria-expanded')).toBe('true');
 
-    // Levels collapsed by default
+    // Levels/progress are not foldable (no toggles), checkboxes should be present when section is visible
     const levelsToggle: HTMLButtonElement | null = fixture.nativeElement.querySelector('#toggle-levels');
-    const levelsPanel: HTMLElement | null = fixture.nativeElement.querySelector('#panel-levels');
-    expect(levelsToggle).toBeTruthy();
-    expect(levelsToggle?.getAttribute('aria-expanded')).toBe('false');
-    expect(levelsPanel?.getAttribute('style') || '').toContain('max-height: 0px');
+    expect(levelsToggle).toBeNull();
+    const easyCheckbox: HTMLElement | null = fixture.nativeElement.querySelector('#checkEasy');
+    expect(easyCheckbox).toBeTruthy();
 
-    // Toggle levels
-    levelsToggle?.click();
-    fixture.detectChanges();
-    expect(levelsToggle?.getAttribute('aria-expanded')).toBe('true');
-
-    // Progress collapsed by default
     const progressToggle: HTMLButtonElement | null = fixture.nativeElement.querySelector('#toggle-progress');
-    const progressPanel: HTMLElement | null = fixture.nativeElement.querySelector('#panel-progress');
-    if (progressToggle && progressPanel) {
-      expect(progressToggle.getAttribute('aria-expanded')).toBe('false');
-      expect(progressPanel.getAttribute('style') || '').toContain('max-height: 0px');
-      progressToggle.click();
-      fixture.detectChanges();
-      expect(progressToggle.getAttribute('aria-expanded')).toBe('true');
-    }
+    expect(progressToggle).toBeNull();
   });
 
   it('should emit when selecting a JS tag + level (+progress if visible)', async () => {
@@ -191,6 +177,70 @@ describe('StarterFiltersComponent', () => {
     expect(jsTagMap).toBeTruthy()
     expect(jsTagReduce).toBeTruthy()
   })
+
+  it('should show an "All" option for each language and toggle all tags for JavaScript', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // Open the JS section (optional, elements are in DOM regardless)
+    const jsToggle = fixture.debugElement.query(By.css('#toggle-javascript'))?.nativeElement as HTMLButtonElement | undefined;
+    jsToggle?.click();
+    fixture.detectChanges();
+
+    const allCheckboxDe = fixture.debugElement.query(By.css('#javascript-tag-all'));
+    expect(allCheckboxDe).toBeTruthy();
+
+    const emitSpy = jest.spyOn(component.filtersSelected, 'emit');
+
+    // Click ALL -> selects both tags
+    const allCheckbox = allCheckboxDe.nativeElement as HTMLInputElement;
+    allCheckbox.click();
+    fixture.detectChanges();
+
+    const jsTagMapInput: HTMLInputElement = fixture.debugElement.query(By.css('#javascript-tag-t-map')).nativeElement;
+    const jsTagReduceInput: HTMLInputElement = fixture.debugElement.query(By.css('#javascript-tag-t-reduce')).nativeElement;
+
+    expect(jsTagMapInput.checked).toBe(true);
+    expect(jsTagReduceInput.checked).toBe(true);
+    expect(component.areAllTagsSelected('javascript')).toBe(true);
+
+    // Last emitted filters should include the JS language id and no tag constraints (all selected)
+    const lastCallArgs = emitSpy.mock.calls.at(-1)?.[0] as any;
+    expect(lastCallArgs.languages).toContain('lang-js');
+    expect(lastCallArgs.tags).toEqual([]);
+
+    // Uncheck ALL -> clears both
+    allCheckbox.click();
+    fixture.detectChanges();
+
+    expect(jsTagMapInput.checked).toBe(false);
+    expect(jsTagReduceInput.checked).toBe(false);
+    expect(component.areAllTagsSelected('javascript')).toBe(false);
+  });
+
+  it('should include a language with no tags when selecting its All option after another language All is selected', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const emitSpy = jest.spyOn(component.filtersSelected, 'emit');
+
+    // Click ALL for JavaScript (has tags)
+    const jsAll = fixture.debugElement.query(By.css('#javascript-tag-all')).nativeElement as HTMLInputElement;
+    jsAll.click();
+    fixture.detectChanges();
+
+    // Click ALL for Python (no tags in mock) -> should toggle language selection for python
+    const pyAll = fixture.debugElement.query(By.css('#python-tag-all')).nativeElement as HTMLInputElement;
+    pyAll.click();
+    fixture.detectChanges();
+
+    // Take last emitted filters after selecting Python All
+    const lastCallArgs = emitSpy.mock.calls.at(-1)?.[0] as any;
+    expect(lastCallArgs).toBeTruthy();
+    expect(lastCallArgs.languages).toEqual(expect.arrayContaining(['lang-js', 'lang-python']));
+    // No tag constraints expected when selecting All
+    expect(lastCallArgs.tags).toEqual([]);
+  });
 
   it('should toggle JS tag checkboxes and reflect the form state', async () => {
     await fixture.whenStable()

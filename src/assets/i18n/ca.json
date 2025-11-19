@@ -197,6 +197,9 @@
     "status": {
         "IN_PROGRESS": "En progrés",
         "ENDED": "Completat"
+    },
+    "common": {
+        "all": "Tots"
     }
 
 }   

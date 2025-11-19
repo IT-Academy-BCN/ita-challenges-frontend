@@ -4,23 +4,37 @@
     padding-right: 0;
 
     .form-check-input {
-        width: 24px;
-        height: 24px;
-        padding: .6rem;
+        width: 16px;
+        height: 16px;
+        padding: 0; /* compact, no extra padding */
+        border: 2px solid rgba($black-3, 0.4);
+        border-radius: 4px;
+        background-color: #fff;
+        transition: background-color 150ms ease-in-out, border-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        /* Use browser native coloring when possible */
+        accent-color: $primary;
+        &:hover {
+            border-color: $primary;
+        }
         &:checked {
             background-color: $primary;
             border-color: $primary;
         }
+        &:indeterminate {
+            background-color: $primary;
+            border-color: $primary;
+        }
         &:focus {
-            box-shadow: none;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba($primary, 0.2);
         }
     }
 
     .form-check-label {
         font-size: 14px;
-        line-height: 34px;
+        line-height: 20px; /* more compact to match smaller checkbox */
         font-weight: 500;
-        padding-left: .3rem;
+        padding-left: 0; /* spacing handled by .form-check gap */
         color: $black-3;
         
         /* Add styles for multi-line text */
@@ -35,7 +49,7 @@
 
     p {
         font-size: 16px;
-        line-height: 34px;
+        line-height: 28px;
         font-weight: 700;
         color: $black-3;
         margin-top: 45px;
@@ -81,7 +95,14 @@
 }
 
 .form-check {
-    display: block;
+    display: flex; /* stack items vertically by making each checkbox row block-level */
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    .form-check-input {
+        margin: 0; /* prevent default vertical misalignment */
+    }
 }
 
 /* Collapsible toggle and panel styles */

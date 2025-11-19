@@ -52,6 +52,21 @@
                 {{ 'modules.starter.filters.tags' | translate }}
               </legend>
 
+              <!-- ALL option -->
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="langKey + '-tag-all'"
+                  [checked]="areAllTagsSelected(langKey)"
+                  [indeterminate]="areSomeTagsSelected(langKey)"
+                  (change)="onToggleAll(langKey, $any($event.target).checked)"
+                />
+                <label class="form-check-label" [for]="langKey + '-tag-all'">
+                  {{ 'common.all' | translate }}
+                </label>
+              </div>
+
               @for (tag of tagsByLanguage[langKey]; track tag.id_tag) {
               <div class="form-check mb-2">
                 <input class="form-check-input" type="checkbox" [id]="langKey + '-tag-' + tag.id_tag"
@@ -71,23 +86,10 @@
   </div>
 
   <div class="form mt-3" formGroupName="levels">
-    <button
-      type="button"
-      id="toggle-levels"
-      class="toggle-button language-row mb-2"
-      [attr.aria-expanded]="openLevels"
-      aria-controls="panel-levels"
-      (click)="toggleLevels()"
-    >
-      <span class="lang-name">{{'modules.starter.filters.dificulty' | translate}}<span class="chevron" [class.open]="openLevels" aria-hidden="true"></span></span>
-    </button>
-    <div
-      id="panel-levels"
-      class="collapsible-panel"
-      [class.open]="openLevels"
-      [style.maxHeight]="openLevels ? '300px' : '0px'"
-      [style.opacity]="openLevels ? 1 : 0"
-    >
+    <div class="language-row mb-2">
+      <span class="lang-name">{{'modules.starter.filters.dificulty' | translate}}</span>
+    </div>
+    <div class="ms-4">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="checkEasy" formControlName="easy">
         <label class="form-check-label" for="checkEasy"><span>{{'modules.starter.filters.easy' | translate}}</span></label>
@@ -104,23 +106,10 @@
   </div>
   
   <div class="form" formGroupName="progress" *ngIf="isUserLoggedIn">
-    <button
-      type="button"
-      id="toggle-progress"
-      class="toggle-button language-row mb-2"
-      [attr.aria-expanded]="openProgress"
-      aria-controls="panel-progress"
-      (click)="toggleProgress()"
-    >
-      <span class="lang-name">{{'modules.starter.filters.progress' | translate}}<span class="chevron" [class.open]="openProgress" aria-hidden="true"></span></span>
-    </button>
-    <div
-      id="panel-progress"
-      class="collapsible-panel"
-      [class.open]="openProgress"
-      [style.maxHeight]="openProgress ? '300px' : '0px'"
-      [style.opacity]="openProgress ? 1 : 0"
-    >
+    <div class="language-row mb-2">
+      <span class="lang-name">{{'modules.starter.filters.progress' | translate}}</span>
+    </div>
+    <div class="ms-4">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
         <label class="form-check-label" for="checkNoStarted"><span>{{'modules.starter.filters.noStarted' | translate}}</span></label>
