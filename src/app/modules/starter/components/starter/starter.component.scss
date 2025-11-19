@@ -122,3 +122,76 @@ app-pagination {
 .challenges-filter-header{
   margin-bottom: 5%;
 }
+
+/* Collapsible filters panel styles */
+#filters-container {
+  .filters-toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .filters-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $black-3;
+    transition: color 200ms ease-in-out, box-shadow 200ms ease-in-out, background-color 200ms ease-in-out;
+
+    .chevron {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(-45deg);
+      transition: transform 200ms ease-in-out;
+    }
+
+    .chevron.open {
+      transform: rotate(135deg);
+    }
+
+    &:hover {
+      color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15) inset;
+      background-color: rgba($primary, 0.05);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary;
+      outline-offset: 2px;
+    }
+  }
+
+  .filters-panel {
+    overflow: hidden;
+    transition: max-height 220ms ease-in-out, opacity 220ms ease-in-out;
+  }
+}
+
+/* Hover styles for filter controls */
+app-starter-filters {
+  .form-check-label:hover {
+    color: $primary;
+  }
+  .language-row {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+
+    &:hover {
+      background-color: rgba($black-3, 0.05);
+      color: $primary;
+    }
+  }
+  .lang-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $primary;
+  }
+}

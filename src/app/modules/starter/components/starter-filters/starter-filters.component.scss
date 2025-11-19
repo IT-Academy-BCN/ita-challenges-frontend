@@ -83,3 +83,46 @@
 .form-check {
     display: block;
 }
+
+/* Collapsible toggle and panel styles */
+.toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  padding: 4px 6px;
+  background: transparent;
+  border: 0;
+  color: $black-3;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out, box-shadow 200ms ease-in-out;
+
+  &:hover {
+    background-color: rgba($black-3, 0.05);
+    color: $primary;
+  }
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+
+  .chevron {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 200ms ease-in-out;
+    flex: 0 0 12px;
+  }
+  .chevron.open {
+    transform: rotate(135deg);
+  }
+}
+
+.collapsible-panel {
+  overflow: hidden;
+  transition: max-height 220ms ease-in-out, opacity 220ms ease-in-out;
+}

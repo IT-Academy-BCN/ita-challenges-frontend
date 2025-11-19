@@ -27,6 +27,11 @@ export class StarterFiltersComponent implements OnInit {
 
   public isUserLoggedIn: boolean = false
 
+  // Collapsible state: all groups collapsed by default
+  public openLanguages: Record<string, boolean> = {}
+  public openLevels: boolean = false
+  public openProgress: boolean = false
+
   filtersForm: FormGroup = this.fb.nonNullable.group({
     data: this.fb.nonNullable.group({
       languagesMap: this.fb.nonNullable.control<LanguagesMap>({}),
@@ -67,6 +72,16 @@ export class StarterFiltersComponent implements OnInit {
 
   constructor() {}
 
+  // Toggle a language group's open state
+  public toggleLanguage(langKey: string): void {
+    this.openLanguages[langKey] = !this.openLanguages[langKey];
+  }
+  public isLanguageOpen(langKey: string): boolean {
+    return !!this.openLanguages[langKey];
+  }
+  public toggleLevels(): void { this.openLevels = !this.openLevels }
+  public toggleProgress(): void { this.openProgress = !this.openProgress }
+
   ngOnInit(): void {
     this.setupFormValueChanges()
 
@@ -89,6 +104,9 @@ export class StarterFiltersComponent implements OnInit {
         const langControls: Record<string, any> =
           Object.keys(map).reduce((acc, key) => ({ ...acc, [key]: false }), {})
         this.filtersForm.setControl('languages', this.fb.group(langControls))
+
+        // initialize per-language open state to collapsed
+        this.openLanguages = Object.keys(map).reduce((acc, key) => ({ ...acc, [key]: false }), {} as Record<string, boolean>)
 
         this.wireLanguageUncheckWatcher()
         this.initTagControl()

@@ -71,6 +71,47 @@ describe('StarterFiltersComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('should have groups collapsed by default and toggle correctly', async () => {
+    // Wait for async language/tags init
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // One known language from mock is 'javascript' -> id toggle-javascript, panel-panel-javascript
+    const langToggle: HTMLButtonElement | null = fixture.nativeElement.querySelector('#toggle-javascript');
+    const langPanel: HTMLElement | null = fixture.nativeElement.querySelector('#panel-javascript');
+    expect(langToggle).toBeTruthy();
+    expect(langToggle?.getAttribute('aria-expanded')).toBe('false');
+    expect(langPanel?.getAttribute('style') || '').toContain('max-height: 0px');
+
+    // Toggle open
+    langToggle?.click();
+    fixture.detectChanges();
+    expect(langToggle?.getAttribute('aria-expanded')).toBe('true');
+
+    // Levels collapsed by default
+    const levelsToggle: HTMLButtonElement | null = fixture.nativeElement.querySelector('#toggle-levels');
+    const levelsPanel: HTMLElement | null = fixture.nativeElement.querySelector('#panel-levels');
+    expect(levelsToggle).toBeTruthy();
+    expect(levelsToggle?.getAttribute('aria-expanded')).toBe('false');
+    expect(levelsPanel?.getAttribute('style') || '').toContain('max-height: 0px');
+
+    // Toggle levels
+    levelsToggle?.click();
+    fixture.detectChanges();
+    expect(levelsToggle?.getAttribute('aria-expanded')).toBe('true');
+
+    // Progress collapsed by default
+    const progressToggle: HTMLButtonElement | null = fixture.nativeElement.querySelector('#toggle-progress');
+    const progressPanel: HTMLElement | null = fixture.nativeElement.querySelector('#panel-progress');
+    if (progressToggle && progressPanel) {
+      expect(progressToggle.getAttribute('aria-expanded')).toBe('false');
+      expect(progressPanel.getAttribute('style') || '').toContain('max-height: 0px');
+      progressToggle.click();
+      fixture.detectChanges();
+      expect(progressToggle.getAttribute('aria-expanded')).toBe('true');
+    }
+  });
+
   it('should emit when selecting a JS tag + level (+progress if visible)', async () => {
     // Usuario logueado para que aparezca progress
     authServiceMock.getUserRole.mockReturnValue(of('ALUMNI'))

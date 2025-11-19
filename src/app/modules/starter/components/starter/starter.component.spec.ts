@@ -15,6 +15,24 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { type UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('StarterComponent', () => {
+  it('should render filters visible by default and without a toggle button', () => {
+    const fixture = TestBed.createComponent(StarterComponent);
+    fixture.detectChanges();
+    const button: HTMLButtonElement | null = fixture.nativeElement.querySelector('#filters-toggle');
+    const panel: HTMLElement | null = fixture.nativeElement.querySelector('#filters-panel');
+    expect(button).toBeNull();
+    expect(panel).toBeTruthy();
+    // Panel should be open by default
+    expect(panel?.classList.contains('open')).toBe(true);
+  });
+
+  it('should have the filters panel present in the DOM', () => {
+    const fixture = TestBed.createComponent(StarterComponent);
+    fixture.detectChanges();
+    const panel: HTMLElement | null = fixture.nativeElement.querySelector('#filters-panel');
+    expect(panel).toBeTruthy();
+    expect(panel?.classList.contains('open')).toBe(true);
+  });
   it('should re-fetch challenges when refresh$ emits', () => {
     const fixture = TestBed.createComponent(StarterComponent);
     const component = fixture.componentInstance;

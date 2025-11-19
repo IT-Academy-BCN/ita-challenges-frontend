@@ -19,6 +19,8 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
   providers: []
 })
 export class StarterComponent implements OnInit {
+  // Filters panel collapsed by default (desktop)
+  public areFiltersOpen: boolean = false;
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
   @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
@@ -53,6 +55,11 @@ export class StarterComponent implements OnInit {
     private readonly challengeService: ChallengeService,
     private readonly cd: ChangeDetectorRef
   ) { }
+
+  // Toggle filters panel (keyboard and click accessible)
+  public toggleFilters(): void {
+    this.areFiltersOpen = !this.areFiltersOpen;
+  }
 
   ngOnInit(): void {
     this.getChallenge()
