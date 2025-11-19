@@ -34,8 +34,8 @@
                 ({{ selectedTagCount(langKey) }})
               </span>
             </ng-container>
+            <span class="chevron" [class.open]="isLanguageOpen(langKey)" aria-hidden="true"></span>
           </span>
-          <span class="chevron" [class.open]="isLanguageOpen(langKey)" aria-hidden="true"></span>
         </button>
         
         <div
@@ -79,8 +79,7 @@
       aria-controls="panel-levels"
       (click)="toggleLevels()"
     >
-      <span>{{'modules.starter.filters.dificulty' | translate}}</span>
-      <span class="chevron" [class.open]="openLevels" aria-hidden="true"></span>
+      <span class="lang-name">{{'modules.starter.filters.dificulty' | translate}}<span class="chevron" [class.open]="openLevels" aria-hidden="true"></span></span>
     </button>
     <div
       id="panel-levels"
@@ -108,13 +107,12 @@
     <button
       type="button"
       id="toggle-progress"
-      class="toggle-button mb-2"
+      class="toggle-button language-row mb-2"
       [attr.aria-expanded]="openProgress"
       aria-controls="panel-progress"
       (click)="toggleProgress()"
     >
-      <span>{{'modules.starter.filters.progress' | translate}}</span>
-      <span class="chevron" [class.open]="openProgress" aria-hidden="true"></span>
+      <span class="lang-name">{{'modules.starter.filters.progress' | translate}}<span class="chevron" [class.open]="openProgress" aria-hidden="true"></span></span>
     </button>
     <div
       id="panel-progress"

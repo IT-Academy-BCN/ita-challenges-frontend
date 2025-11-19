@@ -95,6 +95,21 @@ app-starter-filters p {
   padding-left: 20px;
 }
 
+/* On desktop, let the filters column shrink to content instead of fixed grid width */
+@media (min-width: 1200px) {
+  #filters-container.col-3 {
+    flex: 0 0 auto; /* don't force a 25% column width */
+    width: auto;    /* shrink-wrap to its contents */
+    max-width: 100%;
+  }
+  /* Let challenges area take the remaining space on xl and above */
+  #challenges-container.col-xl-8 {
+    flex: 1 1 auto; /* grow to fill leftover width */
+    width: auto;    /* unset fixed 8/12 width from grid */
+    max-width: 100%;
+  }
+}
+
 #challenges-container {
   height: 100%;
   overflow: hidden;
@@ -167,6 +182,24 @@ app-pagination {
     overflow: hidden;
     transition: max-height 220ms ease-in-out, opacity 220ms ease-in-out;
   }
+}
+
+/* Make the desktop filters container shrink to its content */
+#filters-panel {
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
+}
+
+/* Inside the desktop panel, buttons should size to content, not full width */
+#filters-panel app-starter-filters .toggle-button {
+  width: auto;
+  display: inline-flex;
+}
+
+/* Reduce extra right padding that widened the column */
+#filters-panel app-starter-filters .form {
+  padding-right: 0;
 }
 
 /* Hover styles for filter controls */

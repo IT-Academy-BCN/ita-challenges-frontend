@@ -1,7 +1,7 @@
 @import 'src/styles/colors.scss';
 
 .form {
-    padding-right: 50px;
+    padding-right: 0;
 
     .form-check-input {
         width: 24px;
@@ -86,10 +86,10 @@
 
 /* Collapsible toggle and panel styles */
 .toggle-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: flex-start;
+  width: auto; /* shrink to content so buttons match each other */
   gap: 8px;
   padding: 4px 6px;
   background: transparent;
@@ -108,17 +108,24 @@
     outline-offset: 2px;
   }
 
+  /* Keep the label and chevron next to the title with a clear 20px gap */
+  .lang-name {
+    display: inline-flex;
+    align-items: center; /* vertically centers the chevron with the title */
+    gap: 20px; /* 20px space between title and chevron */
+  }
+
   .chevron {
-    width: 12px;
-    height: 12px;
+    width: 8.4px;   /* 30% smaller than previous 12px */
+    height: 8.4px;  /* 30% smaller than previous 12px */
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
-    transform: rotate(-45deg);
+    transform: rotate(45deg); /* default: down */
     transition: transform 200ms ease-in-out;
-    flex: 0 0 12px;
+    flex: 0 0 8.4px; /* match the visual size */
   }
   .chevron.open {
-    transform: rotate(135deg);
+    transform: rotate(-135deg); /* open: up */
   }
 }
 
