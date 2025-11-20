@@ -197,7 +197,7 @@
 },
     "status": {
         "IN_PROGRESS": "In progress",
-        "ENDED": "Completed"
+        "SUBMITTED_COMPLETE": "Completed"
     }
 
 }    
