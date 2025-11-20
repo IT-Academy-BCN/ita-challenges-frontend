@@ -196,7 +196,7 @@
 },
     "status": {
         "IN_PROGRESS": "En progrés",
-        "ENDED": "Completat"
+        "SUBMITTED_COMPLETE": "Completat"
     },
     "common": {
         "all": "Tots"
