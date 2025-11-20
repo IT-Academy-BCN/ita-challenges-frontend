@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 
@@ -25,6 +26,7 @@ describe('ChallengeHeaderComponent', () => {
   let authService: jest.Mocked<AuthService>;
   let solutionService: jest.Mocked<SolutionService>;
   let mockCommonModalService: jest.Mocked<CommonModalService>;
+
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
@@ -56,7 +58,7 @@ describe('ChallengeHeaderComponent', () => {
       ),
       challengeCompleted$: of("testChallengeId"),
       submitSolution: jest.fn(),
-    } as any
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
@@ -75,6 +77,11 @@ describe('ChallengeHeaderComponent', () => {
         { provide: CommonModalService, useValue: mockCommonModalService },
       ],
     }).compileComponents();
+
+    // Set default language ONCE here, after compileComponents
+    const translate = TestBed.inject(TranslateService);
+    translate.setDefaultLang('en');
+    translate.use('en');
 
     fixture = TestBed.createComponent(ChallengeHeaderComponent);
     component = fixture.componentInstance;
@@ -237,6 +244,29 @@ describe('ChallengeHeaderComponent', () => {
   );
   expect(startButton).toBeUndefined();
 }));
+
+
+
+it('should render delete button for ADMIN role', () => {
+  authService.getUserRole.mockReturnValue(of('ADMIN'));
+  component.userRole = 'ADMIN';
+  fixture.detectChanges();
+
+  const deleteBtn = fixture.debugElement.query(By.css('button.ms-2'));
+  expect(deleteBtn).toBeTruthy();
+});
+
+it('clicking delete button calls deleteChallenge()', () => {
+  authService.getUserRole.mockReturnValue(of('ADMIN'));
+  component.userRole = 'ADMIN';
+  fixture.detectChanges();
+
+  const spy = jest.spyOn(component, 'deleteChallenge');
+  const deleteBtn = fixture.debugElement.query(By.css('button.ms-2'));
+  expect(deleteBtn).toBeTruthy();
+  deleteBtn.triggerEventHandler('click', null);
+  expect(spy).toHaveBeenCalled();
+});
 
   it('should handle solution accepted', () => {
     component.onSolutionAccepted();
