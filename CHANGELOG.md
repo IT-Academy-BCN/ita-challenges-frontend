@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.12.4-RELEASE] - 2025-11-13
+### Added
+-Delete challenge button available for admin/mentors.
+
 ### [ita-challenges-frontend-3.11.4-RELEASE] - 2025-11-13
 
 ### Fixed
