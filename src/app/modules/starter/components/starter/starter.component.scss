@@ -95,6 +95,7 @@ app-starter-filters p {
     flex: 0 0 auto; /* don't force a 25% column width */
     width: auto;    /* shrink-wrap to its contents */
     max-width: 100%;
+    margin-right: 20px; /* add spacing between filters and challenges */
   }
   /* Let challenges area take the remaining space on xl and above */
   #challenges-container.col-xl-8 {
