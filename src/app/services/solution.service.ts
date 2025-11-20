@@ -8,6 +8,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { switchMap } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -64,18 +65,18 @@ export class SolutionService {
     this.solutionTextSubject.next(text);
   }
 
-  submitSolution(uuid_challenge: string, uuid_language: string, uuid_user: string, status: string, solution_text: string): Observable<any> {
+  submitSolution(uuid_challenge: string, uuid_language: string, uuid_user: string, action: string, solution_text: string): Observable<any> {
     const body = {
       uuid_challenge,
       uuid_language,
       uuid_user,
       solution_text,
-      status,
+      action,
     };
 
     return this.http.put<any>(
       `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
-      body,
+     body,
       {
         headers: {
           'Content-Type': 'application/json'
