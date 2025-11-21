@@ -9,6 +9,7 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { of } from 'rxjs'
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 
 describe('SendSolutionModalComponent', () => {
   let component: SendSolutionModalComponent
@@ -85,7 +86,7 @@ describe('SendSolutionModalComponent', () => {
       languageId: 'test-language-id',
       solutionText: 'Test solution text',
       userId: 'test-user-id',
-      status: 'ENDED'
+      action: SolutionAction.COMPLETED
     };
   
     component.idChallenge = solutionData.idChallenge;
@@ -107,7 +108,7 @@ describe('SendSolutionModalComponent', () => {
       solutionData.idChallenge,
       solutionData.languageId,
       solutionData.userId,
-      solutionData.status,
+      SolutionAction.COMPLETED,
       solutionData.solutionText,
     );
   
