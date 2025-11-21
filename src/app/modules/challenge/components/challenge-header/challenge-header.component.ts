@@ -10,6 +10,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
 import { UserRole } from 'src/app/shared/enums/user-role.enum'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { CommonModalService } from "src/app/services/common-modal.service";
+import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 
 @Component({
   selector: 'app-challenge-header',
@@ -55,6 +56,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() status: string = '';
   @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
   @Input() savedSolutionText: string = '';
+  @Input() action: string = '';
 
   challenge_title: string | undefined = ''
   challenge_date: Date | undefined
@@ -182,28 +184,27 @@ export class ChallengeHeaderComponent implements OnInit {
     this.startChallenge.emit(true)
   }
 
-saveChallenge(): void {
-  if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
-    console.error(' Missing data to save the solution');
-    return;
-  }
-
-  this.status = SolutionStatus.IN_PROGRESS;
-  this.solutionService.submitSolution(
-    this.idChallenge,
-    this.languageId,
-    this.userId,
-    this.status,
-    this.solutionText
-  ).subscribe({
-    next: () => {
-      this.solutionState = SolutionStatus.IN_PROGRESS;
-    },
-    error: (err) => {
-      console.error(' Error saving solution', err);
+  saveChallenge(): void {
+    if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
+      console.error(' Missing data to save the solution');
+      return;
     }
-  });
-}
+    this.action = SolutionAction.SAVE_DRAFT;
+    this.solutionService.submitSolution(
+      this.idChallenge,
+      this.languageId,
+      this.userId,
+      this.action,
+      this.solutionText
+    ).subscribe({
+      next: () => {
+        this.solutionState = SolutionStatus.IN_PROGRESS; // Hardcoded status value. Need to be called by fetchUserSolution?
+      },
+      error: (err) => {
+        console.error(' Error saving solution', err);
+      }
+    });
+  }
   sendSolution (): void {
     this.openSendSolutionModal()
   }
