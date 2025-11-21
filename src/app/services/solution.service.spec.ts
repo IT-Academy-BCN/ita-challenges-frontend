@@ -9,7 +9,10 @@ import mockUserSolution from '../../mocks/solution/user-solution.json'
 import { of } from 'rxjs'
 import { AuthService } from './auth.service'
 import { SolutionAction } from '../models/user-solution-action.enum'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 96547488 (fix: update unit tests for SolutionService)
 
 describe('SolutionService', () => {
   let service: SolutionService
@@ -119,6 +122,34 @@ describe('SolutionService', () => {
     req.flush(mockUserSolution)
   })
 
+<<<<<<< HEAD
+=======
+  it('should send the correct data in PUT request', () => {
+  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
+  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
+  const uuid_user = 'user123';
+  const solution_text = 'Mi solución de prueba';
+  const action = 'COMPLETED';
+
+  const mockResponse = { success: true };
+
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
+    expect(response.success).toBe(true);
+  });
+
+  const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
+  expect(req.request.method).toBe('PUT');
+  expect(req.request.body).toEqual({
+    uuid_challenge,
+    uuid_language,
+    uuid_user,
+    solution_text,
+    action
+  });
+
+  req.flush(mockResponse);
+});
+>>>>>>> 96547488 (fix: update unit tests for SolutionService)
 
   it('should send a PUT request to submit solution', (done) => {
     const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
@@ -129,8 +160,12 @@ describe('SolutionService', () => {
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
+<<<<<<< HEAD
     service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
       next: (response) => {
+=======
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
+>>>>>>> 96547488 (fix: update unit tests for SolutionService)
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
@@ -161,9 +196,15 @@ describe('SolutionService', () => {
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
+<<<<<<< HEAD
   service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
    next: () => fail('Expected error, but got success response'),
    error: (error) => {
+=======
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe(
+    () => fail('Expected error, but got success response'),
+    (error) => {
+>>>>>>> 96547488 (fix: update unit tests for SolutionService)
       expect(error.status).toBe(500);
       expect(error.statusText).toBe('Internal Server Error');
       done();
