@@ -1,9 +1,9 @@
   <div class="row w-100">
   <div class="col-12 col-md-8">
     <p>
-       <a class="link" (click)="onCancel()">
-              <span class="backTo"><img class="arrow-left" src="assets\img\icon\arrow_left.svg" alt="arrow-left" fill="currentColor">{{ "modules.challenge.backTo" | translate }}</span>
-          </a>
+      <button type="button" class="link" (click)="onCancel()">
+        <span class="backTo"><img class="arrow-left" src="assets\img\icon\arrow_left.svg" alt="arrow-left" fill="currentColor">{{ "modules.challenge.backTo" | translate }}</span>
+         </button>
     </p>
     <div class="d-flex align-items-start">
       <div class="difficulty">
@@ -32,19 +32,19 @@
         <img src="assets/img/icon/times-performed.svg" alt="Times performed">
         <span>{{timesSolved}}</span>
       </span>
-      <span class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" style="cursor: pointer;">
+      <button type="button" class="stat" [ngbTooltip]="'tooltips.favorites' | translate" (click)="toggleFavorite()" [attr.aria-pressed]="isFavorite" style="cursor: pointer;">
         <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Add to favorites">
         <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Remove from favorites">
         <span>{{favorites_count}}</span>
-      </span>
+      </button>
       <span class="stat" *ngIf="creation_date" [ngbTooltip]="'tooltips.creationDate' | translate">
         <img src="assets/img/icon/date.svg" alt="Date">
         {{ creation_date | customDate }}
       </span>
-      <span class="stat" [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)" (click)="toggleBookmark($event)" (keydown.enter)="toggleBookmark($event)" [attr.aria-pressed]="isBookmarked" [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)">
+      <button type="button" class="stat" [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)" (click)="toggleBookmark($event)" [attr.aria-pressed]="isBookmarked" [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)">
         <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks.unsaved' | translate">
         <img *ngIf=" isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks.saved' | translate">
-      </span>
+      </button>
     </div>
   </div>
 
