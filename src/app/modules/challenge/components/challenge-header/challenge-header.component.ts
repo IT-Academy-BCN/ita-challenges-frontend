@@ -11,7 +11,10 @@ import { UserRole } from 'src/app/shared/enums/user-role.enum'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
+<<<<<<< HEAD
 import { UserSolution } from 'src/app/models/user-solution.interface'
+=======
+>>>>>>> 5774f08a (fix: updated saveChallenge to send SolutionAction instead of status field)
 
 @Component({
   selector: 'app-challenge-header',
@@ -195,11 +198,19 @@ export class ChallengeHeaderComponent implements OnInit {
       this.idChallenge,
       this.languageId,
       this.userId,
+<<<<<<< HEAD
       SolutionAction.SAVE_DRAFT,
       this.solutionText
     ).subscribe({
       next: (response: UserSolution) => {
         this.solutionState = response.status; 
+=======
+      this.action,
+      this.solutionText
+    ).subscribe({
+      next: () => {
+        this.solutionState = SolutionStatus.IN_PROGRESS; // Hardcoded status value. Need to be called by fetchUserSolution?
+>>>>>>> 5774f08a (fix: updated saveChallenge to send SolutionAction instead of status field)
       },
       error: (err) => {
         console.error(' Error saving solution', err);
