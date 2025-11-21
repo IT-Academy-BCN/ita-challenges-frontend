@@ -10,6 +10,7 @@ import mockUserSolution from '../../mocks/solution/user-solution.json'
 import { SolutionStatus } from '../models/user-solution-status.enum'
 import { of } from 'rxjs'
 import { AuthService } from './auth.service'
+import { SolutionAction } from '../models/user-solution-action.enum'
 
 describe('SolutionService', () => {
   let service: SolutionService
@@ -114,11 +115,11 @@ describe('SolutionService', () => {
   const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
   const uuid_user = 'user123';
   const solution_text = 'Mi solución de prueba';
-  const status = 'ENDED';
+  const action = 'COMPLETED';
 
   const mockResponse = { success: true };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
     expect(response.success).toBe(true);
   });
 
@@ -129,7 +130,7 @@ describe('SolutionService', () => {
     uuid_language,
     uuid_user,
     solution_text,
-    status
+    action
   });
 
   req.flush(mockResponse);
@@ -140,11 +141,11 @@ describe('SolutionService', () => {
     const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
     const uuid_user = '12345';
     const solution_text = 'Mi solución de prueba';
-    const status = SolutionStatus.ENDED;
+    const action = SolutionAction.COMPLETED;
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
-    service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
@@ -158,7 +159,7 @@ describe('SolutionService', () => {
       uuid_language,
       uuid_user,
       solution_text,
-      status
+      action
     });
   
     req.flush(mockResponse);
@@ -170,11 +171,11 @@ describe('SolutionService', () => {
   const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
   const uuid_user = 'user123';
   const solution_text = 'Mi solución de prueba';
-  const status = SolutionStatus.ENDED;
+  const action = SolutionAction.COMPLETED;
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, status).subscribe(
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe(
     () => fail('Expected error, but got success response'),
     (error) => {
       expect(error.status).toBe(500);
