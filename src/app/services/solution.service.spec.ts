@@ -12,6 +12,7 @@ import { of } from 'rxjs'
 import { AuthService } from './auth.service'
 import { SolutionAction } from '../models/user-solution-action.enum'
 
+
 describe('SolutionService', () => {
   let service: SolutionService
   let httpMock: HttpTestingController
