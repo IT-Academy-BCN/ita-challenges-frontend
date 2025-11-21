@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth.service';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { SubmitSolutionResponse } from 'src/app/models/user-solution.interface';
+import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 
 @Component({
   selector: 'app-send-solution-modal',
@@ -25,6 +26,7 @@ export class SendSolutionModalComponent {
   @Output() solutionAccepted = new EventEmitter<boolean>();
   @Output() solutionSubmitted = new EventEmitter<string>();
   @Output() timesSolvedUpdated = new EventEmitter<number>();
+
   ngOnInit(): void {
     this.getLanguageId(); 
     
@@ -46,7 +48,7 @@ export class SendSolutionModalComponent {
       this.idChallenge,
       this.languageId,
       this.userId,
-      SolutionStatus.ENDED,
+      SolutionAction.COMPLETED,
       this.solutionText
     ).subscribe({
       next: (response: SubmitSolutionResponse) => {
