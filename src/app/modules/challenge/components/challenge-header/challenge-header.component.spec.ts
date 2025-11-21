@@ -411,25 +411,25 @@ it('clicking delete button calls deleteChallenge()', () => {
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
   });
 
- it("should call loginRequestModal when user is not logged in", async () => {
+ it("should call loginRequestModal when user is not logged in", () => {
     mockCommonModalService.loginRequestModal = jest
       .fn()
       .mockResolvedValue({ isConfirmed: true });
 
     authService.isUserLoggedIn.mockReturnValue(false);
-     await component.onStartChallenge();
+    component.onStartChallenge();
 
     expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
   })
 
-  it("should call loginRequestModal when user is not logged in", async () => {
+  it("should call loginRequestModal when user is not logged in", () => {
     mockCommonModalService.loginRequestModal = jest
       .fn()
       .mockResolvedValue({ isConfirmed: true });
 
     authService.isUserLoggedIn.mockReturnValue(false);
 
-    await component.onStartChallenge();
+    component.onStartChallenge();
 
     expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
   })
