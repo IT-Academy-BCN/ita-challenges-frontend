@@ -119,8 +119,10 @@ describe('SolutionService', () => {
 
   const mockResponse = { success: true };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+    next: (response) => {
     expect(response.success).toBe(true);
+    }
   });
 
   const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
@@ -145,10 +147,12 @@ describe('SolutionService', () => {
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
-    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+      next: (response) => {
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
+      }
     });
   
     const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
