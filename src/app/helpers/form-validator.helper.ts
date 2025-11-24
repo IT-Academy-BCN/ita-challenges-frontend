@@ -49,7 +49,7 @@ export function getInputError (input: string, form: FormGroup, translate: Transl
 
 export function isValidDni (control: AbstractControl): Observable<ValidationErrors | null> {
   const dni: string = control.value
-  const dniRegex = /^[0-9]{8}[A-Za-z]$/
+  const dniRegex = /^\d{8}[A-Za-z]$/
 
   if (!dniRegex.test(dni)) {
     return of({ isValidDni: false })
