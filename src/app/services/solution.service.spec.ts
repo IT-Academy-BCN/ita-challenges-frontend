@@ -128,10 +128,12 @@ describe('SolutionService', () => {
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
-    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe(response => {
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+      next: (response) => {
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
+      }
     });
   
     const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
@@ -158,14 +160,14 @@ describe('SolutionService', () => {
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe(
-    () => fail('Expected error, but got success response'),
-    (error) => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+   next: () => fail('Expected error, but got success response'),
+   error: (error) => {
       expect(error.status).toBe(500);
       expect(error.statusText).toBe('Internal Server Error');
       done();
     }
-  );
+  });
 
   const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
   expect(req.request.method).toBe('PUT');
