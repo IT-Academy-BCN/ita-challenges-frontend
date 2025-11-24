@@ -15,6 +15,11 @@ import { SolutionAction } from '../models/user-solution-action.enum'
 describe('SolutionService', () => {
   let service: SolutionService
   let httpMock: HttpTestingController
+  let uuid_challenge: string;
+  let uuid_language: string;
+  let uuid_user: string;
+  let solution_text: string;
+  let action: SolutionAction;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -32,6 +37,11 @@ describe('SolutionService', () => {
 
     service = TestBed.inject(SolutionService)
     httpMock = TestBed.inject(HttpTestingController)
+    uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5'
+    uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
+    uuid_user = '12345'
+    solution_text = 'Mi solución de prueba'
+    action = SolutionAction.COMPLETED
   })
 
   afterEach(() => {
@@ -110,18 +120,13 @@ describe('SolutionService', () => {
     req.flush(mockUserSolution)
   })
 
-  it('should send the correct data in PUT request', () => {
-  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const uuid_user = 'user123';
-  const solution_text = 'Mi solución de prueba';
-  const action = 'COMPLETED';
-
+  it('should send the correct data in PUT request', (done) => {
   const mockResponse = { success: true };
 
   service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
     next: (response) => {
     expect(response.success).toBe(true);
+    done();
     }
   });
 
@@ -139,12 +144,6 @@ describe('SolutionService', () => {
 });
 
   it('should send a PUT request to submit solution', (done) => {
-    const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-    const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-    const uuid_user = '12345';
-    const solution_text = 'Mi solución de prueba';
-    const action = SolutionAction.COMPLETED;
-  
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
     service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
@@ -171,15 +170,9 @@ describe('SolutionService', () => {
 
   
   it('should handle error when submitting solution', (done) => {
-  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const uuid_user = 'user123';
-  const solution_text = 'Mi solución de prueba';
-  const action = SolutionAction.COMPLETED;
-
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe({
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
    next: () => fail('Expected error, but got success response'),
    error: (error) => {
       expect(error.status).toBe(500);
