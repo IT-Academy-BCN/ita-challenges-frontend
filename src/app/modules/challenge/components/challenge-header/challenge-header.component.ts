@@ -139,7 +139,7 @@ export class ChallengeHeaderComponent implements OnInit {
     if (!confirmed) {
       return;
     }
-    console.log('Delete requested for challenge', this.idChallenge);
+    // console.log('Delete requested for challenge', this.idChallenge);
     // Deletion implementation pending backend API; keep as placeholder for now.
   }
 
