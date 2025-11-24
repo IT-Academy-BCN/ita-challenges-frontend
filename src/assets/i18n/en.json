@@ -170,7 +170,7 @@
             "isValidDni": "Invalid DNI",
             "notSamePassword": "Passwords don't match",
             "notChecked": "Required",
-            "invalidPassword": "Minimum  1 uppercase and 1 lower case letter, 1 number, and no special characters",
+            "invalidCredentialFormat": "Minimum  1 uppercase and 1 lower case letter, 1 number, and no special characters",
             "pattern": "Invalid format"
         }
     },
