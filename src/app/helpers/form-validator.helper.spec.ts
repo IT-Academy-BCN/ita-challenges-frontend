@@ -1,6 +1,5 @@
-import { FormControl, FormGroup } from '@angular/forms'
-import { isValidPassword, isValidDni, getInputError } from './form-validator.helper'
-import { AbstractControl } from '@angular/forms'
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms'
+import { isValidPassword, isValidDni, getInputError, checkBoxChecked } from './form-validator.helper'
 
 describe('form-validator.helper', () => {
   describe('isValidPassword', () => {
@@ -60,8 +59,7 @@ describe('form-validator.helper', () => {
     })
   })
 })
-import { FormControl } from '@angular/forms'
-import { checkBoxChecked } from './form-validator.helper'
+
 
 describe('Form Validators Helper', () => {
   describe('checkBoxChecked', () => {
