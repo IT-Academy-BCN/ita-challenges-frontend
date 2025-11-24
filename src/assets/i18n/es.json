@@ -45,7 +45,8 @@
                 "buttonRegisterUsers": "Añadir alumnos/as",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
-                "solutionSend": "Solución enviada",
+                "solutionSend": "Reto resuelto",
+                "giveUp": "Reto no resuelto",
                 "login": "Iniciar sesión",
                 "logout": "Cerrar sesión"
             },
