@@ -120,12 +120,6 @@ describe('SolutionService', () => {
 
 
   it('should send a PUT request to submit solution', (done) => {
-    const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-    const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-    const uuid_user = '12345';
-    const solution_text = 'Mi solución de prueba';
-    const action = SolutionAction.COMPLETED;
-  
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
     service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
@@ -152,12 +146,6 @@ describe('SolutionService', () => {
 
   
   it('should handle error when submitting solution', (done) => {
-  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const uuid_user = 'user123';
-  const solution_text = 'Mi solución de prueba';
-  const action = SolutionAction.COMPLETED;
-
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
   service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
