@@ -175,14 +175,14 @@ describe('SolutionService', () => {
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe(
-    () => fail('Expected error, but got success response'),
-    (error) => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, action).subscribe({
+   next: () => fail('Expected error, but got success response'),
+   error: (error) => {
       expect(error.status).toBe(500);
       expect(error.statusText).toBe('Internal Server Error');
       done();
     }
-  );
+  });
 
   const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
   expect(req.request.method).toBe('PUT');
