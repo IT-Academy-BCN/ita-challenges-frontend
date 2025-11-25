@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject } from '@angular/core'
 import { Observable, catchError, BehaviorSubject, of, throwError } from 'rxjs'
-import { delay, map } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -197,7 +197,7 @@ export class ChallengeService {
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`
     const storedCount = localStorage.getItem(key)
-    return storedCount ? parseInt(storedCount, 10) : 0
+    return storedCount ? Number.parseInt(storedCount, 10) : 0
   }
 
 
