@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### [ita-challenges-frontend-3.11.6-RELEASE] - 2025-11-25
+
+### Fixed
+- Refactors the submission flow so the frontend sends only user actions (SAVE, SUBMIT, GIVE_UP) (Taiga[#888],PR [#717]).
 
 ### [ita-challenges-frontend-3.11.5-RELEASE] - 2025-11-19
 
