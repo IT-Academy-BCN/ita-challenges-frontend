@@ -5,7 +5,7 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-### [ita-challenges-frontend-3.12.4-RELEASE] - 2025-11-25
+### [ita-challenges-frontend-3.12.0-RELEASE] - 2025-11-25
 ### Added
 -Delete challenge button available for admin/mentors.(Taiga[#892],PR [#719])
 
