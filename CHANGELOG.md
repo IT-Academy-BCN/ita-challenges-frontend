@@ -5,9 +5,14 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-### [ita-challenges-frontend-3.12.4-RELEASE] - 2025-11-13
+### [ita-challenges-frontend-3.12.4-RELEASE] - 2025-11-25
 ### Added
--Delete challenge button available for admin/mentors.
+-Delete challenge button available for admin/mentors.(Taiga[#892],PR [#719])
+
+### [ita-challenges-frontend-3.11.5-RELEASE] - 2025-11-19
+
+### Fixed
+- Fixed Main container size adjusted to hold all the screen, resolving issues with challenge list scrollbars (Taiga[#876],PR [#714]).
 
 ### [ita-challenges-frontend-3.11.4-RELEASE] - 2025-11-13
 
