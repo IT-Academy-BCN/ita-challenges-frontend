@@ -139,8 +139,15 @@ export class ChallengeHeaderComponent implements OnInit {
     if (!confirmed) {
       return;
     }
-    // console.log('Delete requested for challenge', this.idChallenge);
-    // Deletion implementation pending backend API; keep as placeholder for now.
+    this.challengeService.deleteChallenge(this.idChallenge).subscribe({
+      next: () => {
+        console.log('Challenge deleted successfully');
+        this.router.navigate(['/ita-challenge/challenges']);
+      },
+      error: (err) => {
+        console.error('Error deleting challenge:', err);
+      }
+    });
   }
 
 
