@@ -350,7 +350,37 @@ describe('ChallengeService', () => {
     });
   });
 
-  ////////
+
+///
+describe('getMockFavoriteCount (private method)', () => {
+  const challengeId = 'abc123';
+  const key = `favorites_count_${challengeId}`;
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('should return 0 when no value is stored', () => {
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(0);
+  });
+
+  it('should return stored numeric value when present', () => {
+    localStorage.setItem(key, '42');
+
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(42);
+  });
+
+  it('should return 0 if stored value is empty string', () => {
+    localStorage.setItem(key, '');
+
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(0);
+  });
+});
+
+  ////
   describe('deleteChallenge', () => {
   const mockChallengeId = 'delete-123';
 
