@@ -223,7 +223,7 @@ editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Ch
 
   const headers = {
     'Content-Type': 'application/json',
-    ...this.authService.getAuthHeaders() 
+    ...this.authService.getAuthHeaders()
   };
 
   return this.http.put<Challenge>(url, challenge, { headers });
@@ -242,4 +242,4 @@ deleteChallenge(challengeId: string): Observable<void> {
     })
   );
 
-}
+}}
