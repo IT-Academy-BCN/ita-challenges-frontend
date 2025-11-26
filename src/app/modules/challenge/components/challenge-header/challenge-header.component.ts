@@ -133,6 +133,26 @@ export class ChallengeHeaderComponent implements OnInit {
      this.router.navigate([`/ita-challenge/challenges/edit/${this.idChallenge}`]);
   }
 
+  deleteChallenge(): void {
+    const deletionConfirmationMessage = this.translate.instant('modules.challenge.header.confirmDelete') || 'Are you sure you want to delete this challenge?';
+    const confirmed = confirm(deletionConfirmationMessage);
+    if (!confirmed) {
+      return;
+    }
+
+      this.challengeService.deleteChallenge(this.idChallenge).subscribe({
+      next: () => {
+        alert ('Challenge deleted successfully');
+        this.router.navigate(['/ita-challenge/challenges']);
+      },
+      error: (err) => {
+        alert('Error deleting challenge:');
+        console.error('Error deleting challenge:', err);
+
+      }
+    });
+  }
+
 
   onStartChallenge(): void {
     if (this.authService.isUserLoggedIn()) {

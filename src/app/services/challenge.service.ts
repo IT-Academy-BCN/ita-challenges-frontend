@@ -229,5 +229,18 @@ editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Ch
   return this.http.put<Challenge>(url, challenge, { headers });
 }
 
+deleteChallenge(challengeId: string): Observable<void> {
+  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}`;
+  const headers = {
+    'Content-Type': 'application/json',
+    ...this.authService.getAuthHeaders()
+  };
+  return this.http.delete<void>(url, { headers }).pipe(
+    catchError((error: HttpErrorResponse) => {
+      console.error('Error deleting challenge:', error);
+      return throwError(() => error);
+    })
+  );
 
+}
 }
