@@ -244,6 +244,17 @@ describe('ChallengeHeaderComponent', () => {
   expect(startButton).toBeUndefined();
 }));
 
+///
+it('should navigate to edit challenge page', () => {
+  component.idChallenge = '123';
+  const navigateSpy = jest.spyOn(router, 'navigate');
+
+  component.editChallenge();
+
+  expect(navigateSpy).toHaveBeenCalledWith(['/ita-challenge/challenges/edit/123']);
+});
+
+///
 
 
 it('should render delete button for ADMIN role', () => {
@@ -266,6 +277,7 @@ it('clicking delete button calls deleteChallenge()', () => {
   deleteBtn.triggerEventHandler('click', null);
   expect(spy).toHaveBeenCalled();
 });
+
 
   it('should handle solution accepted', () => {
     component.onSolutionAccepted();

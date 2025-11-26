@@ -141,11 +141,12 @@ export class ChallengeHeaderComponent implements OnInit {
     }
     this.challengeService.deleteChallenge(this.idChallenge).subscribe({
       next: () => {
-        console.log('Challenge deleted successfully');
+        alert('Challenge deleted successfully');
         this.router.navigate(['/ita-challenge/challenges']);
       },
       error: (err) => {
         console.error('Error deleting challenge:', err);
+        alert('An error occurred while deleting the challenge. Please try again later.');
       }
     });
   }
