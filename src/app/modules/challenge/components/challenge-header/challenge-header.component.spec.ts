@@ -244,7 +244,7 @@ describe('ChallengeHeaderComponent', () => {
   expect(startButton).toBeUndefined();
 }));
 
-///
+
 it('should navigate to edit challenge page', () => {
   component.idChallenge = '123';
   const navigateSpy = jest.spyOn(router, 'navigate');
@@ -253,8 +253,6 @@ it('should navigate to edit challenge page', () => {
 
   expect(navigateSpy).toHaveBeenCalledWith(['/ita-challenge/challenges/edit/123']);
 });
-
-///
 
 
 it('should render delete button for ADMIN role', () => {
@@ -278,6 +276,40 @@ it('clicking delete button calls deleteChallenge()', () => {
   expect(spy).toHaveBeenCalled();
 });
 
+//////
+it('should navigate and alert on successful delete', () => {
+  component.idChallenge = '123';
+  const navigateSpy = jest.spyOn(router, 'navigate');
+  const alertSpy = jest.spyOn(globalThis, 'alert').mockImplementation(() => {});
+  const confirmSpy = jest.spyOn(globalThis, 'confirm').mockReturnValue(true); 
+  challengeService.deleteChallenge = jest.fn().mockReturnValue(of({}));
+
+  component.deleteChallenge();
+
+  expect(confirmSpy).toHaveBeenCalled();
+  expect(alertSpy).toHaveBeenCalledWith('Challenge deleted successfully');
+  expect(navigateSpy).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+});
+
+it('should log error and alert on failed delete', () => {
+  component.idChallenge = '123';
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  const alertSpy = jest.spyOn(globalThis, 'alert').mockImplementation(() => {});
+  const confirmSpy = jest.spyOn(globalThis, 'confirm').mockReturnValue(true); 
+  const error = new Error('Delete failed');
+  challengeService.deleteChallenge = jest.fn().mockReturnValue(throwError(() => error));
+
+  component.deleteChallenge();
+
+  expect(confirmSpy).toHaveBeenCalled();
+  expect(consoleSpy).toHaveBeenCalledWith('Error deleting challenge:', error);
+  expect(alertSpy).toHaveBeenCalledWith(
+    'An error occurred while deleting the challenge. Please try again later.'
+  );
+});
+
+
+///////
 
   it('should handle solution accepted', () => {
     component.onSolutionAccepted();
