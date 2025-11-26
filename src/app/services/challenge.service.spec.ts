@@ -349,4 +349,80 @@ describe('ChallengeService', () => {
       req.flush(null, mockError);
     });
   });
+
+
+///
+describe('getMockFavoriteCount (private method)', () => {
+  const challengeId = 'abc123';
+  const key = `favorites_count_${challengeId}`;
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('should return 0 when no value is stored', () => {
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(0);
+  });
+
+  it('should return stored numeric value when present', () => {
+    localStorage.setItem(key, '42');
+
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(42);
+  });
+
+  it('should return 0 if stored value is empty string', () => {
+    localStorage.setItem(key, '');
+
+    const result = (service as any).getMockFavoriteCount(challengeId);
+    expect(result).toBe(0);
+  });
+});
+
+  ////
+  describe('deleteChallenge', () => {
+  const mockChallengeId = 'delete-123';
+
+  it('should delete a challenge successfully', () => {
+    service.deleteChallenge(mockChallengeId).subscribe(response => {
+      expect(response).toBeUndefined(); // delete returns void
+    });
+
+    const req = httpMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${mockChallengeId}`
+    );
+
+    expect(req.request.method).toBe('DELETE');
+    expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
+    expect(req.request.headers.get('Content-Type')).toBe('application/json');
+
+    req.flush(null); // success response
+  });
+
+  it('should handle HTTP errors when deleting a challenge', () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    service.deleteChallenge(mockChallengeId).subscribe({
+      next: () => fail('Should fail with 500'),
+      error: (error) => {
+        expect(error.status).toBe(500);
+        expect(console.error).toHaveBeenCalledWith(
+          'Error deleting challenge:',
+          expect.any(HttpErrorResponse)  // <-- IMPORTANT
+        );
+      }
+    });
+
+    const req = httpMock.expectOne(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${mockChallengeId}`
+    );
+
+    req.flush(
+      { message: 'Internal error' },
+      { status: 500, statusText: 'Internal Server Error' }
+    );
+  });
+});
+
 })

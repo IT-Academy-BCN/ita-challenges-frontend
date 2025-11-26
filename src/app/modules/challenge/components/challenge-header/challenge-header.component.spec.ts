@@ -1,10 +1,9 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ChallengeHeaderComponent } from './challenge-header.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, provideRouter } from '@angular/router';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
-import { provideRouter } from '@angular/router';
 import { of, Subject, throwError } from "rxjs";
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
@@ -13,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 
@@ -25,6 +25,7 @@ describe('ChallengeHeaderComponent', () => {
   let authService: jest.Mocked<AuthService>;
   let solutionService: jest.Mocked<SolutionService>;
   let mockCommonModalService: jest.Mocked<CommonModalService>;
+
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
@@ -56,7 +57,7 @@ describe('ChallengeHeaderComponent', () => {
       ),
       challengeCompleted$: of("testChallengeId"),
       submitSolution: jest.fn(),
-    } as any
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
@@ -75,6 +76,11 @@ describe('ChallengeHeaderComponent', () => {
         { provide: CommonModalService, useValue: mockCommonModalService },
       ],
     }).compileComponents();
+
+    // Set default language ONCE here, after compileComponents
+    const translate = TestBed.inject(TranslateService);
+    translate.setDefaultLang('en');
+    translate.use('en');
 
     fixture = TestBed.createComponent(ChallengeHeaderComponent);
     component = fixture.componentInstance;
@@ -238,6 +244,73 @@ describe('ChallengeHeaderComponent', () => {
   expect(startButton).toBeUndefined();
 }));
 
+
+it('should navigate to edit challenge page', () => {
+  component.idChallenge = '123';
+  const navigateSpy = jest.spyOn(router, 'navigate');
+
+  component.editChallenge();
+
+  expect(navigateSpy).toHaveBeenCalledWith(['/ita-challenge/challenges/edit/123']);
+});
+
+
+it('should render delete button for ADMIN role', () => {
+  authService.getUserRole.mockReturnValue(of('ADMIN'));
+  component.userRole = 'ADMIN';
+  fixture.detectChanges();
+
+  const deleteBtn = fixture.debugElement.query(By.css('button.ms-2'));
+  expect(deleteBtn).toBeTruthy();
+});
+
+it('clicking delete button calls deleteChallenge()', () => {
+  authService.getUserRole.mockReturnValue(of('ADMIN'));
+  component.userRole = 'ADMIN';
+  fixture.detectChanges();
+
+  const spy = jest.spyOn(component, 'deleteChallenge');
+  const deleteBtn = fixture.debugElement.query(By.css('button.ms-2'));
+  expect(deleteBtn).toBeTruthy();
+  deleteBtn.triggerEventHandler('click', null);
+  expect(spy).toHaveBeenCalled();
+});
+
+//////
+it('should navigate and alert on successful delete', () => {
+  component.idChallenge = '123';
+  const navigateSpy = jest.spyOn(router, 'navigate');
+  const alertSpy = jest.spyOn(globalThis, 'alert').mockImplementation(() => {});
+  const confirmSpy = jest.spyOn(globalThis, 'confirm').mockReturnValue(true); 
+  challengeService.deleteChallenge = jest.fn().mockReturnValue(of({}));
+
+  component.deleteChallenge();
+
+  expect(confirmSpy).toHaveBeenCalled();
+  expect(alertSpy).toHaveBeenCalledWith('Challenge deleted successfully');
+  expect(navigateSpy).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+});
+
+it('should log error and alert on failed delete', () => {
+  component.idChallenge = '123';
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  const alertSpy = jest.spyOn(globalThis, 'alert').mockImplementation(() => {});
+  const confirmSpy = jest.spyOn(globalThis, 'confirm').mockReturnValue(true); 
+  const error = new Error('Delete failed');
+  challengeService.deleteChallenge = jest.fn().mockReturnValue(throwError(() => error));
+
+  component.deleteChallenge();
+
+  expect(confirmSpy).toHaveBeenCalled();
+  expect(consoleSpy).toHaveBeenCalledWith('Error deleting challenge:', error);
+  expect(alertSpy).toHaveBeenCalledWith(
+    'An error occurred while deleting the challenge. Please try again later.'
+  );
+});
+
+
+///////
+
   it('should handle solution accepted', () => {
     component.onSolutionAccepted();
     expect(component.solutionSent).toBe(true);
@@ -382,25 +455,25 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
   });
 
- it("should call loginRequestModal when user is not logged in", async () => {
+ it("should call loginRequestModal when user is not logged in", () => {
     mockCommonModalService.loginRequestModal = jest
       .fn()
       .mockResolvedValue({ isConfirmed: true });
 
     authService.isUserLoggedIn.mockReturnValue(false);
-     await component.onStartChallenge();
+    component.onStartChallenge();
 
     expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
   })
 
-  it("should call loginRequestModal when user is not logged in", async () => {
+  it("should call loginRequestModal when user is not logged in", () => {
     mockCommonModalService.loginRequestModal = jest
       .fn()
       .mockResolvedValue({ isConfirmed: true });
 
     authService.isUserLoggedIn.mockReturnValue(false);
 
-    await component.onStartChallenge();
+    component.onStartChallenge();
 
     expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
   })

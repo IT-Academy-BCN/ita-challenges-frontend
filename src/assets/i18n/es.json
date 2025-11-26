@@ -44,6 +44,8 @@
                 "buttonRegisterUsers": "Añadir alumnos/as",
                 "buttonCancel": "Cancelar",
                 "buttonEditChallenge": "Editar reto",
+                "buttonDeleteChallenge": "Eliminar reto",
+                "confirmDelete": "¿Estás seguro de que quieres eliminar este reto?",
                 "solutionSend": "Solución enviada",
                 "login": "Iniciar sesión",
                 "logout": "Cerrar sesión"
@@ -167,7 +169,7 @@
             "isValidDni": "DNI inválido",
             "notSamePassword": "Las contraseñas no coinciden",
             "notChecked": "Casilla obligatoria",
-            "invalidPassword": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
+            "invalidCredentialFormat": "Mínimo 1 mayúscula, 1 minúscula, 1 número y sin caracteres especiales",
             "pattern": "Formato incorrecto"
         }
     },

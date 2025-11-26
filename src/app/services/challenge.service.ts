@@ -197,7 +197,7 @@ export class ChallengeService {
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`
     const storedCount = localStorage.getItem(key)
-    return storedCount ? parseInt(storedCount, 10) : 0
+    return storedCount ? Number.parseInt(storedCount, 10) : 0
   }
 
 
@@ -242,5 +242,4 @@ deleteChallenge(challengeId: string): Observable<void> {
     })
   );
 
-}
 }
