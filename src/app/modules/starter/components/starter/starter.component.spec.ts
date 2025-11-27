@@ -1,4 +1,5 @@
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+import { ProgressFilter } from 'src/app/models/progress-filter.enum';
 import { TestBed, type ComponentFixture } from '@angular/core/testing'
 
 import { StarterComponent } from './starter.component'
@@ -280,19 +281,19 @@ describe('Progress filtering behavior', () => {
       c3: SolutionStatus.ENDED
     } as any;
 
-    component.getChallengeFilters({ languages: [], levels: [], progress: [1] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c1']);
+    component.getChallengeFilters({ languages: [], levels: [], progress: [ProgressFilter.NOT_STARTED] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c1'])
 
-    component.getChallengeFilters({ languages: [], levels: [], progress: [2] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c2']);
+    component.getChallengeFilters({ languages: [], levels: [], progress: [ProgressFilter.IN_PROGRESS] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c2'])
 
-    component.getChallengeFilters({ languages: [], levels: [], progress: [3] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3']);
+    component.getChallengeFilters({ languages: [], levels: [], progress: [ProgressFilter.ENDED] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3'])
 
-    component.getChallengeFilters({ languages: [], levels: [], progress: [1, 3] });
+    component.getChallengeFilters({ languages: [], levels: [], progress: [ProgressFilter.NOT_STARTED, ProgressFilter.ENDED] });
     expect(component.challenges
       .map((c: any) => c.id_challenge)
       .sort((a: string, b: string) => a.localeCompare(b))
-    ).toEqual(['c1', 'c3']);
+    ).toEqual(['c1', 'c3'])
   });
 });

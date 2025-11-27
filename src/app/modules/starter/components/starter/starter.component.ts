@@ -11,6 +11,7 @@ import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import { ProgressFilter } from 'src/app/models/progress-filter.enum'
 
 @Component({
   selector: 'app-starter',
@@ -156,11 +157,10 @@ export class StarterComponent implements OnInit {
     this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
       let result = filteredResp;
 
-      // Apply progress filters client-side based on user solution statuses
       if (this.filters.progress && this.filters.progress.length > 0) {
-        const wantsNotStarted = this.filters.progress.includes(Number(SolutionStatus.NOT_STARTED));
-        const wantsInProgress = this.filters.progress.includes(Number(SolutionStatus.IN_PROGRESS));
-        const wantsFinished = this.filters.progress.includes(Number(SolutionStatus.ENDED));
+        const wantsNotStarted = this.filters.progress.includes(ProgressFilter.NOT_STARTED);
+        const wantsInProgress = this.filters.progress.includes(ProgressFilter.IN_PROGRESS);
+        const wantsFinished = this.filters.progress.includes(ProgressFilter.ENDED);
 
         result = filteredResp.filter((ch) => {
           const status = this.solutionStatusMap[ch.id_challenge];
