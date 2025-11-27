@@ -4,6 +4,7 @@ import { FiltersModalComponent } from './filters-modal.component'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { of } from 'rxjs'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 describe('FiltersModalComponent', () => {
   let component: FiltersModalComponent
@@ -70,7 +71,7 @@ describe('FiltersModalComponent', () => {
     const expectedFilters = {
       languages: ['1'], // Solo JavaScript seleccionado
       levels: ['EASY'],
-      progress: [1] // noStarted corresponde al primer valor
+      progress: [SolutionStatus.NOT_STARTED] // noStarted corresponde
     }
     expect(component.filtersSelected.emit).toHaveBeenCalledWith(expectedFilters)
     expect(mockModalService.dismissAll).toHaveBeenCalled()

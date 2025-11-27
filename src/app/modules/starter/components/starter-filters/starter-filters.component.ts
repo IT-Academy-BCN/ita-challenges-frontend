@@ -8,6 +8,7 @@ import { type Language } from 'src/app/models/language.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { forkJoin } from 'rxjs'
 import { map, pairwise, startWith } from 'rxjs/operators'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 type LanguagesMap = Record<string, string>
 type TagsByLanguageMap = Record<string, Array<{ id_tag: string; tag_name: string }>>
@@ -308,7 +309,11 @@ export class StarterFiltersComponent implements OnInit {
     Object.entries(fv.levels as Record<string, boolean>)
       .forEach(([k, v]) => v && filters.levels.push(k.toUpperCase()));
 
-    const progressMap: Record<string, number> = { noStarted: 1, started: 2, finished: 3 };
+    const progressMap: Record<string, SolutionStatus> = {
+      noStarted: SolutionStatus.NOT_STARTED,
+      started: SolutionStatus.IN_PROGRESS,
+      finished: SolutionStatus.ENDED
+    };
     Object.entries(fv.progress as Record<string, boolean>)
       .forEach(([k, v]) => v && progressMap[k] && filters.progress.push(progressMap[k]));
 

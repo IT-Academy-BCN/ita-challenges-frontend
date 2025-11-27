@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { type Language } from 'src/app/models/language.model'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 @Component({
   selector: 'app-filters-modal',
@@ -79,9 +80,14 @@ export class FiltersModalComponent {
 
     // Manejo de progress
     if (formValue.progress !== null && formValue.progress !== undefined) {
-      Object.entries(formValue.progress).forEach(([key, val], i) => {
+      const progressMap: Record<string, SolutionStatus> = {
+        noStarted: SolutionStatus.NOT_STARTED,
+        started: SolutionStatus.IN_PROGRESS,
+        finished: SolutionStatus.ENDED
+      }
+      Object.entries(formValue.progress).forEach(([key, val]) => {
         if (val) {
-          filters.progress.push(i + 1)
+          filters.progress.push(progressMap[key])
         }
       })
     }

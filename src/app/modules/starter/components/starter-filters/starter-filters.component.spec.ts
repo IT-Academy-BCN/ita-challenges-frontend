@@ -2,6 +2,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { AuthService } from 'src/app/services/auth.service'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { StarterFiltersComponent } from './starter-filters.component'
@@ -135,7 +136,7 @@ describe('StarterFiltersComponent', () => {
     const lastCallArgs = emitSpy.mock.calls.at(-1)?.[0] as any
     expect(lastCallArgs).toBeTruthy()
     expect(lastCallArgs.levels).toEqual(['EASY'])
-    expect(lastCallArgs.progress).toEqual(progressEl ? [1] : [])
+    expect(lastCallArgs.progress).toEqual(progressEl ? [SolutionStatus.NOT_STARTED] : [])
     // No forzamos comprobar tags/languages aquí para evitar flaqueos;
     // hay tests específicos abajo que validan el estado de tags en el formulario.
   })
