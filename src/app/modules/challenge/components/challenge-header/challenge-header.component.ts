@@ -82,10 +82,6 @@ export class ChallengeHeaderComponent implements OnInit {
       return;
     }
     this.userId = userId;
-    
-    this.solutionService.solutionSent$.subscribe(sent => {
-    this.solutionSent = sent;
-  });
 
     this.loadUserSolutionStatus();
     
@@ -203,7 +199,7 @@ export class ChallengeHeaderComponent implements OnInit {
       console.error(' Missing data to save the solution');
       return;
     }
-    this.action = SolutionAction.SAVE_DRAFT;
+    this.status = SolutionStatus.IN_PROGRESS;
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
