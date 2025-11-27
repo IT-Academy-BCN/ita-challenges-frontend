@@ -72,7 +72,7 @@ export class StarterComponent implements OnInit {
     this.userRoleSubs$ = this._authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
       this.cd.detectChanges()
-      if (role && role !== '') {
+      if (!this.isAdmin) {
         this.fetchUserSolutionsStatus();
       }
     })
@@ -158,9 +158,9 @@ export class StarterComponent implements OnInit {
 
       // Apply progress filters client-side based on user solution statuses
       if (this.filters.progress && this.filters.progress.length > 0) {
-        const wantsNotStarted = this.filters.progress.includes(1);
-        const wantsInProgress = this.filters.progress.includes(2);
-        const wantsFinished = this.filters.progress.includes(3);
+        const wantsNotStarted = this.filters.progress.includes(Number(SolutionStatus.NOT_STARTED));
+        const wantsInProgress = this.filters.progress.includes(Number(SolutionStatus.IN_PROGRESS));
+        const wantsFinished = this.filters.progress.includes(Number(SolutionStatus.ENDED));
 
         result = filteredResp.filter((ch) => {
           const status = this.solutionStatusMap[ch.id_challenge];
