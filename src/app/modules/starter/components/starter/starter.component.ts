@@ -19,6 +19,8 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
   providers: []
 })
 export class StarterComponent implements OnInit {
+  // Filters panel collapsed by default (desktop)
+  public areFiltersOpen: boolean = false;
   @ViewChild('modal') private readonly modalContent!: FiltersModalComponent
   @ViewChild('challenge') challengesContainer!: ElementRef
   @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
@@ -53,6 +55,11 @@ export class StarterComponent implements OnInit {
     private readonly challengeService: ChallengeService,
     private readonly cd: ChangeDetectorRef
   ) { }
+
+  // Toggle filters panel (keyboard and click accessible)
+  public toggleFilters(): void {
+    this.areFiltersOpen = !this.areFiltersOpen;
+  }
 
   ngOnInit(): void {
     this.getChallenge()
@@ -147,14 +154,34 @@ export class StarterComponent implements OnInit {
     this.filters = filters
 
     this.filteredChallengesSubs$ = this.starterService.getAllChallengesFiltered(this.filters, this.listChallenges).subscribe((filteredResp: Challenge[]) => {
-      this.challenges = filteredResp
-    })
+      let result = filteredResp;
 
-    if (this.sortBy !== '') {
-      this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.challenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
-        this.challenges = sortedResp
-      })
-    }
+      if (this.filters.progress && this.filters.progress.length > 0) {
+        const wantsNotStarted = this.filters.progress.includes(SolutionStatus.NOT_STARTED);
+        const wantsInProgress = this.filters.progress.includes(SolutionStatus.IN_PROGRESS);
+        const wantsFinished = this.filters.progress.includes(SolutionStatus.ENDED);
+
+        result = filteredResp.filter((ch) => {
+          const status = this.solutionStatusMap[ch.id_challenge];
+          // Determine bucket for this challenge
+          const isFinished = status === SolutionStatus.ENDED;
+          const isInProgress = status === SolutionStatus.IN_PROGRESS;
+          const isNotStarted = !status || status === SolutionStatus.NOT_STARTED;
+
+          return (wantsFinished && isFinished) ||
+                 (wantsInProgress && isInProgress) ||
+                 (wantsNotStarted && isNotStarted);
+        });
+      }
+
+      this.challenges = result;
+
+      if (this.sortBy !== '') {
+        this.sortedChallengesSubs$ = this.starterService.orderBySort(this.sortBy, this.challenges, 0, this.listChallenges.length, this.isAscending).subscribe(sortedResp => {
+          this.challenges = sortedResp
+        })
+      }
+    })
   }
 
   changeSort(newSort: string): void {
