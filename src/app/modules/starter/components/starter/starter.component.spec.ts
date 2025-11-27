@@ -194,11 +194,11 @@ describe('StarterComponent', () => {
     expect(fetchUserSolutionSpy).toHaveBeenCalled();
   });
 
-  it('should call fetchUserSolutionsStatus on init if user is admin (progress filters require statuses)', () => {
+  it('should not call fetchUserSolutionsStatus on init if user is admin', () => {
     fetchUserSolutionSpy.calls.reset();
     authRoleSubject.next('ADMIN');
     fixture.detectChanges();
-    expect(fetchUserSolutionSpy).toHaveBeenCalled();
+    expect(fetchUserSolutionSpy).not.toHaveBeenCalled();
   });
 
   it('should correctly map user solutions to solutionStatusMap', () => {
