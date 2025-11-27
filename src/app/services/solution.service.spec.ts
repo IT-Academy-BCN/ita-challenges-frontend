@@ -4,10 +4,8 @@ import { SolutionService } from './solution.service'
 import { environment } from 'src/environments/environment'
 // import { type DataSolution } from '../models/data-solution.model'
 // import { type UserSolution } from '../models/user-solution.interface'
-import mockResponse from '../../mocks/solution/solution-sended.json'
 import mockData from '../../mocks/solution/data-solution.json'
 import mockUserSolution from '../../mocks/solution/user-solution.json'
-import { SolutionStatus } from '../models/user-solution-status.enum'
 import { of } from 'rxjs'
 import { AuthService } from './auth.service'
 import { SolutionAction } from '../models/user-solution-action.enum'
@@ -120,28 +118,6 @@ describe('SolutionService', () => {
     req.flush(mockUserSolution)
   })
 
-  it('should send the correct data in PUT request', (done) => {
-  const mockResponse = { success: true };
-
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
-    next: (response) => {
-    expect(response.success).toBe(true);
-    done();
-    }
-  });
-
-  const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
-  expect(req.request.method).toBe('PUT');
-  expect(req.request.body).toEqual({
-    uuid_challenge,
-    uuid_language,
-    uuid_user,
-    solution_text,
-    action
-  });
-
-  req.flush(mockResponse);
-});
 
   it('should send a PUT request to submit solution', (done) => {
     const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
