@@ -36,8 +36,8 @@ export function getInputError (input: string, form: FormGroup, translate: Transl
       case 'notChecked':
         errorMessage = translate.instant('services.validators.notChecked')
         break
-      case 'invalidCredentialFormat':
-        errorMessage = translate.instant('services.validators.invalidCredentialFormat')
+      case 'invalidPassword':
+        errorMessage = translate.instant('services.validators.invalidPassword')
         break
       case 'pattern':
         errorMessage = translate.instant('services.validators.pattern')
@@ -49,7 +49,7 @@ export function getInputError (input: string, form: FormGroup, translate: Transl
 
 export function isValidDni (control: AbstractControl): Observable<ValidationErrors | null> {
   const dni: string = control.value
-  const dniRegex = /^\d{8}[A-Za-z]$/
+  const dniRegex = /^[0-9]{8}[A-Za-z]$/
 
   if (!dniRegex.test(dni)) {
     return of({ isValidDni: false })
@@ -57,7 +57,7 @@ export function isValidDni (control: AbstractControl): Observable<ValidationErro
 
   const numDni = dni.substring(0, 8)
   const controlLetters = 'TRWAGMYFPDXBNJZSQVHLCKE'
-  const expectedLetterIndex = Number.parseInt(numDni) % 23
+  const expectedLetterIndex = parseInt(numDni) % 23
   const expectedLetter = controlLetters.charAt(expectedLetterIndex)
 
   if (dni.charAt(8).toUpperCase() === expectedLetter) {
@@ -96,5 +96,5 @@ export function isValidPassword (control: AbstractControl): Observable<Validatio
     return of(null)
   }
 
-  return of({ invalidCredentialFormat: true })
+  return of({ invalidPassword: true })
 }
