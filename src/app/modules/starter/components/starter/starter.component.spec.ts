@@ -15,6 +15,24 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { type UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('StarterComponent', () => {
+  it('should render filters visible by default and without a toggle button', () => {
+    const fixture = TestBed.createComponent(StarterComponent);
+    fixture.detectChanges();
+    const button: HTMLButtonElement | null = fixture.nativeElement.querySelector('#filters-toggle');
+    const panel: HTMLElement | null = fixture.nativeElement.querySelector('#filters-panel');
+    expect(button).toBeNull();
+    expect(panel).toBeTruthy();
+    // Panel should be open by default
+    expect(panel?.classList.contains('open')).toBe(true);
+  });
+
+  it('should have the filters panel present in the DOM', () => {
+    const fixture = TestBed.createComponent(StarterComponent);
+    fixture.detectChanges();
+    const panel: HTMLElement | null = fixture.nativeElement.querySelector('#filters-panel');
+    expect(panel).toBeTruthy();
+    expect(panel?.classList.contains('open')).toBe(true);
+  });
   it('should re-fetch challenges when refresh$ emits', () => {
     const fixture = TestBed.createComponent(StarterComponent);
     const component = fixture.componentInstance;
@@ -202,5 +220,79 @@ describe('StarterComponent', () => {
     component.fetchUserSolutionsStatus();
 
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', jasmine.any(Error));
+  });
+});
+
+describe('Progress filtering behavior', () => {
+  let component: StarterComponent;
+  let fixture: ComponentFixture<StarterComponent>;
+  let starterService: StarterService;
+  let authRoleSubject: BehaviorSubject<string>;
+  let fetchUserSolutionSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    authRoleSubject = new BehaviorSubject<string>('USER');
+    const authServiceMock = {
+      getUserRole: () => authRoleSubject.asObservable(),
+      updateUserRoleAndUserNameFromToken: () => {},
+      isUserLoggedIn: () => true,
+      getUserId: () => of('mock-user-id')
+    };
+
+    const challengeServiceMock = {
+      getUserBookmarks: jasmine.createSpy().and.returnValue(of([])),
+      getUserFavorites: jasmine.createSpy().and.returnValue(of([]))
+    };
+
+    fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
+    const solutionServiceMock = { fetchUserSolution: fetchUserSolutionSpy };
+
+    TestBed.configureTestingModule({
+      declarations: [StarterComponent],
+      imports: [TranslateModule.forRoot()],
+      providers: [
+        StarterService,
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: ChallengeService, useValue: challengeServiceMock },
+        { provide: SolutionService, useValue: solutionServiceMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    });
+    fixture = TestBed.createComponent(StarterComponent);
+    component = fixture.componentInstance;
+    starterService = TestBed.inject(StarterService);
+    fixture.detectChanges();
+  });
+
+  it('should filter challenges by progress using solutionStatusMap', () => {
+    const ch1: any = { id_challenge: 'c1', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
+    const ch2: any = { id_challenge: 'c2', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
+    const ch3: any = { id_challenge: 'c3', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
+
+    component.listChallenges = [ch1, ch2, ch3];
+
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of([ch1, ch2, ch3]));
+
+    component.solutionStatusMap = {
+      c1: SolutionStatus.NOT_STARTED,
+      c2: SolutionStatus.IN_PROGRESS,
+      c3: SolutionStatus.ENDED
+    } as any;
+
+    component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.NOT_STARTED] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c1'])
+
+    component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.IN_PROGRESS] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c2'])
+
+    component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.ENDED] });
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3'])
+
+    component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.NOT_STARTED, SolutionStatus.ENDED] });
+    expect(component.challenges
+      .map((c: any) => c.id_challenge)
+      .sort((a: string, b: string) => a.localeCompare(b))
+    ).toEqual(['c1', 'c3'])
   });
 });

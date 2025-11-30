@@ -206,6 +206,9 @@
     "status": {
         "IN_PROGRESS": "In progress",
         "ENDED": "Completed"
+    },
+    "common": {
+        "all": "All"
     }
 
 }    

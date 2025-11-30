@@ -17,7 +17,15 @@
           {{ displayLanguage }}
         </legend>
         
-        <div class="language-row" [class.active]="hasSelectedTags(langKey)">
+        <button
+          type="button"
+          class="toggle-button language-row"
+          [class.active]="hasSelectedTags(langKey)"
+          [attr.aria-expanded]="isLanguageOpen(langKey)"
+          [attr.aria-controls]="'panel-' + langKey"
+          [id]="'toggle-' + langKey"
+          (click)="toggleLanguage(langKey)"
+        >
           <span class="lang-dot" *ngIf="hasSelectedTags(langKey)" aria-hidden="true"></span>
           <span class="lang-name">
             {{ displayLanguage }}
@@ -26,62 +34,94 @@
                 ({{ selectedTagCount(langKey) }})
               </span>
             </ng-container>
+            <span class="chevron" [class.open]="isLanguageOpen(langKey)" aria-hidden="true"></span>
           </span>
-        </div>
+        </button>
         
-        <ng-container [formGroup]="tagsForm">
-          @if (tagsForm.get(langKey)) {
-          <fieldset class="ms-4" [formGroupName]="langKey">
-            <legend class="visually-hidden">
-              {{ 'modules.starter.filters.tags' | translate }}
-            </legend>
+        <div
+          [id]="'panel-' + langKey"
+          class="collapsible-panel ms-3"
+          [class.open]="isLanguageOpen(langKey)"
+          [style.maxHeight]="isLanguageOpen(langKey) ? '1200px' : '0px'"
+          [style.opacity]="isLanguageOpen(langKey) ? 1 : 0"
+        >
+          <ng-container [formGroup]="tagsForm">
+            @if (tagsForm.get(langKey)) {
+            <fieldset [formGroupName]="langKey">
+              <legend class="visually-hidden">
+                {{ 'modules.starter.filters.tags' | translate }}
+              </legend>
 
-            @for (tag of tagsByLanguage[langKey]; track tag.id_tag) {
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" [id]="langKey + '-tag-' + tag.id_tag"
-                [formControlName]="tag.id_tag" />
-              <label class="form-check-label" [for]="langKey + '-tag-' + tag.id_tag">
-                {{ tag.tag_name }}
-              </label>
-            </div>
+              <!-- ALL option -->
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="langKey + '-tag-all'"
+                  [checked]="areAllTagsSelected(langKey)"
+                  [indeterminate]="areSomeTagsSelected(langKey)"
+                  (change)="onToggleAll(langKey, $any($event.target).checked)"
+                />
+                <label class="form-check-label" [for]="langKey + '-tag-all'">
+                  {{ 'common.all' | translate }}
+                </label>
+              </div>
+
+              @for (tag of tagsByLanguage[langKey]; track tag.id_tag) {
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" [id]="langKey + '-tag-' + tag.id_tag"
+                  [formControlName]="tag.id_tag" />
+                <label class="form-check-label" [for]="langKey + '-tag-' + tag.id_tag">
+                  {{ tag.tag_name }}
+                </label>
+              </div>
+              }
+            </fieldset>
             }
-          </fieldset>
-          }
-        </ng-container>
+          </ng-container>
+        </div>
       </fieldset>
       }
     </fieldset>
   </div>
 
-  <div class="form" formGroupName="levels">
-    <p class="mb-2"><span>{{'modules.starter.filters.dificulty' | translate}}</span></p>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkEasy" formControlName="easy">
-      <label class="form-check-label" for="checkEasy"><span>{{'modules.starter.filters.easy' | translate}}</span></label>
+  <div class="form mt-3" formGroupName="levels">
+    <div class="language-row mb-2">
+      <span class="lang-name">{{'modules.starter.filters.dificulty' | translate}}</span>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkMedium" formControlName="medium">
-      <label class="form-check-label" for="checkMedium"><span>{{'modules.starter.filters.medium' | translate}}</span></label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkHard" formControlName="hard">
-      <label class="form-check-label" for="checkHard"><span>{{'modules.starter.filters.hard' | translate}}</span></label>
+    <div class="ms-4">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkEasy" formControlName="easy">
+        <label class="form-check-label" for="checkEasy"><span>{{'modules.starter.filters.easy' | translate}}</span></label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkMedium" formControlName="medium">
+        <label class="form-check-label" for="checkMedium"><span>{{'modules.starter.filters.medium' | translate}}</span></label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkHard" formControlName="hard">
+        <label class="form-check-label" for="checkHard"><span>{{'modules.starter.filters.hard' | translate}}</span></label>
+      </div>
     </div>
   </div>
   
   <div class="form" formGroupName="progress" *ngIf="isUserLoggedIn">
-    <p class="mb-2"><span>{{'modules.starter.filters.progress' | translate}}</span></p>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
-      <label class="form-check-label" for="checkNoStarted"><span>{{'modules.starter.filters.noStarted' | translate}}</span></label>
+    <div class="language-row mb-2">
+      <span class="lang-name">{{'modules.starter.filters.progress' | translate}}</span>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkStarted" formControlName="started">
-      <label class="form-check-label" for="checkStarted"><span>{{'modules.starter.filters.started' | translate}}</span></label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkFinished" formControlName="finished">
-      <label class="form-check-label" for="checkFinished"><span>{{'modules.starter.filters.finished' | translate}}</span></label>
+    <div class="ms-4">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkNoStarted" formControlName="noStarted">
+        <label class="form-check-label" for="checkNoStarted"><span>{{'modules.starter.filters.noStarted' | translate}}</span></label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkStarted" formControlName="started">
+        <label class="form-check-label" for="checkStarted"><span>{{'modules.starter.filters.started' | translate}}</span></label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkFinished" formControlName="finished">
+        <label class="form-check-label" for="checkFinished"><span>{{'modules.starter.filters.finished' | translate}}</span></label>
+      </div>
     </div>
   </div>
 </form>
