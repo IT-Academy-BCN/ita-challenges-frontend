@@ -17,7 +17,6 @@ import { type CreateChallenge } from "../models/create-challenge.interface";
 import { CookieService } from "ngx-cookie-service";
 import { AuthService } from "./auth.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { DeleteChallengeModalComponent } from "../modules/modals/delete-challenge-modal/delete-challenge-modal.component";
 
 @Injectable({
   providedIn: "root",
