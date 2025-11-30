@@ -45,6 +45,8 @@
                 "buttonEditChallenge": "Editar repte",
                 "buttonDeleteChallenge": "Eliminar repte",
                 "confirmDelete": "Estàs segur que vols eliminar aquest repte?",
+                "deletedSuccess": "Repte eliminat amb èxit",
+                "errorOnDelete":"S'ha produït un error en eliminar el repte. Si us plau, torna-ho a intentar més tard",
                 "buttonRegisterUsers": "Afegir alumnes",
                 "solutionSend": "Solució enviada",
                 "login": "Iniciar sessió",
@@ -158,6 +160,11 @@
                 "msg-error":"Alguna cosa ha anat malament. Si us plau, torna-ho a intentar.",
                 "msg-username":"El procés ha parat a l'usuari '",
                 "msg-username2":"Usuari ja existent. Eliminat de la llista"
+            },
+            "delete-challenge":{
+                "description":"Estàs segur que vols eliminar aquest repte?",
+                "btn-accept": "Eliminar",
+                "btn-cancel": "Cancel·lar"
             }
         }
     },

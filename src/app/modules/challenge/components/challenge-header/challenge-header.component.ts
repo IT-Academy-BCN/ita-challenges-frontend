@@ -1,156 +1,151 @@
-import { Component, Input, type OnInit, EventEmitter, Output, inject } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { SendSolutionModalComponent } from './../../../modals/send-solution-modal/send-solution-modal.component'
-import { TranslateService } from '@ngx-translate/core'
-import { ChallengeService } from '../../../../services/challenge.service'
-import { SolutionService } from 'src/app/services/solution.service'
-import { AuthService } from 'src/app/services/auth.service'
-import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
-import { UserRole } from 'src/app/shared/enums/user-role.enum'
-import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import {
+  Component,
+  Input,
+  type OnInit,
+  EventEmitter,
+  Output,
+  inject,
+} from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SendSolutionModalComponent } from "./../../../modals/send-solution-modal/send-solution-modal.component";
+import { TranslateService } from "@ngx-translate/core";
+import { ChallengeService } from "../../../../services/challenge.service";
+import { SolutionService } from "src/app/services/solution.service";
+import { AuthService } from "src/app/services/auth.service";
+import { ChallengeTab } from "src/app/shared/enums/challenge-tab.enum";
+import { UserRole } from "src/app/shared/enums/user-role.enum";
+import { SolutionStatus } from "src/app/models/user-solution-status.enum";
 import { CommonModalService } from "src/app/services/common-modal.service";
-
+import { ToastrService } from "ngx-toastr";
+import { DeleteChallengeModalComponent } from "src/app/modules/modals/delete-challenge-modal/delete-challenge-modal.component";
 @Component({
-  selector: 'app-challenge-header',
-  templateUrl: './challenge-header.component.html',
-  styleUrls: ['./challenge-header.component.scss']
+  selector: "app-challenge-header",
+  templateUrl: "./challenge-header.component.html",
+  styleUrls: ["./challenge-header.component.scss"],
 })
 export class ChallengeHeaderComponent implements OnInit {
-  constructor (
+  constructor(
     private readonly router: Router,
     private readonly modalService: NgbModal,
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute
-    
   ) {}
   public SolutionStatus = SolutionStatus;
-  private readonly challengeService = inject(ChallengeService)
-  private readonly solutionService = inject(SolutionService)
-  private readonly authService = inject(AuthService)
-  private readonly commonModalService = inject(CommonModalService)
+  private readonly challengeService = inject(ChallengeService);
+  private readonly solutionService = inject(SolutionService);
+  private readonly authService = inject(AuthService);
+  private readonly commonModalService = inject(CommonModalService);
+  private readonly toastr = inject(ToastrService);
 
   public userId: string | null = null;
   public userRole: string | null = null;
-  public currentSolutionText: string = '';
-  
+  public currentSolutionText: string = "";
+  isDeleteModalOpen: boolean = false;
 
   challengeTab = ChallengeTab;
   USER_ROLE = UserRole;
 
-  @Input() title = ''
-  @Input() creation_date!: Date
-  @Input() level = ''
-  @Input() activeId!: ChallengeTab
-  @Input() idChallenge!: string
-  @Input() isEditorChallengeVisible: boolean = false
-  @Input() favorites_count: number = 0
-  @Input() isFavorite: boolean = false
-  @Input() isBookmarked: boolean = false
-  @Input() languageId: string = '';
-  @Input() timesSolved: number = 0
-  @Output() startChallenge = new EventEmitter<boolean>()
-  @Output() favoritesUpdated = new EventEmitter<number>()
-  @Input() solutionText: string = '';
-  @Input() status: string = '';
+  @Input() title = "";
+  @Input() creation_date!: Date;
+  @Input() level = "";
+  @Input() activeId!: ChallengeTab;
+  @Input() idChallenge!: string;
+  @Input() isEditorChallengeVisible: boolean = false;
+  @Input() favorites_count: number = 0;
+  @Input() isFavorite: boolean = false;
+  @Input() isBookmarked: boolean = false;
+  @Input() languageId: string = "";
+  @Input() timesSolved: number = 0;
+  @Output() startChallenge = new EventEmitter<boolean>();
+  @Output() favoritesUpdated = new EventEmitter<number>();
+  @Input() solutionText: string = "";
+  @Input() status: string = "";
   @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
-  @Input() savedSolutionText: string = '';
+  @Input() savedSolutionText: string = "";
 
-  challenge_title: string | undefined = ''
-  challenge_date: Date | undefined
-  challenge_level: string | undefined
+  challenge_title: string | undefined = "";
+  challenge_date: Date | undefined;
+  challenge_level: string | undefined;
 
-  challengeStarted: boolean = false
-  solutionSent: boolean = false
-  
+  challengeStarted: boolean = false;
+  solutionSent: boolean = false;
 
   ngOnInit(): void {
-  this.challenge_title = this.title;
-  this.challenge_date = this.creation_date;
-  this.challenge_level = this.level;
+    this.challenge_title = this.title;
+    this.challenge_date = this.creation_date;
+    this.challenge_level = this.level;
 
-  this.route.params.subscribe(params => {
-    this.idChallenge = params['idChallenge'];
-  });
+    this.route.params.subscribe((params) => {
+      this.idChallenge = params["idChallenge"];
+    });
 
-  this.authService.getUserId().subscribe(userId => {
-    if (!userId) {
-      console.error("Could not get User ID");
-      return;
-    }
-    this.userId = userId;
-    this.loadUserSolutionStatus();
-    
-  });
-
-  this.authService.getUserRole().subscribe(role => {
-    this.userRole = role;
-  });
-}
- loadUserSolutionStatus(): void {
-  this.solutionService.fetchUserSolution().subscribe({
-    next: (userSolutions) => {
-      const solution = userSolutions.find(
-        (sol) =>
-          sol.uuid_challenge === this.idChallenge
-      );
-
-      if (!solution) {
-        this.solutionState = SolutionStatus.NOT_STARTED;
-        this.challengeStarted = false;
+    this.authService.getUserId().subscribe((userId) => {
+      if (!userId) {
+        console.error("Could not get User ID");
         return;
       }
-      this.status = solution.status;
-      this.solutionText = solution.solution_text;
+      this.userId = userId;
+      this.loadUserSolutionStatus();
+    });
 
-        switch (solution.status) {
-        case SolutionStatus.IN_PROGRESS:
-          this.solutionState = SolutionStatus.IN_PROGRESS;
-          this.challengeStarted = false;
-          break;
+    this.authService.getUserRole().subscribe((role) => {
+      this.userRole = role;
+    });
+  }
+  loadUserSolutionStatus(): void {
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (userSolutions) => {
+        const solution = userSolutions.find(
+          (sol) => sol.uuid_challenge === this.idChallenge
+        );
 
-        case SolutionStatus.ENDED:
-          this.solutionState = SolutionStatus.ENDED;
-          this.solutionSent = true;
-          this.challengeStarted = true;
-          this.activeId = ChallengeTab.SOLUTIONS;
-          break;
-
-        default:
-          console.warn(`Unhandled solution status: ${solution.status}`);
+        if (!solution) {
           this.solutionState = SolutionStatus.NOT_STARTED;
           this.challengeStarted = false;
-          break;
-      }
-    },
-    error: (err) => {
-      console.error('Error fetching user solutions:', err);
-    }
-  });
-}
+          return;
+        }
+        this.status = solution.status;
+        this.solutionText = solution.solution_text;
 
- editChallenge(): void {
-     this.router.navigate([`/ita-challenge/challenges/edit/${this.idChallenge}`]);
-  }
+        switch (solution.status) {
+          case SolutionStatus.IN_PROGRESS:
+            this.solutionState = SolutionStatus.IN_PROGRESS;
+            this.challengeStarted = false;
+            break;
 
-  deleteChallenge(): void {
-    const confirmationMessage = this.translate.instant('modules.challenge.header.confirmDelete') || 'Are you sure you want to delete this challenge?';
-    const confirmed = confirm(confirmationMessage);
-    if (!confirmed) {
-      return;
-    }
-    this.challengeService.deleteChallenge(this.idChallenge).subscribe({
-      next: () => {
-        alert('Challenge deleted successfully');
-        this.router.navigate(['/ita-challenge/challenges']);
+          case SolutionStatus.ENDED:
+            this.solutionState = SolutionStatus.ENDED;
+            this.solutionSent = true;
+            this.challengeStarted = true;
+            this.activeId = ChallengeTab.SOLUTIONS;
+            break;
+
+          default:
+            console.warn(`Unhandled solution status: ${solution.status}`);
+            this.solutionState = SolutionStatus.NOT_STARTED;
+            this.challengeStarted = false;
+            break;
+        }
       },
       error: (err) => {
-        console.error('Error deleting challenge:', err);
-        alert('An error occurred while deleting the challenge. Please try again later.');
-      }
+        console.error("Error fetching user solutions:", err);
+      },
     });
   }
 
+  editChallenge(): void {
+    this.router.navigate([
+      `/ita-challenge/challenges/edit/${this.idChallenge}`,
+    ]);
+  }
+
+  openDeleteChallengeModal(): void {
+    const modalRef = this.modalService.open(DeleteChallengeModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.idChallenge = this.idChallenge;
+  }
 
   onStartChallenge(): void {
     if (this.authService.isUserLoggedIn()) {
@@ -159,154 +154,164 @@ export class ChallengeHeaderComponent implements OnInit {
       this.activeId = ChallengeTab.SOLUTIONS;
       this.startChallenge.emit(true);
     } else {
-      void this.commonModalService.loginRequestModal()
+      void this.commonModalService.loginRequestModal();
     }
   }
 
-  openSendSolutionModal (): void {
+  openSendSolutionModal(): void {
     const modalRef = this.modalService.open(SendSolutionModalComponent, {
       centered: true,
-      size: 'md'
-    })
+      size: "md",
+    });
     modalRef.componentInstance.idChallenge = this.idChallenge;
     modalRef.componentInstance.userId = this.userId;
     modalRef.componentInstance.status = this.SolutionStatus.ENDED;
-    modalRef.componentInstance.solutionText = this.solutionText; 
+    modalRef.componentInstance.solutionText = this.solutionText;
 
     modalRef.componentInstance.solutionAccepted.subscribe(() => {
       this.onSolutionAccepted();
     });
 
-    modalRef.componentInstance.timesSolvedUpdated.subscribe((newCount: number) => {
-      this.timesSolved = newCount
-    })
+    modalRef.componentInstance.timesSolvedUpdated.subscribe(
+      (newCount: number) => {
+        this.timesSolved = newCount;
+      }
+    );
   }
 
   onSolutionAccepted(): void {
-    this.solutionSent = true; 
+    this.solutionSent = true;
     this.activeId = ChallengeTab.SOLUTIONS;
   }
 
-  get currentLang (): string {
-    return this.translate.currentLang
+  get currentLang(): string {
+    return this.translate.currentLang;
   }
 
-  emitStartChallenge (): void {
-    this.startChallenge.emit(true)
+  emitStartChallenge(): void {
+    this.startChallenge.emit(true);
   }
 
-  startChallengeEvent (): void {
-    this.challengeStarted = true
-    this.startChallenge.emit(true)
+  startChallengeEvent(): void {
+    this.challengeStarted = true;
+    this.startChallenge.emit(true);
   }
 
-saveChallenge(): void {
-  if (!this.idChallenge || !this.languageId || !this.solutionText || !this.userId) {
-    console.error(' Missing data to save the solution');
-    return;
-  }
-
-  this.status = SolutionStatus.IN_PROGRESS;
-  this.solutionService.submitSolution(
-    this.idChallenge,
-    this.languageId,
-    this.userId,
-    this.status,
-    this.solutionText
-  ).subscribe({
-    next: () => {
-      this.solutionState = SolutionStatus.IN_PROGRESS;
-    },
-    error: (err) => {
-      console.error(' Error saving solution', err);
+  saveChallenge(): void {
+    if (
+      !this.idChallenge ||
+      !this.languageId ||
+      !this.solutionText ||
+      !this.userId
+    ) {
+      console.error(" Missing data to save the solution");
+      return;
     }
-  });
-}
-  sendSolution (): void {
-    this.openSendSolutionModal()
+
+    this.status = SolutionStatus.IN_PROGRESS;
+    this.solutionService
+      .submitSolution(
+        this.idChallenge,
+        this.languageId,
+        this.userId,
+        this.status,
+        this.solutionText
+      )
+      .subscribe({
+        next: () => {
+          this.solutionState = SolutionStatus.IN_PROGRESS;
+        },
+        error: (err) => {
+          console.error(" Error saving solution", err);
+        },
+      });
+  }
+  sendSolution(): void {
+    this.openSendSolutionModal();
   }
 
-  toggleFavorite (): void {
+  toggleFavorite(): void {
     if (!this.authService.isUserLoggedIn()) {
-      return
+      return;
     }
     if (this.isFavorite) {
       this.challengeService.removeFromFavorites(this.idChallenge).subscribe({
-        next: response => {
-          this.isFavorite = response.favorite
-          this.favorites_count = response.timesFavorited
-          this.favoritesUpdated.emit(this.favorites_count)
+        next: (response) => {
+          this.isFavorite = response.favorite;
+          this.favorites_count = response.timesFavorited;
+          this.favoritesUpdated.emit(this.favorites_count);
         },
-        error: error => {
-          console.error('Error removing favorite:', error)
-        }
-      })
+        error: (error) => {
+          console.error("Error removing favorite:", error);
+        },
+      });
     } else {
       this.challengeService.addToFavorites(this.idChallenge).subscribe({
-        next: response => {
-          this.isFavorite = response.favorite
-          this.favorites_count = response.timesFavorited
-          this.favoritesUpdated.emit(this.favorites_count)
+        next: (response) => {
+          this.isFavorite = response.favorite;
+          this.favorites_count = response.timesFavorited;
+          this.favoritesUpdated.emit(this.favorites_count);
         },
-        error: error => {
-          console.error('Error adding favorite:', error)
-        }
-      })
+        error: (error) => {
+          console.error("Error adding favorite:", error);
+        },
+      });
     }
   }
 
-  toggleBookmark (event: Event): void {
-    event.stopPropagation()
+  toggleBookmark(event: Event): void {
+    event.stopPropagation();
     if (!this.authService.isUserLoggedIn()) {
-      return
+      return;
     }
     if (this.isBookmarked) {
       this.challengeService.removeBookmark(this.idChallenge).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
+        next: (response) => {
+          this.isBookmarked = response.bookmarked;
         },
-        error: error => {
-          console.error('Error removing bookmark:', error)
-        }
-      })
+        error: (error) => {
+          console.error("Error removing bookmark:", error);
+        },
+      });
     } else {
       this.challengeService.addBookmark(this.idChallenge).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
+        next: (response) => {
+          this.isBookmarked = response.bookmarked;
         },
-        error: error => {
-          console.error('Error adding bookmark:', error)
-        }
-      })
+        error: (error) => {
+          console.error("Error adding bookmark:", error);
+        },
+      });
     }
   }
-    onCancel (): void {
-    void this.router.navigate(['/ita-challenge/challenges'])
+  onCancel(): void {
+    void this.router.navigate(["/ita-challenge/challenges"]);
   }
 
   onContinueChallenge(): void {
-  this.challengeStarted = true;
-  this.isEditorChallengeVisible = true;
-  this.solutionState = SolutionStatus.IN_PROGRESS;
-  this.status = SolutionStatus.IN_PROGRESS;
-  this.startChallenge.emit(true);
-  this.loadSolutionFromBackend();
-}
-loadSolutionFromBackend(): void {
-  this.solutionService.fetchUserSolution().subscribe({
-    next: (solutions) => {
-      const matchingSolution = solutions.find(sol =>
-        sol.uuid_challenge === this.idChallenge &&
-        sol.uuid_language === this.languageId
-      );
+    this.challengeStarted = true;
+    this.isEditorChallengeVisible = true;
+    this.solutionState = SolutionStatus.IN_PROGRESS;
+    this.status = SolutionStatus.IN_PROGRESS;
+    this.startChallenge.emit(true);
+    this.loadSolutionFromBackend();
+  }
+  loadSolutionFromBackend(): void {
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (solutions) => {
+        const matchingSolution = solutions.find(
+          (sol) =>
+            sol.uuid_challenge === this.idChallenge &&
+            sol.uuid_language === this.languageId
+        );
 
-      if (matchingSolution) {
-        this.currentSolutionText = matchingSolution.solution_text || '';
-      }
-    },
-    error: (err) => {
-      console.error('Error loading saved solutions:', err);
-    }
-  });
-}
+        if (matchingSolution) {
+          this.currentSolutionText = matchingSolution.solution_text || "";
+        }
+      },
+      error: (err) => {
+        console.error("Error loading saved solutions:", err);
+      },
+    });
+  }
 }

@@ -46,6 +46,8 @@
                 "buttonEditChallenge": "Editar reto",
                 "buttonDeleteChallenge": "Eliminar reto",
                 "confirmDelete": "¿Estás seguro de que quieres eliminar este reto?",
+                "deletedSuccess": "Reto eliminado con éxito",
+                "errorOnDelete":"Se produjo un error al eliminar el reto. Por favor, inténtalo de nuevo más tarde",
                 "solutionSend": "Solución enviada",
                 "login": "Iniciar sesión",
                 "logout": "Cerrar sesión"
@@ -158,6 +160,11 @@
                 "msg-error":"Algo ha ido mal. Por favor, inténtalo de nuevo.",
                 "msg-username":"El proceso ha parado en el usuario '",
                 "msg-username2":"Usuario ya existente. Eliminado de la lista"
+            },            
+            "delete-challenge":{
+                "description":"¿Estás segur@ de que quieres eliminar este reto?",
+                "btn-accept": "Eliminar",
+                "btn-cancel": "Cancelar"
             }
         }
     },
