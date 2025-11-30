@@ -2,8 +2,9 @@ import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { TranslateModule } from "@ngx-translate/core";
 import { ChallengeService } from "src/app/services/challenge.service";
-import { of } from "rxjs";
+import { of, throwError } from "rxjs";
 import { DeleteChallengeModalComponent } from "./delete-challenge-modal.component";
 import { Router } from "@angular/router";
 
@@ -33,7 +34,7 @@ describe("DeleteChallengeModalComponent", () => {
     };
     await TestBed.configureTestingModule({
       declarations: [DeleteChallengeModalComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       providers: [
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: NgbModal, useValue: mockModalService },
@@ -54,7 +55,10 @@ describe("DeleteChallengeModalComponent", () => {
     expect(mockModalService.dismissAll).toHaveBeenCalled();
   });
   it("should call deleteChallenge and close modal and show success toastr on successful deletion", () => {
-    const spyDelete = spyOn(mockChallengeService, "deleteChallenge");
+    const spyDelete = spyOn(
+      mockChallengeService,
+      "deleteChallenge"
+    ).and.returnValue(of({}));
     const spyClose = spyOn(component, "closeModal");
     component.idChallenge = testIdChallenge;
     component.deleteChallenge();
@@ -63,15 +67,13 @@ describe("DeleteChallengeModalComponent", () => {
     expect(spyClose).toHaveBeenCalled();
   });
   it("should handle error and show error toastr on deletion", () => {
+    const mockError = new Error("Deletion failed");
     const spyDelete = spyOn(
       mockChallengeService,
       "deleteChallenge"
-    ).and.returnValue(
-      of().pipe(() => {
-        throw new Error("Deletion failed");
-      })
-    );
+    ).and.returnValue(throwError(() => mockError));
     const spyClose = spyOn(component, "closeModal");
+    component.idChallenge = testIdChallenge;
     component.deleteChallenge();
     expect(spyDelete).toHaveBeenCalledWith(testIdChallenge);
     expect(mockToastr.error).toHaveBeenCalled();
