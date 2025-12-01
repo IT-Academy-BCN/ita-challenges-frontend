@@ -139,7 +139,10 @@
       <button class="btn btn-sm btn-primary" (click)="editChallenge()">
         {{ "modules.challenge.header.buttonEditChallenge" | translate }}
       </button>
-      <button class="btn btn-sm btn-primary ms-2" (click)="deleteChallenge()">
+      <button
+        class="btn btn-sm btn-primary ms-2"
+        (click)="openDeleteChallengeModal()"
+      >
         {{ "modules.challenge.header.buttonDeleteChallenge" | translate }}
       </button>
     </ng-container>
