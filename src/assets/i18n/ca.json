@@ -176,7 +176,7 @@
             "isValidDni": "DNI invàlid",
             "notSamePassword": "Les contrasenyes no coincideixen",
             "notChecked": "Casella obligatòria",
-            "invalidCredentialFormat": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
+            "invalidPassword": "Mínim 1 majúscula, 1 minúscula, 1 nombre i sense caràcters especials",
             "pattern": "Format incorrecte"
         }
     },

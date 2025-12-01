@@ -197,7 +197,7 @@ export class ChallengeService {
   private getMockFavoriteCount(challengeId: string): number {
     const key = `favorites_count_${challengeId}`;
     const storedCount = localStorage.getItem(key);
-    return storedCount ? Number.parseInt(storedCount, 10) : 0;
+    return storedCount ? parseInt(storedCount, 10) : 0;
   }
 
   getRelatedChallenges(challengeId: string): Observable<Challenge[]> {
@@ -237,11 +237,6 @@ export class ChallengeService {
       "Content-Type": "application/json",
       ...this.authService.getAuthHeaders(),
     };
-    return this.http.delete<void>(url, { headers }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error("Error deleting challenge:", error);
-        return throwError(() => error);
-      })
-    );
+    return this.http.delete<void>(url, { headers });
   }
 }
