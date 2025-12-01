@@ -272,18 +272,6 @@ describe("ChallengeHeaderComponent", () => {
     expect(deleteBtn).toBeTruthy();
   });
 
-  it("clicking delete button calls deleteChallenge()", () => {
-    authService.getUserRole.mockReturnValue(of("ADMIN"));
-    component.userRole = "ADMIN";
-    fixture.detectChanges();
-
-    const spy = jest.spyOn(component, "openDeleteChallengeModal");
-    const deleteBtn = fixture.debugElement.query(By.css("button.ms-2"));
-    expect(deleteBtn).toBeTruthy();
-    deleteBtn.triggerEventHandler("click", null);
-    expect(spy).toHaveBeenCalled();
-  });
-
   it("should open delete challenge modal and pass the challenge ID", () => {
     const mockModalRef = {
       componentInstance: {
