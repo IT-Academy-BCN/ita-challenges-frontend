@@ -1,7 +1,7 @@
 <div class="row w-100">
   <div class="col-12 col-md-8">
     <p>
-      <a class="link" (click)="onCancel()">
+      <button type="button" class="link" (click)="onCancel()">
         <span class="backTo"
           ><img
             class="arrow-left"
@@ -10,7 +10,7 @@
             fill="currentColor"
           />{{ "modules.challenge.backTo" | translate }}</span
         >
-      </a>
+      </button>
     </p>
     <div class="d-flex align-items-start">
       <div class="difficulty">
@@ -39,10 +39,12 @@
         <img src="assets/img/icon/times-performed.svg" alt="Times performed" />
         <span>{{ timesSolved }}</span>
       </span>
-      <span
+      <button
+        type="button"
         class="stat"
         [ngbTooltip]="'tooltips.favorites' | translate"
         (click)="toggleFavorite()"
+        [attr.aria-pressed]="isFavorite"
         style="cursor: pointer"
       >
         <img
@@ -56,7 +58,7 @@
           alt="Remove from favorites"
         />
         <span>{{ favorites_count }}</span>
-      </span>
+      </button>
       <span
         class="stat"
         *ngIf="creation_date"
@@ -137,10 +139,7 @@
       <button class="btn btn-sm btn-primary" (click)="editChallenge()">
         {{ "modules.challenge.header.buttonEditChallenge" | translate }}
       </button>
-      <button
-        class="btn btn-sm btn-primary ms-2"
-        (click)="openDeleteChallengeModal()"
-      >
+      <button class="btn btn-sm btn-primary ms-2" (click)="deleteChallenge()">
         {{ "modules.challenge.header.buttonDeleteChallenge" | translate }}
       </button>
     </ng-container>
