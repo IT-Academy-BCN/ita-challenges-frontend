@@ -16,6 +16,7 @@ import { By } from '@angular/platform-browser';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum';
+import { UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -428,8 +429,21 @@ describe('ChallengeHeaderComponent', () => {
     expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
 
+it('should log error and return when userId is null', () => {
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  component.userId = null;
+
+  component.showSolution();
+
+  expect(consoleSpy).toHaveBeenCalledWith(
+    "User ID is missing. Cannot show solution."
+  );
+  expect(solutionService.submitSolution).not.toHaveBeenCalled();
+});
+
   it('should call submitSolution with SEE_SOLUTION action', () => {
-  const mockResponse = { solution_text: 'some text' } as any;
+  const mockResponse = {solution_text: 'some text'} as any;
 
   const submitSpy = jest
     .spyOn(solutionService, 'submitSolution')
@@ -462,4 +476,17 @@ describe('ChallengeHeaderComponent', () => {
   expect(completeSpy).toHaveBeenCalledWith('challenge1');
   expect(loadStatusSpy).toHaveBeenCalled();
 });
+
+it('should use empty string when solution_text is null', () => {
+  component.userId = '55';
+
+  const response = { solution_text: null } as unknown as UserSolution;
+
+  solutionService.submitSolution.mockReturnValue(of(response));
+
+  component.showSolution();
+
+  expect(solutionService.solutionText).toHaveBeenCalledWith('');
+});
+
 })
