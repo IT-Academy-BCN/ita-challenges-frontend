@@ -231,7 +231,7 @@ export class ChallengeHeaderComponent implements OnInit {
       SolutionAction.SEE_SOLUTION,
       this.solutionText
     ).subscribe({
-      next: (response: SubmitSolutionResponse) => {
+      next: (response: UserSolution) => {
         const solutionText = response.solution_text;        
         this.solutionService.solutionText(solutionText);
         this.solutionService.updateSolutionSentState(true);
