@@ -220,7 +220,7 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   showSolution(): void {
-    if (this.userId == null) {
+    if (this.userId === null) {
       console.error("User ID is missing. Cannot show solution.");
       return;
     }
@@ -232,7 +232,7 @@ export class ChallengeHeaderComponent implements OnInit {
       this.solutionText
     ).subscribe({
       next: (response: UserSolution) => {
-        const solutionText = response.solution_text;        
+        const solutionText = response?.solution_text ?? '';        
         this.solutionService.solutionText(solutionText);
         this.solutionService.updateSolutionSentState(true);
         this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
