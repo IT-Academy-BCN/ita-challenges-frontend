@@ -4,11 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.13.0-RELEASE] - 2025-11-30
+### [ita-challenges-frontend-3.14.0-RELEASE] - 2025-12-01
 
 ### Added
 
 -Delete challenge button available for admin/mentors.(Taiga[#892],PR [#721])
+
+### [ita-challenges-frontend-3.13.0-RELEASE] - 2025-11-27
+
+### Fixed
+
+- Refactors the submission flow so the frontend sends only user actions (SAVE, SUBMIT, GIVE_UP) (Taiga[#888],PR [#717]).
 
 ### [ita-challenges-frontend-3.12.0-RELEASE] - 2025-11-25
 

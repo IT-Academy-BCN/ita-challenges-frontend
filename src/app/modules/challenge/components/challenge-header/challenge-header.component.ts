@@ -19,6 +19,9 @@ import { SolutionStatus } from "src/app/models/user-solution-status.enum";
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { ToastrService } from "ngx-toastr";
 import { DeleteChallengeModalComponent } from "src/app/modules/modals/delete-challenge-modal/delete-challenge-modal.component";
+import { SolutionAction } from "src/app/models/user-solution-action.enum";
+import { UserSolution } from "src/app/models/user-solution.interface";
+
 @Component({
   selector: "app-challenge-header",
   templateUrl: "./challenge-header.component.html",
@@ -63,6 +66,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Input() status: string = "";
   @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
   @Input() savedSolutionText: string = "";
+  @Input() action: string = "";
 
   challenge_title: string | undefined = "";
   challenge_date: Date | undefined;
@@ -207,19 +211,18 @@ export class ChallengeHeaderComponent implements OnInit {
       console.error(" Missing data to save the solution");
       return;
     }
-
-    this.status = SolutionStatus.IN_PROGRESS;
+    this.action = SolutionAction.SAVE_DRAFT;
     this.solutionService
       .submitSolution(
         this.idChallenge,
         this.languageId,
         this.userId,
-        this.status,
+        SolutionAction.SAVE_DRAFT,
         this.solutionText
       )
       .subscribe({
-        next: () => {
-          this.solutionState = SolutionStatus.IN_PROGRESS;
+        next: (response: UserSolution) => {
+          this.solutionState = response.status;
         },
         error: (err) => {
           console.error(" Error saving solution", err);

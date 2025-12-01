@@ -21,6 +21,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { SolutionStatus } from "src/app/models/user-solution-status.enum";
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { DeleteChallengeModalComponent } from "src/app/modules/modals/delete-challenge-modal/delete-challenge-modal.component";
+import { SolutionAction } from 'src/app/models/user-solution-action.enum';
 
 describe("ChallengeHeaderComponent", () => {
   let component: ChallengeHeaderComponent;
@@ -355,6 +356,7 @@ describe("ChallengeHeaderComponent", () => {
     component.solutionText = "solution";
     component.userId = "user1";
     component.saveChallenge();
+<<<<<<< HEAD
     expect(spy).toHaveBeenCalledWith(
       "challenge1",
       "lang1",
@@ -362,6 +364,9 @@ describe("ChallengeHeaderComponent", () => {
       SolutionStatus.IN_PROGRESS,
       "solution"
     );
+=======
+    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionAction.SAVE_DRAFT, 'solution');
+>>>>>>> develop
   });
 
   it("should not save challenge if data is missing", () => {
