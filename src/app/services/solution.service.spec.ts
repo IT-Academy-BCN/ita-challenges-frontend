@@ -4,16 +4,20 @@ import { SolutionService } from './solution.service'
 import { environment } from 'src/environments/environment'
 // import { type DataSolution } from '../models/data-solution.model'
 // import { type UserSolution } from '../models/user-solution.interface'
-import mockResponse from '../../mocks/solution/solution-sended.json'
 import mockData from '../../mocks/solution/data-solution.json'
 import mockUserSolution from '../../mocks/solution/user-solution.json'
-import { SolutionStatus } from '../models/user-solution-status.enum'
 import { of } from 'rxjs'
 import { AuthService } from './auth.service'
+import { SolutionAction } from '../models/user-solution-action.enum'
 
 describe('SolutionService', () => {
   let service: SolutionService
   let httpMock: HttpTestingController
+  let uuid_challenge: string;
+  let uuid_language: string;
+  let uuid_user: string;
+  let solution_text: string;
+  let action: SolutionAction;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,6 +35,11 @@ describe('SolutionService', () => {
 
     service = TestBed.inject(SolutionService)
     httpMock = TestBed.inject(HttpTestingController)
+    uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5'
+    uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f'
+    uuid_user = '12345'
+    solution_text = 'Mi solución de prueba'
+    action = SolutionAction.COMPLETED
   })
 
   afterEach(() => {
@@ -109,45 +118,22 @@ describe('SolutionService', () => {
     req.flush(mockUserSolution)
   })
 
-  it('should send the correct data in PUT request', () => {
-  const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
-  const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
-  const uuid_user = 'user123';
-  const solution_text = 'Mi solución de prueba';
-  const status = 'ENDED';
-
-  const mockResponse = { success: true };
-
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
-    expect(response.success).toBe(true);
-  });
-
-  const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
-  expect(req.request.method).toBe('PUT');
-  expect(req.request.body).toEqual({
-    uuid_challenge,
-    uuid_language,
-    uuid_user,
-    solution_text,
-    status
-  });
-
-  req.flush(mockResponse);
-});
 
   it('should send a PUT request to submit solution', (done) => {
     const uuid_challenge = 'f6e0f877-9560-4e68-bab6-7dd5f16b46a5';
     const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
     const uuid_user = '12345';
     const solution_text = 'Mi solución de prueba';
-    const status = SolutionStatus.ENDED;
+    const action = SolutionAction.COMPLETED;
   
     const mockResponse = { success: true, message: 'Solution submitted successfully' };
   
-    service.submitSolution(uuid_challenge, uuid_language, uuid_user, status, solution_text).subscribe(response => {
+    service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+      next: (response) => {
       expect(response.success).toBe(true);
       expect(response.message).toBe('Solution submitted successfully');
       done();
+      }
     });
   
     const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
@@ -158,7 +144,7 @@ describe('SolutionService', () => {
       uuid_language,
       uuid_user,
       solution_text,
-      status
+      action
     });
   
     req.flush(mockResponse);
@@ -170,18 +156,18 @@ describe('SolutionService', () => {
   const uuid_language = '660e1b18-0c0a-4262-a28a-85de9df6ac5f';
   const uuid_user = 'user123';
   const solution_text = 'Mi solución de prueba';
-  const status = SolutionStatus.ENDED;
+  const action = SolutionAction.COMPLETED;
 
   const mockError = { status: 500, statusText: 'Internal Server Error' };
 
-  service.submitSolution(uuid_challenge, uuid_language, uuid_user, solution_text, status).subscribe(
-    () => fail('Expected error, but got success response'),
-    (error) => {
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+   next: () => fail('Expected error, but got success response'),
+   error: (error) => {
       expect(error.status).toBe(500);
       expect(error.statusText).toBe('Internal Server Error');
       done();
     }
-  );
+  });
 
   const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
   expect(req.request.method).toBe('PUT');

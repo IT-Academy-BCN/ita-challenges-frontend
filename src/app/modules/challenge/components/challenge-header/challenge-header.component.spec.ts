@@ -15,6 +15,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { By } from '@angular/platform-browser';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
+import { SolutionAction } from 'src/app/models/user-solution-action.enum';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -288,7 +289,7 @@ describe('ChallengeHeaderComponent', () => {
     component.solutionText = 'solution';
     component.userId = 'user1';
     component.saveChallenge();
-    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionStatus.IN_PROGRESS, 'solution');
+    expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionAction.SAVE_DRAFT, 'solution');
   });
 
   it('should not save challenge if data is missing', () => {
