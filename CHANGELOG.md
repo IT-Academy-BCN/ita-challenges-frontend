@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.14.0-RELEASE] - 2025-12-04
+
+### Fixed
+- Ensure deployment of the new “Show solution” feature introduced in PR#718.  
+  The previous version did not include the version bump, so the functionality (new status `SHOW_SOLUTION` and updated ChallengeHeader logic) was not deployed.
+
 ### [ita-challenges-frontend-3.13.0-RELEASE] - 2025-11-27
 
 ### Fixed
