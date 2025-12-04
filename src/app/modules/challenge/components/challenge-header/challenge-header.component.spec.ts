@@ -16,6 +16,7 @@ import { By } from '@angular/platform-browser';
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum';
+import { UserSolution } from 'src/app/models/user-solution.interface';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -57,6 +58,11 @@ describe('ChallengeHeaderComponent', () => {
       ),
       challengeCompleted$: of("testChallengeId"),
       submitSolution: jest.fn(),
+
+      solutionText: jest.fn(),
+      updateSolutionSentState: jest.fn(),
+      activeIdSubject: { next: jest.fn() },
+      completeChallenge: jest.fn(),
     } as any
 
     await TestBed.configureTestingModule({
@@ -370,7 +376,8 @@ describe('ChallengeHeaderComponent', () => {
   it('should handle different solution statuses', () => {
     const solutions = [
       { uuid_challenge: 'testChallengeId', status: SolutionStatus.IN_PROGRESS, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
-      { uuid_challenge: 'testChallengeId', status: SolutionStatus.ENDED, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.ENDED, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.SHOW_SOLUTION, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }
     ];
   
     component.idChallenge = 'testChallengeId';
@@ -381,6 +388,10 @@ describe('ChallengeHeaderComponent', () => {
     solutionService.fetchUserSolution.mockReturnValue(of([solutions[1]]));
     component.loadUserSolutionStatus();
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
+
+    solutionService.fetchUserSolution.mockReturnValue(of([solutions[2]]));
+    component.loadUserSolutionStatus();
+    expect(component.solutionState).toBe(SolutionStatus.SHOW_SOLUTION);
   });
 
  it("should call loginRequestModal when user is not logged in", async () => {
@@ -417,4 +428,65 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
     expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
+
+it('should log error and return when userId is null', () => {
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  component.userId = null;
+
+  component.showSolution();
+
+  expect(consoleSpy).toHaveBeenCalledWith(
+    "User ID is missing. Cannot show solution."
+  );
+  expect(solutionService.submitSolution).not.toHaveBeenCalled();
+});
+
+  it('should call submitSolution with SEE_SOLUTION action', () => {
+  const mockResponse = {solution_text: 'some text'} as any;
+
+  const submitSpy = jest
+    .spyOn(solutionService, 'submitSolution')
+    .mockReturnValue(of(mockResponse));
+
+  const solutionTextSpy = jest.spyOn(solutionService, 'solutionText');
+  const updateSentSpy = jest.spyOn(solutionService, 'updateSolutionSentState');
+  const activeTabSpy = jest.spyOn(solutionService.activeIdSubject, 'next');
+  const completeSpy = jest.spyOn(solutionService, 'completeChallenge');
+  const loadStatusSpy = jest.spyOn(component, 'loadUserSolutionStatus');
+
+  component.idChallenge = 'challenge1';
+  component.languageId = 'lang1';
+  component.userId = 'user1';
+  component.solutionText = 'solution text';
+
+  component.showSolution();
+
+  expect(submitSpy).toHaveBeenCalledWith(
+    'challenge1',
+    'lang1',
+    'user1',
+    SolutionAction.SEE_SOLUTION,
+    'solution text'
+  );
+
+  expect(solutionTextSpy).toHaveBeenCalledWith('some text');
+  expect(updateSentSpy).toHaveBeenCalledWith(true);
+  expect(activeTabSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+  expect(completeSpy).toHaveBeenCalledWith('challenge1');
+  expect(loadStatusSpy).toHaveBeenCalled();
+});
+
+it('should use empty string when solution_text is null', () => {
+  component.userId = '55';
+
+  const response = { solution_text: null } as unknown as UserSolution;
+
+  solutionService.submitSolution.mockReturnValue(of(response));
+
+  component.showSolution();
+
+  expect(solutionService.solutionText).toHaveBeenCalledWith('');
+});
+
 })

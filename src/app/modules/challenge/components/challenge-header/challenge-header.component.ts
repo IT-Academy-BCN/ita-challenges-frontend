@@ -82,6 +82,7 @@ export class ChallengeHeaderComponent implements OnInit {
       return;
     }
     this.userId = userId;
+
     this.loadUserSolutionStatus();
     
   });
@@ -90,6 +91,7 @@ export class ChallengeHeaderComponent implements OnInit {
     this.userRole = role;
   });
 }
+
  loadUserSolutionStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({
     next: (userSolutions) => {
@@ -110,6 +112,13 @@ export class ChallengeHeaderComponent implements OnInit {
         case SolutionStatus.IN_PROGRESS:
           this.solutionState = SolutionStatus.IN_PROGRESS;
           this.challengeStarted = false;
+          break;
+
+        case SolutionStatus.SHOW_SOLUTION:
+          this.solutionState = SolutionStatus.SHOW_SOLUTION;
+          this.solutionSent = true;
+          this.challengeStarted = true;
+          this.activeId = ChallengeTab.SOLUTIONS;
           break;
 
         case SolutionStatus.ENDED:
@@ -190,7 +199,7 @@ export class ChallengeHeaderComponent implements OnInit {
       console.error(' Missing data to save the solution');
       return;
     }
-    this.action = SolutionAction.SAVE_DRAFT;
+    this.status = SolutionStatus.IN_PROGRESS;
     this.solutionService.submitSolution(
       this.idChallenge,
       this.languageId,
@@ -208,6 +217,33 @@ export class ChallengeHeaderComponent implements OnInit {
   }
   sendSolution (): void {
     this.openSendSolutionModal()
+  }
+
+  showSolution(): void {
+    if (this.userId === null) {
+      console.error("User ID is missing. Cannot show solution.");
+      return;
+    }
+    this.solutionService.submitSolution(
+      this.idChallenge,
+      this.languageId,
+      this.userId,
+      SolutionAction.SEE_SOLUTION,
+      this.solutionText
+    ).subscribe({
+      next: (response: UserSolution) => {
+        const solutionText = response?.solution_text ?? '';        
+        this.solutionService.solutionText(solutionText);
+        this.solutionService.updateSolutionSentState(true);
+        this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
+        this.solutionService.completeChallenge(this.idChallenge);
+
+        this.loadUserSolutionStatus()
+      },
+      error: (error) => {
+        console.error('Error submitting solution:', error);
+      }
+    });
   }
 
   toggleFavorite (): void {
@@ -276,6 +312,7 @@ export class ChallengeHeaderComponent implements OnInit {
   this.startChallenge.emit(true);
   this.loadSolutionFromBackend();
 }
+
 loadSolutionFromBackend(): void {
   this.solutionService.fetchUserSolution().subscribe({
     next: (solutions) => {
