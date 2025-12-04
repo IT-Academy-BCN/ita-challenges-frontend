@@ -143,7 +143,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     };
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/favorites`;
+    const url = ${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/userinteraction/favorites/${userId};
     return this.http.get<string[]>(url, { headers });
   }
 
