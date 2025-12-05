@@ -8,7 +8,7 @@ and this project adheres to
 
 ### Added
 
--Delete challenge button available for admin/mentors.(Taiga[#892],)
+-Delete challenge button available for admin/mentors.(Taiga[#892],PR [#723])
 
 
 ### [ita-challenges-frontend-3.14.0-RELEASE] - 2025-12-04
