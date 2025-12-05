@@ -48,6 +48,9 @@ export class StarterComponent implements OnInit {
   bookmarkedChallenges: string[] = []
   solutionStatusMap: Record<string, SolutionStatus> = {};
   private readonly solutionService = inject(SolutionService)
+
+  refreshDeleteSubs$!: Subscription;
+
   constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -98,6 +101,8 @@ export class StarterComponent implements OnInit {
         }
       })
     }
+
+    this.refreshDeleteSubs$ = this.challengeService.invalidateList$.subscribe(() => this.getChallenge());
   }
 
   ngOnDestroy(): void {
@@ -106,6 +111,7 @@ export class StarterComponent implements OnInit {
     if (this.sortedChallengesSubs$ !== undefined) this.sortedChallengesSubs$.unsubscribe()
     if (this.userRoleSubs$ !== undefined) this.userRoleSubs$.unsubscribe()
     if (this.refreshSubs$ !== undefined) this.refreshSubs$.unsubscribe()
+    if (this.refreshDeleteSubs$ !== undefined) this.refreshDeleteSubs$.unsubscribe(); 
   }
 
   isFavoriteChallenge(challengeId: string): boolean {

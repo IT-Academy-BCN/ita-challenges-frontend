@@ -62,6 +62,7 @@ class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</b
     </ng-container>
     <ng-container *ngIf="userRole === USER_ROLE.ADMIN">
         <button class="btn btn-sm btn-primary" (click)="editChallenge()"> {{ 'modules.challenge.header.buttonEditChallenge' | translate }}</button>  
+        <button class="btn btn-sm btn-primary ms-2" (click)="openDeleteChallengeModal()">{{ "modules.challenge.header.buttonDeleteChallenge" | translate }}</button>
     </ng-container>
     
     <!-- Si ya se envió la solución -->

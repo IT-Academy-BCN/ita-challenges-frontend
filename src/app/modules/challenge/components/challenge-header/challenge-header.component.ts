@@ -12,6 +12,8 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 import { UserSolution } from 'src/app/models/user-solution.interface'
+import { DeleteChallengeModalComponent } from 'src/app/modules/modals/delete-challenge-modal/delete-challenge-modal.component'
+import { take } from 'rxjs'
 
 @Component({
   selector: 'app-challenge-header',
@@ -145,6 +147,20 @@ export class ChallengeHeaderComponent implements OnInit {
      this.router.navigate([`/ita-challenge/challenges/edit/${this.idChallenge}`]);
   }
 
+  openDeleteChallengeModal(): void {
+    if (!this.idChallenge) return;
+
+    const ref = this.modalService.open(DeleteChallengeModalComponent, {
+      centered: true, backdrop: 'static', keyboard: false
+    });
+    ref.componentInstance.idChallenge = this.idChallenge;
+
+    ref.closed.pipe(take(1)).subscribe((reason) => {
+      if (reason === 'deleted') {
+        this.router.navigate(['/ita-challenge/challenges']);
+      }
+    });
+  }
 
   onStartChallenge(): void {
     if (this.authService.isUserLoggedIn()) {

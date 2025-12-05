@@ -1,8 +1,8 @@
 /* eslint-disable padded-blocks */
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject } from '@angular/core'
-import { Observable, catchError, BehaviorSubject, of, throwError } from 'rxjs'
-import { delay, map } from 'rxjs/operators'
+import { Observable, catchError, BehaviorSubject, of, throwError, Subject } from 'rxjs'
+import { delay, map, tap } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -21,6 +21,9 @@ export class ChallengeService {
   private readonly challengeStartedSubject = new BehaviorSubject<boolean>(this.getChallengeStartedFromStorage())
   private readonly cookieService = inject(CookieService)
   private readonly authService = inject(AuthService)
+
+  private readonly _invalidateList$ = new Subject<void>();
+  invalidateList$ = this._invalidateList$.asObservable();
 
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {
     this.checkChallengeStartedFromStorage()
@@ -99,6 +102,14 @@ export class ChallengeService {
       ...this.authService.getAuthHeaders()
     };
     return this.http.post(url, challenge, { headers });
+  }
+
+  deleteChallenge(challengeId: string): Observable<void> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}`;
+    const headers = { 'Content-Type': 'application/json', ...this.authService.getAuthHeaders() };
+    return this.http.delete<void>(url, { headers }).pipe(
+      tap(() => this._invalidateList$.next()) 
+    );
   }
 
   addToFavorites (challengeId: string): Observable<FavoriteResponse> {

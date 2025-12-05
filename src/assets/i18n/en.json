@@ -45,6 +45,9 @@
                 "buttonCancel": "Cancel",
                 "buttonEditChallenge": "Edit challenge",
                 "buttonRegisterUsers": "Add students",
+                "buttonDeleteChallenge": "Delete challenge",
+                "deletedSuccess": "Challenge deleted successfully",
+                "errorOnDelete":"An error occurred while deleting the challenge. Please try again later",
                 "solutionSend": "Challenge solved",
                 "giveUp": "Challenge not solved",
                 "login": "Log In",
@@ -159,6 +162,11 @@
                 "msg-error":"Something went wrong. Please try again.",
                 "msg-username":"The process has stopped at user '",
                 "msg-username2":"User already exists. Removed from the list"
+            },
+            "delete-challenge":{
+                "description":"Are you sure you want to delete this challenge?",
+                "btn-accept": "Delete",
+                "btn-cancel": "Cancel"
             }
         }
     },

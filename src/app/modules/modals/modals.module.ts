@@ -6,12 +6,14 @@ import { RegisterUsersModalComponent } from './register-users-modal/register-use
 import { ReactiveFormsModule } from '@angular/forms'
 import { FormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
+import { DeleteChallengeModalComponent } from './delete-challenge-modal/delete-challenge-modal.component'
 
 @NgModule({
   declarations: [
     SendSolutionModalComponent,
     FiltersModalComponent,
-    RegisterUsersModalComponent
+    RegisterUsersModalComponent,
+    DeleteChallengeModalComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
   exports: [
     SendSolutionModalComponent,
-    FiltersModalComponent
+    FiltersModalComponent,
   ]
 })
 export class ModalsModule { }
