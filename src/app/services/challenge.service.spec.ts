@@ -196,9 +196,25 @@ describe('ChallengeService', () => {
         })
         expectEndpoint(buildPath(), 'DELETE', { message: 'Err' }, 500, 'Err')
       })
-    })
-  })
+      it('should call getUserFavorites() and return data with the new userinteraction path', () => {
+          const userId = '123'
+          const mockFavorites: string[] = ['challenge1', 'challenge2', 'challenge3']
 
+          service.getUserFavorites(userId).subscribe(favorites => {
+            expect(favorites).toEqual(mockFavorites)
+          })
+
+          // La URL esperada es la nueva ruta que has refactorizado:
+          const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/userinteraction/favorites/${userId}`
+
+          const req = httpMock.expectOne(expectedUrl)
+          expect(req.request.method).toBe('GET')
+          expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
+
+          req.flush(mockFavorites)
+      })
+    })
+})
   it('should call getUserBookmarks() and return data', () => {
     const userId = '123'
     const mockBookmarks: string[] = ['challenge1', 'challenge2']
