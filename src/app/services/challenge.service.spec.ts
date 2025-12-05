@@ -204,8 +204,7 @@ describe('ChallengeService', () => {
             expect(favorites).toEqual(mockFavorites)
           })
 
-          // La URL esperada es la nueva ruta que has refactorizado:
-          const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/userinteraction/favorites/${userId}`
+          const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_GET_FAVORITES}/${userId}`
 
           const req = httpMock.expectOne(expectedUrl)
           expect(req.request.method).toBe('GET')
