@@ -57,6 +57,7 @@ class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</b
     {{ 'modules.challenge.header.buttonStart' | translate }}
   </button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-outline-primary" (click)="saveChallenge()">{{'modules.challenge.header.buttonSaveChallenge' | translate }}</button>
+      <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="showSolution()">{{'modules.challenge.header.buttonShowSolution' | translate }}</button>
       <button *ngIf="challengeStarted"  class="btn btn-sm btn-primary" (click)="openSendSolutionModal()"> {{'modules.challenge.header.buttonSendSolution' | translate }}</button>
     </ng-container>
     <ng-container *ngIf="userRole === USER_ROLE.ADMIN">
@@ -65,11 +66,16 @@ class="btn btn-sm btn-primary"(click)="onContinueChallenge()">Continuar repte</b
     
     <!-- Si ya se envió la solución -->
      <ng-template #solutionSentMessage>
-       <div *ngIf="userRole === USER_ROLE.USER" class="d-none d-md-flex align-items-center gap-2 solutionSent">
+       <div *ngIf="userRole === USER_ROLE.USER && solutionState === SolutionStatus.ENDED" class="d-none d-md-flex align-items-center gap-2 solutionSent">
          <p>{{'modules.challenge.header.solutionSend' | translate }}</p>
          <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
        </div>
+       <div *ngIf="userRole === USER_ROLE.USER && solutionState === SolutionStatus.SHOW_SOLUTION" class="d-none d-md-flex align-items-center gap-2 solutionSent">
+         <p>{{'modules.challenge.header.giveUp' | translate }}</p>
+         <img src="assets/img/icon/tick-pink.svg" alt="tick icon">
+       </div>
      </ng-template>
+
      
 
   </div>
