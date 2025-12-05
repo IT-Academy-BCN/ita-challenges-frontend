@@ -1,14 +1,14 @@
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
-import { TestBed, type ComponentFixture } from '@angular/core/testing'
+import { TestBed, type ComponentFixture } from '@angular/core/testing';
 
-import { StarterComponent } from './starter.component'
-import { StarterService } from 'src/app/services/starter.service'
-import { TranslateModule } from '@ngx-translate/core'
-import { type Challenge } from 'src/app/models/challenge.model'
-import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { of, BehaviorSubject, throwError } from 'rxjs'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
-import mockChallenges from 'src/mocks/challenge/challenge.mock.json'
+import { StarterComponent } from './starter.component';
+import { StarterService } from 'src/app/services/starter.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { type Challenge } from 'src/app/models/challenge.model';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { of, BehaviorSubject, throwError, Subject } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import mockChallenges from 'src/mocks/challenge/challenge.mock.json';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { SolutionService } from 'src/app/services/solution.service';
@@ -22,7 +22,6 @@ describe('StarterComponent', () => {
     const panel: HTMLElement | null = fixture.nativeElement.querySelector('#filters-panel');
     expect(button).toBeNull();
     expect(panel).toBeTruthy();
-    // Panel should be open by default
     expect(panel?.classList.contains('open')).toBe(true);
   });
 
@@ -33,6 +32,7 @@ describe('StarterComponent', () => {
     expect(panel).toBeTruthy();
     expect(panel?.classList.contains('open')).toBe(true);
   });
+
   it('should re-fetch challenges when refresh$ emits', () => {
     const fixture = TestBed.createComponent(StarterComponent);
     const component = fixture.componentInstance;
@@ -44,15 +44,17 @@ describe('StarterComponent', () => {
 
     expect(component.getChallenge).toHaveBeenCalled();
   });
-  let component: StarterComponent
-  let fixture: ComponentFixture<StarterComponent>
-  let starterService: StarterService
+
+  let component: StarterComponent;
+  let fixture: ComponentFixture<StarterComponent>;
+  let starterService: StarterService;
   let authService: AuthService;
   let solutionService: SolutionService;
   let authRoleSubject: BehaviorSubject<string>;
   let getUserBookmarksSpy: jasmine.Spy;
   let getUserFavoritesSpy: jasmine.Spy;
   let fetchUserSolutionSpy: jasmine.Spy;
+  let invalidate$: Subject<void>;
 
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
@@ -62,29 +64,35 @@ describe('StarterComponent', () => {
       id_solution: solution.idSolution,
       solution_text: solution.solutionText
     }))
-  }))
+  }));
 
   beforeEach(() => {
-    // Create a mock AuthService with a BehaviorSubject we can control
-    authRoleSubject = new BehaviorSubject<string>('')
+    // Subject for the list invalidation observable consumed by the component
+    invalidate$ = new Subject<void>();
+
+    // Auth mock with role stream we can control
+    authRoleSubject = new BehaviorSubject<string>('');
     const authServiceMock = {
       getUserRole: () => authRoleSubject.asObservable(),
       updateUserRoleAndUserNameFromToken: () => {},
       isUserLoggedIn: () => true,
       getUserId: () => of('mock-user-id')
-    }
-    getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']))
-    getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]))
+    };
+
+    // ChallengeService mocks
+    getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']));
+    getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]));
 
     const challengeServiceMock = {
+      // ✅ Must exist because StarterComponent subscribes to it in ngOnInit
+      invalidateList$: invalidate$.asObservable(),
       getUserBookmarks: getUserBookmarksSpy,
       getUserFavorites: getUserFavoritesSpy
     };
 
+    // SolutionService mock
     fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
-    const solutionServiceMock = {
-      fetchUserSolution: fetchUserSolutionSpy
-    };
+    const solutionServiceMock = { fetchUserSolution: fetchUserSolutionSpy };
 
     TestBed.configureTestingModule({
       declarations: [StarterComponent],
@@ -98,6 +106,7 @@ describe('StarterComponent', () => {
         provideHttpClientTesting()
       ]
     });
+
     fixture = TestBed.createComponent(StarterComponent);
     component = fixture.componentInstance;
     starterService = TestBed.inject(StarterService);
@@ -105,83 +114,76 @@ describe('StarterComponent', () => {
     solutionService = TestBed.inject(SolutionService);
     fixture.detectChanges();
 
+    // Default state for tests that directly call filtering methods
     component.listChallenges = [];
-    component.filters = { languages: [], levels: [], progress: [] }
-    component.sortBy = ''
-  })
+    component.filters = { languages: [], levels: [], progress: [] };
+    component.sortBy = '';
+  });
 
   it('should assign all challenges when listChallenges is populated.', () => {
-    component.listChallenges = mockChallenges$
-    component.filters = { languages: [], levels: [], progress: [] }
-    component.getChallengeFilters(component.filters)
-    expect(component.challenges.length).toBe(mockChallenges$.length) // Debe mostrar 3 desafíos
-    expect(component.challenges).toEqual(mockChallenges$) // Verifica que los desafíos sean correctos
-  })
+    component.listChallenges = mockChallenges$;
+    component.filters = { languages: [], levels: [], progress: [] };
+    component.getChallengeFilters(component.filters);
+    expect(component.challenges.length).toBe(mockChallenges$.length);
+    expect(component.challenges).toEqual(mockChallenges$);
+  });
 
   it('should filter challenges and update challenges correctly', () => {
-    // Simular la lista de desafíos
-    component.listChallenges = mockChallenges$
+    component.listChallenges = mockChallenges$;
 
-    const filters = { languages: ['es'], levels: ['EASY'], progress: [] }
-    const filteredChallenges = mockChallenges$.slice(0, 3)
+    const filters = { languages: ['es'], levels: ['EASY'], progress: [] };
+    const filteredChallenges = mockChallenges$.slice(0, 3);
 
-    // Simular el servicio para que devuelva desafíos filtrados
-    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(filteredChallenges)) // Solo retorna los primeros
+    spyOn(starterService, 'getAllChallengesFiltered').and.returnValue(of(filteredChallenges));
 
-    component.getChallengeFilters(filters)
+    component.getChallengeFilters(filters);
 
-    expect(component.filters).toEqual(filters) // Verifica que los filtros se hayan establecido correctamente
-    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$) // Verifica que el método se haya llamado con los argumentos correctos
-    expect(component.challenges).toEqual(filteredChallenges)
-  })
+    expect(component.filters).toEqual(filters);
+    expect(starterService.getAllChallengesFiltered).toHaveBeenCalledWith(filters, mockChallenges$);
+    expect(component.challenges).toEqual(filteredChallenges);
+  });
 
   it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
-    component.selectedSort = 'creation_date'
-    component.isAscending = false
-    spyOn(component, 'refreshChallengeList')
+    component.selectedSort = 'creation_date';
+    component.isAscending = false;
+    spyOn(component, 'refreshChallengeList');
 
-    // Cambia a un nuevo criterio de ordenación que no sea el actual
-    component.changeSort('popularity')
+    component.changeSort('popularity');
 
-    expect(component.selectedSort).toBe('popularity')
-    expect(component.isAscending).toBe(false)
-    expect(component.refreshChallengeList).toHaveBeenCalled()
+    expect(component.selectedSort).toBe('popularity');
+    expect(component.isAscending).toBe(false);
+    expect(component.refreshChallengeList).toHaveBeenCalled();
 
-    // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
-    component.changeSort('popularity')
-    expect(component.isAscending).toBe(true)
-    expect(component.refreshChallengeList).toHaveBeenCalledTimes(2)
-  })
+    component.changeSort('popularity');
+    expect(component.isAscending).toBe(true);
+    expect(component.refreshChallengeList).toHaveBeenCalledTimes(2);
+  });
 
   it('should update isAdmin flag when user role changes to ADMIN', () => {
-    expect(component.isAdmin).toBe(false)
-
-    authRoleSubject.next('ADMIN')
-    expect(component.isAdmin).toBe(true)
-  })
+    expect(component.isAdmin).toBe(false);
+    authRoleSubject.next('ADMIN');
+    expect(component.isAdmin).toBe(true);
+  });
 
   it('should update isAdmin flag when user role changes to non-ADMIN', () => {
-    authRoleSubject.next('ADMIN')
-    expect(component.isAdmin).toBe(true)
-
-    authRoleSubject.next('USER')
-
-    expect(component.isAdmin).toBe(false)
-  })
+    authRoleSubject.next('ADMIN');
+    expect(component.isAdmin).toBe(true);
+    authRoleSubject.next('USER');
+    expect(component.isAdmin).toBe(false);
+  });
 
   it('should unsubscribe from userRoleSubs$ on component destruction', () => {
-    spyOn(component.userRoleSubs$, 'unsubscribe')
+    spyOn(component.userRoleSubs$, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled();
+  });
 
-    // Trigger the component's ngOnDestroy lifecycle hook to clean up subscriptions
-    component.ngOnDestroy()
-
-    expect(component.userRoleSubs$.unsubscribe).toHaveBeenCalled()
-  })
   it('should correctly determine if a challenge is bookmarked', () => {
-    component.bookmarkedChallenges = ['id-1', 'id-2']
-    expect(component.isBookmarkedChallenge('id-1')).toBeTruthy()
-    expect(component.isBookmarkedChallenge('id-3')).toBeFalsy()
-  })
+    component.bookmarkedChallenges = ['id-1', 'id-2'];
+    expect(component.isBookmarkedChallenge('id-1')).toBeTruthy();
+    expect(component.isBookmarkedChallenge('id-3')).toBeFalsy();
+  });
+
   it('should fetch and store bookmarks on init', () => {
     expect(getUserBookmarksSpy).toHaveBeenCalled();
     expect(component.bookmarkedChallenges).toEqual(['id-1', 'id-2']);
@@ -216,9 +218,7 @@ describe('StarterComponent', () => {
   it('should handle error when fetching user solutions', () => {
     const consoleErrorSpy = spyOn(console, 'error');
     fetchUserSolutionSpy.and.returnValue(throwError(() => new Error('Error fetching solutions')));
-
     component.fetchUserSolutionsStatus();
-
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', jasmine.any(Error));
   });
 });
@@ -229,8 +229,12 @@ describe('Progress filtering behavior', () => {
   let starterService: StarterService;
   let authRoleSubject: BehaviorSubject<string>;
   let fetchUserSolutionSpy: jasmine.Spy;
+  let invalidate$: Subject<void>;
 
   beforeEach(() => {
+    // Subject for invalidateList$ used by the component
+    invalidate$ = new Subject<void>();
+
     authRoleSubject = new BehaviorSubject<string>('USER');
     const authServiceMock = {
       getUserRole: () => authRoleSubject.asObservable(),
@@ -240,6 +244,7 @@ describe('Progress filtering behavior', () => {
     };
 
     const challengeServiceMock = {
+      invalidateList$: invalidate$.asObservable(),
       getUserBookmarks: jasmine.createSpy().and.returnValue(of([])),
       getUserFavorites: jasmine.createSpy().and.returnValue(of([]))
     };
@@ -259,6 +264,7 @@ describe('Progress filtering behavior', () => {
         provideHttpClientTesting()
       ]
     });
+
     fixture = TestBed.createComponent(StarterComponent);
     component = fixture.componentInstance;
     starterService = TestBed.inject(StarterService);
@@ -281,18 +287,17 @@ describe('Progress filtering behavior', () => {
     } as any;
 
     component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.NOT_STARTED] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c1'])
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c1']);
 
     component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.IN_PROGRESS] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c2'])
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c2']);
 
     component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.ENDED] });
-    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3'])
+    expect(component.challenges.map((c: any) => c.id_challenge)).toEqual(['c3']);
 
     component.getChallengeFilters({ languages: [], levels: [], progress: [SolutionStatus.NOT_STARTED, SolutionStatus.ENDED] });
-    expect(component.challenges
-      .map((c: any) => c.id_challenge)
-      .sort((a: string, b: string) => a.localeCompare(b))
-    ).toEqual(['c1', 'c3'])
+    expect(
+      component.challenges.map((c: any) => c.id_challenge).sort((a: string, b: string) => a.localeCompare(b))
+    ).toEqual(['c1', 'c3']);
   });
 });
