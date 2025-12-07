@@ -196,6 +196,7 @@ describe('ChallengeService', () => {
         })
         expectEndpoint(buildPath(), 'DELETE', { message: 'Err' }, 500, 'Err')
       })
+    })
       it('should call getUserFavorites() and return data with the new userinteraction path', () => {
           const userId = '123'
           const mockFavorites: string[] = ['challenge1', 'challenge2', 'challenge3']
@@ -213,7 +214,6 @@ describe('ChallengeService', () => {
           req.flush(mockFavorites)
       })
     })
-})
   it('should call getUserBookmarks() and return data', () => {
     const userId = '123'
     const mockBookmarks: string[] = ['challenge1', 'challenge2']
