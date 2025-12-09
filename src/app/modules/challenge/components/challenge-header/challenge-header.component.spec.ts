@@ -489,4 +489,26 @@ it('should use empty string when solution_text is null', () => {
   expect(solutionService.solutionText).toHaveBeenCalledWith('');
 });
 
+it('should log error when showSolution fails', () => {
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  solutionService.submitSolution.mockReturnValue(
+    throwError(() => new Error('boom'))
+  );
+
+  component.idChallenge = 'challenge1';
+  component.languageId = 'lang1';
+  component.userId = 'user1';
+  component.solutionText = 'solution text';
+
+  component.showSolution();
+
+  expect(consoleSpy).toHaveBeenCalledWith(
+    'Error submitting solution', 
+    expect.any(Error)
+  );
+
+  consoleSpy.mockRestore();
+});
+
 })
