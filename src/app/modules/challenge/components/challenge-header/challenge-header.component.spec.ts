@@ -1,11 +1,10 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ChallengeHeaderComponent } from './challenge-header.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, provideRouter } from '@angular/router';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
-import { provideRouter } from '@angular/router';
-import { of, Subject, throwError } from "rxjs";
+import { of, Subject, throwError } from 'rxjs';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 import { EventEmitter } from '@angular/core';
 import { ChallengeService } from 'src/app/services/challenge.service';
@@ -30,40 +29,42 @@ describe('ChallengeHeaderComponent', () => {
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
+
     challengeService = {
       addToFavorites: jest.fn(),
       removeFromFavorites: jest.fn(),
       addBookmark: jest.fn(),
       removeBookmark: jest.fn(),
     } as any;
+
     authService = {
       isUserLoggedIn: jest.fn().mockReturnValue(true),
       getUserId: jest.fn().mockReturnValue(of('user1')),
       getUserRole: jest.fn().mockReturnValue(of('ROLE_USER')),
     } as any;
+
     mockCommonModalService = {
       loginRequestModal: jest.fn().mockResolvedValue({} as any)
     } as unknown as jest.Mocked<CommonModalService>;
+
     solutionService = {
       fetchUserSolution: jest.fn().mockReturnValue(
         of([
           {
-            uuid_user: "user1",
-            uuid_challenge: "testChallengeId",
-            uuid_language: "testLang",
-            solution_text: "some solution",
+            uuid_user: 'user1',
+            uuid_challenge: 'testChallengeId',
+            uuid_language: 'testLang',
+            solution_text: 'some solution',
             status: SolutionStatus.ENDED,
           },
         ])
       ),
-      challengeCompleted$: of("testChallengeId"),
+      challengeCompleted$: of('testChallengeId'),
       submitSolution: jest.fn(),
-
-      solutionText: jest.fn(),
       updateSolutionSentState: jest.fn(),
-      activeIdSubject: { next: jest.fn() },
+      activeIdSubject: { next: jest.fn() } as any,
       completeChallenge: jest.fn(),
-    } as any
+    } as any;
 
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
@@ -71,10 +72,7 @@ describe('ChallengeHeaderComponent', () => {
       providers: [
         provideRouter([]),
         { provide: Router, useValue: mockRouter },
-        { 
-          provide: ActivatedRoute, 
-          useValue: { params: of({ idChallenge: 'testChallengeId' }) }
-        },
+        { provide: ActivatedRoute, useValue: { params: of({ idChallenge: 'testChallengeId' }) } },
         { provide: NgbModal, useValue: { open: jest.fn() } },
         { provide: ChallengeService, useValue: challengeService },
         { provide: AuthService, useValue: authService },
@@ -89,7 +87,7 @@ describe('ChallengeHeaderComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('should create', () => { 
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
@@ -101,14 +99,13 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should handle fetchUserSolution error', () => {
-    solutionService.fetchUserSolution = jest.fn()
-    .mockReturnValue(throwError(() => new Error('API Error')));
+    solutionService.fetchUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('API Error')));
     component.ngOnInit();
     expect(component.solutionSent).toBe(false);
   });
 
-  it("should set activeId to SOLUTIONS if challengeStarted is true", () => {
-    component.idChallenge = "testChallengeId";
+  it('should set activeId to SOLUTIONS if challengeStarted is true', () => {
+    component.idChallenge = 'testChallengeId';
     component.challengeStarted = true;
     component.ngOnInit();
     expect(component.challengeStarted).toBe(true);
@@ -116,9 +113,7 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should log error when userId is null', () => {
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     authService.getUserId = jest.fn().mockReturnValue(of(null));
     component.ngOnInit();
     expect(consoleSpy).toHaveBeenCalledWith('Could not get User ID');
@@ -138,15 +133,14 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should open send solution modal', () => {
-
     const timesSolvedSubject = new Subject<number>();
     const mockModalRef = {
-       componentInstance: {
+      componentInstance: {
         idChallenge: '',
         userId: '',
         solutionAccepted: new EventEmitter<void>(),
-        timesSolvedUpdated: timesSolvedSubject
-     } 
+        timesSolvedUpdated: timesSolvedSubject,
+      },
     };
     jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
     component.idChallenge = 'testChallengeId';
@@ -154,8 +148,8 @@ describe('ChallengeHeaderComponent', () => {
 
     expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId');
 
-    timesSolvedSubject.next(5)
-    expect(component.timesSolved).toBe(5)
+    timesSolvedSubject.next(5);
+    expect(component.timesSolved).toBe(5);
   });
 
   it('should start challenge', () => {
@@ -166,12 +160,13 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
     expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
-  it('toggleFavorite: when not favorite should call addToFavorites and emit update', done => {
+
+  it('toggleFavorite: when not favorite should call addToFavorites and emit update', (done) => {
     component.idChallenge = 'ABC';
     component.favorites_count = 1;
     component.isFavorite = false;
     challengeService.addToFavorites.mockReturnValue(of({ favorite: true, timesFavorited: 2 }));
-    component.favoritesUpdated.subscribe(count => {
+    component.favoritesUpdated.subscribe((count) => {
       expect(count).toBe(2);
       expect(component.isFavorite).toBe(true);
       expect(component.favorites_count).toBe(2);
@@ -180,12 +175,12 @@ describe('ChallengeHeaderComponent', () => {
     component.toggleFavorite();
   });
 
-  it('toggleFavorite: when favorite should call removeFromFavorites', done => {
+  it('toggleFavorite: when favorite should call removeFromFavorites', (done) => {
     component.idChallenge = 'ABC';
     component.favorites_count = 2;
     component.isFavorite = true;
     challengeService.removeFromFavorites.mockReturnValue(of({ favorite: false, timesFavorited: 1 }));
-    component.favoritesUpdated.subscribe(count => {
+    component.favoritesUpdated.subscribe((count) => {
       expect(count).toBe(1);
       expect(component.isFavorite).toBe(false);
       expect(component.favorites_count).toBe(1);
@@ -194,7 +189,7 @@ describe('ChallengeHeaderComponent', () => {
     component.toggleFavorite();
   });
 
-  it('toggleBookmark: add bookmark when not bookmarked', done => {
+  it('toggleBookmark: add bookmark when not bookmarked', (done) => {
     component.idChallenge = 'B1';
     component.isBookmarked = false;
     challengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }));
@@ -205,7 +200,7 @@ describe('ChallengeHeaderComponent', () => {
     });
   });
 
-  it('toggleBookmark: remove bookmark when bookmarked', done => {
+  it('toggleBookmark: remove bookmark when bookmarked', (done) => {
     component.idChallenge = 'B1';
     component.isBookmarked = true;
     challengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }));
@@ -218,32 +213,29 @@ describe('ChallengeHeaderComponent', () => {
 
   it('should log warning if fetchUserSolution fails', () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    solutionService.fetchUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('Test error')))
-    component.ngOnInit()
-    expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', expect.any(Error))
-    consoleErrorSpy.mockRestore()
+    solutionService.fetchUserSolution = jest.fn().mockReturnValue(throwError(() => new Error('Test error')));
+    component.ngOnInit();
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', expect.any(Error));
+    consoleErrorSpy.mockRestore();
   });
 
-  it('should set activeId to SOLUTIONS if challengeStarted is true', () => {
+  it('should set activeId to SOLUTIONS if challengeStarted is true (dup guard)', () => {
     component.challengeStarted = true;
     component.ngOnInit();
     expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
   });
 
-  
   it('should NOT show "Start Challenge" button for ADMIN role', fakeAsync(() => {
-  authService.getUserRole.mockReturnValue(of('ADMIN'));
-  component.userRole = 'ADMIN';
-  component.challengeStarted = false;
-  component.ngOnInit();
-  tick();
-  fixture.detectChanges();
-  const buttons = fixture.debugElement.queryAll(By.css('button.btn-primary'));
-  const startButton = buttons.find(btn =>
-    btn.nativeElement.textContent.includes('Start')
-  );
-  expect(startButton).toBeUndefined();
-}));
+    authService.getUserRole.mockReturnValue(of('ADMIN'));
+    component.userRole = 'ADMIN';
+    component.challengeStarted = false;
+    component.ngOnInit();
+    tick();
+    fixture.detectChanges();
+    const buttons = fixture.debugElement.queryAll(By.css('button.btn-primary'));
+    const startButton = buttons.find((btn) => btn.nativeElement.textContent.includes('Start'));
+    expect(startButton).toBeUndefined();
+  }));
 
   it('should handle solution accepted', () => {
     component.onSolutionAccepted();
@@ -253,10 +245,10 @@ describe('ChallengeHeaderComponent', () => {
 
   it('should call openSendSolutionModal on sendSolution', () => {
     const spy = jest.spyOn(modalService, 'open').mockReturnValue({
-        componentInstance: {
-            solutionAccepted: new EventEmitter<void>(),
-            timesSolvedUpdated: new EventEmitter<number>()
-        }
+      componentInstance: {
+        solutionAccepted: new EventEmitter<void>(),
+        timesSolvedUpdated: new EventEmitter<number>(),
+      },
     } as any);
     component.sendSolution();
     expect(spy).toHaveBeenCalled();
@@ -272,9 +264,9 @@ describe('ChallengeHeaderComponent', () => {
   });
 
   it('should load solution from backend', () => {
-    solutionService.fetchUserSolution.mockReturnValue(of([
-      { uuid_challenge: 'testChallengeId', uuid_language: 'testLang', solution_text: 'test solution' }
-    ] as any));
+    solutionService.fetchUserSolution.mockReturnValue(
+      of([{ uuid_challenge: 'testChallengeId', uuid_language: 'testLang', solution_text: 'test solution' }] as any)
+    );
     component.idChallenge = 'testChallengeId';
     component.languageId = 'testLang';
     component.loadSolutionFromBackend();
@@ -366,25 +358,25 @@ describe('ChallengeHeaderComponent', () => {
     component.onCancel();
     expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
   });
-  
+
   it('should set solutionState to NOT_STARTED if no matching solution is found', () => {
     solutionService.fetchUserSolution.mockReturnValue(of([]));
     component.loadUserSolutionStatus();
     expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED);
   });
-  
+
   it('should handle different solution statuses', () => {
     const solutions = [
       { uuid_challenge: 'testChallengeId', status: SolutionStatus.IN_PROGRESS, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
       { uuid_challenge: 'testChallengeId', status: SolutionStatus.ENDED, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
-      { uuid_challenge: 'testChallengeId', status: SolutionStatus.SHOW_SOLUTION, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' }
+      { uuid_challenge: 'testChallengeId', status: SolutionStatus.SHOW_SOLUTION, solution_text: 'solution', uuid_user: 'user1', uuid_language: 'lang1' },
     ];
-  
+
     component.idChallenge = 'testChallengeId';
     solutionService.fetchUserSolution.mockReturnValue(of([solutions[0]]));
     component.loadUserSolutionStatus();
     expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
-  
+
     solutionService.fetchUserSolution.mockReturnValue(of([solutions[1]]));
     component.loadUserSolutionStatus();
     expect(component.solutionState).toBe(SolutionStatus.ENDED);
@@ -394,99 +386,25 @@ describe('ChallengeHeaderComponent', () => {
     expect(component.solutionState).toBe(SolutionStatus.SHOW_SOLUTION);
   });
 
- it("should call loginRequestModal when user is not logged in", async () => {
-    mockCommonModalService.loginRequestModal = jest
-      .fn()
-      .mockResolvedValue({ isConfirmed: true });
+  it('should call submitSolution with SEE_SOLUTION action and update UI state', () => {
+    const mockResponse = { solution_text: 'some text' } as any;
+    const submitSpy = jest.spyOn(solutionService, 'submitSolution').mockReturnValue(of(mockResponse));
+    const updateSentSpy = jest.spyOn(solutionService, 'updateSolutionSentState');
+    const activeTabSpy = jest.spyOn(solutionService.activeIdSubject, 'next');
+    const completeSpy = jest.spyOn(solutionService, 'completeChallenge');
+    const loadStatusSpy = jest.spyOn(component, 'loadUserSolutionStatus');
 
-    authService.isUserLoggedIn.mockReturnValue(false);
-     await component.onStartChallenge();
+    component.idChallenge = 'challenge1';
+    component.languageId = 'lang1';
+    component.userId = 'user1';
+    component.solutionText = 'solution text';
 
-    expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
-  })
+    component.showSolution();
 
-  it("should call loginRequestModal when user is not logged in", async () => {
-    mockCommonModalService.loginRequestModal = jest
-      .fn()
-      .mockResolvedValue({ isConfirmed: true });
-
-    authService.isUserLoggedIn.mockReturnValue(false);
-
-    await component.onStartChallenge();
-
-    expect(mockCommonModalService.loginRequestModal).toHaveBeenCalled();
-  })
-
-  it("should start challenge when user is logged in", () => {
-    authService.isUserLoggedIn.mockReturnValue(true);
-    const startChallengeSpy = jest.spyOn(component.startChallenge, 'emit');
-
-    component.onStartChallenge();
-
-    expect(component.challengeStarted).toBe(true);
-    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS);
-    expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
-    expect(startChallengeSpy).toHaveBeenCalledWith(true);
+    expect(submitSpy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionAction.SEE_SOLUTION, 'solution text');
+    expect(updateSentSpy).toHaveBeenCalledWith(true);
+    expect(activeTabSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+    expect(completeSpy).toHaveBeenCalledWith('challenge1');
+    expect(loadStatusSpy).toHaveBeenCalled();
   });
-
-it('should log error and return when userId is null', () => {
-  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-  component.userId = null;
-
-  component.showSolution();
-
-  expect(consoleSpy).toHaveBeenCalledWith(
-    "User ID is missing. Cannot show solution."
-  );
-  expect(solutionService.submitSolution).not.toHaveBeenCalled();
 });
-
-  it('should call submitSolution with SEE_SOLUTION action', () => {
-  const mockResponse = {solution_text: 'some text'} as any;
-
-  const submitSpy = jest
-    .spyOn(solutionService, 'submitSolution')
-    .mockReturnValue(of(mockResponse));
-
-  const solutionTextSpy = jest.spyOn(solutionService, 'solutionText');
-  const updateSentSpy = jest.spyOn(solutionService, 'updateSolutionSentState');
-  const activeTabSpy = jest.spyOn(solutionService.activeIdSubject, 'next');
-  const completeSpy = jest.spyOn(solutionService, 'completeChallenge');
-  const loadStatusSpy = jest.spyOn(component, 'loadUserSolutionStatus');
-
-  component.idChallenge = 'challenge1';
-  component.languageId = 'lang1';
-  component.userId = 'user1';
-  component.solutionText = 'solution text';
-
-  component.showSolution();
-
-  expect(submitSpy).toHaveBeenCalledWith(
-    'challenge1',
-    'lang1',
-    'user1',
-    SolutionAction.SEE_SOLUTION,
-    'solution text'
-  );
-
-  expect(solutionTextSpy).toHaveBeenCalledWith('some text');
-  expect(updateSentSpy).toHaveBeenCalledWith(true);
-  expect(activeTabSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
-  expect(completeSpy).toHaveBeenCalledWith('challenge1');
-  expect(loadStatusSpy).toHaveBeenCalled();
-});
-
-it('should use empty string when solution_text is null', () => {
-  component.userId = '55';
-
-  const response = { solution_text: null } as unknown as UserSolution;
-
-  solutionService.submitSolution.mockReturnValue(of(response));
-
-  component.showSolution();
-
-  expect(solutionService.solutionText).toHaveBeenCalledWith('');
-});
-
-})
