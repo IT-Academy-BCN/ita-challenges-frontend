@@ -73,32 +73,39 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
-
+  
   toggleBookmark(event: MouseEvent): void {
-    event.stopPropagation()
-    if (!this.authService.isUserLoggedIn()) {
-      return
-    }
-    if (this.isBookmarked) {
-      this.challengeService.removeBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error removing bookmark:', error)
-        }
-      })
-    } else {
-      this.challengeService.addBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error adding bookmark:', error)
-        }
-      })
-    }
+  event.stopPropagation()
+  if (!this.authService.isUserLoggedIn()) {
+    console.warn('User not logged in');
+    return;
   }
+  
+  if (this.isBookmarked) {
+    this.challengeService.removeBookmark(this.id).subscribe({
+      next: response => {
+        this.isBookmarked = response.bookmarked;
+      },
+      error: error => {
+        console.error('Error removing bookmark:', error);
+        console.error('Full error object:', JSON.stringify(error, null, 2));
+      }
+    })
+  } else {
+    this.challengeService.addBookmark(this.id).subscribe({
+      next: response => {
+        this.isBookmarked = response.bookmarked;
+      },
+      error: error => {
+        console.error('Error adding bookmark:', error);
+        console.error('Error status:', error?.status);
+        console.error('Error URL:', error?.url);
+        console.error('Full error:', error);
+      }
+    })
+  }
+}
+
   getStatusTooltip(): string {
     switch (this.solutionStatus) {
       case SolutionStatus.ENDED:
