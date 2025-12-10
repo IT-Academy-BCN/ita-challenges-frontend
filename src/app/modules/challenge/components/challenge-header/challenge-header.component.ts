@@ -236,30 +236,30 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   showSolution(): void {
-    if (this.userId === null) {
-      console.error("User ID is missing. Cannot show solution.");
+    if (!this.userId || !this.idChallenge || !this.languageId) {
+      console.error('User ID is missing. Cannot show solution.');
       return;
     }
-    this.solutionService.submitSolution(
-      this.idChallenge,
-      this.languageId,
-      this.userId,
-      SolutionAction.SEE_SOLUTION,
-      this.solutionText
-    ).subscribe({
-      next: (response: UserSolution) => {
-        const solutionText = response?.solution_text ?? '';        
-        this.solutionService.solutionText(solutionText);
-        this.solutionService.updateSolutionSentState(true);
-        this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
-        this.solutionService.completeChallenge(this.idChallenge);
 
-        this.loadUserSolutionStatus()
-      },
-      error: (error) => {
-        console.error('Error submitting solution:', error);
-      }
-    });
+    this.solutionService
+      .submitSolution(
+        this.idChallenge,
+        this.languageId,
+        this.userId,
+        SolutionAction.SEE_SOLUTION,
+        this.solutionText
+      )
+      .subscribe({
+        next: () => {
+          this.solutionService.updateSolutionSentState(true);
+          this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
+          this.solutionService.completeChallenge(this.idChallenge);
+          this.loadUserSolutionStatus();
+        },
+        error: (error) => {
+          console.error('Error submitting solution:', error);
+        }
+      });
   }
 
   toggleFavorite (): void {
