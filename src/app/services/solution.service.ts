@@ -28,16 +28,6 @@ export class SolutionService {
   private readonly challengeCompletedSubject = new Subject<string>()
   challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
-  updateSolutionSentState (value: boolean): void {
-    this.solutionSentSubject.next(value)
-  }
-
-  sendSolution (solution: string, challengeId?: string): void {
-    // Cuando se haya enviado la solución, actualiza el estado
-    this.updateSolutionSentState(true)
-    // Lógica para enviar la solución al backend si es necesario
-  }
-
   completeChallenge(challengeId: string): void {
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}')
     if (savedChallenge.id === challengeId) {
