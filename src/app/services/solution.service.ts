@@ -28,6 +28,18 @@ export class SolutionService {
   private readonly challengeCompletedSubject = new Subject<string>()
   challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
+  
+  updateSolutionSentState (value: boolean): void {
+
+   //this.solutionSentSubject.next(value)
+
+  }
+
+  sendSolution (solution: string, challengeId?: string): void {
+    
+    this.updateSolutionSentState(true)
+  }
+
   completeChallenge(challengeId: string): void {
     const savedChallenge = JSON.parse(localStorage.getItem('challengeStarted') ?? '{}')
     if (savedChallenge.id === challengeId) {
