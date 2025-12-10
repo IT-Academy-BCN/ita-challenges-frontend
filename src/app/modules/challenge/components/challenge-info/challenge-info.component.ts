@@ -91,14 +91,6 @@ implements OnInit, OnDestroy {
       this.isAdmin = role === 'ADMIN'
     })
 
-    this.solutionService.solutionText$.subscribe((solutionText: string) => {
-      this.solutionText = solutionText;
-      if (solutionText) {
-        this.userSolution = { solution_text: solutionText };
-        this.solutionSent = true;
-        this.cdr.detectChanges(); 
-      }
-    });
 
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
