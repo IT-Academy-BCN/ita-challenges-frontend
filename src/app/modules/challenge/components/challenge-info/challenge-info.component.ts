@@ -24,7 +24,6 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
-
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -105,7 +104,6 @@ implements OnInit, OnDestroy {
 
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
-    //añado para evitar loop
     this.solutionSent = this.solutions.includes(this.idChallenge)
     this.solutionService.solutionSent$.subscribe((sent) => {
 
@@ -116,18 +114,6 @@ implements OnInit, OnDestroy {
       }
       this.cdr.detectChanges();
     });
-
-    /*
-
-    this.solutionSent = this.solutions.includes(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((sent) => {
-      this.solutionSent = sent;
-      if (sent) {
-        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
-      }
-      this.cdr.detectChanges();
-    });
-    */
 
     this.solutionService.solutionSent$.pipe(
   distinctUntilChanged() // ← SOLO emite si el valor CAMBIA
