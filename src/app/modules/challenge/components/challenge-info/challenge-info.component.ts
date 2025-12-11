@@ -105,18 +105,9 @@ implements OnInit, OnDestroy {
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((sent) => {
-
-      this.solutionSent = sent;
-
-      if (sent) {
-        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
-      }
-      this.cdr.detectChanges();
-    });
-
+    
     this.solutionService.solutionSent$.pipe(
-  distinctUntilChanged() // ← SOLO emite si el valor CAMBIA
+  distinctUntilChanged() 
 ).subscribe((sent) => {
   console.log('solutionSent$ (filtered):', sent);
   
@@ -126,11 +117,6 @@ implements OnInit, OnDestroy {
   }
   this.cdr.detectChanges();
 });
-
-
-
-
-
 
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
