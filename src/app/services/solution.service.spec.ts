@@ -49,7 +49,7 @@ describe('SolutionService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-
+/*
   it('should update solution sent state', () => {
     
     expect(true).toBe(true);
@@ -59,6 +59,31 @@ describe('SolutionService', () => {
     
     expect(true).toBe(true);
   });
+
+  */
+
+
+it('should not emit "submitted" if submission fails', (done) => {
+  let emitted = false;
+
+  service.sendSolutionText$.subscribe(() => {
+    emitted = true;
+  });
+
+  const mockError = { status: 500, statusText: 'Internal Server Error' };
+
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+    error: (error) => {
+      expect(error.status).toBe(500);
+      expect(emitted).toBe(false); 
+      done();
+    }
+  });
+
+  const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
+  req.flush(null, mockError);
+});
+
 
   it('should return all challenge solutions', (done) => {
     const testChallengeId = 'dcacb291-b4aa-4029-8e9b-284c8ca80296'
