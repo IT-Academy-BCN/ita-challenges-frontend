@@ -28,10 +28,15 @@ export class SolutionService {
   private readonly challengeCompletedSubject = new Subject<string>()
   challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
-  
+  private isUpdating = false;
   updateSolutionSentState (value: boolean): void {
 
-   //this.solutionSentSubject.next(value)
+  if (this.isUpdating) return;          
+  if (this.solutionSentSubject.value === value) return; 
+
+  this.isUpdating = true;
+  this.solutionSentSubject.next(value);
+  this.isUpdating = false;
 
   }
 
