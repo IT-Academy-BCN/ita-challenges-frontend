@@ -49,19 +49,6 @@ describe('SolutionService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-/*
-  it('should update solution sent state', () => {
-    
-    expect(true).toBe(true);
-  });
-
-  it('should send solution and update state', () => {
-    
-    expect(true).toBe(true);
-  });
-
-  */
-
 
 it('should not emit "submitted" if submission fails', (done) => {
   let emitted = false;
