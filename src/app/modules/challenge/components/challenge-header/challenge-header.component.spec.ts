@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ChallengeHeaderComponent } from './challenge-header.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router, provideRouter } from '@angular/router';
 import { I18nModule } from '../../../../../assets/i18n/i18n.module';
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe';
@@ -16,6 +16,7 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum';
 import { UserSolution } from 'src/app/models/user-solution.interface';
+import { DeleteChallengeModalComponent } from 'src/app/modules/modals/delete-challenge-modal/delete-challenge-modal.component';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -407,4 +408,36 @@ describe('ChallengeHeaderComponent', () => {
     expect(completeSpy).toHaveBeenCalledWith('challenge1');
     expect(loadStatusSpy).toHaveBeenCalled();
   });
+
+  it('should open delete challenge modal and navigate on delete', () => {
+  component.idChallenge = 'testChallengeId';
+
+  const mockModalRef = {
+    componentInstance: { idChallenge: '' },
+    closed: of('deleted') // симулируем закрытие модалки с reason 'deleted'
+  } as unknown as NgbModalRef;
+
+  jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef);
+
+  component.openDeleteChallengeModal();
+
+  expect(modalService.open).toHaveBeenCalledWith(DeleteChallengeModalComponent, {
+    centered: true,
+    backdrop: 'static',
+    keyboard: false
+  });
+  expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId');
+  expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+});
+
+it('should not open modal if idChallenge is empty', () => {
+  component.idChallenge = '';
+
+  const spy = jest.spyOn(modalService, 'open');
+
+  component.openDeleteChallengeModal();
+
+  expect(spy).not.toHaveBeenCalled();
+});
+
 });
