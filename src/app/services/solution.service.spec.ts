@@ -205,4 +205,61 @@ it('should not emit "submitted" if submission fails', (done) => {
     expect(req.request.method).toBe('GET')
     req.flush(null, mockError)
   })
+
+  // Tests for updateSolutionSentState method only
+describe('updateSolutionSentState', () => {
+  beforeEach(() => {
+    // Reset state before each test
+    service['isUpdating'] = false;
+    service['solutionSentSubject'].next(false);
+  });
+
+  it('should update immediately when value is false', () => {
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(false);
+    expect(nextSpy).toHaveBeenCalledWith(false);
+  });
+
+  it('should update immediately when force option is true', () => {
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(true, { force: true });
+    expect(nextSpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should NOT update when isUpdating is true (prevents concurrent updates)', () => {
+    service['isUpdating'] = true;
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(false);
+    expect(nextSpy).not.toHaveBeenCalled();
+  });
+
+  it('should NOT update when current value equals new value', () => {
+    // Set current value to true
+    service['solutionSentSubject'].next(true);
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    
+    // Try to set same value
+    service.updateSolutionSentState(true);
+    
+    expect(nextSpy).not.toHaveBeenCalled();
+  });
+
+  it('should update when value changes from false to true', () => {
+    // Initial value is false
+    service['solutionSentSubject'].next(false);
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    
+    service.updateSolutionSentState(true);
+    
+    expect(nextSpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should reset isUpdating to false after updating', () => {
+    service.updateSolutionSentState(false);
+    expect(service['isUpdating']).toBe(false);
+    
+    service.updateSolutionSentState(true, { force: true });
+    expect(service['isUpdating']).toBe(false);
+  });
+});
 })
