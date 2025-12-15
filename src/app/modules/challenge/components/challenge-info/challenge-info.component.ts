@@ -101,7 +101,6 @@ implements OnInit, OnDestroy {
       }
     });
 
-
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
@@ -113,7 +112,11 @@ implements OnInit, OnDestroy {
   
   this.solutionSent = sent;
   if (sent) {
-    this.loadSolutions(this.idChallenge, this.languages[0].id_language);
+
+  this.solutionService.updateSolutionSentState(false, { force: true });
+
+  this.loadSolutions(this.idChallenge, this.languages[0].id_language);
+  void this.loadUserSolutionData();
   }
   this.cdr.detectChanges();
 });
@@ -140,6 +143,7 @@ implements OnInit, OnDestroy {
     this.authService.getUserId().subscribe(userId => {
       if (userId != null) {
         void this.loadUserSolutionData()
+        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
       }
     })
   }
@@ -160,7 +164,7 @@ implements OnInit, OnDestroy {
       this.solutionSent = true
       this.solutionText = match.solution_text
       this.userSolution = { solution_text: match.solution_text }
-      this.loadSolutions(this.idChallenge, String(match.uuid_language))
+    //  this.loadSolutions(this.idChallenge, String(match.uuid_language))
       this.cdr.detectChanges()
     }
   }

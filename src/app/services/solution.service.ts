@@ -29,17 +29,23 @@ export class SolutionService {
   challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
   private isUpdating = false;
-  updateSolutionSentState (value: boolean): void {
 
-  if (this.isUpdating) return;          
-  if (this.solutionSentSubject.value === value) return; 
-
+  updateSolutionSentState(value: boolean, options: { force?: boolean } = {}): void {
+  if (this.isUpdating) return;
+  
+  if (options.force || value === false) {
+    this.isUpdating = true;
+    this.solutionSentSubject.next(value);
+    this.isUpdating = false;
+    return;
+  }
+  
+  if (this.solutionSentSubject.value === value) return;
+  
   this.isUpdating = true;
   this.solutionSentSubject.next(value);
   this.isUpdating = false;
-
-  }
-
+}
   sendSolution (solution: string, challengeId?: string): void {
     
     this.updateSolutionSentState(true)
