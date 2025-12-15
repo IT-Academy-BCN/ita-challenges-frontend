@@ -12,6 +12,12 @@ and this project adheres to
 - `challenge-info.component`, `send-solution-modal.component`, and `solution.service` were adjusted.
 - The loop no longer occurs, and both solutions to the challenge are now displayed correctly.
 
+### [ita-challenges-frontend-3.14.2-RELEASE] - 2025-12-11
+### Changed
+- Fix user solutions loading to display correctly per challenge (Taiga[#910],PR [#725]).
+  Before the solution text flowed over the challenges. Now it there is an http request for each challenge to show solutions.
+
+
 ### [ita-challenges-frontend-3.14.1-RELEASE] - 2025-12-11
 ### Changed
 - Updated enviroment.ts and environment.prod.ts to point to the new backend URL (Taiga[#911],PR [#1054]).

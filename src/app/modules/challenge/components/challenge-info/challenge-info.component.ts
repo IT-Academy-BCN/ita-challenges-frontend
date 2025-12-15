@@ -49,8 +49,6 @@ implements OnInit, OnDestroy {
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
-  
-  
 
   challengeStarted: boolean = false
 
@@ -59,7 +57,7 @@ implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly starterService = inject(StarterService) 
-   private readonly challengeService=inject (ChallengeService)
+  private readonly challengeService = inject(ChallengeService)
   public currentSolutionText: string = '';
 
 
@@ -91,15 +89,6 @@ implements OnInit, OnDestroy {
     this.authService.getUserRole().subscribe(role => {
       this.isAdmin = role === 'ADMIN'
     })
-
-    this.solutionService.solutionText$.subscribe((solutionText: string) => {
-      this.solutionText = solutionText;
-      if (solutionText) {
-        this.userSolution = { solution_text: solutionText };
-        this.solutionSent = true;
-        this.cdr.detectChanges(); 
-      }
-    });
 
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
