@@ -50,21 +50,27 @@ describe('SolutionService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should update solution sent state', (done) => {
-    service.updateSolutionSentState(true)
-    service.solutionSent$.subscribe(value => {
-      expect(value).toBe(true)
-      done()
-    })
-  })
+it('should not emit "submitted" if submission fails', (done) => {
+  let emitted = false;
 
-  it('should send solution and update state', (done) => {
-    service.sendSolution('test solution')
-    service.solutionSent$.subscribe(value => {
-      expect(value).toBe(true)
-      done()
-    })
-  })
+  service.sendSolutionText$.subscribe(() => {
+    emitted = true;
+  });
+
+  const mockError = { status: 500, statusText: 'Internal Server Error' };
+
+  service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
+    error: (error) => {
+      expect(error.status).toBe(500);
+      expect(emitted).toBe(false); 
+      done();
+    }
+  });
+
+  const req = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`);
+  req.flush(null, mockError);
+});
+
 
   it('should return all challenge solutions', (done) => {
     const testChallengeId = 'dcacb291-b4aa-4029-8e9b-284c8ca80296'
@@ -199,4 +205,61 @@ describe('SolutionService', () => {
     expect(req.request.method).toBe('GET')
     req.flush(null, mockError)
   })
+
+  // Tests for updateSolutionSentState method only
+describe('updateSolutionSentState', () => {
+  beforeEach(() => {
+    // Reset state before each test
+    service['isUpdating'] = false;
+    service['solutionSentSubject'].next(false);
+  });
+
+  it('should update immediately when value is false', () => {
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(false);
+    expect(nextSpy).toHaveBeenCalledWith(false);
+  });
+
+  it('should update immediately when force option is true', () => {
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(true, { force: true });
+    expect(nextSpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should NOT update when isUpdating is true (prevents concurrent updates)', () => {
+    service['isUpdating'] = true;
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    service.updateSolutionSentState(false);
+    expect(nextSpy).not.toHaveBeenCalled();
+  });
+
+  it('should NOT update when current value equals new value', () => {
+    // Set current value to true
+    service['solutionSentSubject'].next(true);
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    
+    // Try to set same value
+    service.updateSolutionSentState(true);
+    
+    expect(nextSpy).not.toHaveBeenCalled();
+  });
+
+  it('should update when value changes from false to true', () => {
+    // Initial value is false
+    service['solutionSentSubject'].next(false);
+    const nextSpy = spyOn(service['solutionSentSubject'], 'next');
+    
+    service.updateSolutionSentState(true);
+    
+    expect(nextSpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should reset isUpdating to false after updating', () => {
+    service.updateSolutionSentState(false);
+    expect(service['isUpdating']).toBe(false);
+    
+    service.updateSolutionSentState(true, { force: true });
+    expect(service['isUpdating']).toBe(false);
+  });
+});
 })

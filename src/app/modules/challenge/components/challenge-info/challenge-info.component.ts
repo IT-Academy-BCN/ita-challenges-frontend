@@ -24,6 +24,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-challenge-info',
@@ -92,14 +93,22 @@ implements OnInit, OnDestroy {
     this.solutionService.activeIdSubject.next(ChallengeTab.DETAILS)
 
     this.solutionSent = this.solutions.includes(this.idChallenge)
-    this.solutionService.solutionSent$.subscribe((sent) => {
-      this.solutionSent = sent;
-      if (sent) {
-        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
-        void this.loadUserSolutionData()
-      }
-      this.cdr.detectChanges();
-    });
+    
+    this.solutionService.solutionSent$.pipe(
+  distinctUntilChanged() 
+).subscribe((sent) => {
+  console.log('solutionSent$ (filtered):', sent);
+  
+  this.solutionSent = sent;
+  if (sent) {
+
+  this.solutionService.updateSolutionSentState(false, { force: true });
+
+  this.loadSolutions(this.idChallenge, this.languages[0].id_language);
+  void this.loadUserSolutionData();
+  }
+  this.cdr.detectChanges();
+});
 
     this.solutionService.activeId$.subscribe((newActiveId) => {
       this.onActiveIdChange(newActiveId)
@@ -123,6 +132,7 @@ implements OnInit, OnDestroy {
     this.authService.getUserId().subscribe(userId => {
       if (userId != null) {
         void this.loadUserSolutionData()
+        this.loadSolutions(this.idChallenge, this.languages[0].id_language);
       }
     })
   }
@@ -143,7 +153,7 @@ implements OnInit, OnDestroy {
       this.solutionSent = true
       this.solutionText = match.solution_text
       this.userSolution = { solution_text: match.solution_text }
-      this.loadSolutions(this.idChallenge, String(match.uuid_language))
+    //  this.loadSolutions(this.idChallenge, String(match.uuid_language))
       this.cdr.detectChanges()
     }
   }

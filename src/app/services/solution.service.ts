@@ -28,14 +28,27 @@ export class SolutionService {
   private readonly challengeCompletedSubject = new Subject<string>()
   challengeCompleted$ = this.challengeCompletedSubject.asObservable()
 
-  updateSolutionSentState (value: boolean): void {
-    this.solutionSentSubject.next(value)
-  }
+  private isUpdating = false;
 
+  updateSolutionSentState(value: boolean, options: { force?: boolean } = {}): void {
+  if (this.isUpdating) return;
+  
+  if (options.force || value === false) {
+    this.isUpdating = true;
+    this.solutionSentSubject.next(value);
+    this.isUpdating = false;
+    return;
+  }
+  
+  if (this.solutionSentSubject.value === value) return;
+  
+  this.isUpdating = true;
+  this.solutionSentSubject.next(value);
+  this.isUpdating = false;
+}
   sendSolution (solution: string, challengeId?: string): void {
-    // Cuando se haya enviado la solución, actualiza el estado
+    
     this.updateSolutionSentState(true)
-    // Lógica para enviar la solución al backend si es necesario
   }
 
   completeChallenge(challengeId: string): void {

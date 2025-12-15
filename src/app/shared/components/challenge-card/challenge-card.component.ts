@@ -74,7 +74,7 @@ export class ChallengeCardComponent implements OnInit {
     }
   }
 
-  toggleBookmark(event: MouseEvent): void {
+toggleBookmark(event: MouseEvent): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return
@@ -99,6 +99,7 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+
   getStatusTooltip(): string {
     switch (this.solutionStatus) {
       case SolutionStatus.ENDED:
