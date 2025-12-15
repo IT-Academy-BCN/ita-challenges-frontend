@@ -12,6 +12,12 @@ and this project adheres to
 - `challenge-info.component`, `send-solution-modal.component`, and `solution.service` were adjusted.
 - The loop no longer occurs, and both solutions to the challenge are now displayed correctly.
 
+### [ita-challenges-frontend-3.14.1-RELEASE] - 2025-12-11
+### Changed
+- Updated enviroment.ts and environment.prod.ts to point to the new backend URL (Taiga[#911],PR [#1054]).
+- Updated challenge.service.spec.ts to test the new backend URL
+- Updated challenge.service.ts to point to the new backend URL
+
 ### [ita-challenges-frontend-3.14.0-RELEASE] - 2025-12-04
 
 ### Fixed
