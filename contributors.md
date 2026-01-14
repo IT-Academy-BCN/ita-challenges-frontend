@@ -44,3 +44,4 @@
 - Leonid Mozheliuk - https://github.com/Leoyalta
 - Ilmira Dozhdikova - https://github.com/Ilmira83
 - Vania Ferrer - https://github.com/vaniaferreresteban
+- Juan Delgado - https://github.com/soyjuandelgado
