@@ -26,6 +26,7 @@ export class ChallengeHeaderComponent implements OnInit {
     private readonly route: ActivatedRoute
     
   ) {}
+
   public SolutionStatus = SolutionStatus;
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
@@ -179,6 +180,7 @@ export class ChallengeHeaderComponent implements OnInit {
   onSolutionAccepted(): void {
     this.solutionSent = true; 
     this.activeId = ChallengeTab.SOLUTIONS;
+    this.loadUserSolutionStatus()
   }
 
   get currentLang (): string {
