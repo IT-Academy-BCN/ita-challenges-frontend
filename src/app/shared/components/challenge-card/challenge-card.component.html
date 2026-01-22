@@ -27,6 +27,7 @@
         [ngClass]="{
           'status-ended': solutionStatus === SolutionStatus.ENDED,
           'status-progress': solutionStatus === SolutionStatus.IN_PROGRESS,
+          'status-incomplete': solutionStatus === SolutionStatus.SHOW_SOLUTION,
         }"
         [ngbTooltip]="getStatusTooltip()"
           >

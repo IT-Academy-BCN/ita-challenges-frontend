@@ -130,4 +130,5 @@
   margin-bottom: 8px;
   &.status-ended   { color: #1e7d34; }
   &.status-progress { color: #efa81b; }
+  &.status-incomplete { color: rgb(84, 68, 91);}
 }

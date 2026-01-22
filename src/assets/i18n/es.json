@@ -198,7 +198,8 @@
 },
     "status": {
         "IN_PROGRESS": "En progreso",
-        "SUBMITTED_COMPLETE": "Completado"
+        "SUBMITTED_COMPLETE": "Completado",
+        "SUBMITTED_INCOMPLETE": "Completado sin resolver"
     },
     "common": {
         "all": "Todos"

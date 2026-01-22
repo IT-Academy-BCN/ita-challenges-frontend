@@ -199,7 +199,8 @@
 },
     "status": {
         "IN_PROGRESS": "In progress",
-        "SUBMITTED_COMPLETE": "Completed"
+        "SUBMITTED_COMPLETE": "Completed",
+        "SUBMITTED_INCOMPLETE": "Completed without solution"
     },
     "common": {
         "all": "All"
