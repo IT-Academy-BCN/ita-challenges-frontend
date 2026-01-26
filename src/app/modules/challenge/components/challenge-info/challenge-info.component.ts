@@ -24,6 +24,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -49,6 +50,9 @@ implements OnInit, OnDestroy {
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
+
+  readonly SolutionStatus = SolutionStatus
+  userSolutionStatus: SolutionStatus = SolutionStatus.NOT_STARTED
 
   challengeStarted: boolean = false
 
@@ -149,6 +153,7 @@ implements OnInit, OnDestroy {
     );
 
     if (match !== undefined && match !== null) {
+      this.userSolutionStatus = match.status
       this.solutionSent = true
       this.solutionText = match.solution_text
       this.userSolution = { solution_text: match.solution_text }
@@ -291,6 +296,12 @@ implements OnInit, OnDestroy {
     // Default: all tabs are visible when challenge hasn't started
     return true;
   }
+
+  shouldShowOfficialSolution (): boolean {
+    return this.userSolutionStatus === SolutionStatus.SHOW_SOLUTION ||
+         this.userSolutionStatus === SolutionStatus.ENDED
+  }
+
   onEditorSolutionChanged(newText: string): void {
   this.currentSolutionText = newText;
   this.solutionChanged.emit(newText); 
