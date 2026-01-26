@@ -9,7 +9,7 @@ import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
 @Component({
   selector: 'app-show-solution-modal',
   templateUrl: './show-solution-modal.component.html',
-  styleUrl: './show-solution-modal.component.css'
+ styleUrls: ['./show-solution-modal.component.css']
 })
 export class ShowSolutionModalComponent {
   private readonly modalService = inject(NgbModal)
