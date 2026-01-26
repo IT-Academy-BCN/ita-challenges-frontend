@@ -7,6 +7,7 @@ import { SubmitSolutionResponse } from 'src/app/models/user-solution.interface';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 
 
+
 @Component({
   selector: 'app-send-solution-modal',
   templateUrl: './send-solution-modal.component.html',

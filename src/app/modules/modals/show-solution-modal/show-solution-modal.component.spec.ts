@@ -21,7 +21,6 @@ describe('ShowSolutionModalComponent', () => {
   let authServiceMock: any;
 
   beforeEach(async () => {
-    // Crear versiones simuladas de NgbModal y Router
     modalServiceMock = {
       dismissAll: jest.fn(),
       open: jest.fn()
@@ -115,7 +114,6 @@ describe('ShowSolutionModalComponent', () => {
     expect(solutionServiceMock.submitSolution).toHaveBeenCalledTimes(1);
   
     expect(solutionServiceMock.updateSolutionSentState).toHaveBeenCalledWith(true);
-/*     expect(solutionServiceMock.sendSolutionText).toHaveBeenCalledWith(true); */
     expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
     expect(solutionServiceMock.completeChallenge).toHaveBeenCalledWith(solutionData.idChallenge);
     expect(modalServiceMock.dismissAll).toHaveBeenCalled();

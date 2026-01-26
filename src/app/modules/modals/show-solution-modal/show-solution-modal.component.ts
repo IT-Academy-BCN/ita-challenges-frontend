@@ -1,17 +1,18 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum';
 import { UserSolution } from 'src/app/models/user-solution.interface';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
+import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-show-solution-modal',
   templateUrl: './show-solution-modal.component.html',
  styleUrls: ['./show-solution-modal.component.css']
 })
-export class ShowSolutionModalComponent {
+export class ShowSolutionModalComponent implements OnInit {
   private readonly modalService = inject(NgbModal)
   private readonly solutionService = inject(SolutionService);
   private readonly challengeService = inject(ChallengeService);
