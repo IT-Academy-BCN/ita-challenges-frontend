@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
+
+### Fixed
+- Synchronize status logic for challenges.
+- The statuses are displayed correctly in the Challenge details and Challenges list.
+- The Show solution button works as expected and triggers appropriate user notification.
+
 ### [ita-challenges-frontend-3.14.3-RELEASE] - 2025-12-15
 
 ### Fixed
