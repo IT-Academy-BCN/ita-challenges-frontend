@@ -123,7 +123,7 @@ export class AuthService {
   }
 
   getAuthToken(): string | null {
-    return localStorage.getItem('authToken');
+    return sessionStorage.getItem('authToken');
   }
 
   getAuthHeaders(): { Authorization: string } {
@@ -132,8 +132,8 @@ export class AuthService {
   }
 
   clearAuthData(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('username');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('username');
   }
 
   private handleLogoutSuccess(): void {
