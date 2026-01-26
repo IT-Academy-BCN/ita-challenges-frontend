@@ -234,14 +234,8 @@ export class ChallengeHeaderComponent implements OnInit {
     modalRef.componentInstance.solutionText = this.solutionText; 
 
     modalRef.componentInstance.mentorSolutionProvided.subscribe(() => {
-      this.onMentorSolutionShowed();
+      this.onSolutionAccepted();
     })
-  }
-
-  onMentorSolutionShowed(): void {
-    this.solutionSent = true; 
-    this.activeId = ChallengeTab.SOLUTIONS;
-    this.loadUserSolutionStatus()
   }
 
   toggleFavorite (): void {
