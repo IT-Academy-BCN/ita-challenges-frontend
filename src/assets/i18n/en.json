@@ -144,6 +144,7 @@
             "solution": {
                 "title": "Are you sure?",
                 "description":"Once the code is sent it cannot be edited" ,
+                "description_showSolution":"Once you view the IT Academy solution, you can no longer submit your own solution." ,
                 "btn-accept": "Accept",
                 "btn-cancel": "Cancel"
             },
@@ -199,7 +200,8 @@
 },
     "status": {
         "IN_PROGRESS": "In progress",
-        "SUBMITTED_COMPLETE": "Completed"
+        "SUBMITTED_COMPLETE": "Completed",
+        "SUBMITTED_INCOMPLETE": "Completed without solution"
     },
     "common": {
         "all": "All"
