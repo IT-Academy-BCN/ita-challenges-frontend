@@ -471,22 +471,22 @@ describe('ChallengeInfoComponent', () => {
     expect(solutionChangedSpy).toHaveBeenCalledWith(newSolution);
   });
   describe('Official Solution Visibility', () => {
-    it('should return false for shouldShowOfficialSolution when status is NOT_STARTED', () => {
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is NOT_STARTED', () => {
       component.userSolutionStatus = SolutionStatus.NOT_STARTED
       expect(component.shouldShowOfficialSolution()).toBe(false)
     })
 
-    it('should return false for shouldShowOfficialSolution when status is IN_PROGRESS', () => {
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is IN_PROGRESS', () => {
       component.userSolutionStatus = SolutionStatus.IN_PROGRESS
       expect(component.shouldShowOfficialSolution()).toBe(false)
     })
 
-    it('should return true for shouldShowOfficialSolution when status is SHOW_SOLUTION', () => {
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is SHOW_SOLUTION', () => {
       component.userSolutionStatus = SolutionStatus.SHOW_SOLUTION
       expect(component.shouldShowOfficialSolution()).toBe(true)
     })
 
-    it('should return true for shouldShowOfficialSolution when status is ENDED', () => {
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is ENDED', () => {
       component.userSolutionStatus = SolutionStatus.ENDED
       expect(component.shouldShowOfficialSolution()).toBe(true)
     })
