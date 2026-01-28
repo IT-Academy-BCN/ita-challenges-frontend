@@ -7,6 +7,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
+
 - Synchronize status logic for challenges.
 - The statuses are displayed correctly in the Challenge details and Challenges list.
 - The Show solution button works as expected and triggers appropriate user notification.
@@ -14,19 +15,24 @@ and this project adheres to
 ### [ita-challenges-frontend-3.14.3-RELEASE] - 2025-12-15
 
 ### Fixed
+
 -Fix Loop solved in challenges, PR#921
+
 - When solving the second challenge, errors occurred that resulted in a loop.
 - `challenge-info.component`, `send-solution-modal.component`, and `solution.service` were adjusted.
 - The loop no longer occurs, and both solutions to the challenge are now displayed correctly.
 
 ### [ita-challenges-frontend-3.14.2-RELEASE] - 2025-12-11
+
 ### Changed
+
 - Fix user solutions loading to display correctly per challenge (Taiga[#910],PR [#725]).
   Before the solution text flowed over the challenges. Now it there is an http request for each challenge to show solutions.
 
-
 ### [ita-challenges-frontend-3.14.1-RELEASE] - 2025-12-11
+
 ### Changed
+
 - Updated enviroment.ts and environment.prod.ts to point to the new backend URL (Taiga[#911],PR [#1054]).
 - Updated challenge.service.spec.ts to test the new backend URL
 - Updated challenge.service.ts to point to the new backend URL
@@ -34,245 +40,295 @@ and this project adheres to
 ### [ita-challenges-frontend-3.14.0-RELEASE] - 2025-12-04
 
 ### Fixed
+
 - Ensure deployment of the new “Show solution” feature introduced in PR#718.  
   The previous version did not include the version bump, so the functionality (new status `SHOW_SOLUTION` and updated ChallengeHeader logic) was not deployed.
 
 ### [ita-challenges-frontend-3.13.0-RELEASE] - 2025-11-27
 
 ### Fixed
+
 - Refactors the submission flow so the frontend sends only user actions (SAVE, SUBMIT, GIVE_UP) (Taiga[#888],PR [#717]).
 
 ### [ita-challenges-frontend-3.12.0-RELEASE] - 2025-11-25
 
 ### Fixed
+
 - Made challenge filters collapsible and hidden by default (Taiga[#894],PR [#715]).
 
 ### [ita-challenges-frontend-3.11.5-RELEASE] - 2025-11-19
 
 ### Fixed
+
 - Fixed Main container size adjusted to hold all the screen, resolving issues with challenge list scrollbars (Taiga[#876],PR [#714]).
 
 ### [ita-challenges-frontend-3.11.4-RELEASE] - 2025-11-13
 
 ### Fixed
+
 - Fix edit challenge. Tags have to be preselected and required. Now when you edit the challenge
-original tags appear and the endpoint accepts the challenge, no duplicated challenge (Taiga[#845],PR [#709]).
+  original tags appear and the endpoint accepts the challenge, no duplicated challenge (Taiga[#845],PR [#709]).
 
 ### [ita-challenges-frontend-3.11.3-RELEASE] - 2025-11-13
 
 ### Added
+
 - The challenge list memory is now updated when a challenge is added (Taiga[#830], PR [#711]).
 
 ### [ita-challenges-frontend-3.11.2-RELEASE] - 2025-11-11
 
 ### Fixed
+
 - Fixed the title for Edit Challenge form to display accordingly(was displaying create challenge insted of edit challenge) (Taiga[#830], PR [#710]).
-
-
 
 ### [ita-challenges-frontend-3.11.1-RELEASE] - 2025-11-06
 
 ### Fixed
+
 - Remove unwanted breadcrumbs from create challenge and edit channel forms (Taiga[#828], PR [#708]).
- 
+
 ### [ita-challenges-frontend-3.11.0-RELEASE] - 2025-10-14
 
 ### Added
+
 - Integrated CommonModalService into ChallengeFormComponent to show loading/success/error modals when creating a new challenge (Taiga[#737], PR [#702]).
 
 ### [ita-challenges-frontend-3.10.0-RELEASE] - 2025-10-14
 
 ### Added
+
 - Integrated CommonModalService into ChallengeHeaderComponent to display login-required modal for unauthenticated users (Taiga[#733], PR [#701]).
 
 ### [ita-challenges-frontend-3.9.0-RELEASE] - 2025-10-14
 
 ### Added
+
 - Created a centralized CommonModalService that encapsulates SweetAlert2 and provides reusable modal methods (login, loading, success, error) (Taiga[#729], PR [#697]).
 
 ### [ita-challenges-frontend-3.8.0-RELEASE] - 2025-10-07
 
 ### Added
+
 - Applied tag-based filtering by language in the Starter view, allowing users to filter challenges dynamically by selected tags. (Taiga [#769], PR [#700])
 
 ### [ita-challenges-frontend-3.7.0-RELEASE] - 2025-10-06
 
 ### Added
+
 - Using the edit service Mentor can edit a current challenge by clicking on edit button (Taiga [#658], PR [#691]).
 
 ### [ita-challenges-frontend-3.6.0-RELEASE] - 2025-09-23
 
 ### Added
+
 - Rendered tags by language in the filter panel (Taiga [#669], PR [#696]).
 
 ### [ita-challenges-frontend-3.5.0-RELEASE] - 2025-09-15
 
 ### Added
+
 - Added update service challenge for mentor, just to modify the old version of the challenge, and save it on the db (Taiga [#659], PR [#690]).
 
 ### [ita-challenges-frontend-3.4.1-RELEASE] - 2025-09-14
 
 ### Added
+
 - Added languages for the error message when submiting new challenge without any selected tags (Taiga [#662], PR [695]).
 
 ### [ita-challenges-frontend-3.4.0-RELEASE] - 2025-09-14
 
 ### Changed
+
 - Added provisional error message when submiting new challenge without any selected tags (Taiga [#653], PR [686]).
 
 ### [ita-challenges-frontend-3.3.2-RELEASE] - 2025-07-30
 
 ### Changed
+
 - Changed error message on register users modal when user already exists (Taiga [#606], PR [#682]).
 
 ### [ita-challenges-frontend-3.3.1-RELEASE] - 2025-07-30
 
 ### Fixed
+
 - Fixed errors where 'Create challenge' button's text got changed to 'Bookmarks' (Taiga [#607], PR [#681]).
 
 ### [ita-challenges-frontend-3.3.0-RELEASE] - 2025-07-28
 
 ### Added
+
 - Remove mocked logic and connected register users modal to backend (Taiga [#606], PR [#679]).
 
 ### [ita-challenges-frontend-3.2.3-RELEASE] - 2025-07-24
 
 ### Fixed
+
 - Fixed an error where user couldn't access the challenge editor trom a tab other than `Details` (Taiga [#632], PR [#677]).
 
 ### [ita-challenges-frontend-3.2.2-RELEASE] - 2025-07-24
 
 ### Added
+
 - Integrated real endpoint to fetch a related challenge from other one using a service (Taiga [#600], PR [#676]).
 
 ### [ita-challenges-frontend-3.2.1-RELEASE] - 2025-07-23
 
 ### Added
+
 - Implemented bookmarks to the bookmarks view (Taiga [#597], PR [#674]).
 
 ### [ita-challenges-frontend-3.2.0-RELEASE] - 2025-07-23
 
 ### Added
+
 - Implemented `bookmarks` view this is just the page there is no funcionality extras (Taiga [#597], PR [#674]).
+
 ### [ita-challenges-frontend-3.1.57-RELEASE] - 2025-07-23
 
 ### Changed
-- Updated sidebar layout. Simplified top section to 'Start', 'Challenges', 'CodeConnect'. And changed bottom section fore logged-in users to 'Bookmarks' and 'Favorites'   (Taiga [#607], PR [#673])
+
+- Updated sidebar layout. Simplified top section to 'Start', 'Challenges', 'CodeConnect'. And changed bottom section fore logged-in users to 'Bookmarks' and 'Favorites' (Taiga [#607], PR [#673])
 
 ### [ita-challenges-frontend-3.1.56-RELEASE] - 2025-07-21
 
 ### Added
+
 - Mocking the logic for user registration through the modal (Taiga [#558], PR [#669])
 
 ### [ita-challenges-frontend-3.1.55-RELEASE] - 2025-07-21
 
 ### Added
+
 - Added button to open the register modal on mobile and text in the three languages (Taiga [#578], PR [#661])
 
 ### [ita-challenges-frontend-3.1.54-RELEASE] - 2025-07-21
 
 ### Added
+
 - Display visual indicators of each challenge's solution status (e.g., 'In progress', 'Completed') using the data from the user's solution map. (Taiga [#549], PR [#664])
 
 ### [ita-challenges-frontend-3.1.53-RELEASE] - 2025-07-16
 
 ### Added
+
 - Fetch and store user challenge solution statuses to enable UI updates based on progress. (Taiga [#573], PR [#663])
 
 ### [ita-challenges-frontend-3.1.52-RELEASE] - 2025-07-16
 
 ### Changed
+
 - Allow students to save a partial solution and continue editing it later. When returning to a challenge with a saved draft, the editor loads the user’s previous progress instead of the mentor’s solution. (Taiga [#547], PR [#662])
 
 ### [ita-challenges-frontend-3.1.51-RELEASE] - 2025-07-04
 
 ### Added
+
 - Added the interface for the user register modal (Taiga [#554], PR [#658])
 
 ### [ita-challenges-frontend-3.1.50-RELEASE] - 2025-06-27
 
 ### Changed
-- I changed the breadcrumb for a link that redirects to challenges list. imported an existing svg instead of using the whole svg code in html file  (Taiga [#574], PR [#665])
+
+- I changed the breadcrumb for a link that redirects to challenges list. imported an existing svg instead of using the whole svg code in html file (Taiga [#574], PR [#665])
+
 ### [ita-challenges-frontend-3.1.49-RELEASE] - 2025-06-27
 
 ### Changed
+
 - Modified sidebar menu. Now appears missing components according figma's document (Taiga [#577], PR [#668])
+
 ### [ita-challenges-frontend-3.1.48-RELEASE] - 2025-06-27
 
 ### Changed
+
 - Icons corrected postition according figma's document: at the list of challenges and the description of challenges (Taiga [#576], PR [#667])
+
 ### [ita-challenges-frontend-3.1.47-RELEASE] - 2025-06-27
+
 ### Changed
+
 - Updated the Save button style According Figma's document using the Style.css component (Taiga [#575], PR [#666])
 
 ### [ita-challenges-frontend-3.1.46-RELEASE] - 2025-06-27
 
 ### Changed
+
 - Reviewed the entire mentor workflow (ADMIN role): ensured no console or network errors across mentor views and improved visual consistency according to design (Taiga [#529], PR [#653])
 
 ### [ita-challenges-frontend-3.1.45-RELEASE] - 2025-06-25
 
 ### Fixed
+
 - Hide "Start challenge" button when the user role is ADMIN (Taiga [#527], PR [#651])
 
 ### [ita-challenges-frontend-3.1.44-RELEASE] - 2025-06-25
 
 ### Fixed
+
 - Removed console errors in challenge views (Taiga [#528], PR [#652])
 
 ### [ita-challenges-frontend-3.1.43-RELEASE] - 2025-06-21
 
 ### Changed
+
 - Refactored `ChallengeHeaderComponent` to remove localStorage usage for user solutions and use backend status instead (Taiga [#518], PR [#650]).
 - Prevented students from submitting or saving a challenge if a solution has already been submitted. Display a “Solution submitted” message when applicable (Taiga [#518], PR [#650]).
 
 ### [ita-challenges-frontend-3.1.42-RELEASE] - 2025-06-20
 
 ### 🆕 Added
+
 - Integrated real endpoint to fetch tags by languageId in challenge form (Taiga [#477], PR [#647]).
 
 ### [ita-challenges-frontend-3.1.41-RELEASE] - 2025-06-16
 
 ### Added
+
 - Implemented `CustomDatePipe` to format challenge creation dates in short format for Catalan, Spanish, and English (Taiga [#497], PR [#649]).
 
 ### Changed
-- Updated challenge-card and challenge-header components to use the new pipe (Taiga [#497], PR [#649]).
 
+- Updated challenge-card and challenge-header components to use the new pipe (Taiga [#497], PR [#649]).
 
 ### [ita-challenges-frontend-3.1.40-RELEASE] - 2025-06-16
 
 ### Fixed
+
 - Fixed multiple initializations of CodeMirror in editor-challenge and removed localStorage retrieval (Taiga [#509], PR [#646])
 
 ### [ita-challenges-frontend-3.1.39-RELEASE] - 2025-06-16
 
 ### Fixed
+
 - Prevented function execution in solution-tab before userId is available, improved error handling in service, and fixed UI display issues (Taiga [#512], PR [#648])
 
 ### [ita-challenges-frontend-3.1.38-RELEASE] - 2025-06-16
 
 ### Changed
+
 - Added translation support to challenge-form: replaced static text with translation keys and updated language JSONs (Taiga [#503], PR [#645])
 
 ### [ita-challenges-frontend-3.1.37-RELEASE] - 2025-06-16
 
 ### Changed
+
 - Visual refactor of icons in `challenge-card` (rocket icon, hover effects, and layout reorder). (Taiga [#487], PR [#638])
 
 ### [ita-challenges-frontend-3.1.36-RELEASE] - 2025-06-10
 
 ### Fixed
+
 - Configuration for SonarCloud compatibility: added sonar-project.properties with coverage paths and exclusions (Taiga [#493], PR [#641])
 - Fixed missing braces in en.json and es.json (Taiga [#492], PR [#642])
 
 ### Changed
+
 - Refactored challenge-form service and component to load tags based on selected language (Taiga [#470], PR [#637])
 - Visual refactor of icons in `challenge-header` (rocket icon, hover effects, tooltip, and layout reorder). (Taiga [#471], PR [#640])
 
 ### [ita-challenges-frontend-3.1.35-RELEASE] - 2025-05-28
 
-- [Added] 
+- [Added]
 
 - Toggle Switch role (#400)
 - Added logic to allow user role switching (#401)
@@ -291,7 +347,7 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 
 - Cleanup pagination logic
 
-- Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge. 
+- Mentors can like/unlike challenges and view their liked challenges and see number of likes on each challenge.
 
 - "Volver a retos" link added
 
@@ -312,7 +368,6 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 ### [ita-challenges-frontend-3.1.30-RELEASE] (2024-11-20) (feature#472)
 
 - Fix sending solution after login
-
 
 ### [ita-challenges-frontend-3.1.29-RELEASE] (2024-11-20) (feature#463)
 
@@ -350,7 +405,6 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 
 - Dropdown menu in the ChallengeInfoComponent mobile version with Details, Solutions, Resources, Related
 
-
 ### [ita-challenges-frontend-3.1.0-RELEASE] (2024-11-04) (feature#271)
 
 - Solution tab redirection.
@@ -367,35 +421,35 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 
 ### [ita-challenges-frontend-3.1.17-RELEASE]
 
-* Added link to breadcrumb in challenge screen
+- Added link to breadcrumb in challenge screen
 
 ### [ita-challenges-frontend-3.1.16-RELEASE]
 
-* Included scroll into Challenge Screen [Mobile Version]
+- Included scroll into Challenge Screen [Mobile Version]
 
 ### [ita-challenges-frontend-3.1.15-RELEASE]
 
-* Fix TS version over CI
+- Fix TS version over CI
 
 ### [ita-challenges-frontend-3.1.13-RELEASE]
 
-* Hide progression filter if user is not logged in
+- Hide progression filter if user is not logged in
 
 ### [ita-challenges-frontend-3.1.10-RELEASE]
 
-- Capture user solution 
+- Capture user solution
 
 ### [ita-challenges-frontend-3.1.9-RELEASE] - 2024-10-08 (feature#300)
 
 - Refactoring: Creación de User Service
 
 ### [ita-challenges-frontend-3.1.8-RELEASE]
+
 - Several fixes in challenges screen
 
-### [ita-challenges-frontend-3.1.7-RELEASE] 
+### [ita-challenges-frontend-3.1.7-RELEASE]
 
 - Added scroll by overflow
-  
 
 ### [ita-challenges-frontend-3.1.6-RELEASE]
 
@@ -403,7 +457,7 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 
 ### [ita-challenges-frontend-3.1.5-RELEASE]
 
-- Reviewing of icons difficulty-off/on 
+- Reviewing of icons difficulty-off/on
 
 ### [ita-challenges-frontend-3.1.4-RELEASE]
 
@@ -440,7 +494,7 @@ original tags appear and the endpoint accepts the challenge, no duplicated chall
 
 ### [ita-challenges-frontend-2.13.1-RELEASE] - 2024-05-16 (feature#328)
 
-- Verified component display with /register true 
+- Verified component display with /register true
 
 ### [ita-challenges-frontend-2.13.0-RELEASE] - 2024-05-15 (feature#331)
 
