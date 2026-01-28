@@ -13,6 +13,7 @@ import { CommonModalService } from "src/app/services/common-modal.service";
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 import { UserSolution } from 'src/app/models/user-solution.interface'
 import { ToastrService } from 'ngx-toastr'
+import { ShowSolutionModalComponent } from 'src/app/modules/modals/show-solution-modal/show-solution-modal.component'
 
 @Component({
   selector: 'app-challenge-header',
@@ -27,6 +28,7 @@ export class ChallengeHeaderComponent implements OnInit {
     private readonly route: ActivatedRoute
     
   ) {}
+
   public SolutionStatus = SolutionStatus;
   private readonly challengeService = inject(ChallengeService)
   private readonly solutionService = inject(SolutionService)
@@ -181,6 +183,7 @@ export class ChallengeHeaderComponent implements OnInit {
   onSolutionAccepted(): void {
     this.solutionSent = true; 
     this.activeId = ChallengeTab.SOLUTIONS;
+    this.loadUserSolutionStatus()
   }
 
   get currentLang (): string {
@@ -223,30 +226,18 @@ export class ChallengeHeaderComponent implements OnInit {
   }
 
   showSolution(): void {
-    if (this.userId === null) {
-      console.error("User ID is missing. Cannot show solution.");
-      return;
-    }
-    this.solutionService.submitSolution(
-      this.idChallenge,
-      this.languageId,
-      this.userId,
-      SolutionAction.SEE_SOLUTION,
-      this.solutionText
-    ).subscribe({
-      next: (response: UserSolution) => {
-        const solutionText = response?.solution_text ?? '';        
-        this.solutionService.solutionText(solutionText);
-        this.solutionService.updateSolutionSentState(true);
-        this.solutionService.activeIdSubject.next(ChallengeTab.SOLUTIONS);
-        this.solutionService.completeChallenge(this.idChallenge);
+    const modalRef = this.modalService.open(ShowSolutionModalComponent, {
+      centered: true,
+      size: 'md'
+    })
+    modalRef.componentInstance.idChallenge = this.idChallenge;
+    modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.status = this.SolutionStatus.SHOW_SOLUTION;
+    modalRef.componentInstance.solutionText = this.solutionText; 
 
-        this.loadUserSolutionStatus()
-      },
-      error: (error) => {
-        console.error('Error submitting solution:', error);
-      }
-    });
+    modalRef.componentInstance.mentorSolutionProvided.subscribe(() => {
+      this.onSolutionAccepted();
+    })
   }
 
   toggleFavorite (): void {

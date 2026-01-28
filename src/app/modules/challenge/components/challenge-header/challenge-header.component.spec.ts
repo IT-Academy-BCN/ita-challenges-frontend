@@ -440,64 +440,57 @@ describe('ChallengeHeaderComponent', () => {
     expect(startChallengeSpy).toHaveBeenCalledWith(true);
   });
 
-it('should log error and return when userId is null', () => {
-  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+it('should open show solution modal', () => {
+  const mockModalRef = {
+    componentInstance: {
+      idChallenge: '',
+      userId: '',
+      status: null,
+      solutionText: '',
+      mentorSolutionProvided: new EventEmitter<void>(),
+    } 
+  };
 
-  component.userId = null;
+  jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
 
-  component.showSolution();
-
-  expect(consoleSpy).toHaveBeenCalledWith(
-    "User ID is missing. Cannot show solution."
-  );
-  expect(solutionService.submitSolution).not.toHaveBeenCalled();
-});
-
-  it('should call submitSolution with SEE_SOLUTION action', () => {
-  const mockResponse = {solution_text: 'some text'} as any;
-
-  const submitSpy = jest
-    .spyOn(solutionService, 'submitSolution')
-    .mockReturnValue(of(mockResponse));
-
-  const solutionTextSpy = jest.spyOn(solutionService, 'solutionText');
-  const updateSentSpy = jest.spyOn(solutionService, 'updateSolutionSentState');
-  const activeTabSpy = jest.spyOn(solutionService.activeIdSubject, 'next');
-  const completeSpy = jest.spyOn(solutionService, 'completeChallenge');
-  const loadStatusSpy = jest.spyOn(component, 'loadUserSolutionStatus');
-
-  component.idChallenge = 'challenge1';
-  component.languageId = 'lang1';
+  component.idChallenge = 'testChallengeId';
   component.userId = 'user1';
   component.solutionText = 'solution text';
 
   component.showSolution();
 
-  expect(submitSpy).toHaveBeenCalledWith(
-    'challenge1',
-    'lang1',
-    'user1',
-    SolutionAction.SEE_SOLUTION,
-    'solution text'
-  );
-
-  expect(solutionTextSpy).toHaveBeenCalledWith('some text');
-  expect(updateSentSpy).toHaveBeenCalledWith(true);
-  expect(activeTabSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
-  expect(completeSpy).toHaveBeenCalledWith('challenge1');
-  expect(loadStatusSpy).toHaveBeenCalled();
+  expect(mockModalRef.componentInstance.idChallenge).toBe('testChallengeId');
+  expect(mockModalRef.componentInstance.userId).toBe('user1');
+  expect(mockModalRef.componentInstance.solutionText).toBe('solution text');
 });
 
-it('should use empty string when solution_text is null', () => {
-  component.userId = '55';
+it('should set solutionSent to true and activeId to SOLUTIONS when mentorSolutionProvided is emitted', () => {
+  const mockModalRef = {
+    componentInstance: {
+      idChallenge: '',
+      userId: '',
+      status: null,
+      solutionText: '',
+      mentorSolutionProvided: new EventEmitter<void>(),
+    } 
+  };
 
-  const response = { solution_text: null } as unknown as UserSolution;
+  jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as any);
 
-  solutionService.submitSolution.mockReturnValue(of(response));
+  component.idChallenge = 'testChallengeId';
+  component.userId = 'user1';
+  component.solutionText = 'solution text';
 
   component.showSolution();
 
-  expect(solutionService.solutionText).toHaveBeenCalledWith('');
+  expect(component.solutionSent).toBe(false);
+  expect(component.activeId).not.toBe(ChallengeTab.SOLUTIONS);
+
+  mockModalRef.componentInstance.mentorSolutionProvided.emit();
+
+  expect(component.solutionSent).toBe(true);
+  expect(component.activeId).toBe(ChallengeTab.SOLUTIONS);
 });
+
 
 })

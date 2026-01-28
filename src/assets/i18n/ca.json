@@ -143,6 +143,7 @@
             "solution": {
                 "title": "Estàs segur?",
                 "description":"Un cop enviat el codi no es pot editar" ,
+                "description_showSolution":"Un cop visualitzis la solució de l'IT Academy, ja no podràs enviar la teva pròpia solució." ,
                 "btn-accept": "Acceptar",
                 "btn-cancel": "Cancel.lar"
             },
@@ -199,7 +200,8 @@
 },
     "status": {
         "IN_PROGRESS": "En progrés",
-        "SUBMITTED_COMPLETE": "Completat"
+        "SUBMITTED_COMPLETE": "Completat",
+        "SUBMITTED_INCOMPLETE": "Completat sense resoldre"
     },
     "common": {
         "all": "Tots"

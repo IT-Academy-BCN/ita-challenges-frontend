@@ -1,0 +1,139 @@
+import { type ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ShowSolutionModalComponent } from './show-solution-modal.component';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { SolutionService } from 'src/app/services/solution.service';
+import { ChallengeService } from 'src/app/services/challenge.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { of, throwError } from 'rxjs';
+import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum';
+import { SolutionAction } from 'src/app/models/user-solution-action.enum';
+
+describe('ShowSolutionModalComponent', () => {
+  let component: ShowSolutionModalComponent;
+  let fixture: ComponentFixture<ShowSolutionModalComponent>;
+
+  let modalServiceMock: any;
+  let solutionServiceMock: any;
+  let challengeServiceMock: any;
+  let authServiceMock: any;
+
+  const solutionData = {
+    idChallenge: 'test-challenge-id',
+    languageId: 'test-language-id',
+    solutionText: 'Test solution text',
+    userId: 'test-user-id',
+    action: SolutionAction.SEE_SOLUTION
+  };
+
+  // ======== Helpers ========
+  function fillComponentData() {
+    component.idChallenge = solutionData.idChallenge;
+    component.languageId = solutionData.languageId;
+    component.solutionText = solutionData.solutionText;
+    component.userId = solutionData.userId;
+  }
+
+  function expectSubmitSolutionCalled(action: SolutionAction) {
+    expect(solutionServiceMock.submitSolution).toHaveBeenCalledWith(
+      solutionData.idChallenge,
+      solutionData.languageId,
+      solutionData.userId,
+      action,
+      solutionData.solutionText
+    );
+    expect(solutionServiceMock.updateSolutionSentState).toHaveBeenCalledWith(true);
+    expect(solutionServiceMock.activeIdSubject.next).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
+    expect(solutionServiceMock.completeChallenge).toHaveBeenCalledWith(solutionData.idChallenge);
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+  }
+
+  function setupErrorSubmitSolution(error: Error) {
+    solutionServiceMock.submitSolution = jest.fn().mockReturnValue(throwError(() => error));
+    return jest.spyOn(console, 'error').mockImplementation(() => {});
+  }
+
+  // ======== Setup ========
+  beforeEach(async () => {
+    modalServiceMock = { dismissAll: jest.fn(), open: jest.fn() };
+    solutionServiceMock = {
+      submitSolution: jest.fn().mockReturnValue(of({})),
+      updateSolutionSentState: jest.fn(),
+      solutionText: jest.fn(),
+      activeIdSubject: { next: jest.fn() },
+      completeChallenge: jest.fn()
+    };
+    challengeServiceMock = {
+      getChallengeById: jest.fn().mockReturnValue(of({ languages: [{ id_language: 'testLanguageId' }] }))
+    };
+    authServiceMock = { getUserId: jest.fn().mockReturnValue(of('testUserId')) };
+
+    await TestBed.configureTestingModule({
+      declarations: [ShowSolutionModalComponent],
+      imports: [NgbModule, TranslateModule.forRoot()],
+      providers: [
+        { provide: NgbModal, useValue: modalServiceMock },
+        { provide: SolutionService, useValue: solutionServiceMock },
+        { provide: ChallengeService, useValue: challengeServiceMock },
+        { provide: AuthService, useValue: authServiceMock }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ShowSolutionModalComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  // ======== Tests ========
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should receive userId as input', () => {
+    component.userId = 'testUserId';
+    expect(component.userId).toBe('testUserId');
+  });
+
+  it('should call getLanguageId and set languageId correctly', fakeAsync(() => {
+    component.getLanguageId();
+    tick();
+    expect(challengeServiceMock.getChallengeById).toHaveBeenCalled();
+    expect(component.languageId).toBe('testLanguageId');
+  }));
+
+  it('should call submitSolution when mentorSolutionShowed is called', fakeAsync(() => {
+    fillComponentData();
+    component.mentorSolutionShowed();
+    tick();
+    expectSubmitSolutionCalled(SolutionAction.SEE_SOLUTION);
+  }));
+
+  it('should dismiss the modal when closeModal is called', () => {
+    component.closeModal();
+    expect(modalServiceMock.dismissAll).toHaveBeenCalled();
+  });
+
+  it('should handle error when submitSolution fails', fakeAsync(() => {
+    fillComponentData();
+    const error = new Error('Failed to show solution');
+    const consoleSpy = setupErrorSubmitSolution(error);
+
+    component.mentorSolutionShowed();
+    tick();
+
+    expect(solutionServiceMock.submitSolution).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith('Error showing solution:', error);
+    expect(solutionServiceMock.updateSolutionSentState).not.toHaveBeenCalled();
+    expect(modalServiceMock.dismissAll).not.toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
+  }));
+
+  it('should emit mentorSolutionProvided when mentorSolutionShowed succeeds', fakeAsync(() => {
+    fillComponentData();
+    const emitSpy = jest.spyOn(component.mentorSolutionProvided, 'emit');
+    component.mentorSolutionShowed();
+    tick();
+    expect(emitSpy).toHaveBeenCalledWith(true);
+  }));
+});
