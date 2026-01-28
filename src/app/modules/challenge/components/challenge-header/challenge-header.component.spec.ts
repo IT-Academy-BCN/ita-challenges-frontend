@@ -17,6 +17,7 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { CommonModalService } from 'src/app/services/common-modal.service';
 import { SolutionAction } from 'src/app/models/user-solution-action.enum';
 import { UserSolution } from 'src/app/models/user-solution.interface';
+import { ToastrService } from 'ngx-toastr';
 
 describe('ChallengeHeaderComponent', () => {
   let component: ChallengeHeaderComponent;
@@ -27,6 +28,7 @@ describe('ChallengeHeaderComponent', () => {
   let authService: jest.Mocked<AuthService>;
   let solutionService: jest.Mocked<SolutionService>;
   let mockCommonModalService: jest.Mocked<CommonModalService>;
+  let mockToastrService: any;
 
   beforeEach(async () => {
     const mockRouter = { navigate: jest.fn() } as any;
@@ -65,6 +67,13 @@ describe('ChallengeHeaderComponent', () => {
       completeChallenge: jest.fn(),
     } as any
 
+    mockToastrService = {
+      success: jest.fn(),
+      error: jest.fn(),
+      info: jest.fn(),
+      warning: jest.fn()
+    };
+
     await TestBed.configureTestingModule({
       declarations: [ChallengeHeaderComponent],
       imports: [I18nModule, DynamicTranslatePipe, CustomDatePipe],
@@ -80,6 +89,7 @@ describe('ChallengeHeaderComponent', () => {
         { provide: AuthService, useValue: authService },
         { provide: SolutionService, useValue: solutionService },
         { provide: CommonModalService, useValue: mockCommonModalService },
+        { provide: ToastrService, useValue: mockToastrService },
       ],
     }).compileComponents();
 
@@ -296,6 +306,7 @@ describe('ChallengeHeaderComponent', () => {
     component.userId = 'user1';
     component.saveChallenge();
     expect(spy).toHaveBeenCalledWith('challenge1', 'lang1', 'user1', SolutionAction.SAVE_DRAFT, 'solution');
+    expect(mockToastrService.success).toHaveBeenCalledWith('messages.success.draft_saved')
   });
 
   it('should not save challenge if data is missing', () => {

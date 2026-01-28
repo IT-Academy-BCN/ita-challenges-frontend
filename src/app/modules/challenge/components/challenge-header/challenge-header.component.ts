@@ -12,6 +12,7 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 import { UserSolution } from 'src/app/models/user-solution.interface'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-challenge-header',
@@ -31,6 +32,7 @@ export class ChallengeHeaderComponent implements OnInit {
   private readonly solutionService = inject(SolutionService)
   private readonly authService = inject(AuthService)
   private readonly commonModalService = inject(CommonModalService)
+  private readonly toastr = inject(ToastrService)
 
   public userId: string | null = null;
   public userRole: string | null = null;
@@ -209,6 +211,7 @@ export class ChallengeHeaderComponent implements OnInit {
     ).subscribe({
       next: (response: UserSolution) => {
         this.solutionState = response.status; 
+        this.toastr.success(this.translate.instant('messages.success.draft_saved')) 
       },
       error: (err) => {
         console.error(' Error saving solution', err);

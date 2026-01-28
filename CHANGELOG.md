@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-01-28
+
+### Added
+- Added toast notification when saving a challenge draft (Issue [#43](https://github.com/IT-Academy-BCN/ita-challenges/issues/43)) in challenge-header.component.ts.
+
 ### [ita-challenges-frontend-3.14.3-RELEASE] - 2025-12-15
 
 ### Fixed
