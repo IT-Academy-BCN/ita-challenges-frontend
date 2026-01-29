@@ -8,6 +8,12 @@ and this project adheres to
 
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
+### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
+
+### Fixed
+- Synchronize status logic for challenges.
+- The statuses are displayed correctly in the Challenge details and Challenges list.
+- The Show solution button works as expected and triggers appropriate user notification.
 
 ### [ita-challenges-frontend-3.14.3-RELEASE] - 2025-12-15
 

@@ -101,7 +101,6 @@ implements OnInit, OnDestroy {
     this.solutionService.solutionSent$.pipe(
   distinctUntilChanged() 
 ).subscribe((sent) => {
-  console.log('solutionSent$ (filtered):', sent);
   
   this.solutionSent = sent;
   if (sent) {
