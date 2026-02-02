@@ -143,6 +143,7 @@
             "solution": {
                 "title": "¿Estás segur@?",
                 "description":"Una vez enviado el código no se puede editar" ,
+                "description_showSolution":"Una vez que veas la solución de IT Academy, ya no podrás enviar tu propia solución." ,
                 "btn-accept": "Aceptar",
                 "btn-cancel": "Cancelar"
             },
@@ -198,7 +199,8 @@
 },
     "status": {
         "IN_PROGRESS": "En progreso",
-        "SUBMITTED_COMPLETE": "Completado"
+        "SUBMITTED_COMPLETE": "Completado",
+        "SUBMITTED_INCOMPLETE": "Completado sin resolver"
     },
     "common": {
         "all": "Todos"
