@@ -5,13 +5,15 @@ import { FiltersModalComponent } from './filters-modal/filters-modal.component'
 import { RegisterUsersModalComponent } from './register-users-modal/register-users-modal.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { FormsModule } from '@angular/forms'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core';
+import { ShowSolutionModalComponent } from './show-solution-modal/show-solution-modal.component'
 
 @NgModule({
   declarations: [
     SendSolutionModalComponent,
     FiltersModalComponent,
-    RegisterUsersModalComponent
+    RegisterUsersModalComponent,
+    ShowSolutionModalComponent
   ],
   imports: [
     CommonModule,
