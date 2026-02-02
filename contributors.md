@@ -46,7 +46,6 @@
 - Vania Ferrer - https://github.com/vaniaferreresteban
 - Juan Delgado - https://github.com/soyjuandelgado
 - Arnau Pérez - https://github.com/Arnau-66
-- Giú Eminente - https://github.com/JungleGiu
 - Ana Lafuente - https://github.com/zanlamar
 - Ot Roca - https://github.com/otrocadev
 - Giú Eminente - https://github.com/JungleGiu
