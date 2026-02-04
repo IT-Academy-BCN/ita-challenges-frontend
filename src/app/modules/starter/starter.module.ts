@@ -12,11 +12,13 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component";
+import { LanguageFilterComponent } from './components/language-filter/language-filter.component';
 
 @NgModule({
   declarations: [
     StarterComponent,
-    StarterFiltersComponent
+    StarterFiltersComponent,
+    LanguageFilterComponent
   ],
   imports: [
     CommonModule,
