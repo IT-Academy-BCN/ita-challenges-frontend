@@ -9,17 +9,64 @@
   </div>
 
   <div class="modal-body">
-    <p class="m-0 text-muted">
-      Modal shell (Sub-task 1). Aquí irá dificultad / tags / estado en la siguiente tarea.
-    </p>
+    <div class="d-flex flex-column gap-4">
+      <section class="d-flex flex-column gap-2">
+        <h6 class="m-0 fw-bold">Dificultad</h6>
+        <div class="d-flex flex-wrap gap-2" role="group" aria-label="Dificultad">
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true">⚡</span>
+            Fácil
+          </button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true">⚡</span>
+            Media
+          </button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true">⚡</span>
+            Difícil
+          </button>
+        </div>
+      </section>
+
+      <section class="d-flex flex-column gap-2">
+        <h6 class="m-0 fw-bold">Tags</h6>
+        <div class="d-flex flex-wrap gap-2"></div>
+
+        <div class="input-group">
+          <span class="input-group-text bg-white" aria-hidden="true">🔎</span>
+          <input type="text" class="form-control" placeholder="Buscar tags" />
+        </div>
+      </section>
+
+      <section class="d-flex flex-column gap-2">
+        <h6 class="m-0 fw-bold">Estado</h6>
+        <div class="d-flex flex-wrap gap-2" role="group" aria-label="Estado">
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#6c757d"></span>
+            Nuevos
+          </button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#0d6efd"></span>
+            En curso
+          </button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#198754"></span>
+            Hechos
+          </button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+            <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#dc3545"></span>
+            No resueltos
+          </button>
+        </div>
+      </section>
+    </div>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onApply()">
-      Aplicar
-    </button>
-    <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
-      Cancelar
-    </button>
+    <div class="w-100 d-flex justify-content-end">
+      <button type="button" class="btn btn-primary px-4" (click)="onApply()">
+        Confirmar
+      </button>
+    </div>
   </div>
 </ng-template>
