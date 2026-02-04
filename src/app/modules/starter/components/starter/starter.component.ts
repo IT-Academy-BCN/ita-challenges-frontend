@@ -184,12 +184,13 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  changeSort(newSort: string): void {
-    this.sortBy = newSort
-    localStorage.setItem('sortBy', newSort)
-    if (newSort === 'popularity' || newSort === 'creation_date') {
-      this.selectedSort = newSort
-      this.refreshChallengeList()
+  changeSort (newSort: string): void {
+    if (newSort === 'popularity' || newSort === 'creation_date' || newSort === 'likes' || newSort === 'difficulty') {
+      if (this.selectedSort !== newSort) {
+        this.selectedSort = newSort
+        this.sortBy = newSort
+        this.refreshChallengeList()
+      }
     }
   }
 
@@ -197,17 +198,18 @@ export class StarterComponent implements OnInit {
     this.isAscending = isAscending
     this.refreshChallengeList()
   }
-  fetchUserSolutionsStatus(): void {
-  this.solutionService.fetchUserSolution().subscribe({
-    next: (solutions = []) => {
-      this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
-        statusMap[userSolution.uuid_challenge] = userSolution.status;
-        return statusMap;
-      }, {} as Record<string, SolutionStatus>);
-    },
-    error: (err) => {
-      console.error('Error fetching user solutions:', err);
-    }
-  });
-}
+
+  fetchUserSolutionsStatus (): void {
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (solutions = []) => {
+        this.solutionStatusMap = solutions.reduce<Record<string, SolutionStatus>>((statusMap, userSolution) => {
+          statusMap[userSolution.uuid_challenge] = userSolution.status
+          return statusMap
+        }, {})
+      },
+      error: (err) => {
+        console.error('Error fetching user solutions:', err)
+      }
+    })
+  }
 }

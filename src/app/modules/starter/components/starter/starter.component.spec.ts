@@ -135,22 +135,17 @@ describe('StarterComponent', () => {
     expect(component.challenges).toEqual(filteredChallenges)
   })
 
-  it('should change the sorting criterion and update isAscending and selectedSort correctly.', () => {
-    component.selectedSort = 'creation_date'
-    component.isAscending = false
+  it('should change the sorting criterion and update selectedSort correctly', () => {
+    component.selectedSort = 'popularity'
+    component.isAscending = true
     spyOn(component, 'refreshChallengeList')
-
-    // Cambia a un nuevo criterio de ordenación que no sea el actual
-    component.changeSort('popularity')
-
-    expect(component.selectedSort).toBe('popularity')
-    expect(component.isAscending).toBe(false)
-    expect(component.refreshChallengeList).toHaveBeenCalled()
-
-    // Cambia de nuevo al criterio de ordenación actual para verificar el cambio en isAscending
-    component.changeSort('popularity')
+    component.changeSort('creation_date')
+    expect(component.selectedSort).toBe('creation_date')
     expect(component.isAscending).toBe(true)
-    expect(component.refreshChallengeList).toHaveBeenCalledTimes(2)
+    expect(component.refreshChallengeList).toHaveBeenCalledTimes(1)
+
+    component.changeSort('creation_date')
+    expect(component.refreshChallengeList).toHaveBeenCalledTimes(1)
   })
 
   it('should update isAdmin flag when user role changes to ADMIN', () => {
