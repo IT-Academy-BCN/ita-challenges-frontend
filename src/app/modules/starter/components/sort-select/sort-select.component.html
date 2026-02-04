@@ -1,7 +1,7 @@
 <div class="dropdown">
   <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     <img src="assets/img/icon/sort.svg" alt="sort">
-    {{ 'modules.starter.main.section2.sort' | translate }}
+    {{ 'modules.starter.main.section3.sort' | translate }}
   </button>
   <ul class="dropdown-menu dropdown-menu-end p-0">
     <!-- Criteria -->
@@ -11,7 +11,7 @@
               [class.active]="sortBy === 'popularity'"
               (click)="selectSort('popularity')">
         <img src="assets/img/icon/times-performed.svg" alt="popularity" class="icon">
-        {{ 'modules.starter.main.section2.popularity' | translate }}
+        {{ 'modules.starter.main.section3.popularity' | translate }}
       </button>
     </li>
     <li>
@@ -19,7 +19,7 @@
               [class.active]="sortBy === 'creation_date'"
               (click)="selectSort('creation_date')">
         <img src="assets/img/icon/date.svg" alt="date" class="icon">
-        {{ 'modules.starter.main.section2.date' | translate }}
+        {{ 'modules.starter.main.section3.date' | translate }}
       </button>
     </li>
     <!-- Likes -->
@@ -28,7 +28,7 @@
               [class.active]="sortBy === 'likes'"
               (click)="selectSort('likes')">
         <img src="assets/img/icon/heart.svg" alt="likes" class="icon">
-        {{ 'modules.starter.main.section2.likes' | translate }}
+        {{ 'modules.starter.main.section3.likes' | translate }}
       </button>
     </li>
     
@@ -38,7 +38,7 @@
               [class.active]="sortBy === 'difficulty'"
               (click)="selectSort('difficulty')">
         <img src="assets/img/icon/difficulty-on.svg" alt="difficulty" class="icon">
-        {{ 'modules.starter.main.section2.difficulty' | translate }}
+        {{ 'modules.starter.main.section3.difficulty' | translate }}
       </button>
     </li>
     
@@ -50,7 +50,7 @@
               (click)="selectOrder(true)">
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
-                {{ 'modules.starter.main.section2.ascending' | translate }} 
+                {{ 'modules.starter.main.section3.ascending' | translate }} 
               </div>
         <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
       </button>
@@ -60,7 +60,7 @@
               (click)="selectOrder(false)">
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" alt="desc" class="icon">
-                {{ 'modules.starter.main.section2.descending' | translate }} 
+                {{ 'modules.starter.main.section3.descending' | translate }} 
               </div>
         <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
       </button>

@@ -131,10 +131,12 @@
             "main": {
                 "section1": "Filters",
                 "section2": {
+                    "title": "Challenges"
+                },
+                "section3": {
                     "sort": "Sort by",
-                    "title": "Challenges",
                     "popularity": "Popularity",
-                    "date": "Date",
+                    "date": "Creation date",
                     "likes": "Likes",
                     "difficulty": "Difficulty",
                     "ascending": "Ascending",
