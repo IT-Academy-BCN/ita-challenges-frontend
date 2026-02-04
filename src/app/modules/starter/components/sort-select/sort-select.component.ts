@@ -30,7 +30,7 @@ export class SortSelectComponent {
     difficulty: 'modules.starter.main.section3.difficulty'
   }
 
-  get currentSortLabel(): string {
+  get currentSortLabel (): string {
     return this.sortConfig[this.sortBy] ?? 'modules.starter.main.section3.sort'
   }
 }
