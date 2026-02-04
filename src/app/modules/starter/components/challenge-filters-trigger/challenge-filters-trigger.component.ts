@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject 
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 
+type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
+
 @Component({
   selector: 'app-challenge-filters-trigger',
   standalone: true,
@@ -12,20 +14,26 @@ import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 })
 
 export class ChallengeFiltersTriggerComponent {
-  @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [] }
-  @Output() filtersApplied = new EventEmitter<FilterChallenge>()
+
+  @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
+  @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
 
   private readonly modalService = inject(NgbModal)
 
+  private draftFilters: ModalFilters = { levels: [], tags: [], progress: [] }
+
   open(): void {
+    this.draftFilters = {
+      levels: [...this.initialFilters.levels],
+      tags: [...(this.initialFilters.tags ?? [])],
+      progress: [...this.initialFilters.progress]
+    }
     this.modalService.open(this.modalTemplate, { size: 'lg' })
   }
 
   onApply(): void {
-    // Sub-task 1: no implementamos todavía UI de filtros.
-    // Emitimos el estado actual (por ahora el initial) para validar wiring si se integra.
-    this.filtersApplied.emit(this.initialFilters)
+    this.filtersApplied.emit(this.draftFilters)
     this.modalService.dismissAll()
   }
 
