@@ -1,7 +1,7 @@
 <div class="dropdown">
   <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <img src="assets/img/icon/sort.svg" alt="sort">
-    {{ 'modules.starter.main.section3.sort' | translate }}
+    <img src="assets/img/icon/sort-selected.svg" [style.transform]="isAscending ? 'rotate(180deg)' : ''" alt="sort">
+    {{ currentSortLabel | translate }}
   </button>
   <ul class="dropdown-menu dropdown-menu-end p-0">
     <!-- Criteria -->
@@ -37,7 +37,7 @@
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'difficulty'"
               (click)="selectSort('difficulty')">
-        <img src="assets/img/icon/difficulty-on.svg" alt="difficulty" class="icon">
+        <img src="assets/img/icon/difficulty-off-gray.svg" alt="difficulty" class="icon">
         {{ 'modules.starter.main.section3.difficulty' | translate }}
       </button>
     </li>
@@ -48,21 +48,21 @@
     <li>
       <button class="dropdown-item d-flex align-items-center justify-content-between" 
               (click)="selectOrder(true)">
+        <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
                 {{ 'modules.starter.main.section3.ascending' | translate }} 
               </div>
-        <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
       </button>
     </li>
     <li>
       <button class="dropdown-item d-flex align-items-center justify-content-between" 
-              (click)="selectOrder(false)">
+              (click)="selectOrder(false)"> <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" alt="desc" class="icon">
                 {{ 'modules.starter.main.section3.descending' | translate }} 
               </div>
-        <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
+       
       </button>
     </li>
   </ul>

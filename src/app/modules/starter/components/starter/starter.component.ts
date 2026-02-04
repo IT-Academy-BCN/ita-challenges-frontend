@@ -32,12 +32,12 @@ export class StarterComponent implements OnInit {
   userRoleSubs$!: Subscription
   refreshSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
-  sortBy: string = ''
+  sortBy: string = 'popularity'
   challenge = Challenge
 
   listChallenges: Challenge[] = []
 
-  selectedSort: string = ''
+  selectedSort: string = 'popularity'
   isAscending: boolean = false
 
   isMobile: boolean = window.innerWidth < 768

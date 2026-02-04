@@ -22,4 +22,15 @@ export class SortSelectComponent {
       this.orderSelected.emit(isAscending)
     }
   }
+
+  private readonly sortConfig: Record<string, string> = {
+    popularity: 'modules.starter.main.section3.popularity',
+    creation_date: 'modules.starter.main.section3.date',
+    likes: 'modules.starter.main.section3.likes',
+    difficulty: 'modules.starter.main.section3.difficulty'
+  }
+
+  get currentSortLabel(): string {
+    return this.sortConfig[this.sortBy] ?? 'modules.starter.main.section3.sort'
+  }
 }
