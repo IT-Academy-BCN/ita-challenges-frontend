@@ -6,6 +6,7 @@ export const environment = {
   BACKEND_ITA_CHALLENGE_BASE_URL: '/itachallenge/api/v1',
   BACKEND_ITA_CHALLENGE_SOLUTION: '/challenge/solution',
   BACKEND_ITA_CHALLENGE_USER_SOLUTION: '/user/solution',
+  BACKEND_ITA_CHALLENGE_SUBMISSIONS: '/users/',
   BACKEND_USER_FAVORITES: '/user/users',
   BACKEND_USERINTERACTION_FAVORITES: '/userinteraction/favorites',
   BACKEND_ITA_CHALLENGE_TAGS: '/tags',

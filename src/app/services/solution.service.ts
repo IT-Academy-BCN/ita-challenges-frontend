@@ -78,33 +78,37 @@ export class SolutionService {
     this.solutionTextSubject.next(text);
   }
 
-  submitSolution(uuid_challenge: string, uuid_language: string, uuid_user: string, action: string, solution_text: string): Observable<any> {
-    const body = {
-      uuid_challenge,
-      uuid_language,
-      uuid_user,
-      solution_text,
-      action,
-    };
+  submitSolution(
+  uuid_challenge: string,
+  uuid_language: string,
+  uuid_user: string,
+  action: string,
+  solution_text: string
+): Observable<any> {
 
-    return this.http.put<any>(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}`,
-     body,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+  const body = {
+    uuid_challenge,
+    uuid_language,
+    action,
+    submission_text: solution_text,
+  };
+
+  const url =
+    `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}` +
+    `${environment.BACKEND_ITA_CHALLENGE_SUBMISSIONS}` +
+    `${uuid_user}/submissions`;
+
+  return this.http.post<SubmitSolutionResponse>(
+    url,
+    body,
+    {
+      headers: {
+        'Content-Type': 'application/json'
       }
-    ).pipe(
-      map((response: SubmitSolutionResponse) => {
-        return {
-          ...response,
-          isSolved: true,
-          timesSolved: response.timesSolved ?? 1
-        }
-      })
-    );
-  }
+    }
+  );
+}
+
 
   getUserSolution (challengeId: string, languageId: string): Observable<UserSolution> {
     return this.http.get<UserSolution>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`,
