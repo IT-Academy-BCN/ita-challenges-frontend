@@ -1,0 +1,61 @@
+<div class="dropdown">
+  <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="assets/img/icon/sort.svg" alt="sort">
+    {{ 'modules.starter.main.section2.sort' | translate }}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end p-0">
+    <!-- Criteria -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'popularity'"
+              (click)="selectSort('popularity')">
+        <img src="assets/img/icon/times-performed.svg" alt="popularity" class="icon">
+        {{ 'modules.starter.main.section2.popularity' | translate }}
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'creation_date'"
+              (click)="selectSort('creation_date')">
+        <img src="assets/img/icon/date.svg" alt="date" class="icon">
+        {{ 'modules.starter.main.section2.date' | translate }}
+      </button>
+    </li>
+    <!-- Likes 
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'likes'"
+              (click)="selectSort('likes')">
+        <img src="assets/img/icon/heart.svg" alt="likes" class="icon">
+        Likes
+      </button>
+    </li>
+    -->
+    
+    <li><hr class="dropdown-divider my-1"></li>
+
+    <!-- Order -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center justify-content-between" 
+              (click)="selectOrder(true)">
+              <div class="d-flex align-items-center gap-2">
+                <img src="assets/img/icon/sort-selected.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
+                {{ 'modules.starter.main.section2.ascending' | translate }} 
+                 Ascendiente
+              </div>
+        <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item d-flex align-items-center justify-content-between" 
+              (click)="selectOrder(false)">
+              <div class="d-flex align-items-center gap-2">
+                <img src="assets/img/icon/sort-selected.svg" alt="desc" class="icon">
+                {{ 'modules.starter.main.section2.descending' | translate }} 
+                Descendiente
+              </div>
+        <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
+      </button>
+    </li>
+  </ul>
+</div>

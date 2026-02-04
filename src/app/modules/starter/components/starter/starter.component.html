@@ -25,18 +25,12 @@
     </div>
 
     <!-- SORT BY -->
-    <ul id="sortBy" class="d-xl-flex justify-content-end d-none">
-      <li class="animated"
-        [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
-        (click)="changeSort('popularity')">
-        {{'modules.starter.main.section2.popularity' | translate}}
-      </li>
-      <li class="animated"
-        [ngClass]="{'selected' : sortBy == 'creation_date', 'up': sortBy === 'creation_date' && !isAscending}"
-        (click)="changeSort('creation_date')">
-        {{'modules.starter.main.section2.date' | translate}}
-      </li>
-    </ul>
+    <app-sort-select
+      [sortBy]="sortBy"
+      [isAscending]="isAscending"
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
+    </app-sort-select>
 
     <div class="d-flex flex-column gap-3" id="challenges" #challenge>
       <ng-container *ngIf="(challenges?.length || 0) > 0; else noResultsTpl">

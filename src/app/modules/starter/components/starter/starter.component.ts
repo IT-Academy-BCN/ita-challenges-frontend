@@ -188,14 +188,14 @@ export class StarterComponent implements OnInit {
     this.sortBy = newSort
     localStorage.setItem('sortBy', newSort)
     if (newSort === 'popularity' || newSort === 'creation_date') {
-      if (this.selectedSort === newSort) {
-        this.isAscending = !this.isAscending
-      } else {
-        this.isAscending = false
-        this.selectedSort = newSort
-      }
+      this.selectedSort = newSort
       this.refreshChallengeList()
     }
+  }
+
+  changeOrder(isAscending: boolean): void {
+    this.isAscending = isAscending
+    this.refreshChallengeList()
   }
   fetchUserSolutionsStatus(): void {
   this.solutionService.fetchUserSolution().subscribe({

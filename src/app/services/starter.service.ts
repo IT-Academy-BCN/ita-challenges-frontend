@@ -62,8 +62,8 @@ export class StarterService {
 
         comparison = isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
       } else if (sortBy === 'popularity') {
-        const scoreA = a.timesFavorite ?? 0
-        const scoreB = b.timesFavorite ?? 0
+        const scoreA = a.timesSolved ?? 0
+        const scoreB = b.timesSolved ?? 0
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       }

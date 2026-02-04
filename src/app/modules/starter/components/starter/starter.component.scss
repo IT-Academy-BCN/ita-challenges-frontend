@@ -17,52 +17,7 @@ img[alt='filter-icon'] {
   cursor: pointer;
 }
 
-#sortBy{
-  gap: 30px;
-}
 
-ul {
-  list-style: none;
-  
-  li {
-    display: flex;
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: 500;
-    color: $gray-3;
-    gap: 5px;
-    cursor: pointer;
-
-    &::after {
-      content: '';
-      display: block;
-      width: 17px;
-      height: 17px;
-      background-image: url('/assets/img/icon/sort-selected.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0; // Oculto por defecto
-      transition: transform 0.3s ease; // Animación suave de rotación
-    }
-
-    &.selected {
-      color: $black-3;
-      font-weight: 700;
-
-      &::after {
-        opacity: 1; // Muestra el icono cuando está seleccionado
-      }
-    }
-
-    &.up::after {
-      transform: rotate(180deg); // Rota solo el icono cuando tiene la clase 'up'
-    }
-
-    &:not(.selected):hover {
-      color: $primary;
-    }
-  }
-}
 
 
 app-starter-filters p {

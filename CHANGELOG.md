@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-04
+### Added
+- Created `SortSelectComponent` to handle challenge sorting with a refined design.
+- Added explicit "Ascending" and "Descending" order options in the sort dropdown.
+
+### IMPORTANT
+- **Sorting Logic Change**: Clicking on a sort criteria (e.g., "Popularity") no longer toggles the sort order. Order must be changed explicitly via the "Ascending" / "Descending" options.
+
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
