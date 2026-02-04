@@ -131,9 +131,14 @@
             "main": {
                 "section1": "Filters",
                 "section2": {
+                    "sort": "Sort by",
                     "title": "Challenges",
                     "popularity": "Popularity",
-                    "date": "Date"
+                    "date": "Date",
+                    "likes": "Likes",
+                    "difficulty": "Difficulty",
+                    "ascending": "Ascending",
+                    "descending": "Descending"
                 }
             },
             "empty": {

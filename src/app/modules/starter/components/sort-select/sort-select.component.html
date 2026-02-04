@@ -5,6 +5,7 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-end p-0">
     <!-- Criteria -->
+     <!--Popularity-->
     <li>
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'popularity'"
@@ -21,16 +22,25 @@
         {{ 'modules.starter.main.section2.date' | translate }}
       </button>
     </li>
-    <!-- Likes 
+    <!-- Likes -->
     <li>
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'likes'"
               (click)="selectSort('likes')">
         <img src="assets/img/icon/heart.svg" alt="likes" class="icon">
-        Likes
+        {{ 'modules.starter.main.section2.likes' | translate }}
       </button>
     </li>
-    -->
+    
+    <!-- Difficulty -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'difficulty'"
+              (click)="selectSort('difficulty')">
+        <img src="assets/img/icon/difficulty-on.svg" alt="difficulty" class="icon">
+        {{ 'modules.starter.main.section2.difficulty' | translate }}
+      </button>
+    </li>
     
     <li><hr class="dropdown-divider my-1"></li>
 
@@ -41,7 +51,6 @@
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
                 {{ 'modules.starter.main.section2.ascending' | translate }} 
-                 Ascendiente
               </div>
         <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
       </button>
@@ -52,7 +61,6 @@
               <div class="d-flex align-items-center gap-2">
                 <img src="assets/img/icon/sort-selected.svg" alt="desc" class="icon">
                 {{ 'modules.starter.main.section2.descending' | translate }} 
-                Descendiente
               </div>
         <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
       </button>

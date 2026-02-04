@@ -66,6 +66,17 @@ export class StarterService {
         const scoreB = b.timesSolved ?? 0
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'likes') {
+        const scoreA = a.favorites_count ?? 0
+        const scoreB = b.favorites_count ?? 0
+
+        comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'difficulty') {
+        const levelMap: Record<string, number> = { EASY: 1, MEDIUM: 2, HARD: 3 }
+        const levelA = levelMap[a.level] ?? 0
+        const levelB = levelMap[b.level] ?? 0
+
+        comparison = isAscending ? levelA - levelB : levelB - levelA
       }
 
       return comparison 

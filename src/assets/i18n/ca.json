@@ -131,9 +131,14 @@
             "main": {
                 "section1": "Filtres",
                 "section2": {
+                    "sort": "Ordenar per",
                     "title": "Reptes",
                     "popularity": "Popularitat",
-                    "date": "Data"
+                    "date": "Data",
+                    "likes": "M'agrada",
+                    "difficulty": "Dificultat",
+                    "ascending": "Ascendent",
+                    "descending": "Descendent"
                 }
             },
             "empty": {

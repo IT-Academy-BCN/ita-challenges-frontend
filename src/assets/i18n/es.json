@@ -131,9 +131,14 @@
             "main": {
                 "section1": "Filtros",
                 "section2": {
+                    "sort": "Ordenar por",
                     "title": "Retos",
                     "popularity": "Popularidad",
-                    "date": "Fecha"
+                    "date": "Fecha",
+                    "likes": "Me gusta",
+                    "difficulty": "Dificultad",
+                    "ascending": "Ascendente",
+                    "descending": "Descendente"
                 }
             },
             "empty": {
