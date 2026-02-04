@@ -1,0 +1,25 @@
+<button type="button" class="btn btn-outline-primary" (click)="open()">
+  Filtrar
+</button>
+
+<ng-template #modal let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title fw-bold">Filtros</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <p class="m-0 text-muted">
+      Modal shell (Sub-task 1). Aquí irá dificultad / tags / estado en la siguiente tarea.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onApply()">
+      Aplicar
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+      Cancelar
+    </button>
+  </div>
+</ng-template>
