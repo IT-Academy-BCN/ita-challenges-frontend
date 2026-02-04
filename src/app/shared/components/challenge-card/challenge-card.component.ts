@@ -24,6 +24,7 @@ export class ChallengeCardComponent implements OnInit {
 
   @Input() title: string = ''
   @Input() languages: any = []
+  @Input() description: string = ''
   @Input() creation_date!: Date
   @Input() level = ''
   @Input() popularity!: number
@@ -74,7 +75,7 @@ export class ChallengeCardComponent implements OnInit {
     }
   }
 
-toggleBookmark(event: MouseEvent): void {
+  toggleBookmark(event: MouseEvent): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return

@@ -40,25 +40,32 @@
 
     <div class="d-flex flex-column gap-3" id="challenges" #challenge>
       <ng-container *ngIf="(challenges?.length || 0) > 0; else noResultsTpl">
-        <app-challenge-card *ngFor="let challenge of challenges; let i = index"
-          [title]="challenge.challenge_title  | dynamicTranslate" [creation_date]="challenge.creation_date"
-          [level]="challenge.level" [popularity]="challenge.popularity" [languages]="challenge.languages"
-          [id]="challenge.id_challenge" [favorites_count]="challenge.timesFavorite || 0"
+        <app-challenge-card
+          *ngFor="let challenge of challenges; let i = index"
+          [title]="challenge.challenge_title | dynamicTranslate"
+          [description]="challenge.detail.description | dynamicTranslate"
+          [languages]="challenge.languages"
+          [creation_date]="challenge.creation_date"
+          [level]="challenge.level"
+          [popularity]="challenge.popularity"
+          [id]="challenge.id_challenge"
+          [favorites_count]="challenge.timesFavorite || 0"
           [challenge_timesSolved]="challenge.timesSolved || timesSolved"
           [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
           [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
-          [solutionStatus]="solutionStatusMap[challenge.id_challenge]">
+          [solutionStatus]="solutionStatusMap[challenge.id_challenge]"
+        >
         </app-challenge-card>
       </ng-container>
     </div>
 
-<ng-template #noResultsTpl>
-  <div class="text-center py-5">
-    <p class="h5 text-muted">
+    <ng-template #noResultsTpl>
+      <div class="text-center py-5">
+        <p class="h5 text-muted">
       {{ 'modules.starter.empty.noResults' | translate }}
-    </p>
-  </div>
-</ng-template>
+        </p>
+      </div>
+    </ng-template>
   </div>
 </div>
  <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal>

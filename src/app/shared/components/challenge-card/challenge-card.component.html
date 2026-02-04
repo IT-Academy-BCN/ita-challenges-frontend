@@ -1,77 +1,117 @@
-<div class="challenge-list-element d-flex flex-column justify-content-center px-2 px-xl-4 py-2 py-xl-3"
-  [routerLink]="['/ita-challenge/challenges/', id]">
-  <div>
-    <div class="info d-flex align-items-start justify-content-between">
-      <div class="d-flex flex-column align-items-start w-100">
-        <div class="d-flex">
-        <div class="difficulty d-flex" *ngIf="level == 'EASY'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-        </div>
-        <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-        </div>
-        <div class="difficulty d-flex" *ngIf="level == 'HARD'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-        </div>
-        <div class="title">{{title}}</div>
-      </div>
-      <span
-        *ngIf="solutionStatus"
-        class="status-text"
-        [ngClass]="{
-          'status-ended': solutionStatus === SolutionStatus.ENDED,
-          'status-progress': solutionStatus === SolutionStatus.IN_PROGRESS,
-          'status-incomplete': solutionStatus === SolutionStatus.SHOW_SOLUTION,
-        }"
-        [ngbTooltip]="getStatusTooltip()"
-          >
-        {{ "status." + solutionStatus | translate }}
-      </span>
+<article
+  class="challenge-list-element"
+  [class.status-ended]="solutionStatus === SolutionStatus.ENDED"
+  [class.status-progress]="solutionStatus === SolutionStatus.IN_PROGRESS"
+  [class.status-incomplete]="solutionStatus === SolutionStatus.SHOW_SOLUTION"
+  [routerLink]="['/ita-challenge/challenges/', id]"
+>
+  <div class="challenge-list-element-content">
+    <div>
+      @for (language of languages; track $index) {
+        <img
+          [src]="
+            'assets/img/icon/language_icon_' + language.language_name + '.svg'
+          "
+          [alt]="language.language_name + ' icon'"
+        />
+      }
     </div>
-      
-      <ul class="code-languages d-none d-xl-flex" *ngFor="let language of languages">
-        <li class="code-icon js">
-          <img src="assets/img/icon/language_icon_{{language.language_name}}.svg" alt="Language Icon">
-        </li>
-      </ul>
-    </div>
-
-    <div class="stats d-flex">
-      <div class="stat d-flex align-items-center" [ngbTooltip]="'tooltips.startedFinished' | translate">
-        <div><img src="assets/img/icon/times-performed.svg" alt="Times performed"></div>
-        <div class="txt">{{challenge_timesSolved}}</div>
-      </div>
-
-      <button class="stat d-flex align-items-center favorite-button" [ngbTooltip]="'tooltips.favorites' | translate"
-        (click)="toggleFavorite($event)">
+    <div class="title">{{ title }}</div>
+    <div class="description">{{ description }}</div>
+    <div class="stats-info-wrapper">
+      <!-- DIFFICULTY LEVEL -->
+      <app-difficulty-level [level]="level"></app-difficulty-level>
+      <!-- TIMES SOLVED -->
+      <div
+        class="stat d-flex align-items-center"
+        [ngbTooltip]="'tooltips.startedFinished' | translate"
+      >
         <div>
-            <img *ngIf="!isFavorite" src="assets/img/icon/heart.svg" alt="Favorites">
-            <img *ngIf="isFavorite" src="assets/img/icon/heart-filled.svg" alt="Favorites">
+          <img
+            src="assets/img/icon/times-performed.svg"
+            alt="Times performed"
+          />
         </div>
-        <div class="txt">{{favorites_count}}</div>
+        <div class="txt">{{ challenge_timesSolved }}</div>
+      </div>
+      <!-- LIKES button -->
+      <button
+        class="stat d-flex align-items-center favorite-button"
+        [ngbTooltip]="'tooltips.favorites' | translate"
+        (click)="toggleFavorite($event)"
+      >
+        <div>
+          <img
+            *ngIf="!isFavorite"
+            src="assets/img/icon/heart.svg"
+            alt="Favorites"
+          />
+          <img
+            *ngIf="isFavorite"
+            src="assets/img/icon/heart-filled.svg"
+            alt="Favorites"
+          />
+        </div>
+        <div class="txt">{{ favorites_count }}</div>
       </button>
-
-      <div class="stat d-flex align-items-center" *ngIf="creation_date" [ngbTooltip]="'tooltips.creationDate' | translate">
-        <div><img src="assets/img/icon/date.svg" alt="Date"></div>
+      <!-- CREATION DATE -->
+      <div
+        class="stat d-flex align-items-center"
+        *ngIf="creation_date"
+        [ngbTooltip]="'tooltips.creationDate' | translate"
+      >
+        <div><img src="assets/img/icon/date.svg" alt="Date" /></div>
         <div class="txt">{{ creation_date | customDate }}</div>
       </div>
-
-      <button class="stat d-flex align-items-center bookmark-button"
-        [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
-        (click)="toggleBookmark($event)"
-        [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
-        [attr.aria-pressed]="isBookmarked">
-        <div>
-          <img *ngIf="!isBookmarked" src="assets/img/icon/bookmark.svg" [attr.alt]="'tooltips.bookmarks.unsaved' | translate">
-          <img *ngIf="isBookmarked" src="assets/img/icon/bookmark-filled.svg" [attr.alt]="'tooltips.bookmarks.saved' | translate">
-        </div>
-      </button>
-      </div>
     </div>
-  </div>
+
+    <!-- Old content pending to validate with product what is needed-->
+    <!-- <div class="info d-flex align-items-start justify-content-between">
+      <div class="d-flex flex-column align-items-start w-100">
+        <div class="d-flex">
+        </div>
+        <span
+          *ngIf="solutionStatus"
+          class="status-text"
+          [ngClass]="{
+            'status-ended': solutionStatus === SolutionStatus.ENDED,
+            'status-progress': solutionStatus === SolutionStatus.IN_PROGRESS,
+            'status-incomplete':
+              solutionStatus === SolutionStatus.SHOW_SOLUTION,
+          }"
+          [ngbTooltip]="getStatusTooltip()"
+        >
+          {{ 'status.' + solutionStatus | translate }}
+        </span>
+      </div> -->
+      <!-- BOOKMARK button -->
+      <!-- <button
+        class="stat d-flex align-items-center bookmark-button"
+        [ngbTooltip]="
+          isBookmarked
+            ? ('tooltips.bookmarks.saved' | translate)
+            : ('tooltips.bookmarks.unsaved' | translate)
+        "
+        (click)="toggleBookmark($event)"
+        [attr.aria-label]="
+          isBookmarked
+            ? ('tooltips.bookmarks.saved' | translate)
+            : ('tooltips.bookmarks.unsaved' | translate)
+        "
+        [attr.aria-pressed]="isBookmarked"
+      >
+        <div>
+          <img
+            *ngIf="!isBookmarked"
+            src="assets/img/icon/bookmark.svg"
+            [attr.alt]="'tooltips.bookmarks.unsaved' | translate"
+          />
+          <img
+            *ngIf="isBookmarked"
+            src="assets/img/icon/bookmark-filled.svg"
+            [attr.alt]="'tooltips.bookmarks.saved' | translate"
+          />
+        </div>
+      </button> -->
+    </div>
+</article>
