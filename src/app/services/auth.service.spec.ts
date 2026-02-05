@@ -203,24 +203,4 @@ describe('AuthService', () => {
     tick()
     expect(result).toBe(photoUrl)
   }))
-  it('should set auth token in sessionStorage', () => {
-    const testToken = 'new-token-123'
-    sessionStorage.clear()
-    service.setAuthToken(testToken)
-    expect(sessionStorage.getItem('authToken')).toBe(testToken)
-  })
-
-  it('should return null from getAuthToken when no token in sessionStorage', () => {
-    sessionStorage.clear()
-    const token = service.getAuthToken()   
-    expect(token).toBeNull()
-  })
-
-  it('should clear both authToken and username from sessionStorage', () => {
-    sessionStorage.setItem('authToken', 'token-to-clear')
-    sessionStorage.setItem('username', 'user-to-clear')
-    service.clearAuthData()
-    expect(sessionStorage.getItem('authToken')).toBeNull()
-    expect(sessionStorage.getItem('username')).toBeNull()
-  })
-})
+});

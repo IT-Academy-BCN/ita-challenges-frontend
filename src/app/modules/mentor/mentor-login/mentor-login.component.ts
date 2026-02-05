@@ -104,8 +104,8 @@ export class MentorLoginComponent implements OnInit {
           this.showError('server_error')
         } else if (err.status === 403) {
           this.showError('unauthorized') // Error 403: El usuario no existe en GitHub.
-          localStorage.removeItem('username')
-          localStorage.removeItem('authToken')
+          sessionStorage.removeItem('username')
+          sessionStorage.removeItem('authToken')
         } else {
           this.showError('unauthorized')
           console.error(err)
