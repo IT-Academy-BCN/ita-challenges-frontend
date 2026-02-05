@@ -113,11 +113,11 @@ it('should not emit "submitted" if submission fails', (done) => {
       uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
       uuid_challenge: challengeId,
       uuid_language: languageId,
-      solution_text: 'Esta es la soluciÃ³n del usuario para el reto FizzBuzz'
+      solution_text: 'Esta es la solución del usuario para el reto FizzBuzz'
     }
 
     service.getUserSolution(challengeId, languageId).subscribe(data => {
-      expect(data.solution_text).toEqual('Esta es la soluciÃ³n del usuario para el reto FizzBuzz')
+      expect(data.solution_text).toEqual('Esta es la solución del usuario para el reto FizzBuzz')
       done()
     })
 
