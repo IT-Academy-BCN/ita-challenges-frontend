@@ -2,24 +2,24 @@ import { Component, EventEmitter, Output, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { Language } from "src/app/models/language.model";
 import { ChallengeFormService } from "src/app/services/challenge-form.service";
-import { ChallengeService } from "src/app/services/challenge.service";
 
+
+
+export const mockLanguages: Language[] = [
+  { id_language: "1", language_name: "JavaScript" },
+  { id_language: "2", language_name: "Python" },
+  { id_language: "3", language_name: "Java" },
+  { id_language: "4", language_name: "PHP" },
+];
 @Component({
   selector: "app-language-filter",
   templateUrl: "./language-filter.component.html",
   styleUrl: "./language-filter.component.css",
 })
-export class LanguageFilterComponent implements OnInit {
-  
-  mockLanguages: Language[] = [
-    { id_language: "1", language_name: "JavaScript" },
-    { id_language: "2", language_name: "Python" },
-    { id_language: "3", language_name: "Java" },
-    { id_language: "4", language_name: "PHP" },
-  ];
-  
 
-  languages: Language[] = this.mockLanguages;
+export class LanguageFilterComponent implements OnInit {
+
+  languages: Language[] = mockLanguages;
   @Output() languageSelected = new EventEmitter<string[]>();
   
   languageForm: FormGroup;
@@ -29,7 +29,7 @@ export class LanguageFilterComponent implements OnInit {
     private readonly challengeService: ChallengeFormService,
     private readonly fb: FormBuilder
   ) {
-    this.languageForm = this.createFormFromLanguages(this.mockLanguages);
+    this.languageForm = this.createFormFromLanguages(mockLanguages);
   }
 
   ngOnInit(): void {

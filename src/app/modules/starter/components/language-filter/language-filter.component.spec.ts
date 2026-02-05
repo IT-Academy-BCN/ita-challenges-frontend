@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { LanguageFilterComponent } from './language-filter.component';
+import { LanguageFilterComponent, mockLanguages as mockLanguagesImported} from './language-filter.component';
 import { ChallengeFormService } from 'src/app/services/challenge-form.service';
 import { Language } from 'src/app/models/language.model';
 
@@ -10,12 +10,7 @@ describe('LanguageFilterComponent', () => {
   let fixture: ComponentFixture<LanguageFilterComponent>;
   let mockChallengeService: jest.Mocked<ChallengeFormService>;
 
-  const mockLanguages: Language[] = [
-    { id_language: '1', language_name: 'JavaScript' },
-    { id_language: '2', language_name: 'Python' },
-    { id_language: '3', language_name: 'Java' },
-    { id_language: '4', language_name: 'PHP' },
-  ];
+const mockLanguages: Language[] = mockLanguagesImported
 
   const apiLanguages: Language[] = [
     { id_language: '5', language_name: 'TypeScript' },
