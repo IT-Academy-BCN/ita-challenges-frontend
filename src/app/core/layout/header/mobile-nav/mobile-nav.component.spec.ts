@@ -148,13 +148,10 @@ describe('MobileNavComponent', () => {
     expect(openRegisterUsersModalSpy).toHaveBeenCalled();
   });
   it('should call setAuthToken when switching role', () => {
-    const mockAuthService = {
-      switchRole: jest.fn().mockReturnValue(of({ token: 'new-token' })),
-      setAuthToken: jest.fn(),
-      updateUserRoleAndUserNameFromToken: jest.fn()
-    }
-    component['_authService'] = mockAuthService as any
+    const setAuthTokenSpy = jest.spyOn(authService, 'setAuthToken' as any).mockImplementation(() => {});
+    const switchRoleSpy = jest.spyOn(authService, 'switchRole' as any).mockReturnValue(of({ token: 'new-token' }));
     component.onSwitchRole('USER')
-    expect(mockAuthService.setAuthToken).toHaveBeenCalledWith('new-token')
+    expect(switchRoleSpy).toHaveBeenCalledWith('USER')
+    expect(setAuthTokenSpy).toHaveBeenCalledWith('new-token')
   })
 })
