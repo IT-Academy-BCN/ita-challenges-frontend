@@ -67,8 +67,8 @@ export class StarterService {
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       } else if (sortBy === 'likes') {
-        const scoreA = a.favorites_count ?? 0
-        const scoreB = b.favorites_count ?? 0
+        const scoreA = a.timesFavorite ?? 0
+        const scoreB = b.timesFavorite ?? 0
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
       } else if (sortBy === 'difficulty') {

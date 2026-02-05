@@ -62,33 +62,89 @@ describe('StarterService', () => {
     httpClientMock.verify();
   });
 
-  it('should sort challenges by creation_date and popularity', (done) => {
-    // Test para creation_date
-    const sortByDate = 'creation_date'
-    const isAscendingDate = true
-    const offset = 0
-    const limit = 3
-    service.orderBySort(sortByDate, parsedChallenges, offset, limit, isAscendingDate).subscribe(result => {
-      expect(result.length).toBe(limit)
-      expect(result[0].id_challenge).toBe('1')
-      expect(result[1].id_challenge).toBe('3')
-      expect(result[2].id_challenge).toBe('2')
-
-      const sortByPopularity = 'popularity'
-      const isAscendingPopularity = true // Ascendente (de menos a más likes)
-
-      console.log('valores', parsedChallenges)
-
-      service.orderBySort(sortByPopularity, parsedChallenges, offset, limit, isAscendingPopularity).subscribe(result => {
-        expect(result.length).toBe(limit)
+  describe('orderBySort', () => {
+    it('should sort challenges by creation_date ascending', (done) => {
+      service.orderBySort('creation_date', parsedChallenges, 0, 3, true).subscribe(result => {
         expect(result[0].id_challenge).toBe('1')
-        expect(result[1].id_challenge).toBe('2')
-        expect(result[2].id_challenge).toBe('3')
+        expect(result[1].id_challenge).toBe('3')
+        expect(result[2].id_challenge).toBe('2')
         done()
       })
     })
-  })
 
+    it('should sort challenges by creation_date descending', (done) => {
+      service.orderBySort('creation_date', parsedChallenges, 0, 3, false).subscribe(result => {
+        expect(result[0].id_challenge).toBe('2')
+        expect(result[1].id_challenge).toBe('3')
+        expect(result[2].id_challenge).toBe('1')
+        done()
+      })
+    })
+
+    it('should sort challenges by popularity ascending', (done) => {
+      parsedChallenges[0].timesSolved = 10
+      parsedChallenges[1].timesSolved = 20
+      parsedChallenges[2].timesSolved = 30
+
+      service.orderBySort('popularity', parsedChallenges, 0, 3, true).subscribe(result => {
+        expect(result[0].timesSolved).toBe(10)
+        expect(result[1].timesSolved).toBe(20)
+        expect(result[2].timesSolved).toBe(30)
+        done()
+      })
+    })
+
+    it('should sort challenges by popularity descending', (done) => {
+      parsedChallenges[0].timesSolved = 10
+      parsedChallenges[1].timesSolved = 20
+      parsedChallenges[2].timesSolved = 30
+
+      service.orderBySort('popularity', parsedChallenges, 0, 3, false).subscribe(result => {
+        expect(result[0].timesSolved).toBe(30)
+        expect(result[1].timesSolved).toBe(20)
+        expect(result[2].timesSolved).toBe(10)
+        done()
+      })
+    })
+
+    it('should sort challenges by likes (timesFavorite)', (done) => {
+      parsedChallenges[0].timesFavorite = 10
+      parsedChallenges[1].timesFavorite = 5
+      parsedChallenges[2].timesFavorite = 20
+
+      service.orderBySort('likes', parsedChallenges, 0, 3, true).subscribe(result => {
+        expect(result[0].timesFavorite).toBe(5)
+        expect(result[1].timesFavorite).toBe(10)
+        expect(result[2].timesFavorite).toBe(20)
+
+        service.orderBySort('likes', parsedChallenges, 0, 3, false).subscribe(resDesc => {
+          expect(resDesc[0].timesFavorite).toBe(20)
+          expect(resDesc[1].timesFavorite).toBe(10)
+          expect(resDesc[2].timesFavorite).toBe(5)
+          done()
+        })
+      })
+    })
+
+    it('should sort challenges by difficulty (level)', (done) => {
+      parsedChallenges[0].level = 'HARD'
+      parsedChallenges[1].level = 'EASY'
+      parsedChallenges[2].level = 'MEDIUM'
+
+      service.orderBySort('difficulty', parsedChallenges, 0, 3, true).subscribe(result => {
+        expect(result[0].level).toBe('EASY')
+        expect(result[1].level).toBe('MEDIUM')
+        expect(result[2].level).toBe('HARD')
+
+        service.orderBySort('difficulty', parsedChallenges, 0, 3, false).subscribe(resDesc => {
+          expect(resDesc[0].level).toBe('HARD')
+          expect(resDesc[1].level).toBe('MEDIUM')
+          expect(resDesc[2].level).toBe('EASY')
+          done()
+        })
+      })
+    })
+  })
   it('Should stream all challenges', (done) => {
     const mockResponse: Record<string, unknown> = { challenge: 'challenge' }
     service.getAllChallenges().subscribe()

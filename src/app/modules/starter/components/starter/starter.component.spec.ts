@@ -148,6 +148,17 @@ describe('StarterComponent', () => {
     expect(component.refreshChallengeList).toHaveBeenCalledTimes(1)
   })
 
+  it('should update isAscending and refresh list when changeOrder is called', () => {
+    spyOn(component, 'refreshChallengeList')
+    component.changeOrder(true)
+    expect(component.isAscending).toBe(true)
+    expect(component.refreshChallengeList).toHaveBeenCalled()
+
+    component.changeOrder(false)
+    expect(component.isAscending).toBe(false)
+    expect(component.refreshChallengeList).toHaveBeenCalledTimes(2)
+  })
+
   it('should update isAdmin flag when user role changes to ADMIN', () => {
     expect(component.isAdmin).toBe(false)
 
