@@ -128,6 +128,20 @@
                 "started": "Falta completar",
                 "finished": "Completados"
             },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filtrar",
+                "modalTitle": "Filtros",
+                "closeAriaLabel": "Cerrar",
+                "difficultyTitle": "Dificultad",
+                "tagsTitle": "Tags",
+                "searchTagsPlaceholder": "Buscar tags",
+                "statusTitle": "Estado",
+                "statusNotStarted": "Nuevos",
+                "statusInProgress": "En curso",
+                "statusEnded": "Hechos",
+                "statusShowSolution": "No resueltos",
+                "confirmButton": "Confirmar"
+            },
             "main": {
                 "section1": "Filtros",
                 "section2": {
@@ -139,7 +153,8 @@
             "empty": {
                 "noResults": "No se han encontrado retos con los filtros seleccionados."
             }
-        },"modals": {
+        },
+        "modals": {
             "solution": {
                 "title": "¿Estás segur@?",
                 "description":"Una vez enviado el código no se puede editar" ,

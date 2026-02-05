@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core'
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
+import { TranslateModule } from '@ngx-translate/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
@@ -8,7 +9,7 @@ type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 @Component({
   selector: 'app-challenge-filters-trigger',
   standalone: true,
-  imports: [CommonModule, NgbModalModule],
+  imports: [CommonModule, NgbModalModule, TranslateModule],
   templateUrl: './challenge-filters-trigger.component.html',
   styleUrls: ['./challenge-filters-trigger.component.scss']
 })

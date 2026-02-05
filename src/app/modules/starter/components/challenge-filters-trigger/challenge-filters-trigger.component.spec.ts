@@ -1,7 +1,15 @@
 import { TestBed } from '@angular/core/testing'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { of } from 'rxjs'
 import { ChallengeFiltersTriggerComponent } from './challenge-filters-trigger.component'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+
+class TranslateLoaderStub implements TranslateLoader {
+  getTranslation() {
+    return of({})
+  }
+}
 
 describe('ChallengeFiltersTriggerComponent', () => {
   const modalStub = {
@@ -11,7 +19,16 @@ describe('ChallengeFiltersTriggerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChallengeFiltersTriggerComponent],
+      imports: [
+        ChallengeFiltersTriggerComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderStub
+          }
+        })
+      ],
+
       providers: [
         {
           provide: NgbModal,

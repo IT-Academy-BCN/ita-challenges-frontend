@@ -1,61 +1,61 @@
 <button type="button" class="btn btn-outline-primary" (click)="open()">
-  Filtrar
+  {{ 'modules.starter.challengeFiltersTrigger.triggerButton' | translate }}
 </button>
 
 <ng-template #modal let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title fw-bold">Filtros</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+    <h4 class="modal-title fw-bold">{{ 'modules.starter.challengeFiltersTrigger.modalTitle' | translate }}</h4>
+    <button type="button" class="btn-close" [attr.aria-label]="('modules.starter.challengeFiltersTrigger.closeAriaLabel' | translate)" (click)="onCancel()"></button>
   </div>
 
   <div class="modal-body">
     <div class="d-flex flex-column gap-4">
       <fieldset class="d-flex flex-column gap-2">
-        <legend class="h6 m-0 fw-bold">Dificultad</legend>
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.difficultyTitle' | translate }}</legend>
         <div class="d-flex flex-wrap gap-2">
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true">⚡</span>
-            Fácil
+            {{ 'modules.starter.filters.easy' | translate }}
           </button>
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true">⚡⚡</span>
-            Media
+            {{ 'modules.starter.filters.medium' | translate }}
           </button>
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true">⚡⚡⚡</span>
-            Difícil
+            {{ 'modules.starter.filters.hard' | translate }}
           </button>
         </div>
       </fieldset>
 
       <fieldset class="d-flex flex-column gap-2">
-        <legend class="h6 m-0 fw-bold">Tags</legend>
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.tagsTitle' | translate }}</legend>
         <div class="d-flex flex-wrap gap-2"></div>
 
         <div class="input-group">
           <span class="input-group-text bg-white" aria-hidden="true">🔎</span>
-          <input type="text" class="form-control" placeholder="Buscar tags" />
+          <input type="text" class="form-control" [placeholder]="('modules.starter.challengeFiltersTrigger.searchTagsPlaceholder' | translate)" />
         </div>
       </fieldset>
 
       <fieldset class="d-flex flex-column gap-2">
-        <legend class="h6 m-0 fw-bold">Estado</legend>
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.statusTitle' | translate }}</legend>
         <div class="d-flex flex-wrap gap-2">
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#6c757d"></span>
-            Nuevos
+            {{ 'modules.starter.challengeFiltersTrigger.statusNotStarted' | translate }}
           </button>
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#0d6efd"></span>
-            En curso
+            {{ 'modules.starter.challengeFiltersTrigger.statusInProgress' | translate }}
           </button>
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#198754"></span>
-            Hechos
+            {{ 'modules.starter.challengeFiltersTrigger.statusEnded' | translate }}
           </button>
           <button type="button" class="btn btn-outline-dark rounded-pill px-3">
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#dc3545"></span>
-            No resueltos
+            {{ 'modules.starter.challengeFiltersTrigger.statusShowSolution' | translate }}
           </button>
         </div>
       </fieldset>
@@ -65,7 +65,7 @@
   <div class="modal-footer">
     <div class="w-100 d-flex justify-content-end">
       <button type="button" class="btn btn-primary px-4" (click)="onApply()">
-        Confirmar
+        {{ 'modules.starter.challengeFiltersTrigger.confirmButton' | translate }}
       </button>
     </div>
   </div>
