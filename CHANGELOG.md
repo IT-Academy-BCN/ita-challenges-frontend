@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [itachallenge-frontend-3.16.0-RELEASE] - 2026-02-05
+
+### Changed
+- Authentication now uses `sessionStorage` instead of `localStorage` for storing auth tokens and usernames.
+- Sessions are now tab-specific and expire when the browser tab is closed.
+- Users must log in again after closing the tab (no auto-login).
+
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
