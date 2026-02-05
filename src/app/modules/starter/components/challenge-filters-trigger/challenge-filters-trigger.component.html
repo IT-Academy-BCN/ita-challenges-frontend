@@ -13,15 +13,33 @@
       <fieldset class="d-flex flex-column gap-2">
         <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.difficultyTitle' | translate }}</legend>
         <div class="d-flex flex-wrap gap-2">
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isLevelSelected('EASY')"
+            [ngClass]="isLevelSelected('EASY') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('EASY')"
+          >
             <span class="me-2" aria-hidden="true">⚡</span>
             {{ 'modules.starter.filters.easy' | translate }}
           </button>
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isLevelSelected('MEDIUM')"
+            [ngClass]="isLevelSelected('MEDIUM') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('MEDIUM')"
+          >
             <span class="me-2" aria-hidden="true">⚡⚡</span>
             {{ 'modules.starter.filters.medium' | translate }}
           </button>
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isLevelSelected('HARD')"
+            [ngClass]="isLevelSelected('HARD') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('HARD')"
+          >
             <span class="me-2" aria-hidden="true">⚡⚡⚡</span>
             {{ 'modules.starter.filters.hard' | translate }}
           </button>
@@ -41,19 +59,43 @@
       <fieldset class="d-flex flex-column gap-2">
         <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.statusTitle' | translate }}</legend>
         <div class="d-flex flex-wrap gap-2">
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.NOT_STARTED)"
+            [ngClass]="isProgressSelected(SolutionStatus.NOT_STARTED) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.NOT_STARTED)"
+          >
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#6c757d"></span>
             {{ 'modules.starter.challengeFiltersTrigger.statusNotStarted' | translate }}
           </button>
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.IN_PROGRESS)"
+            [ngClass]="isProgressSelected(SolutionStatus.IN_PROGRESS) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.IN_PROGRESS)"
+          >
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#0d6efd"></span>
             {{ 'modules.starter.challengeFiltersTrigger.statusInProgress' | translate }}
           </button>
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.ENDED)"
+            [ngClass]="isProgressSelected(SolutionStatus.ENDED) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.ENDED)"
+          >
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#198754"></span>
             {{ 'modules.starter.challengeFiltersTrigger.statusEnded' | translate }}
           </button>
-          <button type="button" class="btn btn-outline-dark rounded-pill px-3">
+          <button
+            type="button"
+            class="btn rounded-pill px-3"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.SHOW_SOLUTION)"
+            [ngClass]="isProgressSelected(SolutionStatus.SHOW_SOLUTION) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.SHOW_SOLUTION)"
+          >
             <span class="me-2" aria-hidden="true" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#dc3545"></span>
             {{ 'modules.starter.challengeFiltersTrigger.statusShowSolution' | translate }}
           </button>
