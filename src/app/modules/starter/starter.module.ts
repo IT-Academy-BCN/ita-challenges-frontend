@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component";
+import { ChallengeFiltersTriggerComponent } from './components/challenge-filters-trigger/challenge-filters-trigger.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ChallengeFormComponent } from "../challenge/components/challenge-form/c
     TranslateModule,
     ModalsModule,
     DynamicTranslatePipe,
-    ChallengeFormComponent
+    ChallengeFormComponent,
+    ChallengeFiltersTriggerComponent
 ],
   providers: [
     ChallengeService

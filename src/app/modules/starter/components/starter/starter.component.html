@@ -14,6 +14,10 @@
       <div class="d-flex justify-content-between align-items-center challenges-filter-header">
         <h2>{{ "modules.starter.main.section2.title" | translate }}</h2>
         <div class="d-flex gap-2 align-items-center">
+          <app-challenge-filters-trigger
+            [initialFilters]="filters"
+            (filtersApplied)="onModalFiltersApplied($event)">
+          </app-challenge-filters-trigger>
           <button class="btn btn-outline-primary btnFiltrar d-xl-none" (click)="openModal()">
             <strong>Filtrar</strong>
           </button>
