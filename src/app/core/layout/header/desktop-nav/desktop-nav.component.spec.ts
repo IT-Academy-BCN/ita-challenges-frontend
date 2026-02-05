@@ -162,4 +162,16 @@ describe('DesktopNavComponent', () => {
     component.openRegisterUsersModal();
     expect(openRegisterUsersModalSpy).toHaveBeenCalled();
   });
+
+  it('should call setAuthToken when switching role', () => {
+    const mockAuthService = {
+      switchRole: jest.fn().mockReturnValue(of({ token: 'new-token' })),
+      setAuthToken: jest.fn(),
+      updateUserRoleAndUserNameFromToken: jest.fn()
+    }
+    component['_authService'] = mockAuthService as any;
+    component.onSwitchRole('ADMIN')
+    expect(mockAuthService.setAuthToken).toHaveBeenCalledWith('new-token')
+    expect(mockAuthService.updateUserRoleAndUserNameFromToken).toHaveBeenCalled()
+  })
 })
