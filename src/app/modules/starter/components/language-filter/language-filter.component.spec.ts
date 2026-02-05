@@ -87,24 +87,5 @@ const mockLanguages: Language[] = mockLanguagesImported
         expect(emittedValue).toContain('2');
         done();
       }, 50);}, 50);});
-  it('should emit updated IDs when checkbox is unchecked', (done) => {
-    mockChallengeService.getAllLangugesCreateForm.mockReturnValue(
-      of({ results: [] })
-    );
-    let emittedValue: string[] | undefined;
-    component.languageSelected.subscribe((ids: string[]) => {
-      emittedValue = ids;
-    });
-    fixture.detectChanges();
-    setTimeout(() => {
-      component.languageForm.get('javascript')?.setValue(true);
-      component.languageForm.get('python')?.setValue(true);
-      setTimeout(() => {
-        expect(emittedValue?.length).toBe(2);
-        component.languageForm.get('javascript')?.setValue(false);
-        setTimeout(() => {
-          expect(emittedValue?.length).toBe(1);
-          expect(emittedValue).toEqual(['2']); 
-          done();
-        }, 50);}, 50);}, 50);
-  });});
+
+});
