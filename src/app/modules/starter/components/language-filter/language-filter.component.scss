@@ -24,6 +24,12 @@ input[type="checkbox"] + label {
   user-select: none;
 }
 
+input[type="checkbox"]+ label:hover {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  background-color: $gray-2;
+  color: white;
+}
 
 input[type="checkbox"]:checked + label {
   -webkit-transition: all 500ms ease;
@@ -32,10 +38,11 @@ input[type="checkbox"]:checked + label {
    color: white; 
 }
 
-input[type="checkbox"]+ label:hover {
+
+input[type="checkbox"]:checked + label:focus {
   -webkit-transition: all 500ms ease;
   transition: all 500ms ease;
-  background-color: $black-3;
-  color: white;
+  background-color: $white;
+  color: $black-3;
+  border: 1px solid $black-3;
 }
-
