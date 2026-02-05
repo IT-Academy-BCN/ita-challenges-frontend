@@ -24,6 +24,7 @@ export class LanguageFilterComponent implements OnInit {
   
   languageForm: FormGroup;
  
+  private languageNameToIdMap: Record<string, string> = {};
   constructor(
     private readonly challengeService: ChallengeFormService,
     private readonly fb: FormBuilder
@@ -53,12 +54,11 @@ export class LanguageFilterComponent implements OnInit {
     const controls: { [key: string]: FormControl } = {};
     
     languages.forEach((language) => {
-      controls[language.language_name.toLowerCase()] = new FormControl(false);
+    const key = language.language_name.toLowerCase();
+      controls[key] = new FormControl(false);
+      this.languageNameToIdMap[key] = language.id_language;
     });
-    
     const form = this.fb.group(controls);
-    
-
     form.valueChanges.subscribe(() => {
 
       this.emitSelectedLanguages(form);
@@ -69,7 +69,8 @@ export class LanguageFilterComponent implements OnInit {
 
   emitSelectedLanguages(form: FormGroup): void {
     const selectedLanguages = Object.keys(form.value)
-      .filter(key => form.value[key] === true);
+      .filter(key => form.value[key] === true)
+      .map(key => this.languageNameToIdMap[key]);
     
     this.languageSelected.emit(selectedLanguages);
     console.log('event emitted', selectedLanguages)

@@ -5,8 +5,9 @@
       type="checkbox" 
       [id]="language.id_language" 
       [formControlName]="language.language_name.toLowerCase()"
+      [value]="language.id_language"
     />
-    <label class="form-check-label" [for]="language.id_language">
+    <label class="form-check-label"  [for]="language.id_language">
       {{ language.language_name }}
     </label>
   </div>

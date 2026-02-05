@@ -2,8 +2,10 @@
   <!-- FILTERS -->
   <div id="filters-container" class="d-none d-xl-block col-3">
     <h2>{{ "modules.starter.main.section1" | translate }}</h2>
-    <app-language-filter></app-language-filter>
     <div id="filters-panel" class="filters-panel open">
+
+      <app-language-filter></app-language-filter>
+      
       <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
     </div>
   </div>
