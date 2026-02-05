@@ -150,8 +150,8 @@ describe('MentorLoginComponent', () => {
       environment.BACKEND_ITA_CHALLENGE_BASE_URL + environment.BACKEND_GITHUB_VALIDATE_ENDPOINT,
       { code: 'testCode' }
     )
-    expect(localStorage.getItem('username')).toBe('testUser')
-    expect(localStorage.getItem('authToken')).toBe('123456')
+    expect(sessionStorage.getItem('username')).toBe('testUser')
+    expect(sessionStorage.getItem('authToken')).toBe('123456')
     expect(authServiceMock.updateUserRoleAndUserNameFromToken).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalledWith([], { queryParams: { code: null }, queryParamsHandling: 'merge' })
     expect(modalSpy).toHaveBeenCalled()
