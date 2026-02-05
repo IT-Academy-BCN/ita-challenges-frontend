@@ -126,6 +126,10 @@ export class AuthService {
     return sessionStorage.getItem('authToken');
   }
 
+  setAuthToken(token: string): void {
+    sessionStorage.setItem('authToken', token);
+  }
+
   getAuthHeaders(): { Authorization: string } {
     const token = this.getAuthToken();
     return token ? { Authorization: `Bearer ${token}` } : { Authorization: '' };
