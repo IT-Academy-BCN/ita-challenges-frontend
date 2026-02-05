@@ -71,4 +71,44 @@ describe('ChallengeFiltersTriggerComponent', () => {
 
     expect((emittedValue as any).languages).toBeUndefined()
   })
+
+  it('should toggle difficulty levels in draft state', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    component.open()
+
+    expect(component.isLevelSelected('EASY')).toBe(false)
+
+    component.toggleLevel('EASY')
+    expect(component.isLevelSelected('EASY')).toBe(true)
+
+    component.toggleLevel('EASY')
+    expect(component.isLevelSelected('EASY')).toBe(false)
+  })
+
+  it('should toggle progress statuses in draft state and emit them on apply', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    component.open()
+
+    component.toggleProgress(SolutionStatus.IN_PROGRESS)
+    component.toggleProgress(SolutionStatus.ENDED)
+
+    let emittedValue: unknown
+    component.filtersApplied.subscribe((value) => {
+      emittedValue = value
+    })
+
+    component.onApply()
+
+    expect(emittedValue).toEqual({
+      levels: [],
+      tags: [],
+      progress: [SolutionStatus.IN_PROGRESS, SolutionStatus.ENDED]
+    })
+  })
 })
