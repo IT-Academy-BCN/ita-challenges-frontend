@@ -220,10 +220,8 @@ describe('ChallengeService', () => {
     service.getUserBookmarks(userId).subscribe(bookmarks => {
       expect(bookmarks).toEqual(mockBookmarks)
     })
-
-    const req = httpMock.expectOne(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/users/${userId}/bookmarks`
-    )
+    const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_BOOKMARKS_PATH}/${userId}/bookmarks`;
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET')
     expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
 
