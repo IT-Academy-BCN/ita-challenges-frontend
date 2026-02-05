@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { Language } from "src/app/models/language.model";
+import { ChallengeFormService } from "src/app/services/challenge-form.service";
 import { ChallengeService } from "src/app/services/challenge.service";
 
 @Component({
@@ -24,7 +25,7 @@ export class LanguageFilterComponent implements OnInit {
   languageForm: FormGroup;
  
   constructor(
-    private readonly challengeService: ChallengeService,
+    private readonly challengeService: ChallengeFormService,
     private readonly fb: FormBuilder
   ) {
     this.languageForm = this.createFormFromLanguages(this.mockLanguages);
@@ -35,7 +36,7 @@ export class LanguageFilterComponent implements OnInit {
   }
 
   loadLanguages(): void {
-    this.challengeService.getAllLanguages().subscribe({
+    this.challengeService.getAllLangugesCreateForm().subscribe({
       next: (res: any) => {
         if (res.results !== null && res.results.length > 0) {
           this.languages = res.results;
