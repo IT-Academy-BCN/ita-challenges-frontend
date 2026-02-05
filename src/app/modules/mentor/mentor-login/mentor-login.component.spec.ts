@@ -163,8 +163,8 @@ describe('MentorLoginComponent', () => {
     { statusCode: 403, expectedError: 'unauthorized' },
     { statusCode: 500, expectedError: 'server_error' }
   ])('❌ Should handle error %i and show error message', ({ statusCode, expectedError }, done) => {
-    localStorage.setItem('username', 'testUser')
-    localStorage.setItem('authToken', '123456')
+    sessionStorage.setItem('username', 'testUser')
+    sessionStorage.setItem('authToken', '123456')
 
     const httpSpy = jest.spyOn(component.http, 'post').mockReturnValue(
       throwError(() => ({ status: statusCode }))
@@ -178,6 +178,10 @@ describe('MentorLoginComponent', () => {
       expect(httpSpy).toHaveBeenCalled()
       expect(errorSpy).toHaveBeenCalledWith(expectedError)
       expect(component.isLoading).toBe(false)
+      if (statusCode === 403) {
+        expect(sessionStorage.getItem('username')).toBeNull()
+        expect(sessionStorage.getItem('authToken')).toBeNull()
+      }
 
       done()
     }, 100)
