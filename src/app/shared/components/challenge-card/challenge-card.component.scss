@@ -34,8 +34,14 @@
 }
 
 .stats-info-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.description {
+  overflow: hidden;
+  line-height: 1.4;
+  height: calc(1.4em * 3);
 }
