@@ -202,4 +202,13 @@ describe('MentorLoginComponent', () => {
     expect(component.isErrorVisible).toBe(false)
     expect(component.isShowTermsError).toBe(false)
   })
+
+  it('✅ Should redirect to GitHub signup', () => {
+    delete (window as any).location
+    window.location = { href: '' } as any
+    
+    component.redirectToRegister()
+    
+    expect(window.location.href).toBe('https://github.com/signup')
+  })
 })
