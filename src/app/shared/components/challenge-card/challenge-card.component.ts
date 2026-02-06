@@ -43,6 +43,20 @@ export class ChallengeCardComponent implements OnInit {
     });
   }
 
+  get descriptionPreview(): string {
+    const raw = this.description ?? ''
+
+    let text = raw
+    if (raw.includes('<')) {
+      const doc = new DOMParser().parseFromString(raw, 'text/html')
+      text = doc.body?.textContent ?? ''
+    }
+
+    text = text.replaceAll(/\s+/g, ' ').trim()
+    const maxLen = 100
+    return text.length > maxLen ? `${text.slice(0, maxLen - 1)}…` : text
+  }
+
   get currentLang(): string {
     return this.translate.currentLang
   }
