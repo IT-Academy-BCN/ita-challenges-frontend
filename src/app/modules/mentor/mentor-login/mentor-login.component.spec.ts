@@ -158,6 +158,21 @@ describe('MentorLoginComponent', () => {
     expect(loginSuccessSpy).toHaveBeenCalledWith(true)
   })
 
+  it('❌ Should handle invalid GitHub response and clean storage', () => {
+    sessionStorage.setItem('username', 'testUser')
+    sessionStorage.setItem('authToken', '123456')
+
+    const mockResponse = { isValid: false, username: '', token: '' }
+    jest.spyOn(component.http, 'post').mockReturnValue(of(mockResponse))
+    const errorSpy = jest.spyOn(component, 'showError')
+
+    component.authenticateWithGitHub('testCode')
+
+    expect(errorSpy).toHaveBeenCalledWith('unauthorized')
+    expect(sessionStorage.getItem('username')).toBeNull()
+    expect(sessionStorage.getItem('authToken')).toBeNull()
+  })
+
   it.each<ErrorHandlingTestCase>([
     { statusCode: 401, expectedError: 'unauthorized' },
     { statusCode: 403, expectedError: 'unauthorized' },
