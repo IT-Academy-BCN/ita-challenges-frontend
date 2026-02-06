@@ -7,6 +7,8 @@
   cursor: pointer;
   background-color: $white;
   max-width: 28rem;
+  color: $gray-3;
+
 
   &.status-ended {
     background-color: #1e7d34;
@@ -30,7 +32,14 @@
   .title {
     font-size: 1.25rem;
     font-weight: bold;
+    color: $gray-1;
   }
+}
+
+.description {
+  overflow: hidden;
+  line-height: 1.4;
+  height: calc(1.4em * 3);
 }
 
 .stats-info-wrapper {
@@ -38,10 +47,21 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
 
-.description {
-  overflow: hidden;
-  line-height: 1.4;
-  height: calc(1.4em * 3);
+  .times-solved {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .likes-button {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    border: none;
+    background: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: $gray-3;
+  }
 }

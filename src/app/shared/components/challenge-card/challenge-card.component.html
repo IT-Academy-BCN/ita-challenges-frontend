@@ -23,20 +23,20 @@
       <app-difficulty-level [level]="level"></app-difficulty-level>
       <!-- TIMES SOLVED -->
       <div
-        class="stat d-flex align-items-center"
+        class="times-solved"
         [ngbTooltip]="'tooltips.startedFinished' | translate"
       >
         <div>
           <img
-            src="assets/img/icon/times-performed.svg"
-            alt="Times performed"
+          src="assets/img/icon/times-performed.svg"
+          alt="Times performed"
           />
         </div>
-        <div class="txt">{{ challenge_timesSolved }}</div>
+        <span>{{ challenge_timesSolved }}</span>
       </div>
       <!-- LIKES button -->
       <button
-        class="stat d-flex align-items-center favorite-button"
+        class="likes-button"
         [ngbTooltip]="'tooltips.favorites' | translate"
         (click)="toggleFavorite($event)"
       >
