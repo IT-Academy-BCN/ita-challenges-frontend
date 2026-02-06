@@ -161,7 +161,8 @@ describe('MentorLoginComponent', () => {
   it.each<ErrorHandlingTestCase>([
     { statusCode: 401, expectedError: 'unauthorized' },
     { statusCode: 403, expectedError: 'unauthorized' },
-    { statusCode: 500, expectedError: 'server_error' }
+    { statusCode: 500, expectedError: 'server_error' },
+    { statusCode: 404, expectedError: 'unauthorized' }
   ])('❌ Should handle error %i and show error message', ({ statusCode, expectedError }, done) => {
     sessionStorage.setItem('username', 'testUser')
     sessionStorage.setItem('authToken', '123456')
@@ -171,7 +172,7 @@ describe('MentorLoginComponent', () => {
     )
 
     const errorSpy = jest.spyOn(component, 'showError')
-
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
     component.authenticateWithGitHub('testCode')
 
     setTimeout(() => {
@@ -182,6 +183,10 @@ describe('MentorLoginComponent', () => {
         expect(sessionStorage.getItem('username')).toBeNull()
         expect(sessionStorage.getItem('authToken')).toBeNull()
       }
+      if (statusCode === 404) {
+        expect(consoleSpy).toHaveBeenCalled()
+      }
+      consoleSpy.mockRestore()
 
       done()
     }, 100)
