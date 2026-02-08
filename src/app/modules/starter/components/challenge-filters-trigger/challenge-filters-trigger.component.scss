@@ -2,6 +2,87 @@
   display: inline-block;
 }
 
+:host ::ng-deep .challenge-filters-trigger-modal .modal-dialog {
+  max-width: 432px;
+  width: calc(100vw - 32px);
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-header,
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body,
+:host ::ng-deep .challenge-filters-trigger-modal .modal-footer {
+  padding: 44px;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body fieldset {
+  gap: 56px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body fieldset > legend {
+  margin-bottom: 36px;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .btn.rounded-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px !important;
+  font-size: 10px !important;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .btn.rounded-pill .me-2 {
+  margin-right: 6px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__status-dot {
+  display: inline-block;
+  width: 6px !important;
+  height: 6px !important;
+  min-width: 6px;
+  min-height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: currentColor;
+  align-self: center;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__status-row {
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 6px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-row {
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 8px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon--filled {
+  color: var(--bs-primary) !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon {
+  width: 1em !important;
+  height: 1em !important;
+  flex: 0 0 1em;
+  color: inherit;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon--outline {
+  color: inherit;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icons {
+  display: inline-flex;
+  gap: 1px;
+  align-items: center;
+}
+
 .filters-trigger {
   display: inline-flex;
   align-items: center;

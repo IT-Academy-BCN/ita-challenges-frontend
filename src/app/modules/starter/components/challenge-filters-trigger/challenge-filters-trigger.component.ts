@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core'
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateModule } from '@ngx-translate/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
@@ -23,6 +23,7 @@ export class ChallengeFiltersTriggerComponent {
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
+  @ViewChild('triggerBtn') private readonly triggerBtn!: ElementRef<HTMLButtonElement>
 
   private readonly modalService = inject(NgbModal)
 
@@ -64,7 +65,30 @@ export class ChallengeFiltersTriggerComponent {
       tags: [...(this.initialFilters.tags ?? [])],
       progress: [...this.initialFilters.progress]
     }
-    this.modalService.open(this.modalTemplate, { size: 'lg' })
+
+    this.modalService.open(this.modalTemplate, {
+      windowClass: 'challenge-filters-trigger-modal',
+      backdrop: 'static',
+      keyboard: false
+    })
+
+    setTimeout(() => {
+      const triggerEl = this.triggerBtn?.nativeElement
+      const dialogEl = document.querySelector('.challenge-filters-trigger-modal .modal-dialog') as HTMLElement | null
+
+      if (!triggerEl || !dialogEl) {
+        return
+      }
+
+      const gapPx = 16
+      const rect = triggerEl.getBoundingClientRect()
+
+      dialogEl.style.position = 'fixed'
+      dialogEl.style.margin = '0'
+      dialogEl.style.top = `${Math.round(rect.bottom + gapPx)}px`
+      dialogEl.style.right = `${Math.round(window.innerWidth - rect.right)}px`
+      dialogEl.style.left = 'auto'
+    })
   }
 
   onApply(): void {

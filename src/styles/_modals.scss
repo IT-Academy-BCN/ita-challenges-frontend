@@ -70,6 +70,109 @@
 
 }
 
+.challenge-filters-trigger-modal {
+    .modal-dialog {
+        max-width: min(95vw, 640px);
+        width: auto;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding-top: 22px;
+        padding-bottom: 22px;
+        padding-left: 44px;
+        padding-right: 44px;
+    }
+
+    .modal-body {
+        > .d-flex.flex-column {
+            gap: 36px !important;
+        }
+
+        fieldset > legend {
+            margin-bottom: 20px !important;
+        }
+
+        .btn.rounded-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            padding: 0 16px !important;
+            font-size: 15px !important;
+            line-height: 1.1;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            white-space: nowrap;
+        }
+
+        .input-group-text,
+        .form-control {
+            height: 30px;
+            padding-top: 2px !important;
+            padding-bottom: 2px !important;
+        }
+
+        .input-group-text {
+            color: $gray-5;
+            border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        .input-group-text + .form-control {
+            border-left: 0;
+        }
+
+        .btn.rounded-pill .me-2 {
+            margin-right: 6px !important;
+        }
+
+        .filters-trigger__status-dot {
+            display: inline-block;
+            width: 9px !important;
+            height: 9px !important;
+            min-width: 9px;
+            min-height: 9px;
+            flex: 0 0 9px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            background: transparent;
+            align-self: center;
+            vertical-align: middle;
+        }
+
+        .filters-trigger__status-row {
+            flex-wrap: wrap;
+            overflow: visible;
+            gap: 6px !important;
+        }
+
+        .filters-trigger__difficulty-row {
+            flex-wrap: wrap;
+            overflow: visible;
+            gap: 8px !important;
+        }
+
+        .filters-trigger__difficulty-icon {
+            width: 1em !important;
+            height: 1em !important;
+        }
+
+        .filters-trigger__difficulty-icons {
+            gap: 1px;
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    .challenge-filters-trigger-modal {
+        .modal-body {
+            .filters-trigger__status-row {
+                flex-wrap: nowrap;
+            }
+        }
+    }
+}
+
 @media (max-width: 767px) {
     .modal-dialog-centered {
         display: block;
