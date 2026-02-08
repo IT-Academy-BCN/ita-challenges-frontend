@@ -1,6 +1,6 @@
 <div class="dropdown">
-  <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <img src="assets/img/icon/sort-selected.svg" [style.transform]="isAscending ? 'rotate(180deg)' : ''" alt="sort">
+  <button class="btn sort-trigger dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="assets/img/icon/order-direction.svg" [style.transform]="isAscending ? 'rotate(180deg)' : ''" alt="sort" class="sort-icon">
     {{ currentSortLabel | translate }}
   </button>
   <ul class="dropdown-menu dropdown-menu-end p-0">
@@ -10,6 +10,7 @@
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'popularity'"
               (click)="selectSort('popularity')">
+        <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="sortBy === 'popularity' ? 'visible' : 'hidden'">
         <img src="assets/img/icon/times-performed.svg" alt="popularity" class="icon">
         {{ 'modules.starter.main.section3.popularity' | translate }}
       </button>
@@ -18,6 +19,7 @@
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'creation_date'"
               (click)="selectSort('creation_date')">
+        <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="sortBy === 'creation_date' ? 'visible' : 'hidden'">
         <img src="assets/img/icon/date.svg" alt="date" class="icon">
         {{ 'modules.starter.main.section3.date' | translate }}
       </button>
@@ -27,6 +29,7 @@
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'likes'"
               (click)="selectSort('likes')">
+        <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="sortBy === 'likes' ? 'visible' : 'hidden'">
         <img src="assets/img/icon/heart.svg" alt="likes" class="icon">
         {{ 'modules.starter.main.section3.likes' | translate }}
       </button>
@@ -37,6 +40,7 @@
       <button class="dropdown-item d-flex align-items-center gap-2" 
               [class.active]="sortBy === 'difficulty'"
               (click)="selectSort('difficulty')">
+        <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="sortBy === 'difficulty' ? 'visible' : 'hidden'">
         <img src="assets/img/icon/difficulty-off-gray.svg" alt="difficulty" class="icon">
         {{ 'modules.starter.main.section3.difficulty' | translate }}
       </button>
@@ -46,23 +50,23 @@
 
     <!-- Order -->
     <li>
-      <button class="dropdown-item d-flex align-items-center justify-content-between" 
+      <button class="dropdown-item d-flex align-items-center gap-2" 
               (click)="selectOrder(true)">
-        <img *ngIf="isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
+              <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="isAscending ? 'visible' : 'hidden'">
               <div class="d-flex align-items-center gap-2">
-                <img src="assets/img/icon/sort-selected.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
+                <img src="assets/img/icon/order-direction.svg" style="transform: rotate(180deg);" alt="asc" class="icon">
                 {{ 'modules.starter.main.section3.ascending' | translate }} 
               </div>
       </button>
     </li>
     <li>
-      <button class="dropdown-item d-flex align-items-center justify-content-between" 
-              (click)="selectOrder(false)"> <img *ngIf="!isAscending" src="assets/img/icon/tick-pink.svg" alt="selected">
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              (click)="selectOrder(false)">
+              <img src="assets/img/icon/tick-pink.svg" alt="selected" class="tick-icon" [style.visibility]="!isAscending ? 'visible' : 'hidden'">
               <div class="d-flex align-items-center gap-2">
-                <img src="assets/img/icon/sort-selected.svg" alt="desc" class="icon">
+                <img src="assets/img/icon/order-direction.svg" alt="desc" class="icon">
                 {{ 'modules.starter.main.section3.descending' | translate }} 
               </div>
-       
       </button>
     </li>
   </ul>
