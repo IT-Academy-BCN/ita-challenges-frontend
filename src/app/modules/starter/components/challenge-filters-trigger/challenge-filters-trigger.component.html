@@ -1,5 +1,12 @@
-<button type="button" class="btn btn-outline-primary" (click)="open()">
-  {{ 'modules.starter.challengeFiltersTrigger.triggerButton' | translate }}
+<button type="button" class="btn btn-outline-primary filters-trigger" [class.filters-trigger--active]="selectedFiltersCount > 0" (click)="open()">
+  <span class="filters-trigger__icon" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 2h12L9 8v5l-2 1V8L2 2z" />
+    </svg>
+  </span>
+  <span class="filters-trigger__label">{{ 'modules.starter.challengeFiltersTrigger.triggerButton' | translate }}</span>
+  <span *ngIf="selectedFiltersCount > 0" class="filters-trigger__badge" aria-hidden="true">{{ selectedFiltersCount }}</span>
+  <span class="filters-trigger__chevron" aria-hidden="true"></span>
 </button>
 
 <ng-template #modal let-d="dismiss">

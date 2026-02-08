@@ -28,6 +28,10 @@ export class ChallengeFiltersTriggerComponent {
 
   private draftFilters: ModalFilters = { levels: [], tags: [], progress: [] }
 
+  get selectedFiltersCount(): number {
+    return this.initialFilters.levels.length + this.initialFilters.progress.length + (this.initialFilters.tags?.length ?? 0)
+  }
+
   private toggleInArray<T>(arr: T[], value: T): T[] {
     return arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value]
   }
