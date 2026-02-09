@@ -4,7 +4,7 @@
     opacity: 0.2;
 }
 .modal-content{
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     background-color: $white;
 
@@ -97,13 +97,21 @@
         .btn.rounded-pill {
             display: inline-flex;
             align-items: center;
-            min-height: 40px;
-            padding: 0 16px !important;
-            font-size: 15px !important;
+            min-height: 36px;
+            padding: 0 14px !important;
+            font-size: 14px !important;
             line-height: 1.1;
             font-weight: 600;
             letter-spacing: -0.2px;
             white-space: nowrap;
+        }
+
+        .btn.rounded-pill.btn-outline-dark {
+            border-color: #adb5bd !important;
+        }
+
+        .btn.rounded-pill.btn-dark {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
         }
 
         .input-group-text,
@@ -128,11 +136,11 @@
 
         .filters-trigger__status-dot {
             display: inline-block;
-            width: 9px !important;
-            height: 9px !important;
-            min-width: 9px;
-            min-height: 9px;
-            flex: 0 0 9px;
+            width: 8px !important;
+            height: 8px !important;
+            min-width: 8px;
+            min-height: 8px;
+            flex: 0 0 8px;
             border-radius: 50%;
             border: 2px solid currentColor;
             background: transparent;
@@ -159,6 +167,16 @@
 
         .filters-trigger__difficulty-icons {
             gap: 1px;
+        }
+    }
+
+    .modal-footer {
+        .btn.btn-primary {
+            min-height: 36px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 14px;
+            line-height: 1.1;
         }
     }
 }
