@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-01-26
+
+### Feature
+- Added new item to main navigation Classification
+- Created footer section with 3 utility options
+- Added new translation keys
+- Removed "My resources" section (Bookmarks/Favorites) from sidebar menu
+
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
