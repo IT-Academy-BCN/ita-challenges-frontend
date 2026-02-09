@@ -75,4 +75,15 @@
     cursor: pointer;
     color: $gray-3;
   }
+
+  .creation-date {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .txt {
+    color: $gray-3;
+    height: 100%;
+  }
 }

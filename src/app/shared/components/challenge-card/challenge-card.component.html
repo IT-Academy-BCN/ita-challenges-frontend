@@ -18,6 +18,8 @@
   </div>
   <div class="title">{{ title }}</div>
   <div class="description">{{ descriptionPreview }}</div>
+ <app-tags [tags]="tags"></app-tags>
+  <!-- STATS WRAPPER -->
   <div class="stats-info-wrapper">
     <!-- DIFFICULTY LEVEL -->
     <app-difficulty-level [level]="level"></app-difficulty-level>
@@ -56,11 +58,11 @@
     </button>
     <!-- CREATION DATE -->
     <div
-      class="stat d-flex align-items-center"
+      class="creation-date"
       *ngIf="creation_date"
       [ngbTooltip]="'tooltips.creationDate' | translate"
     >
-      <div><img src="assets/img/icon/date.svg" alt="Date" /></div>
+      <img src="assets/img/icon/date.svg" alt="Date" />
       <div class="txt">{{ creation_date | customDate }}</div>
     </div>
   </div>

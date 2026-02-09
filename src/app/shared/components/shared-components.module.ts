@@ -14,6 +14,7 @@ import { EditorModule } from '@tinymce/tinymce-angular'
 import { ToggleComponent } from './toggle/toggle.component'
 import { CustomDatePipe } from "../../pipes/custom-date.pipe";
 import { DifficultyLevelComponent } from './challenge-card/difficulty-level/difficulty-level.component'
+import { TagsComponent } from './challenge-card/tags/tags.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DifficultyLevelComponent } from './challenge-card/difficulty-level/diff
     SolutionComponent,
     BreadcrumbComponent,
     ToggleComponent,
-    DifficultyLevelComponent
+    DifficultyLevelComponent,
+    TagsComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { DifficultyLevelComponent } from './challenge-card/difficulty-level/diff
     BreadcrumbComponent,
     DynamicTranslatePipe,
     EscapeJavaForJsonPipe,
-    ToggleComponent
+    ToggleComponent,
+    TagsComponent
   ]
 })
 export class SharedComponentsModule { }

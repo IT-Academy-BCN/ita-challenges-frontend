@@ -5,7 +5,7 @@ import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { take } from 'rxjs/operators'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
-
+import { Tag } from 'src/app/models/tag-response.interface'
 
 @Component({
   selector: 'app-challenge-card',
@@ -35,6 +35,39 @@ export class ChallengeCardComponent implements OnInit {
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
   @Input() solutionStatus?: SolutionStatus;
+
+  // Moked data to test the component UI
+  tags: Tag[] = [{
+    id_tag: '333333',
+    tag_name: 'Lógica',
+    tag_description: 'Hola com estas'
+  },
+  {
+    id_tag: '333333',
+    tag_name: 'Variables',
+    tag_description: 'Hola com estas'
+  },
+  {
+    id_tag: '333333',
+    tag_name: 'Fundamentos',
+    tag_description: 'Hola com estas'
+  },
+  {
+    id_tag: '333333',
+    tag_name: 'Arrays',
+    tag_description: 'Hola com estas'
+  },
+  {
+    id_tag: '333333',
+    tag_name: 'Funciones',
+    tag_description: 'Hola com estas'
+  },
+  {
+    id_tag: '333333',
+    tag_name: 'Bucles',
+    tag_description: 'Hola com estas'
+  }
+]
 
 
   ngOnInit(): void {
