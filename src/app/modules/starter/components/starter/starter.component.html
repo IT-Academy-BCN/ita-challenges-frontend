@@ -52,7 +52,7 @@
   
   <main id="challenges-container" class="col-12 col-xl-8">
 
-    <div class="d-flex flex-column gap-3" id="challenges" #challenge>
+    <div id="challenges" #challenge>
       <ng-container *ngIf="(challenges?.length || 0) > 0; else noResultsTpl">
         <app-challenge-card
           *ngFor="let challenge of challenges; let i = index"

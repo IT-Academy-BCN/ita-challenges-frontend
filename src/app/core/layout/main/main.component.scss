@@ -36,15 +36,12 @@
     height: calc(100% - 20px) !important;
     padding: 0px 40px 20px 40px;
     background-color: $gray-4;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
   }
   app-main-menu {
     height: 100%;
-  }
-  #main-container {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    // scrollbar-width: none;
   }
 }
 
