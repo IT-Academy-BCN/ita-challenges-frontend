@@ -105,7 +105,7 @@ app-starter-filters p {
   overflow-y: auto;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
   gap: 1rem;
 }
 
