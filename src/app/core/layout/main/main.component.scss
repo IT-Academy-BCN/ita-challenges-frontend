@@ -32,7 +32,6 @@
     }
   }
   main {
-    border-radius: 15px;
     width: 100%;
     height: calc(100% - 20px) !important;
     padding: 0px 40px 20px 40px;
@@ -77,13 +76,13 @@
 /* Nasconde per schermi con larghezza esattamente 768px */
 @media (max-width: 768px) {
   .custom-md-block {
-      display: none !important;
+    display: none !important;
   }
 }
 
 /* Mostra per schermi con larghezza superiore a 768px */
 @media (min-width: 769px) {
   .custom-md-block {
-      display: block !important;
+    display: block !important;
   }
 }
