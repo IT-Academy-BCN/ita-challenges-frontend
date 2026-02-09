@@ -59,7 +59,13 @@
             transition: filter 0.2s ease;
         }
 
-        &:hover, &:active, &:focus, &.active {
+        &.active {
+            background-color: transparent;
+            color: $black-2;
+            font-weight: normal; 
+        }
+
+        &:hover, &:active, &:focus {
             background-color: $primary; 
             color: $white !important; 
 
