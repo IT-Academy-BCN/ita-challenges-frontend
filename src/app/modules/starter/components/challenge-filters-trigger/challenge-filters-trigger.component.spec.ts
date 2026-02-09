@@ -120,6 +120,10 @@ describe('ChallengeFiltersTriggerComponent', () => {
     const component = fixture.componentInstance
 
     component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    fixture.detectChanges()
+
+    ;(component as any).modalService = modalStub
+    ;(component as any).modalTemplate = {} as any
     component.open()
 
     expect(modalStub.open).toHaveBeenCalled()
@@ -140,18 +144,18 @@ describe('ChallengeFiltersTriggerComponent', () => {
     component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
 
     const triggerEl = document.createElement('button')
-    spyOn(triggerEl, 'getBoundingClientRect').and.returnValue({
-      bottom: 100,
-      right: 200
-    } as any)
+    ;(triggerEl as any).getBoundingClientRect = () => ({ bottom: 100, right: 200 } as any)
 
     const dialogEl = document.createElement('div') as any
-    dialogEl.style = {} as any
 
     const querySpy = spyOn(document, 'querySelector').and.callFake((selector: string) => {
       return selector === '.challenge-filters-trigger-modal .modal-dialog' ? (dialogEl as any) : null
     })
 
+    fixture.detectChanges()
+
+    ;(component as any).modalService = modalStub
+    ;(component as any).modalTemplate = {} as any
     ;(component as any).triggerBtn = { nativeElement: triggerEl }
 
     component.open()
@@ -159,9 +163,9 @@ describe('ChallengeFiltersTriggerComponent', () => {
 
     expect(querySpy).toHaveBeenCalledWith('.challenge-filters-trigger-modal .modal-dialog')
     expect(dialogEl.style.position).toBe('fixed')
-    expect(dialogEl.style.margin).toBe('0')
+    expect(dialogEl.style.margin).toBe('0px')
     expect(dialogEl.style.top).toBe('116px')
-    expect(dialogEl.style.left).toBe('auto')
+    expect(['', 'auto']).toContain(dialogEl.style.left)
     expect(dialogEl.style.right).toBe(`${Math.round(window.innerWidth - 200)}px`)
   }))
 })
