@@ -73,6 +73,5 @@ export class LanguageFilterComponent implements OnInit {
       .map(key => this.languageNameToIdMap[key]);
     
     this.languageSelected.emit(selectedLanguages);
-    console.log('event emitted', selectedLanguages)
   }
 }
