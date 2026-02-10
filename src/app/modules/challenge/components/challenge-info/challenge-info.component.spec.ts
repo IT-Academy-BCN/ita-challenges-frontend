@@ -419,13 +419,34 @@ describe('ChallengeInfoComponent', () => {
     expect(component.isDropdownOpen).toBe(false);
   });
 
-  it('should load solutions from the service', () => {
-    const mockSolutions = { results: [{ solution_text: 'test solution' }] } as any;
-    const solutionServiceSpy = jest.spyOn(component['solutionService'], 'getAllChallengeSolutions').mockReturnValue(of(mockSolutions));
-    component.loadSolutions('test-challenge-id', 'test-language-id');
-    expect(solutionServiceSpy).toHaveBeenCalledWith('test-challenge-id', 'test-language-id');
-    expect(component.challengeSolutions).toEqual(mockSolutions.results);
-  });
+ it('should load solutions from user submissions', fakeAsync(() => {
+  const mockSubmissions = [
+    {
+      uuid_challenge: 'test-challenge-id',
+      uuid_language: 'test-language-id',
+      solution_text: 'test solution',
+      uuid_submission: 'sub-1'
+    }
+  ] as any[];
+
+  const fetchSpy = jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(fetchSpy).toHaveBeenCalled();
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: 'sub-1',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'test solution'
+    }
+  ]);
+}));
+
 
   describe('Dropdown functionality', () => {
     it('should toggle dropdown', () => {
