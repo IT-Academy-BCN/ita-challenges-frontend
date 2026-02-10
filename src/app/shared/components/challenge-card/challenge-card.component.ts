@@ -20,6 +20,7 @@ export class ChallengeCardComponent implements OnInit {
   private readonly authService = inject(AuthService)
   public userRole: string | null = null
   public SolutionStatus = SolutionStatus;
+  public tags: Tag[] = [];
 
 
   @Input() title: string = ''
@@ -36,43 +37,19 @@ export class ChallengeCardComponent implements OnInit {
   @Input() challenge_timesSolved: number = 0
   @Input() solutionStatus?: SolutionStatus;
 
-  // Moked data to test the component UI
-  tags: Tag[] = [{
-    id_tag: '333333',
-    tag_name: 'Lógica',
-    tag_description: 'Hola com estas'
-  },
-  {
-    id_tag: '333333',
-    tag_name: 'Variables',
-    tag_description: 'Hola com estas'
-  },
-  {
-    id_tag: '333333',
-    tag_name: 'Fundamentos',
-    tag_description: 'Hola com estas'
-  },
-  {
-    id_tag: '333333',
-    tag_name: 'Arrays',
-    tag_description: 'Hola com estas'
-  },
-  {
-    id_tag: '333333',
-    tag_name: 'Funciones',
-    tag_description: 'Hola com estas'
-  },
-  {
-    id_tag: '333333',
-    tag_name: 'Bucles',
-    tag_description: 'Hola com estas'
-  }
-]
-
-
   ngOnInit(): void {
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role;
+    });
+
+    this.challengeService.getChallengeTags(this.id).subscribe({
+      next: (response) => {
+        this.tags = Array.isArray(response) ? response : (response?.results ?? [])
+      },
+      error: (err) => {
+        console.error('Error fetching challenge tags:', err)
+        this.tags = []
+      }
     });
   }
 
