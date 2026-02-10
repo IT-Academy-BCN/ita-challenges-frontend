@@ -51,7 +51,6 @@ implements OnInit, OnDestroy {
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
 
-  readonly SolutionStatus = SolutionStatus
   userSolutionStatus: SolutionStatus = SolutionStatus.NOT_STARTED
 
   challengeStarted: boolean = false
