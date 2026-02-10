@@ -340,7 +340,7 @@ describe('ChallengeComponent', () => {
       { uuid_challenge: '123', uuid_language: 'lang1', solution_text: 'text2' }
     ]))
 
-    const solutionTextSpy = spyOn(mockSolutionService, 'solutionText')
+    const solutionTextSpy = mockSolutionService.solutionText as jasmine.Spy
 
     component.idChallenge = '123'
     component.languageId = 'lang1'
