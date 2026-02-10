@@ -320,6 +320,32 @@ describe('ChallengeComponent', () => {
     expect(component.solutionText).toBe('some solution');
   });
 
+  it('should load solution content when idChallenge and languageId are set', () => {
+    const mockSolutionService = TestBed.inject(SolutionService) as any
+    ;(mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+      { uuid_challenge: '123', uuid_language: 'lang1', solution_text: 'text' }
+    ]))
+
+    component.idChallenge = '123'
+    component.languageId = 'lang1'
+
+    component.loadSolutionContent()
+    expect(mockSolutionService.fetchUserSolution).toHaveBeenCalled()
+    expect(component.solutionText).toBe('text')
+  })
+
+  it('should log errors when user bookmarks/favorites loading fails', () => {
+    const mockChallengeService = TestBed.inject(ChallengeService) as any
+    ;(mockChallengeService.getUserBookmarks as jasmine.Spy).and.returnValue(throwError(() => new Error('fail')))
+    ;(mockChallengeService.getUserFavorites as jasmine.Spy).and.returnValue(throwError(() => new Error('fail')))
+    const consoleSpy = spyOn(console, 'error')
+
+    component.loadUserBookmarks('u')
+    component.loadUserFavorites('u')
+
+    expect(consoleSpy).toHaveBeenCalled()
+  })
+
   it('should update solution text on editor change', () => {
     const newSolution = 'new solution text';
     component.onEditorSolutionChanged(newSolution);
