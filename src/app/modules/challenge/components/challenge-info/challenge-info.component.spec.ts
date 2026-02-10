@@ -36,6 +36,7 @@ describe('ChallengeInfoComponent', () => {
   let modalService: NgbModal
   let mockActiveIdSubject: Subject<ChallengeTab>
   let mockChallengeCompletedSubject: Subject<string>
+  let mockSolutionSentSubject: Subject<boolean>
 
   beforeEach(async () => {
     // Create new subjects for each test
@@ -86,6 +87,12 @@ describe('ChallengeInfoComponent', () => {
     
     Object.defineProperty(component['solutionService'], 'challengeCompleted$', {
       value: mockChallengeCompletedSubject.asObservable()
+    })
+
+    // Provide solutionSent subject to trigger solution-sent logic
+    mockSolutionSentSubject = new Subject<boolean>()
+    Object.defineProperty(component['solutionService'], 'solutionSent$', {
+      value: mockSolutionSentSubject.asObservable()
     })
     
     fixture.detectChanges()
@@ -383,6 +390,49 @@ describe('ChallengeInfoComponent', () => {
     expect(onActiveIdChangeSpy).toHaveBeenCalledWith(ChallengeTab.SOLUTIONS);
     expect(component.isEditorChallengeVisible).toBe(false);
   });
+
+  it('should react to solutionSent$ emission and load solutions and user data', () => {
+    // Spy on methods called when solution is sent
+    const loadSolutionsSpy = jest.spyOn(component, 'loadSolutions').mockImplementation()
+    const loadUserSolutionSpy = jest.spyOn(component as any, 'loadUserSolutionData')
+
+    // set necessary props
+    component.idChallenge = 'abc'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    // Emit true to simulate solution sent
+    mockSolutionSentSubject.next(true)
+
+    expect(loadSolutionsSpy).toHaveBeenCalledWith('abc', 'lang1')
+    expect(loadUserSolutionSpy).toHaveBeenCalled()
+  })
+
+  it('should not call fetchUserSolution when userId is empty in loadUserSolutionData', async () => {
+    jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of(''))
+    const fetchSpy = jest.spyOn(component['solutionService'], 'fetchUserSolution')
+    component.idChallenge = 'c-empty'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    await (component as any).loadUserSolutionData()
+
+    expect(fetchSpy).not.toHaveBeenCalled()
+  })
+
+  it('should set userSolution and solutionText when loadUserSolutionData finds a match', async () => {
+    jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of('user-1'))
+    const submissions = [
+      { uuid_user: 'user-1', uuid_challenge: 'c-1', uuid_language: 'lang1', solution_text: 'found-text' }
+    ] as any[]
+    jest.spyOn(component['solutionService'], 'fetchUserSolution').mockReturnValue(of(submissions))
+
+    component.idChallenge = 'c-1'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    await (component as any).loadUserSolutionData()
+
+    expect(component.userSolution).toEqual({ solution_text: 'found-text' })
+    expect(component.solutionText).toBe('found-text')
+  })
 
   it('should not load solutions when activeId input changes to SOLUTIONS and user is not admin', () => {
     component.isAdmin = false;

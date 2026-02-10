@@ -334,6 +334,44 @@ describe('ChallengeComponent', () => {
     expect(component.solutionText).toBe('text')
   })
 
+  it('should call solutionService.solutionText when a submission match is found in loadSolutionContent', () => {
+    const mockSolutionService = TestBed.inject(SolutionService) as any
+    ;(mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+      { uuid_challenge: '123', uuid_language: 'lang1', solution_text: 'text2' }
+    ]))
+
+    const solutionTextSpy = spyOn(mockSolutionService, 'solutionText')
+
+    component.idChallenge = '123'
+    component.languageId = 'lang1'
+
+    component.loadSolutionContent()
+
+    expect(solutionTextSpy).toHaveBeenCalledWith('text2')
+    expect(component.solutionText).toBe('text2')
+  })
+
+  it('should set solutionState to IN_PROGRESS or ENDED based on fetchUserSolution results', () => {
+    const mockSolutionService = TestBed.inject(SolutionService) as any
+
+    // IN_PROGRESS
+    (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+      { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.IN_PROGRESS, solution_text: 't1' }
+    ]))
+    component.idChallenge = '123'
+    component.loadUserSolutionStatus('u1')
+    expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS)
+    expect(component.savedSolutionText).toBe('t1')
+
+    // ENDED
+    (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+      { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.ENDED, solution_text: 't2' }
+    ]))
+    component.loadUserSolutionStatus('u1')
+    expect(component.solutionState).toBe(SolutionStatus.ENDED)
+    expect(component.savedSolutionText).toBe('t2')
+  })
+
   it('should log errors when user bookmarks/favorites loading fails', () => {
     const mockChallengeService = TestBed.inject(ChallengeService) as any
     ;(mockChallengeService.getUserBookmarks as jasmine.Spy).and.returnValue(throwError(() => new Error('fail')))
