@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.15.1-RELEASE] - 2026-02-10
+
+### Changed
+- Migrated frontend solution submission and retrieval to use Challenge submissions endpoints.
+- Removed legacy user solution endpoints usage.
+- Updated solution service and related tests to align with submissions flow.
+
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
