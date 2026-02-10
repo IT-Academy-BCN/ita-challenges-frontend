@@ -1,7 +1,7 @@
 @import '/src/styles/colors';
 
 .container-fluid {
-  height: 100vh;
+  min-height: 100%;
   gap: 30px;
   display: flex;
   flex-direction: row;
