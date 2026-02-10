@@ -98,42 +98,4 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
-
-  toggleBookmark(event: MouseEvent): void {
-    event.stopPropagation()
-    if (!this.authService.isUserLoggedIn()) {
-      return
-    }
-    if (this.isBookmarked) {
-      this.challengeService.removeBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error removing bookmark:', error)
-        }
-      })
-    } else {
-      this.challengeService.addBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error adding bookmark:', error)
-        }
-      })
-    }
-  }
-
-  getStatusTooltip(): string {
-    switch (this.solutionStatus) {
-      case SolutionStatus.ENDED:
-        return 'You have completed this challenge';
-      case SolutionStatus.IN_PROGRESS:
-        return 'You have a saved solution in progress';
-      default:
-        return '';
-    }
-  }
-
 }
