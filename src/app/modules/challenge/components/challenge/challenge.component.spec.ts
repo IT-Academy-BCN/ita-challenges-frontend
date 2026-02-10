@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component'
-import { of, throwError } from 'rxjs'
+import { of, throwError, BehaviorSubject } from 'rxjs'
 import { ChallengeService } from '../../../../services/challenge.service'
 import { By } from '@angular/platform-browser'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
@@ -61,10 +61,22 @@ describe('ChallengeComponent', () => {
       getUserBookmarks: getUserBookmarksSpy,
       getUserFavorites: getUserFavoritesSpy
     }
+    const activeIdSubject = new BehaviorSubject(ChallengeTab.DETAILS)
+    const solutionSentSubject = new BehaviorSubject(false)
+    const challengeCompletedSubject = new BehaviorSubject<string | null>(null)
+
     mockSolutionService = {
-  fetchUserSolution: jasmine.createSpy('fetchUserSolution').and.returnValue(of([])),
-  solutionText: jasmine.createSpy('solutionText')
-}
+      activeIdSubject,
+      activeId$: activeIdSubject.asObservable(),
+      solutionSentSubject,
+      solutionSent$: solutionSentSubject.asObservable(),
+      challengeCompletedSubject,
+      challengeCompleted$: challengeCompletedSubject.asObservable(),
+      fetchUserSolution: jasmine.createSpy('fetchUserSolution').and.returnValue(of([])),
+      solutionText: jasmine.createSpy('solutionText'),
+      updateSolutionSentState: jasmine.createSpy('updateSolutionSentState'),
+      sendSolution: jasmine.createSpy('sendSolution')
+    }
 
     const mockAuthService = {
       isUserLoggedIn: () => true,
