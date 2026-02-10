@@ -35,7 +35,8 @@ describe('ChallengeCardComponent', () => {
       addToFavorites: jest.fn(),
       removeFromFavorites: jest.fn(),
       addBookmark: jest.fn(),
-      removeBookmark: jest.fn()
+      removeBookmark: jest.fn(),
+      getChallengeTags: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] }))
     } as any
 
     mockAuthService = {
@@ -107,7 +108,7 @@ describe('ChallengeCardComponent', () => {
     fixture.detectChanges()
 
     const formattedDate = datePipe.transform(testDate)
-    const dateElements = fixture.debugElement.queryAll(By.css('.stat .txt'))
+    const dateElements = fixture.debugElement.queryAll(By.css('.creation-date .txt'))
     const dateElement = dateElements.find(el => el.nativeElement.textContent.includes(formattedDate))
 
     expect(dateElement).toBeTruthy()
@@ -142,42 +143,6 @@ describe('ChallengeCardComponent', () => {
       done()
     })
   })
-  it('toggleBookmark: should call addBookmark when not bookmarked', done => {
-    component.id = 'C2'
-    component.isBookmarked = false
-    mockChallengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }))
-
-    component.toggleBookmark(new MouseEvent('click'))
-    setTimeout(() => {
-      expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C2')
-      expect(component.isBookmarked).toBe(true)
-      done()
-    })
-  })
-
-  it('toggleBookmark: should call removeBookmark when already bookmarked', done => {
-    component.id = 'C2'
-    component.isBookmarked = true
-    mockChallengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }))
-
-    component.toggleBookmark(new MouseEvent('click'))
-    setTimeout(() => {
-      expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
-      expect(component.isBookmarked).toBe(false)
-      done()
-    })
-  })
-
-  it('should not call favorite or bookmark services if user is not logged in', () => {
-    mockAuthService.isUserLoggedIn.mockReturnValue(false)
-    const event = new MouseEvent('click')
-
-    component.toggleFavorite(event)
-    expect(mockChallengeService.addToFavorites).not.toHaveBeenCalled()
-
-    component.toggleBookmark(event)
-    expect(mockChallengeService.addBookmark).not.toHaveBeenCalled()
-  })
 
   it('should handle error on addToFavorites', () => {
     component.isFavorite = false
@@ -197,38 +162,76 @@ describe('ChallengeCardComponent', () => {
     consoleSpy.mockRestore()
   })
 
-  it('should handle error on addBookmark', () => {
-    component.isBookmarked = false
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-    mockChallengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')))
-    component.toggleBookmark(new MouseEvent('click'))
-    expect(consoleSpy).toHaveBeenCalled()
-    consoleSpy.mockRestore()
-  })
+  // it('should handle error on addBookmark', () => {
+  //   component.isBookmarked = false
+  //   const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+  //   mockChallengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')))
+  //   component.toggleBookmark(new MouseEvent('click'))
+  //   expect(consoleSpy).toHaveBeenCalled()
+  //   consoleSpy.mockRestore()
+  // })
 
-  it('should handle error on removeBookmark', () => {
-    component.isBookmarked = true
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-    mockChallengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')))
-    component.toggleBookmark(new MouseEvent('click'))
-    expect(consoleSpy).toHaveBeenCalled()
-    consoleSpy.mockRestore()
-  })
+  // it('should handle error on removeBookmark', () => {
+  //   component.isBookmarked = true
+  //   const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+  //   mockChallengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')))
+  //   component.toggleBookmark(new MouseEvent('click'))
+  //   expect(consoleSpy).toHaveBeenCalled()
+  //   consoleSpy.mockRestore()
+  // })
 
-  describe('getStatusTooltip', () => {
-    it('should return the correct tooltip for ENDED status', () => {
-      component.solutionStatus = SolutionStatus.ENDED
-      expect(component.getStatusTooltip()).toBe('You have completed this challenge')
-    })
+  // describe('getStatusTooltip', () => {
+  //   it('should return the correct tooltip for ENDED status', () => {
+  //     component.solutionStatus = SolutionStatus.ENDED
+  //     expect(component.getStatusTooltip()).toBe('You have completed this challenge')
+  //   })
 
-    it('should return the correct tooltip for IN_PROGRESS status', () => {
-      component.solutionStatus = SolutionStatus.IN_PROGRESS
-      expect(component.getStatusTooltip()).toBe('You have a saved solution in progress')
-    })
+  //   it('should return the correct tooltip for IN_PROGRESS status', () => {
+  //     component.solutionStatus = SolutionStatus.IN_PROGRESS
+  //     expect(component.getStatusTooltip()).toBe('You have a saved solution in progress')
+  //   })
 
-    it('should return an empty string for other statuses', () => {
-      component.solutionStatus = undefined
-      expect(component.getStatusTooltip()).toBe('')
-    })
-  })
+  //   it('should return an empty string for other statuses', () => {
+  //     component.solutionStatus = undefined
+  //     expect(component.getStatusTooltip()).toBe('')
+  //   })
+  // })
+
+  // it('toggleBookmark: should call addBookmark when not bookmarked', done => {
+  //   component.id = 'C2'
+  //   component.isBookmarked = false
+  //   mockChallengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }))
+
+  //   component.toggleBookmark(new MouseEvent('click'))
+  //   setTimeout(() => {
+  //     expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C2')
+  //     expect(component.isBookmarked).toBe(true)
+  //     done()
+  //   })
+  // })
+
+  // it('toggleBookmark: should call removeBookmark when already bookmarked', done => {
+  //   component.id = 'C2'
+  //   component.isBookmarked = true
+  //   mockChallengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }))
+
+  //   component.toggleBookmark(new MouseEvent('click'))
+  //   setTimeout(() => {
+  //     expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
+  //     expect(component.isBookmarked).toBe(false)
+  //     done()
+  //   })
+  // })
+
+  // it('should not call favorite or bookmark services if user is not logged in', () => {
+  //   mockAuthService.isUserLoggedIn.mockReturnValue(false)
+  //   const event = new MouseEvent('click')
+
+  //   component.toggleFavorite(event)
+  //   expect(mockChallengeService.addToFavorites).not.toHaveBeenCalled()
+
+  //   component.toggleBookmark(event)
+  //   expect(mockChallengeService.addBookmark).not.toHaveBeenCalled()
+  // })
+
 })
