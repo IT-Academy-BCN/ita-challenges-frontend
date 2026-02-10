@@ -351,10 +351,9 @@ describe('ChallengeComponent', () => {
     expect(component.solutionText).toBe('text2')
   })
 
-  it('should set solutionState to IN_PROGRESS or ENDED based on fetchUserSolution results', () => {
+  it('should set solutionState to IN_PROGRESS based on fetchUserSolution results', () => {
     const mockSolutionService = TestBed.inject(SolutionService) as any
 
-    // IN_PROGRESS
     (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.IN_PROGRESS, solution_text: 't1' }
     ]))
@@ -362,11 +361,15 @@ describe('ChallengeComponent', () => {
     component.loadUserSolutionStatus('u1')
     expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS)
     expect(component.savedSolutionText).toBe('t1')
+  })
 
-    // ENDED
+  it('should set solutionState to ENDED based on fetchUserSolution results', () => {
+    const mockSolutionService = TestBed.inject(SolutionService) as any
+
     (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.ENDED, solution_text: 't2' }
     ]))
+    component.idChallenge = '123'
     component.loadUserSolutionStatus('u1')
     expect(component.solutionState).toBe(SolutionStatus.ENDED)
     expect(component.savedSolutionText).toBe('t2')
