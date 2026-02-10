@@ -22,6 +22,8 @@ import localeCa from '@angular/common/locales/ca'
 import { AuthService } from 'src/app/services/auth.service'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+import { SolutionService } from 'src/app/services/solution.service'
+
 
 registerLocaleData(localeCa)
 
@@ -32,6 +34,8 @@ describe('ChallengeComponent', () => {
   let cookieService: CookieService
   let getUserBookmarksSpy: jasmine.Spy
   let getUserFavoritesSpy: jasmine.Spy
+  let mockSolutionService: any
+
 
   beforeEach(async () => {
     getUserBookmarksSpy = jasmine.createSpy('getUserBookmarks').and.returnValue(of(['id1', 'id2']))
@@ -57,6 +61,11 @@ describe('ChallengeComponent', () => {
       getUserBookmarks: getUserBookmarksSpy,
       getUserFavorites: getUserFavoritesSpy
     }
+    mockSolutionService = {
+  fetchUserSolution: jasmine.createSpy('fetchUserSolution').and.returnValue(of([])),
+  solutionText: jasmine.createSpy('solutionText')
+}
+
     const mockAuthService = {
       isUserLoggedIn: () => true,
       getUserId: () => of('mock-user-id'),
@@ -98,6 +107,10 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
+        {
+    provide: SolutionService,
+    useValue: mockSolutionService
+  },
         { provide: AuthService, useValue: mockAuthService },
         CookieService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -300,4 +313,24 @@ describe('ChallengeComponent', () => {
     component.onEditorSolutionChanged(newSolution);
     expect(component.solutionText).toBe(newSolution);
   });
+
+  it('should NOT load user data when userId is empty', () => {
+  const auth = TestBed.inject(AuthService) as any
+
+  
+  spyOn(auth, 'getUserId').and.returnValue(of(''))
+
+  const bookmarksSpy = spyOn(component, 'loadUserBookmarks')
+  const favsSpy = spyOn(component, 'loadUserFavorites')
+  const statusSpy = spyOn(component, 'loadUserSolutionStatus')
+  const contentSpy = spyOn(component, 'loadSolutionContent')
+
+  component.ngOnInit()
+
+  expect(bookmarksSpy).not.toHaveBeenCalled()
+  expect(favsSpy).not.toHaveBeenCalled()
+  expect(statusSpy).not.toHaveBeenCalled()
+  expect(contentSpy).not.toHaveBeenCalled()
+})
+
 })
