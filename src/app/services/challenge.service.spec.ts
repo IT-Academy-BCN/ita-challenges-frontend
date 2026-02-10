@@ -205,7 +205,7 @@ describe('ChallengeService', () => {
             expect(favorites).toEqual(mockFavorites)
           })
 
-          const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/users/${userId}/favorites`
+          const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USERS}/${userId}/favorites`
 
           const req = httpMock.expectOne(expectedUrl)
           expect(req.request.method).toBe('GET')
