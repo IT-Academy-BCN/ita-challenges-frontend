@@ -190,16 +190,24 @@ loadUserSolutionStatus(userId: string): void {
 
   loadSolutionContent(): void {
     if (this.idChallenge && this.languageId) {
-      this.solutionService.getUserSolution(this.idChallenge, this.languageId).subscribe({
-        next: (solution) => {
-          this.solutionText = solution.solution_text;
-          this.solutionService.solutionText(this.solutionText);
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error loading user solution:', err);
+      this.solutionService.fetchUserSolution().subscribe({
+        next: (submissions: any[]) => {
+          const match = submissions.find((s) =>
+            s.uuid_challenge === this.idChallenge &&
+          s.uuid_language === this.languageId
+        )
+        if (match) {
+          const text = match.solution_text ?? match.submission_text ?? ''
+          this.solutionText = text
+          this.solutionService.solutionText(this.solutionText)
+          this.cdr.detectChanges()
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Error loading user solution:', err)
+      }
+    })
   }
+}
+
 }

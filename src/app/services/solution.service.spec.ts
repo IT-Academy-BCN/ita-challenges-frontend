@@ -47,18 +47,18 @@ describe('SolutionService', () => {
   })
 
 const submissionsUrl = (userId: string) =>
-  `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SUBMISSIONS}${userId}/submissions`
+  `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SUBMISSIONS}${userId}/submissions`
 
 const submissionsBody = (
   uuid_challenge: string,
   uuid_language: string,
   action: any,
-  solution_text: string
+  submission_text: string
 ) => ({
   uuid_challenge,
   uuid_language,
   action,
-  submission_text: solution_text
+  submission_text
 })
 
 
@@ -105,29 +105,6 @@ it('should not emit "submitted" if submission fails', (done) => {
     req.flush(mockData)
   })
 
-  it('should check the user solutions', (done) => {
-    const challengeId = 'challenge123';
-    const languageId = 'language123';
-
-    const mockUserSolution = {
-      uuid_user: '1a2b3c4d-5e6f-6a8b-9c0d-1e2f3a4b5c6d',
-      uuid_challenge: challengeId,
-      uuid_language: languageId,
-      solution_text: 'Esta es la solución del usuario para el reto FizzBuzz'
-    }
-
-    service.getUserSolution(challengeId, languageId).subscribe(data => {
-      expect(data.solution_text).toEqual('Esta es la solución del usuario para el reto FizzBuzz')
-      done()
-    })
-
-    const req = httpMock.expectOne(
-    `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SOLUTION}/challenge/${challengeId}/language/${languageId}`
-    )
-
-    expect(req.request.method).toBe('GET')
-    req.flush(mockUserSolution)
-})
 
   it('should fetch user solutions', (done) => {
     const mockUserId = 'mocked-user-id'
@@ -180,7 +157,7 @@ it('should not emit "submitted" if submission fails', (done) => {
     })
 
   const req = httpMock.expectOne(
-    `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_SUBMISSIONS}${uuid_user}/submissions`
+    `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_USER_SUBMISSIONS}${uuid_user}/submissions`
   )
 
   expect(req.request.method).toBe('POST')
