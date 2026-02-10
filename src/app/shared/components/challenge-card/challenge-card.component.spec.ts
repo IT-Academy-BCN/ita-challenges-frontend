@@ -144,6 +144,53 @@ describe('ChallengeCardComponent', () => {
     })
   })
 
+  it('should set tags from response.results when response is a TagResponse object', () => {
+    const mockTags = [
+      { id_tag: '1', tag_name: 'Arrays', tag_description: 'Array challenges' }
+    ]
+    mockChallengeService.getChallengeTags.mockReturnValue(of({ offset: 0, limit: 1, count: 1, results: mockTags }))
+    component.ngOnInit()
+    expect(component.tags).toEqual(mockTags)
+  })
+
+  it('should set tags to empty array on getChallengeTags error', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.getChallengeTags.mockReturnValue(throwError(() => new Error('error')))
+    component.ngOnInit()
+    expect(component.tags).toEqual([])
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  describe('descriptionPreview', () => {
+    it('should return empty string when description is undefined', () => {
+      component.description = undefined as any
+      expect(component.descriptionPreview).toBe('')
+    })
+
+    it('should return plain text as-is when short enough', () => {
+      component.description = 'Simple description'
+      expect(component.descriptionPreview).toBe('Simple description')
+    })
+
+    it('should strip HTML tags and return plain text', () => {
+      component.description = '<p>Hello <strong>world</strong></p>'
+      expect(component.descriptionPreview).toBe('Hello world')
+    })
+
+    it('should truncate text longer than 100 characters', () => {
+      component.description = 'A'.repeat(150)
+      const result = component.descriptionPreview
+      expect(result.length).toBe(100)
+      expect(result.endsWith('…')).toBe(true)
+    })
+
+    it('should normalize whitespace', () => {
+      component.description = '  too   many    spaces  '
+      expect(component.descriptionPreview).toBe('too many spaces')
+    })
+  })
+
   it('should handle error on addToFavorites', () => {
     component.isFavorite = false
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
