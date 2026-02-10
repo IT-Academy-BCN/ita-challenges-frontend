@@ -122,13 +122,17 @@ it('should not emit "submitted" if submission fails', (done) => {
 
 
   it('should send a POST request to submit solution', (done) => {
-    const mockResponse = { success: true, message: 'Solution submitted successfully' }
+   const mockApiResponse = { success: true, message: 'Solution submitted successfully' }
   
     service.submitSolution(uuid_challenge, uuid_language, uuid_user, action, solution_text).subscribe({
       next: (response) => {
-      expect(response).toEqual(mockResponse)
+      expect(response).toEqual({
+        ...mockApiResponse,
+        isSolved: true,
+        timesSolved: 0
+      })
       done()
-    }
+      }
   })
   
     const req = httpMock.expectOne(submissionsUrl(uuid_user))
@@ -138,7 +142,7 @@ it('should not emit "submitted" if submission fails', (done) => {
     submissionsBody(uuid_challenge, uuid_language, action, solution_text)
   )
 
-  req.flush(mockResponse)
+  req.flush(mockApiResponse)
 })
 
   
