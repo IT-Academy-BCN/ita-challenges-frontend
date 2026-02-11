@@ -4,7 +4,7 @@
     opacity: 0.2;
 }
 .modal-content{
-    border-radius: 10px;
+    border-radius: 20px;
     border: none;
     background-color: $white;
 
@@ -71,6 +71,10 @@
 }
 
 .challenge-filters-trigger-modal {
+    .modal-content {
+        border-radius: 10px;
+    }
+
     .modal-dialog {
         max-width: min(95vw, 640px);
         width: auto;
@@ -87,19 +91,19 @@
 
     .modal-body {
         > .d-flex.flex-column {
-            gap: 36px !important;
+            gap: 36px;
         }
 
         fieldset > legend {
-            margin-bottom: 20px !important;
+            margin-bottom: 20px;
         }
 
         .btn.rounded-pill {
             display: inline-flex;
             align-items: center;
             min-height: 36px;
-            padding: 0 14px !important;
-            font-size: 14px !important;
+            padding: 0 14px;
+            font-size: 14px;
             line-height: 1.1;
             font-weight: 600;
             letter-spacing: -0.2px;
@@ -107,7 +111,7 @@
         }
 
         .btn.rounded-pill.btn-outline-dark {
-            border-color: #adb5bd !important;
+            border-color: #adb5bd;
         }
 
         .btn.rounded-pill.btn-dark {
@@ -117,8 +121,8 @@
         .input-group-text,
         .form-control {
             height: 30px;
-            padding-top: 2px !important;
-            padding-bottom: 2px !important;
+            padding-top: 2px;
+            padding-bottom: 2px;
         }
 
         .input-group-text {
@@ -131,13 +135,13 @@
         }
 
         .btn.rounded-pill .me-2 {
-            margin-right: 6px !important;
+            margin-right: 6px;
         }
 
         .filters-trigger__status-dot {
             display: inline-block;
-            width: 8px !important;
-            height: 8px !important;
+            width: 8px;
+            height: 8px;
             min-width: 8px;
             min-height: 8px;
             flex: 0 0 8px;
@@ -151,18 +155,18 @@
         .filters-trigger__status-row {
             flex-wrap: wrap;
             overflow: visible;
-            gap: 6px !important;
+            gap: 6px;
         }
 
         .filters-trigger__difficulty-row {
             flex-wrap: wrap;
             overflow: visible;
-            gap: 8px !important;
+            gap: 8px;
         }
 
         .filters-trigger__difficulty-icon {
-            width: 1em !important;
-            height: 1em !important;
+            width: 1em;
+            height: 1em;
         }
 
         .filters-trigger__difficulty-icons {
