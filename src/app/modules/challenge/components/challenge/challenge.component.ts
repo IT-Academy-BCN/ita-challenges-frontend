@@ -188,6 +188,11 @@ loadUserSolutionStatus(userId: string): void {
 
   }
 
+  onSolutionStatusChanged (status: SolutionStatus): void {
+    this.solutionState = status
+    this.cdr.detectChanges()
+  }
+
   loadSolutionContent(): void {
     if (this.idChallenge && this.languageId) {
       this.solutionService.getUserSolution(this.idChallenge, this.languageId).subscribe({
