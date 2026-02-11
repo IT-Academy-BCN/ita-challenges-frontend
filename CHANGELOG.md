@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.16.1-RELEASE] - 2026-02-11
+
+### Changed
+- Global style changes
+- Layout styling updates
+- styling adjustments (menu & footer)
+
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-01-26
 
 ### Feature
