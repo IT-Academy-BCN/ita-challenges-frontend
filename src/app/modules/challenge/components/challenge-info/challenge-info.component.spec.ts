@@ -637,3 +637,103 @@ describe('loadRelatedChallenges', () => {
     consoleSpy.mockRestore();
   });
 });
+
+describe('localStorage challenge started', () => {
+  let component: ChallengeInfoComponent;
+  let fixture: ComponentFixture<ChallengeInfoComponent>;
+  let mockSolutionSentSubject: Subject<boolean>;
+
+  beforeEach(async () => {
+    mockSolutionSentSubject = new Subject<boolean>();
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        ChallengeInfoComponent,
+        ResourceCardComponent,
+        ChallengeCardComponent,
+        SolutionComponent,
+        MockEditorChallengeComponent
+      ],
+      imports: [
+        RouterTestingModule,
+        I18nModule,
+        FormsModule,
+        NgbNavModule,
+        DynamicTranslatePipe
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        {
+          provide: NgbModal,
+          useValue: {
+            open: jest.fn()
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ChallengeInfoComponent);
+    component = fixture.componentInstance;
+
+    Object.defineProperty(component['solutionService'], 'solutionSent$', {
+      value: mockSolutionSentSubject.asObservable()
+    });
+
+    Object.defineProperty(component['solutionService'], 'activeIdSubject', {
+      value: new Subject<ChallengeTab>()
+    });
+
+    Object.defineProperty(component['solutionService'], 'activeId$', {
+      value: new Subject<ChallengeTab>().asObservable()
+    });
+
+    Object.defineProperty(component['solutionService'], 'challengeCompleted$', {
+      value: new Subject<string>().asObservable()
+    });
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('should restore challenge started state from localStorage when challenge matches', () => {
+    component.idChallenge = 'test-challenge-123';
+    localStorage.setItem('challengeStarted', JSON.stringify({ id: 'test-challenge-123', started: true }));
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.isChallengeStatementVisible).toBe(false);
+  });
+
+  it('should NOT restore challenge started state from localStorage when challenge ID does not match', () => {
+    component.idChallenge = 'test-challenge-different';
+    localStorage.setItem('challengeStarted', JSON.stringify({ id: 'test-challenge-123', started: true }));
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(false);
+    expect(component.isEditorChallengeVisible).toBe(false);
+    expect(component.isChallengeStatementVisible).toBe(true);
+  });
+
+  it('should NOT restore challenge started state when localStorage has no data', () => {
+    component.idChallenge = 'test-challenge-123';
+    localStorage.clear();
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(false);
+  });
+});

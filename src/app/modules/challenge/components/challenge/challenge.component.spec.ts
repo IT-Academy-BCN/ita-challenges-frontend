@@ -23,6 +23,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 import { SolutionService } from 'src/app/services/solution.service'
+import { UserSolution } from 'src/app/models/user-solution.interface'
 
 
 registerLocaleData(localeCa)
@@ -412,4 +413,91 @@ describe('ChallengeComponent', () => {
   expect(contentSpy).not.toHaveBeenCalled()
 })
 
+it('should handle error when fetchUserSolution fails for user ID', () => {
+  const mockSolutionService = TestBed.inject(SolutionService) as any 
+  const consoleSpy = spyOn(console, 'error')
+
+  mockSolutionService.fetchUserSolution.and.returnValue(throwError(() => new Error('API Error')))
+
+  component.loadUserSolutionStatus('test-user')
+
+  expect(consoleSpy).toHaveBeenCalled()
 })
+
+it('should handle error when loadSolutionContent API fails', () => {
+  const mockSolutionService = TestBed.inject(SolutionService) as any
+  const consoleSpy = spyOn(console, 'error')
+
+  component.idChallenge = 'test-challenge'
+  component.languageId = 'test-lang'
+  mockSolutionService.fetchUserSolution.and.returnValue(throwError(() => new Error('Load error')))
+
+  component.loadSolutionContent()
+
+  expect(consoleSpy).toHaveBeenCalledWith('Error loading user solution:', expect.any(Error))
+})
+
+it('should call loadSolutionContent when onContinueChallenge is invoked when user solution exists', () => {
+  const loadSolutionContentSpy = spyOn(component, 'loadSolutionContent')
+  component.userSolution = { 
+    uuid_user: 'test-user',
+    uuid_challenge: 'test-challenge',
+    uuid_language: 'test-lang',
+    solution_text: 'previous solution',
+    status: SolutionStatus.IN_PROGRESS
+  } as UserSolution
+  
+  component.onContinueChallenge()
+
+  expect(component.challengeStarted).toBe(true)
+  expect(component.isEditorChallengeVisible).toBe(true)
+  expect(component.isChallengeStatementVisible).toBe(false)
+  expect(component.solutionText).toBe('previous solution')
+  expect(loadSolutionContentSpy).toHaveBeenCalled()
+})
+
+it('should handle error when getUserId fails', () => {
+  const mockAuthService = TestBed.inject(AuthService) as any
+  const consoleSpy = spyOn(console, 'error')
+
+  mockAuthService.getUserId.and.returnValue(throwError(() => new Error('Auth Error')))
+
+  component.ngOnInit()
+
+  expect(consoleSpy).toHaveBeenCalledWith('[ChallengeComponent] Error fetching user ID:', expect.any(Error))
+})
+
+it('should set solutionState to NOT_STARTED when no solution match found', () => {
+  const mockSolutionService = TestBed.inject(SolutionService) as any
+
+  mockSolutionService.fetchUserSolution.and.returnValue(of([]))
+  component.idChallenge = 'no-solution-challenge'
+  component.loadUserSolutionStatus('test-user')
+
+  expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED)
+  expect(component.savedSolutionText).toBe('')
+  expect(component.userSolution).toBeNull()
+})
+
+it('should update solution text when match is found in loadSolutionContent', () => {
+  const mockSolutionService = TestBed.inject(SolutionService) as any
+  const mockSubmissions = [
+    {
+      uuid_challenge: 'test-challenge',
+      uuid_language: 'test-lang',
+      solution_text: 'found solution text',
+      submission_text: 'backup text'
+    }
+  ] as any[]
+
+  mockSolutionService.fetchUserSolution.and.returnValue(of(mockSubmissions))
+
+  component.idChallenge = 'test-challenge'
+  component.languageId = 'test-lang'
+  component.loadSolutionContent()
+
+  expect(component.solutionText).toBe('found solution text')
+})
+
+})
+
