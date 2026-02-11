@@ -3,7 +3,10 @@
 @import '/src/styles/fonts';
 
 .starter {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
   margin-top: 1rem;
 }
 
@@ -57,7 +60,7 @@ app-starter-filters p {
     flex: 1 1 auto; /* grow to fill leftover width */
     width: auto;    /* unset fixed 8/12 width from grid */
     max-width: 100%;
-  }
+   }
 }
 
 #challenges-container {
@@ -90,10 +93,9 @@ app-pagination {
 
 /* Collapsible filters panel styles */
 #filters-container {
-  .filters-toggle-wrapper {
-    display: flex;
-    justify-content: flex-end;
-  }
+  display: flex;
+  justify-content: space-between;
+  
 
   .filters-toggle {
     display: inline-flex;
@@ -136,7 +138,6 @@ app-pagination {
 
 /* Make the desktop filters container shrink to its content */
 #filters-panel {
-  display: inline-block;
   width: max-content;
   max-width: 100%;
 }
@@ -178,3 +179,9 @@ app-starter-filters {
     background-color: $primary;
   }
 }
+
+#filters-selector {
+  display: flex;
+  gap: 1rem;
+}
+
