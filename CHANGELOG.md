@@ -10,6 +10,11 @@ and this project adheres to
 - Migrated frontend solution submission and retrieval to use Challenge submissions endpoints.
 - Removed legacy user solution endpoints usage.
 - Updated solution service and related tests to align with submissions flow.
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
+
+### Added
+- Added challenge-list-filters component to fit the new components of the filtering refactor.
+- Adecuated the layout of the starter component to fit the new component of the filtering refactor.
 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
