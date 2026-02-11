@@ -413,6 +413,21 @@ describe('ChallengeComponent', () => {
   expect(contentSpy).not.toHaveBeenCalled()
 })
 
+it('should handle error when getUserId fails in ngOnInit', () => {
+  const auth = TestBed.inject(AuthService) as any
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+
+  jest.spyOn(auth, 'getUserId').mockReturnValue(
+  throwError(() => new Error('Auth service error'))
+)
+
+
+  component.ngOnInit()
+
+  expect(consoleSpy).toHaveBeenCalledWith('[ChallengeComponent] Error fetching user ID:', expect.any(Error))
+})
+
   // TODO: Fix encoding issue in this test
   // it('should handle error when loadSolutionContent fails', () => { ... })
 

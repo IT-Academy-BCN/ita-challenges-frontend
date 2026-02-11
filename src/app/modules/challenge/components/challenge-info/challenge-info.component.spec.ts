@@ -497,6 +497,74 @@ describe('ChallengeInfoComponent', () => {
   ]);
 }));
 
+it('should load solutions using id_solution and solution_text when present', fakeAsync(() => {
+  const mockSubmissions = [
+    {
+      uuid_challenge: 'test-challenge-id',
+      uuid_language: 'test-language-id',
+      id_solution: 'sol-123',
+      solution_text: 'text from solution_text'
+    }
+  ] as any[];
+
+  const fetchSpy = jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  const detectSpy = jest
+    .spyOn((component as any).cdr, 'detectChanges')
+    .mockImplementation();
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(fetchSpy).toHaveBeenCalled();
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: 'sol-123',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'text from solution_text'
+    }
+  ]);
+  expect(detectSpy).toHaveBeenCalled();
+}));
+
+it('should filter non-matching submissions and use fallbacks for mapped fields', fakeAsync(() => {
+  const mockSubmissions = [
+    
+    {
+      uuid_challenge: 'other-challenge',
+      uuid_language: 'test-language-id',
+      id_solution: 'should-be-filtered'
+    },
+    
+    {
+      uuid_challenge: 'test-challenge-id',
+  uuid_language: 'test-language-id',   
+  submission_text: 'text from submission_text'
+    }
+  ] as any[];
+
+  jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: '',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'text from submission_text'
+    }
+  ]);
+}));
+
+
+
 
   describe('Dropdown functionality', () => {
     it('should toggle dropdown', () => {
