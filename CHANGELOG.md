@@ -10,6 +10,11 @@ and this project adheres to
 - Updated frontend favorites API path to consume the new `/users/{userId}/favorites` endpoint.
 - Centralized user favorites base path in environment configuration.
 
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
+
+### Added
+- Added challenge-list-filters component to fit the new components of the filtering refactor.
+- Adecuated the layout of the starter component to fit the new component of the filtering refactor.
 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
