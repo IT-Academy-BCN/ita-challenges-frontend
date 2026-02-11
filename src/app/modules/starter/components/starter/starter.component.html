@@ -1,42 +1,56 @@
-<div class="d-flex starter">
-  <!-- FILTERS -->
-  <div id="filters-container" class="d-none d-xl-block col-3">
-    <h2>{{ "modules.starter.main.section1" | translate }}</h2>
-    <div id="filters-panel" class="filters-panel open">
-
-      <app-language-filter></app-language-filter>
-      
-      <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
-    </div>
-  </div>
-  <!-- CHALLENGES -->
-  <div id="challenges-container" class="col-12 col-xl-8">
-    <div class="challenges-filter">
-      <div class="d-flex justify-content-between align-items-center challenges-filter-header">
-        <h2>{{ "modules.starter.main.section2.title" | translate }}</h2>
-        <div class="d-flex gap-2 align-items-center">
-          <button class="btn btn-outline-primary btnFiltrar d-xl-none" (click)="openModal()">
-            <strong>Filtrar</strong>
-          </button>
-          <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin" class="btn btn-sm btn-primary new-challenge-btn">
-            {{ "components.mainMenu.section4.title" | translate }}
-          </button>
-        </div>
+<div class="starter">
+  <!-- OLD FILTERS COMPONENT -->
+  <header class="challenges-header">
+    <div class="d-flex justify-content-between align-items-center challenges-filter-header">
+      <h2>{{ "modules.starter.main.section2.title" | translate }}</h2>
+      <div class="d-flex gap-2 align-items-center">
+        <!-- MOBILE FILTER BUTTON -->
+        <!-- TODO: Decide how this button fits with the new filters implementations,
+        will the button be the same for the mobile and desktop versions? -->
+        <button class="btn btn-outline-primary btnFiltrar d-xl-none" (click)="openModal()">
+          <strong>Filtrar</strong>
+        </button>
+        <!-- NEW CHALLENGE BUTTON -->
+        <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin" class="btn btn-sm btn-primary new-challenge-btn">
+          {{ "components.mainMenu.section4.title" | translate }}
+        </button>
       </div>
     </div>
-    <!-- SORT BY -->
-    <ul id="sortBy" class="d-xl-flex justify-content-end d-none">
-      <li class="animated"
-        [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
-        (click)="changeSort('popularity')">
-        {{'modules.starter.main.section2.popularity' | translate}}
-      </li>
-      <li class="animated"
-        [ngClass]="{'selected' : sortBy == 'creation_date', 'up': sortBy === 'creation_date' && !isAscending}"
-        (click)="changeSort('creation_date')">
-        {{'modules.starter.main.section2.date' | translate}}
-      </li>
-    </ul>
+    <fieldset id="filters-container">
+      <!-- SORT BY AND FILTERS SELECTOR -->
+      <div id="filters-selector">
+        <!-- ORDER BY SELECTOR -->
+        <div>
+          <!-- SORT BY -->
+          <ul id="sortBy" class="d-xl-flex justify-content-end d-none">
+            <li class="animated"
+              [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
+              (click)="changeSort('popularity')">
+              {{'modules.starter.main.section2.popularity' | translate}}
+            </li>
+            <li class="animated"
+            [ngClass]="{'selected' : sortBy == 'creation_date', 'up': sortBy === 'creation_date' && !isAscending}"
+            (click)="changeSort('creation_date')">
+            {{'modules.starter.main.section2.date' | translate}}
+            </li>
+          </ul>
+        </div>
+        <!-- FILTERS SELECTOR -->
+        <div id="filters-panel" class="filters-panel open">
+          <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
+        </div>
+      </div>
+    </fieldset>
+  </header>
+
+
+  <!-- NEW FILTERS COMPONENT -->
+  <header id="challenge-filters">
+    <app-challenge-list-filters></app-challenge-list-filters>
+  </header>
+  
+  
+  <main id="challenges-container" class="col-12 col-xl-8">
 
     <div class="d-flex flex-column gap-3" id="challenges" #challenge>
       <ng-container *ngIf="(challenges?.length || 0) > 0; else noResultsTpl">
@@ -52,13 +66,14 @@
       </ng-container>
     </div>
 
-<ng-template #noResultsTpl>
-  <div class="text-center py-5">
-    <p class="h5 text-muted">
-      {{ 'modules.starter.empty.noResults' | translate }}
-    </p>
-  </div>
-</ng-template>
-  </div>
+    <ng-template #noResultsTpl>
+      <div class="text-center py-5">
+        <p class="h5 text-muted">
+          {{ 'modules.starter.empty.noResults' | translate }}
+        </p>
+      </div>
+    </ng-template>
+  </main>
 </div>
+  
  <app-filters-modal #modal  (filtersSelected)="getChallengeFilters($event)"></app-filters-modal>
