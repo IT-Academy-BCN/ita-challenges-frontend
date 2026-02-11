@@ -1,6 +1,11 @@
 <div id="challenge-list-filters">
     <div>Here goes the language filters</div>
     <div class="space-divider"></div>
-    <div>Here goes the sort by filters</div>
+    <app-sort-select
+      [sortBy]="sortBy"
+      [isAscending]="isAscending"
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
+    </app-sort-select>
     <div>Here goes the challenge filters</div>
 </div>

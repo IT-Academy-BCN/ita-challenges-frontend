@@ -19,7 +19,7 @@ import { ChallengeListFiltersComponent } from './components/challenge-list-filte
   declarations: [
     StarterComponent,
     StarterFiltersComponent,
-    SortSelectComponent
+    SortSelectComponent,
     ChallengeListFiltersComponent
   ],
   imports: [
