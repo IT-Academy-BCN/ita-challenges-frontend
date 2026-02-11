@@ -4,13 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-02-09
+### [ita-challenges-frontend-3.18.0-RELEASE] - 2026-02-09
 ### Added
 - Custom styling for `SortSelectComponent` matching figma.
 - Accessibility support: Keyboard navigation, ARIA labels, and focus indicators.
 - Responsive layout with touch-optimized targets.
 
-### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-04
+### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-02-04
 ### Added
 - `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
 - Explicit "Ascending" and "Descending" selection options in the dropdown.
