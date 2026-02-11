@@ -51,7 +51,7 @@ implements OnInit, OnDestroy {
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
 
-  userSolutionStatus: SolutionStatus = SolutionStatus.NOT_STARTED
+  @Input() userSolutionStatus: SolutionStatus = SolutionStatus.NOT_STARTED
 
   challengeStarted: boolean = false
 
@@ -152,7 +152,6 @@ implements OnInit, OnDestroy {
     );
 
     if (match !== undefined && match !== null) {
-      this.userSolutionStatus = match.status
       this.solutionSent = true
       this.solutionText = match.solution_text
       this.userSolution = { solution_text: match.solution_text }
@@ -175,12 +174,21 @@ implements OnInit, OnDestroy {
         this.loadSolutions(this.idChallenge, idLanguage);
       }
     }
+
+    if (changes['userSolutionStatus'] || changes['languages']) {
+      this.solutionSent = this.userSolutionStatus === SolutionStatus.ENDED ||
+        this.userSolutionStatus === SolutionStatus.SHOW_SOLUTION
+
+      if (this.shouldShowOfficialSolution() && this.languages.length > 0) {
+        this.loadSolutions(this.idChallenge, this.languages[0].id_language)
+      }
+    }
   }
 
   onChallengeStart (): void {
     this.challengeStarted = true
     this.isEditorChallengeVisible = true
-    this.isChallengeStatementVisible = false;
+    this.isChallengeStatementVisible = false
   }
 
   toggleStatement (): void {
