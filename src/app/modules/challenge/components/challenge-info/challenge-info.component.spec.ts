@@ -491,7 +491,7 @@ describe('ChallengeInfoComponent', () => {
       expect(component.shouldShowOfficialSolution()).toBe(true)
     })
 
-    it('should update userSolutionStatus when loading user solution', async () => {
+    it('should update solutionSent and solutionText when loading user solution', async () => {
       const mockSolution = {
         uuid_user: 'test-user-id',
         uuid_challenge: 'test-challenge-id',
@@ -508,7 +508,8 @@ describe('ChallengeInfoComponent', () => {
 
       await (component as any).loadUserSolutionData()
 
-      expect(component.userSolutionStatus).toBe(SolutionStatus.IN_PROGRESS)
+      expect(component.solutionSent).toBe(true)
+      expect(component.solutionText).toBe('test solution')
     })
   })
 })
