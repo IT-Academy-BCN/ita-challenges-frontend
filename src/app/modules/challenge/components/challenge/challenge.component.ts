@@ -106,6 +106,8 @@ loadUserSolutionStatus(userId: string): void {
           this.solutionState = SolutionStatus.IN_PROGRESS;
         } else if (match?.status === SolutionStatus.ENDED) {
           this.solutionState = SolutionStatus.ENDED;
+        } else if (match?.status === SolutionStatus.SHOW_SOLUTION) {
+          this.solutionState = SolutionStatus.SHOW_SOLUTION
         } else {
           this.solutionState = SolutionStatus.NOT_STARTED;
         }
