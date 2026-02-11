@@ -10,8 +10,6 @@ and this project adheres to
 - Accessibility support: Keyboard navigation, ARIA labels, and focus indicators.
 - Responsive layout with touch-optimized targets.
 
-
-
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-04
 ### Added
 - `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
@@ -27,6 +25,11 @@ and this project adheres to
 
 ### IMPORTANT
 - **Sorting and Ordering Logic Change**: Users must now use the explicit "Ascending"/"Descending" options to change order; clicking the same criteria repeatedly will not toggle it.
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
+
+### Added
+- Added challenge-list-filters component to fit the new components of the filtering refactor.
+- Adecuated the layout of the starter component to fit the new component of the filtering refactor.
 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
