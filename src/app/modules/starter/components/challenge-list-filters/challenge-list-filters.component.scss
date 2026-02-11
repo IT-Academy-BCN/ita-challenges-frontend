@@ -1,0 +1,10 @@
+#challenge-list-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.space-divider {
+    flex-grow: 1;
+}
