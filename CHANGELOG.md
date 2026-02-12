@@ -8,6 +8,9 @@ and this project adheres to
 
 ### Added
 - Added toast notification when saving a challenge draft (Issue [#43](https://github.com/IT-Academy-BCN/ita-challenges/issues/43)) in challenge-header.component.ts.
+### Changed
+- Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
+
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
 ### Added
