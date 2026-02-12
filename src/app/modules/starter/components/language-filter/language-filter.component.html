@@ -1,5 +1,5 @@
-<div [formGroup]="languageForm">
-  <div *ngFor="let language of languages" class="ms-3">
+<div class="d-flex flex-row" [formGroup]="languageForm">
+  <div *ngFor="let language of languages" class="d-flex flex-row ms-3">
     <input 
       class="form-check-input"
       type="checkbox" 
@@ -7,7 +7,7 @@
       [formControlName]="language.language_name.toLowerCase()"
       [value]="language.id_language"
     />
-    <label class="form-check-label"  [for]="language.id_language">
+    <label class="form-check-label" [for]="language.id_language">
       {{ language.language_name }}
     </label>
   </div>

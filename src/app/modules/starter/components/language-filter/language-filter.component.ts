@@ -14,7 +14,7 @@ export const mockLanguages: Language[] = [
 @Component({
   selector: "app-language-filter",
   templateUrl: "./language-filter.component.html",
-  styleUrl: "./language-filter.component.css",
+  styleUrl: "./language-filter.component.scss",
 })
 
 export class LanguageFilterComponent implements OnInit {
