@@ -19,7 +19,7 @@ and this project adheres to
 - Added new translation keys
 - Removed "My resources" section (Bookmarks/Favorites) from sidebar menu
 
-- ### [ita-challenges-frontend-3.17.2-RELEASE] - 2026-02-12
+### [ita-challenges-frontend-3.17.2-RELEASE] - 2026-02-12
 
 ### Fixed
 - Added missing `BACKEND_USER_BOOKMARKS_PATH` to production environment configuration to fix production build.
