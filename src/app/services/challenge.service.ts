@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
+import { type TagResponse } from '../models/tag-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { CookieService } from 'ngx-cookie-service'
 import { AuthService } from './auth.service'
@@ -152,7 +153,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     }
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/bookmarks`
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_BOOKMARKS_PATH}/${userId}/bookmarks`;
     return this.http.get<string[]>(url, { headers })
   }
 
@@ -202,32 +203,41 @@ export class ChallengeService {
 
 
   getRelatedChallenges(challengeId: string): Observable<Challenge[]> {
-  const headers = {
-    'Content-Type': 'application/json',
-    ...this.authService.getAuthHeaders()
-  };
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
 
-  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/related`;
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/related`;
 
-  return this.http.get<{results: Challenge[] }>(url, { headers }).pipe(
-    map(response => response.results),
-    catchError((error: HttpErrorResponse) => {
-      console.error('Error fetching related challenges:', error);
-      return throwError(() => error);
-    })
-  );
-}
+    return this.http.get<{results: Challenge[] }>(url, { headers }).pipe(
+      map(response => response.results),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching related challenges:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 
-editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Challenge> {
-  const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${challengeId}/update`;
+  editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Challenge> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${challengeId}/update`;
 
-  const headers = {
-    'Content-Type': 'application/json',
-    ...this.authService.getAuthHeaders() 
-  };
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders() 
+    };
 
-  return this.http.put<Challenge>(url, challenge, { headers });
-}
+    return this.http.put<Challenge>(url, challenge, { headers });
+  }
 
+  getChallengeTags(challengeId: string): Observable<TagResponse> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${challengeId}`
+    
+     const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    return this.http.get<TagResponse>(url, { headers })
+  }
 
 }

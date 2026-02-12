@@ -470,6 +470,48 @@ describe('ChallengeInfoComponent', () => {
     expect(component.currentSolutionText).toBe(newSolution);
     expect(solutionChangedSpy).toHaveBeenCalledWith(newSolution);
   });
+  describe('Official Solution Visibility', () => {
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is NOT_STARTED', () => {
+      component.userSolutionStatus = SolutionStatus.NOT_STARTED
+      expect(component.shouldShowOfficialSolution()).toBe(false)
+    })
+
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is IN_PROGRESS', () => {
+      component.userSolutionStatus = SolutionStatus.IN_PROGRESS
+      expect(component.shouldShowOfficialSolution()).toBe(false)
+    })
+
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is SHOW_SOLUTION', () => {
+      component.userSolutionStatus = SolutionStatus.SHOW_SOLUTION
+      expect(component.shouldShowOfficialSolution()).toBe(true)
+    })
+
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is ENDED', () => {
+      component.userSolutionStatus = SolutionStatus.ENDED
+      expect(component.shouldShowOfficialSolution()).toBe(true)
+    })
+
+    it('should update solutionSent and solutionText when loading user solution', async () => {
+      const mockSolution = {
+        uuid_user: 'test-user-id',
+        uuid_challenge: 'test-challenge-id',
+        uuid_language: 'test-language-id',
+        status: SolutionStatus.IN_PROGRESS,
+        solution_text: 'test solution'
+      }
+
+      jest.spyOn((component as any).solutionService, 'fetchUserSolution').mockReturnValue(of([mockSolution]))
+      jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of('test-user-id'))
+
+      component.idChallenge = 'test-challenge-id'
+      component.languages = [{ id_language: 'test-language-id', language_name: 'Java' }]
+
+      await (component as any).loadUserSolutionData()
+
+      expect(component.solutionSent).toBe(true)
+      expect(component.solutionText).toBe('test solution')
+    })
+  })
 })
 
 describe('loadRelatedChallenges', () => {

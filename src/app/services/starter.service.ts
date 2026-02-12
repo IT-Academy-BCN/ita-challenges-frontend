@@ -4,12 +4,16 @@ import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { type FilterChallenge } from '../models/filter-challenge.model'
 import { type Challenge, type ChallengeResponse } from '../models/challenge.model'
+import { type Tag, type TagResponse } from '../models/tag-response.interface'
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class StarterService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
   cachedChallenges: ChallengeResponse | null = null
+  cachedTags: TagResponse | null = null
 
   private readonly refreshSubject = new Subject<void>()
   readonly refresh$ = this.refreshSubject.asObservable()
@@ -35,7 +39,7 @@ export class StarterService {
     }).pipe(
       tap((response) => {
         this.cachedChallenges = response
-      }))
+    }))
   }
 
   getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {

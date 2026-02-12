@@ -35,7 +35,8 @@ describe('ChallengeCardComponent', () => {
       addToFavorites: jest.fn(),
       removeFromFavorites: jest.fn(),
       addBookmark: jest.fn(),
-      removeBookmark: jest.fn()
+      removeBookmark: jest.fn(),
+      getChallengeTags: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] }))
     } as any
 
     mockAuthService = {
@@ -107,7 +108,7 @@ describe('ChallengeCardComponent', () => {
     fixture.detectChanges()
 
     const formattedDate = datePipe.transform(testDate)
-    const dateElements = fixture.debugElement.queryAll(By.css('.stat .txt'))
+    const dateElements = fixture.debugElement.queryAll(By.css('.creation-date .txt'))
     const dateElement = dateElements.find(el => el.nativeElement.textContent.includes(formattedDate))
 
     expect(dateElement).toBeTruthy()
@@ -142,41 +143,52 @@ describe('ChallengeCardComponent', () => {
       done()
     })
   })
-  it('toggleBookmark: should call addBookmark when not bookmarked', done => {
-    component.id = 'C2'
-    component.isBookmarked = false
-    mockChallengeService.addBookmark.mockReturnValue(of({ bookmarked: true, timesBookmarked: 1 }))
 
-    component.toggleBookmark(new MouseEvent('click'))
-    setTimeout(() => {
-      expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C2')
-      expect(component.isBookmarked).toBe(true)
-      done()
-    })
+  it('should set tags from response.results when response is a TagResponse object', () => {
+    const mockTags = [
+      { id_tag: '1', tag_name: 'Arrays', tag_description: 'Array challenges' }
+    ]
+    mockChallengeService.getChallengeTags.mockReturnValue(of({ offset: 0, limit: 1, count: 1, results: mockTags }))
+    component.ngOnInit()
+    expect(component.tags).toEqual(mockTags)
   })
 
-  it('toggleBookmark: should call removeBookmark when already bookmarked', done => {
-    component.id = 'C2'
-    component.isBookmarked = true
-    mockChallengeService.removeBookmark.mockReturnValue(of({ bookmarked: false, timesBookmarked: 0 }))
-
-    component.toggleBookmark(new MouseEvent('click'))
-    setTimeout(() => {
-      expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C2')
-      expect(component.isBookmarked).toBe(false)
-      done()
-    })
+  it('should set tags to empty array on getChallengeTags error', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.getChallengeTags.mockReturnValue(throwError(() => new Error('error')))
+    component.ngOnInit()
+    expect(component.tags).toEqual([])
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
   })
 
-  it('should not call favorite or bookmark services if user is not logged in', () => {
-    mockAuthService.isUserLoggedIn.mockReturnValue(false)
-    const event = new MouseEvent('click')
+  describe('descriptionPreview', () => {
+    it('should return empty string when description is undefined', () => {
+      component.description = undefined as any
+      expect(component.descriptionPreview).toBe('')
+    })
 
-    component.toggleFavorite(event)
-    expect(mockChallengeService.addToFavorites).not.toHaveBeenCalled()
+    it('should return plain text as-is when short enough', () => {
+      component.description = 'Simple description'
+      expect(component.descriptionPreview).toBe('Simple description')
+    })
 
-    component.toggleBookmark(event)
-    expect(mockChallengeService.addBookmark).not.toHaveBeenCalled()
+    it('should strip HTML tags and return plain text', () => {
+      component.description = '<p>Hello <strong>world</strong></p>'
+      expect(component.descriptionPreview).toBe('Hello world')
+    })
+
+    it('should truncate text longer than 100 characters', () => {
+      component.description = 'A'.repeat(150)
+      const result = component.descriptionPreview
+      expect(result.length).toBe(100)
+      expect(result.endsWith('…')).toBe(true)
+    })
+
+    it('should normalize whitespace', () => {
+      component.description = '  too   many    spaces  '
+      expect(component.descriptionPreview).toBe('too many spaces')
+    })
   })
 
   it('should handle error on addToFavorites', () => {
@@ -195,40 +207,5 @@ describe('ChallengeCardComponent', () => {
     component.toggleFavorite(new MouseEvent('click'))
     expect(consoleSpy).toHaveBeenCalled()
     consoleSpy.mockRestore()
-  })
-
-  it('should handle error on addBookmark', () => {
-    component.isBookmarked = false
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-    mockChallengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')))
-    component.toggleBookmark(new MouseEvent('click'))
-    expect(consoleSpy).toHaveBeenCalled()
-    consoleSpy.mockRestore()
-  })
-
-  it('should handle error on removeBookmark', () => {
-    component.isBookmarked = true
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-    mockChallengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')))
-    component.toggleBookmark(new MouseEvent('click'))
-    expect(consoleSpy).toHaveBeenCalled()
-    consoleSpy.mockRestore()
-  })
-
-  describe('getStatusTooltip', () => {
-    it('should return the correct tooltip for ENDED status', () => {
-      component.solutionStatus = SolutionStatus.ENDED
-      expect(component.getStatusTooltip()).toBe('You have completed this challenge')
-    })
-
-    it('should return the correct tooltip for IN_PROGRESS status', () => {
-      component.solutionStatus = SolutionStatus.IN_PROGRESS
-      expect(component.getStatusTooltip()).toBe('You have a saved solution in progress')
-    })
-
-    it('should return an empty string for other statuses', () => {
-      component.solutionStatus = undefined
-      expect(component.getStatusTooltip()).toBe('')
-    })
   })
 })
