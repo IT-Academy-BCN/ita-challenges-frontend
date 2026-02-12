@@ -25,6 +25,18 @@
             },
             "section6": {
                 "title": "Bookmarks"
+            },
+            "section7": {
+                "title": "Classification"
+            },
+            "section9": {
+                "title": "Settings"
+            },
+            "section10": {
+                "title": "Help"
+            },
+            "section11": {
+                "title": "Information"
             }
         }
     },
