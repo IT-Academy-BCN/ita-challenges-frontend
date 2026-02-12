@@ -105,7 +105,7 @@
               </app-solution>
             </div>
 
-            <div class="official-solution" *ngIf="challengeSolutions.length > 0">
+            <div class="official-solution" *ngIf="challengeSolutions.length > 0 && shouldShowOfficialSolution()">
               <app-solution
                 [number]="2"
                 class="mb-4"

@@ -8,8 +8,9 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component'
-import { of, throwError } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { ChallengeService } from '../../../../services/challenge.service'
+import { SolutionService } from '../../../../services/solution.service'
 import { By } from '@angular/platform-browser'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
@@ -21,7 +22,7 @@ import { registerLocaleData } from '@angular/common'
 import localeCa from '@angular/common/locales/ca'
 import { AuthService } from 'src/app/services/auth.service'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
-import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 
 registerLocaleData(localeCa)
 
@@ -63,6 +64,14 @@ describe('ChallengeComponent', () => {
       getUserRole: () => of('ROLE_USER')
     }
 
+    const mockSolutionService = {
+      fetchUserSolution: jasmine.createSpy('fetchUserSolution').and.returnValue(of([])),
+      activeIdSubject: new Subject(),
+      activeId$: of(ChallengeTab.DETAILS),
+      solutionSent$: of(false),
+      challengeCompleted$: of(null)
+    }
+
     await TestBed.configureTestingModule({
       declarations: [
         ChallengeComponent,
@@ -98,6 +107,7 @@ describe('ChallengeComponent', () => {
           provide: ChallengeService,
           useValue: mockChallengeService
         },
+        { provide: SolutionService, useValue: mockSolutionService },
         { provide: AuthService, useValue: mockAuthService },
         CookieService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -210,7 +220,7 @@ describe('ChallengeComponent', () => {
   })
 
   it('should pass challenge detail to ChallengeInfoComponent', () => {
-    const challenge = {
+    const componentInfoMock = {
       detail: {
         description: 'Test Challenge Description',
         examples: [],
@@ -224,7 +234,7 @@ describe('ChallengeComponent', () => {
       timesFavorite: 0
     }
 
-    mockChallengeService.getChallengeById.and.returnValue(of(challenge))
+    mockChallengeService.getChallengeById.and.returnValue(of(componentInfoMock))
 
     component.loadMasterData('123')
     fixture.detectChanges()
@@ -300,4 +310,67 @@ describe('ChallengeComponent', () => {
     component.onEditorSolutionChanged(newSolution);
     expect(component.solutionText).toBe(newSolution);
   });
+
+  describe('loadUserSolutionStatus', () => {
+    it('should set solutionState to IN_PROGRESS when status is IN_PROGRESS', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.IN_PROGRESS,
+        solution_text: 'draft'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS)
+    })
+
+    it('should set solutionState to ENDED when status is ENDED', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.ENDED,
+        solution_text: 'ended solution'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.ENDED)
+    })
+
+    it('should set solutionState to SHOW_SOLUTION when status is SHOW_SOLUTION', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.SHOW_SOLUTION,
+        solution_text: 'solution'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.SHOW_SOLUTION)
+    })
+
+    it('should set solutionState to NOT_STARTED when status is unknown or not found', () => {
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of([]))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED)
+    })
+  })
 })
