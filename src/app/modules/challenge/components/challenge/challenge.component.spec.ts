@@ -8,8 +8,8 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { ActivatedRoute, convertToParamMap } from '@angular/router'
 import { ChallengeHeaderComponent } from '../challenge-header/challenge-header.component'
 import { ChallengeInfoComponent } from '../challenge-info/challenge-info.component'
-import { of, throwError, BehaviorSubject } from 'rxjs'
 import { ChallengeService } from '../../../../services/challenge.service'
+import { SolutionService } from '../../../../services/solution.service'
 import { By } from '@angular/platform-browser'
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { FormsModule } from '@angular/forms'
@@ -22,8 +22,8 @@ import localeCa from '@angular/common/locales/ca'
 import { AuthService } from 'src/app/services/auth.service'
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
-import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
+import { of, throwError, Subject, BehaviorSubject } from 'rxjs'
 
 
 registerLocaleData(localeCa)
@@ -84,6 +84,8 @@ describe('ChallengeComponent', () => {
       getUserId: () => of('mock-user-id'),
       getUserRole: () => of('ROLE_USER')
     }
+
+
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -236,7 +238,7 @@ describe('ChallengeComponent', () => {
   })
 
   it('should pass challenge detail to ChallengeInfoComponent', () => {
-    const challenge = {
+    const componentInfoMock = {
       detail: {
         description: 'Test Challenge Description',
         examples: [],
@@ -250,7 +252,7 @@ describe('ChallengeComponent', () => {
       timesFavorite: 0
     }
 
-    mockChallengeService.getChallengeById.and.returnValue(of(challenge))
+    mockChallengeService.getChallengeById.and.returnValue(of(componentInfoMock))
 
     component.loadMasterData('123')
     fixture.detectChanges()
@@ -322,7 +324,7 @@ describe('ChallengeComponent', () => {
   });
 
   it('should load solution content when idChallenge and languageId are set', () => {
-    const mockSolutionService = TestBed.inject(SolutionService) as any
+    const solutionService = TestBed.inject(SolutionService) as any
     ;(mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_language: 'lang1', solution_text: 'text' }
     ]))
@@ -336,12 +338,12 @@ describe('ChallengeComponent', () => {
   })
 
   it('should call solutionService.solutionText when a submission match is found in loadSolutionContent', () => {
-    const mockSolutionService = TestBed.inject(SolutionService) as any
-    ;(mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+    const solutionService = TestBed.inject(SolutionService) as any
+    ;(solutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_language: 'lang1', solution_text: 'text2' }
     ]))
 
-    const solutionTextSpy = mockSolutionService.solutionText as jasmine.Spy
+    const solutionTextSpy = solutionService.solutionText as jasmine.Spy
 
     component.idChallenge = '123'
     component.languageId = 'lang1'
@@ -353,9 +355,9 @@ describe('ChallengeComponent', () => {
   })
 
   it('should set solutionState to IN_PROGRESS based on fetchUserSolution results', () => {
-    const mockSolutionService = TestBed.inject(SolutionService) as any
+    const solutionService = TestBed.inject(SolutionService) as any
 
-    (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+    (solutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.IN_PROGRESS, solution_text: 't1' }
     ]))
     component.idChallenge = '123'
@@ -365,9 +367,9 @@ describe('ChallengeComponent', () => {
   })
 
   it('should set solutionState to ENDED based on fetchUserSolution results', () => {
-    const mockSolutionService = TestBed.inject(SolutionService) as any
+    const solutionService = TestBed.inject(SolutionService) as any
 
-    (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
+    (solutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([
       { uuid_challenge: '123', uuid_user: 'u1', status: SolutionStatus.ENDED, solution_text: 't2' }
     ]))
     component.idChallenge = '123'
@@ -411,6 +413,70 @@ describe('ChallengeComponent', () => {
   expect(favsSpy).not.toHaveBeenCalled()
   expect(statusSpy).not.toHaveBeenCalled()
   expect(contentSpy).not.toHaveBeenCalled()
+
+  describe('loadUserSolutionStatus', () => {
+    it('should set solutionState to IN_PROGRESS when status is IN_PROGRESS', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.IN_PROGRESS,
+        solution_text: 'draft'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS)
+    })
+
+    it('should set solutionState to ENDED when status is ENDED', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.ENDED,
+        solution_text: 'ended solution'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.ENDED)
+    })
+
+    it('should set solutionState to SHOW_SOLUTION when status is SHOW_SOLUTION', () => {
+      const mockSolutions = [{
+        uuid_challenge: '123',
+        uuid_user: 'mock-user-id',
+        status: SolutionStatus.SHOW_SOLUTION,
+        solution_text: 'solution'
+      }]
+
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of(mockSolutions))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.SHOW_SOLUTION)
+    })
+
+    it('should set solutionState to NOT_STARTED when status is unknown or not found', () => {
+      const solutionService = TestBed.inject(SolutionService)
+      const spy = solutionService.fetchUserSolution as jasmine.Spy
+      spy.and.returnValue(of([]))
+
+      component.ngOnInit()
+
+      expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED)
+    })
+  })
+
 })
 
 it('should handle error when getUserId fails in ngOnInit', () => {
@@ -451,9 +517,9 @@ it('should call loadSolutionContent when onContinueChallenge is invoked when use
 })
 
 it('should set solutionState to NOT_STARTED when no solution match found', () => {
-  const mockSolutionService = TestBed.inject(SolutionService) as any
+  const solutionService = TestBed.inject(SolutionService) as any
 
-  (mockSolutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([]))
+  (solutionService.fetchUserSolution as jasmine.Spy).and.returnValue(of([]))
   component.idChallenge = 'no-solution-challenge'
   component.loadUserSolutionStatus('test-user')
 
@@ -463,7 +529,7 @@ it('should set solutionState to NOT_STARTED when no solution match found', () =>
 })
 
 it('should update solution text when match is found in loadSolutionContent', () => {
-  const mockSolutionService = TestBed.inject(SolutionService) as any
+  const solutionService = TestBed.inject(SolutionService) as any
   const mockSubmissions = [
     {
       uuid_challenge: 'test-challenge',
@@ -473,7 +539,7 @@ it('should update solution text when match is found in loadSolutionContent', () 
     }
   ] as any[]
 
-  mockSolutionService.fetchUserSolution.and.returnValue(of(mockSubmissions))
+  solutionService.fetchUserSolution.and.returnValue(of(mockSubmissions))
 
   component.idChallenge = 'test-challenge'
   component.languageId = 'test-lang'
