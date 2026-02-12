@@ -106,6 +106,8 @@ loadUserSolutionStatus(userId: string): void {
           this.solutionState = SolutionStatus.IN_PROGRESS;
         } else if (match?.status === SolutionStatus.ENDED) {
           this.solutionState = SolutionStatus.ENDED;
+        } else if (match?.status === SolutionStatus.SHOW_SOLUTION) {
+          this.solutionState = SolutionStatus.SHOW_SOLUTION
         } else {
           this.solutionState = SolutionStatus.NOT_STARTED;
         }
@@ -186,6 +188,11 @@ loadUserSolutionStatus(userId: string): void {
   onEditorSolutionChanged(newText: string): void {
     this.solutionText = newText;
 
+  }
+
+  onSolutionStatusChanged (status: SolutionStatus): void {
+    this.solutionState = status
+    this.cdr.detectChanges()
   }
 
   loadSolutionContent(): void {
