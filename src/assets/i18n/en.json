@@ -195,7 +195,8 @@
     },
     "success": {
         "welcome": "Welcome! Redirecting...",
-        "logout": "Logout successful"
+        "logout": "Logout successful",
+        "draft_saved": "Draft saved. You can continue working on your solution later."
     }
 },
     "status": {
