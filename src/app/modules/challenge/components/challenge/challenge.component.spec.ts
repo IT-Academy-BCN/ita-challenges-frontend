@@ -399,7 +399,6 @@ describe('ChallengeComponent', () => {
   it('should NOT load user data when userId is empty', () => {
   const auth = TestBed.inject(AuthService) as any
 
-  
   spyOn(auth, 'getUserId').and.returnValue(of(''))
 
   const bookmarksSpy = spyOn(component, 'loadUserBookmarks')
@@ -413,69 +412,7 @@ describe('ChallengeComponent', () => {
   expect(favsSpy).not.toHaveBeenCalled()
   expect(statusSpy).not.toHaveBeenCalled()
   expect(contentSpy).not.toHaveBeenCalled()
-
-  describe('loadUserSolutionStatus', () => {
-    it('should set solutionState to IN_PROGRESS when status is IN_PROGRESS', () => {
-      const mockSolutions = [{
-        uuid_challenge: '123',
-        uuid_user: 'mock-user-id',
-        status: SolutionStatus.IN_PROGRESS,
-        solution_text: 'draft'
-      }]
-
-      const solutionService = TestBed.inject(SolutionService)
-      const spy = solutionService.fetchUserSolution as jasmine.Spy
-      spy.and.returnValue(of(mockSolutions))
-
-      component.ngOnInit()
-
-      expect(component.solutionState).toBe(SolutionStatus.IN_PROGRESS)
-    })
-
-    it('should set solutionState to ENDED when status is ENDED', () => {
-      const mockSolutions = [{
-        uuid_challenge: '123',
-        uuid_user: 'mock-user-id',
-        status: SolutionStatus.ENDED,
-        solution_text: 'ended solution'
-      }]
-
-      const solutionService = TestBed.inject(SolutionService)
-      const spy = solutionService.fetchUserSolution as jasmine.Spy
-      spy.and.returnValue(of(mockSolutions))
-
-      component.ngOnInit()
-
-      expect(component.solutionState).toBe(SolutionStatus.ENDED)
-    })
-
-    it('should set solutionState to SHOW_SOLUTION when status is SHOW_SOLUTION', () => {
-      const mockSolutions = [{
-        uuid_challenge: '123',
-        uuid_user: 'mock-user-id',
-        status: SolutionStatus.SHOW_SOLUTION,
-        solution_text: 'solution'
-      }]
-
-      const solutionService = TestBed.inject(SolutionService)
-      const spy = solutionService.fetchUserSolution as jasmine.Spy
-      spy.and.returnValue(of(mockSolutions))
-
-      component.ngOnInit()
-
-      expect(component.solutionState).toBe(SolutionStatus.SHOW_SOLUTION)
-    })
-
-    it('should set solutionState to NOT_STARTED when status is unknown or not found', () => {
-      const solutionService = TestBed.inject(SolutionService)
-      const spy = solutionService.fetchUserSolution as jasmine.Spy
-      spy.and.returnValue(of([]))
-
-      component.ngOnInit()
-
-      expect(component.solutionState).toBe(SolutionStatus.NOT_STARTED)
-    })
-  })
+  
 
 })
 

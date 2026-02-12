@@ -27,6 +27,7 @@ export const environment = {
   BACKEND_LOGOUT_ENDPOINT: '/auth/logout',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '/user/users/',
+  BACKEND_USER_BOOKMARKS_PATH: '/users',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
   AUTHORIZATION: 'Authorization',
   BEARER: 'Bearer ',

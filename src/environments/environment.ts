@@ -25,6 +25,7 @@ export const environment = {
   BACKEND_SSO_VALIDATE_TOKEN_URL: '/tokens/validate',
   BACKEND_GITHUB_VALIDATE_ENDPOINT: '/auth/github/authenticate',
   BACKEND_LOGOUT_ENDPOINT: '/auth/logout',
+  BACKEND_USER_BOOKMARKS_PATH: '/users',
   ADMIN_USER: '../assets/dummy/admin-user.json',
   USER_SOLUTION: '/user/users/',
   ITINERARY_ID: 'clpb8t1cc000008k0cg1icvl4',
