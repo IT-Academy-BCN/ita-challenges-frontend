@@ -11,6 +11,7 @@ import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import * as challenges from 'src/assets/dummy/challenges-mock.json'
 
 @Component({
   selector: 'app-starter',
@@ -25,7 +26,8 @@ export class StarterComponent implements OnInit {
   @ViewChild('challenge') challengesContainer!: ElementRef
   @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
 
-  challenges: Challenge[] = []
+  challenges = challenges.results as any[]
+  //challenges: Challenge[] = []
   challengesSubs$!: Subscription
   sortedChallengesSubs$!: Subscription
   filteredChallengesSubs$!: Subscription
