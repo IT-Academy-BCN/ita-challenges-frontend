@@ -12,11 +12,8 @@ import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { CommonModalService } from "src/app/services/common-modal.service";
 import { SolutionAction } from 'src/app/models/user-solution-action.enum'
 import { UserSolution } from 'src/app/models/user-solution.interface'
-<<<<<<< HEAD
 import { ShowSolutionModalComponent } from 'src/app/modules/modals/show-solution-modal/show-solution-modal.component'
-=======
 import { ToastrService } from 'ngx-toastr'
->>>>>>> b67e40fd (feat: add toast notification on draft save, update tests and bump version to 3.16.0)
 
 @Component({
   selector: 'app-challenge-header',
@@ -219,12 +216,8 @@ export class ChallengeHeaderComponent implements OnInit {
       this.solutionText
     ).subscribe({
       next: (response: UserSolution) => {
-<<<<<<< HEAD
         this.solutionState = response.status;
-=======
-        this.solutionState = response.status; 
-        this.toastr.success(this.translate.instant('messages.success.draft_saved')) 
->>>>>>> b67e40fd (feat: add toast notification on draft save, update tests and bump version to 3.16.0)
+        this.toastr.success(this.translate.instant('messages.success.draft_saved'))
       },
       error: (err) => {
         console.error(' Error saving solution', err);
