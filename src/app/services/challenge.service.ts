@@ -153,7 +153,7 @@ export class ChallengeService {
       'Content-Type': 'application/json',
       ...this.authService.getAuthHeaders()
     }
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/bookmarks`
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_BOOKMARKS_PATH}/${userId}/bookmarks`;
     return this.http.get<string[]>(url, { headers })
   }
 
