@@ -214,16 +214,14 @@ describe('ChallengeService', () => {
           req.flush(mockFavorites)
       })
     })
-  it('should call getUserBookmarks() and return data', () => {
+  it('should call getUserBookmarks() and return data with the new user subresource path', () => {
     const userId = '123'
     const mockBookmarks: string[] = ['challenge1', 'challenge2']
     service.getUserBookmarks(userId).subscribe(bookmarks => {
       expect(bookmarks).toEqual(mockBookmarks)
     })
-
-    const req = httpMock.expectOne(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/bookmarks`
-    )
+    const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_BOOKMARKS_PATH}/${userId}/bookmarks`;
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET')
     expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
 

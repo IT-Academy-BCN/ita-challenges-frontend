@@ -4,13 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.18.0-RELEASE] - 2026-02-09
+### [ita-challenges-frontend-3.19.0-RELEASE] - 2026-02-09
 ### Added
 - Custom styling for `SortSelectComponent` matching figma.
 - Accessibility support: Keyboard navigation, ARIA labels, and focus indicators.
 - Responsive layout with touch-optimized targets.
 
-### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-02-04
+### [ita-challenges-frontend-3.18.0-RELEASE] - 2026-02-04
 ### Added
 - `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
 - Explicit "Ascending" and "Descending" selection options in the dropdown.
@@ -25,6 +25,21 @@ and this project adheres to
 
 ### IMPORTANT
 - **Sorting and Ordering Logic Change**: Users must now use the explicit "Ascending"/"Descending" options to change order; clicking the same criteria repeatedly will not toggle it.
+### [ita-challenges-frontend-3.17.2-RELEASE] - 2026-02-12
+
+### Fixed
+- Added missing `BACKEND_USER_BOOKMARKS_PATH` to production environment configuration to fix production build.
+
+### [ita-challenges-frontend-3.17.1-RELEASE] - 2026-02-12
+
+### Changed
+- Updated bookmarks endpoint path to align with backend route change (requires backend deployment with the new bookmarks route).
+
+### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-01-28
+
+### Changed
+- Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
+
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
 ### Added
