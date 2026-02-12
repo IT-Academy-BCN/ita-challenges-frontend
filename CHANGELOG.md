@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.19.0-RELEASE] - 2026-02-11
+
+### Changed
+- Global style changes
+- Layout styling updates
+- styling adjustments (menu & footer)
+
 ### [ita-challenges-frontend-3.18.0-RELEASE] - 2026-02-11
 
 ### Feature
@@ -26,7 +33,7 @@ and this project adheres to
 
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
-
+  
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
 ### Added
