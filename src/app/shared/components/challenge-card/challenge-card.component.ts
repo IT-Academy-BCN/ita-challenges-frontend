@@ -5,7 +5,7 @@ import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { take } from 'rxjs/operators'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
-
+import { Tag } from 'src/app/models/tag-response.interface'
 
 @Component({
   selector: 'app-challenge-card',
@@ -20,10 +20,12 @@ export class ChallengeCardComponent implements OnInit {
   private readonly authService = inject(AuthService)
   public userRole: string | null = null
   public SolutionStatus = SolutionStatus;
+  public tags: Tag[] = [];
 
 
   @Input() title: string = ''
   @Input() languages: any = []
+  @Input() description: string = ''
   @Input() creation_date!: Date
   @Input() level = ''
   @Input() popularity!: number
@@ -35,11 +37,34 @@ export class ChallengeCardComponent implements OnInit {
   @Input() challenge_timesSolved: number = 0
   @Input() solutionStatus?: SolutionStatus;
 
-
   ngOnInit(): void {
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role;
     });
+
+    this.challengeService.getChallengeTags(this.id).subscribe({
+      next: (response) => {
+        this.tags = Array.isArray(response) ? response : (response?.results ?? [])
+      },
+      error: (err) => {
+        console.error('Error fetching challenge tags:', err)
+        this.tags = []
+      }
+    });
+  }
+
+  get descriptionPreview(): string {
+    const raw = this.description ?? ''
+
+    let text = raw
+    if (raw.includes('<')) {
+      const doc = new DOMParser().parseFromString(raw, 'text/html')
+      text = doc.body?.textContent ?? ''
+    }
+
+    text = text.replaceAll(/\s+/g, ' ').trim()
+    const maxLen = 100
+    return text.length > maxLen ? `${text.slice(0, maxLen - 1)}…` : text
   }
 
   get currentLang(): string {
@@ -73,42 +98,4 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
-
-toggleBookmark(event: MouseEvent): void {
-    event.stopPropagation()
-    if (!this.authService.isUserLoggedIn()) {
-      return
-    }
-    if (this.isBookmarked) {
-      this.challengeService.removeBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error removing bookmark:', error)
-        }
-      })
-    } else {
-      this.challengeService.addBookmark(this.id).subscribe({
-        next: response => {
-          this.isBookmarked = response.bookmarked
-        },
-        error: error => {
-          console.error('Error adding bookmark:', error)
-        }
-      })
-    }
-  }
-
-  getStatusTooltip(): string {
-    switch (this.solutionStatus) {
-      case SolutionStatus.ENDED:
-        return 'You have completed this challenge';
-      case SolutionStatus.IN_PROGRESS:
-        return 'You have a saved solution in progress';
-      default:
-        return '';
-    }
-  }
-
 }

@@ -13,6 +13,7 @@ import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
 import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component";
 import { SortSelectComponent } from './components/sort-select/sort-select.component'
+import { LanguageFilterComponent } from './components/language-filter/language-filter.component';
 import { ChallengeListFiltersComponent } from './components/challenge-list-filters/challenge-list-filters.component'
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ChallengeListFiltersComponent } from './components/challenge-list-filte
     StarterComponent,
     StarterFiltersComponent,
     SortSelectComponent,
+    LanguageFilterComponent,
     ChallengeListFiltersComponent
   ],
   imports: [
