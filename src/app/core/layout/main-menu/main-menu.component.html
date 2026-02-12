@@ -1,28 +1,31 @@
-<nav class="main-menu d-flex flex-column justify-content-between">
+<nav class="main-menu">
   <div id="main-options">
 
-    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">{{
-      "components.mainMenu.section0.title" | translate }}</a>
+      <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+        <img src="assets/img/icon/mainMenu-section0-Dashboard.svg" alt="inicio" class="me-2">{{
+        "components.mainMenu.section0.title" | translate }}</a>
 
-    <a [routerLink]="['challenges']" [routerLinkActive]="['active']">{{
-      "components.mainMenu.section1.title" | translate }}</a>
+      <a [routerLink]="['challenges']" [routerLinkActive]="['active']">
+        <img src="assets/img/icon/mainMenu-section1-Code.svg" alt="retos" class="me-2">{{
+        "components.mainMenu.section1.title" | translate }}</a>
 
-    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">{{
-      "components.mainMenu.section2.title" | translate }}</a>
+      <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+        <img src="assets/img/icon/mainMenu-section7-trophy.svg" alt="clasificación" class="me-2">{{
+        "components.mainMenu.section7.title" | translate }}</a>
 
   </div>
-  
-  <div class="userOptions" *ngIf="isLoggedIn$ | async">
 
-    <p class="fw-bold mb-4 text-black-3 fs-7">{{ "components.mainMenu.section3.title" | translate }}</p>
+  <div class="footer-options">
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+      <img src="assets/img/icon/mainMenu-section9-Setting_5.svg" alt="configuración" class="me-2">{{
+      "components.mainMenu.section9.title" | translate }}</a>
 
-    <a [routerLink]="['bookmark']" [routerLinkActive]="['active']"><img src="assets/img/icon/bookmark.svg"
-        alt="settings" class="me-2 ms-1">{{
-      "components.mainMenu.section6.title" | translate }}</a>
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+      <img src="assets/img/icon/mainMenu-section10-Question.svg" alt="ayuda" class="me-2">{{
+      "components.mainMenu.section10.title" | translate }}</a>
 
-    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']"><img src="assets/img/icon/heart.svg"
-        alt="user" class="me-2">{{
-      "components.mainMenu.section5.title" | translate }}</a>
-
+    <a [routerLink]="['componentToBuild']" [routerLinkActive]="['active']">
+      <img src="assets/img/icon/mainMenu-section11-Info.svg" alt="información" class="me-2">{{
+      "components.mainMenu.section11.title" | translate }}</a>
   </div>
 </nav>
