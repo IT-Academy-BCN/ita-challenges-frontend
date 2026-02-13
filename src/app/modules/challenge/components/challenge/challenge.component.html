@@ -11,9 +11,9 @@
         (favoritesUpdated)="onFavoritesUpdated($event)"
         [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
         [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
-        [status]="solutionState"
-        [solutionText]="solutionText"
         [languageId]="languageId"
+        (solutionStatusChanged)="onSolutionStatusChanged($event)"
+        [solutionText]="solutionText"
 >   </app-challenge-header>
 
     <app-challenge-info
@@ -29,6 +29,7 @@
         [startChallenge]="challengeStarted"
         (activeIdChange)="onActiveIdChange($event)"
         (solutionChanged)="onEditorSolutionChanged($event)"
+        [userSolutionStatus]="solutionState"
 >   </app-challenge-info>
 
 </div>

@@ -25,6 +25,18 @@
             },
             "section6": {
                 "title": "Guardados"
+            },
+            "section7": {
+                "title": "Clasificación"
+            },
+            "section9": {
+                "title": "Ajustes"
+            },
+            "section10": {
+                "title": "Ayuda"
+            },
+            "section11": {
+                "title": "Información"
             }
         }
     },
