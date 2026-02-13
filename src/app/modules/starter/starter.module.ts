@@ -11,14 +11,16 @@ import { ChallengeService } from 'src/app/services/challenge.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
 import { DynamicTranslatePipe } from 'src/app/pipes/dynamic-translate.pipe'
-import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component";
+import { ChallengeFormComponent } from "../challenge/components/challenge-form/challenge-form.component"
 import { ChallengeFiltersTriggerComponent } from './components/challenge-filters-trigger/challenge-filters-trigger.component'
+import { LanguageFilterComponent } from './components/language-filter/language-filter.component'
 import { ChallengeListFiltersComponent } from './components/challenge-list-filters/challenge-list-filters.component'
 
 @NgModule({
   declarations: [
     StarterComponent,
     StarterFiltersComponent,
+    LanguageFilterComponent,
     ChallengeListFiltersComponent
   ],
   imports: [

@@ -58,6 +58,7 @@ export class ChallengeHeaderComponent implements OnInit {
   @Output() favoritesUpdated = new EventEmitter<number>()
   @Input() solutionText: string = '';
   @Input() status: string = '';
+  @Output() solutionStatusChanged = new EventEmitter<SolutionStatus>()
   @Input() solutionState: SolutionStatus = SolutionStatus.NOT_STARTED;
   @Input() savedSolutionText: string = '';
   @Input() action: string = '';
@@ -106,6 +107,7 @@ export class ChallengeHeaderComponent implements OnInit {
       if (!solution) {
         this.solutionState = SolutionStatus.NOT_STARTED;
         this.challengeStarted = false;
+        this.solutionStatusChanged.emit(this.solutionState)
         return;
       }
       this.status = solution.status;
@@ -137,6 +139,7 @@ export class ChallengeHeaderComponent implements OnInit {
           this.challengeStarted = false;
           break;
       }
+        this.solutionStatusChanged.emit(this.solutionState)
     },
     error: (err) => {
       console.error('Error fetching user solutions:', err);

@@ -1,0 +1,19 @@
+@import '/src/styles/colors';
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: calc(2.5rem * 2);
+}
+
+.tag-chip {
+  background-color: $gray-4;
+  color: $gray-1;
+  border: 1px solid $gray-5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2rem;
+}
