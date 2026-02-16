@@ -7,5 +7,11 @@
       (sortSelected)="changeSort($event)"
       (orderSelected)="changeOrder($event)">
     </app-sort-select>
-    <div>Here goes the challenge filters</div>
+    
+    <div>
+        <app-challenge-filters-trigger
+            [initialFilters]="initialFilters"
+            (filtersApplied)="onModalFiltersApplied($event)">
+        </app-challenge-filters-trigger>
+    </div>
 </div>
