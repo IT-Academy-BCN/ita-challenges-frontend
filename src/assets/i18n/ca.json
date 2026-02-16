@@ -157,9 +157,16 @@
             "main": {
                 "section1": "Filtres",
                 "section2": {
-                    "title": "Reptes",
-                    "popularity": "Popularitat",
-                    "date": "Data"
+                    "title": "Reptes"
+                },
+                "section3": {
+                    "sort": "Ordenar per",
+                    "popularity": "Populars",
+                    "date": "Data de creació",
+                    "likes": "Likes",
+                    "difficulty": "Dificultat",
+                    "ascending": "Ascendent",
+                    "descending": "Descendent"
                 }
             },
             "empty": {

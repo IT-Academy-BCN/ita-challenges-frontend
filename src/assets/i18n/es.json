@@ -157,11 +157,19 @@
             "main": {
                 "section1": "Filtros",
                 "section2": {
-                    "title": "Retos",
-                    "popularity": "Popularidad",
-                    "date": "Fecha"
+                    "title": "Retos"
+                },
+                "section3":{
+                    "sort": "Ordenar por",
+                    "popularity": "Populares",
+                    "date": "Fecha de creación",
+                    "likes": "Likes",
+                    "difficulty": "Dificultad",
+                    "ascending": "Ascendente",
+                    "descending": "Descendente"
                 }
             },
+            
             "empty": {
                 "noResults": "No se han encontrado retos con los filtros seleccionados."
             }

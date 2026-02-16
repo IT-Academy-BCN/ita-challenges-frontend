@@ -20,21 +20,13 @@
       <!-- SORT BY AND FILTERS SELECTOR -->
       <div id="filters-selector">
         <!-- ORDER BY SELECTOR -->
-        <div>
           <!-- SORT BY -->
-          <ul id="sortBy" class="d-xl-flex justify-content-end d-none">
-            <li class="animated"
-              [ngClass]="{'selected' : sortBy == 'popularity', 'up': sortBy === 'popularity' && !isAscending}"
-              (click)="changeSort('popularity')">
-              {{'modules.starter.main.section2.popularity' | translate}}
-            </li>
-            <li class="animated"
-            [ngClass]="{'selected' : sortBy == 'creation_date', 'up': sortBy === 'creation_date' && !isAscending}"
-            (click)="changeSort('creation_date')">
-            {{'modules.starter.main.section2.date' | translate}}
-            </li>
-          </ul>
-        </div>
+    <app-sort-select
+      [sortBy]="sortBy"
+      [isAscending]="isAscending"
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
+    </app-sort-select>
         <!-- FILTERS SELECTOR -->
         <div id="filters-panel" class="filters-panel open">
           <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
@@ -47,6 +39,8 @@
   <!-- NEW FILTERS COMPONENT -->
   <header id="challenge-filters">
     <app-challenge-list-filters
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
       [initialFilters]="filters"
       (filtersApplied)="onModalFiltersApplied($event)">
     </app-challenge-list-filters>

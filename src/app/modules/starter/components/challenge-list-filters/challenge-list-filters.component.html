@@ -1,6 +1,13 @@
 <div id="challenge-list-filters">
     <div><app-language-filter></app-language-filter></div>
     <div class="space-divider"></div>
+    <app-sort-select
+      [sortBy]="sortBy"
+      [isAscending]="isAscending"
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
+    </app-sort-select>
+    
     <div>
         <app-challenge-filters-trigger
             [initialFilters]="initialFilters"
