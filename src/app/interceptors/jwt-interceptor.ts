@@ -12,7 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
   private readonly cookieService = inject(CookieService)
 
   intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = this.cookieService.get('authToken')
+    const token: string = sessionStorage.getItem('authToken') ?? ''
     const isApiUrl = request.url.startsWith(environment.BACKEND_ITA_CHALLENGE_BASE_URL)
     if (isApiUrl && token !== '') {
       // Agregar el token al encabezado Authorization

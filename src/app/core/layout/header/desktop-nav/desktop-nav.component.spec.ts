@@ -4,7 +4,7 @@ import { NavService } from 'src/app/services/nav.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule, ActivatedRoute } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { Component, Input } from '@angular/core';
 
@@ -36,6 +36,7 @@ class MockAuthService {
   getUserPhoto = jest.fn(() => of('https://mock-photo-url.com/avatar.png'))
 
   checkAndHandleExpiredToken = jest.fn()
+  switchRole = jest.fn((role: string) => of({ token: 'new-token-123' }))
 }
 
 const mockActivatedRoute = {
@@ -162,4 +163,23 @@ describe('DesktopNavComponent', () => {
     component.openRegisterUsersModal();
     expect(openRegisterUsersModalSpy).toHaveBeenCalled();
   });
+
+  it('✅ Should switch role successfully', () => {
+    sessionStorage.clear() 
+    component.onSwitchRole('USER')
+    expect(authService.switchRole).toHaveBeenCalledWith('USER')
+    expect(sessionStorage.getItem('authToken')).toBe('new-token-123')
+    expect(authService.updateUserRoleAndUserNameFromToken).toHaveBeenCalled()
+  })
+
+  it('❌ Should handle switch role error', () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+    jest.spyOn(authService, 'switchRole').mockReturnValue(
+      throwError(() => new Error('Failed'))
+    )
+    component.onSwitchRole('ADMIN')
+
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
 })
