@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { TestBed, fakeAsync, tick } from '@angular/core/testing'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
@@ -18,6 +18,9 @@ describe('ChallengeFiltersTriggerComponent', () => {
   }
 
   beforeEach(async () => {
+    modalStub.open.calls.reset()
+    modalStub.dismissAll.calls.reset()
+
     await TestBed.configureTestingModule({
       imports: [
         ChallengeFiltersTriggerComponent,
@@ -111,4 +114,58 @@ describe('ChallengeFiltersTriggerComponent', () => {
       progress: [SolutionStatus.IN_PROGRESS, SolutionStatus.ENDED]
     })
   })
+
+  it('should open modal with apply-only config', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    fixture.detectChanges()
+
+    ;(component as any).modalService = modalStub
+    ;(component as any).modalTemplate = {} as any
+    component.open()
+
+    expect(modalStub.open).toHaveBeenCalled()
+    const callArgs = modalStub.open.calls.mostRecent().args
+    expect(callArgs[1]).toEqual(
+      jasmine.objectContaining({
+        windowClass: 'challenge-filters-trigger-modal',
+        backdrop: 'static',
+        keyboard: false
+      })
+    )
+  })
+
+  it('should position the dialog next to the trigger button after open', fakeAsync(() => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+
+    const triggerEl = document.createElement('button')
+    ;(triggerEl as any).getBoundingClientRect = () => ({ bottom: 100, right: 200 } as any)
+
+    const dialogEl = document.createElement('div') as any
+
+    const querySpy = spyOn(document, 'querySelector').and.callFake((selector: string) => {
+      return selector === '.challenge-filters-trigger-modal .modal-dialog' ? (dialogEl as any) : null
+    })
+
+    fixture.detectChanges()
+
+    ;(component as any).modalService = modalStub
+    ;(component as any).modalTemplate = {} as any
+    ;(component as any).triggerBtn = { nativeElement: triggerEl }
+
+    component.open()
+    tick()
+
+    expect(querySpy).toHaveBeenCalledWith('.challenge-filters-trigger-modal .modal-dialog')
+    expect(dialogEl.style.position).toBe('fixed')
+    expect(dialogEl.style.margin).toBe('0px')
+    expect(dialogEl.style.top).toBe('116px')
+    expect(['', 'auto']).toContain(dialogEl.style.left)
+    expect(dialogEl.style.right).toBe(`${Math.round(window.innerWidth - 200)}px`)
+  }))
 })

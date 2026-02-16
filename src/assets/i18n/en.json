@@ -141,7 +141,7 @@
                 "finished": "Completed"
             },
             "challengeFiltersTrigger": {
-                "triggerButton": "Filter",
+                "triggerButton": "Filters",
                 "modalTitle": "Filters",
                 "closeAriaLabel": "Close",
                 "difficultyTitle": "Difficulty",

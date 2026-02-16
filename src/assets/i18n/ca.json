@@ -141,7 +141,7 @@
                 "finished": "Completats"
             },
             "challengeFiltersTrigger": {
-                "triggerButton": "Filtrar",
+                "triggerButton": "Filtres",
                 "modalTitle": "Filtres",
                 "closeAriaLabel": "Tancar",
                 "difficultyTitle": "Dificultat",
