@@ -36,6 +36,7 @@ describe('ChallengeInfoComponent', () => {
   let modalService: NgbModal
   let mockActiveIdSubject: Subject<ChallengeTab>
   let mockChallengeCompletedSubject: Subject<string>
+  let mockSolutionSentSubject: Subject<boolean>
 
   beforeEach(async () => {
     // Create new subjects for each test
@@ -86,6 +87,12 @@ describe('ChallengeInfoComponent', () => {
     
     Object.defineProperty(component['solutionService'], 'challengeCompleted$', {
       value: mockChallengeCompletedSubject.asObservable()
+    })
+
+    // Provide solutionSent subject to trigger solution-sent logic
+    mockSolutionSentSubject = new Subject<boolean>()
+    Object.defineProperty(component['solutionService'], 'solutionSent$', {
+      value: mockSolutionSentSubject.asObservable()
     })
     
     fixture.detectChanges()
@@ -384,6 +391,49 @@ describe('ChallengeInfoComponent', () => {
     expect(component.isEditorChallengeVisible).toBe(false);
   });
 
+  it('should react to solutionSent$ emission and load solutions and user data', () => {
+    // Spy on methods called when solution is sent
+    const loadSolutionsSpy = jest.spyOn(component, 'loadSolutions').mockImplementation()
+    const loadUserSolutionSpy = jest.spyOn(component as any, 'loadUserSolutionData')
+
+    // set necessary props
+    component.idChallenge = 'abc'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    // Emit true to simulate solution sent
+    mockSolutionSentSubject.next(true)
+
+    expect(loadSolutionsSpy).toHaveBeenCalledWith('abc', 'lang1')
+    expect(loadUserSolutionSpy).toHaveBeenCalled()
+  })
+
+  it('should not call fetchUserSolution when userId is empty in loadUserSolutionData', async () => {
+    jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of(''))
+    const fetchSpy = jest.spyOn(component['solutionService'], 'fetchUserSolution')
+    component.idChallenge = 'c-empty'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    await (component as any).loadUserSolutionData()
+
+    expect(fetchSpy).not.toHaveBeenCalled()
+  })
+
+  it('should set userSolution and solutionText when loadUserSolutionData finds a match', async () => {
+    jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of('user-1'))
+    const submissions = [
+      { uuid_user: 'user-1', uuid_challenge: 'c-1', uuid_language: 'lang1', solution_text: 'found-text' }
+    ] as any[]
+    jest.spyOn(component['solutionService'], 'fetchUserSolution').mockReturnValue(of(submissions))
+
+    component.idChallenge = 'c-1'
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }]
+
+    await (component as any).loadUserSolutionData()
+
+    expect(component.userSolution).toEqual({ solution_text: 'found-text' })
+    expect(component.solutionText).toBe('found-text')
+  })
+
   it('should not load solutions when activeId input changes to SOLUTIONS and user is not admin', () => {
     component.isAdmin = false;
     component.languages = [{ id_language: 'test-language-id', language_name: 'JavaScript' }];
@@ -419,13 +469,102 @@ describe('ChallengeInfoComponent', () => {
     expect(component.isDropdownOpen).toBe(false);
   });
 
-  it('should load solutions from the service', () => {
-    const mockSolutions = { results: [{ solution_text: 'test solution' }] } as any;
-    const solutionServiceSpy = jest.spyOn(component['solutionService'], 'getAllChallengeSolutions').mockReturnValue(of(mockSolutions));
-    component.loadSolutions('test-challenge-id', 'test-language-id');
-    expect(solutionServiceSpy).toHaveBeenCalledWith('test-challenge-id', 'test-language-id');
-    expect(component.challengeSolutions).toEqual(mockSolutions.results);
-  });
+ it('should load solutions from user submissions', fakeAsync(() => {
+  const mockSubmissions = [
+    {
+      uuid_challenge: 'test-challenge-id',
+      uuid_language: 'test-language-id',
+      solution_text: 'test solution',
+      uuid_submission: 'sub-1'
+    }
+  ] as any[];
+
+  const fetchSpy = jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(fetchSpy).toHaveBeenCalled();
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: 'sub-1',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'test solution'
+    }
+  ]);
+}));
+
+it('should load solutions using id_solution and solution_text when present', fakeAsync(() => {
+  const mockSubmissions = [
+    {
+      uuid_challenge: 'test-challenge-id',
+      uuid_language: 'test-language-id',
+      id_solution: 'sol-123',
+      solution_text: 'text from solution_text'
+    }
+  ] as any[];
+
+  const fetchSpy = jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  const detectSpy = jest
+    .spyOn((component as any).cdr, 'detectChanges')
+    .mockImplementation();
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(fetchSpy).toHaveBeenCalled();
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: 'sol-123',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'text from solution_text'
+    }
+  ]);
+  expect(detectSpy).toHaveBeenCalled();
+}));
+
+it('should filter non-matching submissions and use fallbacks for mapped fields', fakeAsync(() => {
+  const mockSubmissions = [
+    
+    {
+      uuid_challenge: 'other-challenge',
+      uuid_language: 'test-language-id',
+      id_solution: 'should-be-filtered'
+    },
+    
+    {
+      uuid_challenge: 'test-challenge-id',
+  uuid_language: 'test-language-id',   
+  submission_text: 'text from submission_text'
+    }
+  ] as any[];
+
+  jest
+    .spyOn(component['solutionService'], 'fetchUserSolution')
+    .mockReturnValue(of(mockSubmissions));
+
+  component.loadSolutions('test-challenge-id', 'test-language-id');
+  tick();
+
+  expect(component.challengeSolutions).toEqual([
+    {
+      id_solution: '',
+      uuid_language: 'test-language-id',
+      uuid_challenge: 'test-challenge-id',
+      solution_text: 'text from submission_text'
+    }
+  ]);
+}));
+
+
+
 
   describe('Dropdown functionality', () => {
     it('should toggle dropdown', () => {
@@ -470,6 +609,48 @@ describe('ChallengeInfoComponent', () => {
     expect(component.currentSolutionText).toBe(newSolution);
     expect(solutionChangedSpy).toHaveBeenCalledWith(newSolution);
   });
+  describe('Official Solution Visibility', () => {
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is NOT_STARTED', () => {
+      component.userSolutionStatus = SolutionStatus.NOT_STARTED
+      expect(component.shouldShowOfficialSolution()).toBe(false)
+    })
+
+    it('should return false for shouldShowOfficialSolution when userSolutionStatus is IN_PROGRESS', () => {
+      component.userSolutionStatus = SolutionStatus.IN_PROGRESS
+      expect(component.shouldShowOfficialSolution()).toBe(false)
+    })
+
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is SHOW_SOLUTION', () => {
+      component.userSolutionStatus = SolutionStatus.SHOW_SOLUTION
+      expect(component.shouldShowOfficialSolution()).toBe(true)
+    })
+
+    it('should return true for shouldShowOfficialSolution when userSolutionStatus is ENDED', () => {
+      component.userSolutionStatus = SolutionStatus.ENDED
+      expect(component.shouldShowOfficialSolution()).toBe(true)
+    })
+
+    it('should update solutionSent and solutionText when loading user solution', async () => {
+      const mockSolution = {
+        uuid_user: 'test-user-id',
+        uuid_challenge: 'test-challenge-id',
+        uuid_language: 'test-language-id',
+        status: SolutionStatus.IN_PROGRESS,
+        solution_text: 'test solution'
+      }
+
+      jest.spyOn((component as any).solutionService, 'fetchUserSolution').mockReturnValue(of([mockSolution]))
+      jest.spyOn((component as any).authService, 'getUserId').mockReturnValue(of('test-user-id'))
+
+      component.idChallenge = 'test-challenge-id'
+      component.languages = [{ id_language: 'test-language-id', language_name: 'Java' }]
+
+      await (component as any).loadUserSolutionData()
+
+      expect(component.solutionSent).toBe(true)
+      expect(component.solutionText).toBe('test solution')
+    })
+  })
 })
 
 describe('loadRelatedChallenges', () => {
@@ -564,5 +745,105 @@ describe('loadRelatedChallenges', () => {
     
     // Clean up
     consoleSpy.mockRestore();
+  });
+});
+
+describe('localStorage challenge started', () => {
+  let component: ChallengeInfoComponent;
+  let fixture: ComponentFixture<ChallengeInfoComponent>;
+  let mockSolutionSentSubject: Subject<boolean>;
+
+  beforeEach(async () => {
+    mockSolutionSentSubject = new Subject<boolean>();
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        ChallengeInfoComponent,
+        ResourceCardComponent,
+        ChallengeCardComponent,
+        SolutionComponent,
+        MockEditorChallengeComponent
+      ],
+      imports: [
+        RouterTestingModule,
+        I18nModule,
+        FormsModule,
+        NgbNavModule,
+        DynamicTranslatePipe
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        {
+          provide: NgbModal,
+          useValue: {
+            open: jest.fn()
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ChallengeInfoComponent);
+    component = fixture.componentInstance;
+
+    Object.defineProperty(component['solutionService'], 'solutionSent$', {
+      value: mockSolutionSentSubject.asObservable()
+    });
+
+    Object.defineProperty(component['solutionService'], 'activeIdSubject', {
+      value: new Subject<ChallengeTab>()
+    });
+
+    Object.defineProperty(component['solutionService'], 'activeId$', {
+      value: new Subject<ChallengeTab>().asObservable()
+    });
+
+    Object.defineProperty(component['solutionService'], 'challengeCompleted$', {
+      value: new Subject<string>().asObservable()
+    });
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('should restore challenge started state from localStorage when challenge matches', () => {
+    component.idChallenge = 'test-challenge-123';
+    localStorage.setItem('challengeStarted', JSON.stringify({ id: 'test-challenge-123', started: true }));
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(true);
+    expect(component.isEditorChallengeVisible).toBe(true);
+    expect(component.isChallengeStatementVisible).toBe(false);
+  });
+
+  it('should NOT restore challenge started state from localStorage when challenge ID does not match', () => {
+    component.idChallenge = 'test-challenge-different';
+    localStorage.setItem('challengeStarted', JSON.stringify({ id: 'test-challenge-123', started: true }));
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(false);
+    expect(component.isEditorChallengeVisible).toBe(false);
+    expect(component.isChallengeStatementVisible).toBe(true);
+  });
+
+  it('should NOT restore challenge started state when localStorage has no data', () => {
+    component.idChallenge = 'test-challenge-123';
+    localStorage.clear();
+
+    component.languages = [{ id_language: 'lang1', language_name: 'JS' }];
+    component.solutions = [];
+
+    component.ngOnInit();
+
+    expect(component.challengeStarted).toBe(false);
   });
 });

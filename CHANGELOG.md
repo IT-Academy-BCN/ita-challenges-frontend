@@ -4,18 +4,105 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [itachallenge-frontend-3.17.0-RELEASE] - 2026-02-11
+### [itachallenge-frontend-3.26.0-RELEASE] - 2026-02-16
 
 ### Changed
 - Authentication now uses `sessionStorage` instead of `localStorage` for storing auth tokens and usernames.
 - Sessions are now tab-specific and expire when the browser tab is closed.
 - Users must log in again after closing the tab (no auto-login).
+### [ita-challenges-frontend-3.25.1-RELEASE] - 2026-02-16
+
+### Changed
+- Migrated frontend solution submission and retrieval to use Challenge submissions endpoints.
+- Removed legacy user solution endpoints usage.
+- Updated solution service and related tests to align with submissions flow.
+
+### [ita-challenges-frontend-3.25.0-RELEASE] - 2026-02-16
+
+### Added
+- Custom styling for `SortSelectComponent` matching figma.
+- Accessibility support: Keyboard navigation, ARIA labels, and focus indicators.
+- Responsive layout with touch-optimized targets.
+
+### [ita-challenges-frontend-3.24.0-RELEASE] - 2026-02-16
+
+### Added
+- `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
+- Explicit "Ascending" and "Descending" selection options in the dropdown.
+
+### Changed
+- Decoupled sort criteria from sort order: Selecting a criteria no longer toggles the direction.
+- Refactored internal component logic to use specific methods for sort vs. order selection.
+- StarterComponent recieves inputs from sort-select component to update the sort and order.
+
+### Fixed
+- Ensured correct icon rotation and state synchronization for sort controls.
+
+### IMPORTANT
+- **Sorting and Ordering Logic Change**: Users must now use the explicit "Ascending"/"Descending" options to change order; clicking the same criteria repeatedly will not toggle it.
+
+### [ita-challenges-frontend-3.23.1-RELEASE] - 2026-02-13
+
+### Changed
+- Align new filters component styles with Figma design (layout, spacing, responsive adjustments). GitHub [#159], PR [#750].
+
+### [ita-challenges-frontend-3.23.0-RELEASE] - 2026-02-13
+
+### Added
+- Add new standalone filters component (modal shell + sections) prepared for future integration with the filtering logic. GitHub [#144], PR [#744].
+
+### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
+
+### Changed
+- Changed the challenge card layout and style to fit the new design
+
+### [ita-challenges-frontend-3.21.0-RELEASE] - 2026-02-12
+
+### Added
+- New language-filter component styled accordigly to figma design, GitHub [#125], PR [#746].
+
+### [ita-challenges-frontend-3.20.0-RELEASE] - 2026-02-12
+
+### Added
+- New language-filter component for filtering challenges by language as part of a future layout major change, GitHub [#126], PR [#743].
+- New component is ready to be wired to a new wrapper component still in development.
+
+### [ita-challenges-frontend-3.19.0-RELEASE] - 2026-02-11
+
+### Changed
+- Global style changes
+- Layout styling updates
+- styling adjustments (menu & footer)
+
+### [ita-challenges-frontend-3.18.0-RELEASE] - 2026-02-11
+
+### Feature
+- Added new item to main navigation Classification
+- Created footer section with 3 utility options
+- Added new translation keys
+- Removed "My resources" section (Bookmarks/Favorites) from sidebar menu
+
+### [ita-challenges-frontend-3.17.2-RELEASE] - 2026-02-12
+
+### Fixed
+- Added missing `BACKEND_USER_BOOKMARKS_PATH` to production environment configuration to fix production build.
+
+### [ita-challenges-frontend-3.17.1-RELEASE] - 2026-02-12
+
+### Changed
+- Updated bookmarks endpoint path to align with backend route change (requires backend deployment with the new bookmarks route).
+
+### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-01-28
+
+### Changed
+- Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
+ 
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
 ### Added
 - Added challenge-list-filters component to fit the new components of the filtering refactor.
 - Adecuated the layout of the starter component to fit the new component of the filtering refactor.
-
+ 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed

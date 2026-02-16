@@ -24,6 +24,7 @@ import { type SolutionResults } from 'src/app/models/solution-results.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { StarterService } from 'src/app/services/starter.service' 
 import { ChallengeTab } from 'src/app/shared/enums/challenge-tab.enum'
+import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -49,6 +50,8 @@ implements OnInit, OnDestroy {
   relatedChallenges: any[] = [];
   relatedChallengesLoaded = false;
   challengeTab = ChallengeTab;
+
+  @Input() userSolutionStatus: SolutionStatus = SolutionStatus.NOT_STARTED
 
   challengeStarted: boolean = false
 
@@ -171,12 +174,21 @@ implements OnInit, OnDestroy {
         this.loadSolutions(this.idChallenge, idLanguage);
       }
     }
+
+    if (changes['userSolutionStatus'] || changes['languages']) {
+      this.solutionSent = this.userSolutionStatus === SolutionStatus.ENDED ||
+        this.userSolutionStatus === SolutionStatus.SHOW_SOLUTION
+
+      if (this.shouldShowOfficialSolution() && this.languages.length > 0) {
+        this.loadSolutions(this.idChallenge, this.languages[0].id_language)
+      }
+    }
   }
 
   onChallengeStart (): void {
     this.challengeStarted = true
     this.isEditorChallengeVisible = true
-    this.isChallengeStatementVisible = false;
+    this.isChallengeStatementVisible = false
   }
 
   toggleStatement (): void {
@@ -206,14 +218,24 @@ implements OnInit, OnDestroy {
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
-    this.solutionService
-      .getAllChallengeSolutions(idChallenge, idLanguage)
-      .subscribe((data) => {
-        if (data.results.length > 0) {
-          this.challengeSolutions = data.results
-        } 
-      })
-  }
+    this.solutionService.fetchUserSolution().subscribe((submissions: any[]) => {
+
+      const matches = submissions.filter(s =>
+      s.uuid_challenge === idChallenge &&
+      s.uuid_language === idLanguage
+    )
+
+    this.challengeSolutions = matches.map(s => ({
+      id_solution: s.id_solution ?? s.uuid_submission ?? s.id ?? '',
+  uuid_language: s.uuid_language ?? s.uuid_language_id ?? idLanguage,
+  uuid_challenge: s.uuid_challenge ?? idChallenge,
+  solution_text: s.solution_text ?? s.submission_text ?? ''
+}))
+
+    this.cdr.detectChanges()
+  })
+}
+      
 
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen
@@ -291,6 +313,12 @@ implements OnInit, OnDestroy {
     // Default: all tabs are visible when challenge hasn't started
     return true;
   }
+
+  shouldShowOfficialSolution (): boolean {
+    return this.userSolutionStatus === SolutionStatus.SHOW_SOLUTION ||
+         this.userSolutionStatus === SolutionStatus.ENDED
+  }
+
   onEditorSolutionChanged(newText: string): void {
   this.currentSolutionText = newText;
   this.solutionChanged.emit(newText); 

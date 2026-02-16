@@ -1,0 +1,31 @@
+{
+    "offset": 0,
+    "limit": 4,
+    "count": 4,
+    "results": [
+        {
+            "id_tag": "c8964d6d-db27-4e78-80e6-bf6e522254c0",
+            "tag_name": "Tipos",
+            "tag_description": "Definición de tipos para variables y funciones.",
+            "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
+        },
+        {
+            "id_tag": "21ffd1e9-dc5b-433d-a465-6e3fcbd7c376",
+            "tag_name": "Interfaces",
+            "tag_description": "Contratos que definen la estructura que deben cumplir los objetos.",
+            "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
+        },
+        {
+            "id_tag": "28fe84fc-a382-48b6-b8c3-b7954449a7f4",
+            "tag_name": "Decoradores",
+            "tag_description": "Anotaciones especiales para clases y propiedades.",
+            "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
+        },
+        {
+            "id_tag": "9030fc3c-752f-4777-acd6-eedd5e17c1bc",
+            "tag_name": "Funciones",
+            "tag_description": "Declaración de funciones con tipado estricto.",
+            "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
+        }
+    ]
+}

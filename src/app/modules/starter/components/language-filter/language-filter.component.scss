@@ -1,0 +1,48 @@
+@import '/src/styles/colors';
+@import '/src/styles/fonts';
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  font-size: $font-size-lg;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50px;
+  background-color: #fff;
+  border:solid 1px $gray-7;
+  line-height: 1rem;
+  padding: 0.7rem 1rem ;
+  box-sizing: content-box;
+  display: inline-block;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input[type="checkbox"]+ label:hover {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  background-color: $gray-2;
+  color: white;
+}
+
+input[type="checkbox"]:checked + label {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  background-color: $black-3;
+   color: white; 
+}
+
+
+input[type="checkbox"]:checked + label:focus {
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  background-color: $white;
+  color: $black-3;
+  border: 1px solid $black-3;
+}
