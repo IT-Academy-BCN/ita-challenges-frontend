@@ -98,8 +98,6 @@ and this project adheres to
 
 ### [ita-challenges-frontend-3.17.0-RELEASE] - 2026-01-28
 
-### Added
-- Added toast notification when saving a challenge draft (Issue [#43](https://github.com/IT-Academy-BCN/ita-challenges/issues/43)) in challenge-header.component.ts.
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
  
@@ -115,10 +113,6 @@ and this project adheres to
 - Synchronize status logic for challenges.
 - The statuses are displayed correctly in the Challenge details and Challenges list.
 - The Show solution button works as expected and triggers appropriate user notification.
-### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-01-28
-
-### Added
-- Added toast notification when saving a challenge draft (Issue [#43](https://github.com/IT-Academy-BCN/ita-challenges/issues/43)) in challenge-header.component.ts.
 
 ### [ita-challenges-frontend-3.14.3-RELEASE] - 2025-12-15
 
