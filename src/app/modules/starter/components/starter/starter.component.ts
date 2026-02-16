@@ -150,6 +150,13 @@ export class StarterComponent implements OnInit {
     this.modalContent.open()
   }
 
+  onModalFiltersApplied(subset: Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>): void {
+    this.getChallengeFilters({
+      ...this.filters,
+      ...subset
+    })
+  }
+
   getChallengeFilters(filters: FilterChallenge): void {
     this.filters = filters
 

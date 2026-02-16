@@ -25,6 +25,16 @@ and this project adheres to
 
 ### IMPORTANT
 - **Sorting and Ordering Logic Change**: Users must now use the explicit "Ascending"/"Descending" options to change order; clicking the same criteria repeatedly will not toggle it.
+### [ita-challenges-frontend-3.23.1-RELEASE] - 2026-02-13
+
+### Changed
+- Align new filters component styles with Figma design (layout, spacing, responsive adjustments). GitHub [#159], PR [#750].
+
+### [ita-challenges-frontend-3.23.0-RELEASE] - 2026-02-13
+
+### Added
+- Add new standalone filters component (modal shell + sections) prepared for future integration with the filtering logic. GitHub [#144], PR [#744].
+
 ### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
 
 ### Changed
@@ -70,13 +80,13 @@ and this project adheres to
 
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
-  
+ 
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
 ### Added
 - Added challenge-list-filters component to fit the new components of the filtering refactor.
 - Adecuated the layout of the starter component to fit the new component of the filtering refactor.
-
+ 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed

@@ -19,6 +19,14 @@
     <fieldset id="filters-container">
       <!-- SORT BY AND FILTERS SELECTOR -->
       <div id="filters-selector">
+        <!-- ORDER BY SELECTOR -->
+          <!-- SORT BY -->
+    <app-sort-select
+      [sortBy]="sortBy"
+      [isAscending]="isAscending"
+      (sortSelected)="changeSort($event)"
+      (orderSelected)="changeOrder($event)">
+    </app-sort-select>
         <!-- FILTERS SELECTOR -->
         <div id="filters-panel" class="filters-panel open">
           <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
@@ -33,6 +41,8 @@
     <app-challenge-list-filters
       (sortSelected)="changeSort($event)"
       (orderSelected)="changeOrder($event)">
+      [initialFilters]="filters"
+      (filtersApplied)="onModalFiltersApplied($event)">
     </app-challenge-list-filters>
   </header>
   
