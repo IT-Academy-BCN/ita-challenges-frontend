@@ -21,8 +21,9 @@ export class ChallengeListFiltersComponent {
 
   protected onModalFiltersApplied(filters: ModalFilters): void {
     this.filtersApplied.emit(filters)
-    
-    changeSort (sort: string): void {
+  }
+
+  changeSort (sort: string): void {
     this.sortBy = sort
     this.sortSelected.emit(sort)
   }
