@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.24.1-RELEASE] - 2026-02-16
+
+### Changed
+- Migrated frontend solution submission and retrieval to use Challenge submissions endpoints.
+- Removed legacy user solution endpoints usage.
+- Updated solution service and related tests to align with submissions flow.
+
 ### [ita-challenges-frontend-3.24.0-RELEASE] - 2026-02-11
 ### Added
 - `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
@@ -75,13 +82,6 @@ and this project adheres to
 
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
-
-### [ita-challenges-frontend-3.16.1-RELEASE] - 2026-02-10
-
-### Changed
-- Migrated frontend solution submission and retrieval to use Challenge submissions endpoints.
-- Removed legacy user solution endpoints usage.
-- Updated solution service and related tests to align with submissions flow.
  
 ### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
 
