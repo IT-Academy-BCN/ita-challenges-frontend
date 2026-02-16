@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.24.0-RELEASE] - 2026-02-11
+### Added
+- `SortSelectComponent` (`src/app/modules/starter/components/sort-select/`) to modularize sort functionality.
+- Explicit "Ascending" and "Descending" selection options in the dropdown.
+
+### Changed
+- Decoupled sort criteria from sort order: Selecting a criteria no longer toggles the direction.
+- Refactored internal component logic to use specific methods for sort vs. order selection.
+- StarterComponent recieves inputs from sort-select component to update the sort and order.
+
+### Fixed
+- Ensured correct icon rotation and state synchronization for sort controls.
+
+### IMPORTANT
+- **Sorting and Ordering Logic Change**: Users must now use the explicit "Ascending"/"Descending" options to change order; clicking the same criteria repeatedly will not toggle it.
 
 ### [ita-challenges-frontend-3.23.1-RELEASE] - 2026-02-13
 

@@ -157,9 +157,16 @@
             "main": {
                 "section1": "Filters",
                 "section2": {
-                    "title": "Challenges",
+                    "title": "Challenges"
+                },
+                "section3": {
+                    "sort": "Sort by",
                     "popularity": "Popularity",
-                    "date": "Date"
+                    "date": "Creation date",
+                    "likes": "Likes",
+                    "difficulty": "Difficulty",
+                    "ascending": "Ascending",
+                    "descending": "Descending"
                 }
             },
             "empty": {

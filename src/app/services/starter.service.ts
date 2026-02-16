@@ -66,10 +66,21 @@ export class StarterService {
 
         comparison = isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
       } else if (sortBy === 'popularity') {
+        const scoreA = a.timesSolved ?? 0
+        const scoreB = b.timesSolved ?? 0
+
+        comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'likes') {
         const scoreA = a.timesFavorite ?? 0
         const scoreB = b.timesFavorite ?? 0
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'difficulty') {
+        const levelMap: Record<string, number> = { EASY: 1, MEDIUM: 2, HARD: 3 }
+        const levelA = levelMap[a.level] ?? 0
+        const levelB = levelMap[b.level] ?? 0
+
+        comparison = isAscending ? levelA - levelB : levelB - levelA
       }
 
       return comparison 
