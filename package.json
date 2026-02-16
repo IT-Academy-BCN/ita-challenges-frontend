@@ -1,7 +1,7 @@
 {
   "name": "ita-challenges-frontend",
-  "version": "3.24.0-RELEASE",
-  "scripts": {
+  "version": "3.25.0-RELEASE",
+   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.dev.json",
     "build": "ng build --configuration production && cp -r node_modules/tinymce dist/ita-challenges-frontend/browser/assets/tinymce",

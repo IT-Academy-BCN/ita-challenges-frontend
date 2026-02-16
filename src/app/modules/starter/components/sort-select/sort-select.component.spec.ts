@@ -56,10 +56,13 @@ describe('SortSelectComponent', () => {
     expect(activeBtn).toBeTruthy()
   })
 
-  it('should display selected icon for the current order', () => {
+  it('should display visible tick for the current order', () => {
     component.isAscending = true
     fixture.detectChanges()
-    const selectedIcons = fixture.debugElement.queryAll(By.css('img[alt="selected"]'))
-    expect(selectedIcons.length).toBe(1)
+    const items = fixture.debugElement.queryAll(By.css('.dropdown-item'))
+    const ascendingBtn = items[4]
+    const tick = ascendingBtn.query(By.css('.tick-icon'))
+
+    expect(tick.styles['visibility']).toBe('visible')
   })
 })

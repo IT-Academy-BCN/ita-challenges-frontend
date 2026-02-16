@@ -48,8 +48,8 @@ app-starter-filters p {
 
 #challenges-container {
   height: 100%;
+  overflow: visible;
   width: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding-top: 2rem;

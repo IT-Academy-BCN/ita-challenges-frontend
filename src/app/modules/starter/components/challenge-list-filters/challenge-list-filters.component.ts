@@ -1,9 +1,7 @@
-
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
-
 
 @Component({
   selector: 'app-challenge-list-filters',
@@ -11,7 +9,6 @@ type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
   styleUrls: ['./challenge-list-filters.component.scss']
 })
 export class ChallengeListFiltersComponent {
-
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @Output() sortSelected = new EventEmitter<string>()
@@ -19,7 +16,7 @@ export class ChallengeListFiltersComponent {
   sortBy: string = 'popularity'
   isAscending: boolean = false
 
-  protected onModalFiltersApplied(filters: ModalFilters): void {
+  protected onModalFiltersApplied (filters: ModalFilters): void {
     this.filtersApplied.emit(filters)
   }
 
