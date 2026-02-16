@@ -55,6 +55,12 @@ and this project adheres to
 ### Changed
 - Official solution is now hidden by default in the challenge info view. It only becomes visible when the user's status is `SHOW_SOLUTION` or `ENDED`. (ITA Challanges #44), (ITA Challanges Frontend PR#731)
  
+### [ita-challenges-frontend-3.16.0-RELEASE] - 2026-02-05
+
+### Added
+- Added challenge-list-filters component to fit the new components of the filtering refactor.
+- Adecuated the layout of the starter component to fit the new component of the filtering refactor.
+ 
 ### [ita-challenges-frontend-3.15.0-RELEASE] - 2026-01-26
 
 ### Fixed
