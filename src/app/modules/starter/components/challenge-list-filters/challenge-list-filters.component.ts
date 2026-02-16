@@ -25,22 +25,6 @@ export class ChallengeListFiltersComponent {
     this.sortSelected.emit(sort)
   }
 
-  @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
-  @Output() filtersApplied = new EventEmitter<ModalFilters>()
-  @Output() sortSelected = new EventEmitter<string>()
-  @Output() orderSelected = new EventEmitter<boolean>()
-  sortBy: string = 'popularity'
-  isAscending: boolean = false
-
-  protected onModalFiltersApplied(filters: ModalFilters): void {
-    this.filtersApplied.emit(filters)
-  }
-
-  changeSort (sort: string): void {
-    this.sortBy = sort
-    this.sortSelected.emit(sort)
-  }
-
   changeOrder (isAscending: boolean): void {
     this.isAscending = isAscending
     this.orderSelected.emit(isAscending)
