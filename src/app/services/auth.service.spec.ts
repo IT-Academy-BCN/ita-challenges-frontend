@@ -16,6 +16,8 @@ describe('AuthService', () => {
   let router: Router;
 
   beforeEach(() => {
+    sessionStorage.clear();
+    localStorage.clear();
 
     const translateServiceMock = {
       instant: (key: string) => key,
@@ -39,6 +41,7 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
+    sessionStorage.clear();
     localStorage.clear();
     httpMock.verify();
   });
@@ -56,7 +59,7 @@ describe('AuthService', () => {
 
   it('should return the correct role when there is a valid token', fakeAsync(() => {
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    localStorage.setItem('authToken', `header.${token}.signature`);
+    sessionStorage.setItem('authToken', `header.${token}.signature`);
 
     spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'));
 
@@ -80,6 +83,7 @@ describe('AuthService', () => {
   });
 
   it('should emit updated role when updateUserRoleAndUserNameFromToken is called', fakeAsync(() => {
+    sessionStorage.clear();
     spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'))
     let initialRole: string | undefined;
     service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
@@ -87,7 +91,7 @@ describe('AuthService', () => {
     expect(initialRole).toBe('');
 
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    localStorage.setItem('authToken', `header.${token}.signature`);
+    sessionStorage.setItem('authToken', `header.${token}.signature`);
     service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
@@ -99,24 +103,26 @@ describe('AuthService', () => {
   it('should emit empty role when token is removed', fakeAsync(() => {
     spyOn(service, 'getUserPhoto').and.returnValue(of('https://github.com/avatar.jpg'))
     const token = btoa(JSON.stringify({ role: 'ADMIN' }));
-    localStorage.setItem('authToken', `header.${token}.signature`);
-    service.updateUserRoleAndUserNameFromToken();
-
+    sessionStorage.setItem('authToken', `header.${token}.signature`);
+    
     let initialRole: string | undefined;
-    service.getUserRole().pipe(first()).subscribe(r => initialRole = r);
+    service.getUserRole().subscribe(r => initialRole = r);
+    service.updateUserRoleAndUserNameFromToken();
     tick();
     expect(initialRole).toBe('ADMIN');
 
-    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
     service.updateUserRoleAndUserNameFromToken();
 
     let updatedRole: string | undefined;
-    service.getUserRole().pipe(first()).subscribe(r => updatedRole = r);
+    service.getUserRole().subscribe(r => updatedRole = r);
     tick();
     expect(updatedRole).toBe('');
   }));
 
   it('should return true if user is logged in (auth token exists)', () => {
+    sessionStorage.clear();
+    localStorage.clear();
     const validToken = [
       btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' })),
       btoa(JSON.stringify({
@@ -128,7 +134,7 @@ describe('AuthService', () => {
       })),
       'signature'
     ].join('.')
-    localStorage.setItem('authToken', validToken)
+    sessionStorage.setItem('authToken', validToken)
     expect(service.isUserLoggedIn()).toBe(true)
   })
 
@@ -157,8 +163,8 @@ describe('AuthService', () => {
 
     tick();
 
-    expect(localStorage.getItem('authToken')).toBeNull();
-    expect(localStorage.getItem('username')).toBeNull();
+    expect(sessionStorage.getItem('authToken')).toBeNull();
+    expect(sessionStorage.getItem('username')).toBeNull();
 
     expect(routerSpy).toHaveBeenCalledWith([environment.AUTH_REDIRECT_URL]);
     expect(updateAuthStatusSpy).toHaveBeenCalled();
@@ -166,7 +172,8 @@ describe('AuthService', () => {
   }));
 
   it('should return authorization header with token if token exists', () => {
-    localStorage.setItem('authToken', 'test-token');
+    sessionStorage.clear();
+    sessionStorage.setItem('authToken', 'test-token');
     
     const headers = service.getAuthHeaders();
 
@@ -174,7 +181,7 @@ describe('AuthService', () => {
   });
 
   it('should return empty authorization header if no token exists', () => {
-    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
 
     const headers = service.getAuthHeaders();
     expect(headers.Authorization).toBe('');
