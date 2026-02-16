@@ -214,16 +214,14 @@ describe('ChallengeService', () => {
           req.flush(mockFavorites)
       })
     })
-  it('should call getUserBookmarks() and return data', () => {
+  it('should call getUserBookmarks() and return data with the new user subresource path', () => {
     const userId = '123'
     const mockBookmarks: string[] = ['challenge1', 'challenge2']
     service.getUserBookmarks(userId).subscribe(bookmarks => {
       expect(bookmarks).toEqual(mockBookmarks)
     })
-
-    const req = httpMock.expectOne(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_FAVORITES}/${userId}/bookmarks`
-    )
+    const expectedUrl = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_USER_BOOKMARKS_PATH}/${userId}/bookmarks`;
+    const req = httpMock.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET')
     expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token')
 
@@ -362,6 +360,65 @@ describe('ChallengeService', () => {
         `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_EDIT_CHALLENGE_URL}/${mockChallengeId}/update`
       );
       req.flush(null, mockError);
+    });
+  });
+
+  describe('getChallengeTags', () => {
+    const mockChallengeId = '5caa6142-a49e-4415-a8fc-439669777d1d';
+    const mockTagResponse = {
+      offset: 0,
+      limit: 3,
+      count: 3,
+      results: [
+        { id_tag: 'tag-1', tag_name: 'Arrays', tag_description: 'Array challenges' },
+        { id_tag: 'tag-2', tag_name: 'Loops', tag_description: 'Loop challenges' },
+        { id_tag: 'tag-3', tag_name: 'Logic', tag_description: 'Logic challenges' }
+      ]
+    };
+
+    it('should fetch challenge tags successfully', (done) => {
+      service.getChallengeTags(mockChallengeId).subscribe(response => {
+        expect(response).toEqual(mockTagResponse);
+        expect(response.results.length).toBe(3);
+        done();
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${mockChallengeId}`
+      );
+      expect(req.request.method).toBe('GET');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockTagResponse);
+    });
+
+    it('should handle empty results', (done) => {
+      const emptyResponse = { offset: 0, limit: 0, count: 0, results: [] };
+
+      service.getChallengeTags(mockChallengeId).subscribe(response => {
+        expect(response.results).toEqual([]);
+        expect(response.count).toBe(0);
+        done();
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${mockChallengeId}`
+      );
+      req.flush(emptyResponse);
+    });
+
+    it('should handle HTTP errors', (done) => {
+      service.getChallengeTags(mockChallengeId).subscribe({
+        next: () => fail('should have failed with 404 error'),
+        error: (error) => {
+          expect(error.status).toBe(404);
+          done();
+        }
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/${mockChallengeId}`
+      );
+      req.flush(null, { status: 404, statusText: 'Not Found' });
     });
   });
 })

@@ -25,6 +25,18 @@
             },
             "section6": {
                 "title": "Guardats"
+            },
+            "section7": {
+                "title": "Classificació"
+            },
+            "section9": {
+                "title": "Configuració"
+            },
+            "section10": {
+                "title": "Ajuda"
+            },
+            "section11": {
+                "title": "Informació"
             }
         }
     },
@@ -128,18 +140,40 @@
                 "started": "Falta completar",
                 "finished": "Completats"
             },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filtres",
+                "modalTitle": "Filtres",
+                "closeAriaLabel": "Tancar",
+                "difficultyTitle": "Dificultat",
+                "tagsTitle": "Etiquetes",
+                "searchTagsPlaceholder": "Cercar etiquetes",
+                "statusTitle": "Estat",
+                "statusNotStarted": "Nous",
+                "statusInProgress": "En curs",
+                "statusEnded": "Fets",
+                "statusShowSolution": "No resolts",
+                "confirmButton": "Confirmar"
+            },
             "main": {
                 "section1": "Filtres",
                 "section2": {
-                    "title": "Reptes",
-                    "popularity": "Popularitat",
-                    "date": "Data"
+                    "title": "Reptes"
+                },
+                "section3": {
+                    "sort": "Ordenar per",
+                    "popularity": "Populars",
+                    "date": "Data de creació",
+                    "likes": "Likes",
+                    "difficulty": "Dificultat",
+                    "ascending": "Ascendent",
+                    "descending": "Descendent"
                 }
             },
             "empty": {
                 "noResults": "No s'han trobat reptes amb els filtres seleccionats."
             }
-        },"modals": {
+        },
+        "modals": {
             "solution": {
                 "title": "Estàs segur?",
                 "description":"Un cop enviat el codi no es pot editar" ,

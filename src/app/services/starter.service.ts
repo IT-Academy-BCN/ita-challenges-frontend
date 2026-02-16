@@ -4,12 +4,16 @@ import { environment } from '../../environments/environment'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { type FilterChallenge } from '../models/filter-challenge.model'
 import { type Challenge, type ChallengeResponse } from '../models/challenge.model'
+import { type Tag, type TagResponse } from '../models/tag-response.interface'
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class StarterService {
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {}
   cachedChallenges: ChallengeResponse | null = null
+  cachedTags: TagResponse | null = null
 
   private readonly refreshSubject = new Subject<void>()
   readonly refresh$ = this.refreshSubject.asObservable()
@@ -35,7 +39,7 @@ export class StarterService {
     }).pipe(
       tap((response) => {
         this.cachedChallenges = response
-      }))
+    }))
   }
 
   getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {
@@ -62,10 +66,21 @@ export class StarterService {
 
         comparison = isAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime()
       } else if (sortBy === 'popularity') {
+        const scoreA = a.timesSolved ?? 0
+        const scoreB = b.timesSolved ?? 0
+
+        comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'likes') {
         const scoreA = a.timesFavorite ?? 0
         const scoreB = b.timesFavorite ?? 0
 
         comparison = isAscending ? scoreA - scoreB : scoreB - scoreA
+      } else if (sortBy === 'difficulty') {
+        const levelMap: Record<string, number> = { EASY: 1, MEDIUM: 2, HARD: 3 }
+        const levelA = levelMap[a.level] ?? 0
+        const levelB = levelMap[b.level] ?? 0
+
+        comparison = isAscending ? levelA - levelB : levelB - levelA
       }
 
       return comparison 

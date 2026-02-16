@@ -5,9 +5,8 @@
 .starter {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
-  margin-top: 1rem;
+  padding: 2rem;
 }
 
 h2 {
@@ -20,52 +19,7 @@ img[alt='filter-icon'] {
   cursor: pointer;
 }
 
-#sortBy{
-  gap: 30px;
-}
 
-ul {
-  list-style: none;
-  
-  li {
-    display: flex;
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: 500;
-    color: $gray-3;
-    gap: 5px;
-    cursor: pointer;
-
-    &::after {
-      content: '';
-      display: block;
-      width: 17px;
-      height: 17px;
-      background-image: url('/assets/img/icon/sort-selected.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0; // Oculto por defecto
-      transition: transform 0.3s ease; // Animación suave de rotación
-    }
-
-    &.selected {
-      color: $black-3;
-      font-weight: 700;
-
-      &::after {
-        opacity: 1; // Muestra el icono cuando está seleccionado
-      }
-    }
-
-    &.up::after {
-      transform: rotate(180deg); // Rota solo el icono cuando tiene la clase 'up'
-    }
-
-    &:not(.selected):hover {
-      color: $primary;
-    }
-  }
-}
 
 
 app-starter-filters p {
@@ -92,34 +46,22 @@ app-starter-filters p {
    }
 }
 
-/* On desktop, let the filters column shrink to content instead of fixed grid width */
-@media (min-width: 1200px) {
-  #filters-container.col-3 {
-    flex: 0 0 auto; /* don't force a 25% column width */
-    width: auto;    /* shrink-wrap to its contents */
-    max-width: 100%;
-    margin-right: 20px; /* add spacing between filters and challenges */
-  }
-  /* Let challenges area take the remaining space on xl and above */
-  #challenges-container.col-xl-8 {
-    flex: 1 1 auto; /* grow to fill leftover width */
-    width: auto;    /* unset fixed 8/12 width from grid */
-    max-width: 100%;
-   }
-}
-
 #challenges-container {
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 2rem;
 }
 
 #challenges {
-  flex: 1;
+  padding-top: 1rem;
   overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 1rem;
 }
 
 #challenges::-webkit-scrollbar {
