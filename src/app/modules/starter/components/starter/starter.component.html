@@ -46,7 +46,10 @@
 
   <!-- NEW FILTERS COMPONENT -->
   <header id="challenge-filters">
-    <app-challenge-list-filters></app-challenge-list-filters>
+    <app-challenge-list-filters
+      [initialFilters]="filters"
+      (filtersApplied)="onModalFiltersApplied($event)">
+    </app-challenge-list-filters>
   </header>
   
   

@@ -140,6 +140,20 @@
                 "started": "Falta completar",
                 "finished": "Completats"
             },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filtrar",
+                "modalTitle": "Filtres",
+                "closeAriaLabel": "Tancar",
+                "difficultyTitle": "Dificultat",
+                "tagsTitle": "Etiquetes",
+                "searchTagsPlaceholder": "Cercar etiquetes",
+                "statusTitle": "Estat",
+                "statusNotStarted": "Nous",
+                "statusInProgress": "En curs",
+                "statusEnded": "Fets",
+                "statusShowSolution": "No resolts",
+                "confirmButton": "Confirmar"
+            },
             "main": {
                 "section1": "Filtres",
                 "section2": {
@@ -151,7 +165,8 @@
             "empty": {
                 "noResults": "No s'han trobat reptes amb els filtres seleccionats."
             }
-        },"modals": {
+        },
+        "modals": {
             "solution": {
                 "title": "Estàs segur?",
                 "description":"Un cop enviat el codi no es pot editar" ,
