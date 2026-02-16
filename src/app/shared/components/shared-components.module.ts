@@ -12,7 +12,9 @@ import { EscapeJavaForJsonPipe } from '../../pipes/escape-java-chars.pipe'
 import { FormsModule } from '@angular/forms'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { ToggleComponent } from './toggle/toggle.component'
-import { CustomDatePipe } from "../../pipes/custom-date.pipe"
+import { CustomDatePipe } from "../../pipes/custom-date.pipe";
+import { DifficultyLevelComponent } from './challenge-card/difficulty-level/difficulty-level.component'
+import { TagsComponent } from './challenge-card/tags/tags.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { CustomDatePipe } from "../../pipes/custom-date.pipe"
     ResourceCardComponent,
     SolutionComponent,
     BreadcrumbComponent,
-    ToggleComponent
+    ToggleComponent,
+    DifficultyLevelComponent,
+    TagsComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,8 @@ import { CustomDatePipe } from "../../pipes/custom-date.pipe"
     BreadcrumbComponent,
     DynamicTranslatePipe,
     EscapeJavaForJsonPipe,
-    ToggleComponent
+    ToggleComponent,
+    TagsComponent
   ]
 })
 export class SharedComponentsModule { }

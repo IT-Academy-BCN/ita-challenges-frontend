@@ -1,0 +1,155 @@
+<button #triggerBtn type="button" class="btn btn-outline-primary filters-trigger" [class.filters-trigger--active]="selectedFiltersCount > 0" (click)="open()">
+  <span class="filters-trigger__icon" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 2h12L9 8v5l-2 1V8L2 2z" />
+    </svg>
+  </span>
+  <span class="filters-trigger__label">{{ 'modules.starter.challengeFiltersTrigger.triggerButton' | translate }}</span>
+  <span *ngIf="selectedFiltersCount > 0" class="filters-trigger__badge" aria-hidden="true">{{ selectedFiltersCount }}</span>
+  <span class="filters-trigger__chevron" aria-hidden="true"></span>
+</button>
+
+<ng-template #modal let-d="dismiss">
+  <div class="modal-header">
+    
+  </div>
+
+  <div class="modal-body">
+    <div class="d-flex flex-column gap-4">
+      <fieldset class="d-flex flex-column gap-2">
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.difficultyTitle' | translate }}</legend>
+        <div class="d-flex gap-3 filters-trigger__difficulty-row">
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isLevelSelected('EASY')"
+            [ngClass]="isLevelSelected('EASY') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('EASY')"
+          >
+            <span class="me-2 filters-trigger__difficulty-icons" aria-hidden="true">
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--outline" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--outline" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+            </span>
+            {{ 'modules.starter.filters.easy' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isLevelSelected('MEDIUM')"
+            [ngClass]="isLevelSelected('MEDIUM') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('MEDIUM')"
+          >
+            <span class="me-2 filters-trigger__difficulty-icons" aria-hidden="true">
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--outline" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+            </span>
+            {{ 'modules.starter.filters.medium' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isLevelSelected('HARD')"
+            [ngClass]="isLevelSelected('HARD') ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleLevel('HARD')"
+          >
+            <span class="me-2 filters-trigger__difficulty-icons" aria-hidden="true">
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+              <svg class="filters-trigger__difficulty-icon filters-trigger__difficulty-icon--filled" viewBox="0 0 16 16" width="16" height="16" fill="#B91879" aria-hidden="true">
+                <path d="M7 1 1 9h6l-1 6 9-10H9l1-4z" />
+              </svg>
+            </span>
+            {{ 'modules.starter.filters.hard' | translate }}
+          </button>
+        </div>
+      </fieldset>
+
+      <fieldset class="d-flex flex-column gap-2">
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.tagsTitle' | translate }}</legend>
+        <div class="d-flex gap-2"></div>
+
+        <div class="input-group">
+          <span class="input-group-text bg-white" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3.5-3.5" />
+            </svg>
+          </span>
+          <input type="text" class="form-control" [placeholder]="('modules.starter.challengeFiltersTrigger.searchTagsPlaceholder' | translate)" />
+        </div>
+      </fieldset>
+
+      <fieldset class="d-flex flex-column gap-2">
+        <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.statusTitle' | translate }}</legend>
+        <div class="d-flex gap-2 filters-trigger__status-row">
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.NOT_STARTED)"
+            [ngClass]="isProgressSelected(SolutionStatus.NOT_STARTED) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.NOT_STARTED)"
+          >
+            <span class="me-2 filters-trigger__status-dot" aria-hidden="true" style="color:#0A58CA"></span>
+            {{ 'modules.starter.challengeFiltersTrigger.statusNotStarted' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.IN_PROGRESS)"
+            [ngClass]="isProgressSelected(SolutionStatus.IN_PROGRESS) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.IN_PROGRESS)"
+          >
+            <span class="me-2 filters-trigger__status-dot" aria-hidden="true" style="color:#997404"></span>
+            {{ 'modules.starter.challengeFiltersTrigger.statusInProgress' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.ENDED)"
+            [ngClass]="isProgressSelected(SolutionStatus.ENDED) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.ENDED)"
+          >
+            <span class="me-2 filters-trigger__status-dot" aria-hidden="true" style="color:#198754"></span>
+            {{ 'modules.starter.challengeFiltersTrigger.statusEnded' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill"
+            [attr.aria-pressed]="isProgressSelected(SolutionStatus.SHOW_SOLUTION)"
+            [ngClass]="isProgressSelected(SolutionStatus.SHOW_SOLUTION) ? 'btn-dark' : 'btn-outline-dark'"
+            (click)="toggleProgress(SolutionStatus.SHOW_SOLUTION)"
+          >
+            <span class="me-2 filters-trigger__status-dot" aria-hidden="true" style="color:#dc3545"></span>
+            {{ 'modules.starter.challengeFiltersTrigger.statusShowSolution' | translate }}
+          </button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="w-100 d-flex justify-content-end">
+      <button type="button" class="btn btn-primary px-4" (click)="onApply()">
+        {{ 'modules.starter.challengeFiltersTrigger.confirmButton' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

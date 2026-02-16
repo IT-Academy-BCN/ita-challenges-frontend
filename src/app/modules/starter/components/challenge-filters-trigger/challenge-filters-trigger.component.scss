@@ -1,0 +1,161 @@
+:host {
+  display: inline-block;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-dialog {
+  max-width: 432px;
+  width: calc(100vw - 32px);
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-header,
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body,
+:host ::ng-deep .challenge-filters-trigger-modal .modal-footer {
+  padding: 44px;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body fieldset {
+  gap: 56px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body fieldset > legend {
+  margin-bottom: 36px;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .btn.rounded-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px !important;
+  font-size: 10px !important;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .btn.rounded-pill .me-2 {
+  margin-right: 6px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__status-dot {
+  display: inline-block;
+  width: 6px !important;
+  height: 6px !important;
+  min-width: 6px;
+  min-height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: currentColor;
+  align-self: center;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__status-row {
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 6px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-row {
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 8px !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon--filled {
+  color: var(--bs-primary) !important;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon {
+  width: 1em !important;
+  height: 1em !important;
+  flex: 0 0 1em;
+  color: inherit;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icon--outline {
+  color: inherit;
+}
+
+:host ::ng-deep .challenge-filters-trigger-modal .modal-body .filters-trigger__difficulty-icons {
+  display: inline-flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.filters-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-width: 1.5px;
+  border-color: #adb5bd;
+  color: #212529;
+
+  &:hover {
+    border-color: #adb5bd;
+    color: #212529;
+    background-color: rgba(33, 37, 41, 0.06);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.2);
+  }
+}
+
+.filters-trigger.filters-trigger--active {
+  background-color: #212529;
+  border-color: #212529;
+  color: #fff;
+
+  &:hover {
+    background-color: #212529;
+    border-color: #212529;
+    color: #fff;
+  }
+}
+
+.filters-trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.filters-trigger__label {
+  color: inherit;
+  font-weight: 500;
+}
+
+.filters-trigger__chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  margin-left: 2px;
+  position: relative;
+  top: -1px;
+}
+
+.filters-trigger__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #212529;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.filters-trigger.filters-trigger--active .filters-trigger__badge {
+  background: #fff;
+  color: #212529;
+}

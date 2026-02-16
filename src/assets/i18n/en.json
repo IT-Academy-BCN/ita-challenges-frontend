@@ -25,6 +25,18 @@
             },
             "section6": {
                 "title": "Bookmarks"
+            },
+            "section7": {
+                "title": "Classification"
+            },
+            "section9": {
+                "title": "Settings"
+            },
+            "section10": {
+                "title": "Help"
+            },
+            "section11": {
+                "title": "Information"
             }
         }
     },
@@ -118,8 +130,8 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Languaje",
-                "dificulty": "Dificulty",
+                "lenguaje": "Language",
+                "dificulty": "Difficulty",
                 "easy": "Easy",
                 "medium": "Medium",
                 "hard": "Hard",
@@ -127,6 +139,20 @@
                 "noStarted": "Not started",
                 "started": "Needs completing",
                 "finished": "Completed"
+            },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filters",
+                "modalTitle": "Filters",
+                "closeAriaLabel": "Close",
+                "difficultyTitle": "Difficulty",
+                "tagsTitle": "Tags",
+                "searchTagsPlaceholder": "Search tags",
+                "statusTitle": "Status",
+                "statusNotStarted": "New",
+                "statusInProgress": "In progress",
+                "statusEnded": "Done",
+                "statusShowSolution": "Unsolved",
+                "confirmButton": "Confirm"
             },
             "main": {
                 "section1": "Filters",

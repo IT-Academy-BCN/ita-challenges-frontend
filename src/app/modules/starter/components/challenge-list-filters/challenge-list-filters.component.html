@@ -1,6 +1,10 @@
 <div id="challenge-list-filters">
-    <div>Here goes the language filters</div>
+    <div><app-language-filter></app-language-filter></div>
     <div class="space-divider"></div>
-    <div>Here goes the sort by filters</div>
-    <div>Here goes the challenge filters</div>
+    <div>
+        <app-challenge-filters-trigger
+            [initialFilters]="initialFilters"
+            (filtersApplied)="onModalFiltersApplied($event)">
+        </app-challenge-filters-trigger>
+    </div>
 </div>
