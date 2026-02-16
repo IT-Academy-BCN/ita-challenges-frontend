@@ -229,7 +229,8 @@
     },
     "success": {
         "welcome": "¡Bienvenido! Redirigiendo...",
-        "logout": "Cierre de sesión exitoso"
+        "logout": "Cierre de sesión exitoso",
+        "draft_saved": "Borrador guardado. Puedes continuar trabajando en tu solución más tarde."
     }
 },
     "status": {

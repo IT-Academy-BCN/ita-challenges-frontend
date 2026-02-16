@@ -228,7 +228,8 @@
     },
     "success": {
         "welcome": "Benvingut! Redirigint...",
-        "logout": "Tancament de sessió correcte"
+        "logout": "Tancament de sessió correcte",
+        "draft_saved": "Esborrany desat. Pots continuar treballant en la solució més tard."
     }
 },
     "status": {
