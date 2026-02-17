@@ -19,10 +19,15 @@ and this project adheres to
 ### Changed
 - resolvedTags() method to challenge card component.
 - tagIds input to challenge card component now display correctly.
-### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-18
+### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-18
 
 ### Changed
 - Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
+### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-17
+
+### Fixed
+- Enabled closing the Challenge Filters modal via `Escape` key and backdrop click. GitHub [#761], PR [#762].
+
 
 ### [ita-challenges-frontend-3.27.0-RELEASE] - 2026-02-16
 
