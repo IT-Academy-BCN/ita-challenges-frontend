@@ -131,8 +131,8 @@ describe('ChallengeFiltersTriggerComponent', () => {
     expect(callArgs[1]).toEqual(
       jasmine.objectContaining({
         windowClass: 'challenge-filters-trigger-modal',
-        backdrop: 'static',
-        keyboard: false
+        backdrop: true,
+        keyboard: true
       })
     )
   })
