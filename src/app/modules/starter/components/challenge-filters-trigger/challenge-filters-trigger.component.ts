@@ -98,8 +98,8 @@ export class ChallengeFiltersTriggerComponent {
 
     this.modalService.open(this.modalTemplate, {
       windowClass: 'challenge-filters-trigger-modal',
-      backdrop: 'static',
-      keyboard: false
+      backdrop: true,
+      keyboard: true
     })
 
     setTimeout(() => {
