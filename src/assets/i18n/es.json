@@ -140,18 +140,41 @@
                 "started": "Falta completar",
                 "finished": "Completados"
             },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filtros",
+                "modalTitle": "Filtros",
+                "closeAriaLabel": "Cerrar",
+                "difficultyTitle": "Dificultad",
+                "tagsTitle": "Tags",
+                "searchTagsPlaceholder": "Buscar tags",
+                "statusTitle": "Estado",
+                "statusNotStarted": "Nuevos",
+                "statusInProgress": "En curso",
+                "statusEnded": "Hechos",
+                "statusShowSolution": "No resueltos",
+                "confirmButton": "Confirmar"
+            },
             "main": {
                 "section1": "Filtros",
                 "section2": {
-                    "title": "Retos",
-                    "popularity": "Popularidad",
-                    "date": "Fecha"
+                    "title": "Retos"
+                },
+                "section3":{
+                    "sort": "Ordenar por",
+                    "popularity": "Populares",
+                    "date": "Fecha de creación",
+                    "likes": "Likes",
+                    "difficulty": "Dificultad",
+                    "ascending": "Ascendente",
+                    "descending": "Descendente"
                 }
             },
+            
             "empty": {
                 "noResults": "No se han encontrado retos con los filtros seleccionados."
             }
-        },"modals": {
+        },
+        "modals": {
             "solution": {
                 "title": "¿Estás segur@?",
                 "description":"Una vez enviado el código no se puede editar" ,
@@ -206,7 +229,8 @@
     },
     "success": {
         "welcome": "¡Bienvenido! Redirigiendo...",
-        "logout": "Cierre de sesión exitoso"
+        "logout": "Cierre de sesión exitoso",
+        "draft_saved": "Borrador guardado. Puedes continuar trabajando en tu solución más tarde."
     }
 },
     "status": {

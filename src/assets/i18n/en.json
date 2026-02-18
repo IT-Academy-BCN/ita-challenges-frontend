@@ -130,8 +130,8 @@
         },
         "starter": {
             "filters": {
-                "lenguaje": "Languaje",
-                "dificulty": "Dificulty",
+                "lenguaje": "Language",
+                "dificulty": "Difficulty",
                 "easy": "Easy",
                 "medium": "Medium",
                 "hard": "Hard",
@@ -140,12 +140,33 @@
                 "started": "Needs completing",
                 "finished": "Completed"
             },
+            "challengeFiltersTrigger": {
+                "triggerButton": "Filters",
+                "modalTitle": "Filters",
+                "closeAriaLabel": "Close",
+                "difficultyTitle": "Difficulty",
+                "tagsTitle": "Tags",
+                "searchTagsPlaceholder": "Search tags",
+                "statusTitle": "Status",
+                "statusNotStarted": "New",
+                "statusInProgress": "In progress",
+                "statusEnded": "Done",
+                "statusShowSolution": "Unsolved",
+                "confirmButton": "Confirm"
+            },
             "main": {
                 "section1": "Filters",
                 "section2": {
-                    "title": "Challenges",
+                    "title": "Challenges"
+                },
+                "section3": {
+                    "sort": "Sort by",
                     "popularity": "Popularity",
-                    "date": "Date"
+                    "date": "Creation date",
+                    "likes": "Likes",
+                    "difficulty": "Difficulty",
+                    "ascending": "Ascending",
+                    "descending": "Descending"
                 }
             },
             "empty": {
@@ -207,7 +228,8 @@
     },
     "success": {
         "welcome": "Welcome! Redirecting...",
-        "logout": "Logout successful"
+        "logout": "Logout successful",
+        "draft_saved": "Draft saved. You can continue working on your solution later."
     }
 },
     "status": {

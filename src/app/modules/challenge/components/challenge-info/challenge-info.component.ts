@@ -218,14 +218,24 @@ implements OnInit, OnDestroy {
   }
 
   loadSolutions (idChallenge: string, idLanguage: string): void {
-    this.solutionService
-      .getAllChallengeSolutions(idChallenge, idLanguage)
-      .subscribe((data) => {
-        if (data.results.length > 0) {
-          this.challengeSolutions = data.results
-        } 
-      })
-  }
+    this.solutionService.fetchUserSolution().subscribe((submissions: any[]) => {
+
+      const matches = submissions.filter(s =>
+      s.uuid_challenge === idChallenge &&
+      s.uuid_language === idLanguage
+    )
+
+    this.challengeSolutions = matches.map(s => ({
+      id_solution: s.id_solution ?? s.uuid_submission ?? s.id ?? '',
+  uuid_language: s.uuid_language ?? s.uuid_language_id ?? idLanguage,
+  uuid_challenge: s.uuid_challenge ?? idChallenge,
+  solution_text: s.solution_text ?? s.submission_text ?? ''
+}))
+
+    this.cdr.detectChanges()
+  })
+}
+      
 
   toggleDropdown (): void {
     this.isDropdownOpen = !this.isDropdownOpen

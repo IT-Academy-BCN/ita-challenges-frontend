@@ -150,34 +150,58 @@ describe('MentorLoginComponent', () => {
       environment.BACKEND_ITA_CHALLENGE_BASE_URL + environment.BACKEND_GITHUB_VALIDATE_ENDPOINT,
       { code: 'testCode' }
     )
-    expect(localStorage.getItem('username')).toBe('testUser')
-    expect(localStorage.getItem('authToken')).toBe('123456')
+    expect(sessionStorage.getItem('username')).toBe('testUser')
+    expect(sessionStorage.getItem('authToken')).toBe('123456')
     expect(authServiceMock.updateUserRoleAndUserNameFromToken).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalledWith([], { queryParams: { code: null }, queryParamsHandling: 'merge' })
     expect(modalSpy).toHaveBeenCalled()
     expect(loginSuccessSpy).toHaveBeenCalledWith(true)
   })
 
+  it('❌ Should handle invalid GitHub response and clean storage', () => {
+    sessionStorage.setItem('username', 'testUser')
+    sessionStorage.setItem('authToken', '123456')
+
+    const mockResponse = { isValid: false, username: '', token: '' }
+    jest.spyOn(component.http, 'post').mockReturnValue(of(mockResponse))
+    const errorSpy = jest.spyOn(component, 'showError')
+
+    component.authenticateWithGitHub('testCode')
+
+    expect(errorSpy).toHaveBeenCalledWith('unauthorized')
+    expect(sessionStorage.getItem('username')).toBeNull()
+    expect(sessionStorage.getItem('authToken')).toBeNull()
+  })
+
   it.each<ErrorHandlingTestCase>([
     { statusCode: 401, expectedError: 'unauthorized' },
     { statusCode: 403, expectedError: 'unauthorized' },
-    { statusCode: 500, expectedError: 'server_error' }
+    { statusCode: 500, expectedError: 'server_error' },
+    { statusCode: 404, expectedError: 'unauthorized' }
   ])('❌ Should handle error %i and show error message', ({ statusCode, expectedError }, done) => {
-    localStorage.setItem('username', 'testUser')
-    localStorage.setItem('authToken', '123456')
+    sessionStorage.setItem('username', 'testUser')
+    sessionStorage.setItem('authToken', '123456')
 
     const httpSpy = jest.spyOn(component.http, 'post').mockReturnValue(
       throwError(() => ({ status: statusCode }))
     )
 
     const errorSpy = jest.spyOn(component, 'showError')
-
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
     component.authenticateWithGitHub('testCode')
 
     setTimeout(() => {
       expect(httpSpy).toHaveBeenCalled()
       expect(errorSpy).toHaveBeenCalledWith(expectedError)
       expect(component.isLoading).toBe(false)
+      if (statusCode === 403) {
+        expect(sessionStorage.getItem('username')).toBeNull()
+        expect(sessionStorage.getItem('authToken')).toBeNull()
+      }
+      if (statusCode === 404) {
+        expect(consoleSpy).toHaveBeenCalled()
+      }
+      consoleSpy.mockRestore()
 
       done()
     }, 100)
@@ -192,5 +216,14 @@ describe('MentorLoginComponent', () => {
 
     expect(component.isErrorVisible).toBe(false)
     expect(component.isShowTermsError).toBe(false)
+  })
+
+  it('✅ Should redirect to GitHub signup', () => {
+    delete (window as any).location
+    window.location = { href: '' } as any
+    
+    component.redirectToRegister()
+    
+    expect(window.location.href).toBe('https://github.com/signup')
   })
 })

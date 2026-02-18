@@ -32,12 +32,12 @@ export class StarterComponent implements OnInit {
   userRoleSubs$!: Subscription
   refreshSubs$!: Subscription
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
-  sortBy: string = ''
+  sortBy: string = 'popularity'
   challenge = Challenge
 
   listChallenges: Challenge[] = []
 
-  selectedSort: string = ''
+  selectedSort: string = 'popularity'
   isAscending: boolean = false
 
   isMobile: boolean = window.innerWidth < 768
@@ -150,6 +150,13 @@ export class StarterComponent implements OnInit {
     this.modalContent.open()
   }
 
+  onModalFiltersApplied(subset: Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>): void {
+    this.getChallengeFilters({
+      ...this.filters,
+      ...subset
+    })
+  }
+
   getChallengeFilters(filters: FilterChallenge): void {
     this.filters = filters
 
@@ -184,30 +191,32 @@ export class StarterComponent implements OnInit {
     })
   }
 
-  changeSort(newSort: string): void {
-    this.sortBy = newSort
-    localStorage.setItem('sortBy', newSort)
-    if (newSort === 'popularity' || newSort === 'creation_date') {
-      if (this.selectedSort === newSort) {
-        this.isAscending = !this.isAscending
-      } else {
-        this.isAscending = false
+  changeSort (newSort: string): void {
+    if (newSort === 'popularity' || newSort === 'creation_date' || newSort === 'likes' || newSort === 'difficulty') {
+      if (this.selectedSort !== newSort) {
         this.selectedSort = newSort
+        this.sortBy = newSort
+        this.refreshChallengeList()
       }
-      this.refreshChallengeList()
     }
   }
-  fetchUserSolutionsStatus(): void {
-  this.solutionService.fetchUserSolution().subscribe({
-    next: (solutions = []) => {
-      this.solutionStatusMap = solutions.reduce((statusMap, userSolution) => {
-        statusMap[userSolution.uuid_challenge] = userSolution.status;
-        return statusMap;
-      }, {} as Record<string, SolutionStatus>);
-    },
-    error: (err) => {
-      console.error('Error fetching user solutions:', err);
-    }
-  });
-}
+
+  changeOrder(isAscending: boolean): void {
+    this.isAscending = isAscending
+    this.refreshChallengeList()
+  }
+
+  fetchUserSolutionsStatus (): void {
+    this.solutionService.fetchUserSolution().subscribe({
+      next: (solutions = []) => {
+        this.solutionStatusMap = solutions.reduce<Record<string, SolutionStatus>>((statusMap, userSolution) => {
+          statusMap[userSolution.uuid_challenge] = userSolution.status
+          return statusMap
+        }, {})
+      },
+      error: (err) => {
+        console.error('Error fetching user solutions:', err)
+      }
+    })
+  }
 }

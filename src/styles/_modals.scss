@@ -70,6 +70,131 @@
 
 }
 
+.challenge-filters-trigger-modal {
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    .modal-dialog {
+        max-width: min(95vw, 640px);
+        width: auto;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding-top: 22px;
+        padding-bottom: 22px;
+        padding-left: 44px;
+        padding-right: 44px;
+    }
+
+    .modal-body {
+        > .d-flex.flex-column {
+            gap: 36px;
+        }
+
+        fieldset > legend {
+            margin-bottom: 20px;
+        }
+
+        .btn.rounded-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            padding: 0 14px;
+            font-size: 14px;
+            line-height: 1.1;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            white-space: nowrap;
+        }
+
+        .btn.rounded-pill.btn-outline-dark {
+            border-color: #adb5bd;
+        }
+
+        .btn.rounded-pill.btn-dark {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+        }
+
+        .input-group-text,
+        .form-control {
+            height: 30px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        .input-group-text {
+            color: $gray-5;
+            border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        .input-group-text + .form-control {
+            border-left: 0;
+        }
+
+        .btn.rounded-pill .me-2 {
+            margin-right: 6px;
+        }
+
+        .filters-trigger__status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            min-width: 8px;
+            min-height: 8px;
+            flex: 0 0 8px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            background: transparent;
+            align-self: center;
+            vertical-align: middle;
+        }
+
+        .filters-trigger__status-row {
+            flex-wrap: wrap;
+            overflow: visible;
+            gap: 6px;
+        }
+
+        .filters-trigger__difficulty-row {
+            flex-wrap: wrap;
+            overflow: visible;
+            gap: 8px;
+        }
+
+        .filters-trigger__difficulty-icon {
+            width: 1em;
+            height: 1em;
+        }
+
+        .filters-trigger__difficulty-icons {
+            gap: 1px;
+        }
+    }
+
+    .modal-footer {
+        .btn.btn-primary {
+            min-height: 36px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 14px;
+            line-height: 1.1;
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    .challenge-filters-trigger-modal {
+        .modal-body {
+            .filters-trigger__status-row {
+                flex-wrap: nowrap;
+            }
+        }
+    }
+}
+
 @media (max-width: 767px) {
     .modal-dialog-centered {
         display: block;

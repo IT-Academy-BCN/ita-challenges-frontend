@@ -1,0 +1,73 @@
+<div class="dropdown">
+  <button class="btn sort-trigger dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" [attr.aria-label]="'modules.starter.main.section3.sort' | translate">
+    <img src="assets/img/icon/order-direction.svg" [style.transform]="isAscending ? 'rotate(180deg)' : ''" alt="" aria-hidden="true" class="sort-icon">
+    {{ currentSortLabel | translate }}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end p-0">
+    <!-- Criteria -->
+     <!--Popularity-->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'popularity'"
+              (click)="selectSort('popularity')">
+        <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="sortBy === 'popularity' ? 'visible' : 'hidden'">
+        <img src="assets/img/icon/times-performed.svg" alt="" aria-hidden="true" class="icon">
+        {{ 'modules.starter.main.section3.popularity' | translate }}
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'creation_date'"
+              (click)="selectSort('creation_date')">
+        <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="sortBy === 'creation_date' ? 'visible' : 'hidden'">
+        <img src="assets/img/icon/date.svg" alt="" aria-hidden="true" class="icon">
+        {{ 'modules.starter.main.section3.date' | translate }}
+      </button>
+    </li>
+    <!-- Likes -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'likes'"
+              (click)="selectSort('likes')">
+        <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="sortBy === 'likes' ? 'visible' : 'hidden'">
+        <img src="assets/img/icon/heart.svg" alt="" aria-hidden="true" class="icon">
+        {{ 'modules.starter.main.section3.likes' | translate }}
+      </button>
+    </li>
+    
+    <!-- Difficulty -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              [class.active]="sortBy === 'difficulty'"
+              (click)="selectSort('difficulty')">
+        <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="sortBy === 'difficulty' ? 'visible' : 'hidden'">
+        <img src="assets/img/icon/difficulty-off-gray.svg" alt="" aria-hidden="true" class="icon">
+        {{ 'modules.starter.main.section3.difficulty' | translate }}
+      </button>
+    </li>
+    
+    <li><hr class="dropdown-divider my-1"></li>
+
+    <!-- Order -->
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              (click)="selectOrder(true)">
+              <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="isAscending ? 'visible' : 'hidden'">
+              <div class="d-flex align-items-center gap-2">
+                <img src="assets/img/icon/order-direction.svg" style="transform: rotate(180deg);" alt="" aria-hidden="true" class="icon">
+                {{ 'modules.starter.main.section3.ascending' | translate }} 
+              </div>
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item d-flex align-items-center gap-2" 
+              (click)="selectOrder(false)">
+              <img src="assets/img/icon/tick-pink.svg" alt="" aria-hidden="true" class="tick-icon" [style.visibility]="!isAscending ? 'visible' : 'hidden'">
+              <div class="d-flex align-items-center gap-2">
+                <img src="assets/img/icon/order-direction.svg" alt="" aria-hidden="true" class="icon">
+                {{ 'modules.starter.main.section3.descending' | translate }} 
+              </div>
+      </button>
+    </li>
+  </ul>
+</div>

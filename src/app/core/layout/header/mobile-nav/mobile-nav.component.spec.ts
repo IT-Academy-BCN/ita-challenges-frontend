@@ -26,6 +26,7 @@ class MockAuthService {
   getUserPhoto = jest.fn(() => of('https://mock-photo-url.com/avatar.png'))
 
   checkAndHandleExpiredToken = jest.fn()
+  switchRole = jest.fn((role: string) => of({ token: 'new-token-123' }))
 }
 
 const mockActivatedRoute = {

@@ -49,3 +49,4 @@
 - Ana Lafuente - https://github.com/zanlamar
 - Ot Roca - https://github.com/otrocadev
 - Giú Eminente - https://github.com/JungleGiu
+- Carlos Martorell - https://github.com/Carlos-Martorell
