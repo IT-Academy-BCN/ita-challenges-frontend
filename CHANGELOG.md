@@ -4,10 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.22.1-RELEASE] - 2026-02-18
+
+### Fixed
+- Challenge card layout div to show the status of the challenge
+
 ### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
 
 ### Changed
-- Changed the challenge card layout and style to fit the new design
+- Changed the challenge card layout and style to fit the new design 
 
 ### [ita-challenges-frontend-3.21.0-RELEASE] - 2026-02-12
 
