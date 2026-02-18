@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-18
+
+### Changed
+- Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
+
 ### [ita-challenges-frontend-3.27.0-RELEASE] - 2026-02-16
 ### Added
 - Feedback to user when saving solution.
