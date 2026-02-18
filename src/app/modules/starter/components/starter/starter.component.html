@@ -1,39 +1,36 @@
 <div class="starter">
   <!-- OLD FILTERS COMPONENT -->
-  <header class="challenges-header">
+  <!-- <header class="challenges-header">
     <div class="d-flex justify-content-between align-items-center challenges-filter-header">
       <h2>{{ "modules.starter.main.section2.title" | translate }}</h2>
       <div class="d-flex gap-2 align-items-center">
-        <!-- MOBILE FILTER BUTTON -->
-        <!-- TODO: Decide how this button fits with the new filters implementations,
-        will the button be the same for the mobile and desktop versions? -->
+
         <button class="btn btn-outline-primary btnFiltrar d-xl-none" (click)="openModal()">
           <strong>Filtrar</strong>
         </button>
-        <!-- NEW CHALLENGE BUTTON -->
+
         <button [routerLink]="['/ita-challenge/challenges/new-challenge']" *ngIf="isAdmin" class="btn btn-sm btn-primary new-challenge-btn">
           {{ "components.mainMenu.section4.title" | translate }}
         </button>
       </div>
     </div>
     <fieldset id="filters-container">
-      <!-- SORT BY AND FILTERS SELECTOR -->
+
       <div id="filters-selector">
-        <!-- ORDER BY SELECTOR -->
-          <!-- SORT BY -->
+
     <app-sort-select
       [sortBy]="sortBy"
       [isAscending]="isAscending"
       (sortSelected)="changeSort($event)"
       (orderSelected)="changeOrder($event)">
     </app-sort-select>
-        <!-- FILTERS SELECTOR -->
+     
         <div id="filters-panel" class="filters-panel open">
           <app-starter-filters ></app-starter-filters>
         </div>
       </div>
     </fieldset>
-  </header>
+  </header> -->
 
 
   <!-- NEW FILTERS COMPONENT -->
