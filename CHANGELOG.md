@@ -79,7 +79,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
 
 ### Changed
-- Changed the challenge card layout and style to fit the new design
+- Changed the challenge card layout and style to fit the new design 
 
 ### [ita-challenges-frontend-3.21.0-RELEASE] - 2026-02-12
 
