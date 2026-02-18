@@ -29,7 +29,7 @@
     </app-sort-select>
         <!-- FILTERS SELECTOR -->
         <div id="filters-panel" class="filters-panel open">
-          <app-starter-filters (filtersSelected)="getChallengeFilters($event)"></app-starter-filters>
+          <app-starter-filters ></app-starter-filters>
         </div>
       </div>
     </fieldset>
@@ -39,10 +39,11 @@
   <!-- NEW FILTERS COMPONENT -->
   <header id="challenge-filters">
     <app-challenge-list-filters
+      [initialFilters]="filters"
+      (allFiltersApplied)="getChallengeFilters($event)"
       (sortSelected)="changeSort($event)"
       (orderSelected)="changeOrder($event)">
-      [initialFilters]="filters"
-      (filtersApplied)="onModalFiltersApplied($event)">
+    
     </app-challenge-list-filters>
   </header>
   
