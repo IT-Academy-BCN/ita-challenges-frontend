@@ -18,7 +18,7 @@ export class ChallengeListFiltersComponent {
   modalFilters: ModalFilters = { levels: [], tags: [], progress: [] } 
   languageFilters: string[] = []
 
-  protected onModalFiltersApplied (filters: ModalFilters): void {
+  onModalFiltersApplied (filters: ModalFilters): void {
     this.modalFilters = filters
     this.allFiltersApplied.emit({
       ...filters,
