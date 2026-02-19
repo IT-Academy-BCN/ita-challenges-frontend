@@ -39,10 +39,6 @@ export class ChallengeCardComponent implements OnInit {
 
   ngOnInit(): void {
 
-     if (this.id === 'C1' || this.id === 'C2') {
-    this.isBookmarked = true;
-  }
-
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role;
     });
