@@ -14,7 +14,7 @@ const mockLanguages: Language[] = mockLanguagesImported
 
   const apiLanguages: Language[] = [
     { id_language: '5', language_name: 'TypeScript' },
-    { id_language: '6', language_name: 'Go' },
+    { id_language: '6', language_name: 'C++' },
   ];
 
   beforeEach(async () => {
@@ -67,6 +67,46 @@ const mockLanguages: Language[] = mockLanguagesImported
       expect(component.languages).toEqual(mockLanguages);
       done();
     }, 100); });
+
+  // Language Map Emission
+  it('should emit full language map on initialization with mock languages', () => {
+    const emittedMaps: Record<string, string>[] = [];
+    component.languageMapChanged.subscribe((map: Record<string, string>) => {
+      emittedMaps.push(map);
+    });
+
+    // The constructor already emitted the map for mock languages.
+    // Calling createFormFromLanguages again to capture it via subscription.
+    (component as any).languageNameToIdMap = {};
+    component.languageForm = component.createFormFromLanguages(mockLanguages);
+
+    expect(emittedMaps.length).toBeGreaterThan(0);
+    const emittedMap = emittedMaps[emittedMaps.length - 1];
+    expect(emittedMap['1']).toBe('Javascript');
+    expect(emittedMap['2']).toBe('Python');
+    expect(emittedMap['3']).toBe('Java');
+    expect(emittedMap['4']).toBe('Php');
+  });
+
+  it('should emit full language map with API languages after load', (done) => {
+    mockChallengeService.getAllLangugesCreateForm.mockReturnValue(
+      of({ results: apiLanguages })
+    );
+
+    let emittedMap: Record<string, string> | undefined;
+    component.languageMapChanged.subscribe((map: Record<string, string>) => {
+      emittedMap = map;
+    });
+
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      expect(emittedMap).toBeDefined();
+      expect(emittedMap!['5']).toBe('Typescript');
+      expect(emittedMap!['6']).toBe('C++');
+      done();
+    }, 100);
+  });
 
   // Emission Tests
   it('should emit language IDs when checkboxes are selected', (done) => {

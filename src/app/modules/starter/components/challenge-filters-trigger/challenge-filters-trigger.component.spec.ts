@@ -144,6 +144,112 @@ describe('ChallengeFiltersTriggerComponent', () => {
     )
   })
 
+  it('should toggle tags in draft state', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    component.open()
+
+    expect(component.isTagSelected('tag-id-1')).toBe(false)
+
+    component.toggleTag('tag-id-1')
+    expect(component.isTagSelected('tag-id-1')).toBe(true)
+
+    component.toggleTag('tag-id-2')
+    expect(component.isTagSelected('tag-id-2')).toBe(true)
+
+    component.toggleTag('tag-id-1')
+    expect(component.isTagSelected('tag-id-1')).toBe(false)
+    expect(component.isTagSelected('tag-id-2')).toBe(true)
+  })
+
+  it('should include selected tags in emitted filters on apply', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    component.open()
+
+    component.toggleTag('tag-id-1')
+    component.toggleTag('tag-id-2')
+
+    let emittedValue: unknown
+    component.filtersApplied.subscribe((value) => {
+      emittedValue = value
+    })
+
+    component.onApply()
+
+    expect(emittedValue).toEqual({
+      levels: [],
+      tags: ['tag-id-1', 'tag-id-2'],
+      progress: []
+    })
+  })
+
+  it('should pre-select tags from initialFilters when modal opens', () => {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: [], levels: [], progress: [], tags: ['tag-id-1', 'tag-id-3'] }
+    component.open()
+
+    expect(component.isTagSelected('tag-id-1')).toBe(true)
+    expect(component.isTagSelected('tag-id-3')).toBe(true)
+    expect(component.isTagSelected('tag-id-2')).toBe(false)
+  })
+
+  it('should fetch tags and populate displayTags with language names', () => {
+    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
+    mockService.getTagsByLanguage = jest.fn().mockImplementation((langId: string) => {
+      if (langId === 'lang-1') {
+        return of({ offset: 0, limit: 0, count: 2, results: [
+          { id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' },
+          { id_tag: 'tag-2', tag_name: 'Loops', tag_description: '' }
+        ]})
+      }
+      return of({ offset: 0, limit: 0, count: 1, results: [
+        { id_tag: 'tag-3', tag_name: 'Decorators', tag_description: '' }
+      ]})
+    })
+
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: ['lang-1', 'lang-2'], levels: [], progress: [], tags: [] }
+    component.languageMap = { 'lang-1': 'Javascript', 'lang-2': 'Python' }
+
+    component.open()
+
+    expect(component.displayTags.length).toBe(2)
+    expect(component.displayTags[0]).toEqual({
+      language: 'Javascript',
+      tags: [{ id: 'tag-1', name: 'Arrays' }, { id: 'tag-2', name: 'Loops' }]
+    })
+    expect(component.displayTags[1]).toEqual({
+      language: 'Python',
+      tags: [{ id: 'tag-3', name: 'Decorators' }]
+    })
+  })
+
+  it('should fall back to language ID when languageMap has no entry', () => {
+    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
+    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
+      of({ offset: 0, limit: 0, count: 0, results: [] })
+    )
+
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+
+    component.initialFilters = { languages: ['unknown-lang-id'], levels: [], progress: [], tags: [] }
+    component.languageMap = {}
+
+    component.open()
+
+    expect(component.displayTags[0].language).toBe('unknown-lang-id')
+  })
+
   it('should position the dialog next to the trigger button after open', fakeAsync(() => {
     const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
     const component = fixture.componentInstance
