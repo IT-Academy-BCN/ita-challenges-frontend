@@ -9,8 +9,7 @@ type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
   styleUrls: ['./challenge-list-filters.component.scss']
 })
 export class ChallengeListFiltersComponent {
-  // REMOVE MOCKED LANGUAGES
-  @Input() initialFilters: FilterChallenge = { languages: ['09fabe32-7362-4bfb-ac05-b7bf854c6e0f', '660e1b18-0c0a-4262-a28a-85de9df6ac5f'], levels: [], progress: [], tags: [] }
+  @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @Output() sortSelected = new EventEmitter<string>()
   @Output() orderSelected = new EventEmitter<boolean>()
