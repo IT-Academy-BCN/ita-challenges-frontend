@@ -24,4 +24,5 @@ describe('ChallengeListFiltersComponent', () => {
     const element: HTMLElement = fixture.nativeElement
     expect(element.querySelector('#challenge-list-filters')).toBeTruthy()
   })
+  
 })

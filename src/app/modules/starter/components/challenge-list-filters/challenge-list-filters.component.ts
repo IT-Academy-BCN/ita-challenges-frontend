@@ -24,10 +24,6 @@ export class ChallengeListFiltersComponent {
       ...filters,
       languages: this.languageFilters
     })
-    console.log('Applied filters:', {
-      ...filters,
-      languages: this.languageFilters
-    })
   }
 
   changeSort (sort: string): void {
@@ -43,10 +39,6 @@ export class ChallengeListFiltersComponent {
   onLanguageFilterChange (languages: string[]): void {
     this.languageFilters = languages
     this.allFiltersApplied.emit({
-      ...this.modalFilters,
-      languages
-    })
-    console.log('Applied filters:', {
       ...this.modalFilters,
       languages
     })
