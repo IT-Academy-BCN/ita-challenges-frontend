@@ -16,6 +16,26 @@
       />
     }
   </div>
+   <button
+    class="bookmark-button"
+    [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
+    (click)="toggleBookmark($event)"
+    [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
+    [attr.aria-pressed]="isBookmarked"
+  >
+    @if (!isBookmarked) {
+      <img
+        src="assets/img/icon/bookmark.svg"
+        [attr.alt]="'tooltips.bookmarks.unsaved' | translate"
+      />
+    }
+    @if (isBookmarked) {
+      <img
+        src="assets/img/icon/bookmark-filled.svg"
+        [attr.alt]="'tooltips.bookmarks.saved' | translate"
+      />
+    }
+  </button>
   <div class="title">{{ title }}</div>
   <div class="description">{{ descriptionPreview }}</div>
  <app-tags [tags]="tags"></app-tags>
@@ -86,33 +106,5 @@
           {{ 'status.' + solutionStatus | translate }}
         </span>
       </div> -->
-      <!-- BOOKMARK button -->
-      <!-- <button
-        class="stat d-flex align-items-center bookmark-button"
-        [ngbTooltip]="
-          isBookmarked
-            ? ('tooltips.bookmarks.saved' | translate)
-            : ('tooltips.bookmarks.unsaved' | translate)
-        "
-        (click)="toggleBookmark($event)"
-        [attr.aria-label]="
-          isBookmarked
-            ? ('tooltips.bookmarks.saved' | translate)
-            : ('tooltips.bookmarks.unsaved' | translate)
-        "
-        [attr.aria-pressed]="isBookmarked"
-      >
-        <div>
-          <img
-            *ngIf="!isBookmarked"
-            src="assets/img/icon/bookmark.svg"
-            [attr.alt]="'tooltips.bookmarks.unsaved' | translate"
-          />
-          <img
-            *ngIf="isBookmarked"
-            src="assets/img/icon/bookmark-filled.svg"
-            [attr.alt]="'tooltips.bookmarks.saved' | translate"
-          />
-        </div>
-      </button> -->
+
 </article>
