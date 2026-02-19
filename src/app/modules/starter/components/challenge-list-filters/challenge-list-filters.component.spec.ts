@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 import { ChallengeListFiltersComponent } from './challenge-list-filters.component'
 
@@ -8,7 +9,8 @@ describe('ChallengeListFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChallengeListFiltersComponent]
+      declarations: [ChallengeListFiltersComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
 
     fixture = TestBed.createComponent(ChallengeListFiltersComponent)

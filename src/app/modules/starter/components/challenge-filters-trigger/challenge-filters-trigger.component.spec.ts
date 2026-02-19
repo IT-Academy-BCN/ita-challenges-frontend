@@ -4,6 +4,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { ChallengeFiltersTriggerComponent } from './challenge-filters-trigger.component'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 
 class TranslateLoaderStub implements TranslateLoader {
   getTranslation() {
@@ -36,6 +37,12 @@ describe('ChallengeFiltersTriggerComponent', () => {
         {
           provide: NgbModal,
           useValue: modalStub
+        },
+        {
+          provide: ChallengeFormService,
+          useValue: {
+            getTagsByLanguage: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] }))
+          }
         }
       ]
     }).compileComponents()
