@@ -1,6 +1,7 @@
 @import '/src/styles/colors';
 
 .challenge-list-element {
+  position: relative;
   border-radius: 1rem;
   padding: 2rem;
   display: flex;
@@ -17,6 +18,8 @@
     transform: translateY(-5px);
     transition: all 0.2s ease-in-out;
     box-shadow: 0 0.25rem 0.25rem 0 rgba($gray-5, 0.25);
+
+    z-index: 10;
   }
 
   &.status-ended {
@@ -27,6 +30,23 @@
   }
   &.status-incomplete {
     background-color: rgb(84, 68, 91);
+  }
+  .bookmark-button {
+    
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    color: $gray-3;
+    z-index: 1;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
   .title {
@@ -45,6 +65,8 @@
     width: 2rem;
     height: 2rem;
   }
+
+  
 }
 
 .description {
