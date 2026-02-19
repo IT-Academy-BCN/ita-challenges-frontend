@@ -8,7 +8,8 @@ import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 type Level = NonNullable<FilterChallenge['levels']>[number]
-type LanguageTags = { language: string; tags: string[] }
+type TagItem = { id: string; name: string }
+type LanguageTags = { language: string; tags: TagItem[] }
 
 @Component({
   selector: 'app-challenge-filters-trigger',
@@ -64,13 +65,24 @@ export class ChallengeFiltersTriggerComponent {
     }
   }
   
+  isTagSelected(tag: string): boolean {
+    return (this.draftFilters.tags ?? []).includes(tag)
+  }
+
+  toggleTag(tag: string): void {
+    this.draftFilters = {
+      ...this.draftFilters,
+      tags: this.toggleInArray(this.draftFilters.tags ?? [], tag)
+    }
+  }
+
   fetchTags(): void {
     this.displayTags = []
     for (const language of this.initialFilters.languages) {
       this.challengeFormService.getTagsByLanguage(language).subscribe((tags) => {
-        const tagNames = tags.results.map((tag) => tag.tag_name)
+        const tagItems = tags.results.map((tag) => ({ id: tag.id_tag, name: tag.tag_name }))
         const languageName = this.languageMap[language] ?? language
-        this.displayTags.push({ language: languageName, tags: tagNames })
+        this.displayTags.push({ language: languageName, tags: tagItems })
       })
     }
   }
