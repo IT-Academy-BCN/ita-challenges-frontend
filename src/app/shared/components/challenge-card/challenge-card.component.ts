@@ -38,6 +38,11 @@ export class ChallengeCardComponent implements OnInit {
   @Input() solutionStatus?: SolutionStatus;
 
   ngOnInit(): void {
+
+     if (this.id === 'C1' || this.id === 'C2') {
+    this.isBookmarked = true;
+  }
+
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role;
     });
@@ -98,4 +103,9 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+
+  toggleBookmark(event: MouseEvent): void {
+  event.stopPropagation()
+  // Logic will be implemented in #205
+}
 }
