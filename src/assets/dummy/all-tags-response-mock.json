@@ -1,153 +1,9 @@
-{
-    "offset": 0,
-    "limit": 0,
-    "count": 28,
-    "results": [
-     {
-      "id_tag": "c8964d6d-db27-4e78-80e6-bf6e522254c0",
-      "tag_name": "Tipos",
-      "tag_description": "Definición de tipos para variables y funciones.",
-      "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
-    },
+[{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
     {
-      "id_tag": "21ffd1e9-dc5b-433d-a465-6e3fcbd7c376",
-      "tag_name": "Interfaces",
-      "tag_description": "Contratos que definen la estructura que deben cumplir los objetos.",
-      "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
-    },
-    {
-      "id_tag": "28fe84fc-a382-48b6-b8c3-b7954449a7f4",
-      "tag_name": "Decoradores",
-      "tag_description": "Anotaciones especiales para clases y propiedades.",
-      "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
-    },
-    {
-      "id_tag": "9030fc3c-752f-4777-acd6-eedd5e17c1bc",
-      "tag_name": "Funciones",
-      "tag_description": "Declaración de funciones con tipado estricto.",
-      "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
-    },
-     {
-      "id_tag": "0c8ca47c-d915-486e-8ae9-803483c8ed17",
-      "tag_name": "Callbacks",
-      "tag_description": "Funciones que se pasan como argumento y se ejecutan después de otra función.",
-      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
-    },
-    {
-      "id_tag": "24dc381b-96b1-4231-8a79-ed0ac8c8e222",
-      "tag_name": "Promises",
-      "tag_description": "Manejo de operaciones asíncronas en forma encadenada.",
-      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
-    },
-    {
-      "id_tag": "0641e89b-58ee-4fa3-a8f7-3d9e9a31f174",
-      "tag_name": "Async/Await",
-      "tag_description": "Sintaxis moderna para trabajar con promesas de manera más legible.",
-      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
-    },
-    {
-      "id_tag": "45d791bd-1a44-42b5-b54e-618eda9e08e2",
-      "tag_name": "Closures",
-      "tag_description": "Funciones internas que recuerdan el scope de su función padre.",
-      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
-    },
- {
-      "id_tag": "e0f542d7-55d6-4055-94bb-aed9d78c6189",
-      "tag_name": "POO",
-      "tag_description": "Programación Orientada a Objetos: clases, herencia, encapsulamiento, etc.",
-      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
-    },
-    {
-      "id_tag": "fc240e1e-a84c-485c-9abb-2f8f7b27c7c3",
-      "tag_name": "Streams",
-      "tag_description": "API para procesamiento de colecciones de forma funcional.",
-      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
-    },
-    {
-      "id_tag": "693e9349-6740-44f7-a99d-8a094ef42d3a",
-      "tag_name": "Collections",
-      "tag_description": "Uso de List, Set y Map para manejar estructuras de datos.",
-      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
-    },
-    {
-      "id_tag": "6458da04-f71d-478a-bd95-e0ed671d964a",
-      "tag_name": "Lambdas",
-      "tag_description": "Expresiones lambda para programación funcional en Java.",
-      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
-    },
-     {
-      "id_tag": "57eb69dd-d224-42fb-8cce-782898e07a50",
-      "tag_name": "Arrays",
-      "tag_description": "Manipulación de arrays asociativos y multidimensionales.",
-      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
-    },
-    {
-      "id_tag": "5d22c2af-94e7-4ed0-9b82-f09011d0e800",
-      "tag_name": "Funciones",
-      "tag_description": "Definición y uso de funciones propias y predefinidas.",
-      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
-    },
-    {
-      "id_tag": "ecec3cf5-0dca-47a1-bc92-18f9dc44044a",
-      "tag_name": "POO",
-      "tag_description": "Implementación de clases y objetos en PHP.",
-      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
-    },
-    {
-      "id_tag": "7cd2e934-424a-4d8a-8b34-70a1f17ee16d",
-      "tag_name": "Superglobals",
-      "tag_description": "Uso de variables globales como $_GET, $_POST, $_SESSION.",
-      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
-    },
-    {
-      "id_tag": "f723cd89-762e-42df-a398-54246b2e7109",
-      "tag_name": "List Comprehension",
-      "tag_description": "Sintaxis compacta para construir listas a partir de iterables.",
-      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
-    },
-    {
-      "id_tag": "05fe1f7f-5db2-4b9c-9034-393e5dd801ed",
-      "tag_name": "Decoradores",
-      "tag_description": "Funciones que modifican el comportamiento de otras funciones.",
-      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
-    },
-    {
-      "id_tag": "bbf0afda-ff6a-40a1-91f6-1a092538d410",
-      "tag_name": "Módulos",
-      "tag_description": "Organización del código Python en archivos reutilizables.",
-      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
-    },
-    {
-      "id_tag": "f732e956-4833-482e-aa93-3357fb3b092e",
-      "tag_name": "Funciones",
-      "tag_description": "Definición y uso de funciones con y sin parámetros.",
-      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
-    },
-     {
-      "id_tag": "b8f181ce-5f2a-4872-8444-82f1326b1f14",
-      "tag_name": "SELECT",
-      "tag_description": "Consulta básica para recuperar datos de una tabla.",
-      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
-    },
-    {
-      "id_tag": "d792006f-d80f-47f7-9377-1d312e266082",
-      "tag_name": "JOINS",
-      "tag_description": "Combinación de registros de dos o más tablas relacionadas.",
-      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
-    },
-    {
-      "id_tag": "d76cbb39-5add-4ccf-8290-09f041373220",
-      "tag_name": "GROUP BY",
-      "tag_description": "Agrupación de datos para aplicar funciones agregadas.",
-      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
-    },
-    {
-      "id_tag": "51bda818-7216-40bf-a7da-6510e80e4e14",
-      "tag_name": "Subqueries",
-      "tag_description": "Consultas anidadas dentro de otras consultas SQL.",
-      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
-    },
-     {
       "id_tag": "c8964d6d-db27-4e78-80e6-bf6e522254c0",
       "tag_name": "Tipos",
       "tag_description": "Definición de tipos para variables y funciones.",
@@ -171,5 +27,161 @@
       "tag_description": "Declaración de funciones con tipado estricto.",
       "language_id": "5caa6142-a49e-4415-a8fc-439669777d1d"
     }
-    ]
+  ]
+},
+{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
+    {
+      "id_tag": "0c8ca47c-d915-486e-8ae9-803483c8ed17",
+      "tag_name": "Callbacks",
+      "tag_description": "Funciones que se pasan como argumento y se ejecutan después de otra función.",
+      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
+    },
+    {
+      "id_tag": "24dc381b-96b1-4231-8a79-ed0ac8c8e222",
+      "tag_name": "Promises",
+      "tag_description": "Manejo de operaciones asíncronas en forma encadenada.",
+      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
+    },
+    {
+      "id_tag": "0641e89b-58ee-4fa3-a8f7-3d9e9a31f174",
+      "tag_name": "Async/Await",
+      "tag_description": "Sintaxis moderna para trabajar con promesas de manera más legible.",
+      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
+    },
+    {
+      "id_tag": "45d791bd-1a44-42b5-b54e-618eda9e08e2",
+      "tag_name": "Closures",
+      "tag_description": "Funciones internas que recuerdan el scope de su función padre.",
+      "language_id": "09fabe32-7362-4bfb-ac05-b7bf854c6e0f"
+    }
+  ]
+},
+{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
+    {
+      "id_tag": "e0f542d7-55d6-4055-94bb-aed9d78c6189",
+      "tag_name": "POO",
+      "tag_description": "Programación Orientada a Objetos: clases, herencia, encapsulamiento, etc.",
+      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
+    },
+    {
+      "id_tag": "fc240e1e-a84c-485c-9abb-2f8f7b27c7c3",
+      "tag_name": "Streams",
+      "tag_description": "API para procesamiento de colecciones de forma funcional.",
+      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
+    },
+    {
+      "id_tag": "693e9349-6740-44f7-a99d-8a094ef42d3a",
+      "tag_name": "Collections",
+      "tag_description": "Uso de List, Set y Map para manejar estructuras de datos.",
+      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
+    },
+    {
+      "id_tag": "6458da04-f71d-478a-bd95-e0ed671d964a",
+      "tag_name": "Lambdas",
+      "tag_description": "Expresiones lambda para programación funcional en Java.",
+      "language_id": "660e1b18-0c0a-4262-a28a-85de9df6ac5f"
+    }
+  ]
+},
+{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
+    {
+      "id_tag": "57eb69dd-d224-42fb-8cce-782898e07a50",
+      "tag_name": "Arrays",
+      "tag_description": "Manipulación de arrays asociativos y multidimensionales.",
+      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
+    },
+    {
+      "id_tag": "5d22c2af-94e7-4ed0-9b82-f09011d0e800",
+      "tag_name": "Funciones",
+      "tag_description": "Definición y uso de funciones propias y predefinidas.",
+      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
+    },
+    {
+      "id_tag": "ecec3cf5-0dca-47a1-bc92-18f9dc44044a",
+      "tag_name": "POO",
+      "tag_description": "Implementación de clases y objetos en PHP.",
+      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
+    },
+    {
+      "id_tag": "7cd2e934-424a-4d8a-8b34-70a1f17ee16d",
+      "tag_name": "Superglobals",
+      "tag_description": "Uso de variables globales como $_GET, $_POST, $_SESSION.",
+      "language_id": "1e047ea2-b787-49e7-acea-d79e92be3909"
+    }
+  ]
+},
+{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
+    {
+      "id_tag": "f723cd89-762e-42df-a398-54246b2e7109",
+      "tag_name": "List Comprehension",
+      "tag_description": "Sintaxis compacta para construir listas a partir de iterables.",
+      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
+    },
+    {
+      "id_tag": "05fe1f7f-5db2-4b9c-9034-393e5dd801ed",
+      "tag_name": "Decoradores",
+      "tag_description": "Funciones que modifican el comportamiento de otras funciones.",
+      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
+    },
+    {
+      "id_tag": "bbf0afda-ff6a-40a1-91f6-1a092538d410",
+      "tag_name": "Módulos",
+      "tag_description": "Organización del código Python en archivos reutilizables.",
+      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
+    },
+    {
+      "id_tag": "f732e956-4833-482e-aa93-3357fb3b092e",
+      "tag_name": "Funciones",
+      "tag_description": "Definición y uso de funciones con y sin parámetros.",
+      "language_id": "409c9fe8-74de-4db3-81a1-a55280cf92ef"
+    }
+  ]
+},
+{
+  "offset": 0,
+  "limit": 4,
+  "count": 4,
+  "results": [
+    {
+      "id_tag": "b8f181ce-5f2a-4872-8444-82f1326b1f14",
+      "tag_name": "SELECT",
+      "tag_description": "Consulta básica para recuperar datos de una tabla.",
+      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
+    },
+    {
+      "id_tag": "d792006f-d80f-47f7-9377-1d312e266082",
+      "tag_name": "JOINS",
+      "tag_description": "Combinación de registros de dos o más tablas relacionadas.",
+      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
+    },
+    {
+      "id_tag": "d76cbb39-5add-4ccf-8290-09f041373220",
+      "tag_name": "GROUP BY",
+      "tag_description": "Agrupación de datos para aplicar funciones agregadas.",
+      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
+    },
+    {
+      "id_tag": "51bda818-7216-40bf-a7da-6510e80e4e14",
+      "tag_name": "Subqueries",
+      "tag_description": "Consultas anidadas dentro de otras consultas SQL.",
+      "language_id": "129568b8-b09a-4589-a0bb-053dd120f0bb"
+    }
+  ]
 }
+]
