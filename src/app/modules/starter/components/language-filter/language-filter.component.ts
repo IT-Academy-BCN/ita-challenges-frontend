@@ -3,14 +3,13 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { Language } from "src/app/models/language.model";
 import { ChallengeFormService } from "src/app/services/challenge-form.service";
 
-
-
 export const mockLanguages: Language[] = [
   { id_language: "1", language_name: "JavaScript" },
   { id_language: "2", language_name: "Python" },
   { id_language: "3", language_name: "Java" },
   { id_language: "4", language_name: "PHP" },
 ];
+
 @Component({
   selector: "app-language-filter",
   templateUrl: "./language-filter.component.html",
@@ -21,6 +20,7 @@ export class LanguageFilterComponent implements OnInit {
 
   languages: Language[] = mockLanguages;
   @Output() languageSelected = new EventEmitter<string[]>();
+  @Output() languageMapChanged = new EventEmitter<Record<string, string>>();
   
   languageForm: FormGroup;
  
@@ -63,6 +63,8 @@ export class LanguageFilterComponent implements OnInit {
 
       this.emitSelectedLanguages(form);
     });
+
+    this.emitFullLanguageMap();
     
     return form;
   }
@@ -73,5 +75,13 @@ export class LanguageFilterComponent implements OnInit {
       .map(key => this.languageNameToIdMap[key]);
     
     this.languageSelected.emit(selectedLanguages);
+  }
+
+  private emitFullLanguageMap(): void {
+    const map: Record<string, string> = {};
+    Object.entries(this.languageNameToIdMap).forEach(([name, id]) => {
+      map[id] = name.charAt(0).toUpperCase() + name.slice(1);
+    });
+    this.languageMapChanged.emit(map);
   }
 }

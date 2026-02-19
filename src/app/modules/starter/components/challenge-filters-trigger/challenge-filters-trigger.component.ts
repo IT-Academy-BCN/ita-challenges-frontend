@@ -4,9 +4,11 @@ import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateModule } from '@ngx-translate/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 type Level = NonNullable<FilterChallenge['levels']>[number]
+type LanguageTags = { language: string; tags: string[] }
 
 @Component({
   selector: 'app-challenge-filters-trigger',
@@ -17,10 +19,13 @@ type Level = NonNullable<FilterChallenge['levels']>[number]
 })
 
 export class ChallengeFiltersTriggerComponent {
-
+  private readonly challengeFormService = inject(ChallengeFormService)
   protected readonly SolutionStatus = SolutionStatus
 
+  displayTags: LanguageTags[] = []
+
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
+  @Input() languageMap: Record<string, string> = {}
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
   @ViewChild('triggerBtn') private readonly triggerBtn!: ElementRef<HTMLButtonElement>
@@ -58,6 +63,17 @@ export class ChallengeFiltersTriggerComponent {
       progress: this.toggleInArray(this.draftFilters.progress, status)
     }
   }
+  
+  fetchTags(): void {
+    this.displayTags = []
+    for (const language of this.initialFilters.languages) {
+      this.challengeFormService.getTagsByLanguage(language).subscribe((tags) => {
+        const tagNames = tags.results.map((tag) => tag.tag_name)
+        const languageName = this.languageMap[language] ?? language
+        this.displayTags.push({ language: languageName, tags: tagNames })
+      })
+    }
+  }
 
   open(): void {
     this.draftFilters = {
@@ -65,6 +81,8 @@ export class ChallengeFiltersTriggerComponent {
       tags: [...(this.initialFilters.tags ?? [])],
       progress: [...this.initialFilters.progress]
     }
+
+    this.fetchTags()
 
     this.modalService.open(this.modalTemplate, {
       windowClass: 'challenge-filters-trigger-modal',
