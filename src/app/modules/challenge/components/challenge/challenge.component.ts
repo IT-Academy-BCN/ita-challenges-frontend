@@ -13,7 +13,6 @@ import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
-import mockData from '../../../../../assets/dummy/challenges-mock.json';
 
 @Component({
   selector: 'app-challenge',
@@ -78,9 +77,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
         this.loadUserSolutionStatus(userId);
         this.loadSolutionContent();
       },
-      error: (err) => {
-        console.error('[ChallengeComponent] Error fetching user ID:', err);
-      }
     });
   }
 loadUserBookmarks(userId: string): void {
@@ -179,7 +175,6 @@ loadUserSolutionStatus(userId: string): void {
   }
 
   private loadFromMock(): void {
-  const mockChallenge = mockData.results[0]
   if (!this.challenge) return
   this.title = this.challenge.challenge_title
   this.creation_date = this.challenge.creation_date

@@ -13,7 +13,6 @@ import { type TagResponse } from '../models/tag-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
 import { CookieService } from 'ngx-cookie-service'
 import { AuthService } from './auth.service'
-import mockData from '../../assets/dummy/challenges-mock.json'
 
 @Injectable({
   providedIn: 'root'
@@ -53,20 +52,15 @@ export class ChallengeService {
     }
   }
 
-  // getChallengeById (id: string): Observable<Challenge> {
-  //   return this.http.get<Challenge>(
-  //     `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     }
-  //   )
-  // }
-
   getChallengeById (id: string): Observable<Challenge> {
-  // TODO: remove mock, restore HTTP call when server is available
-  return of(mockData.results[0] as unknown as Challenge)
+    return this.http.get<Challenge>(
+      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
   }
 
   async getItineraries (): Promise<Itinerary[]> {
