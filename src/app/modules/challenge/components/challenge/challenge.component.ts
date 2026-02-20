@@ -207,6 +207,11 @@ loadUserSolutionStatus(userId: string): void {
     }
     this.loadSolutionContent();
   }
+
+  onCancel(): void {
+  void this.router.navigate(['/ita-challenge/challenges'])
+  }
+
   onEditorSolutionChanged(newText: string): void {
     this.solutionText = newText;
 
@@ -238,5 +243,4 @@ loadUserSolutionStatus(userId: string): void {
     })
   }
 }
-
 }
