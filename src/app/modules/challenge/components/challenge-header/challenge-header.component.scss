@@ -16,9 +16,11 @@ span:hover .arrow-left{
   filter:invert(0%) sepia(97%) saturate(7416%) hue-rotate(131deg) brightness(90%) contrast(97%);
 }
 .difficulty img {
-  margin-top: 7px;
-  margin-right: 2px;
-  width: 15px;
+  margin-top: 0;
+  margin-right: 0;
+  width: 18px;
+  height: 24px;
+  object-fit: cover;
 }
 
 .stats {
@@ -27,7 +29,18 @@ span:hover .arrow-left{
   line-height: 32px;
   font-weight: 600;
   color: #808080;
+  gap: 15px;
 }
+
+.stats .difficulty {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-left: 5px;
+  gap: 2px;
+  margin-top: -4px;
+}
+
 .stats .stat {
   display: flex;
   flex-direction: row;
