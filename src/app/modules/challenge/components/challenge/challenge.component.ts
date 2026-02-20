@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
-
+import mockData from '../../../../../assets/dummy/challenges-mock.json';
 
 @Component({
   selector: 'app-challenge',
@@ -156,8 +156,9 @@ loadUserSolutionStatus(userId: string): void {
   }
 
   loadMasterData(id: string): void {
-    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge)
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe({
+      next: (challengeData) => {
+      this.challenge = new Challenge(challengeData)
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
       this.level = this.challenge.level
@@ -169,7 +170,28 @@ loadUserSolutionStatus(userId: string): void {
       this.languages = this.challenge.languages
       this.timesSolved = this.challenge.timesSolved
       this.languageId = this.languages[0]?.id_language ?? ''
+    },
+    error: (err) => {
+      console.warn('Server unavailable, loading mock data', err)
+      this.loadFromMock()
+    }
     })
+  }
+
+  private loadFromMock(): void {
+  const mockChallenge = mockData.results[0]
+  if (!this.challenge) return
+  this.title = this.challenge.challenge_title
+  this.creation_date = this.challenge.creation_date
+  this.level = this.challenge.level
+  this.detail = this.challenge.detail
+  this.description = this.challenge.detail.description
+  this.examples = this.challenge.detail?.examples
+  this.notes = this.challenge.detail.notes
+  this.popularity = this.challenge.popularity
+  this.languages = this.challenge.languages
+  this.timesSolved = this.challenge.timesSolved
+  this.languageId = this.languages[0]?.id_language ?? ''
   }
   onChallengeStart(): void {
     this.challengeStarted = true;

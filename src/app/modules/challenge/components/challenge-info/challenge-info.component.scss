@@ -2,9 +2,9 @@
 @import "src/styles/fonts";
 
 .nav {
-  border-bottom: 5px solid $gray-4;
-  margin-top: 2rem;
-  padding: 0;
+  border-bottom: 1.5px solid $gray-3;
+  margin-top: 0.5rem;
+  padding: 0 32px;
   border-radius: 2px;
   
   &.no-tabs {
@@ -21,7 +21,8 @@
   font-weight: 500;
   color: $gray-3;
   border: 0 solid transparent;
-  border-bottom-width: 5px;
+  border-bottom-width: 3px;
+  padding: 10px 40px;
 }
 .nav-link:hover {
   border-bottom-color: $gray-2;
@@ -33,9 +34,10 @@
 }
 
 .tab-content {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   width: 100%;
   max-width: 100%;
+  padding: 0 32px;
 }
 
 .title {

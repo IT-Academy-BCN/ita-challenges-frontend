@@ -24,7 +24,7 @@ span:hover .arrow-left{
 .stats {
   display: flex;
   font-size: 12px;
-  line-height: 50px;
+  line-height: 32px;
   font-weight: 600;
   color: #808080;
 }
@@ -41,7 +41,7 @@ span:hover .arrow-left{
   justify-content: flex-end;
   align-items: center;
   text-align: center;
-  margin-top: 32px;
+  margin-top: 0px;
   padding-right: 0;
   
   .btn.btn-sm {
@@ -111,4 +111,12 @@ h3 {
   border: none;
   padding: 0;
   transition: transform 0.2s ease;
+}
+
+.backTo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  color: $primary;
+  margin-bottom: 16px;
 }
