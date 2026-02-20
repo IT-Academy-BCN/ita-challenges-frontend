@@ -167,27 +167,9 @@ loadUserSolutionStatus(userId: string): void {
       this.timesSolved = this.challenge.timesSolved
       this.languageId = this.languages[0]?.id_language ?? ''
     },
-    error: (err) => {
-      console.warn('Server unavailable, loading mock data', err)
-      this.loadFromMock()
-    }
     })
   }
 
-  private loadFromMock(): void {
-  if (!this.challenge) return
-  this.title = this.challenge.challenge_title
-  this.creation_date = this.challenge.creation_date
-  this.level = this.challenge.level
-  this.detail = this.challenge.detail
-  this.description = this.challenge.detail.description
-  this.examples = this.challenge.detail?.examples
-  this.notes = this.challenge.detail.notes
-  this.popularity = this.challenge.popularity
-  this.languages = this.challenge.languages
-  this.timesSolved = this.challenge.timesSolved
-  this.languageId = this.languages[0]?.id_language ?? ''
-  }
   onChallengeStart(): void {
     this.challengeStarted = true;
     this.isEditorChallengeVisible = true;
