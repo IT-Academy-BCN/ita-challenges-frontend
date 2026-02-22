@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { take } from 'rxjs/operators'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { Tag } from 'src/app/models/tag-response.interface'
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-challenge-card',
@@ -39,6 +40,10 @@ export class ChallengeCardComponent implements OnInit {
 
   ngOnInit(): void {
 
+     if (this.id === 'C1' || this.id === 'C2') {
+    this.isBookmarked = true;
+  }
+  
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role;
     });
@@ -100,8 +105,43 @@ export class ChallengeCardComponent implements OnInit {
     }
   }
 
-  toggleBookmark(event: MouseEvent): void {
+  toggleBookmark(event: MouseEvent, tooltip?: NgbTooltip): void {
+
+  //     console.log('🔖 toggleBookmark called!', { 
+  //   id: this.id, 
+  //   isBookmarked: this.isBookmarked,
+  //   isLoggedIn: this.authService.isUserLoggedIn() 
+  // })
   event.stopPropagation()
-  // Logic will be implemented in #205
+ if (!this.authService.isUserLoggedIn()) {
+    return
+  }
+  if (tooltip) {
+    tooltip.close()
+  }
+
+  if (this.isBookmarked) {
+    this.challengeService.removeBookmark(this.id).subscribe({
+      next: () => {
+        this.isBookmarked = false
+        this.bookmarks_count--
+        console.error('removing bookmark OKK')
+      },
+      error: (err) => {
+        console.error('Error removing bookmark:', err)
+      }
+    })
+  } else {
+    this.challengeService.addBookmark(this.id).subscribe({
+      next: () => {
+        this.isBookmarked = true
+        this.bookmarks_count++
+        console.error('adding bookmark: OKKK')
+      },
+      error: (err) => {
+        console.error('Error adding bookmark:', err)
+      }
+    })
+  }
 }
 }

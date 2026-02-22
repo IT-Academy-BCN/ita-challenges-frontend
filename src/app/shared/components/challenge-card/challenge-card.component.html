@@ -19,8 +19,9 @@
     </div>
        <button
     class="bookmark-button"
+      #bookmarkTooltip="ngbTooltip"
     [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
-    (click)="toggleBookmark($event)"
+    (click)="toggleBookmark($event, bookmarkTooltip)"
     [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
     [attr.aria-pressed]="isBookmarked"
   >
