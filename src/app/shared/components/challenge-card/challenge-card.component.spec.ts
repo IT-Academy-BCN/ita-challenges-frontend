@@ -209,12 +209,80 @@ describe('ChallengeCardComponent', () => {
     consoleSpy.mockRestore()
   })
 
-  it('toggleBookmark: should prevent event propagation', () => {
-  const event = new MouseEvent('click');
-  const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
+
+describe('toggleBookmark', () => {
+  it('should call addBookmark when not bookmarked', (done) => {
+    component.id = 'C1'
+    component.isBookmarked = false
+    component.bookmarks_count = 0
+    mockChallengeService.addBookmark.mockReturnValue(of({}))
+
+    component.toggleBookmark(new MouseEvent('click'))
+    
+    setTimeout(() => {
+      expect(mockChallengeService.addBookmark).toHaveBeenCalledWith('C1')
+      expect(component.isBookmarked).toBe(true)
+      expect(component.bookmarks_count).toBe(1)
+      done()
+    })
+  })
+
+  it('should call removeBookmark when already bookmarked', (done) => {
+    component.id = 'C1'
+    component.isBookmarked = true
+    component.bookmarks_count = 1
+    mockChallengeService.removeBookmark.mockReturnValue(of({}))
+
+    component.toggleBookmark(new MouseEvent('click'))
+    
+    setTimeout(() => {
+      expect(mockChallengeService.removeBookmark).toHaveBeenCalledWith('C1')
+      expect(component.isBookmarked).toBe(false)
+      expect(component.bookmarks_count).toBe(0)
+      done()
+    })
+  })
+
+  it('should handle error on addBookmark', () => {
+    component.isBookmarked = false
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.addBookmark.mockReturnValue(throwError(() => new Error('error')))
+    
+    component.toggleBookmark(new MouseEvent('click'))
+    
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('should handle error on removeBookmark', () => {
+    component.isBookmarked = true
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockChallengeService.removeBookmark.mockReturnValue(throwError(() => new Error('error')))
+    
+    component.toggleBookmark(new MouseEvent('click'))
+    
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('should close tooltip when provided', () => {
+    const mockTooltip = { close: jest.fn() } as any
+    component.isBookmarked = false
+    mockChallengeService.addBookmark.mockReturnValue(of({}))
+    
+    component.toggleBookmark(new MouseEvent('click'), mockTooltip)
+    
+    expect(mockTooltip.close).toHaveBeenCalled()
+  })
+
+  it('should not execute if user is not logged in', () => {
+  mockAuthService.isUserLoggedIn.mockReturnValue(false)
+  component.isBookmarked = false
   
-  component.toggleBookmark(event);
+  component.toggleBookmark(new MouseEvent('click'))
   
-  expect(stopPropagationSpy).toHaveBeenCalled();
-});
+  expect(mockChallengeService.addBookmark).not.toHaveBeenCalled()
+  expect(mockChallengeService.removeBookmark).not.toHaveBeenCalled()
+})
+})
 })
