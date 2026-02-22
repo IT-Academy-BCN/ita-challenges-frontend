@@ -1,7 +1,7 @@
 /* eslint-disable padded-blocks */
 /* eslint-disable @typescript-eslint/semi */
-import { Inject, Injectable, inject } from '@angular/core'
-import { Observable, catchError, BehaviorSubject, of, throwError } from 'rxjs'
+import { Inject, Injectable, inject, signal } from '@angular/core'
+import { Observable, catchError, BehaviorSubject, of, throwError, forkJoin, switchMap } from 'rxjs'
 import { delay, map } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
@@ -9,8 +9,9 @@ import { environment } from 'src/environments/environment'
 import { type Challenge } from '../models/challenge.model'
 import { type Language } from '../models/language.model'
 import { type FavoriteResponse } from '../models/favorite-response.interface'
-import { type TagResponse } from '../models/tag-response.interface'
+import { type Tag, type TagResponse } from '../models/tag-response.interface'
 import { type CreateChallenge } from '../models/create-challenge.interface'
+import { ChallengeFormService } from './challenge-form.service'
 import { CookieService } from 'ngx-cookie-service'
 import { AuthService } from './auth.service'
 
@@ -22,6 +23,9 @@ export class ChallengeService {
   private readonly challengeStartedSubject = new BehaviorSubject<boolean>(this.getChallengeStartedFromStorage())
   private readonly cookieService = inject(CookieService)
   private readonly authService = inject(AuthService)
+  private readonly challengeFormService = inject(ChallengeFormService)
+
+  public readonly tagMap = signal<Record<string, Tag>>({})
 
   constructor (@Inject(HttpClient) private readonly http: HttpClient) {
     this.checkChallengeStartedFromStorage()
@@ -238,6 +242,38 @@ export class ChallengeService {
     };
 
     return this.http.get<TagResponse>(url, { headers })
+  }
+
+
+  fetchAndCacheAllTags (): void {
+    this.challengeFormService.getAllLangugesCreateForm ().pipe(
+      map(response => response.results),
+      catchError(error => {
+        console.error('Error fetching languages for tags cache:', error)
+        return of([])
+      }),
+      switchMap(languages => {
+        if (languages.length === 0) return of([])
+
+        const tagRequests = languages.map(lang =>
+          this.challengeFormService.getTagsByLanguage(lang.id_language).pipe(
+            map(res => res.results),
+            catchError( () => of([]))
+          )
+        )
+        return forkJoin(tagRequests)
+      })
+    ).subscribe(allTagsResults => {
+      if (allTagsResults.length === 0) return
+
+      const dictionary: Record<string, Tag> = {}
+      allTagsResults.forEach(tags => {
+        tags.forEach(tag => {
+          dictionary[tag.id_tag] = tag
+        })
+      })
+      this.tagMap.set(dictionary)
+    })
   }
 
 }
