@@ -4,12 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [ita-challenges-frontend-3.28.0-RELEASE] - 2026-02-16
+### [ita-challenges-frontend-3.29.0-RELEASE] - 2026-02-23
 
 ### Added
 - Enable dynamic tag filtering in the `challengeFiltersTriggerComponent`
 - Selectable checkboxes grouped by language name
 - Selected tag IDs are emitted to the parent component for challenge filtering
+
+### [ita-challenges-frontend-3.28.0-RELEASE] - 2026-02-23
+
+### Added
+- tagMap() signal to challenge service.
+
+### Changed
+- resolvedTags() method to challenge card component.
+- tagIds input to challenge card component now display correctly.
 
 ### [ita-challenges-frontend-3.27.0-RELEASE] - 2026-02-16
 
