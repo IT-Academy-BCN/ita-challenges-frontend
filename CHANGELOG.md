@@ -28,6 +28,10 @@ and this project adheres to
 ### Fixed
 - Enabled closing the Challenge Filters modal via `Escape` key and backdrop click. GitHub [#761], PR [#762].
 
+### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-21
+
+### Fixed
+- Fixed environment.ts and environment.prod.ts route for solution submission and retrieval.
 
 ### [ita-challenges-frontend-3.27.0-RELEASE] - 2026-02-16
 
