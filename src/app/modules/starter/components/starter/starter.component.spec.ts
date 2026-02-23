@@ -75,10 +75,12 @@ describe('StarterComponent', () => {
     }
     getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']))
     getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]))
+    const fetchAndCacheAllTagsSpy = jasmine.createSpy('fetchAndCacheAllTags');
 
     const challengeServiceMock = {
       getUserBookmarks: getUserBookmarksSpy,
-      getUserFavorites: getUserFavoritesSpy
+      getUserFavorites: getUserFavoritesSpy,
+      fetchAndCacheAllTags: fetchAndCacheAllTagsSpy
     };
 
     fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
