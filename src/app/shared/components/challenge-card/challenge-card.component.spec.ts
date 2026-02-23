@@ -144,23 +144,48 @@ describe('ChallengeCardComponent', () => {
     })
   })
 
-  it('should set tags from response.results when response is a TagResponse object', () => {
-    const mockTags = [
-      { id_tag: '1', tag_name: 'Arrays', tag_description: 'Array challenges' }
-    ]
-    mockChallengeService.getChallengeTags.mockReturnValue(of({ offset: 0, limit: 1, count: 1, results: mockTags }))
-    component.ngOnInit()
-    expect(component.tags).toEqual(mockTags)
-  })
+  it('should resolve tags reactively from the tagMap signal', () => {
+    const mockTagDictionary = {
+      't1': { id_tag: 't1', tag_name: 'Tag1', tag_description: 'D1' },
+      't2': { id_tag: 't2', tag_name: 'Tag2', tag_description: 'D2' }
+    };
 
-  it('should set tags to empty array on getChallengeTags error', () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-    mockChallengeService.getChallengeTags.mockReturnValue(throwError(() => new Error('error')))
-    component.ngOnInit()
-    expect(component.tags).toEqual([])
-    expect(consoleSpy).toHaveBeenCalled()
-    consoleSpy.mockRestore()
-  })
+    // Set service signal value
+    mockChallengeService.tagMap.set(mockTagDictionary);
+
+    // Set component input signal value
+    fixture.componentRef.setInput('tagIds', ['t1', 't2']);
+    fixture.detectChanges();
+
+    const resolved = component.resolvedTags();
+    expect(resolved.length).toBe(2);
+    expect(resolved[0].tag_name).toBe('Tag1');
+    expect(resolved[1].tag_name).toBe('Tag2');
+
+    // Test reactivity: update input
+    fixture.componentRef.setInput('tagIds', ['t2']);
+    fixture.detectChanges();
+    expect(component.resolvedTags().length).toBe(1);
+    expect(component.resolvedTags()[0].tag_name).toBe('Tag2');
+
+    // Test reactivity: update dictionary
+    mockChallengeService.tagMap.set({
+      ...mockTagDictionary,
+      't2': { id_tag: 't2', tag_name: 'UpdatedTag2', tag_description: 'D2' }
+    });
+    fixture.detectChanges();
+    expect(component.resolvedTags()[0].tag_name).toBe('UpdatedTag2');
+  });
+
+  it('should return empty array if tagId is not in dictionary', () => {
+    mockChallengeService.tagMap.set({
+      't1': { id_tag: 't1', tag_name: 'Tag1', tag_description: 'D1' }
+    });
+    fixture.componentRef.setInput('tagIds', ['unknown']);
+    fixture.detectChanges();
+
+    expect(component.resolvedTags()).toEqual([]);
+  });
 
   describe('descriptionPreview', () => {
     it('should return empty string when description is undefined', () => {
