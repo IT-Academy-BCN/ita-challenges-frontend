@@ -7,7 +7,6 @@ export const environment = {
   BACKEND_ITA_CHALLENGE_SOLUTION: '/challenge/solution',
   BACKEND_ITA_CHALLENGE_USER_SUBMISSIONS: '/users',
   BACKEND_USER_USERS_FAVORITES: '/user/users',
-  BACKEND_ITA_CHALLENGE_USER_SUBMISSIONS: '/users/',
   BACKEND_USERINTERACTION_FAVORITES: '/userinteraction/favorites',
   BACKEND_ITA_CHALLENGE_TAGS: '/tags',
   BACKEND_ITA_SSO_BASE_URL: 'https://dev.sso.itawiki.eurecatacademy.org/api/v1',
