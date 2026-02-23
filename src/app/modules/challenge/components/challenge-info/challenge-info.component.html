@@ -178,7 +178,7 @@
         <!-- Display related challenges when available. By now this
           is a temporary mocked solution for demo purposes -->
         <section *ngIf="relatedChallenges && relatedChallenges.length > 0" class="info-card">
-          <div class="d-flex flex-column gap-3">
+          <div class="related-challenges-grid">
             <app-challenge-card *ngFor="let challenge of relatedChallenges"
               [title]="challenge.challenge_title | dynamicTranslate" 
               [creation_date]="challenge.creation_date"
