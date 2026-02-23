@@ -156,19 +156,30 @@ loadUserSolutionStatus(userId: string): void {
   }
 
   loadMasterData(id: string): void {
-    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge)
-      this.title = this.challenge.challenge_title
-      this.creation_date = this.challenge.creation_date
-      this.level = this.challenge.level
-      this.detail = this.challenge.detail
-      this.description = this.challenge.detail.description
-      this.examples = this.challenge.detail?.examples
-      this.notes = this.challenge.detail.notes
-      this.popularity = this.challenge.popularity
-      this.languages = this.challenge.languages
-      this.timesSolved = this.challenge.timesSolved
-      this.languageId = this.languages[0]?.id_language ?? ''
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe({
+      next: (challenge) => {
+        try {
+          this.challenge = new Challenge(challenge)
+          this.title = this.challenge.challenge_title
+          this.creation_date = this.challenge.creation_date
+          this.level = this.challenge.level
+          this.detail = this.challenge.detail
+          this.description = this.challenge.detail.description
+          this.examples = this.challenge.detail?.examples
+          this.notes = this.challenge.detail.notes
+          this.popularity = this.challenge.popularity
+          this.languages = this.challenge.languages
+          this.timesSolved = this.challenge.timesSolved
+          this.languageId = this.languages[0]?.id_language ?? ''
+        } catch (err) {
+          console.error('[ChallengeComponent] Error parsing challenge payload:', id, err, challenge)
+          this.challenge = null
+        }
+      },
+      error: (err) => {
+        console.error('[ChallengeComponent] Error loading challenge by id:', id, err)
+        this.challenge = null
+      }
     })
   }
   onChallengeStart(): void {

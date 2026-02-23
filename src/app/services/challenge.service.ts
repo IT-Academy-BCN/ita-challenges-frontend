@@ -53,13 +53,35 @@ export class ChallengeService {
   }
 
   getChallengeById (id: string): Observable<Challenge> {
-    return this.http.get<Challenge>(
-      `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+    return this.http.get<any>('assets/dummy/challenges-mock.json', {
+      headers: {
+        'Content-Type': 'application/json'
       }
+    }).pipe(
+      map((data) => {
+        const results = Array.isArray(data?.results) ? data.results : []
+        const found = results.find((ch: any) => ch?.id_challenge === id)
+        if (!found) {
+          throw new Error(`Mock challenge not found: ${id}`)
+        }
+        return {
+          ...found,
+          creation_date: found?.creation_date ? new Date(found.creation_date) : found?.creation_date,
+          popularity: found?.popularity ?? 0,
+          languages: Array.isArray(found?.languages) ? found.languages : [],
+          detail: {
+            ...(found?.detail ?? {}),
+            description: found?.detail?.description ?? '',
+            notes: found?.detail?.notes ?? '',
+            examples: Array.isArray(found?.detail?.examples) ? found.detail.examples : []
+          },
+          solutions: Array.isArray(found?.solutions)
+            ? found.solutions.map((sid: any) => (typeof sid === 'string'
+              ? ({ id_solution: sid, solution_text: '' })
+              : sid))
+            : []
+        } as Challenge
+      })
     )
   }
 
@@ -91,7 +113,6 @@ export class ChallengeService {
         headers
       })
   }
-
 
   createChallenge (challenge: CreateChallenge): Observable<any> {
     const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`
@@ -194,29 +215,36 @@ export class ChallengeService {
     );
   }
 
-  // Helper methods for mock implementation
-  private getMockFavoriteCount(challengeId: string): number {
-    const key = `favorites_count_${challengeId}`
-    const storedCount = localStorage.getItem(key)
-    return storedCount ? parseInt(storedCount, 10) : 0
-  }
-
-
   getRelatedChallenges(challengeId: string): Observable<Challenge[]> {
     const headers = {
-      'Content-Type': 'application/json',
-      ...this.authService.getAuthHeaders()
-    };
+      'Content-Type': 'application/json'
+    }
 
-    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}/challenge/challenges/${challengeId}/related`;
-
-    return this.http.get<{results: Challenge[] }>(url, { headers }).pipe(
-      map(response => response.results),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error fetching related challenges:', error);
-        return throwError(() => error);
+    return this.http.get<any>('assets/dummy/challenges-mock.json', { headers }).pipe(
+      map((data) => {
+        const results = Array.isArray(data?.results) ? data.results : []
+        return results
+          .filter((ch: any) => ch?.id_challenge && ch.id_challenge !== challengeId)
+          .slice(0, 4)
+          .map((ch: any) => ({
+            ...ch,
+            creation_date: ch?.creation_date ? new Date(ch.creation_date) : ch?.creation_date,
+            popularity: ch?.popularity ?? 0,
+            languages: Array.isArray(ch?.languages) ? ch.languages : [],
+            detail: {
+              ...(ch?.detail ?? {}),
+              description: ch?.detail?.description ?? '',
+              notes: ch?.detail?.notes ?? '',
+              examples: Array.isArray(ch?.detail?.examples) ? ch.detail.examples : []
+            },
+            solutions: Array.isArray(ch?.solutions)
+              ? ch.solutions.map((sid: any) => (typeof sid === 'string'
+                ? ({ id_solution: sid, solution_text: '' })
+                : sid))
+              : []
+          })) as Challenge[]
       })
-    );
+    )
   }
 
   editChallenge(challengeId: string, challenge: Partial<Challenge>): Observable<Challenge> {

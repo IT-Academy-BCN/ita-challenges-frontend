@@ -131,6 +131,9 @@ export class SolutionService {
 
         return this.http.get<UserSolution[]>(url).pipe(
           catchError(error => {
+            if (error?.status === 404) {
+              return of([])
+            }
             console.error('Error fetching user solution:', error)
             return of([])
           }))

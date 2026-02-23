@@ -34,12 +34,37 @@ export class StarterService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.get<ChallengeResponse>(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}`, {
+
+    return this.http.get<any>('assets/dummy/challenges-mock.json', {
       headers
     }).pipe(
+      map((data) => {
+        const results = Array.isArray(data?.results) ? data.results : []
+        return {
+          ...data,
+          results: results.map((ch: any) => ({
+            ...ch,
+            creation_date: ch?.creation_date ? new Date(ch.creation_date) : ch?.creation_date,
+            popularity: ch?.popularity ?? 0,
+            languages: Array.isArray(ch?.languages) ? ch.languages : [],
+            detail: {
+              ...(ch?.detail ?? {}),
+              description: ch?.detail?.description ?? '',
+              notes: ch?.detail?.notes ?? '',
+              examples: Array.isArray(ch?.detail?.examples) ? ch.detail.examples : []
+            },
+            solutions: Array.isArray(ch?.solutions)
+              ? ch.solutions.map((id: any) => (typeof id === 'string'
+                ? ({ id_solution: id, solution_text: '' })
+                : id))
+              : []
+          }))
+        } as ChallengeResponse
+      }),
       tap((response) => {
         this.cachedChallenges = response
-    }))
+      })
+    )
   }
 
   getAllChallengesOffset (pageOffset: number, pageLimit: number): Observable<ChallengeResponse> {

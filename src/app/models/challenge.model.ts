@@ -18,23 +18,28 @@ export class Challenge {
   bookmarked: boolean
 
   constructor (element: any) {
-    this.id_challenge = element.id_challenge
-    this.challenge_title = element.challenge_title
-    this.level = element.level
-    this.creation_date = element.creation_date
-    this.popularity = element.popularity
-    this.favorites_count = element.favorites_count || 0
-    this.saved_count = element.saved_count || 0
-    this.timesFavorite = element.timesFavorite || 0
-    this.timesSolved = element.timesSolved || 0
-    this.bookmarked = element.bookmarked || false
-    this.detail = element.detail
+    this.id_challenge = element?.id_challenge ?? ''
+    this.challenge_title = element?.challenge_title ?? ''
+    this.level = element?.level ?? ''
 
-    element.languages.forEach((language: Language) => {
+    const rawDate = element?.creation_date
+    this.creation_date = rawDate instanceof Date ? rawDate : new Date(rawDate)
+
+    this.popularity = element?.popularity ?? 0
+    this.favorites_count = element?.favorites_count ?? 0
+    this.saved_count = element?.saved_count ?? 0
+    this.timesFavorite = element?.timesFavorite ?? 0
+    this.timesSolved = element?.timesSolved ?? 0
+    this.bookmarked = element?.bookmarked ?? false
+    this.detail = element?.detail
+
+    const langs = Array.isArray(element?.languages) ? element.languages : []
+    langs.forEach((language: Language) => {
       this.languages.push(language)
     })
 
-    element.solutions.forEach((solution: Solution) => {
+    const sols = Array.isArray(element?.solutions) ? element.solutions : []
+    sols.forEach((solution: Solution) => {
       this.solutions.push(solution)
     })
   }
