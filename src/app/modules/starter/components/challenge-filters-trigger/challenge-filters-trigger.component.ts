@@ -19,7 +19,6 @@ type Level = NonNullable<FilterChallenge['levels']>[number]
 export class ChallengeFiltersTriggerComponent {
 
   protected readonly SolutionStatus = SolutionStatus
-
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
@@ -68,8 +67,8 @@ export class ChallengeFiltersTriggerComponent {
 
     this.modalService.open(this.modalTemplate, {
       windowClass: 'challenge-filters-trigger-modal',
-      backdrop: 'static',
-      keyboard: false
+      backdrop: true,
+      keyboard: true
     })
 
     setTimeout(() => {
