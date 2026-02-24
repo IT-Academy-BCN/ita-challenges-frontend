@@ -86,6 +86,10 @@
         <legend class="h6 m-0 fw-bold">{{ 'modules.starter.challengeFiltersTrigger.tagsTitle' | translate }}</legend>
         <div class="d-flex gap-2"></div>
 
+        <div *ngIf="displayTags.length === 0">
+          {{ 'modules.starter.challengeFiltersTrigger.noTagsFound' | translate }}
+        </div>
+
         <div *ngFor="let group of displayTags">
           <strong>{{ group.language }}</strong>
           <div class="d-flex flex-wrap gap-2 mt-1 mb-2">

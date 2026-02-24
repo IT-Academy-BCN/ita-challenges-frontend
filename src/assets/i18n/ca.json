@@ -146,6 +146,7 @@
                 "closeAriaLabel": "Tancar",
                 "difficultyTitle": "Dificultat",
                 "tagsTitle": "Etiquetes",
+                "noTagsFound": "No s'han trobat etiquetes, seleccioneu almenys un llenguatge",
                 "searchTagsPlaceholder": "Cercar etiquetes",
                 "statusTitle": "Estat",
                 "statusNotStarted": "Nous",
