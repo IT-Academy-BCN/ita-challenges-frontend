@@ -90,18 +90,19 @@
           {{ 'modules.starter.challengeFiltersTrigger.noTagsFound' | translate }}
         </div>
 
-        <div *ngFor="let group of displayTags">
-          <strong>{{ group.language }}</strong>
+        <div class="d-flex flex-column gap-1" *ngFor="let group of displayTags">
+          <span>{{ group.language }}</span>
           <div class="d-flex flex-wrap gap-2 mt-1 mb-2">
-            <label *ngFor="let tag of group.tags" class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                [checked]="isTagSelected(tag.id_tag)"
-                (change)="toggleTag(tag.id_tag)"
-              />
+            <button
+              *ngFor="let tag of group.tags"
+              type="button"
+              class="btn rounded-pill"
+              [attr.aria-pressed]="isTagSelected(tag.id_tag)"
+              [ngClass]="isTagSelected(tag.id_tag) ? 'btn-dark' : 'btn-outline-dark'"
+              (click)="toggleTag(tag.id_tag)"
+            >
               {{ tag.tag_name }}
-            </label>
+            </button>
           </div>
         </div>
       </fieldset>
