@@ -40,7 +40,7 @@
   <header id="challenge-filters">
     <app-challenge-list-filters
       (sortSelected)="changeSort($event)"
-      (orderSelected)="changeOrder($event)">
+      (orderSelected)="changeOrder($event)"
       [initialFilters]="filters"
       (filtersApplied)="onModalFiltersApplied($event)">
     </app-challenge-list-filters>
