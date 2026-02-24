@@ -2,10 +2,11 @@
 @import "src/styles/fonts";
 
 .nav {
-  border-bottom: 1.5px solid $gray-3;
+  border-bottom: none;
   margin-top: 0.5rem;
   padding: 0 32px;
   border-radius: 2px;
+  display: flex;
   
   &.no-tabs {
     border-bottom: none;
@@ -22,7 +23,10 @@
   color: $gray-3;
   border: 0 solid transparent;
   border-bottom-width: 3px;
+  margin-bottom: -1.5px;
   padding: 10px 40px;
+  position: relative;
+  z-index: 1;
 }
 .nav-link:hover {
   border-bottom-color: $gray-2;
