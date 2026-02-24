@@ -2,16 +2,12 @@
 
 .challenge-list-element {
   border-radius: 1rem;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  padding-top: 0.4rem;
   min-height: 110px;
   cursor: pointer;
-  background-color: $white;
   max-width: 24rem;
+  background-color: $white;
   color: $gray-3;
-  margin: 0 auto;
 
   &:hover {
     transform: translateY(-5px);
@@ -20,14 +16,24 @@
   }
 
   &.status-ended {
-    background-color: #1e7d34;
+    background-color: $success;
   }
   &.status-progress {
-    background-color: #efa81b;
+    background-color: $warning;
   }
   &.status-incomplete {
-    background-color: rgb(84, 68, 91);
+    background-color: $gray-2;
   }
+
+}
+
+.challenge-list-element-content {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   .title {
     display: flex;
