@@ -5,8 +5,6 @@ import { of } from 'rxjs'
 import { ChallengeFiltersTriggerComponent } from './challenge-filters-trigger.component'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
-import { ChallengeService } from 'src/app/services/challenge.service'
-import { signal } from '@angular/core'
 
 class TranslateLoaderStub implements TranslateLoader {
   getTranslation() {
@@ -45,12 +43,6 @@ describe('ChallengeFiltersTriggerComponent', () => {
           useValue: {
             getTagsByLanguage: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] })),
             getAllLangugesCreateForm: jest.fn().mockReturnValue(of({ results: [] }))
-          }
-        },
-        {
-          provide: ChallengeService,
-          useValue: {
-            tagMap: signal({})
           }
         }
       ]

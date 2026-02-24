@@ -22,14 +22,11 @@ type LanguageTags = { language: string; tags: Tag[] }
 export class ChallengeFiltersTriggerComponent {
   private readonly challengeFormService = inject(ChallengeFormService)
   protected readonly SolutionStatus = SolutionStatus
-<<<<<<< feature232/Add-logic-to-manage-language-tags-slected-filters
 
   displayTags: LanguageTags[] = []
   private readonly tagsByLanguageCache: Record<string, Tag[]> = {}
   private readonly languageNameCache: Record<string, string> = {}
 
-=======
->>>>>>> develop
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
