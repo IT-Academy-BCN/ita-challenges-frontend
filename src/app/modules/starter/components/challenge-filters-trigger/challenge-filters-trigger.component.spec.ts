@@ -5,6 +5,8 @@ import { of } from 'rxjs'
 import { ChallengeFiltersTriggerComponent } from './challenge-filters-trigger.component'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
+import { ChallengeService } from 'src/app/services/challenge.service'
+import { signal } from '@angular/core'
 
 class TranslateLoaderStub implements TranslateLoader {
   getTranslation() {
@@ -41,7 +43,14 @@ describe('ChallengeFiltersTriggerComponent', () => {
         {
           provide: ChallengeFormService,
           useValue: {
-            getTagsByLanguage: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] }))
+            getTagsByLanguage: jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: [] })),
+            getAllLangugesCreateForm: jest.fn().mockReturnValue(of({ results: [] }))
+          }
+        },
+        {
+          provide: ChallengeService,
+          useValue: {
+            tagMap: signal({})
           }
         }
       ]
@@ -202,6 +211,10 @@ describe('ChallengeFiltersTriggerComponent', () => {
 
   it('should fetch tags and populate displayTags with language names', () => {
     const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
+    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [
+      { id_language: 'lang-1', language_name: 'Javascript' },
+      { id_language: 'lang-2', language_name: 'Python' }
+    ]}))
     mockService.getTagsByLanguage = jest.fn().mockImplementation((langId: string) => {
       if (langId === 'lang-1') {
         return of({ offset: 0, limit: 0, count: 2, results: [
@@ -218,23 +231,23 @@ describe('ChallengeFiltersTriggerComponent', () => {
     const component = fixture.componentInstance
 
     component.initialFilters = { languages: ['lang-1', 'lang-2'], levels: [], progress: [], tags: [] }
-    component.languageMap = { 'lang-1': 'Javascript', 'lang-2': 'Python' }
 
     component.open()
 
     expect(component.displayTags.length).toBe(2)
     expect(component.displayTags[0]).toEqual({
       language: 'Javascript',
-      tags: [{ id: 'tag-1', name: 'Arrays' }, { id: 'tag-2', name: 'Loops' }]
+      tags: [{ id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' }, { id_tag: 'tag-2', tag_name: 'Loops', tag_description: '' }]
     })
     expect(component.displayTags[1]).toEqual({
       language: 'Python',
-      tags: [{ id: 'tag-3', name: 'Decorators' }]
+      tags: [{ id_tag: 'tag-3', tag_name: 'Decorators', tag_description: '' }]
     })
   })
 
-  it('should fall back to language ID when languageMap has no entry', () => {
+  it('should fall back to language ID when language name is not found', () => {
     const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
+    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [] }))
     mockService.getTagsByLanguage = jest.fn().mockReturnValue(
       of({ offset: 0, limit: 0, count: 0, results: [] })
     )
@@ -243,7 +256,6 @@ describe('ChallengeFiltersTriggerComponent', () => {
     const component = fixture.componentInstance
 
     component.initialFilters = { languages: ['unknown-lang-id'], levels: [], progress: [], tags: [] }
-    component.languageMap = {}
 
     component.open()
 

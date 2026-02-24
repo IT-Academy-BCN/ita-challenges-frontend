@@ -1,5 +1,5 @@
 <div id="challenge-list-filters">
-    <div><app-language-filter (languageMapChanged)="languageMap = $event"></app-language-filter></div>
+    <div><app-language-filter></app-language-filter></div>
     <div class="space-divider"></div>
     <app-sort-select
       [sortBy]="sortBy"
@@ -10,7 +10,6 @@
     <div>
         <app-challenge-filters-trigger
             [initialFilters]="initialFilters"
-            [languageMap]="languageMap"
             (filtersApplied)="onModalFiltersApplied($event)">
         </app-challenge-filters-trigger>
     </div>

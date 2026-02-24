@@ -3,13 +3,14 @@ import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewCh
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateModule } from '@ngx-translate/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
+import { Tag } from 'src/app/models/tag-response.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
+import { ChallengeService } from 'src/app/services/challenge.service'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 type Level = NonNullable<FilterChallenge['levels']>[number]
-type TagItem = { id: string; name: string }
-type LanguageTags = { language: string; tags: TagItem[] }
+type LanguageTags = { language: string; tags: Tag[] }
 
 @Component({
   selector: 'app-challenge-filters-trigger',
@@ -20,13 +21,16 @@ type LanguageTags = { language: string; tags: TagItem[] }
 })
 
 export class ChallengeFiltersTriggerComponent {
+  private readonly challengeService = inject(ChallengeService)
+  private readonly tagMap = this.challengeService.tagMap
   private readonly challengeFormService = inject(ChallengeFormService)
   protected readonly SolutionStatus = SolutionStatus
 
   displayTags: LanguageTags[] = []
+  private readonly tagsByLanguageCache: Record<string, Tag[]> = {}
+  private readonly languageNameCache: Record<string, string> = {}
 
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
-  @Input() languageMap: Record<string, string> = {}
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
   @ViewChild('triggerBtn') private readonly triggerBtn!: ElementRef<HTMLButtonElement>
@@ -78,13 +82,43 @@ export class ChallengeFiltersTriggerComponent {
 
   fetchTags(): void {
     this.displayTags = []
-    for (const language of this.initialFilters.languages) {
-      this.challengeFormService.getTagsByLanguage(language).subscribe((tags) => {
-        const tagItems = tags.results.map((tag) => ({ id: tag.id_tag, name: tag.tag_name }))
-        const languageName = this.languageMap[language] ?? language
-        this.displayTags.push({ language: languageName, tags: tagItems })
-      })
+    this.loadLanguageNames(() => {
+      for (const language of this.initialFilters.languages) {
+        if (this.tagsByLanguageCache[language]) {
+          this.displayTags.push({
+            language: this.languageNameCache[language] ?? language,
+            tags: this.tagsByLanguageCache[language]
+          })
+        } else {
+          this.challengeFormService.getTagsByLanguage(language).subscribe({
+            next: (res) => {
+              const tags = res.results ?? []
+              this.tagsByLanguageCache[language] = tags
+              this.displayTags.push({
+                language: this.languageNameCache[language] ?? language,
+                tags
+              })
+            }
+          })
+        }
+      }
+    })
+  }
+
+  private loadLanguageNames(callback: () => void): void {
+    if (Object.keys(this.languageNameCache).length > 0) {
+      callback()
+      return
     }
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: (res) => {
+        (res.results ?? []).forEach((lang: { id_language: string; language_name: string }) => {
+          this.languageNameCache[lang.id_language] = lang.language_name
+        })
+        callback()
+      },
+      error: () => callback()
+    })
   }
 
   open(): void {

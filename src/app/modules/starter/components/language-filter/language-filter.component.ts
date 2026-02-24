@@ -20,7 +20,6 @@ export class LanguageFilterComponent implements OnInit {
 
   languages: Language[] = mockLanguages;
   @Output() languageSelected = new EventEmitter<string[]>();
-  @Output() languageMapChanged = new EventEmitter<Record<string, string>>();
   
   languageForm: FormGroup;
  
@@ -60,11 +59,9 @@ export class LanguageFilterComponent implements OnInit {
     });
     const form = this.fb.group(controls);
     form.valueChanges.subscribe(() => {
-
       this.emitSelectedLanguages(form);
     });
 
-    this.emitFullLanguageMap();
     
     return form;
   }
@@ -77,11 +74,4 @@ export class LanguageFilterComponent implements OnInit {
     this.languageSelected.emit(selectedLanguages);
   }
 
-  private emitFullLanguageMap(): void {
-    const map: Record<string, string> = {};
-    Object.entries(this.languageNameToIdMap).forEach(([name, id]) => {
-      map[id] = name.charAt(0).toUpperCase() + name.slice(1);
-    });
-    this.languageMapChanged.emit(map);
-  }
 }

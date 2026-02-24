@@ -15,7 +15,6 @@ export class ChallengeListFiltersComponent {
   @Output() orderSelected = new EventEmitter<boolean>()
   sortBy: string = 'popularity'
   isAscending: boolean = false
-  languageMap: Record<string, string> = {}
 
   protected onModalFiltersApplied (filters: ModalFilters): void {
     this.filtersApplied.emit(filters)
