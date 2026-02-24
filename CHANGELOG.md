@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+### [ita-challenges-frontend-3.30.0-RELEASE] - 2026-02-24
+
+### Added
+- Applied styles to the `challengeFiltersTriggerComponent` tags
+
 ### [ita-challenges-frontend-3.29.0-RELEASE] - 2026-02-23
 
 ### Added
@@ -19,11 +25,11 @@ and this project adheres to
 ### Changed
 - resolvedTags() method to challenge card component.
 - tagIds input to challenge card component now display correctly.
-### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-18
+### [ita-challenges-frontend-3.27.3-RELEASE] - 2026-02-18
 
 ### Changed
 - Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
-### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-17
+### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-17
 
 ### Fixed
 - Enabled closing the Challenge Filters modal via `Escape` key and backdrop click. GitHub [#761], PR [#762].
@@ -88,7 +94,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
 
 ### Changed
-- Changed the challenge card layout and style to fit the new design
+- Changed the challenge card layout and style to fit the new design 
 
 ### [ita-challenges-frontend-3.21.0-RELEASE] - 2026-02-12
 
