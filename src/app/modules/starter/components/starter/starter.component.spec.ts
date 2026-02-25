@@ -77,7 +77,7 @@ describe('StarterComponent', () => {
     }
     getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']))
     getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]))
-    fetchAndCacheAllTagsSpy = jasmine.createSpy('fetchAndCacheAllTags')
+    fetchAndCacheAllTagsSpy = jasmine.createSpy('fetchAndCacheAllTags').and.returnValue(of(undefined))
 
     const challengeServiceMock = {
       getUserBookmarks: getUserBookmarksSpy,
@@ -256,7 +256,7 @@ describe('Progress filtering behavior', () => {
     const challengeServiceMock = {
       getUserBookmarks: jasmine.createSpy().and.returnValue(of([])),
       getUserFavorites: jasmine.createSpy().and.returnValue(of([])),
-      fetchAndCacheAllTags: jasmine.createSpy()
+      fetchAndCacheAllTags: jasmine.createSpy().and.returnValue(of(undefined))
     };
 
     fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));

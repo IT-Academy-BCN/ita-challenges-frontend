@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject, signal } from '@angular/core'
 import { Observable, catchError, BehaviorSubject, of, throwError, forkJoin, switchMap } from 'rxjs'
-import { delay, map } from 'rxjs/operators'
+import { delay, map, tap } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -245,10 +245,10 @@ export class ChallengeService {
   }
 
 
-  fetchAndCacheAllTags (): void {
-    if (Object.keys(this.tagMap()).length > 0) return
+  fetchAndCacheAllTags (): Observable<void> {
+    if (Object.keys(this.tagMap()).length > 0) return of(undefined)
 
-    this.challengeFormService.getAllLangugesCreateForm ().pipe(
+    return this.challengeFormService.getAllLangugesCreateForm ().pipe(
       map(response => response.results),
       catchError(error => {
         console.error('Error fetching languages for tags cache:', error)
@@ -264,18 +264,20 @@ export class ChallengeService {
           )
         )
         return forkJoin(tagRequests)
-      })
-    ).subscribe(allTagsResults => {
-      if (allTagsResults.length === 0) return
+      }),
+      tap(allTagsResults => {
+        if (allTagsResults.length === 0) return
 
-      const dictionary: Record<string, Tag> = {}
-      allTagsResults.forEach(tags => {
-        tags.forEach(tag => {
-          dictionary[tag.id_tag] = tag
+        const dictionary: Record<string, Tag> = {}
+        allTagsResults.forEach(tags => {
+          tags.forEach(tag => {
+            dictionary[tag.id_tag] = tag
+          })
         })
-      })
-      this.tagMap.set(dictionary)
-    })
+        this.tagMap.set(dictionary)
+      }),
+      map(() => undefined)
+    )
   }
 
 }
