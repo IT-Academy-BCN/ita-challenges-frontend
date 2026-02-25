@@ -43,6 +43,7 @@ export class ChallengeCardComponent implements OnInit {
   @Input() solutionStatus?: SolutionStatus
 
   ngOnInit(): void {
+
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role
     })
@@ -93,4 +94,9 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+
+  toggleBookmark(event: MouseEvent): void {
+  event.stopPropagation()
+  // Logic will be implemented in #205
+}
 }

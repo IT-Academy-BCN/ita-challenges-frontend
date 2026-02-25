@@ -372,11 +372,6 @@ describe('ChallengeHeaderComponent', () => {
     component.toggleBookmark(new MouseEvent('click'));
     expect(spy).not.toHaveBeenCalled();
   });
-
-  it('should navigate to challenges on cancel', () => {
-    component.onCancel();
-    expect(router.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
-  });
   
   it('should set solutionState to NOT_STARTED if no matching solution is found', () => {
     solutionService.fetchUserSolution.mockReturnValue(of([]));

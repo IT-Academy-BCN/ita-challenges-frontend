@@ -1,5 +1,6 @@
 <div id="challenge-list-filters">
-    <div><app-language-filter></app-language-filter></div>
+    <div><app-language-filter
+        (languageSelected)="onLanguageFilterChange($event)"></app-language-filter></div>
     <div class="space-divider"></div>
     <app-sort-select
       [sortBy]="sortBy"
