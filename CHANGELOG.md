@@ -3,6 +3,30 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### [ita-challenges-frontend-3.28.0-RELEASE] - 2026-02-19
+### Added
+- Bookmark button UI in challenge card component
+
+### [ita-challenges-frontend-3.27.4-RELEASE] - 2026-02-18
+
+### Fixed
+- Challenge card layout div to show the status of the challenge
+
+### [ita-challenges-frontend-3.27.3-RELEASE] - 2026-02-23
+
+### Changed
+- Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
+
+### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-23
+
+### Fixed
+- Enabled closing the Challenge Filters modal via `Escape` key and backdrop click. GitHub [#761], PR [#762].
+
+### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-21
+
+### Fixed
+- Fixed environment.ts and environment.prod.ts route for solution submission and retrieval.
+
 
 ### [ita-challenges-frontend-3.27.3-RELEASE] - 2026-02-20
 ### Added
@@ -23,6 +47,7 @@ and this project adheres to
 - Fixed environment.ts and environment.prod.ts route for solution submission and retrieval.
 
 ### [ita-challenges-frontend-3.27.0-RELEASE] - 2026-02-16
+
 ### Added
 - Feedback to user when saving solution.
 
@@ -76,7 +101,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.22.0-RELEASE] - 2026-02-11
 
 ### Changed
-- Changed the challenge card layout and style to fit the new design
+- Changed the challenge card layout and style to fit the new design 
 
 ### [ita-challenges-frontend-3.21.0-RELEASE] - 2026-02-12
 

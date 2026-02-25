@@ -5,67 +5,89 @@
   [class.status-incomplete]="solutionStatus === SolutionStatus.SHOW_SOLUTION"
   [routerLink]="['/ita-challenge/challenges/', id]"
 >
-  <div>
-    @for (language of languages; track $index) {
+  <div class="challenge-list-element-content">
+    <div>
+      @for (language of languages; track $index) {
+        <img
+          class="icon"
+          [src]="
+            'assets/img/icon/language_icon_' + language.language_name + '.svg'
+          "
+          [alt]="language.language_name + ' icon'"
+        />
+      }
+    </div>
+       <button
+    class="bookmark-button"
+    [ngbTooltip]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
+    (click)="toggleBookmark($event)"
+    [attr.aria-label]="isBookmarked ? ('tooltips.bookmarks.saved' | translate) : ('tooltips.bookmarks.unsaved' | translate)"
+    [attr.aria-pressed]="isBookmarked"
+  >
+    @if (!isBookmarked) {
       <img
-        class="icon"
-        [src]="
-          'assets/img/icon/language_icon_' + language.language_name + '.svg'
-        "
-        [alt]="language.language_name + ' icon'"
+        src="assets/img/icon/bookmark.svg"
+        [attr.alt]="'tooltips.bookmarks.unsaved' | translate"
       />
     }
-  </div>
-  <div class="title">{{ title }}</div>
-  <div class="description">{{ descriptionPreview }}</div>
- <app-tags [tags]="tags"></app-tags>
-  <!-- STATS WRAPPER -->
-  <div class="stats-info-wrapper">
-    <!-- DIFFICULTY LEVEL -->
-    <app-difficulty-level [level]="level"></app-difficulty-level>
-    <!-- TIMES SOLVED -->
-    <div
-      class="times-solved"
-      [ngbTooltip]="'tooltips.startedFinished' | translate"
-    >
-      <div>
-        <img
-        src="assets/img/icon/times-performed.svg"
-        alt="Times performed"
-        />
+    @if (isBookmarked) {
+      <img
+        src="assets/img/icon/bookmark-filled.svg"
+        [attr.alt]="'tooltips.bookmarks.saved' | translate"
+      />
+    }
+  </button>
+    <div class="title">{{ title }}</div>
+    <div class="description">{{ descriptionPreview }}</div>
+  <app-tags [tags]="tags"></app-tags>
+    <!-- STATS WRAPPER -->
+    <div class="stats-info-wrapper">
+      <!-- DIFFICULTY LEVEL -->
+      <app-difficulty-level [level]="level"></app-difficulty-level>
+      <!-- TIMES SOLVED -->
+      <div
+        class="times-solved"
+        [ngbTooltip]="'tooltips.startedFinished' | translate"
+      >
+        <div>
+          <img
+          src="assets/img/icon/times-performed.svg"
+          alt="Times performed"
+          />
+        </div>
+        <span>{{ challenge_timesSolved }}</span>
       </div>
-      <span>{{ challenge_timesSolved }}</span>
-    </div>
-    <!-- LIKES button -->
-    <button
-      class="likes-button"
-      [ngbTooltip]="'tooltips.favorites' | translate"
-      (click)="toggleFavorite($event)"
-    >
-      <div>
-        <img
-          *ngIf="!isFavorite"
-          src="assets/img/icon/heart.svg"
-          alt="Favorites"
-        />
-        <img
-          *ngIf="isFavorite"
-          src="assets/img/icon/heart-filled.svg"
-          alt="Favorites"
-        />
+      <!-- LIKES button -->
+      <button
+        class="likes-button"
+        [ngbTooltip]="'tooltips.favorites' | translate"
+        (click)="toggleFavorite($event)"
+      >
+        <div>
+          <img
+            *ngIf="!isFavorite"
+            src="assets/img/icon/heart.svg"
+            alt="Favorites"
+          />
+          <img
+            *ngIf="isFavorite"
+            src="assets/img/icon/heart-filled.svg"
+            alt="Favorites"
+          />
+        </div>
+        <div class="txt">{{ favorites_count }}</div>
+      </button>
+      <!-- CREATION DATE -->
+      <div
+        class="creation-date"
+        *ngIf="creation_date"
+        [ngbTooltip]="'tooltips.creationDate' | translate"
+      >
+        <img src="assets/img/icon/date.svg" alt="Date" />
+        <div class="txt">{{ creation_date | customDate }}</div>
       </div>
-      <div class="txt">{{ favorites_count }}</div>
-    </button>
-    <!-- CREATION DATE -->
-    <div
-      class="creation-date"
-      *ngIf="creation_date"
-      [ngbTooltip]="'tooltips.creationDate' | translate"
-    >
-      <img src="assets/img/icon/date.svg" alt="Date" />
-      <div class="txt">{{ creation_date | customDate }}</div>
     </div>
-  </div>
+  
 
     <!-- Old content pending to validate with product what is needed-->
     <!-- <div class="info d-flex align-items-start justify-content-between">
@@ -86,33 +108,7 @@
           {{ 'status.' + solutionStatus | translate }}
         </span>
       </div> -->
-      <!-- BOOKMARK button -->
-      <!-- <button
-        class="stat d-flex align-items-center bookmark-button"
-        [ngbTooltip]="
-          isBookmarked
-            ? ('tooltips.bookmarks.saved' | translate)
-            : ('tooltips.bookmarks.unsaved' | translate)
-        "
-        (click)="toggleBookmark($event)"
-        [attr.aria-label]="
-          isBookmarked
-            ? ('tooltips.bookmarks.saved' | translate)
-            : ('tooltips.bookmarks.unsaved' | translate)
-        "
-        [attr.aria-pressed]="isBookmarked"
-      >
-        <div>
-          <img
-            *ngIf="!isBookmarked"
-            src="assets/img/icon/bookmark.svg"
-            [attr.alt]="'tooltips.bookmarks.unsaved' | translate"
-          />
-          <img
-            *ngIf="isBookmarked"
-            src="assets/img/icon/bookmark-filled.svg"
-            [attr.alt]="'tooltips.bookmarks.saved' | translate"
-          />
-        </div>
-      </button> -->
+    
+  </div>
+
 </article>
