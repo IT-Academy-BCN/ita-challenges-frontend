@@ -246,6 +246,8 @@ export class ChallengeService {
 
 
   fetchAndCacheAllTags (): void {
+    if (Object.keys(this.tagMap()).length > 0) return
+
     this.challengeFormService.getAllLangugesCreateForm ().pipe(
       map(response => response.results),
       catchError(error => {
