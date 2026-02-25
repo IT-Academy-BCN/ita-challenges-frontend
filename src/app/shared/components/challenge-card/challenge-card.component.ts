@@ -104,11 +104,6 @@ export class ChallengeCardComponent implements OnInit {
 
   toggleBookmark(event: MouseEvent, tooltip?: NgbTooltip): void {
 
-  //     console.log('🔖 toggleBookmark called!', { 
-  //   id: this.id, 
-  //   isBookmarked: this.isBookmarked,
-  //   isLoggedIn: this.authService.isUserLoggedIn() 
-  // })
   event.stopPropagation()
  if (!this.authService.isUserLoggedIn()) {
     return
@@ -122,7 +117,6 @@ export class ChallengeCardComponent implements OnInit {
       next: () => {
         this.isBookmarked = false
         this.bookmarks_count--
-        console.error('removing bookmark OKK')
       },
       error: (err) => {
         console.error('Error removing bookmark:', err)
@@ -133,7 +127,6 @@ export class ChallengeCardComponent implements OnInit {
       next: () => {
         this.isBookmarked = true
         this.bookmarks_count++
-        console.error('adding bookmark: OKKK')
       },
       error: (err) => {
         console.error('Error adding bookmark:', err)
