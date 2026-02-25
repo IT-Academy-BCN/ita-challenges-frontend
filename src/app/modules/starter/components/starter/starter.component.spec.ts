@@ -36,10 +36,12 @@ describe('StarterComponent', () => {
   let getUserBookmarksSpy: jasmine.Spy;
   let getUserFavoritesSpy: jasmine.Spy;
   let fetchUserSolutionSpy: jasmine.Spy;
+  let fetchAndCacheAllTagsSpy: jasmine.Spy
 
   const mockChallenges$: Challenge[] = mockChallenges.map((challenge: any) => ({
     ...challenge,
     creation_date: new Date(`${challenge.creation_date}`),
+    tags: [],
     timesFavorite: typeof challenge.timesFavorite === 'number' ? challenge.timesFavorite : 0,
     solutions: challenge.solutions.map((solution: any) => ({
       id_solution: solution.idSolution,
@@ -58,10 +60,12 @@ describe('StarterComponent', () => {
     }
     getUserBookmarksSpy = jasmine.createSpy().and.returnValue(of(['id-1', 'id-2']))
     getUserFavoritesSpy = jasmine.createSpy().and.returnValue(of([]))
+    fetchAndCacheAllTagsSpy = jasmine.createSpy('fetchAndCacheAllTags').and.returnValue(of(undefined))
 
     const challengeServiceMock = {
       getUserBookmarks: getUserBookmarksSpy,
-      getUserFavorites: getUserFavoritesSpy
+      getUserFavorites: getUserFavoritesSpy,
+      fetchAndCacheAllTags: fetchAndCacheAllTagsSpy
     };
 
     fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
@@ -210,6 +214,10 @@ describe('StarterComponent', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching user solutions:', jasmine.any(Error));
   });
+
+  it('should call fetchAndCacheAllTags on init', () => {
+    expect(fetchAndCacheAllTagsSpy).toHaveBeenCalled()
+  })
 });
 
 describe('Progress filtering behavior', () => {
@@ -230,7 +238,8 @@ describe('Progress filtering behavior', () => {
 
     const challengeServiceMock = {
       getUserBookmarks: jasmine.createSpy().and.returnValue(of([])),
-      getUserFavorites: jasmine.createSpy().and.returnValue(of([]))
+      getUserFavorites: jasmine.createSpy().and.returnValue(of([])),
+      fetchAndCacheAllTags: jasmine.createSpy().and.returnValue(of(undefined))
     };
 
     fetchUserSolutionSpy = jasmine.createSpy().and.returnValue(of([]));
@@ -255,9 +264,9 @@ describe('Progress filtering behavior', () => {
   });
 
   it('should filter challenges by progress using solutionStatusMap', () => {
-    const ch1: any = { id_challenge: 'c1', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
-    const ch2: any = { id_challenge: 'c2', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
-    const ch3: any = { id_challenge: 'c3', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY' };
+    const ch1: any = { id_challenge: 'c1', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY', tags: [] }
+    const ch2: any = { id_challenge: 'c2', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY', tags: [] }
+    const ch3: any = { id_challenge: 'c3', creation_date: new Date(), timesFavorite: 0, solutions: [], languages: [], level: 'EASY', tags: [] }
 
     component.listChallenges = [ch1, ch2, ch3];
 
