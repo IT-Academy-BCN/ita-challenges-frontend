@@ -433,7 +433,7 @@ describe('ChallengeService', () => {
       const mockTags1 = { results: [{ id_tag: 't1', tag_name: 'Tag1', tag_description: 'D1' }] }
       const mockTags2 = { results: [{ id_tag: 't2', tag_name: 'Tag2', tag_description: 'D2' }] }
 
-      service.fetchAndCacheAllTags()
+      service.fetchAndCacheAllTags().subscribe()
 
       // First call: Get languages
       const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
@@ -456,7 +456,7 @@ describe('ChallengeService', () => {
     })
 
     it('should handle empty languages list gracefully', () => {
-      service.fetchAndCacheAllTags()
+      service.fetchAndCacheAllTags().subscribe()
 
       const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
       langReq.flush({ results: [] })
@@ -466,7 +466,7 @@ describe('ChallengeService', () => {
 
     it('should handle error in language fetching', () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-      service.fetchAndCacheAllTags()
+      service.fetchAndCacheAllTags().subscribe()
 
       const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
       langReq.error(new ProgressEvent('error'))

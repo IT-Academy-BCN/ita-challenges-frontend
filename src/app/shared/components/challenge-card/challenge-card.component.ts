@@ -93,4 +93,9 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+
+  toggleBookmark(event: MouseEvent): void {
+  event.stopPropagation()
+  // Logic will be implemented in #205
+}
 }

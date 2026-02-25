@@ -1,4 +1,10 @@
 <div class="challenge-component" *ngIf="challenge">
+    <p>
+       <a class="link back-link" (click)="onCancel()">
+            <img class="arrow-left" src="assets/img/icon/arrow_left.svg" alt="arrow-left">{{ "modules.challenge.backTo" | translate }}
+        </a>
+    </p>
+
     <app-challenge-header
         [title]="title"
         [creation_date]="creation_date"
