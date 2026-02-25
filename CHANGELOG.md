@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+### [ita-challenges-frontend-3.30.0-RELEASE] - 2026-02-20
+### Added
+- Restyled challenge detail page with card layout, repositioned breadcrumb outside header card, and moved difficulty indicator to stats row
+
+### [ita-challenges-frontend-3.29.0-RELEASE] - 2026-02-23
+### Added
+- tagMap() signal to challenge service.
+
+### Changed
+- resolvedTags() method to challenge card component.
+- tagIds input to challenge card component now display correctly.
+
 ### [ita-challenges-frontend-3.28.0-RELEASE] - 2026-02-19
 ### Added
 - Bookmark button UI in challenge card component
@@ -17,25 +30,6 @@ and this project adheres to
 ### Changed
 - Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
 
-### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-23
-
-### Fixed
-- Enabled closing the Challenge Filters modal via `Escape` key and backdrop click. GitHub [#761], PR [#762].
-
-### [ita-challenges-frontend-3.27.1-RELEASE] - 2026-02-21
-
-### Fixed
-- Fixed environment.ts and environment.prod.ts route for solution submission and retrieval.
-
-
-### [ita-challenges-frontend-3.27.3-RELEASE] - 2026-02-20
-### Added
-- Restyled challenge detail page with card layout, repositioned breadcrumb outside header card, and moved difficulty indicator to stats row
-
-### [ita-challenges-frontend-3.27.3-RELEASE] - 2026-02-23
-
-### Changed
-- Display related challenge cards in a responsive grid layout (3 columns on desktop, 1 column on mobile).
 ### [ita-challenges-frontend-3.27.2-RELEASE] - 2026-02-23
 
 ### Fixed
