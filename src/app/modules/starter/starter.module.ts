@@ -6,7 +6,6 @@ import { StarterComponent } from './components/starter/starter.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { SharedComponentsModule } from '../../shared/components/shared-components.module'
-import { StarterFiltersComponent } from './components/starter-filters/starter-filters.component'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { ModalsModule } from '../modals/modals.module'
@@ -20,7 +19,6 @@ import { ChallengeListFiltersComponent } from './components/challenge-list-filte
 @NgModule({
   declarations: [
     StarterComponent,
-    StarterFiltersComponent,
     SortSelectComponent,
     LanguageFilterComponent,
     ChallengeListFiltersComponent
