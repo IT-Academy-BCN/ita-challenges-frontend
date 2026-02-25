@@ -5,7 +5,7 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 <<<<<<< feature/185-show-tags-on-card
-### [ita-challenges-frontend-3.28.0-RELEASE] - 2026-02-23
+### [ita-challenges-frontend-3.29.0-RELEASE] - 2026-02-23
 ### Added
 - tagMap() signal to challenge service.
 
