@@ -1,33 +1,28 @@
   <div class="row w-100">
   <div class="col-12 col-md-8">
-    <p>
-       <a class="link" (click)="onCancel()">
-              <span class="backTo"><img class="arrow-left" src="assets\img\icon\arrow_left.svg" alt="arrow-left" fill="currentColor">{{ "modules.challenge.backTo" | translate }}</span>
-          </a>
-    </p>
     <div class="d-flex align-items-start">
-      <div class="difficulty">
-        <div class="difficulty d-flex" *ngIf="level == 'EASY'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-        </div>
-        <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-off.svg" alt="Difficulty">
-        </div>
-        <div class="difficulty d-flex" *ngIf="level == 'HARD'">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-          <img src="assets/img/icon/difficulty-on.svg" alt="Difficulty">
-        </div>
-      </div>
       <div class="title">
         <h3 class="ms-2">{{title | dynamicTranslate}}</h3>
       </div>
     </div>
     <div class="stats" *ngIf="!challengeStarted">
+      <div class="difficulty">
+        <div class="difficulty d-flex" *ngIf="level == 'EASY'">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off-gray.svg" alt="Difficulty">
+        </div>
+        <div class="difficulty d-flex" *ngIf="level == 'MEDIUM'">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-off-gray.svg" alt="Difficulty">
+        </div>
+        <div class="difficulty d-flex" *ngIf="level == 'HARD'">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+          <img src="assets/img/icon/difficulty-on-gray.svg" alt="Difficulty">
+        </div>
+      </div>
       <span class="stat" [ngbTooltip]="'tooltips.startedFinished' | translate">
         <img src="assets/img/icon/times-performed.svg" alt="Times performed">
         <span>{{timesSolved}}</span>
