@@ -12,10 +12,37 @@ class TranslateLoaderStub implements TranslateLoader {
   }
 }
 
+function getMockService() {
+  return TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
+}
+
+function tagResponse(results: { id_tag: string; tag_name: string; tag_description: string }[]) {
+  return of({ offset: 0, limit: 0, count: results.length, results })
+}
+
+function configureMockService(
+  languages: { id_language: string; language_name: string }[],
+  tagsFn: jest.Mock
+) {
+  const svc = getMockService()
+  svc.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: languages }))
+  svc.getTagsByLanguage = tagsFn
+  return svc
+}
+
 describe('ChallengeFiltersTriggerComponent', () => {
   const modalStub = {
     open: jasmine.createSpy('open'),
     dismissAll: jasmine.createSpy('dismissAll')
+  }
+
+  const emptyFilters = { languages: [] as string[], levels: [] as string[], progress: [] as SolutionStatus[], tags: [] as string[] }
+
+  function createComponent(filters = emptyFilters) {
+    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
+    const component = fixture.componentInstance
+    component.initialFilters = { ...filters }
+    return { fixture, component }
   }
 
   beforeEach(async () => {
@@ -34,10 +61,7 @@ describe('ChallengeFiltersTriggerComponent', () => {
       ],
 
       providers: [
-        {
-          provide: NgbModal,
-          useValue: modalStub
-        },
+        { provide: NgbModal, useValue: modalStub },
         {
           provide: ChallengeFormService,
           useValue: {
@@ -50,26 +74,20 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should create', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
+    const { component } = createComponent()
     expect(component).toBeTruthy()
   })
 
   it('should emit subset filters (levels/tags/progress) on apply', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = {
+    const { component } = createComponent({
       languages: ['ts', 'js'],
       levels: ['EASY', 'HARD'],
       tags: ['arrays', 'dp'],
       progress: [SolutionStatus.NOT_STARTED, SolutionStatus.IN_PROGRESS]
-    }
+    })
 
     let emittedValue: unknown
-    component.filtersApplied.subscribe((value) => {
-      emittedValue = value
-    })
+    component.filtersApplied.subscribe((value) => { emittedValue = value })
 
     component.open()
     component.onApply()
@@ -79,41 +97,29 @@ describe('ChallengeFiltersTriggerComponent', () => {
       tags: ['arrays', 'dp'],
       progress: [SolutionStatus.NOT_STARTED, SolutionStatus.IN_PROGRESS]
     })
-
     expect((emittedValue as any).languages).toBeUndefined()
   })
 
   it('should toggle difficulty levels in draft state', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { component } = createComponent()
     component.open()
 
     expect(component.isLevelSelected('EASY')).toBe(false)
-
     component.toggleLevel('EASY')
     expect(component.isLevelSelected('EASY')).toBe(true)
-
     component.toggleLevel('EASY')
     expect(component.isLevelSelected('EASY')).toBe(false)
   })
 
   it('should toggle progress statuses in draft state and emit them on apply', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { component } = createComponent()
     component.open()
 
     component.toggleProgress(SolutionStatus.IN_PROGRESS)
     component.toggleProgress(SolutionStatus.ENDED)
 
     let emittedValue: unknown
-    component.filtersApplied.subscribe((value) => {
-      emittedValue = value
-    })
-
+    component.filtersApplied.subscribe((value) => { emittedValue = value })
     component.onApply()
 
     expect(emittedValue).toEqual({
@@ -124,10 +130,7 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should open modal with apply-only config', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { fixture, component } = createComponent()
     fixture.detectChanges()
 
     ;(component as any).modalService = modalStub
@@ -146,14 +149,10 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should toggle tags in draft state', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { component } = createComponent()
     component.open()
 
     expect(component.isTagSelected('tag-id-1')).toBe(false)
-
     component.toggleTag('tag-id-1')
     expect(component.isTagSelected('tag-id-1')).toBe(true)
 
@@ -166,34 +165,21 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should include selected tags in emitted filters on apply', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { component } = createComponent()
     component.open()
 
     component.toggleTag('tag-id-1')
     component.toggleTag('tag-id-2')
 
     let emittedValue: unknown
-    component.filtersApplied.subscribe((value) => {
-      emittedValue = value
-    })
-
+    component.filtersApplied.subscribe((value) => { emittedValue = value })
     component.onApply()
 
-    expect(emittedValue).toEqual({
-      levels: [],
-      tags: ['tag-id-1', 'tag-id-2'],
-      progress: []
-    })
+    expect(emittedValue).toEqual({ levels: [], tags: ['tag-id-1', 'tag-id-2'], progress: [] })
   })
 
   it('should pre-select tags from initialFilters when modal opens', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: ['tag-id-1', 'tag-id-3'] }
+    const { component } = createComponent({ ...emptyFilters, tags: ['tag-id-1', 'tag-id-3'] })
     component.open()
 
     expect(component.isTagSelected('tag-id-1')).toBe(true)
@@ -202,28 +188,16 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should fetch tags and populate displayTags with language names', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [
-      { id_language: 'lang-1', language_name: 'Javascript' },
-      { id_language: 'lang-2', language_name: 'Python' }
-    ]}))
-    mockService.getTagsByLanguage = jest.fn().mockImplementation((langId: string) => {
-      if (langId === 'lang-1') {
-        return of({ offset: 0, limit: 0, count: 2, results: [
-          { id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' },
-          { id_tag: 'tag-2', tag_name: 'Loops', tag_description: '' }
-        ]})
-      }
-      return of({ offset: 0, limit: 0, count: 1, results: [
-        { id_tag: 'tag-3', tag_name: 'Decorators', tag_description: '' }
-      ]})
-    })
+    configureMockService(
+      [{ id_language: 'lang-1', language_name: 'Javascript' }, { id_language: 'lang-2', language_name: 'Python' }],
+      jest.fn().mockImplementation((langId: string) =>
+        langId === 'lang-1'
+          ? tagResponse([{ id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' }, { id_tag: 'tag-2', tag_name: 'Loops', tag_description: '' }])
+          : tagResponse([{ id_tag: 'tag-3', tag_name: 'Decorators', tag_description: '' }])
+      )
+    )
 
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['lang-1', 'lang-2'], levels: [], progress: [], tags: [] }
-
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1', 'lang-2'] })
     component.open()
 
     expect(component.displayTags.length).toBe(2)
@@ -238,27 +212,14 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should fall back to language ID when language name is not found', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [] }))
-    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
-      of({ offset: 0, limit: 0, count: 0, results: [] })
-    )
-
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['unknown-lang-id'], levels: [], progress: [], tags: [] }
-
+    const { component } = createComponent({ ...emptyFilters, languages: ['unknown-lang-id'] })
     component.open()
 
     expect(component.displayTags[0].language).toBe('unknown-lang-id')
   })
 
   it('should return correct selectedFiltersCount', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { component } = createComponent()
     expect(component.selectedFiltersCount).toBe(0)
 
     component.initialFilters = { languages: ['lang-1'], levels: ['EASY', 'HARD'], progress: [SolutionStatus.IN_PROGRESS], tags: ['t1'] }
@@ -266,98 +227,71 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should return 0 selectedFiltersCount when tags is undefined', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
+    const { component } = createComponent()
     component.initialFilters = { languages: [], levels: ['EASY'], progress: [] } as any
     expect(component.selectedFiltersCount).toBe(1)
   })
 
   it('should dismiss modal on cancel', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
+    const { component } = createComponent()
     const dismissSpy = jasmine.createSpy('dismissAll')
     ;(component as any).modalService = { ...modalStub, dismissAll: dismissSpy }
 
     component.onCancel()
-
     expect(dismissSpy).toHaveBeenCalled()
   })
 
   it('should dismiss modal on apply', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
+    const { component } = createComponent()
     const dismissSpy = jasmine.createSpy('dismissAll')
     ;(component as any).modalService = { ...modalStub, dismissAll: dismissSpy }
 
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
     component.open()
     dismissSpy.calls.reset()
     component.onApply()
-
     expect(dismissSpy).toHaveBeenCalledTimes(1)
   })
 
   it('should use cached tags on second fetchTags call', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [
-      { id_language: 'lang-1', language_name: 'Javascript' }
-    ]}))
-    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
-      of({ offset: 0, limit: 0, count: 1, results: [
-        { id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' }
-      ]})
+    const svc = configureMockService(
+      [{ id_language: 'lang-1', language_name: 'Javascript' }],
+      jest.fn().mockReturnValue(tagResponse([{ id_tag: 'tag-1', tag_name: 'Arrays', tag_description: '' }]))
     )
 
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['lang-1'], levels: [], progress: [], tags: [] }
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1'] })
 
     component.open()
     expect(component.displayTags.length).toBe(1)
-    expect(mockService.getTagsByLanguage).toHaveBeenCalledTimes(1)
+    expect(svc.getTagsByLanguage).toHaveBeenCalledTimes(1)
 
     component.open()
     expect(component.displayTags.length).toBe(1)
-    expect(mockService.getTagsByLanguage).toHaveBeenCalledTimes(1)
+    expect(svc.getTagsByLanguage).toHaveBeenCalledTimes(1)
   })
 
   it('should use cached language names on second fetchTags call', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: [
-      { id_language: 'lang-1', language_name: 'Javascript' }
-    ]}))
-    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
-      of({ offset: 0, limit: 0, count: 0, results: [] })
+    const svc = configureMockService(
+      [{ id_language: 'lang-1', language_name: 'Javascript' }],
+      jest.fn().mockReturnValue(tagResponse([]))
     )
 
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['lang-1'], levels: [], progress: [], tags: [] }
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1'] })
 
     component.open()
-    expect(mockService.getAllLangugesCreateForm).toHaveBeenCalledTimes(1)
+    expect(svc.getAllLangugesCreateForm).toHaveBeenCalledTimes(1)
 
     component.open()
-    expect(mockService.getAllLangugesCreateForm).toHaveBeenCalledTimes(1)
+    expect(svc.getAllLangugesCreateForm).toHaveBeenCalledTimes(1)
   })
 
   it('should still fetch tags when loadLanguageNames API fails', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(throwError(() => new Error('API error')))
-    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
-      of({ offset: 0, limit: 0, count: 1, results: [
-        { id_tag: 'tag-1', tag_name: 'Loops', tag_description: '' }
-      ]})
+    configureMockService(
+      [],
+      jest.fn().mockReturnValue(tagResponse([{ id_tag: 'tag-1', tag_name: 'Loops', tag_description: '' }]))
     )
+    getMockService().getAllLangugesCreateForm = jest.fn().mockReturnValue(throwError(() => new Error('API error')))
 
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['lang-1'], levels: [], progress: [], tags: [] }
-
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1'] })
     component.open()
 
     expect(component.displayTags.length).toBe(1)
@@ -366,17 +300,11 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should handle null results in API response gracefully', () => {
-    const mockService = TestBed.inject(ChallengeFormService) as jest.Mocked<ChallengeFormService>
-    mockService.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: null }))
-    mockService.getTagsByLanguage = jest.fn().mockReturnValue(
-      of({ offset: 0, limit: 0, count: 0, results: null })
-    )
+    const svc = getMockService()
+    svc.getAllLangugesCreateForm = jest.fn().mockReturnValue(of({ results: null }))
+    svc.getTagsByLanguage = jest.fn().mockReturnValue(of({ offset: 0, limit: 0, count: 0, results: null }))
 
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: ['lang-1'], levels: [], progress: [], tags: [] }
-
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1'] })
     component.open()
 
     expect(component.displayTags.length).toBe(1)
@@ -385,11 +313,8 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should clear displayTags before fetching new ones', () => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
+    const { component } = createComponent({ ...emptyFilters, languages: ['lang-1'] })
     component.displayTags = [{ language: 'Old', tags: [] }]
-    component.initialFilters = { languages: ['lang-1'], levels: [], progress: [], tags: [] }
 
     component.fetchTags()
 
@@ -397,22 +322,17 @@ describe('ChallengeFiltersTriggerComponent', () => {
   })
 
   it('should position the dialog next to the trigger button after open', fakeAsync(() => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { fixture, component } = createComponent()
 
     const triggerEl = document.createElement('button')
     ;(triggerEl as any).getBoundingClientRect = () => ({ bottom: 100, right: 200 } as any)
 
     const dialogEl = document.createElement('div') as any
-
-    const querySpy = spyOn(document, 'querySelector').and.callFake((selector: string) => {
-      return selector === '.challenge-filters-trigger-modal .modal-dialog' ? (dialogEl as any) : null
-    })
+    const querySpy = spyOn(document, 'querySelector').and.callFake((selector: string) =>
+      selector === '.challenge-filters-trigger-modal .modal-dialog' ? (dialogEl as any) : null
+    )
 
     fixture.detectChanges()
-
     ;(component as any).modalService = modalStub
     ;(component as any).modalTemplate = {} as any
     ;(component as any).triggerBtn = { nativeElement: triggerEl }
@@ -429,10 +349,7 @@ describe('ChallengeFiltersTriggerComponent', () => {
   }))
 
   it('should not apply positioning styles when triggerBtn is missing', fakeAsync(() => {
-    const fixture = TestBed.createComponent(ChallengeFiltersTriggerComponent)
-    const component = fixture.componentInstance
-
-    component.initialFilters = { languages: [], levels: [], progress: [], tags: [] }
+    const { fixture, component } = createComponent()
     fixture.detectChanges()
 
     const dialogEl = document.createElement('div')
