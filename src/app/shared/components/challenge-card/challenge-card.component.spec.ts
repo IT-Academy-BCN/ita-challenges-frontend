@@ -208,4 +208,13 @@ describe('ChallengeCardComponent', () => {
     expect(consoleSpy).toHaveBeenCalled()
     consoleSpy.mockRestore()
   })
+
+  it('toggleBookmark: should prevent event propagation', () => {
+  const event = new MouseEvent('click');
+  const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
+  
+  component.toggleBookmark(event);
+  
+  expect(stopPropagationSpy).toHaveBeenCalled();
+});
 })
