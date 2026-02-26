@@ -14,7 +14,6 @@ import { SolutionService } from 'src/app/services/solution.service'
 import { UserSolution } from 'src/app/models/user-solution.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum';
 
-
 @Component({
   selector: 'app-challenge',
   templateUrl: './challenge.component.html',
@@ -78,9 +77,6 @@ export class ChallengeComponent implements OnInit, OnDestroy {
         this.loadUserSolutionStatus(userId);
         this.loadSolutionContent();
       },
-      error: (err) => {
-        console.error('[ChallengeComponent] Error fetching user ID:', err);
-      }
     });
   }
 loadUserBookmarks(userId: string): void {
@@ -156,8 +152,9 @@ loadUserSolutionStatus(userId: string): void {
   }
 
   loadMasterData(id: string): void {
-    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe((challenge) => {
-      this.challenge = new Challenge(challenge)
+    this.challengeSubs$ = this.challengeService.getChallengeById(id).subscribe({
+      next: (challengeData) => {
+      this.challenge = new Challenge(challengeData)
       this.title = this.challenge.challenge_title
       this.creation_date = this.challenge.creation_date
       this.level = this.challenge.level
@@ -169,8 +166,10 @@ loadUserSolutionStatus(userId: string): void {
       this.languages = this.challenge.languages
       this.timesSolved = this.challenge.timesSolved
       this.languageId = this.languages[0]?.id_language ?? ''
+    },
     })
   }
+
   onChallengeStart(): void {
     this.challengeStarted = true;
     this.isEditorChallengeVisible = true;
@@ -185,6 +184,11 @@ loadUserSolutionStatus(userId: string): void {
     }
     this.loadSolutionContent();
   }
+
+  onCancel(): void {
+  void this.router.navigate(['/ita-challenge/challenges'])
+  }
+
   onEditorSolutionChanged(newText: string): void {
     this.solutionText = newText;
 
@@ -216,5 +220,4 @@ loadUserSolutionStatus(userId: string): void {
     })
   }
 }
-
 }

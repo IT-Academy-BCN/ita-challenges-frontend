@@ -62,6 +62,7 @@ export class StarterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.challengeService.fetchAndCacheAllTags().subscribe()
     this.getChallenge()
 
     // Listen for refresh notifications (e.g., after create)
@@ -212,7 +213,8 @@ export class StarterComponent implements OnInit {
         this.solutionStatusMap = solutions.reduce<Record<string, SolutionStatus>>((statusMap, userSolution) => {
           statusMap[userSolution.uuid_challenge] = userSolution.status
           return statusMap
-        }, {})
+        }, {});
+        this.cd.detectChanges();
       },
       error: (err) => {
         console.error('Error fetching user solutions:', err)
