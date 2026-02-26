@@ -28,6 +28,7 @@
           [isFavorite]="isFavoriteChallenge(challenge.id_challenge)"
           [isBookmarked]="isBookmarkedChallenge(challenge.id_challenge)"
           [solutionStatus]="solutionStatusMap[challenge.id_challenge]"
+          [tagIds]="challenge.tags"
         >
         </app-challenge-card>
       </ng-container>

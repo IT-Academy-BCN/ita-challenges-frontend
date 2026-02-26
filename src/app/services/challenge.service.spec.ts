@@ -322,7 +322,8 @@ describe('ChallengeService', () => {
       languages: [],
       solutions: [],
       timesSolved: 1,
-      bookmarked: false
+      bookmarked: false,
+      tags: []
     };
 
     it('should update a challenge successfully', () => {
@@ -421,4 +422,58 @@ describe('ChallengeService', () => {
       req.flush(null, { status: 404, statusText: 'Not Found' });
     });
   });
+
+  describe('tagMap signal and fetchAndCacheAllTags', () => {
+    it('should have an empty initial tagMap', () => {
+      expect(service.tagMap()).toEqual({})
+    })
+
+    it('should fetch languages and then tags per language to populate tagMap', () => {
+      const mockLanguages = { results: [{ id_language: 'lang1' }, { id_language: 'lang2' }] }
+      const mockTags1 = { results: [{ id_tag: 't1', tag_name: 'Tag1', tag_description: 'D1' }] }
+      const mockTags2 = { results: [{ id_tag: 't2', tag_name: 'Tag2', tag_description: 'D2' }] }
+
+      service.fetchAndCacheAllTags().subscribe()
+
+      // First call: Get languages
+      const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
+      expect(langReq.request.method).toBe('GET')
+      langReq.flush(mockLanguages)
+
+      // Subsequent calls: Get tags for each language
+      const tagsReq1 = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/lang1`)
+      expect(tagsReq1.request.method).toBe('GET')
+      tagsReq1.flush(mockTags1)
+
+      const tagsReq2 = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ITA_CHALLENGE_TAGS}/lang2`)
+      expect(tagsReq2.request.method).toBe('GET')
+      tagsReq2.flush(mockTags2)
+
+      // Verify tagMap is updated
+      const finalMap = service.tagMap()
+      expect(finalMap['t1']).toEqual(mockTags1.results[0])
+      expect(finalMap['t2']).toEqual(mockTags2.results[0])
+    })
+
+    it('should handle empty languages list gracefully', () => {
+      service.fetchAndCacheAllTags().subscribe()
+
+      const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
+      langReq.flush({ results: [] })
+
+      expect(service.tagMap()).toEqual({})
+    })
+
+    it('should handle error in language fetching', () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+      service.fetchAndCacheAllTags().subscribe()
+
+      const langReq = httpMock.expectOne(`${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_LANGUAGE_URL}`)
+      langReq.error(new ProgressEvent('error'))
+
+      expect(service.tagMap()).toEqual({})
+      expect(consoleSpy).toHaveBeenCalled()
+      consoleSpy.mockRestore()
+    })
+  })
 })

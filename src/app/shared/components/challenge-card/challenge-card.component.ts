@@ -1,5 +1,4 @@
-import { Component, Input, inject, OnInit } from '@angular/core'
-import { StarterService } from '../../../services/starter.service'
+import { Component, Input, inject, OnInit, computed, input } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../../../services/challenge.service'
 import { AuthService } from 'src/app/services/auth.service'
@@ -14,13 +13,18 @@ import { Tag } from 'src/app/models/tag-response.interface'
   providers: []
 })
 export class ChallengeCardComponent implements OnInit {
-  private readonly starterService = inject(StarterService)
   private readonly translate = inject(TranslateService)
   private readonly challengeService = inject(ChallengeService)
   private readonly authService = inject(AuthService)
   public userRole: string | null = null
-  public SolutionStatus = SolutionStatus;
-  public tags: Tag[] = [];
+  public SolutionStatus = SolutionStatus
+
+  public readonly resolvedTags = computed(() => {
+    const dictionary = this.challengeService.tagMap()
+    return this.tagIds()
+      .map(id => dictionary[id])
+      .filter((tag): tag is Tag => tag !== undefined)
+  })
 
 
   @Input() title: string = ''
@@ -30,30 +34,22 @@ export class ChallengeCardComponent implements OnInit {
   @Input() level = ''
   @Input() popularity!: number
   @Input() id = ''
+  public readonly tagIds = input<string[]>([])
   @Input() favorites_count: number = 0
   @Input() isFavorite: boolean = false
   @Input() isBookmarked: boolean = false
   @Input() bookmarks_count: number = 0
   @Input() challenge_timesSolved: number = 0
-  @Input() solutionStatus?: SolutionStatus;
+  @Input() solutionStatus?: SolutionStatus
 
   ngOnInit(): void {
-    this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
-      this.userRole = role;
-    });
 
-    this.challengeService.getChallengeTags(this.id).subscribe({
-      next: (response) => {
-        this.tags = Array.isArray(response) ? response : (response?.results ?? [])
-      },
-      error: (err) => {
-        console.error('Error fetching challenge tags:', err)
-        this.tags = []
-      }
-    });
+    this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
+      this.userRole = role
+    })
   }
 
-  get descriptionPreview(): string {
+  get descriptionPreview (): string {
     const raw = this.description ?? ''
 
     let text = raw
@@ -67,11 +63,11 @@ export class ChallengeCardComponent implements OnInit {
     return text.length > maxLen ? `${text.slice(0, maxLen - 1)}…` : text
   }
 
-  get currentLang(): string {
+  get currentLang (): string {
     return this.translate.currentLang
   }
 
-  toggleFavorite(event: MouseEvent): void {
+  toggleFavorite (event: MouseEvent): void {
     event.stopPropagation()
     if (!this.authService.isUserLoggedIn()) {
       return
@@ -98,4 +94,9 @@ export class ChallengeCardComponent implements OnInit {
       })
     }
   }
+
+  toggleBookmark(event: MouseEvent): void {
+  event.stopPropagation()
+  // Logic will be implemented in #205
+}
 }

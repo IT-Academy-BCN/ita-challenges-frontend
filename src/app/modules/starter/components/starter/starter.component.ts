@@ -62,6 +62,7 @@ export class StarterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.challengeService.fetchAndCacheAllTags().subscribe()
     this.getChallenge()
 
     // Listen for refresh notifications (e.g., after create)
