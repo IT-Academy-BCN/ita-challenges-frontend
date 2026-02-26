@@ -1,5 +1,6 @@
 <div class="starter">
   <header id="challenge-filters">
+    <h2 class=""> {{ 'modules.challenge.header.title' | translate }}</h2>
     <app-challenge-list-filters
       [initialFilters]="filters"
       (allFiltersApplied)="getChallengeFilters($event)"
