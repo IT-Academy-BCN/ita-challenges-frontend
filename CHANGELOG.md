@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [itachallenge-challenge-3.33.0-RELEASE] - 2026-02-22
+
+### Added
+- Bookmark toggle functionality in challenge card component
+
 ### [ita-challenges-frontend-3.32.1-RELEASE] - 2026-03-05
 
 ### Removed
