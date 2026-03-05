@@ -43,7 +43,6 @@ export class ChallengeCardComponent implements OnInit {
   @Input() solutionStatus?: SolutionStatus
 
   ngOnInit(): void {
-
     this.authService.getUserRole().pipe(take(1)).subscribe((role) => {
       this.userRole = role
     })
