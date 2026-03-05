@@ -3,14 +3,13 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { Language } from "src/app/models/language.model";
 import { ChallengeFormService } from "src/app/services/challenge-form.service";
 
-
-
 export const mockLanguages: Language[] = [
   { id_language: "1", language_name: "JavaScript" },
   { id_language: "2", language_name: "Python" },
   { id_language: "3", language_name: "Java" },
   { id_language: "4", language_name: "PHP" },
 ];
+
 @Component({
   selector: "app-language-filter",
   templateUrl: "./language-filter.component.html",
@@ -60,9 +59,9 @@ export class LanguageFilterComponent implements OnInit {
     });
     const form = this.fb.group(controls);
     form.valueChanges.subscribe(() => {
-
       this.emitSelectedLanguages(form);
     });
+
     
     return form;
   }
@@ -74,4 +73,5 @@ export class LanguageFilterComponent implements OnInit {
     
     this.languageSelected.emit(selectedLanguages);
   }
+
 }
