@@ -3,10 +3,13 @@ import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewCh
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateModule } from '@ngx-translate/core'
 import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
+import { Tag } from 'src/app/models/tag-response.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
+import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 type Level = NonNullable<FilterChallenge['levels']>[number]
+type LanguageTags = { language: string; tags: Tag[] }
 
 @Component({
   selector: 'app-challenge-filters-trigger',
@@ -17,8 +20,13 @@ type Level = NonNullable<FilterChallenge['levels']>[number]
 })
 
 export class ChallengeFiltersTriggerComponent {
-
+  private readonly challengeFormService = inject(ChallengeFormService)
   protected readonly SolutionStatus = SolutionStatus
+
+  displayTags: LanguageTags[] = []
+  private readonly tagsByLanguageCache: Record<string, Tag[]> = {}
+  private readonly languageNameCache: Record<string, string> = {}
+
   @Input() initialFilters: FilterChallenge = { languages: [], levels: [], progress: [], tags: [] }
   @Output() filtersApplied = new EventEmitter<ModalFilters>()
   @ViewChild('modal') private readonly modalTemplate!: TemplateRef<unknown>
@@ -57,6 +65,58 @@ export class ChallengeFiltersTriggerComponent {
       progress: this.toggleInArray(this.draftFilters.progress, status)
     }
   }
+  
+  isTagSelected(tag: string): boolean {
+    return (this.draftFilters.tags ?? []).includes(tag)
+  }
+
+  toggleTag(tag: string): void {
+    this.draftFilters = {
+      ...this.draftFilters,
+      tags: this.toggleInArray(this.draftFilters.tags ?? [], tag)
+    }
+  }
+
+  fetchTags(): void {
+    this.displayTags = []
+    this.loadLanguageNames(() => {
+      for (const language of this.initialFilters.languages) {
+        if (this.tagsByLanguageCache[language]) {
+          this.displayTags.push({
+            language: this.languageNameCache[language] ?? language,
+            tags: this.tagsByLanguageCache[language]
+          })
+        } else {
+          this.challengeFormService.getTagsByLanguage(language).subscribe({
+            next: (res) => {
+              const tags = res.results ?? []
+              this.tagsByLanguageCache[language] = tags
+              this.displayTags.push({
+                language: this.languageNameCache[language] ?? language,
+                tags
+              })
+            }
+          })
+        }
+      }
+    })
+  }
+
+  private loadLanguageNames(callback: () => void): void {
+    if (Object.keys(this.languageNameCache).length > 0) {
+      callback()
+      return
+    }
+    this.challengeFormService.getAllLangugesCreateForm().subscribe({
+      next: (res) => {
+        (res.results ?? []).forEach((lang: { id_language: string; language_name: string }) => {
+          this.languageNameCache[lang.id_language] = lang.language_name
+        })
+        callback()
+      },
+      error: () => callback()
+    })
+  }
 
   open(): void {
     this.draftFilters = {
@@ -64,6 +124,8 @@ export class ChallengeFiltersTriggerComponent {
       tags: [...(this.initialFilters.tags ?? [])],
       progress: [...this.initialFilters.progress]
     }
+
+    this.fetchTags()
 
     this.modalService.open(this.modalTemplate, {
       windowClass: 'challenge-filters-trigger-modal',

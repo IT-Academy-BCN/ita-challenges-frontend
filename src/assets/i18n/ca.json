@@ -44,7 +44,7 @@
         "challenge": {
             "backTo":"Tornar a reptes",
             "header": {
-                "title": "Reptes",
+                "title": "Proves tècniques",
                 "section":"Detall",
                 "button": "Iniciar repte",
                 "toolTip": "Inicia sessió per enviar la solució.",

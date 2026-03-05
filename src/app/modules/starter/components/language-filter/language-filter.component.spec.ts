@@ -14,7 +14,7 @@ const mockLanguages: Language[] = mockLanguagesImported
 
   const apiLanguages: Language[] = [
     { id_language: '5', language_name: 'TypeScript' },
-    { id_language: '6', language_name: 'Go' },
+    { id_language: '6', language_name: 'C++' },
   ];
 
   beforeEach(async () => {
