@@ -44,7 +44,7 @@
         "challenge": {
             "backTo":"Back to challenges",
             "header": {
-                "title": "Challenges",
+                "title": "Tech Challenges",
                 "section":"Detail",
                 "button": "Start challenge",
                 "toolTip": "Log in to submit the solution.",

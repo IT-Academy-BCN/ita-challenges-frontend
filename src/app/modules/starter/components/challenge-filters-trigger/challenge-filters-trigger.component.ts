@@ -6,7 +6,6 @@ import { type FilterChallenge } from 'src/app/models/filter-challenge.model'
 import { Tag } from 'src/app/models/tag-response.interface'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
-import { ChallengeService } from 'src/app/services/challenge.service'
 
 type ModalFilters = Pick<FilterChallenge, 'levels' | 'tags' | 'progress'>
 type Level = NonNullable<FilterChallenge['levels']>[number]
@@ -21,8 +20,6 @@ type LanguageTags = { language: string; tags: Tag[] }
 })
 
 export class ChallengeFiltersTriggerComponent {
-  private readonly challengeService = inject(ChallengeService)
-  private readonly tagMap = this.challengeService.tagMap
   private readonly challengeFormService = inject(ChallengeFormService)
   protected readonly SolutionStatus = SolutionStatus
 

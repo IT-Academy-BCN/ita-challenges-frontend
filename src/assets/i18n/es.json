@@ -44,7 +44,7 @@
         "challenge": {
             "backTo":"Volver a retos",
             "header": {
-                "title": "Retos",
+                "title": "Pruebas técnicas",
                 "section":"Detalle",
                 "button": "Iniciar reto",
                 "toolTip": "Inicia sesión para enviar la solución.",

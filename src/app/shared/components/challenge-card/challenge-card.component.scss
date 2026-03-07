@@ -55,6 +55,16 @@
   flex-direction: column;
   gap: 1rem;
 
+}
+
+.challenge-list-element-content {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
   .title {
     display: flex;
     flex-direction: column;
