@@ -146,6 +146,7 @@
                 "closeAriaLabel": "Close",
                 "difficultyTitle": "Difficulty",
                 "tagsTitle": "Tags",
+                "noTagsFound": "No tags found, please select at least one language first",
                 "searchTagsPlaceholder": "Search tags",
                 "statusTitle": "Status",
                 "statusNotStarted": "New",
