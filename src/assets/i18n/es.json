@@ -104,7 +104,10 @@
                 "hard": "Difícil",
                 "tags": "Tags",
                 "tagsRequired": "Selecciona al menos una etiqueta",
-                "dangerZone": "Zona de peligro"
+                "dangerZone": "Zona de peligro",
+                "deleteChallenge": "Eliminar reto",
+                "deleteThisChallenge": "Eliminar este reto",
+                "deleteChallengeMsg": "Eliminar este reto es permanente y no se puede deshacer."
             },
              "bookmarksView":{
                 "bookmarksSaved": "Retos guardados",
