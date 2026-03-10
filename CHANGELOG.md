@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [ita-challenges-frontend-3.35.0-RELEASE] - 2026-03-07
+
+### Added
+- Applied danger zone UI into the challenge editing form with delete button.
+
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
 ### Added
