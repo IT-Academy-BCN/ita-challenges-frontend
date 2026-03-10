@@ -103,7 +103,8 @@
                 "medium": "Mitjana",
                 "hard": "Difícil",
                 "tags": "Etiquetes",
-                "tagsRequired": "Selecciona almenys una etiqueta"
+                "tagsRequired": "Selecciona almenys una etiqueta",
+                "dangerZone": "Zona de perill"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",

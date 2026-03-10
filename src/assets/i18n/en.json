@@ -103,7 +103,8 @@
                 "medium": "Medium",
                 "hard": "Hard",
                 "tags": "Tags",
-                "tagsRequired": "Select at least one tag"
+                "tagsRequired": "Select at least one tag",
+                "dangerZone": "Danger zone"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Saved challenges",

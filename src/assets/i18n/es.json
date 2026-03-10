@@ -103,7 +103,8 @@
                 "medium": "Media",
                 "hard": "Difícil",
                 "tags": "Tags",
-                "tagsRequired": "Selecciona al menos una etiqueta"
+                "tagsRequired": "Selecciona al menos una etiqueta",
+                "dangerZone": "Zona de peligro"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Retos guardados",
