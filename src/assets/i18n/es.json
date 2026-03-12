@@ -107,7 +107,12 @@
                 "dangerZone": "Zona de peligro",
                 "deleteChallenge": "Eliminar reto",
                 "deleteThisChallenge": "Eliminar este reto",
-                "deleteChallengeMsg": "Eliminar este reto es permanente y no se puede deshacer."
+                "deleteChallengeMsg": "Eliminar este reto es permanente y no se puede deshacer.",
+                "deleteConfirmMsg": "Esta acción no se puede deshacer. El reto será eliminado permanentemente.",
+                "deleteConfirmBtn": "Sí, eliminar",
+                "deleteSuccessTitle": "Reto eliminado",
+                "deleteSuccessMsg": "El reto ha sido eliminado correctamente.",
+                "deleteErrorTitle": "Error al eliminar el reto"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Retos guardados",
