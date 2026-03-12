@@ -14,7 +14,11 @@
   <main id="challenges-container" class="col-12 col-xl-8">
 
     <div id="challenges" #challenge>
-      <ng-container *ngIf="(challenges?.length || 0) > 0; else noResultsTpl">
+<ng-container *ngIf="loadingState === 'LOADING'" [ngTemplateOutlet]="loadingTpl"></ng-container>
+
+<ng-container *ngIf="loadingState === 'ERROR'" [ngTemplateOutlet]="errorTpl"></ng-container>
+
+      <ng-container *ngIf="(challenges?.length || 0) > 0 && loadingState === 'SUCCESS'" [ngTemplateOutlet]="noResultsTpl" >
         <app-challenge-card
           *ngFor="let challenge of challenges; let i = index"
           [title]="challenge.challenge_title | dynamicTranslate"
@@ -39,6 +43,22 @@
       <div class="text-center py-5">
         <p class="h5 text-muted">
           {{ 'modules.starter.empty.noResults' | translate }}
+        </p>
+      </div>
+    </ng-template>
+    <ng-template #loadingTpl>
+     <div class="text-center py-5">
+        <p class="h5 text-muted">
+          <!-- Provisional loading state message  -->
+          {{ this.loadingState }}
+        </p>
+      </div>
+    </ng-template>
+    <ng-template #errorTpl>
+      <div class="text-center py-5">
+        <p class="h5 text-muted">
+           <!-- Provisional loading state message  -->
+          {{ this.loadingState }}
         </p>
       </div>
     </ng-template>
