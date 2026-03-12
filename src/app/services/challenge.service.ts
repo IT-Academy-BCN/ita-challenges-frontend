@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject, signal } from '@angular/core'
 import { Observable, catchError, BehaviorSubject, of, throwError, forkJoin, switchMap } from 'rxjs'
-import { delay, map, tap } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
@@ -57,29 +57,6 @@ export class ChallengeService {
   }
 
   getChallengeById (id: string): Observable<Challenge> {
-    // TODO: REMOVE — dev mock (no backend available)
-    if (!environment.production) {
-      return of({
-        id_challenge: id,
-        challenge_title: { en: 'Mock Challenge Title', es: 'Título de Desafío Mock', ca: 'Títol de Desafiament Mock' },
-        level: 'MEDIUM',
-        creation_date: new Date(),
-        popularity: 42,
-        favorites_count: 5,
-        saved_count: 3,
-        timesFavorite: 5,
-        timesSolved: 10,
-        bookmarked: false,
-        detail: {
-          description: { en: 'This is a mock description for testing the edit form.', es: 'Esta es una descripción mock para probar el formulario de edición.', ca: 'Aquesta és una descripció mock per provar el formulari d\'edició.' },
-          examples: [],
-          notes: 'Some mock notes'
-        },
-        tags: ['tag-1', 'tag-2'],
-        languages: [{ id_language: 'lang-js', language_name: 'Javascript' }],
-        solutions: []
-      } as any)
-    }
     return this.http.get<Challenge>(
       `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${id}`,
       {
