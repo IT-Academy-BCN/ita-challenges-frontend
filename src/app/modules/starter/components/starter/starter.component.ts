@@ -11,7 +11,7 @@ import * as bootstrap from 'bootstrap'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
 import { SolutionStatus } from 'src/app/models/user-solution-status.enum'
-
+import { LoadingState } from 'src/app/shared/enums/loading-state.enum'
 @Component({
   selector: 'app-starter',
   templateUrl: './starter.component.html',
@@ -34,7 +34,6 @@ export class StarterComponent implements OnInit {
   filters: FilterChallenge = { languages: [], levels: [], progress: [] }
   sortBy: string = 'popularity'
   challenge = Challenge
-
   listChallenges: Challenge[] = []
 
   selectedSort: string = 'popularity'
@@ -48,6 +47,7 @@ export class StarterComponent implements OnInit {
   bookmarkedChallenges: string[] = []
   solutionStatusMap: Record<string, SolutionStatus> = {};
   private readonly solutionService = inject(SolutionService)
+  loadingState: LoadingState = LoadingState.LOADING
   constructor(
     @Inject(StarterService) private readonly starterService: StarterService,
     @Inject(TranslateService) readonly translate: TranslateService,
@@ -123,9 +123,11 @@ export class StarterComponent implements OnInit {
       next: (resp) => {
         this.listChallenges = resp.results
         this.refreshChallengeList()
+        this.loadingState = LoadingState.SUCCESS
       },
       error: (err) => {
         console.error('Error al obtener los desafíos:', err)
+        this.loadingState = LoadingState.ERROR
       }
     })
   }
