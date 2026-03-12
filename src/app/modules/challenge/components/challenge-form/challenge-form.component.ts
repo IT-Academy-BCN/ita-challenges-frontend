@@ -360,6 +360,20 @@ loadChallengeForEditing(): void {
   this.tagsControl.markAsTouched();
 }
 
+  // TODO: Replace simulated delete with this.challengeService.deleteChallenge() when merging with delete branch
+  onDeleteChallenge(): void {
+    this.commonModalService.deleteConfirmationModal().then((result) => {
+      if (result.isConfirmed) {
+        setTimeout(() => {
+          this.starterService.invalidateCacheAndRefresh();
+          this.commonModalService.deleteSuccessModal().then(() => {
+            void this.router.navigate(['/ita-challenge/challenges']);
+          });
+        }, 500);
+      }
+    });
+  }
+
   isTagSelected (idTag: string): boolean {
     return this.tagsControl.value.includes(idTag);
   }
