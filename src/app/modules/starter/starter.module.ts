@@ -15,7 +15,7 @@ import { ChallengeFormComponent } from "../challenge/components/challenge-form/c
 import { ChallengeFiltersTriggerComponent } from './components/challenge-filters-trigger/challenge-filters-trigger.component'
 import { LanguageFilterComponent } from './components/language-filter/language-filter.component'
 import { ChallengeListFiltersComponent } from './components/challenge-list-filters/challenge-list-filters.component'
-import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap";
+
 
 @NgModule({
   declarations: [
@@ -37,7 +37,6 @@ import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap";
     DynamicTranslatePipe,
     ChallengeFormComponent,
     ChallengeFiltersTriggerComponent,
-    NgbCarouselModule
 ],
   providers: [
     ChallengeService
