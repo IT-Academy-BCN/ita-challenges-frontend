@@ -9,6 +9,9 @@ and this project adheres to
 ### Added
 - enum for loading states management
 
+### Added
+- loading state management to starter component
+
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
 ### Added
