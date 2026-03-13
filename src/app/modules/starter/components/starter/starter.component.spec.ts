@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChallengeService } from 'src/app/services/challenge.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { type UserSolution } from 'src/app/models/user-solution.interface';
+import { LoadingState } from 'src/app/shared/enums/loading-state.enum';
 
 describe('StarterComponent', () => {
 
@@ -95,6 +96,7 @@ describe('StarterComponent', () => {
     component.listChallenges = [];
     component.filters = { languages: [], levels: [], progress: [] }
     component.sortBy = ''
+    component.loadingState = LoadingState.LOADING
   })
 
   it('should assign all challenges when listChallenges is populated.', () => {
@@ -218,6 +220,43 @@ describe('StarterComponent', () => {
   it('should call fetchAndCacheAllTags on init', () => {
     expect(fetchAndCacheAllTagsSpy).toHaveBeenCalled()
   })
+
+  it('should set loadingState to SUCCESS when getChallenge succeeds', () => {
+  spyOn(starterService, 'getAllChallenges').and.returnValue(
+    of({ results: mockChallenges$ })
+  );
+  
+  component.getChallenge();
+
+  expect(component.loadingState).toBe(LoadingState.SUCCESS);
+});
+
+it('should set loadingState to ERROR when getChallenge fails', () => {
+  spyOn(starterService, 'getAllChallenges').and.returnValue(
+    throwError(() => new Error('Network error'))
+  );
+
+  component.getChallenge();
+
+  expect(component.loadingState).toBe(LoadingState.ERROR);
+});
+
+it('should start with loadingState as LOADING before any fetch', () => {
+  // Reset to initial state explicitly
+  component.loadingState = LoadingState.LOADING;
+  expect(component.loadingState).toBe(LoadingState.LOADING);
+});
+
+it('should reset loadingState to LOADING then SUCCESS on refresh', () => {
+  spyOn(starterService, 'getAllChallenges').and.returnValue(
+    of({ results: mockChallenges$ })
+  );
+
+  component.loadingState = LoadingState.LOADING;
+  component.getChallenge();
+
+  expect(component.loadingState).toBe(LoadingState.SUCCESS);
+});
 });
 
 describe('Progress filtering behavior', () => {
