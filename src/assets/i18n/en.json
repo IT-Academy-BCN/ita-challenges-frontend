@@ -103,7 +103,11 @@
                 "medium": "Medium",
                 "hard": "Hard",
                 "tags": "Tags",
-                "tagsRequired": "Select at least one tag"
+                "tagsRequired": "Select at least one tag",
+                "dangerZone": "Danger zone",
+                "deleteChallenge": "Delete challenge",
+                "deleteThisChallenge": "Delete this challenge",
+                "deleteChallengeMsg": "Deleting this challenge is permanent and cannot be undone."
             },
              "bookmarksView":{
                 "bookmarksSaved": "Saved challenges",
