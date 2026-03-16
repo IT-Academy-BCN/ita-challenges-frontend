@@ -242,8 +242,6 @@ it('should set loadingState to ERROR when getChallenge fails', () => {
 });
 
 it('should start with loadingState as LOADING before any fetch', () => {
-  // Reset to initial state explicitly
-  component.loadingState = LoadingState.LOADING;
   expect(component.loadingState).toBe(LoadingState.LOADING);
 });
 
@@ -252,7 +250,7 @@ it('should reset loadingState to LOADING then SUCCESS on refresh', () => {
     of({ results: mockChallenges$ })
   );
 
-  component.loadingState = LoadingState.LOADING;
+  expect(component.loadingState).toBe(LoadingState.LOADING);
   component.getChallenge();
 
   expect(component.loadingState).toBe(LoadingState.SUCCESS);
