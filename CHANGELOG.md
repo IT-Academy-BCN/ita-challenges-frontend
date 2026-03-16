@@ -12,10 +12,7 @@ and this project adheres to
 ### [ita-challenges-frontend-3.35.0-RELEASE] - 2026-03-11
 
 ### Added
-- enum for loading states management
-
-### Added
-- loading state management to starter component
+- enum for loading states management and logic in starter component to manage loading states
 
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
