@@ -280,4 +280,21 @@ export class ChallengeService {
     )
   }
 
+  deleteChallenge(challengeId: string): Observable<any> {
+    const url = `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${challengeId}`
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.authService.getAuthHeaders()
+    };
+    return this.http.delete<any>(
+      url,
+      { headers }
+    ).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error deleting challenge:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }
