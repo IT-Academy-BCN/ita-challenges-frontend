@@ -476,4 +476,63 @@ describe('ChallengeService', () => {
       consoleSpy.mockRestore()
     })
   })
+  describe('deleteChallenge', () => {
+    const mockChallengeId = '12345';
+
+    it('should delete a challenge successfully', () => {
+      const mockResponse = { message: 'Challenge deleted successfully' };
+      service.deleteChallenge(mockChallengeId).subscribe(response => {
+        expect(response).toEqual(mockResponse);
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${mockChallengeId}`
+      );
+      expect(req.request.method).toBe('DELETE');
+      expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockResponse);
+    });
+
+    it('should handle HTTP errors on delete', () => {
+      const mockError = new HttpErrorResponse({
+        status: 500,
+        statusText: 'Internal Server Error'
+      });
+
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      service.deleteChallenge(mockChallengeId).subscribe({
+        next: () => fail('should have failed with 500 error'),
+        error: (error) => {
+          expect(error.status).toEqual(500);
+          expect(console.error).toHaveBeenCalledWith('Error deleting challenge:', mockError);
+        }
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${mockChallengeId}`
+      );
+      req.flush(null, mockError);
+    });
+    it('should handle delete with invalid challenge ID', () => {
+      const invalidId = 'invalid-id';
+      const mockError = new HttpErrorResponse({
+        status: 404,
+        statusText: 'Not Found'
+      });
+
+      service.deleteChallenge(invalidId).subscribe({
+        next: () => fail('should have failed with 404 error'),
+        error: (error) => {
+          expect(error.status).toEqual(404);
+        }
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.BACKEND_ITA_CHALLENGE_BASE_URL}${environment.BACKEND_ALL_CHALLENGES_URL}/${invalidId}`
+      );
+      req.flush(null, mockError);
+    });
+  })
 })

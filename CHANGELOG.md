@@ -4,9 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### UNRELEASED - 2026-03-16
+### [UNRELEASED] - 2026-03-16
 
-- Add a visually distinct "Danger Zone" section at the bottom of the editorChallenge component that contains the delete trigger, making it clear to the mentor that this area holds destructive actions.
+### Added
+- deleteChallenge() method in challenge service 
+ -visually distinct "Danger Zone" section at the bottom of the editorChallenge component that contains the delete trigger, making it clear to the mentor that this area holds destructive actions.
 
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
