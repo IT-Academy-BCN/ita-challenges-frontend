@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Inject, Injectable, inject, signal } from '@angular/core'
 import { Observable, catchError, BehaviorSubject, of, throwError, forkJoin, switchMap } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { delay, map, tap } from 'rxjs/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { type Itinerary } from '../models/itinerary.interface'
 import { environment } from 'src/environments/environment'
