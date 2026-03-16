@@ -103,7 +103,11 @@
                 "medium": "Mitjana",
                 "hard": "Difícil",
                 "tags": "Etiquetes",
-                "tagsRequired": "Selecciona almenys una etiqueta"
+                "tagsRequired": "Selecciona almenys una etiqueta",
+                "dangerZone": "Zona de perill",
+                "deleteChallenge": "Eliminar repte",
+                "deleteThisChallenge": "Eliminar aquest repte",
+                "deleteChallengeMsg": "L'eliminació d'aquest repte és permanent i no es pot desfer."
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",

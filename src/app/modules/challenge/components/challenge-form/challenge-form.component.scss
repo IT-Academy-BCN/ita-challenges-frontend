@@ -1,4 +1,4 @@
-
+@import 'src/styles/_colors.scss';
 
 :host {
   display: block;
@@ -51,11 +51,6 @@
   margin-bottom: 2rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
-}
-.section:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
 }
 
 .section h4 {
@@ -336,4 +331,34 @@
   display: inline-flex;
   align-items: center;
   margin-bottom: 0.75rem; 
+}
+
+.danger-zone {
+  padding: 1rem;
+  display: flex;
+  color: $danger;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $danger;
+  border-radius: 0.5rem;
+
+  p {
+    margin: 0;
+    color: #333;
+  }
+
+  & button {
+    color: $danger;
+    border: 1px solid $danger;
+    background: rgba($danger, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: darken($danger, 10%);
+      color: white;
+    }
+  }
 }
