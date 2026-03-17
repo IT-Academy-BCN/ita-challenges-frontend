@@ -26,6 +26,9 @@ import { type Challenge } from 'src/app/models/challenge.model'
 
 import { CommonModalService } from "src/app/services/common-modal.service"; 
 import { StarterService } from 'src/app/services/starter.service'
+import { AuthService } from 'src/app/services/auth.service'
+import { Observable, of, from} from 'rxjs'
+import { take, switchMap } from 'rxjs/operators';
 
 @Component({
   standalone: true,
@@ -86,7 +89,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly commonModalService = inject(CommonModalService)
   private readonly starterService = inject(StarterService)
-
+  private readonly authService = inject(AuthService)
+  userRole$: Observable<string> = this.authService.getUserRole();
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService,
     private toastr: ToastrService
@@ -386,22 +390,33 @@ loadChallengeForEditing(): void {
   }
 
 onDeleteChallenge(): void {
-  this.commonModalService.deleteConfirmationModal().then((result) => {
-    if (result.isConfirmed) {
-      this.challengeService.deleteChallenge(this.challengeIdToEdit).subscribe({
-        next: () => {
-          this.starterService.invalidateCacheAndRefresh();
-          this.commonModalService.deleteSuccessModal().then(() => {
-            void this.router.navigate(['/ita-challenge/challenges']);
-          });
-        },
-        error: (err) => {
-          console.error('Error deleting challenge:', err);
-          this.commonModalService.deleteErrorModal(
-            err?.message ?? this.translate.instant('challengeForm.deleteErrorMessage')
-          );
-        }
+  this.userRole$.pipe(
+    take(1),
+    switchMap((role) => {
+      if (role !== 'ADMIN') {
+        this.commonModalService.deleteErrorModal(
+          this.translate.instant('challengeForm.deleteUnauthorizedMessage')
+        );
+        return of(null);
+      }
+      return from(this.commonModalService.deleteConfirmationModal());
+    }),
+    switchMap((result) => {
+      if (!result?.isConfirmed) return of(null);
+      return this.challengeService.deleteChallenge(this.challengeIdToEdit);
+    })
+  ).subscribe({
+    next: (response) => {
+      if (response === null) return;
+      this.starterService.invalidateCacheAndRefresh();
+      this.commonModalService.deleteSuccessModal().then(() => {
+        void this.router.navigate(['/ita-challenge/challenges']);
       });
+    },
+    error: (err) => {
+      this.commonModalService.deleteErrorModal(
+        err?.message ?? this.translate.instant('challengeForm.deleteErrorMessage')
+      );
     }
   });
 }

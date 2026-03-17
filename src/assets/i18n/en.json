@@ -112,7 +112,8 @@
                 "deleteConfirmBtn": "Yes, delete",
                 "deleteSuccessTitle": "Challenge deleted",
                 "deleteSuccessMsg": "The challenge has been successfully deleted.",
-                "deleteErrorTitle": "Error deleting challenge"
+                "deleteErrorTitle": "Error deleting challenge",
+                "deleteUnauthorized": "You do not have permission to delete challenges, switch to admin mode"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Saved challenges",

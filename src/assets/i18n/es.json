@@ -112,7 +112,8 @@
                 "deleteConfirmBtn": "Sí, eliminar",
                 "deleteSuccessTitle": "Reto eliminado",
                 "deleteSuccessMsg": "El reto ha sido eliminado correctamente.",
-                "deleteErrorTitle": "Error al eliminar el reto"
+                "deleteErrorTitle": "Error al eliminar el reto",
+                "deleteUnauthorized": "No tienes permiso para eliminar retos, cambia a modo admin"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Retos guardados",
