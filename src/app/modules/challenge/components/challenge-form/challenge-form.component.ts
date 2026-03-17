@@ -384,4 +384,25 @@ loadChallengeForEditing(): void {
       ]
     });
   }
+
+onDeleteChallenge(): void {
+  this.commonModalService.deleteConfirmationModal().then((result) => {
+    if (result.isConfirmed) {
+      this.challengeService.deleteChallenge(this.challengeIdToEdit).subscribe({
+        next: () => {
+          this.starterService.invalidateCacheAndRefresh();
+          this.commonModalService.deleteSuccessModal().then(() => {
+            void this.router.navigate(['/ita-challenge/challenges']);
+          });
+        },
+        error: (err) => {
+          console.error('Error deleting challenge:', err);
+          this.commonModalService.deleteErrorModal(
+            err?.message ?? this.translate.instant('challengeForm.deleteErrorMessage')
+          );
+        }
+      });
+    }
+  });
+}
 }
