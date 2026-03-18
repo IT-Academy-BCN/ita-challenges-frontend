@@ -9,16 +9,12 @@ and this project adheres to
 - Add deleteChallenge() method in challenge service 
 - Add a visually distinct "Danger Zone" section at the bottom of the editorChallenge component that contains the delete trigger, making it clear to the mentor that this area holds destructive actions.
 - Add delete challenge confirmation and success modals.
+
 ### [ita-challenges-frontend-3.35.0-RELEASE] - 2026-03-11
 
 ### Added
-- enum for loading states management and logic in starter component to manage loading states
-
-### [UNRELEASED] - 2026-03-11
-
-### Added
-- enum for loading states management 
-- logic in starter component to manage loading states
+- Enum for loading states management and logic in starter component to manage loading states.
+- Skeleton and dispayting texts that show feedback for the user to know if the challenges are loading or there has been an error.
 
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
