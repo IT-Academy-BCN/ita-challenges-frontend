@@ -395,7 +395,7 @@ onDeleteChallenge(): void {
     switchMap((role) => {
       if (role !== 'ADMIN') {
         this.commonModalService.deleteErrorModal(
-          this.translate.instant('challengeForm.deleteUnauthorizedMessage')
+          this.translate.instant('challengeForm.deleteUnauthorized')
         );
         return of(null);
       }
