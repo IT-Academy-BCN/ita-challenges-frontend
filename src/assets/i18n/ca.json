@@ -180,7 +180,8 @@
                 }
             },
             "empty": {
-                "noResults": "No s'han trobat reptes amb els filtres seleccionats."
+                "noResults": "No s'han trobat reptes amb els filtres seleccionats.",
+                "errorLoading": "Oooops! Servei no disponible. Torna-ho a provar-ho més tard."
             }
         },
         "modals": {
