@@ -1088,95 +1088,72 @@ it('should not render breadcrumb in the header', () => {
   expect(breadcrumbEl).toBeNull();
 });
 describe('onDeleteChallenge', () => {
+  let starter: any;
+  let invalidateSpy: jest.SpyInstance;
+
   beforeEach(() => {
     component.challengeIdToEdit = 'challenge-123';
+    roleSubject.next('ADMIN');
+    // Happy path defaults — sobreescribe solo en tests de casos alternativos
+    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
+    mockChallengeService.deleteChallenge.mockReturnValue(of({}));
+    mockCommonModalService.deleteSuccessModal.mockResolvedValue({} as any);
+    starter = TestBed.inject(StarterService) as any;
+    invalidateSpy = jest.spyOn(starter, 'invalidateCacheAndRefresh');
   });
 
   it('should show error modal when user is not ADMIN', fakeAsync(() => {
     roleSubject.next('USER');
-
     component.onDeleteChallenge();
     tick();
-
-    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(
-      expect.any(String)
-    );
+    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
     expect(mockCommonModalService.deleteConfirmationModal).not.toHaveBeenCalled();
     expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
   }));
 
   it('should show confirmation modal when user is ADMIN', fakeAsync(() => {
-    roleSubject.next('ADMIN');
-
     component.onDeleteChallenge();
     tick();
-
     expect(mockCommonModalService.deleteConfirmationModal).toHaveBeenCalled();
   }));
 
-  it('should delete challenge when confirmation is accepted', fakeAsync(() => {
-    roleSubject.next('ADMIN');
-    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
-    mockChallengeService.deleteChallenge.mockReturnValue(of({}));
-    mockCommonModalService.deleteSuccessModal.mockResolvedValue({} as any);
-
-    const starter = TestBed.inject(StarterService) as any;
-    const invalidateSpy = jest.spyOn(starter, 'invalidateCacheAndRefresh');
-
+  // Fusionados: delete + invalidate + navigate + success modal en un solo flujo
+  it('should delete challenge, invalidate cache, show success and navigate', fakeAsync(() => {
     component.onDeleteChallenge();
     tick();
-
     expect(mockChallengeService.deleteChallenge).toHaveBeenCalledWith('challenge-123');
     expect(invalidateSpy).toHaveBeenCalled();
     expect(mockCommonModalService.deleteSuccessModal).toHaveBeenCalled();
-  }));
-
-  it('should navigate after success modal is dismissed', fakeAsync(() => {
-    roleSubject.next('ADMIN');
-    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
-    mockChallengeService.deleteChallenge.mockReturnValue(of({}));
-    mockCommonModalService.deleteSuccessModal.mockResolvedValue({} as any);
-
-    component.onDeleteChallenge();
-    tick();
-
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
   }));
 
   it('should not delete when confirmation is cancelled', fakeAsync(() => {
-    roleSubject.next('ADMIN');
     mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: false } as any);
-
     component.onDeleteChallenge();
     tick();
-
     expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
     expect(mockRouter.navigate).not.toHaveBeenCalled();
   }));
 
-  it('should show error modal when delete fails', fakeAsync(() => {
-    roleSubject.next('ADMIN');
-    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
-    const error = new Error('Delete failed');
-    mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => error));
-
+  it('should show error modal with message when delete fails', fakeAsync(() => {
+    mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => new Error('Delete failed')));
     component.onDeleteChallenge();
     tick();
-
     expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith('Delete failed');
   }));
 
   it('should fallback to translate key when error has no message', fakeAsync(() => {
-    roleSubject.next('ADMIN');
-    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
     mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => ({})));
-
     component.onDeleteChallenge();
     tick();
-
-    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(
-      expect.any(String)
-    );
+    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
   }));
+  it('should show error modal if challengeIdToEdit is empty', fakeAsync(() => {
+  component.challengeIdToEdit = '';
+  component.onDeleteChallenge();
+  tick();
+  expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
+  expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
+}));
 });
 })

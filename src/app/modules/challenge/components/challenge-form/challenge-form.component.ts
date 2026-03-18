@@ -403,6 +403,12 @@ onDeleteChallenge(): void {
     }),
     switchMap((result) => {
       if (!result?.isConfirmed) return of(null);
+      if (!this.challengeIdToEdit) {
+    this.commonModalService.deleteErrorModal(
+      this.translate.instant('challengeForm.deleteErrorTitle')
+    );
+    return of(null);
+  }
       return this.challengeService.deleteChallenge(this.challengeIdToEdit);
     })
   ).subscribe({
