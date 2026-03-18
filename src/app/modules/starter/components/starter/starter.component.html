@@ -11,24 +11,28 @@
   </header>
 
   <main id="challenges-container" class="col-12 col-xl-8">
-    <div id="challenges" #challenge>
-      <ng-container
-        *ngIf="loadingState === 'LOADING'"
-        [ngTemplateOutlet]="loadingTpl"
-      >
+    <ng-container
+      *ngIf="loadingState === 'LOADING'"
+      [ngTemplateOutlet]="loadingTpl"
+    >
     </ng-container>
-      <ng-container
-        *ngIf="loadingState === 'ERROR'"
-        [ngTemplateOutlet]="errorTpl"
-      ></ng-container>
-      <ng-container
-        *ngIf="(challenges?.length || 0) === 0 && loadingState === 'SUCCESS'"
-        [ngTemplateOutlet]="noResultsTpl"
-      >
-      </ng-container>
-      <ng-container
-        *ngIf="(challenges?.length || 0) > 0 && loadingState === 'SUCCESS'"
-      >
+    <ng-container
+      *ngIf="loadingState === 'ERROR'"
+      [ngTemplateOutlet]="errorTpl"
+    ></ng-container>
+    <ng-container
+      *ngIf="(challenges?.length || 0) === 0 && loadingState === 'SUCCESS'"
+      [ngTemplateOutlet]="noResultsTpl"
+    >
+    </ng-container>
+    <ng-container
+      *ngIf="(challenges?.length || 0) > 0 && loadingState === 'SUCCESS'"
+    >
+      <ng-container [ngTemplateOutlet]="challengesTpl"></ng-container>
+    </ng-container>
+
+    <ng-template #challengesTpl>
+      <div id="challenges" #challenge>
         <app-challenge-card
           *ngFor="let challenge of challenges; let i = index"
           [title]="challenge.challenge_title | dynamicTranslate"
@@ -46,8 +50,8 @@
           [tagIds]="challenge.tags"
         >
         </app-challenge-card>
-      </ng-container>
-    </div>
+      </div>
+    </ng-template>
 
     <ng-template #noResultsTpl>
       <div class="text-center py-5">
@@ -57,8 +61,8 @@
       </div>
     </ng-template>
     <ng-template #loadingTpl>
-      <div class="text-center py-5">
-        <app-loading-card></app-loading-card>
+      <div id="loading-challenges">
+        <app-loading-card *ngFor="let _ of [].constructor(33)"></app-loading-card>
       </div>
     </ng-template>
     <ng-template #errorTpl>
