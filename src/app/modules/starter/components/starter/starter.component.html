@@ -16,7 +16,6 @@
         *ngIf="loadingState === 'LOADING'"
         [ngTemplateOutlet]="loadingTpl"
       ></ng-container>
-
       <ng-container
         *ngIf="loadingState === 'ERROR'"
         [ngTemplateOutlet]="errorTpl"
@@ -67,8 +66,7 @@
     <ng-template #errorTpl>
       <div class="text-center py-5">
         <p class="h5 text-muted">
-          <!-- Provisional loading state message  -->
-          {{ this.loadingState }}
+          {{ "modules.starter.empty.errorLoading" | translate }}
         </p>
       </div>
     </ng-template>
