@@ -15,7 +15,8 @@
       <ng-container
         *ngIf="loadingState === 'LOADING'"
         [ngTemplateOutlet]="loadingTpl"
-      ></ng-container>
+      >
+    </ng-container>
       <ng-container
         *ngIf="loadingState === 'ERROR'"
         [ngTemplateOutlet]="errorTpl"
@@ -57,10 +58,7 @@
     </ng-template>
     <ng-template #loadingTpl>
       <div class="text-center py-5">
-        <p class="h5 text-muted">
-          <!-- Provisional loading state message  -->
-          {{ this.loadingState }}
-        </p>
+        <app-loading-card></app-loading-card>
       </div>
     </ng-template>
     <ng-template #errorTpl>
