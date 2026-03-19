@@ -16,6 +16,12 @@ and this project adheres to
 - Add delete challenge confirmation and success modals.
 - Integrated onDeleteChallenge() complete functionality with UI and confirmation modals into challenge-form component.
 
+### [UNRELEASED] - 2026-03-11
+
+### Added
+- enum for loading states management 
+- logic in starter component to manage loading states
+
 ### [ita-challenges-frontend-3.34.0-RELEASE] - 2026-03-07
 
 ### Added

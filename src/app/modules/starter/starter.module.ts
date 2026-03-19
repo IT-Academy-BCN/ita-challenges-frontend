@@ -16,6 +16,7 @@ import { ChallengeFiltersTriggerComponent } from './components/challenge-filters
 import { LanguageFilterComponent } from './components/language-filter/language-filter.component'
 import { ChallengeListFiltersComponent } from './components/challenge-list-filters/challenge-list-filters.component'
 
+
 @NgModule({
   declarations: [
     StarterComponent,
@@ -35,8 +36,8 @@ import { ChallengeListFiltersComponent } from './components/challenge-list-filte
     ModalsModule,
     DynamicTranslatePipe,
     ChallengeFormComponent,
-    ChallengeFiltersTriggerComponent
-  ],
+    ChallengeFiltersTriggerComponent,
+],
   providers: [
     ChallengeService
   ]
