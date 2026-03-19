@@ -182,7 +182,8 @@
                 }
             },
             "empty": {
-                "noResults": "No challenges found with the selected filters."
+                "noResults": "No challenges found with the selected filters.",
+                "errorLoading": "Oooops! Service unavailable. Try again later."
             }
         },
         "modals": {

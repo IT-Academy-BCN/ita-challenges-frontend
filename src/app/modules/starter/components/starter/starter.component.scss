@@ -2,9 +2,18 @@
 @import '/src/styles/buttons';
 @import '/src/styles/fonts';
 
+:host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .starter {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   padding: 2rem;
 }
@@ -13,14 +22,12 @@ h2 {
   font-size: 1.8rem;
   line-height: 34px;
   font-weight: 700;
-   margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 img[alt='filter-icon'] {
   cursor: pointer;
 }
-
-
 
 @media screen and (max-width: 1200px) {
   h2 {
@@ -41,8 +48,8 @@ img[alt='filter-icon'] {
 }
 
 #challenges-container {
-  height: 100%;
-  overflow: visible;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -51,11 +58,14 @@ img[alt='filter-icon'] {
 
 #challenges {
   padding-top: 1rem;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
   gap: 1rem;
+  align-content: start;
 }
 
 #challenges::-webkit-scrollbar {
@@ -63,11 +73,17 @@ img[alt='filter-icon'] {
   height: 0;
 }
 
+#loading-challenges {
+  padding-top: 1rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 1rem;
+}
+
 app-pagination {
   flex-shrink: 0;
 }
-
-
 
 #filters-selector {
   display: flex;

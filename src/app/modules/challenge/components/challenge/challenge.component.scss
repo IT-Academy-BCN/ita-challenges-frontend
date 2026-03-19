@@ -1,11 +1,21 @@
 @import '/src/styles/colors';
 
+:host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .challenge-component{
     margin-right: 0; 
     padding: 32px 0 40px 0;
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     gap: 16px;
+    overflow-y: auto;
 
     app-challenge-header {
         background-color: white;

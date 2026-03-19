@@ -183,7 +183,8 @@
             },
             
             "empty": {
-                "noResults": "No se han encontrado retos con los filtros seleccionados."
+                "noResults": "No se han encontrado retos con los filtros seleccionados.",
+                "errorLoading": "Oooops! Servicio no disponible. Inténtalo de nuevo más tarde."
             }
         },
         "modals": {

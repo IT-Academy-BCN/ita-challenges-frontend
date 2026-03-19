@@ -15,10 +15,12 @@ import { ToggleComponent } from './toggle/toggle.component'
 import { CustomDatePipe } from "../../pipes/custom-date.pipe";
 import { DifficultyLevelComponent } from './challenge-card/difficulty-level/difficulty-level.component'
 import { TagsComponent } from './challenge-card/tags/tags.component'
+import { LoadingCardComponent } from './loading-card/loading-card.component'
 
 @NgModule({
   declarations: [
     ChallengeCardComponent,
+    LoadingCardComponent,
     ResourceCardComponent,
     SolutionComponent,
     BreadcrumbComponent,
@@ -39,6 +41,7 @@ import { TagsComponent } from './challenge-card/tags/tags.component'
 ],
   exports: [
     ChallengeCardComponent,
+    LoadingCardComponent,
     ResourceCardComponent,
     SolutionComponent,
     BreadcrumbComponent,

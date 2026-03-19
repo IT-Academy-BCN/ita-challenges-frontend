@@ -25,6 +25,7 @@ export class StarterComponent implements OnInit {
   @ViewChild('challenge') challengesContainer!: ElementRef
   @ViewChild('challengeFormModal') challengeFormModal!: ElementRef
 
+  LoadingState = LoadingState
   challenges: Challenge[] = []
   challengesSubs$!: Subscription
   sortedChallengesSubs$!: Subscription
