@@ -107,7 +107,14 @@
                 "dangerZone": "Danger zone",
                 "deleteChallenge": "Delete challenge",
                 "deleteThisChallenge": "Delete this challenge",
-                "deleteChallengeMsg": "Deleting this challenge is permanent and cannot be undone."
+                "deleteChallengeMsg": "Deleting this challenge is permanent and cannot be undone.",
+                "deleteConfirmMsg": "This action cannot be undone. The challenge will be permanently deleted.",
+                "deleteConfirmBtn": "Yes, delete",
+                "deleteSuccessTitle": "Challenge deleted",
+                "deleteSuccessMsg": "The challenge has been successfully deleted.",
+                "deleteErrorTitle": "Error deleting challenge",
+                "deleteUnauthorized": "You do not have permission to delete challenges, switch to admin mode",
+                "deleteUnexpected": "Unexpected error deleting challenge"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Saved challenges",

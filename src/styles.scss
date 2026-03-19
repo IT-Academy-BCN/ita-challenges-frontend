@@ -73,6 +73,20 @@ a {
   }
 }
 
+.custom-danger-button {
+  background-color: $danger;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($danger, 10%);
+  }
+}
+
 .custom-cancel-button {
   background-color: #e0e0e0;  
   color: #333333;
