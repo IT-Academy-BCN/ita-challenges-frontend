@@ -29,7 +29,7 @@ import { StarterService } from 'src/app/services/starter.service'
 import { AuthService } from 'src/app/services/auth.service'
 import { Observable, of, from} from 'rxjs'
 import { take, switchMap } from 'rxjs/operators';
-
+import { UserRole } from 'src/app/shared/enums/user-role.enum';
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -393,7 +393,7 @@ onDeleteChallenge(): void {
   this.userRole$.pipe(
     take(1),
     switchMap((role) => {
-      if (role !== 'ADMIN') {
+      if (role !== UserRole.ADMIN) {
         this.commonModalService.deleteErrorModal(
           this.translate.instant('modules.challenge.challengeForm.deleteUnauthorized')
         );
@@ -419,9 +419,9 @@ onDeleteChallenge(): void {
         void this.router.navigate(['/ita-challenge/challenges']);
       });
     },
-    error: (err) => {
+    error: () => {
       this.commonModalService.deleteErrorModal(
-        err?.message ?? this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
+      this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
       );
     }
   });
