@@ -107,7 +107,14 @@
                 "dangerZone": "Zona de perill",
                 "deleteChallenge": "Eliminar repte",
                 "deleteThisChallenge": "Eliminar aquest repte",
-                "deleteChallengeMsg": "L'eliminació d'aquest repte és permanent i no es pot desfer."
+                "deleteChallengeMsg": "L'eliminació d'aquest repte és permanent i no es pot desfer.",
+                "deleteConfirmMsg": "Aquesta acció no es pot desfer. El repte serà eliminat permanentment.",
+                "deleteConfirmBtn": "Sí, eliminar",
+                "deleteSuccessTitle": "Repte eliminat",
+                "deleteSuccessMsg": "El repte s'ha eliminat correctament.",
+                "deleteErrorTitle": "Error en eliminar el repte",
+                "deleteUnauthorized": "No tens permisos per eliminar reptes, canvia a mode admin",
+                "deleteUnexpected": "Error inesperat en eliminar el repte"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",

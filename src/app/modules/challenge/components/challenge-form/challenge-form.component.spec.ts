@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { Router, ActivatedRoute } from '@angular/router'
-import { of, throwError } from 'rxjs'
+import { BehaviorSubject, of, throwError } from 'rxjs'
 import { ChallengeFormService } from 'src/app/services/challenge-form.service'
 import { ChallengeService } from 'src/app/services/challenge.service'
 import { SolutionService } from 'src/app/services/solution.service'
@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr'
 import { CommonModalService } from 'src/app/services/common-modal.service'
 import { StarterService } from 'src/app/services/starter.service'
+import { AuthService } from 'src/app/services/auth.service'
 
 // Mocks para CodeMirror
 const mockEditorView = {
@@ -94,6 +95,8 @@ describe('ChallengeFormComponent', () => {
   let mockRouter: jest.Mocked<Router>
   let mockToastrService: jest.Mocked<ToastrService>
   let mockCommonModalService: jest.Mocked<CommonModalService>
+  let mockAuthService: { getUserRole: jest.Mock };
+  let roleSubject: BehaviorSubject<string>;
 
   const mockJavascriptTags = {
     results: [
@@ -158,7 +161,8 @@ describe('ChallengeFormComponent', () => {
     mockChallengeService = {
       createChallenge: jest.fn().mockReturnValue(of({})),
       getChallengeById: jest.fn().mockReturnValue(of({})),
-      editChallenge: jest.fn().mockReturnValue(of({}))
+      editChallenge: jest.fn().mockReturnValue(of({})),
+      deleteChallenge: jest.fn().mockReturnValue(of({}))
     } as unknown as jest.Mocked<ChallengeService>
 
     mockRouter = {
@@ -172,12 +176,20 @@ describe('ChallengeFormComponent', () => {
     mockCommonModalService = {
       successPostingChallengeModal: jest.fn().mockResolvedValue({} as any),
       errorPostingChallengeModal: jest.fn().mockResolvedValue({} as any),
-      loadingPostingChallengeModal: jest.fn().mockResolvedValue({} as any)
+      loadingPostingChallengeModal: jest.fn().mockResolvedValue({} as any),
+      deleteConfirmationModal: jest.fn().mockResolvedValue({ isConfirmed: true }),
+      deleteSuccessModal: jest.fn().mockResolvedValue({}),
+      deleteErrorModal: jest.fn().mockResolvedValue({})
     } as unknown as jest.Mocked<CommonModalService>
+    roleSubject = new BehaviorSubject<string>('ADMIN');
+    mockAuthService = {
+      getUserRole: jest.fn().mockReturnValue(roleSubject.asObservable())
+      };
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, CommonModule, EditorModule, HttpClientTestingModule, TranslateModule.forRoot(), ReactiveFormsModule],
       providers: [
+        { provide: AuthService, useValue: mockAuthService },
         { provide: ChallengeFormService, useValue: mockChallengeFormService },
         { provide: ChallengeService, useValue: mockChallengeService },
         { provide: Router, useValue: mockRouter },
@@ -1074,5 +1086,70 @@ it('should not render breadcrumb in the header', () => {
   fixture.detectChanges();
   const breadcrumbEl: HTMLElement | null = fixture.nativeElement.querySelector('.breadcrumb');
   expect(breadcrumbEl).toBeNull();
+});
+describe('onDeleteChallenge', () => {
+  let starter: any;
+  let invalidateSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    component.challengeIdToEdit = 'challenge-123';
+    roleSubject.next('ADMIN');
+    // Happy path defaults — sobreescribe solo en tests de casos alternativos
+    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: true } as any);
+    mockChallengeService.deleteChallenge.mockReturnValue(of({}));
+    mockCommonModalService.deleteSuccessModal.mockResolvedValue({} as any);
+    starter = TestBed.inject(StarterService) as any;
+    invalidateSpy = jest.spyOn(starter, 'invalidateCacheAndRefresh');
+  });
+
+  it('should show error modal when user is not ADMIN', fakeAsync(() => {
+    roleSubject.next('USER');
+    component.onDeleteChallenge();
+    tick();
+    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
+    expect(mockCommonModalService.deleteConfirmationModal).not.toHaveBeenCalled();
+    expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
+  }));
+
+  it('should show confirmation modal when user is ADMIN', fakeAsync(() => {
+    component.onDeleteChallenge();
+    tick();
+    expect(mockCommonModalService.deleteConfirmationModal).toHaveBeenCalled();
+  }));
+
+  // Fusionados: delete + invalidate + navigate + success modal en un solo flujo
+  it('should delete challenge, invalidate cache, show success and navigate', fakeAsync(() => {
+    component.onDeleteChallenge();
+    tick();
+    expect(mockChallengeService.deleteChallenge).toHaveBeenCalledWith('challenge-123');
+    expect(invalidateSpy).toHaveBeenCalled();
+    expect(mockCommonModalService.deleteSuccessModal).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/ita-challenge/challenges']);
+  }));
+
+  it('should not delete when confirmation is cancelled', fakeAsync(() => {
+    mockCommonModalService.deleteConfirmationModal.mockResolvedValue({ isConfirmed: false } as any);
+    component.onDeleteChallenge();
+    tick();
+    expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
+  }));
+
+  it('should show error modal with message when delete fails', fakeAsync(() => {
+    mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => new Error('Delete failed')));
+    component.onDeleteChallenge();
+    tick();
+    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(
+    expect.any(String)
+  );
+  }));
+
+  it('should show error modal if challengeIdToEdit is empty', fakeAsync(() => {
+  component.challengeIdToEdit = '';
+  component.onDeleteChallenge();
+  tick();
+  expect(mockChallengeService.deleteChallenge).not.toHaveBeenCalled();
+  expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
+}));
 });
 })

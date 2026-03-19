@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { TranslateService } from "@ngx-translate/core";
 import Swal, { SweetAlertOptions } from "sweetalert2";
 import { CommonModalService } from "./common-modal.service";
 
@@ -8,12 +9,19 @@ jest.mock("sweetalert2", () => ({
   close: jest.fn(),
 }));
 
+const mockTranslateService = {
+  instant: jest.fn((key: string) => key),
+};
+
 describe("CommonModalService", () => {
   let service: CommonModalService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CommonModalService],
+      providers: [
+        CommonModalService,
+        { provide: TranslateService, useValue: mockTranslateService },
+      ],
     });
     service = TestBed.inject(CommonModalService);
   });
@@ -81,5 +89,46 @@ describe("CommonModalService", () => {
     expect(opts.title).toBe("Error al publicar reto");
     expect(opts.text).toBe(errorMsg);
     expect(opts.confirmButtonText).toBe("Volver");
+  });
+
+  it("deleteConfirmationModal should call Swal.fire with warning and cancel button", async () => {
+    await service.deleteConfirmationModal();
+
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
+    const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
+
+    expect(opts.icon).toBe("warning");
+    expect(opts.title).toBe("modules.modals.solution.title");
+    expect(opts.text).toBe("modules.challenge.challengeForm.deleteConfirmMsg");
+    expect(opts.showCancelButton).toBe(true);
+    expect(opts.confirmButtonText).toBe("modules.challenge.challengeForm.deleteConfirmBtn");
+    expect(opts.cancelButtonText).toBe("modules.modals.solution.btn-cancel");
+    expect(opts.customClass?.confirmButton).toBe("custom-danger-button");
+    expect(opts.customClass?.cancelButton).toBe("custom-cancel-button");
+  });
+
+  it("deleteSuccessModal should call Swal.fire with success options", async () => {
+    await service.deleteSuccessModal();
+
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
+    const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
+
+    expect(opts.icon).toBe("success");
+    expect(opts.title).toBe("modules.challenge.challengeForm.deleteSuccessTitle");
+    expect(opts.text).toBe("modules.challenge.challengeForm.deleteSuccessMsg");
+    expect(opts.customClass?.confirmButton).toBe("custom-danger-button");
+  });
+
+  it("deleteErrorModal should call Swal.fire with error options and custom message", async () => {
+    const errorMsg = "Something went wrong";
+    await service.deleteErrorModal(errorMsg);
+
+    expect(Swal.fire).toHaveBeenCalledTimes(1);
+    const opts: SweetAlertOptions = (Swal.fire as jest.Mock).mock.calls[0][0];
+
+    expect(opts.icon).toBe("error");
+    expect(opts.title).toBe("modules.challenge.challengeForm.deleteErrorTitle");
+    expect(opts.text).toBe(errorMsg);
+    expect(opts.customClass?.confirmButton).toBe("custom-danger-button");
   });
 });
