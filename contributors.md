@@ -44,9 +44,9 @@
 - Leonid Mozheliuk - https://github.com/Leoyalta
 - Ilmira Dozhdikova - https://github.com/Ilmira83
 - Vania Ferrer - https://github.com/vaniaferreresteban
-- Juan Delgado - https://github.com/soyjuandelgado
 - Arnau Pérez - https://github.com/Arnau-66
 - Ana Lafuente - https://github.com/zanlamar
 - Ot Roca - https://github.com/otrocadev
 - Giú Eminente - https://github.com/JungleGiu
 - Carlos Martorell - https://github.com/Carlos-Martorell
+- Juan Delgado - https://github.com/soyjuandelgado
