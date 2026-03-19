@@ -112,7 +112,9 @@
                 "deleteConfirmBtn": "Sí, eliminar",
                 "deleteSuccessTitle": "Repte eliminat",
                 "deleteSuccessMsg": "El repte s'ha eliminat correctament.",
-                "deleteErrorTitle": "Error en eliminar el repte"
+                "deleteErrorTitle": "Error en eliminar el repte",
+                "deleteUnauthorized": "No tens permisos per eliminar reptes, canvia a mode admin",
+                "deleteUnexpected": "Error inesperat en eliminar el repte"
             },
              "bookmarksView":{
                 "bookmarksSaved": "Reptes desats",

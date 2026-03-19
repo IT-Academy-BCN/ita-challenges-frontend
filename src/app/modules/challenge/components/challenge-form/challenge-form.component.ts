@@ -26,7 +26,11 @@ import { type Challenge } from 'src/app/models/challenge.model'
 
 import { CommonModalService } from "src/app/services/common-modal.service"; 
 import { StarterService } from 'src/app/services/starter.service'
-
+import { AuthService } from 'src/app/services/auth.service'
+import { Observable, of, from} from 'rxjs'
+import { take, switchMap } from 'rxjs/operators';
+import { UserRole } from 'src/app/shared/enums/user-role.enum';
+import { SweetAlertResult } from 'sweetalert2'
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -86,7 +90,8 @@ export class ChallengeFormComponent implements AfterViewInit, OnDestroy, OnInit 
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly commonModalService = inject(CommonModalService)
   private readonly starterService = inject(StarterService)
-
+  private readonly authService = inject(AuthService)
+  userRole$: Observable<string> = this.authService.getUserRole();
   constructor (
     @Inject(TranslateService) readonly translate: TranslateService,
     private toastr: ToastrService
@@ -384,4 +389,48 @@ loadChallengeForEditing(): void {
       ]
     });
   }
+  private checkAdminRole(role: string): Observable<SweetAlertResult | null> {
+  if (role !== UserRole.ADMIN) {
+    this.commonModalService.deleteErrorModal(
+      this.translate.instant('modules.challenge.challengeForm.deleteUnauthorized')
+    );
+    return of(null);
+  }
+  return from(this.commonModalService.deleteConfirmationModal());
+}
+
+private confirmAndDelete(result: SweetAlertResult | null): Observable<unknown> {
+  if (!result?.isConfirmed) return of(null);
+  if (!this.challengeIdToEdit) {
+    this.commonModalService.deleteErrorModal(
+      this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
+    );
+    return of(null);
+  }
+  return this.challengeService.deleteChallenge(this.challengeIdToEdit);
+}
+
+private handleDeleteSuccess(response: unknown): void {
+  if (response === null) return;
+  this.starterService.invalidateCacheAndRefresh();
+  this.commonModalService.deleteSuccessModal().then(() => {
+   this.onCancel()
+  });
+}
+
+private handleDeleteError(): void {
+  this.commonModalService.deleteErrorModal(
+    this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
+  );
+}
+onDeleteChallenge(): void {
+  this.userRole$.pipe(
+    take(1),
+    switchMap((role) => this.checkAdminRole(role)),
+    switchMap((result) => this.confirmAndDelete(result))
+  ).subscribe({
+    next: (response) => this.handleDeleteSuccess(response),
+    error: () => this.handleDeleteError()
+  });
+}
 }

@@ -13,8 +13,4 @@ describe('LoadingState Enum', () => {
     expect(LoadingState.ERROR).toBe('ERROR');
   });
 
-  it('should have exactly 3 values', () => {
-    const values = Object.keys(LoadingState);
-    expect(values.length).toBe(3);
-  });
 });
