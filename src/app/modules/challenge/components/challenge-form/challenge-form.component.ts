@@ -30,6 +30,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { Observable, of, from} from 'rxjs'
 import { take, switchMap } from 'rxjs/operators';
 import { UserRole } from 'src/app/shared/enums/user-role.enum';
+import { SweetAlertResult } from 'sweetalert2'
 @Component({
   standalone: true,
   selector: 'app-challenge-form',
@@ -388,42 +389,48 @@ loadChallengeForEditing(): void {
       ]
     });
   }
+  private checkAdminRole(role: string): Observable<SweetAlertResult | null> {
+  if (role !== UserRole.ADMIN) {
+    this.commonModalService.deleteErrorModal(
+      this.translate.instant('modules.challenge.challengeForm.deleteUnauthorized')
+    );
+    return of(null);
+  }
+  return from(this.commonModalService.deleteConfirmationModal());
+}
 
-onDeleteChallenge(): void {
-  this.userRole$.pipe(
-    take(1),
-    switchMap((role) => {
-      if (role !== UserRole.ADMIN) {
-        this.commonModalService.deleteErrorModal(
-          this.translate.instant('modules.challenge.challengeForm.deleteUnauthorized')
-        );
-        return of(null);
-      }
-      return from(this.commonModalService.deleteConfirmationModal());
-    }),
-    switchMap((result) => {
-      if (!result?.isConfirmed) return of(null);
-      if (!this.challengeIdToEdit) {
+private confirmAndDelete(result: SweetAlertResult | null): Observable<unknown> {
+  if (!result?.isConfirmed) return of(null);
+  if (!this.challengeIdToEdit) {
     this.commonModalService.deleteErrorModal(
       this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
     );
     return of(null);
   }
-      return this.challengeService.deleteChallenge(this.challengeIdToEdit);
-    })
+  return this.challengeService.deleteChallenge(this.challengeIdToEdit);
+}
+
+private handleDeleteSuccess(response: unknown): void {
+  if (response === null) return;
+  this.starterService.invalidateCacheAndRefresh();
+  this.commonModalService.deleteSuccessModal().then(() => {
+    void this.router.navigate(['/ita-challenge/challenges']);
+  });
+}
+
+private handleDeleteError(): void {
+  this.commonModalService.deleteErrorModal(
+    this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
+  );
+}
+onDeleteChallenge(): void {
+  this.userRole$.pipe(
+    take(1),
+    switchMap((role) => this.checkAdminRole(role)),
+    switchMap((result) => this.confirmAndDelete(result))
   ).subscribe({
-    next: (response) => {
-      if (response === null) return;
-      this.starterService.invalidateCacheAndRefresh();
-      this.commonModalService.deleteSuccessModal().then(() => {
-        void this.router.navigate(['/ita-challenge/challenges']);
-      });
-    },
-    error: () => {
-      this.commonModalService.deleteErrorModal(
-      this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
-      );
-    }
+    next: (response) => this.handleDeleteSuccess(response),
+    error: () => this.handleDeleteError()
   });
 }
 }

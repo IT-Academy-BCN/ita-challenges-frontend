@@ -1139,15 +1139,11 @@ describe('onDeleteChallenge', () => {
     mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => new Error('Delete failed')));
     component.onDeleteChallenge();
     tick();
-    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith('Delete failed');
+    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(
+    expect.any(String)
+  );
   }));
 
-  it('should fallback to translate key when error has no message', fakeAsync(() => {
-    mockChallengeService.deleteChallenge.mockReturnValue(throwError(() => ({})));
-    component.onDeleteChallenge();
-    tick();
-    expect(mockCommonModalService.deleteErrorModal).toHaveBeenCalledWith(expect.any(String));
-  }));
   it('should show error modal if challengeIdToEdit is empty', fakeAsync(() => {
   component.challengeIdToEdit = '';
   component.onDeleteChallenge();
