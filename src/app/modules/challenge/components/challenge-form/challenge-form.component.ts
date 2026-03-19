@@ -395,7 +395,7 @@ onDeleteChallenge(): void {
     switchMap((role) => {
       if (role !== 'ADMIN') {
         this.commonModalService.deleteErrorModal(
-          this.translate.instant('challengeForm.deleteUnauthorized')
+          this.translate.instant('modules.challenge.challengeForm.deleteUnauthorized')
         );
         return of(null);
       }
@@ -405,7 +405,7 @@ onDeleteChallenge(): void {
       if (!result?.isConfirmed) return of(null);
       if (!this.challengeIdToEdit) {
     this.commonModalService.deleteErrorModal(
-      this.translate.instant('challengeForm.deleteErrorTitle')
+      this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
     );
     return of(null);
   }
@@ -421,7 +421,7 @@ onDeleteChallenge(): void {
     },
     error: (err) => {
       this.commonModalService.deleteErrorModal(
-        err?.message ?? this.translate.instant('challengeForm.deleteErrorMessage')
+        err?.message ?? this.translate.instant('modules.challenge.challengeForm.deleteUnexpected')
       );
     }
   });
