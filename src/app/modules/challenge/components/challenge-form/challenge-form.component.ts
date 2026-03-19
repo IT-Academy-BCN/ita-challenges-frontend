@@ -414,7 +414,7 @@ private handleDeleteSuccess(response: unknown): void {
   if (response === null) return;
   this.starterService.invalidateCacheAndRefresh();
   this.commonModalService.deleteSuccessModal().then(() => {
-    void this.router.navigate(['/ita-challenge/challenges']);
+   this.onCancel()
   });
 }
 
