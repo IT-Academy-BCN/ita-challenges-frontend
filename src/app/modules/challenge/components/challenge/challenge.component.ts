@@ -77,6 +77,7 @@ export class ChallengeComponent implements OnInit, OnDestroy {
         this.loadUserSolutionStatus(userId);
         this.loadSolutionContent();
       },
+      error: (err) => console.error('[ChallengeComponent] Error fetching user ID:', err),
     });
   }
 loadUserBookmarks(userId: string): void {
