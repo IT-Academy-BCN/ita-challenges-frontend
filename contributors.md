@@ -50,3 +50,5 @@
 - Giú Eminente - https://github.com/JungleGiu
 - Carlos Martorell - https://github.com/Carlos-Martorell
 - Juan Delgado - https://github.com/soyjuandelgado
+
+- Nerea Medina - https://github.com/nereame96
