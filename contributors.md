@@ -50,3 +50,4 @@
 - Giú Eminente - https://github.com/JungleGiu
 - Carlos Martorell - https://github.com/Carlos-Martorell
 - Juan Delgado - https://github.com/soyjuandelgado
+- Jordi Miravet - https://github.com/JordiMiravet
