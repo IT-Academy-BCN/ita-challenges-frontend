@@ -3,13 +3,14 @@
 .challenge-list-element {
   position: relative;
   border-radius: 1rem;
+  border: 1px solid $gray-4;
   padding-top: 0.4rem;
   min-height: 110px;
   cursor: pointer;
   max-width: 24rem;
   background-color: $white;
   color: $gray-3;
-
+  
   &:hover {
     transform: translateY(-5px);
     transition: all 0.2s ease-in-out;

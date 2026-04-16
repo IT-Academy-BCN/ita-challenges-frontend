@@ -51,3 +51,4 @@
 - Carlos Martorell - https://github.com/Carlos-Martorell
 - Juan Delgado - https://github.com/soyjuandelgado
 - Nerea Medina - https://github.com/nereame96
+- Jordi Miravet - https://github.com/JordiMiravet

@@ -67,6 +67,14 @@ span:hover .arrow-left{
   }
 }
 
+.btn.btn-outline-primary.btn-save-challenge {
+  color: $black-3; 
+  
+  &:hover {
+    color: $black-3;
+  }
+}
+
 h3 {
   font-size: 26px;
   font-weight: 700;
